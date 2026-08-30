@@ -47,12 +47,12 @@ npx design-wiki add spring-dialog --install-deps
 * **Automatic Path Mapping**: Reads `components.json` or `tsconfig.json` to place files into `@/components/ui` (`src/components/ui` or `components/ui`).
 * **Recursive Dependencies**: Automatically checks and installs internal registry dependencies (e.g. `magnetic-button` &rarr; `button`).
 * **Helper Scaffolding**: Detects if `lib/utils.ts` (with `cn`) exists; scaffolds it automatically if missing.
-* **Peer Package Audit**: Identifies missing packages (`motion`, `three`, `clsx`, `tailwind-merge`) and displays or runs the correct install command for your package manager (`pnpm`, `npm`, `bun`, `yarn`).
+* **Peer Package Audit**: Identifies missing packages (`motion`, `three`, `remotion`, `clsx`, `tailwind-merge`) and displays or runs the correct install command for your package manager (`pnpm`, `npm`, `bun`, `yarn`).
 
 ---
 
 ### 2. `list`
-Lists all 27+ verified zero-slop components indexed in the registry with their taxonomy categories, taste dials, and tags.
+Lists all 29+ verified zero-slop components indexed in the registry with their taxonomy categories, taste dials, and tags.
 
 ```bash
 npx design-wiki list
@@ -71,7 +71,7 @@ npx design-wiki search creative
 ---
 
 ### 4. `audit [path]`
-Runs the 20 Anti-Slop Rules against a local file or directory, flagging arbitrary pixel overrides (`p-[17px]`), blanket transitions, and accessibility issues.
+Runs the 21 Anti-Slop Rules against a local file or directory, flagging arbitrary pixel overrides (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), blanket transitions, and accessibility issues.
 
 ```bash
 npx design-wiki audit ./components/ui

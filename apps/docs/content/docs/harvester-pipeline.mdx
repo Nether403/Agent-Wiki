@@ -25,6 +25,7 @@ Supported upstream repositories:
 - **diagram-design** (`ui:editorial`): Analytical data cards and SVG diagrams
 - **Evil-Buttons** (`ui:motion`): Tactile physics button interactions
 - **Tailark** (`ui:block`): Asymmetrical bento grid layouts
+- **Remocn** (`ui:media`): Timeline-based video composition and frame-scrubbing controllers
 - **KokonutUI** (`ui:motion`): Spring dialogs and modals
 - **Dot Matrix** (`ui:utility`): Specialized canvas dot loaders
 - **ReUI** (`ui:primitive`): Radix primitives and animated icons
@@ -34,7 +35,7 @@ Supported upstream repositories:
 
 Using the TypeScript Compiler API (`ts.createSourceFile`), the parser statically extracts:
 - **Exported Signatures**: Components, functions, and TypeScript prop interfaces.
-- **Dependency & Graphic Tells**: Automatically identifies core imports (`framer-motion`, `motion/react`, `three`, `@react-three/fiber`, Radix UI, Ark UI).
+- **Dependency & Graphic Tells**: Automatically identifies core imports (`framer-motion`, `motion/react`, `three`, `@react-three/fiber`, `remotion`, Radix UI, Ark UI).
 - **Three.js & WebGL Cross-Referencing**: When analyzing creative canvas and WebGL components (such as `canvas-fluid-wave.tsx`), the parser automatically cross-references `threejs`, `webgl`, and `canvas` tags, automatically injecting `three` into `dependencies` and `@types/three` into `devDependencies` to ensure seamless downstream consumption.
 - **Structural Complexity Scoring**: Evaluates mathematical loops (`requestAnimationFrame` with sinusoidal oscillations), shader code, and lines of code to score complexity as `low`, `medium`, or `high`.
 - **Dynamic YAML Frontmatter Injection**: Formats component metadata, dial calibrations, and accessibility contracts directly into standard YAML frontmatter blocks.
@@ -50,9 +51,9 @@ Incoming code is sanitized automatically:
 
 ### 4. Taste-Dial Scoring & Anti-Slop Gate
 
-Components are scored on the three Taste Dials (1–10) and evaluated against the 20 Anti-Slop Rules:
+Components are scored on the three Taste Dials (1–10) and evaluated against the 21 Anti-Slop Rules:
 - **Health Score**: Starts at 100 with deductions (15 for High, 8 for Medium, 3 for Low)
-- **Automated Gating**: Any component with High-severity slop (`as any as`, fake TODOs, missing accessible labels) is blocked from ingestion.
+- **Automated Gating**: Any component with High-severity slop (`as any as`, fake TODOs, missing accessible labels, raw unshaded backgrounds) is blocked from ingestion.
 
 ## CLI Usage
 

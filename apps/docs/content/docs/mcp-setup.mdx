@@ -32,26 +32,28 @@ Add into `.cursor/mcp.json`:
 
 ### Core MCP Tools
 
-1. **`search_components`**:
+All tools are optimized to deliver structured responses well under **15KB**, ensuring high LLM context efficiency and zero truncation:
+
+1. **`search_library` / `search_components`**:
    Search the catalog by query, category, tags, or taste dial parameters (`minMotionIntensity`, `maxVisualDensity`, `minDesignVariance`).
    ```json
    { "query": "dock", "category": "ui:motion", "minMotionIntensity": 6 }
    ```
 
-2. **`fetch_raw_markdown`**:
-   Fetch complete raw Markdown documentation including structured YAML frontmatter contract, technical tags, structural complexity, accessibility specifications, and verified TSX source code. *(Aliases: `fetch_raw_markup`, `get_component_markup`)*
+2. **`fetch_raw_markup` / `fetch_raw_markdown`**:
+   Fetch complete raw Markdown documentation or structured TSX markup including structured YAML frontmatter contract, technical tags, structural complexity, accessibility specifications, and verified TSX source code. *(Aliases: `get_component_markup`)*
    ```json
    { "name": "floating-dock" }
    ```
 
-3. **`get_installation_commands`**:
-   Retrieve the exact programmatic CLI commands (`npx design-wiki add <slug>`, `npx shadcn@latest add ...`), peer npm install strings, import snippets, and step-by-step instructions. *(Aliases: `get_installation_schema`, `get_install_recipe`)*
+3. **`get_installation_schema` / `get_installation_commands`**:
+   Retrieve the exact programmatic CLI commands (`npx design-wiki add <slug>`, `npx shadcn@latest add ...`), shadcn v3 compliant file schemas, peer npm install strings, import snippets, and step-by-step instructions. *(Alias: `get_install_recipe`)*
    ```json
    { "name": "floating-dock", "packageManager": "pnpm", "baseUrl": "http://localhost:3000" }
    ```
 
 4. **`audit_code_slop`**:
-   Scan arbitrary user code against the 20 anti-slop rules, checking arbitrary pixel escapes (`p-[17px]`), blanket transitions, and accessibility compliance, receiving a health scorecard (0–100) with line-by-line remediation recommendations.
+   Scan arbitrary user code against the 21 anti-slop rules, checking arbitrary pixel escapes (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), blanket transitions, and accessibility compliance, receiving a health scorecard (0–100) with line-by-line remediation recommendations.
    ```json
    { "code": "<your-tsx-code>" }
    ```

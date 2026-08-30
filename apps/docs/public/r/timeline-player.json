@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "timeline-player",
+  "type": "registry:component",
+  "title": "Timeline Player",
+  "description": "Precision timeline-based motion and video composition controller with frame scrubbing and timecode.",
+  "category": "ui:media",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "remotion",
+    "video",
+    "motion",
+    "timeline",
+    "media",
+    "player"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 8,
+    "visual_density": 4
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/remocn/remocn",
+    "license_type": "MIT",
+    "author": "Remocn Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/media/timeline-player.tsx",
+      "content": "/**\n * @license MIT\n * @origin https://github.com/remocn/remocn\n * @author Remocn Team & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { motion, useReducedMotion } from \"motion/react\";\nimport { Play, Pause, RotateCcw, Volume2, VolumeX, FastForward } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface TimelinePlayerProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  totalDurationFrames?: number;\n  fps?: number;\n  autoPlay?: boolean;\n}\n\n/**\n * TimelinePlayer: Precision timeline-based motion and video composition controller.\n * Conforms to ui:media taxonomy for frame-accurate playback and scrubbing.\n */\nexport function TimelinePlayer({\n  title = \"Composition Timeline\",\n  totalDurationFrames = 300,\n  fps = 30,\n  autoPlay = false,\n  className,\n  ...props\n}: TimelinePlayerProps) {\n  const shouldReduceMotion = useReducedMotion();\n  const [isPlaying, setIsPlaying] = React.useState(autoPlay && !shouldReduceMotion);\n  const [currentFrame, setCurrentFrame] = React.useState(0);\n  const [isMuted, setIsMuted] = React.useState(false);\n  const [speed, setSpeed] = React.useState<1 | 1.5 | 2>(1);\n\n  // Playback timer ticker\n  React.useEffect(() => {\n    if (!isPlaying) return;\n    const intervalMs = 1000 / (fps * speed);\n    const timer = setInterval(() => {\n      setCurrentFrame((prev) => {\n        if (prev >= totalDurationFrames) {\n          setIsPlaying(false);\n          return 0;\n        }\n        return prev + 1;\n      });\n    }, intervalMs);\n\n    return () => clearInterval(timer);\n  }, [isPlaying, fps, speed, totalDurationFrames]);\n\n  const togglePlay = () => setIsPlaying((prev) => !prev);\n  const restart = () => {\n    setCurrentFrame(0);\n    setIsPlaying(true);\n  };\n\n  const cycleSpeed = () => {\n    setSpeed((s) => (s === 1 ? 1.5 : s === 1.5 ? 2 : 1));\n  };\n\n  const handleScrub = (e: React.ChangeEvent<HTMLInputElement>) => {\n    setCurrentFrame(Number(e.target.value));\n  };\n\n  // Convert frame to MM:SS:FF format\n  const formatTimecode = (frame: number) => {\n    const totalSeconds = Math.floor(frame / fps);\n    const minutes = Math.floor(totalSeconds / 60)\n      .toString()\n      .padStart(2, \"0\");\n    const seconds = (totalSeconds % 60).toString().padStart(2, \"0\");\n    const remainderFrames = (frame % fps).toString().padStart(2, \"0\");\n    return `${minutes}:${seconds}:${remainderFrames}`;\n  };\n\n  const progressPercent = (currentFrame / totalDurationFrames) * 100;\n\n  return (\n    <div\n      role=\"region\"\n      aria-label={title}\n      className={cn(\n        \"relative flex flex-col w-full max-w-2xl rounded-2xl border border-border bg-card text-card-foreground shadow-sm overflow-hidden p-5\",\n        className\n      )}\n      {...props}\n    >\n      {/* Media Canvas Viewport Placeholder */}\n      <div className=\"relative w-full aspect-video rounded-xl border border-border bg-muted/40 flex flex-col items-center justify-center overflow-hidden mb-4\">\n        <motion.div\n          animate={\n            shouldReduceMotion\n              ? {}\n              : {\n                  scale: isPlaying ? [1, 1.03, 1] : 1,\n                  opacity: isPlaying ? 1 : 0.85,\n                }\n          }\n          transition={{ repeat: Infinity, duration: 2 / speed }}\n          className=\"flex flex-col items-center gap-2 select-none\"\n        >\n          <div className=\"w-12 h-12 rounded-full border border-primary/40 bg-primary/10 flex items-center justify-center text-primary font-mono text-xs\">\n            {fps} FPS\n          </div>\n          <span className=\"text-sm font-medium text-muted-foreground\">{title}</span>\n          <span className=\"font-mono text-xs text-muted-foreground tracking-wider\">\n            {formatTimecode(currentFrame)} / {formatTimecode(totalDurationFrames)}\n          </span>\n        </motion.div>\n\n        {/* Scrub Overlay Track Line */}\n        <div\n          className=\"absolute bottom-0 left-0 h-1 bg-primary transition-all\"\n          style={{ width: `${progressPercent}%` }}\n        />\n      </div>\n\n      {/* Frame Timeline Slider */}\n      <div className=\"flex flex-col gap-1.5 mb-4\">\n        <div className=\"flex justify-between items-center text-xs font-mono text-muted-foreground\">\n          <span>FRAME: {currentFrame}</span>\n          <span>TOTAL: {totalDurationFrames}</span>\n        </div>\n        <label htmlFor=\"timeline-scrubber\" className=\"sr-only\">\n          Timeline frame scrubber\n        </label>\n        <input\n          id=\"timeline-scrubber\"\n          type=\"range\"\n          min={0}\n          max={totalDurationFrames}\n          value={currentFrame}\n          onChange={handleScrub}\n          aria-valuemin={0}\n          aria-valuemax={totalDurationFrames}\n          aria-valuenow={currentFrame}\n          aria-valuetext={`Frame ${currentFrame} of ${totalDurationFrames}`}\n          className=\"w-full h-2 rounded-lg bg-muted appearance-none cursor-pointer accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        />\n      </div>\n\n      {/* Composition Controls */}\n      <div className=\"flex items-center justify-between pt-2 border-t border-border\">\n        <div className=\"flex items-center gap-2\">\n          <button\n            type=\"button\"\n            onClick={togglePlay}\n            aria-label={isPlaying ? \"Pause timeline playback\" : \"Play timeline playback\"}\n            className=\"p-2.5 rounded-xl border border-border bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none transition-colors\"\n          >\n            {isPlaying ? (\n              <Pause className=\"w-4 h-4\" aria-hidden=\"true\" />\n            ) : (\n              <Play className=\"w-4 h-4 fill-current ml-0.5\" aria-hidden=\"true\" />\n            )}\n          </button>\n\n          <button\n            type=\"button\"\n            onClick={restart}\n            aria-label=\"Restart timeline playback from frame zero\"\n            className=\"p-2 rounded-lg border border-border bg-card text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          >\n            <RotateCcw className=\"w-4 h-4\" aria-hidden=\"true\" />\n          </button>\n\n          <button\n            type=\"button\"\n            onClick={cycleSpeed}\n            aria-label={`Current playback speed ${speed}x. Click to change.`}\n            className=\"px-2.5 py-1 text-xs font-mono rounded-lg border border-border bg-card text-foreground hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          >\n            {speed}x\n          </button>\n        </div>\n\n        <div className=\"flex items-center gap-2\">\n          <button\n            type=\"button\"\n            onClick={() => setIsMuted((m) => !m)}\n            aria-label={isMuted ? \"Unmute audio track\" : \"Mute audio track\"}\n            className=\"p-2 rounded-lg border border-border bg-card text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          >\n            {isMuted ? (\n              <VolumeX className=\"w-4 h-4\" aria-hidden=\"true\" />\n            ) : (\n              <Volume2 className=\"w-4 h-4\" aria-hidden=\"true\" />\n            )}\n          </button>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/timeline-player.tsx"
+    }
+  ]
+}

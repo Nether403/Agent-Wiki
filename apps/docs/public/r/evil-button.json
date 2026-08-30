@@ -1,0 +1,56 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "evil-button",
+  "type": "registry:component",
+  "title": "Evil Button",
+  "description": "Playful tactile spring-physics button with synthesized audio feedback and chaotic variants.",
+  "category": "ui:motion",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "spring-physics",
+    "playful",
+    "sound-physics",
+    "interactive",
+    "button"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 7,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "button",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/evil-buttons/evil-buttons",
+    "license_type": "MIT",
+    "author": "Evil-Buttons Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/evil-button.tsx",
+      "content": "/**\n * @license MIT\n * @origin https://github.com/evil-buttons/evil-buttons\n * @author Evil-Buttons Team & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { motion, useReducedMotion } from \"motion/react\";\nimport { Sparkles, Volume2, VolumeX } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface EvilButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  label?: string;\n  variant?: \"primary\" | \"secondary\" | \"destructive\" | \"outline\";\n  enableAudioPhysics?: boolean;\n  intensity?: \"gentle\" | \"medium\" | \"chaotic\";\n}\n\n/**\n * EvilButton: Playful, tactile spring-physics button with audio click synthesis.\n * Built for high-variance interactive actions without aesthetic slop.\n */\nexport function EvilButton({\n  label = \"Push Me\",\n  variant = \"primary\",\n  enableAudioPhysics = false,\n  intensity = \"medium\",\n  className,\n  children,\n  onClick,\n  disabled,\n  ...props\n}: EvilButtonProps) {\n  const shouldReduceMotion = useReducedMotion();\n  const [audioActive, setAudioActive] = React.useState(enableAudioPhysics);\n  const [clickCount, setClickCount] = React.useState(0);\n\n  // Playful audio-haptic feedback using Web Audio API (zero external sound file deps)\n  const triggerAudioClick = React.useCallback(() => {\n    if (!audioActive || typeof window === \"undefined\") return;\n    try {\n      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;\n      if (!AudioCtx) return;\n      const ctx = new AudioCtx();\n      const osc = ctx.createOscillator();\n      const gain = ctx.createGain();\n\n      const baseFreq = 220 + (clickCount % 5) * 80;\n      osc.type = \"sine\";\n      osc.frequency.setValueAtTime(baseFreq, ctx.currentTime);\n      osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.08);\n\n      gain.gain.setValueAtTime(0.15, ctx.currentTime);\n      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);\n\n      osc.connect(gain);\n      gain.connect(ctx.destination);\n\n      osc.start();\n      osc.stop(ctx.currentTime + 0.09);\n    } catch {\n      // Audio context policy safe fallback\n    }\n  }, [audioActive, clickCount]);\n\n  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {\n    if (disabled) return;\n    setClickCount((prev) => prev + 1);\n    triggerAudioClick();\n    if (onClick) onClick(e);\n  };\n\n  // Dynamics calibration based on intensity setting\n  const springSettings = React.useMemo(() => {\n    if (shouldReduceMotion) return { scale: 1, rotate: 0 };\n    switch (intensity) {\n      case \"chaotic\":\n        return { hoverScale: 1.08, tapScale: 0.88, rotateDelta: 4 };\n      case \"gentle\":\n        return { hoverScale: 1.02, tapScale: 0.96, rotateDelta: 1 };\n      case \"medium\":\n      default:\n        return { hoverScale: 1.05, tapScale: 0.92, rotateDelta: 2.5 };\n    }\n  }, [intensity, shouldReduceMotion]);\n\n  const variantStyles = {\n    primary:\n      \"bg-primary text-primary-foreground border-primary shadow-sm hover:bg-primary/90\",\n    secondary:\n      \"bg-secondary text-secondary-foreground border-border shadow-sm hover:bg-secondary/80\",\n    destructive:\n      \"bg-destructive text-destructive-foreground border-destructive shadow-sm hover:bg-destructive/90\",\n    outline:\n      \"bg-card text-foreground border-border hover:bg-muted\",\n  };\n\n  return (\n    <div className=\"inline-flex items-center gap-2\">\n      <motion.button\n        type=\"button\"\n        role=\"button\"\n        disabled={disabled}\n        whileHover={\n          disabled || shouldReduceMotion\n            ? {}\n            : {\n                scale: springSettings.hoverScale,\n                rotate: clickCount % 2 === 0 ? springSettings.rotateDelta : -springSettings.rotateDelta,\n              }\n        }\n        whileTap={\n          disabled || shouldReduceMotion\n            ? {}\n            : {\n                scale: springSettings.tapScale,\n                rotate: clickCount % 2 === 0 ? -springSettings.rotateDelta : springSettings.rotateDelta,\n              }\n        }\n        transition={{\n          type: \"spring\",\n          stiffness: 400,\n          damping: 17,\n        }}\n        onClick={handleClick}\n        className={cn(\n          \"relative inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium rounded-xl border select-none cursor-pointer\",\n          \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\",\n          \"disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed\",\n          variantStyles[variant],\n          className\n        )}\n        {...props}\n      >\n        <Sparkles className=\"w-4 h-4 shrink-0\" aria-hidden=\"true\" />\n        <span>{children || label}</span>\n        {clickCount > 0 && (\n          <span className=\"ml-1.5 px-1.5 py-0.5 text-xs rounded-md bg-background/20 font-mono\">\n            {clickCount}\n          </span>\n        )}\n      </motion.button>\n\n      {enableAudioPhysics && (\n        <button\n          type=\"button\"\n          onClick={() => setAudioActive((v) => !v)}\n          aria-label={audioActive ? \"Mute button sound feedback\" : \"Enable button sound feedback\"}\n          className=\"p-2 rounded-lg border border-border bg-card text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n        >\n          {audioActive ? (\n            <Volume2 className=\"w-4 h-4\" aria-hidden=\"true\" />\n          ) : (\n            <VolumeX className=\"w-4 h-4\" aria-hidden=\"true\" />\n          )}\n        </button>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/evil-button.tsx"
+    }
+  ]
+}

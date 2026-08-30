@@ -28,13 +28,13 @@ The Design Agent Wiki solves this by implementing a dual-interface model:
    - `/raw/components/[slug]`: Clean, token-efficient Markdown representations of component usage.
    - `/r/[name].json`: Programmatic endpoint adhering to the shadcn v3 registry schema.
    - `/r/registry.json`: Master index of all registered items for rapid agent discovery.
-   - `@design-wiki/mcp`: Official Model Context Protocol server exposing `search_components`, `fetch_raw_markup`, `get_installation_schema`, and `audit_code_slop`.
+   - `@design-wiki/mcp`: Official Model Context Protocol server exposing `search_library` / `search_components`, `fetch_raw_markup`, `get_installation_schema`, and `audit_code_slop` (< 15KB payloads).
 
 ## Platform Modules
 
 - **`apps/docs`**: Next.js 15 App Router documentation and static registry host.
-- **`packages/registry`**: 27+ seed zero-slop components and the dynamic static compiler (`build-registry.ts`).
-- **`packages/harvester`**: AST static analysis engine, repository shallow cloner, and automated anti-slop review gate.
+- **`packages/registry`**: 29+ seed zero-slop components across all 7 taxonomy categories and the dynamic static compiler (`build-registry.ts`).
+- **`packages/harvester`**: AST static analysis engine, repository shallow cloner, dial scorer, and automated anti-slop review gate.
 - **`packages/mcp-server`**: Model Context Protocol stdio service for Claude Code, Cursor, and Codex.
-- **`packages/audit-linter`**: 20-rule AST + regex anti-slop linter (`verify-audit`).
+- **`packages/audit-linter`**: 21-rule AST + regex anti-slop linter (`verify-audit`) and automated taste review engine.
 - **`skills/design-system-agent`**: Portable agent skill packs and `.cursorrules` for autonomous agent pair-programming.

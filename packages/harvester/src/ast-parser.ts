@@ -150,6 +150,17 @@ export const KNOWN_REPOSITORIES: Record<string, RepositoryConfig> = {
     author: "beUI Team",
     description: "React 19 and Tailwind 4 optimized primitives using View Transition API.",
   },
+  remocn: {
+    id: "remocn",
+    name: "Remocn",
+    url: "https://github.com/remocn/remocn.git",
+    subpath: "components/media",
+    defaultCategory: "ui:media",
+    defaultTags: ["remotion", "video", "motion", "timeline", "media"],
+    license: "MIT",
+    author: "Remocn Team",
+    description: "Advanced, timeline-based motion and video compositions built on Remotion.",
+  },
 };
 
 /**
@@ -342,6 +353,12 @@ export function parseComponentAST(
         tagSet.add("canvas-confetti");
         depSet.add("canvas-confetti");
         devDepSet.add("@types/canvas-confetti");
+      } else if (specifier === "remotion" || specifier.startsWith("@remotion/")) {
+        tagSet.add("remotion");
+        tagSet.add("video");
+        tagSet.add("media");
+        tagSet.add("timeline");
+        depSet.add(specifier);
       } else if (
         specifier === "clsx" ||
         specifier === "tailwind-merge" ||
@@ -534,7 +551,9 @@ export function applyTaxonomy(
   }
 
   // Structural heuristics
-  if (metadata.hasMotion) {
+  if (/Video|Timeline|Player|Media|Audio|Track|Remotion/i.test(metadata.name) || metadata.tags.includes("media") || metadata.tags.includes("video")) {
+    metadata.category = "ui:media";
+  } else if (metadata.hasMotion) {
     metadata.category = "ui:motion";
   } else if (/Grid|Bento|Hero|Section|Pricing|Layout|Navbar|Sidebar/i.test(metadata.name) || metadata.linesCount > 160) {
     metadata.category = "ui:block";

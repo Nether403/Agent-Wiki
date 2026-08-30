@@ -2,14 +2,14 @@
 
 The automated ingestion engine and AST static analyzer for the **Machine-First Design Agent Wiki**.
 
-Connects to upstream repositories (HeroUI, SmoothUI, Aceternity, Canvas UI, KokonutUI, etc.), parses TypeScript AST structures, auto-cross-references WebGL/Three.js dependencies, scores structural complexity, and generates clean, machine-readable YAML frontmatter contracts.
+Connects to upstream repositories (HeroUI, SmoothUI, Aceternity, Canvas UI, Evil-Buttons, diagram-design, Tailark, Remocn, etc.), parses TypeScript AST structures, auto-cross-references WebGL/Three.js and Remotion dependencies, scores structural complexity, and generates clean, machine-readable YAML frontmatter contracts.
 
 ---
 
 ## 🚀 Features
 
-* **AST Parsing & Dependency Extraction**: Statically extracts third-party packages, props interfaces, and local shadcn dependencies using the TypeScript Compiler API.
-* **Three.js & WebGL Auto-Cross-Referencing**: When scanning creative canvas or shader files (`canvas-fluid-wave.tsx`), automatically injects `three` into `dependencies`, `@types/three` into `devDependencies`, and cross-references tags (`webgl`, `threejs`, `canvas`).
+* **AST Parsing & Dependency Extraction**: Statically extracts third-party packages (`motion`, `lucide-react`, `three`, `remotion`, `@radix-ui/*`), props interfaces, and local shadcn dependencies using the TypeScript Compiler API.
+* **Three.js, WebGL & Media Auto-Cross-Referencing**: When scanning creative canvas or video shader files, automatically injects `three` or `remotion` into `dependencies` and cross-references taxonomy tags (`webgl`, `threejs`, `remotion`, `timeline`, `canvas`).
 * **Structural Complexity Scoring**: Evaluates mathematical oscillation loops (`requestAnimationFrame`), shader setups, and lines of code to classify components into `low`, `medium`, or `high` complexity.
 * **YAML Frontmatter Injection**: Injects standardized metadata and taste dial contracts into generated component documentation.
 * **Normalization Codemods**: Transforms legacy Tailwind v3 values and imports to Tailwind v4 and React 19 / `motion/react`.

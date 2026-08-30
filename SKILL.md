@@ -47,9 +47,9 @@ When a user asks you to build, modify, or redesign an interface, you must execut
 ### Phase 1: Discover
 Before writing code, query our machine-readable discovery endpoints:
 1. Query MCP `@design-wiki/mcp`:
-   - `search_components({ query: "dock", category: "ui:motion" })`
-   - `fetch_raw_markdown({ name: "floating-dock" })` (fetches structured YAML frontmatter & verified TSX)
-   - `get_installation_commands({ name: "floating-dock", packageManager: "pnpm" })`
+   - `search_library({ query: "dock", category: "ui:motion" })` (or `search_components`) (< 15KB payloads)
+   - `fetch_raw_markup({ name: "floating-dock" })` (fetches structured YAML frontmatter & verified TSX)
+   - `get_installation_schema({ name: "floating-dock", packageManager: "pnpm" })`
 2. Or load and parse `/public/llms.txt` and `/raw/components/<name>.md`.
 
 ### Phase 2: Install
@@ -60,7 +60,7 @@ If the component is registered but missing from the local workspace:
    # or via shadcn v3:
    npx shadcn@latest add http://localhost:3000/r/<component-name>.json
    ```
-2. Automatically verify that peer npm dependencies (e.g., `motion`, `three`, `lucide-react`) are merged into `package.json` and successfully installed.
+2. Automatically verify that peer npm dependencies (e.g., `motion`, `three`, `remotion`, `lucide-react`) are merged into `package.json` and successfully installed.
 3. Resolve any typescript import path aliases (`@/components/ui/<component-name>`).
 
 ### Phase 3: Implement & Constrain
@@ -73,13 +73,14 @@ When wiring components together on a page, respect our architectural constraints
 *   **Controlled Glassmorphism**: Never use raw `bg-white/10 backdrop-blur` without crisp structural border tokens (`border-border`) and solid card fallbacks.
 
 ### Phase 4: Audit & Taste Review (The Anti-Slop Check)
-Before declaring your work complete, audit your code against the 20 Anti-Slop Rules and calibrated taste dials:
+Before declaring your work complete, audit your code against the 21 Anti-Slop Rules and calibrated taste dials:
 1. Run automated taste audit via `pnpm review:taste <path-to-file>` or call MCP `audit_code_slop({ code: "<code-string>" })`.
 2. Enforce strict design hygiene:
    - **No Chained Type Assertions**: Never bypass TypeScript compiler safety by chaining assertions (`input as object as User`).
    - **No Empty Object Spreads**: Avoid ad-hoc, conditional spreading patterns (`...(cond ? { field } : {})`).
    - **No Ad-Hoc Transitions**: Ban generic `transition-all duration-300` across whole sections. Set transitions explicitly (`transition-colors duration-200`).
    - **No Arbitrary Sizing Hacks**: Reject arbitrary padding/margin overrides (`p-[17px]`, `m-[13px]`, `gap-[15px]`). Use standard Tailwind tokens (`p-4`).
+   - **No Raw Unshaded Backgrounds**: Never use flat unshaded backgrounds (`bg-white`, `bg-black`, `bg-[#fff]`); use semantic theme tokens (`bg-card`, `bg-background`) with dark variants (`SLOP-021`).
    - **Zero High Flags**: Verify health score is 85+ with zero High-severity flags.
 
 ---

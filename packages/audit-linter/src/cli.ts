@@ -35,9 +35,10 @@ function main() {
     console.log(`       * Motion Intensity: ${result.dials.motion_intensity}/10 (1: static/CSS hover · 10: GPU WebGL/springs)`);
     console.log(`       * Visual Density:   ${result.dials.visual_density}/10 (1: generous space · 10: compact analytical)`);
     console.log(`   - Guardrail Check:`);
-    console.log(`       * Shaders & Canvas Safe:    ${result.guardrails.shadersSafe ? "✅ Pass" : "⚠️ Missing fallback"}`);
-    console.log(`       * Glassmorphism Curated:    ${result.guardrails.glassmorphismSafe ? "✅ Pass" : "⚠️ Blanket blur without border tokens"}`);
-    console.log(`       * Spacing / Token Rhythm:   ${result.guardrails.tokenRhythmSafe ? "✅ Pass" : "⚠️ Arbitrary pixel escapes detected"}`);
+    console.log(`       * Shaders & Canvas Safe:    ${result.guardrails.shadersSafe ? "✅ Pass" : "⚠️ Missing fallback"}
+      * Glassmorphism Curated:    ${result.guardrails.glassmorphismSafe ? "✅ Pass" : "⚠️ Blanket blur without border tokens"}
+      * Spacing / Token Rhythm:   ${result.guardrails.tokenRhythmSafe ? "✅ Pass" : "⚠️ Arbitrary pixel escapes detected"}
+      * Surfaces Shaded / Tokens: ${result.guardrails.surfacesSafe !== false ? "✅ Pass" : "⚠️ Raw unshaded backgrounds detected"}`);
 
     if (result.cssArbitraryViolations.length > 0) {
       console.log(`\n🚫 Arbitrary CSS Anti-Patterns Detected (${result.cssArbitraryViolations.length}):`);

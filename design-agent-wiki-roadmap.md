@@ -219,6 +219,13 @@ Deploy the automated headless evaluation sandbox to mathematically prove >90% Ze
 *   **Task 14.3: 🚀 Public Launch & Announcement**
     *   *Scope*: Launch live website, announce on developer channels, and release `@design-wiki/mcp` to npm.
 
+> [!NOTE]
+> **Phase 4 Checkpoint Gate (Scaled Ingestion & Aesthetic Hardening)**:
+> - [x] Harvester engine maps blueprint repos (Aceternity UI, Canvas UI, diagram-design, HeroUI, Evil-Buttons, SmoothUI, Tailark, Remocn) with AST peer dependency auto-resolution.
+> - [x] Canonical 7-category taxonomy strictly enforced (`ui:primitive`, `ui:motion`, `ui:creative`, `ui:editorial`, `ui:block`, `ui:media`, `ui:utility`) with 29 compiled reference components.
+> - [x] Automated taste audit active with 21 Anti-Slop Rules (including SLOP-021 raw unshaded backgrounds) and 100/100 Health Score across all registry sources.
+> - [x] MCP tools `search_library` / `search_components`, `fetch_raw_markup`, and `get_installation_schema` validated in sandbox with context payloads strictly `< 15KB`.
+
 ---
 
 ## 6. Definition of Done (DoD) & Sprint Gate Policy

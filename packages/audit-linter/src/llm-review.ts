@@ -30,6 +30,7 @@ export interface LLMTasteReviewResult {
     shadersSafe: boolean;
     glassmorphismSafe: boolean;
     tokenRhythmSafe: boolean;
+    surfacesSafe?: boolean;
   };
 }
 
@@ -85,6 +86,7 @@ export function runLlmTasteReview(
   const hasGlassmorphism = /backdrop-blur/i.test(code);
   const glassmorphismSafe = !hasGlassmorphism || (code.includes("border-border") && !code.includes("bg-white/10"));
   const tokenRhythmSafe = cssArbitraryViolations.length === 0;
+  const surfacesSafe = !violations.some((v) => v.ruleId === "SLOP-021");
 
   // Dial Calibration
   if (hasWebGL || (hasCanvas && /requestAnimationFrame/i.test(code))) {
@@ -211,6 +213,7 @@ export function runLlmTasteReview(
       shadersSafe,
       glassmorphismSafe,
       tokenRhythmSafe,
+      surfacesSafe,
     },
   };
 }

@@ -52,4 +52,7 @@ pnpm review:taste ./packages/registry/src/creative/canvas-fluid-wave.tsx
 3. **Spacing & Token Rhythm**:
    - Arbitrary pixel values (`p-[17px]`, `m-[13px]`, `gap-[15px]`) violate system scales and trigger layout breakage across viewports.
    - Automatically detected with recommended standard Tailwind tokens (`p-4` or `p-5`).
+4. **Shaded & Tokenized Surfaces**:
+   - Raw unshaded backgrounds (`bg-white`, `bg-black`, `bg-[#ffffff]`) without dark-mode variants or semantic tokens are blocked under `SLOP-021`.
+   - Ensures components seamlessly adapt to light and dark themes with curated semantic tokens (`bg-card`, `bg-background`, `bg-muted`).
 

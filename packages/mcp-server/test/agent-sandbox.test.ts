@@ -21,6 +21,7 @@ async function runAutonomySandboxTest() {
   // Verify core tools presence
   const requiredTools = [
     "search_components",
+    "search_library",
     "fetch_raw_markdown",
     "get_installation_commands",
     "fetch_raw_markup",
@@ -34,13 +35,21 @@ async function runAutonomySandboxTest() {
     console.log(`   ✓ Tool registered: ${toolName}`);
   }
 
-  // Phase 1: Discover
-  console.log(`\n🔍 --- PHASE 1: DISCOVER ---`);
-  console.log(`Agent calls search_components({ query: "dock", category: "ui:motion" })...`);
-  const searchTool = tools["search_components"];
-  const searchResult: McpToolResponse = await searchTool.handler({ query: "dock", category: "ui:motion" });
-  const parsedSearch = JSON.parse(searchResult.content[0].text);
+  const MAX_PAYLOAD_BYTES = 15 * 1024; // 15KB limit for AI agent context efficiency
 
+  // Phase 1: Discover via search_library
+  console.log(`\n🔍 --- PHASE 1: DISCOVER VIA search_library ---`);
+  console.log(`Agent calls search_library({ query: "dock", category: "ui:motion" })...`);
+  const searchTool = tools["search_library"];
+  const searchResult: McpToolResponse = await searchTool.handler({ query: "dock", category: "ui:motion" });
+  const searchPayloadBytes = Buffer.byteLength(searchResult.content[0].text, "utf-8");
+  console.log(`   - search_library payload size: ${searchPayloadBytes} bytes (Limit: < 15KB)`);
+
+  if (searchPayloadBytes >= MAX_PAYLOAD_BYTES) {
+    throw new Error(`❌ Payload size violation: search_library returned ${searchPayloadBytes} bytes, exceeding 15KB limit.`);
+  }
+
+  const parsedSearch = JSON.parse(searchResult.content[0].text);
   console.log(`Found ${parsedSearch.matchCount} matching components:`);
   parsedSearch.components.forEach((c: any) => {
     console.log(`   - [${c.category}] ${c.name} (${c.title}): Variance ${c.dials.design_variance}, Motion ${c.dials.motion_intensity}`);
@@ -49,7 +58,7 @@ async function runAutonomySandboxTest() {
   if (parsedSearch.matchCount === 0 || parsedSearch.components[0].name !== "floating-dock") {
     throw new Error("❌ Discovery failed: 'floating-dock' was not found in search results.");
   }
-  console.log(`✅ Phase 1 Succeeded: Component autonomously discovered.`);
+  console.log(`✅ Phase 1 Succeeded: search_library discovered component within <15KB payload.`);
 
   // Phase 2: Inspect Raw Markdown (with YAML frontmatter) & Markup
   console.log(`\n🔬 --- PHASE 2: INSPECT RAW MARKDOWN (YAML FRONTMATTER) ---`);
@@ -71,8 +80,14 @@ async function runAutonomySandboxTest() {
   console.log(`\nAgent calls fetch_raw_markup({ name: "floating-dock" })...`);
   const fetchMarkupTool = tools["fetch_raw_markup"];
   const markupResult: McpToolResponse = await fetchMarkupTool.handler({ name: "floating-dock" });
-  const parsedMarkup = JSON.parse(markupResult.content[0].text);
+  const markupPayloadBytes = Buffer.byteLength(markupResult.content[0].text, "utf-8");
+  console.log(`   - fetch_raw_markup payload size: ${markupPayloadBytes} bytes (Limit: < 15KB)`);
 
+  if (markupPayloadBytes >= MAX_PAYLOAD_BYTES) {
+    throw new Error(`❌ Payload size violation: fetch_raw_markup returned ${markupPayloadBytes} bytes, exceeding 15KB limit.`);
+  }
+
+  const parsedMarkup = JSON.parse(markupResult.content[0].text);
   console.log(`   - Component: ${parsedMarkup.name}`);
   console.log(`   - Dependencies: ${parsedMarkup.dependencies.join(", ")}`);
   console.log(`   - Source snippet length: ${parsedMarkup.sourceCode.length} characters`);
@@ -81,7 +96,7 @@ async function runAutonomySandboxTest() {
   if (!parsedMarkup.sourceCode || !parsedMarkup.sourceCode.includes("export function FloatingDock")) {
     throw new Error("❌ Markup fetch failed: Invalid or truncated TSX source.");
   }
-  console.log(`✅ Phase 2B Succeeded: Production TSX markup fetched without truncation.`);
+  console.log(`✅ Phase 2B Succeeded: Production TSX markup fetched within <15KB payload.`);
 
   // Phase 3: Get Installation Commands & Schema
   console.log(`\n📦 --- PHASE 3: GET INSTALLATION COMMANDS & SIMULATE INSTALL ---`);
@@ -103,8 +118,14 @@ async function runAutonomySandboxTest() {
   console.log(`Agent calls get_installation_schema({ name: "floating-dock" })...`);
   const getInstallTool = tools["get_installation_schema"];
   const installResult: McpToolResponse = await getInstallTool.handler({ name: "floating-dock" });
-  const parsedInstall = JSON.parse(installResult.content[0].text);
+  const installPayloadBytes = Buffer.byteLength(installResult.content[0].text, "utf-8");
+  console.log(`   - get_installation_schema payload size: ${installPayloadBytes} bytes (Limit: < 15KB)`);
 
+  if (installPayloadBytes >= MAX_PAYLOAD_BYTES) {
+    throw new Error(`❌ Payload size violation: get_installation_schema returned ${installPayloadBytes} bytes, exceeding 15KB limit.`);
+  }
+
+  const parsedInstall = JSON.parse(installResult.content[0].text);
   console.log(`   - Install Command: ${parsedInstall.installCommands.shadcn}`);
   console.log(`   - Files in Schema: ${parsedInstall.files.length}`);
   console.log(`   - Target Destination: ${parsedInstall.files[0].target}`);
@@ -119,7 +140,7 @@ async function runAutonomySandboxTest() {
     throw new Error("❌ Simulated installation failed: file not written.");
   }
   console.log(`   ✓ Autonomous file write verified: ${targetFilePath} (${fs.statSync(targetFilePath).size} bytes)`);
-  console.log(`✅ Phase 3B Succeeded: Schema delivered and component installed autonomously.`);
+  console.log(`✅ Phase 3B Succeeded: Schema delivered (<15KB payload) and component installed autonomously.`);
 
   // Phase 4: Anti-Slop Audit
   console.log(`\n🛡️ --- PHASE 4: ANTI-SLOP AUDIT & QUALITY GATE ---`);
@@ -138,13 +159,17 @@ async function runAutonomySandboxTest() {
   }
   console.log(`   ✓ Clean component passed audit with 100/100 score.`);
 
-  // Test B: Audit intentional AI Slop to verify blocker works
-  console.log(`\nAuditing intentionally substandard slop snippet...`);
+  // Test B: Audit intentional AI Slop to verify blocker catches:
+  // 1. Arbitrary pixel offsets (p-[17px])
+  // 2. Chained type assertions (as any as)
+  // 3. Raw unshaded backgrounds (bg-white)
+  console.log(`\nAuditing intentionally substandard slop snippet with arbitrary pixels, chained casts, and unshaded backgrounds...`);
   const slopSnippet = `
 export function BadComponent(props: any) {
   // TODO: implement real logic
+  const unsafeCast = (props as any as Record<string, string>);
   return (
-    <div className="bg-indigo-600 p-[17px] transition-all duration-300">
+    <div className="bg-white p-[17px] transition-all duration-300">
       <button className="bg-gradient-to-r from-purple-500 to-blue-500 outline-none">
         <span>🚀</span>
       </button>
@@ -161,9 +186,19 @@ export function BadComponent(props: any) {
     console.log(`     ⚠️ [${f.severity}] ${f.name} (Line ${f.lineNum}): ${f.recommendation}`);
   });
 
-  if (parsedSlopAudit.violationsFound < 4 || !parsedSlopAudit.status.includes("FAIL")) {
-    throw new Error("❌ Slop detection failed: Expected multiple anti-slop violations.");
+  const ruleIds = parsedSlopAudit.findings.map((f: any) => f.ruleId);
+  const hasArbitraryPx = ruleIds.includes("SLOP-007");
+  const hasChainedCast = ruleIds.includes("SLOP-004");
+  const hasUnshadedBg = ruleIds.includes("SLOP-021");
+
+  console.log(`   - Detected SLOP-007 (Arbitrary Pixels): ${hasArbitraryPx ? "✅ YES" : "❌ NO"}`);
+  console.log(`   - Detected SLOP-004 (Chained Assertions): ${hasChainedCast ? "✅ YES" : "❌ NO"}`);
+  console.log(`   - Detected SLOP-021 (Unshaded Background): ${hasUnshadedBg ? "✅ YES" : "❌ NO"}`);
+
+  if (!hasArbitraryPx || !hasChainedCast || !hasUnshadedBg) {
+    throw new Error("❌ Slop gate failed: Expected detection of SLOP-007, SLOP-004, and SLOP-021.");
   }
+  console.log(`   ✓ All required slop rules (arbitrary pixels, chained assertions, unshaded backgrounds) verified.`);
   console.log(`   ✓ Slop code correctly blocked and flagged.`);
   console.log(`✅ Phase 4 Succeeded: Anti-slop quality gates verified.`);
 

@@ -7,7 +7,7 @@
 - Raw Markdown Docs: /raw/components/[slug]
 - MCP Server: npx @design-wiki/mcp
 
-## Available Registry Components (27 verified zero-slop items)
+## Available Registry Components (29 verified zero-slop items)
 
 ### Category: ui:block
 - [bento-grid](/r/bento-grid.json): Multi-pane asymmetrical layout grid with responsive column spans and structural borders. (Variance: 7, Motion: 3, Density: 6)
@@ -55,11 +55,21 @@
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/minimal-table.json
 
+### Category: ui:media
+- [timeline-player](/r/timeline-player.json): Precision timeline-based motion and video composition controller with frame scrubbing and timecode. (Variance: 7, Motion: 8, Density: 4)
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, remotion, video, motion, timeline, media, player
+  - Dependencies: motion, lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/timeline-player.json
+
 ### Category: ui:motion
 - [animated-tabs](/r/animated-tabs.json): Smooth spring-bound tab slider with layout ID preservation and zero layout shift. (Variance: 4, Motion: 6, Density: 5)
   - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, spring-physics, tabs, layoutId
   - Dependencies: motion, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/animated-tabs.json
+- [evil-button](/r/evil-button.json): Playful tactile spring-physics button with synthesized audio feedback and chaotic variants. (Variance: 8, Motion: 7, Density: 5)
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, spring-physics, playful, sound-physics, interactive, button
+  - Dependencies: motion, lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/evil-button.json
 - [floating-dock](/r/floating-dock.json): macOS-style interactive dock with mouse proximity magnification and spring physics. (Variance: 6, Motion: 7, Density: 4)
   - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, spring-physics, dock, macos-style
   - Dependencies: motion, clsx, tailwind-merge

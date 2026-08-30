@@ -215,6 +215,18 @@ export const SLOP_RULES: SlopRule[] = [
       !content.includes("@origin") &&
       !content.includes("SPDX-License-Identifier"),
   },
+  {
+    id: "SLOP-021",
+    name: "Raw Unshaded Background",
+    category: "Styling & Surface",
+    severity: "Medium",
+    description: "Raw unshaded background (bg-white, bg-black, or un-tokenized bg-[#...]) used without dark variant or semantic tokens (bg-card, bg-background, bg-muted).",
+    check: (line) =>
+      !line.includes("dark:bg-") &&
+      !line.includes("bg-white/") &&
+      !line.includes("bg-black/") &&
+      (/(?:bg-white|bg-black)\b/i.test(line) || /bg-\[#(?:fff|ffffff|000|000000)\]/i.test(line)),
+  },
 ];
 
 export interface CssAntiPatternMatch {

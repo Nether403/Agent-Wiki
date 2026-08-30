@@ -37,8 +37,8 @@ The platform runs on a **Double-Exposure Architecture**:
                                                [1. Ingestion Harvester]
                                                (ast-parser.ts + cloner)
                                                               │
-                                               [2. Dial Scorer & Slop Gate]
-                                               (20 anti-slop rules + LLM review)
+                                                [2. Dial Scorer & Slop Gate]
+                                                (21 anti-slop rules + LLM review)
                                                               │
                                                [3. Static Registry Compiler]
                                                (build-registry.ts dynamic sweeper)
@@ -71,16 +71,16 @@ Agent Wiki/
 ├── packages/
 │   ├── harvester/                   # Ingestion engine, shallow git cloner, AST analyzer, slop blocker
 │   │   ├── src/ast-parser.ts        # TypeScript Compiler API AST extractor & repo manifests
-│   │   ├── src/dial-classifier.ts   # Taste-dial scoring heuristics & 20-rule slop review
+│   │   ├── src/dial-classifier.ts   # Taste-dial scoring heuristics & 21-rule slop review
 │   │   ├── src/codemods/            # Tailwind v4 & React 19 / motion/react transformers
 │   │   ├── src/attribution.ts       # Open-source SPDX license header injector
 │   │   └── src/cli.ts               # Standalone Harvester CLI (pnpm harvest)
-│   ├── registry/                    # 27+ seed zero-slop components & dynamic registry compiler
-│   │   ├── src/                     # TSX source files (primitives, motion, creative, editorial, blocks, utility)
+│   ├── registry/                    # 29+ seed zero-slop components & dynamic registry compiler
+│   │   ├── src/                     # TSX source files (primitives, motion, creative, editorial, blocks, media, utility)
 │   │   ├── compiler/build-registry.ts # Dynamic component sweeper and /r/ JSON compiler
 │   │   └── schema.json              # Component JSON Schema extending shadcn registry-item
 │   ├── mcp-server/                  # Model Context Protocol (MCP) service for developer agents
-│   │   ├── src/server.ts            # search_components, fetch_raw_markdown, get_installation_commands
+│   │   ├── src/server.ts            # search_library, fetch_raw_markup, get_installation_schema (<15KB)
 │   │   ├── src/index.ts             # Stdio transport entrypoint
 │   │   └── test/agent-sandbox.test.ts # Autonomous end-to-end sandbox verification test
 │   ├── cli/                         # Native installer CLI (npx design-wiki add <slug>)
@@ -88,8 +88,8 @@ Agent Wiki/
 │   │   ├── src/commands/list.ts     # Component catalog browser with taste dials
 │   │   ├── src/commands/audit.ts    # Standalone anti-slop audit scanner
 │   │   └── src/index.ts             # Executable CLI router
-│   └── audit-linter/                # 20-rule AST + regex anti-slop verification & taste auditing
-│       ├── src/rules.ts             # Rule definitions (SLOP-001 through SLOP-020) & scanCssAntiPatterns
+│   └── audit-linter/                # 21-rule AST + regex anti-slop verification & taste auditing
+│       ├── src/rules.ts             # Rule definitions (SLOP-001 through SLOP-021) & scanCssAntiPatterns
 │       ├── src/llm-review.ts        # Automated LLM taste audit & 1-10 dial calibration engine
 │       └── src/cli.ts               # verify-audit & taste review CLI (pnpm review:taste)
 ├── skills/
@@ -166,16 +166,16 @@ claude mcp add design-wiki npx @design-wiki/mcp
 
 | Tool Name | Parameters | Description |
 | :--- | :--- | :--- |
-| `search_components` | `query`, `category`, `tag`, `minMotionIntensity`, `maxVisualDensity`, `minDesignVariance` | Searches the catalog with multi-dimensional filtering across 27+ zero-slop components. |
-| `fetch_raw_markdown` | `name` (slug) | Returns complete raw Markdown with structured YAML frontmatter contract, taxonomy, complexity, taste dials, accessibility, and verified TSX source. *(Aliases: `fetch_raw_markup`, `get_component_markup`)* |
-| `get_installation_commands` | `name` (slug), `packageManager` (`pnpm`, `npm`, `bun`, `yarn`), `baseUrl` | Returns exact CLI commands (`npx design-wiki add <slug>`, `npx shadcn@latest add ...`), peer npm install strings, import snippets, and instructions. *(Aliases: `get_installation_schema`, `get_install_recipe`)* |
-| `audit_code_slop` | `code` (string) | Scans arbitrary React/Tailwind code against 20 anti-slop rules, checking arbitrary pixel escapes (`p-[17px]`), and returns a health score (0–100). |
+| `search_library` / `search_components` | `query`, `category`, `tag`, `minMotionIntensity`, `maxVisualDensity`, `minDesignVariance` | Searches the catalog with multi-dimensional filtering across 29+ zero-slop components (< 15KB payload). |
+| `fetch_raw_markup` / `fetch_raw_markdown` | `name` (slug) | Returns complete raw Markdown with structured YAML frontmatter contract, taxonomy, complexity, taste dials, accessibility, and verified TSX source. *(Alias: `get_component_markup`)* |
+| `get_installation_schema` / `get_installation_commands` | `name` (slug), `packageManager` (`pnpm`, `npm`, `bun`, `yarn`), `baseUrl` | Returns exact CLI commands (`npx design-wiki add <slug>`, `npx shadcn@latest add ...`), peer npm install strings, import snippets, and instructions. *(Alias: `get_install_recipe`)* |
+| `audit_code_slop` | `code` (string) | Scans arbitrary React/Tailwind code against 21 anti-slop rules, checking arbitrary pixel escapes (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), and returns a health score (0–100). |
 
 ---
 
-## 🛡️ Anti-Slop 20-Rule Specification
+## 🛡️ Anti-Slop 21-Rule Specification
 
-Every component ingested or generated is validated against our 20 Anti-Slop Rules:
+Every component ingested or generated is validated against our 21 Anti-Slop Rules:
 
 | Rule ID | Category | Severity | Detection | Target Violation |
 | :--- | :--- | :---: | :---: | :--- |
@@ -199,6 +199,7 @@ Every component ingested or generated is validated against our 20 Anti-Slop Rule
 | **SLOP-018** | Styling / Layout | Medium | Regex | Repetitive centered card layouts (identical 3-col centered cards) |
 | **SLOP-019** | Architecture | **High** | AST | Deep relative imports bypassing standard aliases (`../../../../`) |
 | **SLOP-020** | Legal / IP | **High** | Regex | Missing mandatory upstream license attribution headers |
+| **SLOP-021** | Styling / Surface | Medium | Regex | Raw unshaded backgrounds (`bg-white`, `bg-black`, `bg-[#fff]`) without dark-mode or semantic tokens |
 
 ---
 

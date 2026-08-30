@@ -153,6 +153,13 @@ const MCP_SLOP_CHECKS: SlopCheck[] = [
     regex: /^$/i,
     recommendation: "Inject upstream license attribution header before publication.",
   },
+  {
+    id: "SLOP-021",
+    name: "Raw Unshaded Background",
+    severity: "Medium",
+    regex: /(?:bg-white|bg-black)\b|bg-\[#(?:fff|ffffff|000|000000)\]/i,
+    recommendation: "Replace raw unshaded background with semantic tokens (bg-card, bg-background, bg-muted) and dark variant.",
+  },
 ];
 
 export function getRegistryItems(): any[] {
@@ -210,90 +217,119 @@ export function createDesignWikiMcpServer(): McpServer {
     version: "1.0.0",
   });
 
+  const searchInputSchema = z.object({
+    query: z.string().optional().describe("Search keywords (e.g., 'dialog', 'matrix', 'dock', 'bento')"),
+    category: z
+      .enum([
+        "ui:primitive",
+        "ui:motion",
+        "ui:creative",
+        "ui:editorial",
+        "ui:block",
+        "ui:media",
+        "ui:utility",
+      ])
+      .optional()
+      .describe("Taxonomy category filter"),
+    tag: z.string().optional().describe("Technical or visual tag (e.g., 'tailwind-v4', 'motion/react', 'webgl')"),
+    minMotionIntensity: z.number().min(1).max(10).optional().describe("Minimum motion intensity dial (1-10)"),
+    maxVisualDensity: z.number().min(1).max(10).optional().describe("Maximum visual density dial (1-10)"),
+    minDesignVariance: z.number().min(1).max(10).optional().describe("Minimum design variance dial (1-10)"),
+  });
+
+  const handleSearchComponents = async ({
+    query,
+    category,
+    tag,
+    minMotionIntensity,
+    maxVisualDensity,
+    minDesignVariance,
+  }: {
+    query?: string;
+    category?: any;
+    tag?: string;
+    minMotionIntensity?: number;
+    maxVisualDensity?: number;
+    minDesignVariance?: number;
+  }) => {
+    const items = getRegistryItems();
+    let filtered = items;
+
+    if (category) {
+      filtered = filtered.filter((i) => i.category === category);
+    }
+    if (tag) {
+      filtered = filtered.filter((i) => i.tags && i.tags.includes(tag.toLowerCase()));
+    }
+    if (minMotionIntensity) {
+      filtered = filtered.filter((i) => i.dials && i.dials.motion_intensity >= minMotionIntensity);
+    }
+    if (maxVisualDensity) {
+      filtered = filtered.filter((i) => i.dials && i.dials.visual_density <= maxVisualDensity);
+    }
+    if (minDesignVariance) {
+      filtered = filtered.filter((i) => i.dials && i.dials.design_variance >= minDesignVariance);
+    }
+    if (query) {
+      const q = query.toLowerCase();
+      filtered = filtered.filter(
+        (i) =>
+          i.name.toLowerCase().includes(q) ||
+          i.title.toLowerCase().includes(q) ||
+          i.description.toLowerCase().includes(q) ||
+          (i.tags && i.tags.some((t: string) => t.toLowerCase().includes(q)))
+      );
+    }
+
+    const results = filtered.map((i) => ({
+      name: i.name,
+      title: i.title,
+      category: i.category,
+      tags: i.tags,
+      dials: i.dials,
+      a11y: i.a11y,
+      dependencies: i.dependencies,
+      registryDependencies: i.registryDependencies,
+      installCommand: `npx shadcn@latest add http://localhost:3000/r/${i.name}.json`,
+    }));
+
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(
+            {
+              matchCount: results.length,
+              components: results,
+            },
+            null,
+            2
+          ),
+        },
+      ],
+    };
+  };
+
   // Tool 1: search_components
   server.registerTool(
     "search_components",
     {
       description:
         "Search the Machine-First Design Agent Wiki for curated, high-performance UI components by keyword, taxonomy category, tags, or taste dials.",
-      inputSchema: z.object({
-        query: z.string().optional().describe("Search keywords (e.g., 'dialog', 'matrix', 'dock', 'bento')"),
-        category: z
-          .enum([
-            "ui:primitive",
-            "ui:motion",
-            "ui:creative",
-            "ui:editorial",
-            "ui:block",
-            "ui:media",
-            "ui:utility",
-          ])
-          .optional()
-          .describe("Taxonomy category filter"),
-        tag: z.string().optional().describe("Technical or visual tag (e.g., 'tailwind-v4', 'motion/react', 'webgl')"),
-        minMotionIntensity: z.number().min(1).max(10).optional().describe("Minimum motion intensity dial (1-10)"),
-        maxVisualDensity: z.number().min(1).max(10).optional().describe("Maximum visual density dial (1-10)"),
-        minDesignVariance: z.number().min(1).max(10).optional().describe("Minimum design variance dial (1-10)"),
-      }),
+      inputSchema: searchInputSchema,
     },
-    async ({ query, category, tag, minMotionIntensity, maxVisualDensity, minDesignVariance }) => {
-      const items = getRegistryItems();
-      let filtered = items;
+    handleSearchComponents
+  );
 
-      if (category) {
-        filtered = filtered.filter((i) => i.category === category);
-      }
-      if (tag) {
-        filtered = filtered.filter((i) => i.tags && i.tags.includes(tag.toLowerCase()));
-      }
-      if (minMotionIntensity) {
-        filtered = filtered.filter((i) => i.dials && i.dials.motion_intensity >= minMotionIntensity);
-      }
-      if (maxVisualDensity) {
-        filtered = filtered.filter((i) => i.dials && i.dials.visual_density <= maxVisualDensity);
-      }
-      if (minDesignVariance) {
-        filtered = filtered.filter((i) => i.dials && i.dials.design_variance >= minDesignVariance);
-      }
-      if (query) {
-        const q = query.toLowerCase();
-        filtered = filtered.filter(
-          (i) =>
-            i.name.toLowerCase().includes(q) ||
-            i.title.toLowerCase().includes(q) ||
-            i.description.toLowerCase().includes(q) ||
-            (i.tags && i.tags.some((t: string) => t.toLowerCase().includes(q)))
-        );
-      }
-
-      const results = filtered.map((i) => ({
-        name: i.name,
-        title: i.title,
-        category: i.category,
-        tags: i.tags,
-        dials: i.dials,
-        a11y: i.a11y,
-        dependencies: i.dependencies,
-        registryDependencies: i.registryDependencies,
-        installCommand: `npx shadcn@latest add http://localhost:3000/r/${i.name}.json`,
-      }));
-
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(
-              {
-                matchCount: results.length,
-                components: results,
-              },
-              null,
-              2
-            ),
-          },
-        ],
-      };
-    }
+  // Tool 1 Alias: search_library (for agent workflows in Cursor, Claude Code, etc.)
+  server.registerTool(
+    "search_library",
+    {
+      description:
+        "Search and discover UI component templates and libraries within the Machine-First Design Agent Wiki by keyword, taxonomy category, tags, or taste dials.",
+      inputSchema: searchInputSchema,
+    },
+    handleSearchComponents
   );
 
   // Helper handler for markup retrieval
@@ -662,6 +698,9 @@ ${sourceCode}
             continue;
           }
           if (check.id === "SLOP-014" && code.includes("prefers-reduced-motion")) {
+            continue;
+          }
+          if (check.id === "SLOP-021" && (line.includes("dark:bg-") || line.includes("bg-white/") || line.includes("bg-black/"))) {
             continue;
           }
 

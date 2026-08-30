@@ -47,11 +47,11 @@ Read the repository's configuration (or infer from the user's brief) to adjust t
 
 ### Phase 1: Discover
 Before writing code, query our machine-readable discovery endpoints:
-1. Parse `/public/llms.txt` or call MCP `search_components` to look up available components, categories, and tags.
+1. Parse `/public/llms.txt` or call MCP `search_library` / `search_components` to look up available components, categories, and tags (< 15KB payloads).
 2. If using MCP, query `@design-wiki/mcp`:
-   - `search_components({ query: "modal", category: "ui:motion" })`
-   - `fetch_raw_markdown({ name: "spring-dialog" })` (returns full YAML frontmatter contract & TSX block)
-   - `get_installation_commands({ name: "spring-dialog", packageManager: "pnpm" })`
+   - `search_library({ query: "modal", category: "ui:motion" })`
+   - `fetch_raw_markup({ name: "spring-dialog" })` (returns full YAML frontmatter contract & TSX block)
+   - `get_installation_schema({ name: "spring-dialog", packageManager: "pnpm" })`
 
 ### Phase 2: Install
 If the component is registered but missing from the local workspace:
@@ -61,7 +61,7 @@ If the component is registered but missing from the local workspace:
    # or via shadcn v3:
    npx shadcn@latest add http://localhost:3000/r/<component-name>.json
    ```
-2. Automatically verify that peer npm dependencies (e.g. `motion`, `three`, `lucide-react`, `@radix-ui/*`) are installed.
+2. Automatically verify that peer npm dependencies (e.g. `motion`, `three`, `remotion`, `lucide-react`, `@radix-ui/*`) are installed.
 3. Resolve typescript import path aliases (`@/components/ui/<component-name>`).
 
 ### Phase 3: Implement & Constrain
@@ -73,7 +73,7 @@ If the component is registered but missing from the local workspace:
 *   **Controlled Glassmorphism**: Never use raw `bg-white/10 backdrop-blur` without crisp structural border tokens (`border-border`) and solid card fallbacks.
 
 ### Phase 4: Audit & Taste Review (The Anti-Slop Gate)
-Audit your code against the 20 Anti-Slop Rules and calibrated taste dials before declaring your task complete:
+Audit your code against the 21 Anti-Slop Rules and calibrated taste dials before declaring your task complete:
 1. Call MCP `audit_code_slop({ code: "<your-tsx-code>" })` or run:
    ```bash
    pnpm review:taste <path-to-file>
@@ -86,6 +86,7 @@ Audit your code against the 20 Anti-Slop Rules and calibrated taste dials before
    - No conditional empty object spreads (`...(cond ? { a } : {})`).
    - No blanket `transition-all duration-300` &rarr; target specific mutable styles (`transition-colors`).
    - No arbitrary sizing hacks (`p-[17px]`, `m-[13px]`, `gap-[15px]`) &rarr; map to system tokens (`p-4`).
+   - No raw unshaded backgrounds (`bg-white`, `bg-black`, `bg-[#fff]`) &rarr; use semantic tokens (`bg-card`, `bg-background`) with dark variants (`SLOP-021`).
    - No decorative emojis inside buttons or cards &rarr; use Lucide SVG icons.
 3. Verify that the health score is 85+ with 0 High-severity flags.
 

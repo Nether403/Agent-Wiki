@@ -1,11 +1,11 @@
 ---
-title: "Anti-Slop 20-Rule Specification"
-description: "The complete 20-rule AST and pattern linter specifications enforced by @design-wiki/audit-linter."
+title: "Anti-Slop 21-Rule Specification"
+description: "The complete 21-rule AST and pattern linter specifications enforced by @design-wiki/audit-linter."
 ---
 
-# Anti-Slop 20-Rule Specification
+# Anti-Slop 21-Rule Specification
 
-Our automated linter checks code across 20 distinct rules before allowing components into the registry or before an agent completes a task:
+Our automated linter checks code across 21 distinct rules before allowing components into the registry or before an agent completes a task:
 
 | Rule ID | Category | Severity | Detection Mechanism | Target Violation |
 | :--- | :--- | :---: | :--- | :--- |
@@ -29,6 +29,7 @@ Our automated linter checks code across 20 distinct rules before allowing compon
 | **SLOP-018** | Styling / Layout | Medium | Regex | Repetitive centered card layouts |
 | **SLOP-019** | Architecture | **High** | AST | Deep relative imports bypassing standard aliases |
 | **SLOP-020** | Legal / IP | **High** | Regex | Missing mandatory upstream license attribution headers |
+| **SLOP-021** | Styling / Surface | Medium | Regex | Raw unshaded backgrounds (`bg-white`, `bg-black`, `bg-[#fff]`) without dark-mode or semantic tokens |
 
 ---
 
@@ -53,7 +54,7 @@ In addition to whole-line regular expression and AST checks, the linter incorpor
 Execute the automated taste audit CLI across your repository or on specific component files:
 
 ```bash
-# Run full 20-rule scan on target directory
+# Run full 21-rule scan on target directory
 pnpm lint:slop
 
 # Run calibrated taste audit on a single component

@@ -188,6 +188,13 @@ const HARVESTER_SLOP_CHECKS: Array<{
     regex: /^$/i, // Handled separately in header check
     recommendation: "Inject upstream license attribution header before publication.",
   },
+  {
+    id: "SLOP-021",
+    name: "Raw Unshaded Background",
+    severity: "Medium",
+    regex: /(?:bg-white|bg-black)\b|bg-\[#(?:fff|ffffff|000|000000)\]/i,
+    recommendation: "Replace raw unshaded background with semantic tokens (bg-card, bg-background, bg-muted) and dark variant.",
+  },
 ];
 
 /**
@@ -296,6 +303,9 @@ export function reviewComponentSlop(
       }
       if (check.id === "SLOP-014" && code.includes("prefers-reduced-motion")) {
         continue; // Has reduced motion support in file
+      }
+      if (check.id === "SLOP-021" && (line.includes("dark:bg-") || line.includes("bg-white/") || line.includes("bg-black/"))) {
+        continue; // Handled with dark mode token or backdrop opacity
       }
 
       if (check.regex.test(line)) {

@@ -29,8 +29,10 @@ claude mcp add design-wiki npx @design-wiki/mcp
 
 ## 🛠️ Available MCP Tools
 
-### 1. `search_components`
-Searches the 27+ component catalog with multi-dimensional filtering.
+All tools are engineered to deliver deterministic payloads strictly **< 15KB**, ensuring lightning-fast responses within AI agent context windows.
+
+### 1. `search_library` / `search_components`
+Searches the 29+ component catalog across all 7 taxonomy categories with multi-dimensional taste dial filtering.
 * **Parameters**:
   - `query` (string, optional)
   - `category` (`ui:primitive` | `ui:motion` | `ui:creative` | `ui:editorial` | `ui:block` | `ui:media` | `ui:utility`, optional)
@@ -39,24 +41,24 @@ Searches the 27+ component catalog with multi-dimensional filtering.
   - `maxVisualDensity` (number 1–10, optional)
   - `minDesignVariance` (number 1–10, optional)
 
-### 2. `fetch_raw_markdown` *(Aliases: `fetch_raw_markup`, `get_component_markup`)*
-Returns complete raw Markdown documentation including:
+### 2. `fetch_raw_markup` / `fetch_raw_markdown` *(Alias: `get_component_markup`)*
+Returns complete raw Markdown or structured TSX markup including:
 - Structured YAML frontmatter contract (ID, name, category, taste dials, complexity, tags)
 - Accessibility criteria (WCAG 2.1 AA, keyboard navigable)
 - CLI recipes (`npx design-wiki add <slug>`)
 - Verified, copy-pasteable TSX production source code block
 * **Parameters**:
-  - `name` (string, required): Component slug (e.g. `canvas-fluid-wave`, `floating-dock`)
+  - `name` (string, required): Component slug (e.g. `canvas-fluid-wave`, `floating-dock`, `evil-button`, `timeline-player`)
 
-### 3. `get_installation_commands` *(Aliases: `get_installation_schema`, `get_install_recipe`)*
-Returns exact terminal commands, peer dependency installations, import syntax, and step-by-step setup instructions.
+### 3. `get_installation_schema` / `get_installation_commands` *(Alias: `get_install_recipe`)*
+Returns exact terminal commands, shadcn v3 registry schemas, peer dependency installations, import syntax, and step-by-step setup instructions.
 * **Parameters**:
   - `name` (string, required): Component slug
   - `packageManager` (`pnpm` | `npm` | `bun` | `yarn`, optional, default: `pnpm`)
   - `baseUrl` (string, optional, default: `http://localhost:3000`)
 
 ### 4. `audit_code_slop`
-Lints user or agent-generated React/Tailwind code against the 20 Anti-Slop Rules, checking arbitrary pixel values (`p-[17px]`), blanket transitions, and accessibility gaps.
+Lints user or agent-generated React/Tailwind code against the 21 Anti-Slop Rules, catching arbitrary pixel offsets (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), blanket transitions, and accessibility gaps.
 * **Parameters**:
   - `code` (string, required): TSX/JSX code to analyze
 

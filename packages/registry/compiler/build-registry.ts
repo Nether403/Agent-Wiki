@@ -364,6 +364,28 @@ const COMPONENT_METADATA_OVERRIDES: Record<
     dependencies: ["clsx", "tailwind-merge"],
     registryDependencies: [],
   },
+  "evil-button": {
+    title: "Evil Button",
+    description: "Playful tactile spring-physics button with synthesized audio feedback and chaotic variants.",
+    category: "ui:motion",
+    tags: ["playful", "framer-motion", "sound-physics", "interactive", "motion/react", "button", "spring-physics"],
+    dials: { design_variance: 8, motion_intensity: 7, visual_density: 5 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, wai_aria_role: "button", fallback_provided: true, reduced_motion_supported: true },
+    license: { source_repository: "https://github.com/evil-buttons/evil-buttons", license_type: "MIT", author: "Evil-Buttons Team", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["motion", "lucide-react", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "timeline-player": {
+    title: "Timeline Player",
+    description: "Precision timeline-based motion and video composition controller with frame scrubbing and timecode.",
+    category: "ui:media",
+    tags: ["remotion", "video", "motion", "timeline", "media", "player", "tailwind-v4"],
+    dials: { design_variance: 7, motion_intensity: 8, visual_density: 4 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, wai_aria_role: "region", fallback_provided: true, reduced_motion_supported: true },
+    license: { source_repository: "https://github.com/remocn/remocn", license_type: "MIT", author: "Remocn Team", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["motion", "lucide-react", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
 };
 
 /**
