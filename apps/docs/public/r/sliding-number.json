@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "sliding-number",
+  "type": "registry:component",
+  "title": "Sliding Number",
+  "description": "Curated production-grade component.",
+  "category": "ui:motion",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "wai-aria-compliant",
+    "spring-physics"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 8,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "status",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/sliding-number.tsx",
+      "content": "/**\n * @license MIT\n * @origin ibelick / motion-primitives (https://motion-primitives.com)\n * @author ibelick & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { motion, useSpring, useTransform } from \"motion/react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface SlidingNumberProps extends React.HTMLAttributes<HTMLSpanElement> {\n  value: number;\n  prefix?: string;\n  suffix?: string;\n  decimals?: number;\n}\n\nfunction DigitColumn({ digit }: { digit: number }) {\n  const spring = useSpring(digit, { mass: 0.8, stiffness: 85, damping: 15 });\n  const y = useTransform(spring, (current) => -current * 10 + \"%\");\n\n  React.useEffect(() => {\n    spring.set(digit);\n  }, [digit, spring]);\n\n  return (\n    <div className=\"relative inline-block h-[1em] w-[0.62em] overflow-hidden align-baseline\">\n      <motion.div style={{ y }} className=\"flex flex-col select-none\">\n        {Array.from({ length: 10 }).map((_, i) => (\n          <span key={i} className=\"flex h-[1em] items-center justify-center\">\n            {i}\n          </span>\n        ))}\n      </motion.div>\n    </div>\n  );\n}\n\nexport function SlidingNumber({\n  value,\n  prefix = \"\",\n  suffix = \"\",\n  decimals = 0,\n  className,\n  ...props\n}: SlidingNumberProps) {\n  const formatted = value.toFixed(decimals);\n  const parts = formatted.split(\"\");\n\n  return (\n    <span\n      className={cn(\"inline-flex items-baseline font-mono font-bold tracking-tight text-foreground\", className)}\n      role=\"status\"\n      aria-live=\"polite\"\n      aria-label={`${prefix}${formatted}${suffix}`}\n      {...props}\n    >\n      {prefix && <span>{prefix}</span>}\n      {parts.map((char, index) => {\n        if (!isNaN(parseInt(char, 10))) {\n          return <DigitColumn key={`${index}-${char}`} digit={parseInt(char, 10)} />;\n        }\n        return <span key={`${index}-${char}`}>{char}</span>;\n      })}\n      {suffix && <span>{suffix}</span>}\n    </span>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/sliding-number.tsx"
+    }
+  ]
+}

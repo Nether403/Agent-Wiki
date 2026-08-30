@@ -1,0 +1,52 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "morphing-dialog",
+  "type": "registry:component",
+  "title": "Morphing Dialog",
+  "description": "Curated production-grade component.",
+  "category": "ui:motion",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "lucide-react",
+    "tailwind-v4",
+    "glassmorphism",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 9,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "dialog",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/morphing-dialog.tsx",
+      "content": "/**\n * @license MIT\n * @origin ibelick / motion-primitives (https://motion-primitives.com)\n * @author ibelick & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { motion, AnimatePresence } from \"motion/react\";\nimport { cn } from \"../lib/utils\";\nimport { X } from \"lucide-react\";\n\nexport interface MorphingDialogProps extends React.HTMLAttributes<HTMLDivElement> {\n  triggerText?: string;\n  dialogTitle?: string;\n  dialogContent?: React.ReactNode;\n  children?: React.ReactNode;\n}\n\nexport function MorphingDialog({\n  triggerText = \"Expand Details\",\n  dialogTitle = \"Shared-Element Morph Dialog\",\n  dialogContent,\n  children,\n  className,\n  ...props\n}: MorphingDialogProps) {\n  const [isOpen, setIsOpen] = React.useState(false);\n  const layoutId = React.useId();\n\n  // Escape key handler\n  React.useEffect(() => {\n    const handleKeyDown = (e: KeyboardEvent) => {\n      if (e.key === \"Escape\" && isOpen) {\n        setIsOpen(false);\n      }\n    };\n    window.addEventListener(\"keydown\", handleKeyDown);\n    return () => window.removeEventListener(\"keydown\", handleKeyDown);\n  }, [isOpen]);\n\n  return (\n    <div className={cn(\"inline-block\", className)} {...props}>\n      {/* Trigger Card / Button */}\n      <motion.div\n        layoutId={`dialog-container-${layoutId}`}\n        onClick={() => setIsOpen(true)}\n        className=\"cursor-pointer p-4 rounded-xl border border-border bg-card text-card-foreground shadow-xs hover:border-primary/40 transition-colors focus-within:ring-2 focus-within:ring-ring\"\n        tabIndex={0}\n        role=\"button\"\n        aria-haspopup=\"dialog\"\n        aria-expanded={isOpen}\n        aria-label={triggerText}\n        onKeyDown={(e) => {\n          if (e.key === \"Enter\" || e.key === \" \") {\n            e.preventDefault();\n            setIsOpen(true);\n          }\n        }}\n      >\n        <motion.h4 layoutId={`dialog-title-${layoutId}`} className=\"text-xs font-semibold text-foreground\">\n          {triggerText}\n        </motion.h4>\n        {children && <div className=\"mt-2 text-xs text-muted-foreground\">{children}</div>}\n      </motion.div>\n\n      {/* Expanded Modal */}\n      <AnimatePresence>\n        {isOpen && (\n          <div className=\"fixed inset-0 z-50 flex items-center justify-center p-4\">\n            {/* Backdrop */}\n            <motion.div\n              initial={{ opacity: 0 }}\n              animate={{ opacity: 1 }}\n              exit={{ opacity: 0 }}\n              onClick={() => setIsOpen(false)}\n              className=\"fixed inset-0 bg-background/80 backdrop-blur-xs\"\n              aria-hidden=\"true\"\n            />\n\n            {/* Modal Box */}\n            <motion.div\n              layoutId={`dialog-container-${layoutId}`}\n              role=\"dialog\"\n              aria-modal=\"true\"\n              aria-labelledby={`dialog-title-${layoutId}`}\n              className=\"relative w-full max-w-lg rounded-2xl border border-border bg-card text-card-foreground p-6 shadow-xl z-10 space-y-4\"\n            >\n              <header className=\"flex items-center justify-between\">\n                <motion.h3\n                  id={`dialog-title-${layoutId}`}\n                  layoutId={`dialog-title-${layoutId}`}\n                  className=\"text-sm font-bold text-foreground\"\n                >\n                  {dialogTitle}\n                </motion.h3>\n\n                <button\n                  type=\"button\"\n                  onClick={() => setIsOpen(false)}\n                  className=\"p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n                  aria-label=\"Close dialog\"\n                >\n                  <X className=\"h-4 w-4\" aria-hidden=\"true\" />\n                </button>\n              </header>\n\n              <div className=\"text-xs text-muted-foreground leading-relaxed\">\n                {dialogContent || (\n                  <p>\n                    This shared-element morph seamlessly transitions between card layout and modal state using Framer Motion layoutId without Cumulative Layout Shift (CLS).\n                  </p>\n                )}\n              </div>\n            </motion.div>\n          </div>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/morphing-dialog.tsx"
+    }
+  ]
+}

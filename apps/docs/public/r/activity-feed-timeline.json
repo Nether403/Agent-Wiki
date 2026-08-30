@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "activity-feed-timeline",
+  "type": "registry:component",
+  "title": "Activity Feed Timeline",
+  "description": "Curated production-grade component.",
+  "category": "ui:media",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "feed",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/activity-feed-timeline.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @author Community Contributor\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { CheckCircle2, GitCommit, AlertCircle, ShieldAlert, Sparkles, User } from \"lucide-react\";\n\nexport interface ActivityFeedItem {\n  id: string;\n  actor: string;\n  action: string;\n  target?: string;\n  timestamp: string;\n  type?: \"success\" | \"warning\" | \"error\" | \"ai\" | \"default\";\n  avatarInitials?: string;\n}\n\nexport interface ActivityFeedTimelineProps extends React.HTMLAttributes<HTMLDivElement> {\n  items?: ActivityFeedItem[];\n}\n\nconst DEFAULT_ITEMS: ActivityFeedItem[] = [\n  { id: \"1\", actor: \"Design Agent\", action: \"Compiled registry with\", target: \"100+ UI components\", timestamp: \"Just now\", type: \"ai\" },\n  { id: \"2\", actor: \"Tripwire Security\", action: \"Neutralized prompt injection attack on\", target: \"search_library\", timestamp: \"5m ago\", type: \"warning\" },\n  { id: \"3\", actor: \"CI Pipeline\", action: \"Passed 100% on WCAG 2.1 AA\", target: \"A11y Linter\", timestamp: \"18m ago\", type: \"success\" },\n  { id: \"4\", actor: \"Alex Chen\", action: \"Pushed 4 new components to\", target: \"primitives/\", timestamp: \"1h ago\", type: \"default\", avatarInitials: \"AC\" },\n];\n\nexport function ActivityFeedTimeline({\n  items = DEFAULT_ITEMS,\n  className,\n  ...props\n}: ActivityFeedTimelineProps) {\n  return (\n    <div\n      className={cn(\"flex flex-col w-full max-w-lg p-4 rounded-xl border border-border bg-card shadow-xs\", className)}\n      role=\"feed\"\n      aria-label=\"Activity Audit Timeline\"\n      {...props}\n    >\n      <header className=\"flex items-center justify-between pb-3 border-b border-border mb-4\">\n        <h4 className=\"text-xs font-bold text-foreground\">System Activity Feed</h4>\n        <span className=\"text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-mono\">\n          Live Telemetry\n        </span>\n      </header>\n\n      <div className=\"relative pl-6 space-y-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-border\">\n        {items.map((item) => {\n          return (\n            <article key={item.id} className=\"relative flex items-start gap-3 text-xs\" aria-label={`Activity: ${item.actor} ${item.action}`}>\n              {/* Timeline marker node */}\n              <div\n                className={cn(\n                  \"absolute -left-6 top-0.5 flex items-center justify-center h-5 w-5 rounded-full border border-background shadow-xs text-white\",\n                  item.type === \"success\" && \"bg-emerald-500\",\n                  item.type === \"warning\" && \"bg-amber-500\",\n                  item.type === \"error\" && \"bg-destructive\",\n                  item.type === \"ai\" && \"bg-primary\",\n                  (!item.type || item.type === \"default\") && \"bg-muted text-foreground border-border\"\n                )}\n                aria-hidden=\"true\"\n              >\n                {item.type === \"success\" && <CheckCircle2 className=\"h-3 w-3\" />}\n                {item.type === \"warning\" && <AlertCircle className=\"h-3 w-3\" />}\n                {item.type === \"error\" && <ShieldAlert className=\"h-3 w-3\" />}\n                {item.type === \"ai\" && <Sparkles className=\"h-3 w-3\" />}\n                {(!item.type || item.type === \"default\") && <GitCommit className=\"h-3 w-3 text-muted-foreground\" />}\n              </div>\n\n              <div className=\"flex flex-col flex-1 space-y-1\">\n                <div className=\"flex items-baseline justify-between gap-2\">\n                  <span className=\"font-semibold text-foreground\">{item.actor}</span>\n                  <span className=\"text-[10px] text-muted-foreground font-mono shrink-0\">{item.timestamp}</span>\n                </div>\n                <p className=\"text-muted-foreground leading-relaxed\">\n                  {item.action}{\" \"}\n                  {item.target && <span className=\"font-medium text-foreground font-mono\">{item.target}</span>}\n                </p>\n              </div>\n            </article>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/activity-feed-timeline.tsx"
+    }
+  ]
+}

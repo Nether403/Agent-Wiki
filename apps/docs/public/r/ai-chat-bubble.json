@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ai-chat-bubble",
+  "type": "registry:ui",
+  "title": "Ai Chat Bubble",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "article",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/ai-chat-bubble.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @author Community Contributor\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Bot, User, Copy, Check } from \"lucide-react\";\n\nexport interface AiChatBubbleProps extends React.HTMLAttributes<HTMLDivElement> {\n  role: \"user\" | \"assistant\" | \"system\";\n  content: string;\n  avatarUrl?: string;\n  timestamp?: string;\n  onCopy?: () => void;\n}\n\nexport function AiChatBubble({\n  role,\n  content,\n  avatarUrl,\n  timestamp,\n  onCopy,\n  className,\n  ...props\n}: AiChatBubbleProps) {\n  const [copied, setCopied] = React.useState(false);\n  const isUser = role === \"user\";\n\n  const handleCopy = () => {\n    navigator.clipboard?.writeText(content);\n    setCopied(true);\n    onCopy?.();\n    setTimeout(() => setCopied(false), 2000);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"flex gap-3 w-full max-w-2xl my-2\",\n        isUser ? \"ml-auto flex-row-reverse\" : \"mr-auto\",\n        className\n      )}\n      role=\"article\"\n      aria-label={`${role} chat bubble`}\n      {...props}\n    >\n      <div\n        className={cn(\n          \"flex items-center justify-center h-7 w-7 rounded-full shrink-0 text-xs\",\n          isUser\n            ? \"bg-secondary text-secondary-foreground border border-border\"\n            : \"bg-primary text-primary-foreground\"\n        )}\n        aria-hidden=\"true\"\n      >\n        {isUser ? <User className=\"h-3.5 w-3.5\" /> : <Bot className=\"h-3.5 w-3.5\" />}\n      </div>\n\n      <div\n        className={cn(\n          \"group relative flex flex-col px-4 py-2.5 rounded-2xl text-xs leading-relaxed transition-colors\",\n          isUser\n            ? \"bg-primary text-primary-foreground rounded-tr-xs\"\n            : \"bg-card text-card-foreground border border-border rounded-tl-xs shadow-xs\"\n        )}\n      >\n        <p className=\"whitespace-pre-wrap break-words\">{content}</p>\n\n        <div className=\"flex items-center justify-between mt-1 pt-1 text-[10px] opacity-70 gap-3\">\n          {timestamp && <span>{timestamp}</span>}\n          <button\n            type=\"button\"\n            onClick={handleCopy}\n            className=\"opacity-0 group-hover:opacity-100 transition-opacity ml-auto focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n            aria-label=\"Copy bubble message\"\n          >\n            {copied ? <Check className=\"h-3 w-3 inline\" /> : <Copy className=\"h-3 w-3 inline\" />}\n          </button>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/ai-chat-bubble.tsx"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "hacker-decrypt",
+  "type": "registry:ui",
+  "title": "Hacker Decrypt",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 6
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "status",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/hacker-decrypt.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @author Community Contributor\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface HackerDecryptProps extends React.HTMLAttributes<HTMLSpanElement> {\n  targetText: string;\n  speed?: number;\n}\n\nconst HEX_CHARS = \"0123456789ABCDEF!@#$%^&*\";\n\nexport function HackerDecrypt({\n  targetText,\n  speed = 40,\n  className,\n  ...props\n}: HackerDecryptProps) {\n  const [displayText, setDisplayText] = React.useState(targetText);\n\n  React.useEffect(() => {\n    let iteration = 0;\n    const interval = setInterval(() => {\n      setDisplayText(\n        targetText\n          .split(\"\")\n          .map((char, index) => {\n            if (index < iteration) return targetText[index];\n            return HEX_CHARS[Math.floor(Math.random() * HEX_CHARS.length)];\n          })\n          .join(\"\")\n      );\n\n      if (iteration >= targetText.length) {\n        clearInterval(interval);\n      }\n      iteration += 1 / 2;\n    }, speed);\n\n    return () => clearInterval(interval);\n  }, [targetText, speed]);\n\n  return (\n    <span\n      className={cn(\"font-mono font-bold text-primary tracking-wider select-none\", className)}\n      role=\"status\"\n      aria-label={targetText}\n      {...props}\n    >\n      {displayText}\n    </span>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/hacker-decrypt.tsx"
+    }
+  ]
+}

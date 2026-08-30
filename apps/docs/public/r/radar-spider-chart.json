@@ -1,0 +1,43 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "radar-spider-chart",
+  "type": "registry:block",
+  "title": "Radar Spider Chart",
+  "description": "Curated production-grade component.",
+  "category": "ui:block",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "layout-block"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 3,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/radar-spider-chart.tsx",
+      "content": "/**\n * @license MIT\n * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)\n * @author Cathryn Lavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface RadarAxis {\n  label: string;\n  value: number; // 0-100\n}\n\nexport interface RadarSpiderChartProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  axes?: RadarAxis[];\n}\n\nconst DEFAULT_AXES: RadarAxis[] = [\n  { label: \"Accessibility AA\", value: 100 },\n  { label: \"Token Hygiene\", value: 95 },\n  { label: \"Performance & Leaks\", value: 98 },\n  { label: \"Design Variance\", value: 85 },\n  { label: \"Motion Fidelity\", value: 90 },\n  { label: \"TypeScript Safety\", value: 100 },\n];\n\nexport function RadarSpiderChart({\n  title = \"Component Quality & Craft Radar\",\n  axes = DEFAULT_AXES,\n  className,\n  ...props\n}: RadarSpiderChartProps) {\n  const size = 260;\n  const center = size / 2;\n  const radius = 90;\n  const numAxes = axes.length;\n\n  // Calculate polygon points\n  const points = axes\n    .map((axis, i) => {\n      const angle = (Math.PI * 2 / numAxes) * i - Math.PI / 2;\n      const r = (axis.value / 100) * radius;\n      const x = center + r * Math.cos(angle);\n      const y = center + r * Math.sin(angle);\n      return `${x.toFixed(1)},${y.toFixed(1)}`;\n    })\n    .join(\" \");\n\n  return (\n    <figure\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Radar Spider Chart: ${title}`}\n      {...props}\n    >\n      <header className=\"border-b border-border pb-3 mb-4\">\n        <h3 className=\"text-sm font-bold text-foreground\">{title}</h3>\n        <p className=\"text-xs text-muted-foreground mt-0.5\">\n          Multi-axis capability spider polygon evaluating 6 craft and compliance dimensions.\n        </p>\n      </header>\n\n      <div className=\"flex items-center justify-center py-2\">\n        <svg\n          viewBox={`0 0 ${size} ${size}`}\n          className=\"w-full max-w-[280px] h-auto overflow-visible\"\n          role=\"img\"\n          aria-label=\"Radar chart polygon\"\n        >\n          {/* Background concentric rings */}\n          {[0.25, 0.5, 0.75, 1].map((scale) => (\n            <polygon\n              key={scale}\n              points={Array.from({ length: numAxes })\n                .map((_, i) => {\n                  const angle = (Math.PI * 2 / numAxes) * i - Math.PI / 2;\n                  const r = radius * scale;\n                  const x = center + r * Math.cos(angle);\n                  const y = center + r * Math.sin(angle);\n                  return `${x.toFixed(1)},${y.toFixed(1)}`;\n                })\n                .join(\" \")}\n              fill=\"none\"\n              stroke=\"currentColor\"\n              strokeWidth=\"1\"\n              className=\"text-muted-foreground/20\"\n            />\n          ))}\n\n          {/* Radial axis lines & labels */}\n          {axes.map((axis, i) => {\n            const angle = (Math.PI * 2 / numAxes) * i - Math.PI / 2;\n            const x = center + radius * Math.cos(angle);\n            const y = center + radius * Math.sin(angle);\n            const labelX = center + (radius + 24) * Math.cos(angle);\n            const labelY = center + (radius + 24) * Math.sin(angle) + 3;\n\n            return (\n              <g key={axis.label}>\n                <line\n                  x1={center}\n                  y1={center}\n                  x2={x}\n                  y2={y}\n                  stroke=\"currentColor\"\n                  strokeWidth=\"1\"\n                  className=\"text-muted-foreground/30\"\n                />\n                <text\n                  x={labelX}\n                  y={labelY}\n                  textAnchor=\"middle\"\n                  className=\"fill-muted-foreground text-[9px] font-medium\"\n                >\n                  {axis.label}\n                </text>\n              </g>\n            );\n          })}\n\n          {/* Value Polygon */}\n          <polygon\n            points={points}\n            fill=\"currentColor\"\n            stroke=\"currentColor\"\n            strokeWidth=\"2\"\n            className=\"text-primary/25 stroke-primary\"\n          />\n        </svg>\n      </div>\n    </figure>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/radar-spider-chart.tsx"
+    }
+  ]
+}

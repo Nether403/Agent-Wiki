@@ -1,0 +1,42 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "progressive-blur",
+  "type": "registry:ui",
+  "title": "Progressive Blur",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/progressive-blur.tsx",
+      "content": "/**\n * @license MIT\n * @origin ibelick / motion-primitives (https://motion-primitives.com)\n * @author ibelick & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface ProgressiveBlurProps extends React.HTMLAttributes<HTMLDivElement> {\n  direction?: \"top\" | \"bottom\" | \"left\" | \"right\";\n  blurLayers?: number;\n  maxBlur?: number;\n}\n\nexport function ProgressiveBlur({\n  direction = \"bottom\",\n  blurLayers = 6,\n  maxBlur = 12,\n  className,\n  ...props\n}: ProgressiveBlurProps) {\n  const layers = Array.from({ length: blurLayers }, (_, i) => {\n    const step = (i + 1) / blurLayers;\n    const blurPx = step * maxBlur;\n    return { step, blurPx };\n  });\n\n  return (\n    <div\n      className={cn(\n        \"pointer-events-none absolute inset-x-0 bottom-0 h-24 overflow-hidden\",\n        direction === \"top\" && \"inset-x-0 top-0 bottom-auto\",\n        direction === \"left\" && \"inset-y-0 left-0 right-auto w-24 h-full\",\n        direction === \"right\" && \"inset-y-0 right-0 left-auto w-24 h-full\",\n        className\n      )}\n      aria-hidden=\"true\"\n      {...props}\n    >\n      {layers.map(({ step, blurPx }, idx) => (\n        <div\n          key={idx}\n          style={{\n            backdropFilter: `blur(${blurPx.toFixed(1)}px)`,\n            WebkitBackdropFilter: `blur(${blurPx.toFixed(1)}px)`,\n            maskImage: `linear-gradient(to ${direction}, rgba(0,0,0,0) ${(idx / blurLayers) * 100}%, rgba(0,0,0,1) ${step * 100}%)`,\n            WebkitMaskImage: `linear-gradient(to ${direction}, rgba(0,0,0,0) ${(idx / blurLayers) * 100}%, rgba(0,0,0,1) ${step * 100}%)`,\n          }}\n          className=\"absolute inset-0\"\n        />\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/progressive-blur.tsx"
+    }
+  ]
+}

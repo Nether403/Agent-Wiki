@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "customer-story-masonry",
+  "type": "registry:ui",
+  "title": "Customer Story Masonry",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/customer-story-masonry.tsx",
+      "content": "/**\n * @license MIT\n * @origin Tailark / 21st.dev (https://tailark.com)\n * @author Tailark & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Quote, Sparkles, Star } from \"lucide-react\";\n\nexport interface TestimonialItem {\n  id: string;\n  quote: string;\n  author: string;\n  role: string;\n  company: string;\n  avatarUrl?: string;\n  metric?: string;\n}\n\nexport interface CustomerStoryMasonryProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  stories?: TestimonialItem[];\n}\n\nconst DEFAULT_STORIES: TestimonialItem[] = [\n  {\n    id: \"1\",\n    quote: \"With 30 Anti-Slop Rules enforcing Tailwind v4 and strict contrast, our Claude Code pipelines generate production PRs that require zero human cleanup.\",\n    author: \"Elena Rostova\",\n    role: \"VP of Engineering\",\n    company: \"Veloce Cloud\",\n    metric: \"0 AI Slop Violations\",\n  },\n  {\n    id: \"2\",\n    quote: \"The 15KB context limit was a game changer for our Hermes and Cursor agents. No more context blowing up midway through refactoring.\",\n    author: \"Marcus Vance\",\n    role: \"Staff AI Engineer\",\n    company: \"Synthetix Labs\",\n    metric: \"85% Token Savings\",\n  },\n  {\n    id: \"3\",\n    quote: \"Cathryn Lavery's 39 diagram blueprints rendered as pure, lightweight SVGs made our architecture docs look like a high-end design agency built them.\",\n    author: \"Sara Lin\",\n    role: \"Principal Architect\",\n    company: \"Komorebi Dynamics\",\n    metric: \"39 SVG Blueprints\",\n  },\n];\n\nexport function CustomerStoryMasonry({\n  title = \"Trusted by Autonomous Development Teams\",\n  stories = DEFAULT_STORIES,\n  className,\n  ...props\n}: CustomerStoryMasonryProps) {\n  return (\n    <section\n      className={cn(\n        \"flex flex-col w-full p-8 rounded-2xl border border-border bg-card shadow-sm space-y-6 text-card-foreground\",\n        className\n      )}\n      aria-label={title}\n      {...props}\n    >\n      <header className=\"text-center max-w-xl mx-auto space-y-2\">\n        <h3 className=\"text-lg font-bold text-foreground\">{title}</h3>\n        <p className=\"text-xs text-muted-foreground\">\n          Real telemetry and qualitative feedback from engineers using the Machine-First Design System.\n        </p>\n      </header>\n\n      <div className=\"grid grid-cols-1 md:grid-cols-3 gap-4\">\n        {stories.map((s) => (\n          <article\n            key={s.id}\n            className=\"flex flex-col justify-between p-5 rounded-xl border border-border bg-muted/20 hover:border-primary/40 transition-colors space-y-4 shadow-xs\"\n          >\n            <div className=\"space-y-3\">\n              <Quote className=\"h-5 w-5 text-primary/60\" aria-hidden=\"true\" />\n              <p className=\"text-xs text-foreground/90 leading-relaxed italic\">\n                \"{s.quote}\"\n              </p>\n            </div>\n\n            <footer className=\"pt-3 border-t border-border/40 flex items-center justify-between\">\n              <div>\n                <h4 className=\"text-xs font-bold text-foreground\">{s.author}</h4>\n                <p className=\"text-[10px] text-muted-foreground\">\n                  {s.role} · {s.company}\n                </p>\n              </div>\n\n              {s.metric && (\n                <span className=\"text-[10px] font-mono px-2 py-0.5 rounded bg-primary/10 text-primary font-semibold\">\n                  {s.metric}\n                </span>\n              )}\n            </footer>\n          </article>\n        ))}\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/customer-story-masonry.tsx"
+    }
+  ]
+}

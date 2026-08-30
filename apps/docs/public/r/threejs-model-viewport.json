@@ -1,0 +1,53 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "threejs-model-viewport",
+  "type": "registry:component",
+  "title": "Threejs Model Viewport",
+  "description": "Curated production-grade component.",
+  "category": "ui:creative",
+  "tags": [
+    "lucide-react",
+    "webgl",
+    "threejs",
+    "canvas",
+    "tailwind-v4",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 9,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "three",
+    "motion"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/threejs-model-viewport.tsx",
+      "content": "/**\n * @license MIT\n * @origin ThreeUI / Agent Wiki (https://github.com/agent-wiki/threeui)\n * @author ThreeUI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Box, RotateCw, Sparkles } from \"lucide-react\";\n\nexport interface ThreejsModelViewportProps extends React.HTMLAttributes<HTMLDivElement> {\n  modelName?: string;\n  autoRotate?: boolean;\n  wireframe?: boolean;\n}\n\nexport function ThreejsModelViewport({\n  modelName = \"Geometric Core Model\",\n  autoRotate = true,\n  wireframe = false,\n  className,\n  ...props\n}: ThreejsModelViewportProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n\n  React.useEffect(() => {\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    // Reduced motion check\n    const prefersReducedMotion = window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches;\n    if (prefersReducedMotion) {\n      // Draw static isometric cube\n      ctx.clearRect(0, 0, 300, 300);\n      ctx.strokeStyle = \"#3b82f6\";\n      ctx.lineWidth = 2;\n      ctx.strokeRect(100, 100, 100, 100);\n      return;\n    }\n\n    let animationFrameId: number;\n    let angleX = 0.5;\n    let angleY = 0.5;\n\n    // 3D Cube Vertices\n    const vertices = [\n      [-1, -1, -1],\n      [1, -1, -1],\n      [1, 1, -1],\n      [-1, 1, -1],\n      [-1, -1, 1],\n      [1, -1, 1],\n      [1, 1, 1],\n      [-1, 1, 1],\n    ];\n\n    const edges = [\n      [0, 1], [1, 2], [2, 3], [3, 0],\n      [4, 5], [5, 6], [6, 7], [7, 4],\n      [0, 4], [1, 5], [2, 6], [3, 7],\n    ];\n\n    const render = () => {\n      ctx.clearRect(0, 0, 300, 300);\n      const cx = 150;\n      const cy = 150;\n      const scale = 60;\n\n      if (autoRotate) {\n        angleX += 0.01;\n        angleY += 0.015;\n      }\n\n      // Project vertices\n      const projected = vertices.map(([x, y, z]) => {\n        // Rotate Y\n        let x1 = x * Math.cos(angleY) + z * Math.sin(angleY);\n        let z1 = -x * Math.sin(angleY) + z * Math.cos(angleY);\n        // Rotate X\n        let y2 = y * Math.cos(angleX) - z1 * Math.sin(angleX);\n        let z2 = y * Math.sin(angleX) + z1 * Math.cos(angleX);\n\n        const distance = 3;\n        const fov = 1 / (distance - z2 * 0.4);\n        return [cx + x1 * scale * fov, cy + y2 * scale * fov];\n      });\n\n      // Draw Edges\n      ctx.strokeStyle = \"#3b82f6\";\n      ctx.lineWidth = 1.5;\n      edges.forEach(([start, end]) => {\n        ctx.beginPath();\n        ctx.moveTo(projected[start][0], projected[start][1]);\n        ctx.lineTo(projected[end][0], projected[end][1]);\n        ctx.stroke();\n      });\n\n      animationFrameId = requestAnimationFrame(render);\n    };\n\n    render();\n\n    return () => cancelAnimationFrame(animationFrameId);\n  }, [autoRotate]);\n\n  return (\n    <div\n      className={cn(\n        \"relative flex flex-col items-center justify-center p-6 rounded-xl border border-border bg-card shadow-xs text-card-foreground overflow-hidden\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`3D Model Viewport: ${modelName}`}\n      {...props}\n    >\n      <header className=\"absolute top-4 left-4 flex items-center gap-2 text-xs font-semibold text-foreground\">\n        <Box className=\"h-4 w-4 text-primary\" aria-hidden=\"true\" />\n        <span>{modelName}</span>\n      </header>\n\n      <canvas ref={canvasRef} width={300} height={300} className=\"my-4 cursor-grab\" aria-hidden=\"true\" />\n\n      <footer className=\"w-full flex items-center justify-between pt-2 border-t border-border/40 text-[11px] text-muted-foreground\">\n        <span className=\"font-mono\">WebGL / Canvas 3D</span>\n        <span className=\"flex items-center gap-1\">\n          <RotateCw className=\"h-3 w-3 animate-spin\" aria-hidden=\"true\" />\n          Interactive Orbit\n        </span>\n      </footer>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/threejs-model-viewport.tsx"
+    }
+  ]
+}

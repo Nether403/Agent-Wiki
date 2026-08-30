@@ -1,0 +1,42 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "cyber-hud-frame",
+  "type": "registry:ui",
+  "title": "Cyber Hud Frame",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/cyber-hud-frame.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @author Community Contributor\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface CyberHudFrameProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  systemCode?: string;\n}\n\nexport function CyberHudFrame({\n  title = \"TELEMETRY OVERLAY\",\n  systemCode = \"SYS.CORE-01\",\n  children,\n  className,\n  ...props\n}: CyberHudFrameProps) {\n  return (\n    <div\n      className={cn(\n        \"relative p-6 rounded-xl border border-primary/40 bg-card/90 text-card-foreground shadow-lg overflow-hidden\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`HUD Frame: ${title}`}\n      {...props}\n    >\n      {/* Corner Bracket Accents */}\n      <span className=\"absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-primary\" aria-hidden=\"true\" />\n      <span className=\"absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-primary\" aria-hidden=\"true\" />\n      <span className=\"absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-primary\" aria-hidden=\"true\" />\n      <span className=\"absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-primary\" aria-hidden=\"true\" />\n\n      {/* Header bar */}\n      <header className=\"flex items-center justify-between pb-3 mb-4 border-b border-primary/20 text-[10px] font-mono text-primary font-bold tracking-widest uppercase\">\n        <span className=\"flex items-center gap-1.5\">\n          <span className=\"h-1.5 w-1.5 rounded-full bg-primary animate-pulse\" aria-hidden=\"true\" />\n          {title}\n        </span>\n        <span className=\"opacity-80\">{systemCode}</span>\n      </header>\n\n      <div className=\"relative z-10\">{children}</div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/cyber-hud-frame.tsx"
+    }
+  ]
+}

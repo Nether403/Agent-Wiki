@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "theme-toggle-dropdown",
+  "type": "registry:ui",
+  "title": "Theme Toggle Dropdown",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "option",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/utility/theme-toggle-dropdown.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @author Community Contributor\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Sun, Moon, Laptop, ChevronDown, Check } from \"lucide-react\";\n\nexport interface ThemeToggleDropdownProps extends React.HTMLAttributes<HTMLDivElement> {\n  onThemeSelect?: (theme: \"light\" | \"dark\" | \"system\") => void;\n}\n\nexport function ThemeToggleDropdown({\n  onThemeSelect,\n  className,\n  ...props\n}: ThemeToggleDropdownProps) {\n  const [selectedTheme, setSelectedTheme] = React.useState<\"light\" | \"dark\" | \"system\">(\"dark\");\n  const [isOpen, setIsOpen] = React.useState(false);\n\n  const handleSelect = (theme: \"light\" | \"dark\" | \"system\") => {\n    setSelectedTheme(theme);\n    setIsOpen(false);\n    onThemeSelect?.(theme);\n\n    if (theme === \"system\") {\n      const systemDark = window.matchMedia(\"(prefers-color-scheme: dark)\").matches;\n      document.documentElement.classList.toggle(\"dark\", systemDark);\n    } else {\n      document.documentElement.classList.toggle(\"dark\", theme === \"dark\");\n    }\n  };\n\n  return (\n    <div className={cn(\"relative inline-block text-left\", className)} {...props}>\n      <button\n        type=\"button\"\n        onClick={() => setIsOpen((prev) => !prev)}\n        className=\"flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border bg-card text-card-foreground text-xs font-semibold hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shadow-xs\"\n        aria-expanded={isOpen}\n        aria-haspopup=\"listbox\"\n        aria-label=\"Theme selection dropdown\"\n      >\n        {selectedTheme === \"light\" && <Sun className=\"h-3.5 w-3.5 text-amber-500\" aria-hidden=\"true\" />}\n        {selectedTheme === \"dark\" && <Moon className=\"h-3.5 w-3.5 text-primary\" aria-hidden=\"true\" />}\n        {selectedTheme === \"system\" && <Laptop className=\"h-3.5 w-3.5 text-muted-foreground\" aria-hidden=\"true\" />}\n        <span className=\"capitalize\">{selectedTheme}</span>\n        <ChevronDown className=\"h-3 w-3 opacity-60\" aria-hidden=\"true\" />\n      </button>\n\n      {isOpen && (\n        <div\n          role=\"listbox\"\n          className=\"absolute right-0 mt-1.5 w-36 rounded-xl border border-border bg-popover p-1 shadow-lg z-50 animate-in fade-in-50 zoom-in-95\"\n        >\n          {([\"light\", \"dark\", \"system\"] as const).map((t) => (\n            <button\n              key={t}\n              role=\"option\"\n              aria-selected={t === selectedTheme}\n              onClick={() => handleSelect(t)}\n              className={cn(\n                \"flex items-center justify-between w-full px-2.5 py-1.5 rounded-md text-xs text-left capitalize transition-colors focus-visible:outline-none focus-visible:bg-accent\",\n                t === selectedTheme ? \"bg-accent text-accent-foreground font-semibold\" : \"text-popover-foreground hover:bg-muted\"\n              )}\n            >\n              <span>{t}</span>\n              {t === selectedTheme && <Check className=\"h-3 w-3 text-primary\" aria-hidden=\"true\" />}\n            </button>\n          ))}\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/theme-toggle-dropdown.tsx"
+    }
+  ]
+}

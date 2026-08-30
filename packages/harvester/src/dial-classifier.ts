@@ -195,6 +195,69 @@ const HARVESTER_SLOP_CHECKS: Array<{
     regex: /(?:bg-white|bg-black)\b|bg-\[#(?:fff|ffffff|000|000000)\]/i,
     recommendation: "Replace raw unshaded background with semantic tokens (bg-card, bg-background, bg-muted) and dark variant.",
   },
+  {
+    id: "SLOP-022",
+    name: "AI Writing Clichés",
+    severity: "Medium",
+    regex: /(?:in today's fast-paced|unleash the power of|it's not just .* it's|the future is here|supercharge your workflow|revolutionize the way you|dive deep into|testament to)/i,
+    recommendation: "Replace generic AI clichés with direct, high-signal, benefit-driven copy.",
+  },
+  {
+    id: "SLOP-023",
+    name: "Oxlint Contract Hygiene",
+    severity: "High",
+    regex: /(?:Record<string,\s*any>|:\s*any\[\]|\((?:e|evt|event|item|data|val|props):\s*any\))/i,
+    recommendation: "Define explicit TypeScript interfaces and avoid loose 'any' signatures.",
+  },
+  {
+    id: "SLOP-024",
+    name: "Strict WCAG 2.1 AA Contrast Ratio",
+    severity: "High",
+    regex: /(?:text-muted-foreground\/(?:10|20|30)|text-zinc-400\s+bg-zinc-300|text-gray-300\s+bg-gray-200|text-white\/20\s+bg-white)/i,
+    recommendation: "Ensure text contrast meets WCAG 2.1 AA (4.5:1 minimum for normal text).",
+  },
+  {
+    id: "SLOP-025",
+    name: "Uncancelled Timer or Listener Leaks",
+    severity: "High",
+    regex: /(?:setInterval|addEventListener)\(/i,
+    recommendation: "Return cleanup functions in useEffect for any registered timers or event listeners.",
+  },
+  {
+    id: "SLOP-026",
+    name: "Arbitrary Color Token Escapes",
+    severity: "Medium",
+    regex: /(?:bg|text|border)-\[#(?:0f172a|1e293b|334155|64748b|94a3b8|cbd5e1|e2e8f0|f1f5f9|f8fafc)\]/i,
+    recommendation: "Replace arbitrary hex colors with semantic tokens (bg-background, text-foreground, border-border).",
+  },
+  {
+    id: "SLOP-027",
+    name: "Unbounded List Rendering Without Stable Key",
+    severity: "Medium",
+    regex: /\.map\(\s*\([^)]*\)\s*=>\s*<[a-zA-Z]/i,
+    recommendation: "Provide unique, stable React keys for dynamic mapped lists.",
+  },
+  {
+    id: "SLOP-028",
+    name: "Missing Spring Fallback Damping",
+    severity: "Low",
+    regex: /stiffness:\s*(?:[5-9]\d{2}|\d{4,})/i,
+    recommendation: "Ensure high-stiffness spring configurations specify adequate damping to prevent visual stutter.",
+  },
+  {
+    id: "SLOP-029",
+    name: "Hardcoded SVG Dimensions",
+    severity: "Low",
+    regex: /<svg\b[^>]*\b(?:width|height)=["'](?:[5-9]\d{2}|\d{4,})["']/i,
+    recommendation: "Use scalable viewBox and standard Tailwind sizing classes on inline SVGs.",
+  },
+  {
+    id: "SLOP-030",
+    name: "Clean SPDX & Origin Header Verification",
+    severity: "High",
+    regex: /^$/i,
+    recommendation: "Inject machine-readable @origin, @license, and @curated-by frontmatter headers.",
+  },
 ];
 
 /**
@@ -304,7 +367,7 @@ export function reviewComponentSlop(
 
   lines.forEach((line, index) => {
     for (const check of HARVESTER_SLOP_CHECKS) {
-      if (check.id === "SLOP-020") continue; // Special handling for attribution
+      if (check.id === "SLOP-020" || check.id === "SLOP-030") continue; // Special handling for whole-file attribution
       if (check.id === "SLOP-012" && (line.includes("focus-visible:") || line.includes("focus:ring"))) {
         continue; // Handled focus ring replacement
       }

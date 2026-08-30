@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "agent-step-pipeline",
+  "type": "registry:ui",
+  "title": "Agent Step Pipeline",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/agent-step-pipeline.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @author Community Contributor\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { CheckCircle2, Clock, Terminal, AlertTriangle, ArrowRight, Bot, Cpu } from \"lucide-react\";\n\nexport interface PipelineStep {\n  id: string;\n  agentRole: string;\n  toolCall: string;\n  durationMs: number;\n  tokensUsed: number;\n  status: \"success\" | \"running\" | \"error\" | \"pending\";\n  outputSummary?: string;\n}\n\nexport interface AgentStepPipelineProps extends React.HTMLAttributes<HTMLDivElement> {\n  sessionTitle?: string;\n  steps?: PipelineStep[];\n}\n\nconst DEFAULT_STEPS: PipelineStep[] = [\n  { id: \"1\", agentRole: \"Architect\", toolCall: \"search_library({ query: 'dock' })\", durationMs: 140, tokensUsed: 120, status: \"success\", outputSummary: \"Discovered floating-dock with variance 6, motion 7\" },\n  { id: \"2\", agentRole: \"Security Sandbox\", toolCall: \"scanMaliciousPayload(source)\", durationMs: 45, tokensUsed: 40, status: \"success\", outputSummary: \"Clean AST payload (0 dangerous sink patterns)\" },\n  { id: \"3\", agentRole: \"Anti-Slop Linter\", toolCall: \"audit_code_slop(source)\", durationMs: 310, tokensUsed: 180, status: \"success\", outputSummary: \"Verified 30 rules (Score: 100/100, 0 violations)\" },\n  { id: \"4\", agentRole: \"Builder\", toolCall: \"get_installation_schema('floating-dock')\", durationMs: 520, tokensUsed: 410, status: \"success\", outputSummary: \"Installed floating-dock.tsx into components/ui/\" },\n];\n\nexport function AgentStepPipeline({\n  sessionTitle = \"Subagent Execution DAG Pipeline\",\n  steps = DEFAULT_STEPS,\n  className,\n  ...props\n}: AgentStepPipelineProps) {\n  const totalDuration = steps.reduce((sum, s) => sum + s.durationMs, 0);\n  const totalTokens = steps.reduce((sum, s) => sum + s.tokensUsed, 0);\n\n  return (\n    <section\n      className={cn(\n        \"flex flex-col w-full rounded-2xl border border-border bg-card shadow-sm p-6 space-y-6 text-card-foreground\",\n        className\n      )}\n      aria-label={`Agent Step Pipeline: ${sessionTitle}`}\n      {...props}\n    >\n      <header className=\"flex flex-wrap items-center justify-between gap-4 border-b border-border pb-4\">\n        <div className=\"flex items-center gap-3\">\n          <div className=\"flex items-center justify-center h-9 w-9 rounded-xl bg-primary/10 text-primary border border-primary/20\">\n            <Bot className=\"h-5 w-5\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <h3 className=\"text-sm font-bold text-foreground\">{sessionTitle}</h3>\n            <p className=\"text-xs text-muted-foreground\">Autonomous multi-agent verification trajectory</p>\n          </div>\n        </div>\n\n        <div className=\"flex items-center gap-3 text-xs font-mono text-muted-foreground\">\n          <span className=\"px-2 py-1 rounded-md bg-muted border border-border\">\n            ⏱️ {totalDuration}ms\n          </span>\n          <span className=\"px-2 py-1 rounded-md bg-muted border border-border\">\n            🪙 {totalTokens} tokens\n          </span>\n        </div>\n      </header>\n\n      {/* Step Pipeline List */}\n      <div className=\"flex flex-col space-y-4\">\n        {steps.map((step, idx) => (\n          <article\n            key={step.id}\n            className=\"flex flex-col p-4 rounded-xl border border-border bg-muted/20 hover:border-primary/40 transition-colors space-y-2\"\n          >\n            <div className=\"flex items-center justify-between\">\n              <div className=\"flex items-center gap-2\">\n                <span className=\"flex items-center justify-center h-5 w-5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold\">\n                  {idx + 1}\n                </span>\n                <span className=\"text-xs font-bold text-foreground\">{step.agentRole}</span>\n                <span className=\"text-muted-foreground text-xs\">•</span>\n                <code className=\"text-xs font-mono text-primary bg-primary/10 px-2 py-0.5 rounded\">\n                  {step.toolCall}\n                </code>\n              </div>\n\n              <div className=\"flex items-center gap-2 text-xs\">\n                {step.status === \"success\" && (\n                  <span className=\"flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-semibold text-[11px]\">\n                    <CheckCircle2 className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                    Passed\n                  </span>\n                )}\n                {step.status === \"running\" && (\n                  <span className=\"flex items-center gap-1 text-primary font-semibold text-[11px] animate-pulse\">\n                    <Clock className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                    Running\n                  </span>\n                )}\n                {step.status === \"error\" && (\n                  <span className=\"flex items-center gap-1 text-destructive font-semibold text-[11px]\">\n                    <AlertTriangle className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                    Failed\n                  </span>\n                )}\n              </div>\n            </div>\n\n            {step.outputSummary && (\n              <p className=\"text-xs text-muted-foreground pl-7 leading-relaxed\">\n                {step.outputSummary}\n              </p>\n            )}\n          </article>\n        ))}\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/agent-step-pipeline.tsx"
+    }
+  ]
+}

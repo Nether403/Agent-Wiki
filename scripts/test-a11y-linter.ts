@@ -105,7 +105,7 @@ function runA11yLinter() {
       item.category === "ui:motion" ||
       content.includes("requestAnimationFrame");
 
-    if (isHeavyMotion && !a11y?.reduced_motion_supported && !content.includes("prefers-reduced-motion")) {
+    if (isHeavyMotion && !a11y?.reduced_motion_supported && !content.includes("prefers-reduced-motion") && !content.includes("useReducedMotion")) {
       issues.push("Motion-intensive component missing reduced motion support or fallback check.");
     }
 

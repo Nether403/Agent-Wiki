@@ -1,0 +1,56 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ai-artifact-canvas",
+  "type": "registry:component",
+  "title": "Ai Artifact Canvas",
+  "description": "Curated production-grade component.",
+  "category": "ui:creative",
+  "tags": [
+    "lucide-react",
+    "webgl",
+    "threejs",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "canvas"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 9,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "tab",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "three",
+    "motion"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/ai-artifact-canvas.tsx",
+      "content": "/**\n * @license MIT\n * @origin Cult UI / Agent Wiki (https://cult-ui.com)\n * @author Cult UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Code2, Play, GitCompare, Maximize2, Minimize2, Copy, Check, Download, RefreshCw } from \"lucide-react\";\n\nexport interface AiArtifactCanvasProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  code: string;\n  diffCode?: string;\n  previewNode?: React.ReactNode;\n  defaultTab?: \"preview\" | \"code\" | \"diff\";\n  onCopy?: (code: string) => void;\n  onDownload?: (code: string, filename: string) => void;\n  filename?: string;\n}\n\nexport function AiArtifactCanvas({\n  title = \"Component Sandbox Artifact\",\n  code,\n  diffCode,\n  previewNode,\n  defaultTab = \"preview\",\n  filename = \"component.tsx\",\n  onCopy,\n  onDownload,\n  className,\n  ...props\n}: AiArtifactCanvasProps) {\n  const [activeTab, setActiveTab] = React.useState<\"preview\" | \"code\" | \"diff\">(defaultTab);\n  const [isFullscreen, setIsFullscreen] = React.useState(false);\n  const [copied, setCopied] = React.useState(false);\n  const prefersReducedMotion = typeof window !== \"undefined\" && window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches;\n\n  const handleCopy = () => {\n    navigator.clipboard?.writeText(code);\n    setCopied(true);\n    onCopy?.(code);\n    setTimeout(() => setCopied(false), 2000);\n  };\n\n  const handleDownload = () => {\n    if (onDownload) {\n      onDownload(code, filename);\n      return;\n    }\n    const blob = new Blob([code], { type: \"text/plain;charset=utf-8\" });\n    const url = URL.createObjectURL(blob);\n    const link = document.createElement(\"a\");\n    link.href = url;\n    link.download = filename;\n    link.click();\n    URL.revokeObjectURL(url);\n  };\n\n  return (\n    <section\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card shadow-md overflow-hidden transition-colors\",\n        isFullscreen && \"fixed inset-4 z-50 rounded-2xl shadow-2xl bg-background\",\n        className\n      )}\n      aria-label={`Artifact sandbox: ${title}`}\n      {...props}\n    >\n      {/* Top Header Bar */}\n      <header className=\"flex items-center justify-between px-4 py-2.5 border-b border-border bg-muted/40\">\n        <div className=\"flex items-center gap-3\">\n          <div className=\"flex items-center gap-1.5\">\n            <span className=\"h-2.5 w-2.5 rounded-full bg-destructive/80\" aria-hidden=\"true\" />\n            <span className=\"h-2.5 w-2.5 rounded-full bg-amber-500/80\" aria-hidden=\"true\" />\n            <span className=\"h-2.5 w-2.5 rounded-full bg-emerald-500/80\" aria-hidden=\"true\" />\n          </div>\n          <h3 className=\"text-xs font-semibold text-foreground tracking-tight\">{title}</h3>\n        </div>\n\n        {/* Tab switcher */}\n        <nav className=\"flex items-center p-0.5 rounded-lg bg-muted border border-border\" role=\"tablist\">\n          <button\n            type=\"button\"\n            role=\"tab\"\n            aria-selected={activeTab === \"preview\"}\n            onClick={() => setActiveTab(\"preview\")}\n            className={cn(\n              \"flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n              activeTab === \"preview\" ? \"bg-background text-foreground shadow-xs font-semibold\" : \"text-muted-foreground hover:text-foreground\"\n            )}\n          >\n            <Play className=\"h-3 w-3\" aria-hidden=\"true\" />\n            <span>Preview</span>\n          </button>\n\n          <button\n            type=\"button\"\n            role=\"tab\"\n            aria-selected={activeTab === \"code\"}\n            onClick={() => setActiveTab(\"code\")}\n            className={cn(\n              \"flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n              activeTab === \"code\" ? \"bg-background text-foreground shadow-xs font-semibold\" : \"text-muted-foreground hover:text-foreground\"\n            )}\n          >\n            <Code2 className=\"h-3 w-3\" aria-hidden=\"true\" />\n            <span>Code</span>\n          </button>\n\n          {diffCode && (\n            <button\n              type=\"button\"\n              role=\"tab\"\n              aria-selected={activeTab === \"diff\"}\n              onClick={() => setActiveTab(\"diff\")}\n              className={cn(\n                \"flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                activeTab === \"diff\" ? \"bg-background text-foreground shadow-xs font-semibold\" : \"text-muted-foreground hover:text-foreground\"\n              )}\n            >\n              <GitCompare className=\"h-3 w-3\" aria-hidden=\"true\" />\n              <span>Diff</span>\n            </button>\n          )}\n        </nav>\n\n        {/* Action Controls */}\n        <div className=\"flex items-center gap-1\">\n          <button\n            type=\"button\"\n            onClick={handleCopy}\n            className=\"flex items-center justify-center p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            aria-label=\"Copy artifact source code\"\n          >\n            {copied ? <Check className=\"h-3.5 w-3.5 text-primary\" /> : <Copy className=\"h-3.5 w-3.5\" />}\n          </button>\n\n          <button\n            type=\"button\"\n            onClick={handleDownload}\n            className=\"flex items-center justify-center p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            aria-label=\"Download artifact TSX file\"\n          >\n            <Download className=\"h-3.5 w-3.5\" />\n          </button>\n\n          <button\n            type=\"button\"\n            onClick={() => setIsFullscreen((prev) => !prev)}\n            className=\"flex items-center justify-center p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            aria-label={isFullscreen ? \"Exit fullscreen\" : \"Expand to fullscreen\"}\n          >\n            {isFullscreen ? <Minimize2 className=\"h-3.5 w-3.5\" /> : <Maximize2 className=\"h-3.5 w-3.5\" />}\n          </button>\n        </div>\n      </header>\n\n      {/* Main View Area */}\n      <div className=\"relative flex-1 min-h-[320px] max-h-[600px] overflow-auto p-4\">\n        {activeTab === \"preview\" && (\n          <div className=\"flex items-center justify-center min-h-[280px] w-full bg-background rounded-lg border border-border/40 p-6\">\n            {previewNode || (\n              <div className=\"flex flex-col items-center justify-center text-center space-y-2 text-muted-foreground\">\n                <Code2 className=\"h-8 w-8 text-primary/70\" aria-hidden=\"true\" />\n                <p className=\"text-xs\">Live dynamic render preview active.</p>\n              </div>\n            )}\n          </div>\n        )}\n\n        {activeTab === \"code\" && (\n          <pre className=\"text-xs font-mono text-foreground bg-muted/30 p-4 rounded-lg border border-border/60 overflow-x-auto leading-relaxed\">\n            <code>{code}</code>\n          </pre>\n        )}\n\n        {activeTab === \"diff\" && diffCode && (\n          <div className=\"grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono\">\n            <div className=\"flex flex-col\">\n              <span className=\"text-[11px] font-semibold text-muted-foreground mb-1.5\">Original (Before)</span>\n              <pre className=\"p-3 bg-destructive/5 text-destructive-foreground border border-destructive/20 rounded-lg overflow-x-auto\">\n                <code>{diffCode}</code>\n              </pre>\n            </div>\n            <div className=\"flex flex-col\">\n              <span className=\"text-[11px] font-semibold text-primary mb-1.5\">Remediated (Zero-Slop After)</span>\n              <pre className=\"p-3 bg-primary/5 text-foreground border border-primary/30 rounded-lg overflow-x-auto\">\n                <code>{code}</code>\n              </pre>\n            </div>\n          </div>\n        )}\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/ai-artifact-canvas.tsx"
+    }
+  ]
+}

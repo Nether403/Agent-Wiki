@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "footer-mega-menu",
+  "type": "registry:ui",
+  "title": "Footer Mega Menu",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/footer-mega-menu.tsx",
+      "content": "/**\n * @license MIT\n * @origin Tailark / 21st.dev (https://tailark.com)\n * @author Tailark & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Globe, Terminal, Shield, Sparkles } from \"lucide-react\";\n\nexport interface FooterNavSection {\n  title: string;\n  links: Array<{ label: string; href: string }>;\n}\n\nexport interface FooterMegaMenuProps extends React.HTMLAttributes<HTMLElement> {\n  sections?: FooterNavSection[];\n}\n\nconst DEFAULT_SECTIONS: FooterNavSection[] = [\n  {\n    title: \"Taxonomy Domains\",\n    links: [\n      { label: \"AI-Native Primitives\", href: \"#\" },\n      { label: \"Editorial Diagrams (39)\", href: \"#\" },\n      { label: \"Motion & Springs\", href: \"#\" },\n      { label: \"Procedural 3D & WebGL\", href: \"#\" },\n      { label: \"Enterprise Application\", href: \"#\" },\n    ],\n  },\n  {\n    title: \"Governance & Quality\",\n    links: [\n      { label: \"30 Anti-Slop Rulepack\", href: \"#\" },\n      { label: \"Calibrated 1-10 Dials\", href: \"#\" },\n      { label: \"Tripwire Security Sandbox\", href: \"#\" },\n      { label: \"Unslop Retheming CLI\", href: \"#\" },\n      { label: \"WCAG 2.1 AA A11y Suite\", href: \"#\" },\n    ],\n  },\n  {\n    title: \"Agent Ecosystem\",\n    links: [\n      { label: \"Claude Code Integration\", href: \"#\" },\n      { label: \"Cursor IDE & MDC Rules\", href: \"#\" },\n      { label: \"Windsurf Cascade Sync\", href: \"#\" },\n      { label: \"Hermes CLI & OpenClaw\", href: \"#\" },\n      { label: \"Cloudflare Edge MCP\", href: \"#\" },\n    ],\n  },\n  {\n    title: \"Open Source Registry\",\n    links: [\n      { label: \"llms.txt Specification\", href: \"/llms.txt\" },\n      { label: \"llms-full.txt Context\", href: \"/llms-full.txt\" },\n      { label: \"Shadcn v3 Registry Map\", href: \"/r/\" },\n      { label: \"GitHub Repository\", href: \"https://github.com/agent-wiki/design-wiki\" },\n    ],\n  },\n];\n\nexport function FooterMegaMenu({\n  sections = DEFAULT_SECTIONS,\n  className,\n  ...props\n}: FooterMegaMenuProps) {\n  return (\n    <footer\n      className={cn(\n        \"flex flex-col w-full border-t border-border bg-card text-card-foreground p-8 md:p-12 space-y-8\",\n        className\n      )}\n      {...props}\n    >\n      <div className=\"grid grid-cols-2 md:grid-cols-4 gap-8\">\n        {sections.map((section) => (\n          <div key={section.title} className=\"flex flex-col space-y-3\">\n            <h4 className=\"text-xs font-bold text-foreground tracking-wider uppercase\">\n              {section.title}\n            </h4>\n            <ul className=\"flex flex-col space-y-2 text-xs text-muted-foreground\">\n              {section.links.map((link) => (\n                <li key={link.label}>\n                  <a\n                    href={link.href}\n                    className=\"hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n                  >\n                    {link.label}\n                  </a>\n                </li>\n              ))}\n            </ul>\n          </div>\n        ))}\n      </div>\n\n      <div className=\"pt-8 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"h-5 w-5 rounded-md bg-primary text-primary-foreground flex items-center justify-center font-bold text-[10px]\">\n            W\n          </div>\n          <span className=\"font-semibold text-foreground\">Machine-First Design Agent Wiki</span>\n          <span>© 2026. MIT Licensed.</span>\n        </div>\n\n        <div className=\"flex items-center gap-4 text-[11px] font-mono\">\n          <span className=\"flex items-center gap-1\">\n            <Shield className=\"h-3 w-3 text-emerald-500\" aria-hidden=\"true\" />\n            100% Zero-Slop Verified\n          </span>\n        </div>\n      </div>\n    </footer>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/footer-mega-menu.tsx"
+    }
+  ]
+}

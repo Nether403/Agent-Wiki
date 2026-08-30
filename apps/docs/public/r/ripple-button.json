@@ -1,0 +1,42 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ripple-button",
+  "type": "registry:ui",
+  "title": "Ripple Button",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/ripple-button.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @author Community Contributor\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface RippleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  rippleColor?: string;\n}\n\ninterface Ripple {\n  x: number;\n  y: number;\n  size: number;\n  id: number;\n}\n\nexport function RippleButton({\n  children,\n  rippleColor = \"rgba(255, 255, 255, 0.35)\",\n  className,\n  onClick,\n  ...props\n}: RippleButtonProps) {\n  const [ripples, setRipples] = React.useState<Ripple[]>([]);\n\n  const createRipple = (e: React.MouseEvent<HTMLButtonElement>) => {\n    const button = e.currentTarget;\n    const rect = button.getBoundingClientRect();\n    const size = Math.max(rect.width, rect.height);\n    const x = e.clientX - rect.left - size / 2;\n    const y = e.clientY - rect.top - size / 2;\n\n    const newRipple: Ripple = { x, y, size, id: Date.now() };\n    setRipples((prev) => [...prev, newRipple]);\n\n    onClick?.(e);\n  };\n\n  const removeRipple = (id: number) => {\n    setRipples((prev) => prev.filter((r) => r.id !== id));\n  };\n\n  return (\n    <button\n      type=\"button\"\n      onClick={createRipple}\n      className={cn(\n        \"relative inline-flex items-center justify-center px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-primary-foreground overflow-hidden shadow-xs hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\",\n        className\n      )}\n      {...props}\n    >\n      <span className=\"relative z-10\">{children}</span>\n\n      {ripples.map((ripple) => (\n        <span\n          key={ripple.id}\n          onAnimationEnd={() => removeRipple(ripple.id)}\n          style={{\n            top: ripple.y,\n            left: ripple.x,\n            width: ripple.size,\n            height: ripple.size,\n            backgroundColor: rippleColor,\n          }}\n          className=\"absolute rounded-full pointer-events-none animate-ping opacity-75\"\n          aria-hidden=\"true\"\n        />\n      ))}\n    </button>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/ripple-button.tsx"
+    }
+  ]
+}

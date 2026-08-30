@@ -227,6 +227,105 @@ export const SLOP_RULES: SlopRule[] = [
       !line.includes("bg-black/") &&
       (/(?:bg-white|bg-black)\b/i.test(line) || /bg-\[#(?:fff|ffffff|000|000000)\]/i.test(line)),
   },
+  {
+    id: "SLOP-022",
+    name: "AI Writing Clichés",
+    category: "Copy & Writing",
+    severity: "Medium",
+    description: "Bans AI writing clichés and tropes (e.g. 'In today's fast-paced world', 'Unleash the power of', 'The future of X is here').",
+    check: (line) =>
+      /(?:in today's fast-paced|unleash the power of|it's not just .* it's|the future is here|supercharge your workflow|revolutionize the way you|dive deep into|testament to)/i.test(
+        line
+      ),
+  },
+  {
+    id: "SLOP-023",
+    name: "Oxlint Contract Hygiene",
+    category: "TypeScript Safety",
+    severity: "High",
+    description: "Rejects loose Record<string, any>, untyped callback parameters, and unconstrained any interfaces.",
+    check: (line) =>
+      /(?:Record<string,\s*any>|:\s*any\[\]|\((?:e|evt|event|item|data|val|props):\s*any\))/i.test(
+        line
+      ),
+  },
+  {
+    id: "SLOP-024",
+    name: "Strict WCAG 2.1 AA Contrast Ratio",
+    category: "Accessibility",
+    severity: "High",
+    description: "Flags low-contrast text color combinations (e.g. muted text opacity under 40% or light gray on light gray backgrounds).",
+    check: (line) =>
+      /(?:text-muted-foreground\/(?:10|20|30)|text-zinc-400\s+bg-zinc-300|text-gray-300\s+bg-gray-200|text-white\/20\s+bg-white)/i.test(
+        line
+      ),
+  },
+  {
+    id: "SLOP-025",
+    name: "Uncancelled Timer or Listener Leaks",
+    category: "Performance & Architecture",
+    severity: "High",
+    description: "Flags timer (setInterval) or event listener attachments in useEffect missing return cleanup handler.",
+    check: (line, content) =>
+      (line.includes("setInterval(") || line.includes("addEventListener(")) &&
+      content.includes("useEffect(") &&
+      !content.includes("clearInterval") &&
+      !content.includes("removeEventListener"),
+  },
+  {
+    id: "SLOP-026",
+    name: "Arbitrary Color Token Escapes",
+    category: "Styling & Color",
+    severity: "Medium",
+    description: "Flags hardcoded hex/RGB color escapes where standard semantic tokens (bg-background, text-foreground, border-border) should be used.",
+    check: (line) =>
+      /(?:bg|text|border)-\[#(?:0f172a|1e293b|334155|64748b|94a3b8|cbd5e1|e2e8f0|f1f5f9|f8fafc)\]/i.test(
+        line
+      ),
+  },
+  {
+    id: "SLOP-027",
+    name: "Unbounded List Rendering Without Stable Key",
+    category: "Architecture & Quality",
+    severity: "Medium",
+    description: "Flags .map() iterations over JSX elements missing stable keys or using fragile array index fallback.",
+    check: (line) =>
+      /\.map\(\s*\([^)]*\)\s*=>\s*<[a-zA-Z]/i.test(line) &&
+      !line.includes("key=") &&
+      !line.includes("return"),
+  },
+  {
+    id: "SLOP-028",
+    name: "Missing Spring Fallback Damping",
+    category: "Motion Quality",
+    severity: "Low",
+    description: "Flags Framer Motion spring physics definitions with excessive stiffness (>500) and zero/low damping.",
+    check: (line) =>
+      /stiffness:\s*(?:[5-9]\d{2}|\d{4,})/i.test(line) &&
+      !line.includes("damping:"),
+  },
+  {
+    id: "SLOP-029",
+    name: "Hardcoded SVG Dimensions",
+    category: "Iconography & A11y",
+    severity: "Low",
+    description: "Flags raw inline SVGs with fixed pixel dimensions and missing scalable viewBox or currentColor inheritance.",
+    check: (line) =>
+      /<svg\b[^>]*\b(?:width|height)=["'](?:[5-9]\d{2}|\d{4,})["'](?!.*viewBox)/i.test(
+        line
+      ),
+  },
+  {
+    id: "SLOP-030",
+    name: "Clean SPDX & Origin Header Verification",
+    category: "Legal & IP Compliance",
+    severity: "High",
+    description: "Requires verified machine-readable @origin, @license, and @curated-by frontmatter headers on all registry components.",
+    check: (line, content, lineIndex, filePath) =>
+      lineIndex === 0 &&
+      Boolean(filePath && (filePath.includes("registry") || filePath.includes("components"))) &&
+      (!content.includes("@origin") || !content.includes("@license") || !content.includes("@curated-by")),
+  },
 ];
 
 export interface CssAntiPatternMatch {

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "waveform-audio-player",
+  "type": "registry:component",
+  "title": "Waveform Audio Player",
+  "description": "Curated production-grade component.",
+  "category": "ui:media",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/media/waveform-audio-player.tsx",
+      "content": "/**\n * @license MIT\n * @origin Remocn / Remotion (https://remotion.dev)\n * @author Remotion & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Play, Pause, Volume2 } from \"lucide-react\";\n\nexport interface WaveformAudioPlayerProps extends React.HTMLAttributes<HTMLDivElement> {\n  trackTitle?: string;\n  artist?: string;\n  durationSeconds?: number;\n}\n\nexport function WaveformAudioPlayer({\n  trackTitle = \"Synthesized Voiceover Track\",\n  artist = \"Deepgram Nova-2\",\n  durationSeconds = 45,\n  className,\n  ...props\n}: WaveformAudioPlayerProps) {\n  const [isPlaying, setIsPlaying] = React.useState(false);\n  const [progress, setProgress] = React.useState(35); // 0-100\n\n  return (\n    <div\n      className={cn(\n        \"flex items-center gap-4 p-4 rounded-xl border border-border bg-card shadow-xs text-card-foreground\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Audio Player: ${trackTitle} by ${artist}`}\n      {...props}\n    >\n      <button\n        type=\"button\"\n        onClick={() => setIsPlaying((p) => !p)}\n        className=\"flex items-center justify-center h-10 w-10 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shrink-0 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        aria-label={isPlaying ? \"Pause audio\" : \"Play audio\"}\n      >\n        {isPlaying ? <Pause className=\"h-4 w-4\" /> : <Play className=\"h-4 w-4 fill-current ml-0.5\" />}\n      </button>\n\n      <div className=\"flex flex-col flex-1 space-y-1.5 overflow-hidden\">\n        <div className=\"flex items-center justify-between text-xs\">\n          <span className=\"font-bold text-foreground truncate\">{trackTitle}</span>\n          <span className=\"text-[10px] font-mono text-muted-foreground\">{artist}</span>\n        </div>\n\n        {/* Waveform Bar Track */}\n        <div\n          onClick={(e) => {\n            const rect = e.currentTarget.getBoundingClientRect();\n            const pct = Math.max(0, Math.min((e.clientX - rect.left) / rect.width * 100, 100));\n            setProgress(pct);\n          }}\n          className=\"flex items-center gap-1 h-6 cursor-pointer\"\n        >\n          {Array.from({ length: 32 }).map((_, i) => {\n            const barPct = (i / 32) * 100;\n            const isFilled = barPct <= progress;\n            const height = Math.sin(i * 0.4) * 40 + 50;\n\n            return (\n              <div\n                key={i}\n                style={{ height: `${height}%` }}\n                className={cn(\n                  \"flex-1 min-w-[2px] rounded-full transition-colors\",\n                  isFilled ? \"bg-primary\" : \"bg-muted-foreground/30\"\n                )}\n                aria-hidden=\"true\"\n              />\n            );\n          })}\n        </div>\n      </div>\n\n      <div className=\"flex items-center gap-2 pl-2 border-l border-border/40 text-muted-foreground shrink-0\">\n        <Volume2 className=\"h-4 w-4\" aria-hidden=\"true\" />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/waveform-audio-player.tsx"
+    }
+  ]
+}

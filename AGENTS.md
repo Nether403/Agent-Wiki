@@ -40,8 +40,9 @@ When a user asks you to build, modify, or redesign an interface, you must execut
 Before writing code, query our machine-readable discovery endpoints:
 1. Query MCP `@design-wiki/mcp`:
    - `search_library({ query: "dock", category: "ui:motion" })` (or `search_components`) (< 15KB payloads)
-   - `fetch_raw_markup({ name: "floating-dock" })` (fetches structured YAML frontmatter & verified TSX)
-   - `get_installation_schema({ name: "floating-dock", packageManager: "pnpm" })`
+   - `fetch_raw_markup({ name: "floating-dock" })` (or `fetch_raw_markdown`) (fetches structured YAML frontmatter & verified TSX)
+   - `get_installation_schema({ name: "floating-dock", packageManager: "pnpm" })` (or `get_installation_commands`)
+   - `audit_code_slop({ code: "<raw-code>" })` / `audit_and_fix_slop({ code: "<raw-code>" })` (auto-remaps anti-patterns to zero-slop TSX)
 2. Or load and parse `/public/llms.txt` and `/raw/components/<name>.md`.
 
 ### Phase 2: Install
@@ -51,6 +52,8 @@ If the component is registered but missing from the local workspace:
    npx design-wiki add <component-name>
    # or via shadcn v3:
    npx shadcn@latest add http://localhost:3000/r/<component-name>.json
+   # or auto-refactor existing messy code:
+   npx design-wiki unslop ./components/ui/hero.tsx --theme neo-tokyo
    ```
 2. Automatically verify that peer npm dependencies (e.g., `motion`, `three`, `remotion`, `lucide-react`) are merged into `package.json` and successfully installed.
 3. Resolve any typescript import path aliases (`@/components/ui/<component-name>`).
@@ -65,14 +68,16 @@ When wiring components together on a page, respect our architectural constraints
 *   **Controlled Glassmorphism**: Never use raw `bg-white/10 backdrop-blur` without crisp structural border tokens (`border-border`) and solid card fallbacks.
 
 ### Phase 4: Audit & Taste Review (The Anti-Slop Check)
-Before declaring your work complete, audit your code against the 21 Anti-Slop Rules and calibrated taste dials:
-1. Run automated taste audit via `pnpm review:taste <path-to-file>` or call MCP `audit_code_slop({ code: "<code-string>" })`.
-2. Enforce strict design hygiene:
+Before declaring your work complete, audit your code against the 30 Anti-Slop Rules and calibrated taste dials:
+1. Run automated taste audit via `pnpm review:taste <path-to-file>` or call MCP `audit_code_slop({ code: "<code-string>" })` / `audit_and_fix_slop({ code: "<code-string>" })`.
+2. Enforce strict design hygiene across all 30 Anti-Slop rules (SLOP-001 to SLOP-030):
    - **No Chained Type Assertions**: Never bypass TypeScript compiler safety by chaining assertions (`input as object as User`).
    - **No Empty Object Spreads**: Avoid ad-hoc, conditional spreading patterns (`...(cond ? { field } : {})`).
    - **No Ad-Hoc Transitions**: Ban generic `transition-all duration-300` across whole sections. Set transitions explicitly (`transition-colors duration-200`).
    - **No Arbitrary Sizing Hacks**: Reject arbitrary padding/margin overrides (`p-[17px]`, `m-[13px]`, `gap-[15px]`). Use standard Tailwind tokens (`p-4`).
    - **No Raw Unshaded Backgrounds**: Never use flat unshaded backgrounds (`bg-white`, `bg-black`, `bg-[#fff]`); use semantic theme tokens (`bg-card`, `bg-background`) with dark variants (`SLOP-021`).
+   - **No AI Writing Clichés**: Reject tropes like *"In today's fast-paced world"*, *"Unleash the power of"*, *"The future is here"* (`SLOP-022`).
+   - **Zero Uncancelled Timers/Listeners**: Clean up all `setInterval`, `requestAnimationFrame`, and `addEventListener` in `useEffect` (`SLOP-025`).
    - **Zero High Flags**: Verify health score is 85+ with zero High-severity flags.
 
 ---

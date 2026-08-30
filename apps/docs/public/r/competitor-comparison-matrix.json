@@ -1,0 +1,46 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "competitor-comparison-matrix",
+  "type": "registry:component",
+  "title": "Competitor Comparison Matrix",
+  "description": "Curated production-grade component.",
+  "category": "ui:utility",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "utility"
+  ],
+  "dials": {
+    "design_variance": 2,
+    "motion_intensity": 4,
+    "visual_density": 9
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "grid",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/competitor-comparison-matrix.tsx",
+      "content": "/**\n * @license MIT\n * @origin Tailark / 21st.dev (https://tailark.com)\n * @author Tailark & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Check, X, Sparkles } from \"lucide-react\";\n\nexport interface ComparisonRow {\n  feature: string;\n  agentWiki: boolean | string;\n  genericLlms: boolean | string;\n  traditionalUi: boolean | string;\n}\n\nexport interface CompetitorComparisonMatrixProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  rows?: ComparisonRow[];\n}\n\nconst DEFAULT_ROWS: ComparisonRow[] = [\n  { feature: \"Sub-15KB MCP Delivery\", agentWiki: true, genericLlms: false, traditionalUi: false },\n  { feature: \"30 Anti-Slop AST Rules\", agentWiki: true, genericLlms: false, traditionalUi: false },\n  { feature: \"100% WCAG 2.1 AA A11y\", agentWiki: true, genericLlms: \"Uncertain\", traditionalUi: true },\n  { feature: \"1-10 Calibrated Taste Dials\", agentWiki: true, genericLlms: false, traditionalUi: false },\n  { feature: \"Tripwire Prompt Injection Sandbox\", agentWiki: true, genericLlms: false, traditionalUi: false },\n  { feature: \"Multi-Agent Sync (11 IDEs)\", agentWiki: true, genericLlms: false, traditionalUi: false },\n];\n\nexport function CompetitorComparisonMatrix({\n  title = \"Architecture & Capability Comparison\",\n  rows = DEFAULT_ROWS,\n  className,\n  ...props\n}: CompetitorComparisonMatrixProps) {\n  return (\n    <section\n      className={cn(\n        \"flex flex-col w-full rounded-2xl border border-border bg-card shadow-sm p-6 space-y-6 text-card-foreground\",\n        className\n      )}\n      aria-label={title}\n      {...props}\n    >\n      <header className=\"border-b border-border pb-4\">\n        <h3 className=\"text-sm font-bold text-foreground\">{title}</h3>\n        <p className=\"text-xs text-muted-foreground mt-0.5\">\n          Deterministic capabilities vs. generic LLM code generation and legacy component packages.\n        </p>\n      </header>\n\n      <div className=\"overflow-x-auto\">\n        <table className=\"w-full text-xs text-left border-collapse\" role=\"grid\">\n          <thead>\n            <tr className=\"border-b border-border text-muted-foreground\">\n              <th scope=\"col\" className=\"py-3 px-4 font-semibold\">Capability</th>\n              <th scope=\"col\" className=\"py-3 px-4 font-bold text-primary bg-primary/5 rounded-t-lg\">\n                <div className=\"flex items-center gap-1.5\">\n                  <Sparkles className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                  <span>Agent Wiki</span>\n                </div>\n              </th>\n              <th scope=\"col\" className=\"py-3 px-4 font-medium\">Generic LLM Prompts</th>\n              <th scope=\"col\" className=\"py-3 px-4 font-medium\">Standard UI Kits</th>\n            </tr>\n          </thead>\n          <tbody className=\"divide-y divide-border/60\">\n            {rows.map((row) => (\n              <tr key={row.feature} className=\"hover:bg-muted/20 transition-colors\">\n                <td className=\"py-3 px-4 font-medium text-foreground\">{row.feature}</td>\n                <td className=\"py-3 px-4 bg-primary/5 font-semibold text-primary\">\n                  {typeof row.agentWiki === \"boolean\" ? (\n                    row.agentWiki ? (\n                      <Check className=\"h-4 w-4 text-emerald-500\" aria-hidden=\"true\" />\n                    ) : (\n                      <X className=\"h-4 w-4 text-destructive\" aria-hidden=\"true\" />\n                    )\n                  ) : (\n                    <span>{row.agentWiki}</span>\n                  )}\n                </td>\n                <td className=\"py-3 px-4 text-muted-foreground\">\n                  {typeof row.genericLlms === \"boolean\" ? (\n                    row.genericLlms ? (\n                      <Check className=\"h-4 w-4 text-emerald-500\" aria-hidden=\"true\" />\n                    ) : (\n                      <X className=\"h-4 w-4 text-destructive\" aria-hidden=\"true\" />\n                    )\n                  ) : (\n                    <span>{row.genericLlms}</span>\n                  )}\n                </td>\n                <td className=\"py-3 px-4 text-muted-foreground\">\n                  {typeof row.traditionalUi === \"boolean\" ? (\n                    row.traditionalUi ? (\n                      <Check className=\"h-4 w-4 text-emerald-500\" aria-hidden=\"true\" />\n                    ) : (\n                      <X className=\"h-4 w-4 text-destructive\" aria-hidden=\"true\" />\n                    )\n                  ) : (\n                    <span>{row.traditionalUi}</span>\n                  )}\n                </td>\n              </tr>\n            ))}\n          </tbody>\n        </table>\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/competitor-comparison-matrix.tsx"
+    }
+  ]
+}

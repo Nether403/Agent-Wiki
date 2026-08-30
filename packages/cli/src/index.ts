@@ -3,6 +3,7 @@
 import { addComponent } from "./commands/add";
 import { listComponents } from "./commands/list";
 import { auditLocalPath } from "./commands/audit";
+import { unslopTarget } from "./commands/unslop";
 
 function printHelp() {
   console.log(`
@@ -17,8 +18,10 @@ Commands:
   list                List all curated zero-slop components and taste dials
   search <query>      Search components by name, category, or tag
   audit [path]        Scan local files for AI slop anti-patterns (arbitrary tokens, etc.)
+  unslop <path>       Auto-refactor messy AI code into zero-slop accessible TSX with theme tokens
 
 Options:
+  --theme <name>      Target theme for unslop (default: 'default', 'neo-tokyo', 'midnight', 'minimal')
   --path <dir>        Custom target directory (default: components/ui or src/components/ui)
   --overwrite         Overwrite existing component files without asking
   --install-deps      Automatically execute npm/pnpm/bun add for missing peer dependencies
@@ -32,6 +35,7 @@ Examples:
   npx design-wiki list
   npx design-wiki search dialog
   npx design-wiki audit ./components
+  npx design-wiki unslop ./components/ui/hero.tsx --theme neo-tokyo
 `);
 }
 
@@ -49,6 +53,7 @@ async function main() {
   let pathOverride: string | undefined;
   let registryUrl: string | undefined;
   let cwdOverride: string | undefined;
+  let themeOverride: string | undefined;
   let overwrite = false;
   let installDeps = false;
   let dryRun = false;
@@ -58,6 +63,8 @@ async function main() {
       pathOverride = args[++i];
     } else if (args[i] === "--cwd" && args[i + 1]) {
       cwdOverride = args[++i];
+    } else if (args[i] === "--theme" && args[i + 1]) {
+      themeOverride = args[++i];
     } else if (args[i] === "--registry" && args[i + 1]) {
       registryUrl = args[++i];
     } else if (args[i] === "--overwrite") {
@@ -104,6 +111,16 @@ async function main() {
     const target = args[1] && !args[1].startsWith("--") ? args[1] : process.cwd();
     auditLocalPath(target);
     process.exit(0);
+  }
+
+  if (command === "unslop") {
+    const target = args[1] && !args[1].startsWith("--") ? args[1] : "./components";
+    const success = unslopTarget(target, {
+      theme: themeOverride,
+      dryRun,
+      overwrite,
+    });
+    process.exit(success ? 0 : 1);
   }
 
   console.error(`❌ Unknown command: "${command}"`);

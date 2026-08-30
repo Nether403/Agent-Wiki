@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ai-token-meter",
+  "type": "registry:ui",
+  "title": "Ai Token Meter",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "progressbar",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/ai-token-meter.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @author Community Contributor\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Gauge, AlertTriangle } from \"lucide-react\";\n\nexport interface AiTokenMeterProps extends React.HTMLAttributes<HTMLDivElement> {\n  usedTokens: number;\n  maxTokens: number;\n  costEstimateUsd?: number;\n}\n\nexport function AiTokenMeter({\n  usedTokens = 42500,\n  maxTokens = 128000,\n  costEstimateUsd,\n  className,\n  ...props\n}: AiTokenMeterProps) {\n  const percentage = Math.min(100, Math.round((usedTokens / maxTokens) * 100));\n  const isHigh = percentage > 85;\n  const isMed = percentage > 60 && !isHigh;\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col p-3 rounded-xl border border-border bg-card text-card-foreground shadow-xs w-full max-w-xs space-y-2\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Context Window Token Budget Meter\"\n      {...props}\n    >\n      <div className=\"flex items-center justify-between text-xs\">\n        <div className=\"flex items-center gap-1.5 font-semibold text-foreground\">\n          <Gauge className=\"h-3.5 w-3.5 text-primary\" aria-hidden=\"true\" />\n          <span>Context Budget</span>\n        </div>\n        <span className=\"font-mono text-[11px] text-muted-foreground\">\n          {percentage}%\n        </span>\n      </div>\n\n      {/* Progress Track */}\n      <div\n        className=\"w-full h-2 rounded-full bg-muted overflow-hidden\"\n        role=\"progressbar\"\n        aria-valuenow={usedTokens}\n        aria-valuemin={0}\n        aria-valuemax={maxTokens}\n        aria-label=\"Context Window Utilization\"\n      >\n        <div\n          className={cn(\n            \"h-full transition-all duration-300 rounded-full\",\n            isHigh ? \"bg-destructive\" : isMed ? \"bg-amber-500\" : \"bg-primary\"\n          )}\n          style={{ width: `${percentage}%` }}\n        />\n      </div>\n\n      <div className=\"flex items-center justify-between text-[11px] text-muted-foreground font-mono\">\n        <span>{(usedTokens / 1000).toFixed(1)}k used</span>\n        <span>{(maxTokens / 1000).toFixed(0)}k limit</span>\n      </div>\n\n      {costEstimateUsd !== undefined && (\n        <div className=\"pt-1.5 border-t border-border/40 flex items-center justify-between text-[10px] text-muted-foreground\">\n          <span>Est. Session Cost:</span>\n          <span className=\"font-mono font-semibold text-foreground\">${costEstimateUsd.toFixed(4)}</span>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/ai-token-meter.tsx"
+    }
+  ]
+}

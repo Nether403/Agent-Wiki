@@ -1,0 +1,46 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "decision-tree-node-graph",
+  "type": "registry:block",
+  "title": "Decision Tree Node Graph",
+  "description": "Curated production-grade component.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "layout-block"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 3,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/decision-tree-node-graph.tsx",
+      "content": "/**\n * @license MIT\n * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)\n * @author Cathryn Lavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { GitBranch, Check, X } from \"lucide-react\";\n\nexport interface DecisionTreeNodeGraphProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n}\n\nexport function DecisionTreeNodeGraph({\n  title = \"Agent Decision Matrix & Routing Tree\",\n  className,\n  ...props\n}: DecisionTreeNodeGraphProps) {\n  return (\n    <figure\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Decision Tree Diagram: ${title}`}\n      {...props}\n    >\n      <header className=\"border-b border-border pb-3 mb-6\">\n        <h3 className=\"text-sm font-bold text-foreground\">{title}</h3>\n        <p className=\"text-xs text-muted-foreground mt-0.5\">\n          Deterministic logic branches resolving user intent to registry components or code generation.\n        </p>\n      </header>\n\n      <div className=\"relative w-full overflow-x-auto py-2\">\n        <svg\n          viewBox=\"0 0 700 240\"\n          className=\"w-full min-w-[640px] h-auto overflow-visible\"\n          role=\"img\"\n          aria-label=\"Branching decision tree diagram\"\n        >\n          {/* Connector Paths */}\n          <path\n            d=\"M 140 120 L 230 120\"\n            fill=\"none\"\n            stroke=\"currentColor\"\n            strokeWidth=\"1.5\"\n            className=\"text-muted-foreground/60\"\n          />\n          <path\n            d=\"M 330 120 C 370 120, 370 50, 420 50\"\n            fill=\"none\"\n            stroke=\"currentColor\"\n            strokeWidth=\"1.5\"\n            className=\"text-emerald-500/70\"\n          />\n          <path\n            d=\"M 330 120 C 370 120, 370 190, 420 190\"\n            fill=\"none\"\n            stroke=\"currentColor\"\n            strokeWidth=\"1.5\"\n            className=\"text-destructive/70\"\n          />\n          <path\n            d=\"M 540 50 L 590 50\"\n            fill=\"none\"\n            stroke=\"currentColor\"\n            strokeWidth=\"1.5\"\n            className=\"text-emerald-500/70\"\n          />\n          <path\n            d=\"M 540 190 L 590 190\"\n            fill=\"none\"\n            stroke=\"currentColor\"\n            strokeWidth=\"1.5\"\n            className=\"text-destructive/70\"\n          />\n\n          {/* Root Node: Prompt Arrives */}\n          <g transform=\"translate(10, 85)\">\n            <rect\n              width=\"130\"\n              height=\"70\"\n              rx=\"8\"\n              fill=\"currentColor\"\n              className=\"text-muted/30 stroke-border stroke-1\"\n            />\n            <text x=\"65\" y=\"32\" textAnchor=\"middle\" className=\"fill-foreground text-[11px] font-bold\">\n              User Prompt\n            </text>\n            <text x=\"65\" y=\"50\" textAnchor=\"middle\" className=\"fill-muted-foreground text-[9px] font-mono\">\n              Input Intent\n            </text>\n          </g>\n\n          {/* Decision Node: Check Registry */}\n          <g transform=\"translate(230, 80)\">\n            <polygon\n              points=\"50,0 100,40 50,80 0,40\"\n              fill=\"currentColor\"\n              className=\"text-primary/10 stroke-primary/50 stroke-1\"\n            />\n            <text x=\"50\" y=\"38\" textAnchor=\"middle\" className=\"fill-primary text-[10px] font-bold\">\n              Registry Match?\n            </text>\n            <text x=\"50\" y=\"50\" textAnchor=\"middle\" className=\"fill-muted-foreground text-[8px] font-mono\">\n              search_library\n            </text>\n          </g>\n\n          {/* Branch True: Install Recipe */}\n          <g transform=\"translate(420, 15)\">\n            <rect\n              width=\"120\"\n              height=\"70\"\n              rx=\"8\"\n              fill=\"currentColor\"\n              className=\"text-emerald-500/10 stroke-emerald-500/40 stroke-1\"\n            />\n            <text x=\"60\" y=\"30\" textAnchor=\"middle\" className=\"fill-emerald-600 dark:text-emerald-400 text-[11px] font-bold\">\n              npx design-wiki add\n            </text>\n            <text x=\"60\" y=\"48\" textAnchor=\"middle\" className=\"fill-muted-foreground text-[9px] font-mono\">\n              Pre-tested Zero Slop\n            </text>\n          </g>\n\n          {/* Terminal True: Deliver UI */}\n          <g transform=\"translate(590, 25)\">\n            <circle cx=\"25\" cy=\"25\" r=\"25\" fill=\"currentColor\" className=\"text-emerald-500/20 stroke-emerald-500 stroke-1\" />\n            <text x=\"25\" y=\"30\" textAnchor=\"middle\" className=\"fill-emerald-600 dark:text-emerald-400 text-[10px] font-bold\">\n              DONE\n            </text>\n          </g>\n\n          {/* Branch False: Harvester & AST Linter */}\n          <g transform=\"translate(420, 155)\">\n            <rect\n              width=\"120\"\n              height=\"70\"\n              rx=\"8\"\n              fill=\"currentColor\"\n              className=\"text-destructive/10 stroke-destructive/40 stroke-1\"\n            />\n            <text x=\"60\" y=\"30\" textAnchor=\"middle\" className=\"fill-destructive text-[11px] font-bold\">\n              Codegen + Audit\n            </text>\n            <text x=\"60\" y=\"48\" textAnchor=\"middle\" className=\"fill-muted-foreground text-[9px] font-mono\">\n              Run 30 Slop Rules\n            </text>\n          </g>\n\n          {/* Terminal False: Unslop Refactor */}\n          <g transform=\"translate(590, 165)\">\n            <circle cx=\"25\" cy=\"25\" r=\"25\" fill=\"currentColor\" className=\"text-destructive/20 stroke-destructive stroke-1\" />\n            <text x=\"25\" y=\"30\" textAnchor=\"middle\" className=\"fill-destructive text-[10px] font-bold\">\n              UNSLOP\n            </text>\n          </g>\n        </svg>\n      </div>\n\n      <footer className=\"mt-4 pt-3 border-t border-border/60 flex items-center justify-between text-xs text-muted-foreground\">\n        <div className=\"flex items-center gap-4\">\n          <span className=\"flex items-center gap-1\">\n            <span className=\"h-2 w-2 rounded-full bg-emerald-500\" aria-hidden=\"true\" />\n            Match: Direct Registry Ingestion\n          </span>\n          <span className=\"flex items-center gap-1\">\n            <span className=\"h-2 w-2 rounded-full bg-destructive\" aria-hidden=\"true\" />\n            Mismatch: Anti-Slop Audit Pipeline\n          </span>\n        </div>\n      </footer>\n    </figure>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/decision-tree-node-graph.tsx"
+    }
+  ]
+}

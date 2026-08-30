@@ -1,0 +1,46 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "stat-metric-card",
+  "type": "registry:component",
+  "title": "Stat Metric Card",
+  "description": "Curated production-grade component.",
+  "category": "ui:editorial",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "editorial"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 1,
+    "visual_density": 10
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/stat-metric-card.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @author Community Contributor\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { TrendingUp, TrendingDown, Minus } from \"lucide-react\";\n\nexport interface StatMetricCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  title: string;\n  value: string | number;\n  change?: number; // e.g. +14.2\n  period?: string; // e.g. \"vs last month\"\n  sparklineData?: number[];\n  icon?: React.ComponentType<{ className?: string }>;\n}\n\nexport function StatMetricCard({\n  title,\n  value,\n  change,\n  period = \"vs last period\",\n  sparklineData = [12, 18, 14, 22, 28, 24, 32],\n  icon: Icon,\n  className,\n  ...props\n}: StatMetricCardProps) {\n  const isPositive = change !== undefined && change > 0;\n  const isNegative = change !== undefined && change < 0;\n\n  // Render SVG Sparkline\n  const maxVal = Math.max(...sparklineData, 1);\n  const minVal = Math.min(...sparklineData, 0);\n  const range = maxVal - minVal || 1;\n  const width = 80;\n  const height = 28;\n\n  const points = sparklineData\n    .map((val, idx) => {\n      const x = (idx / (sparklineData.length - 1)) * width;\n      const y = height - ((val - minVal) / range) * (height - 4) - 2;\n      return `${x.toFixed(1)},${y.toFixed(1)}`;\n    })\n    .join(\" \");\n\n  return (\n    <article\n      className={cn(\n        \"flex flex-col p-4 rounded-xl border border-border bg-card text-card-foreground shadow-xs transition-colors hover:border-primary/40 space-y-3\",\n        className\n      )}\n      aria-label={`Metric card for ${title}`}\n      {...props}\n    >\n      <header className=\"flex items-center justify-between\">\n        <span className=\"text-xs font-medium text-muted-foreground\">{title}</span>\n        {Icon && (\n          <div className=\"flex items-center justify-center h-7 w-7 rounded-lg bg-muted/60 text-muted-foreground\" aria-hidden=\"true\">\n            <Icon className=\"h-3.5 w-3.5\" />\n          </div>\n        )}\n      </header>\n\n      <div className=\"flex items-baseline justify-between gap-2\">\n        <div className=\"text-2xl font-bold text-foreground tracking-tight\">{value}</div>\n\n        {/* Inline Sparkline */}\n        {sparklineData.length > 1 && (\n          <svg\n            className=\"h-7 w-20 overflow-visible text-primary shrink-0\"\n            viewBox={`0 0 ${width} ${height}`}\n            role=\"img\"\n            aria-hidden=\"true\"\n          >\n            <polyline\n              fill=\"none\"\n              stroke=\"currentColor\"\n              strokeWidth=\"2\"\n              strokeLinecap=\"round\"\n              strokeLinejoin=\"round\"\n              points={points}\n            />\n          </svg>\n        )}\n      </div>\n\n      {/* Delta Badge & Period */}\n      {change !== undefined && (\n        <footer className=\"flex items-center gap-1.5 text-xs\">\n          <span\n            className={cn(\n              \"flex items-center gap-0.5 px-1.5 py-0.2 rounded font-semibold text-[11px]\",\n              isPositive && \"bg-emerald-500/10 text-emerald-600 dark:text-emerald-400\",\n              isNegative && \"bg-destructive/10 text-destructive\",\n              !isPositive && !isNegative && \"bg-muted text-muted-foreground\"\n            )}\n          >\n            {isPositive && <TrendingUp className=\"h-3 w-3 inline\" aria-hidden=\"true\" />}\n            {isNegative && <TrendingDown className=\"h-3 w-3 inline\" aria-hidden=\"true\" />}\n            {!isPositive && !isNegative && <Minus className=\"h-3 w-3 inline\" aria-hidden=\"true\" />}\n            {Math.abs(change)}%\n          </span>\n          <span className=\"text-[11px] text-muted-foreground\">{period}</span>\n        </footer>\n      )}\n    </article>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/stat-metric-card.tsx"
+    }
+  ]
+}

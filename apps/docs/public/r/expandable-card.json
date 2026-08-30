@@ -1,0 +1,51 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "expandable-card",
+  "type": "registry:component",
+  "title": "Expandable Card",
+  "description": "Curated production-grade component.",
+  "category": "ui:motion",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "spring-physics"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 8,
+    "visual_density": 7
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/expandable-card.tsx",
+      "content": "/**\n * @license MIT\n * @origin ibelick / motion-primitives (https://motion-primitives.com)\n * @author ibelick & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { motion, useReducedMotion } from \"motion/react\";\nimport { cn } from \"../lib/utils\";\nimport { ChevronDown } from \"lucide-react\";\n\nexport interface ExpandableCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  title: string;\n  subtitle?: string;\n  children: React.ReactNode;\n  defaultExpanded?: boolean;\n}\n\nexport function ExpandableCard({\n  title,\n  subtitle,\n  children,\n  defaultExpanded = false,\n  className,\n  ...props\n}: ExpandableCardProps) {\n  const [isExpanded, setIsExpanded] = React.useState(defaultExpanded);\n  const shouldReduceMotion = useReducedMotion();\n\n  return (\n    <motion.div\n      layout\n      transition={{ type: \"spring\", stiffness: 300, damping: 25 }}\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card text-card-foreground shadow-xs overflow-hidden transition-colors\",\n        className\n      )}\n      {...props}\n    >\n      <button\n        type=\"button\"\n        onClick={() => setIsExpanded((prev) => !prev)}\n        className=\"flex items-center justify-between p-4 text-left w-full hover:bg-muted/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        aria-expanded={isExpanded}\n        aria-label={`Toggle card: ${title}`}\n      >\n        <div className=\"flex flex-col\">\n          <h4 className=\"text-xs font-bold text-foreground\">{title}</h4>\n          {subtitle && <p className=\"text-[11px] text-muted-foreground mt-0.5\">{subtitle}</p>}\n        </div>\n\n        <motion.div\n          animate={{ rotate: isExpanded ? 180 : 0 }}\n          transition={{ duration: 0.2 }}\n          className=\"text-muted-foreground\"\n        >\n          <ChevronDown className=\"h-4 w-4\" aria-hidden=\"true\" />\n        </motion.div>\n      </button>\n\n      {isExpanded && (\n        <motion.div\n          initial={{ opacity: 0, height: 0 }}\n          animate={{ opacity: 1, height: \"auto\" }}\n          exit={{ opacity: 0, height: 0 }}\n          transition={{ duration: 0.25 }}\n          className=\"px-4 pb-4 pt-1 border-t border-border/40 text-xs text-muted-foreground\"\n        >\n          {children}\n        </motion.div>\n      )}\n    </motion.div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/expandable-card.tsx"
+    }
+  ]
+}

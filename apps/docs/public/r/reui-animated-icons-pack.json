@@ -1,0 +1,49 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "reui-animated-icons-pack",
+  "type": "registry:component",
+  "title": "Reui Animated Icons Pack",
+  "description": "Curated production-grade component.",
+  "category": "ui:utility",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "utility"
+  ],
+  "dials": {
+    "design_variance": 2,
+    "motion_intensity": 4,
+    "visual_density": 9
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/utility/reui-animated-icons-pack.tsx",
+      "content": "/**\n * @license MIT\n * @origin ReUI / Keenthemes (https://reui.io)\n * @author Keenthemes & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Sparkles, Shield, Cpu, Zap, Globe, Lock, Terminal, Database, Server, Compass } from \"lucide-react\";\n\nexport interface ReuiAnimatedIconsPackProps extends React.HTMLAttributes<HTMLDivElement> {\n  size?: number;\n}\n\nconst ICONS = [\n  { name: \"Sparkles\", component: Sparkles },\n  { name: \"Security\", component: Shield },\n  { name: \"Processor\", component: Cpu },\n  { name: \"Lightning\", component: Zap },\n  { name: \"Network\", component: Globe },\n  { name: \"Cryptographic Lock\", component: Lock },\n  { name: \"CLI Terminal\", component: Terminal },\n  { name: \"Vector Database\", component: Database },\n  { name: \"Compute Server\", component: Server },\n  { name: \"Explorer Compass\", component: Compass },\n];\n\nexport function ReuiAnimatedIconsPack({\n  size = 20,\n  className,\n  ...props\n}: ReuiAnimatedIconsPackProps) {\n  return (\n    <div\n      className={cn(\"grid grid-cols-5 gap-3 p-4 rounded-xl border border-border bg-card\", className)}\n      role=\"region\"\n      aria-label=\"ReUI Animated Icons Collection\"\n      {...props}\n    >\n      {ICONS.map(({ name, component: Icon }) => (\n        <button\n          key={name}\n          type=\"button\"\n          className=\"group flex flex-col items-center justify-center p-3 rounded-lg border border-border bg-muted/20 hover:border-primary/50 hover:bg-primary/5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          aria-label={name}\n        >\n          <Icon\n            className=\"text-muted-foreground group-hover:text-primary group-hover:scale-110 transition-transform duration-200\"\n            style={{ width: `${size}px`, height: `${size}px` }}\n            aria-hidden=\"true\"\n          />\n          <span className=\"text-[9px] text-muted-foreground group-hover:text-foreground mt-1.5 truncate max-w-full font-mono\">\n            {name}\n          </span>\n        </button>\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/reui-animated-icons-pack.tsx"
+    }
+  ]
+}

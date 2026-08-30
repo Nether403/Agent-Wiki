@@ -52,6 +52,8 @@ export default {
             "fetch_raw_markdown",
             "get_installation_commands",
             "audit_code_slop",
+            "audit_and_fix_slop",
+            "get_dependency_graph",
           ],
         }),
         {

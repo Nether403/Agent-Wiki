@@ -1,0 +1,44 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ascii-rain",
+  "type": "registry:ui",
+  "title": "Ascii Rain",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/ascii-rain.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @author Community Contributor\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface AsciiRainProps extends React.HTMLAttributes<HTMLDivElement> {\n  density?: number;\n}\n\nexport function AsciiRain({ density = 30, className, ...props }: AsciiRainProps) {\n  const [lines, setLines] = React.useState<string[]>([]);\n\n  React.useEffect(() => {\n    // Reduced motion check\n    const prefersReducedMotion = window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches;\n    if (prefersReducedMotion) {\n      setLines(Array.from({ length: 8 }, () => \"█▓▒░ [REDUCED MOTION] ░▒▓█\"));\n      return;\n    }\n\n    const chars = \" .:-=+*#%@\";\n    const interval = setInterval(() => {\n      setLines(\n        Array.from({ length: 12 }, () =>\n          Array.from({ length: 48 }, () => chars[Math.floor(Math.random() * chars.length)]).join(\"\")\n        )\n      );\n    }, 150);\n\n    return () => clearInterval(interval);\n  }, []);\n\n  return (\n    <pre\n      className={cn(\n        \"p-4 rounded-xl border border-border bg-black font-mono text-[10px] text-emerald-500/80 leading-none overflow-hidden select-none\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"ASCII Terminal Rain Matrix\"\n      {...props}\n    >\n      {lines.map((line, idx) => (\n        <div key={idx}>{line}</div>\n      ))}\n    </pre>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/ascii-rain.tsx"
+    }
+  ]
+}

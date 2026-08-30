@@ -7,135 +7,89 @@
 - Raw Markdown Docs: /raw/components/[slug]
 - MCP Server: npx @design-wiki/mcp
 
-## Available Registry Components (45 verified zero-slop items)
-
-### Category: ui:block
-- [bento-grid](/r/bento-grid.json): Multi-pane asymmetrical layout grid with responsive column spans and structural borders. (Variance: 5, Motion: 4, Density: 6)
-  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, marketing, asymmetry
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/bento-grid.json
-- [feature-section](/r/feature-section.json): Asymmetrical 4-column SaaS architectural feature grid with badge pill and structured cards. (Variance: 5, Motion: 3, Density: 6)
-  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, feature, marketing, saas
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/feature-section.json
-- [hero-section](/r/hero-section.json): Editorial SaaS hero section featuring typography discipline, badge pill, and active CTA. (Variance: 5, Motion: 2, Density: 5)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, hero, marketing, typography, block
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/hero-section.json
-- [navbar-sticky](/r/navbar-sticky.json): Sticky responsive top navigation bar with blur backdrop, link routing, and mobile drawer. (Variance: 4, Motion: 3, Density: 6)
-  - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, navbar, navigation, header, layout-block, responsive
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/navbar-sticky.json
-- [pricing-table](/r/pricing-table.json): Multi-tier pricing matrix with monthly/annual toggle and clear feature checkmarks. (Variance: 5, Motion: 4, Density: 6)
-  - Tags: lucide-react, bento-grid, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, marketing, pricing, saas
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/pricing-table.json
-
-### Category: ui:creative
-- [canvas-fluid-wave](/r/canvas-fluid-wave.json): Interactive HTML5 Canvas fluid simulation with mouse interaction, WebGL / Three.js bridge compatibility, and CSS gradient fallback. (Variance: 9, Motion: 9, Density: 3)
-  - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, framer-motion, interactive, a11y-fallback
-  - Dependencies: three, clsx, tailwind-merge, motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/canvas-fluid-wave.json
-- [dot-matrix-loader](/r/dot-matrix-loader.json): Animated dot matrix with wave oscillation, customizable matrix rows, and accessible status role. (Variance: 6, Motion: 5, Density: 7)
-  - Tags: wai-aria-compliant, utility, dot-matrix, canvas-pattern, loader, status
-  - Dependencies: clsx, tailwind-merge, motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/dot-matrix-loader.json
-- [glow-border](/r/glow-border.json): Rotating chromatic gradient glow border wrapper for cards, hero callouts, and featured sections. (Variance: 7, Motion: 7, Density: 5)
-  - Tags: tailwind-v4, neon-scifi, wai-aria-compliant, magic-ui, glow, conic-gradient, creative, border
-  - Dependencies: clsx, tailwind-merge, motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/glow-border.json
-- [noise-texture-card](/r/noise-texture-card.json): High-craft noise-dithered backdrop with crisp typography overlay and zero AI slop. (Variance: 7, Motion: 2, Density: 6)
-  - Tags: tailwind-v4, wai-aria-compliant, svg-noise, editorial, texture, brutalist
-  - Dependencies: clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/noise-texture-card.json
-- [particle-field](/r/particle-field.json): GPU-friendly interactive particle web with prefers-reduced-motion fallback. (Variance: 8, Motion: 8, Density: 4)
-  - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, particles, physics, reduced-motion
-  - Dependencies: three, clsx, tailwind-merge, motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/particle-field.json
-- [radial-gradient-mask](/r/radial-gradient-mask.json): Interactive radial reveal mask on dotted matrix backdrop with pointer position tracking. (Variance: 7, Motion: 3, Density: 5)
-  - Tags: tailwind-v4, wai-aria-compliant, aceternity, mask, shader-simulation, creative, interactive
-  - Dependencies: clsx, tailwind-merge, motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/radial-gradient-mask.json
-
-### Category: ui:editorial
-- [callout-card](/r/callout-card.json): High-contrast editorial callout with semantic state themes (info, warning, success, danger). (Variance: 3, Motion: 1, Density: 7)
-  - Tags: lucide-react, wai-aria-compliant, callout, alert, editorial, semantic
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/callout-card.json
-- [code-block](/r/code-block.json): Editorial syntax display card with line numbering, language badge, and instant copy feedback. (Variance: 4, Motion: 2, Density: 8)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, code, syntax, editorial, developer-tool, copy
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/code-block.json
-- [data-stat-grid](/r/data-stat-grid.json): Asymmetrical metric showcase for SaaS analytics with high visual density and clean type. (Variance: 5, Motion: 1, Density: 9)
-  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, svg, zero-dependency, static, analytical, metrics, grid
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/data-stat-grid.json
-- [diagram-card](/r/diagram-card.json): Precision SVG diagramming card with minimal vector lines and zero decorative emojis. (Variance: 5, Motion: 1, Density: 9)
-  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, diagram
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/diagram-card.json
-- [minimal-table](/r/minimal-table.json): Clean tabular data display with accessible headers, captions, and responsive overflow. (Variance: 5, Motion: 1, Density: 9)
-  - Tags: tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, table, data-grid
-  - Dependencies: clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/minimal-table.json
-
-### Category: ui:media
-- [audio-visualizer](/r/audio-visualizer.json): Acoustic frequency waveform visualizer with playback state toggles and live audio synthesis. (Variance: 6, Motion: 7, Density: 6)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, audio, waveform, visualizer, media, player
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/audio-visualizer.json
-- [timeline-player](/r/timeline-player.json): Precision timeline-based motion and video composition controller with frame scrubbing and timecode. (Variance: 7, Motion: 8, Density: 4)
-  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, remotion, video, motion, timeline, media, player
-  - Dependencies: motion, lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/timeline-player.json
-
-### Category: ui:motion
-- [animated-tabs](/r/animated-tabs.json): Smooth spring-bound tab slider with layout ID preservation and zero layout shift. (Variance: 4, Motion: 6, Density: 5)
-  - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, shadcn-compatible, spring-physics, tabs, layoutId
-  - Dependencies: motion, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/animated-tabs.json
-- [evil-button](/r/evil-button.json): Playful tactile spring-physics button with synthesized audio feedback and chaotic variants. (Variance: 8, Motion: 7, Density: 5)
-  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, playful, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, sound-physics, interactive, button
-  - Dependencies: motion, lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/evil-button.json
-- [floating-dock](/r/floating-dock.json): macOS-style interactive dock with mouse proximity magnification and spring physics. (Variance: 6, Motion: 8, Density: 4)
-  - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, micro-interaction, dock, macos-style
-  - Dependencies: motion, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/floating-dock.json
-- [fluid-cursor](/r/fluid-cursor.json): Smooth trailing cursor follower with graceful coarse-pointer (mobile) disablement. (Variance: 8, Motion: 8, Density: 3)
-  - Tags: framer-motion, motion/react, animation, glassmorphism, wai-aria-compliant, spring-physics, cursor-follower, smooth-spring
-  - Dependencies: motion, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/fluid-cursor.json
-- [magnetic-button](/r/magnetic-button.json): Physics-based cursor magnetic attraction button for high-taste calls to action. (Variance: 4, Motion: 6, Density: 5)
-  - Tags: framer-motion, motion/react, animation, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, shadcn-compatible, magnetic-physics, button, interactive
-  - Dependencies: motion, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/magnetic-button.json
-- [marquee](/r/marquee.json): Infinite content stream marquee with pause-on-hover, velocity controls, and reduced-motion disablement. (Variance: 5, Motion: 6, Density: 6)
-  - Tags: wai-aria-compliant, magic-ui, marquee, animation, ticker, loop
-  - Dependencies: clsx, tailwind-merge, motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/marquee.json
-- [shimmer-button](/r/shimmer-button.json): Polished call-to-action button featuring smooth rotating radial conic shimmer and micro-spring scale. (Variance: 6, Motion: 5, Density: 5)
-  - Tags: tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, magic-ui, shimmer, button, micro-interaction, cta
-  - Dependencies: clsx, tailwind-merge, motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/shimmer-button.json
-- [spotlight-card](/r/spotlight-card.json): Interactive radial cursor spotlight tracking card with smooth proximity illumination. (Variance: 5, Motion: 5, Density: 5)
-  - Tags: tailwind-v4, wai-aria-compliant, aceternity, spotlight, card, mouse-tracking, micro-interaction
-  - Dependencies: clsx, tailwind-merge, motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/spotlight-card.json
-- [spring-dialog](/r/spring-dialog.json): Scale-and-fade physics modal with AnimatePresence and keyboard escape handling. (Variance: 5, Motion: 6, Density: 5)
-  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, animate-presence, modal
-  - Dependencies: motion, lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/spring-dialog.json
-- [tilt-card](/r/tilt-card.json): Curated production-grade component. (Variance: 5, Motion: 8, Density: 7)
-  - Tags: framer-motion, motion/react, animation, tailwind-v4, wai-aria-compliant, spring-physics
-  - Dependencies: motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/tilt-card.json
+## Available Registry Components (112 verified zero-slop items)
 
 ### Category: ui:primitive
+- [agent-step-pipeline](/r/agent-step-pipeline.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant
+  - Dependencies: lucide-react, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/agent-step-pipeline.json
+- [customer-story-masonry](/r/customer-story-masonry.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/customer-story-masonry.json
+- [footer-mega-menu](/r/footer-mega-menu.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/footer-mega-menu.json
+- [ascii-rain](/r/ascii-rain.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/ascii-rain.json
+- [cyber-hud-frame](/r/cyber-hud-frame.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/cyber-hud-frame.json
+- [digital-ticker](/r/digital-ticker.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/digital-ticker.json
+- [hacker-decrypt](/r/hacker-decrypt.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 6)
+  - Tags: wai-aria-compliant
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/hacker-decrypt.json
+- [text-scrambler](/r/text-scrambler.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 6)
+  - Tags: wai-aria-compliant
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/text-scrambler.json
+- [voice-waveform](/r/voice-waveform.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/voice-waveform.json
+- [tree-hierarchy-map](/r/tree-hierarchy-map.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/tree-hierarchy-map.json
+- [karaoke-caption-stream](/r/karaoke-caption-stream.json): Curated production-grade component. (Variance: 5, Motion: 2, Density: 8)
+  - Tags: tailwind-v4, brutalist, wai-aria-compliant
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/karaoke-caption-stream.json
+- [kinetic-title-card](/r/kinetic-title-card.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/kinetic-title-card.json
+- [progressive-blur](/r/progressive-blur.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: wai-aria-compliant
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/progressive-blur.json
+- [ripple-button](/r/ripple-button.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: accessible, keyboard-accessible, wai-aria-compliant
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/ripple-button.json
+- [view-transition-theme-toggle](/r/view-transition-theme-toggle.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 6)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/view-transition-theme-toggle.json
 - [accordion](/r/accordion.json): Accessible collapsible disclosure panels with smooth height transitions and keyboard arrow navigation. (Variance: 2, Motion: 3, Density: 6)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, radix-primitives, accordion, disclosure, headless, a11y
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/accordion.json
+- [ai-chat-bubble](/r/ai-chat-bubble.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-chat-bubble.json
+- [ai-model-selector](/r/ai-model-selector.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-model-selector.json
+- [ai-reasoning-foldout](/r/ai-reasoning-foldout.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-reasoning-foldout.json
+- [ai-token-meter](/r/ai-token-meter.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-token-meter.json
 - [avatar](/r/avatar.json): Fallback-aware image avatar with initials display and smooth loading states. (Variance: 2, Motion: 1, Density: 6)
   - Tags: radix-primitives, headless, wai-aria-compliant, avatar, image
   - Dependencies: @radix-ui/react-avatar, clsx, tailwind-merge
@@ -188,8 +142,126 @@
   - Tags: radix-primitives, headless, wai-aria-compliant, utility, tooltip, micro-interaction, a11y
   - Dependencies: @radix-ui/react-tooltip, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/tooltip.json
+- [scroll-progress-bar](/r/scroll-progress-bar.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: wai-aria-compliant
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/scroll-progress-bar.json
+- [theme-toggle-dropdown](/r/theme-toggle-dropdown.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/theme-toggle-dropdown.json
+
+### Category: ui:block
+- [bento-grid](/r/bento-grid.json): Multi-pane asymmetrical layout grid with responsive column spans and structural borders. (Variance: 5, Motion: 4, Density: 6)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, marketing, asymmetry
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/bento-grid.json
+- [feature-section](/r/feature-section.json): Asymmetrical 4-column SaaS architectural feature grid with badge pill and structured cards. (Variance: 5, Motion: 3, Density: 6)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, feature, marketing, saas
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/feature-section.json
+- [hero-section](/r/hero-section.json): Editorial SaaS hero section featuring typography discipline, badge pill, and active CTA. (Variance: 5, Motion: 2, Density: 5)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, hero, marketing, typography, block
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/hero-section.json
+- [integration-grid-showcase](/r/integration-grid-showcase.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/integration-grid-showcase.json
+- [interactive-feature-cycler](/r/interactive-feature-cycler.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-feature-cycler.json
+- [navbar-sticky](/r/navbar-sticky.json): Sticky responsive top navigation bar with blur backdrop, link routing, and mobile drawer. (Variance: 4, Motion: 3, Density: 6)
+  - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, navbar, navigation, header, layout-block, responsive
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/navbar-sticky.json
+- [pricing-table](/r/pricing-table.json): Multi-tier pricing matrix with monthly/annual toggle and clear feature checkmarks. (Variance: 5, Motion: 4, Density: 6)
+  - Tags: lucide-react, bento-grid, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, marketing, pricing, saas
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/pricing-table.json
+- [saas-hero-browser-mockup](/r/saas-hero-browser-mockup.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/saas-hero-browser-mockup.json
+- [architecture-topology-diagram](/r/architecture-topology-diagram.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/architecture-topology-diagram.json
+- [decision-tree-node-graph](/r/decision-tree-node-graph.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/decision-tree-node-graph.json
+- [matrix-grid-diagram](/r/matrix-grid-diagram.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: bento-grid, tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/matrix-grid-diagram.json
+- [radar-spider-chart](/r/radar-spider-chart.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/radar-spider-chart.json
+- [timeline-roadmap-track](/r/timeline-roadmap-track.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/timeline-roadmap-track.json
+- [ai-message-thread](/r/ai-message-thread.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-message-thread.json
+- [ai-prompt-input](/r/ai-prompt-input.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-prompt-input.json
+- [draggable-kanban-board](/r/draggable-kanban-board.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/draggable-kanban-board.json
+- [event-calendar-view](/r/event-calendar-view.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/event-calendar-view.json
+- [filter-builder-toolbar](/r/filter-builder-toolbar.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/filter-builder-toolbar.json
+- [reui-data-grid](/r/reui-data-grid.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/reui-data-grid.json
+- [split-pane-layout](/r/split-pane-layout.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/split-pane-layout.json
 
 ### Category: ui:utility
+- [competitor-comparison-matrix](/r/competitor-comparison-matrix.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, utility
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/competitor-comparison-matrix.json
+- [dot-matrix-scoreboard](/r/dot-matrix-scoreboard.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
+  - Tags: tailwind-v4, wai-aria-compliant, utility
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/dot-matrix-scoreboard.json
+- [strategic-quadrant-matrix](/r/strategic-quadrant-matrix.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
+  - Tags: tailwind-v4, wai-aria-compliant, utility
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/strategic-quadrant-matrix.json
+- [venn-comparison-matrix](/r/venn-comparison-matrix.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
+  - Tags: tailwind-v4, wai-aria-compliant, utility
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/venn-comparison-matrix.json
+- [border-trail](/r/border-trail.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
+  - Tags: wai-aria-compliant, utility
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/border-trail.json
+- [text-shimmer-wave](/r/text-shimmer-wave.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 7)
+  - Tags: wai-aria-compliant, utility
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/text-shimmer-wave.json
+- [copy-button](/r/copy-button.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 7)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, utility
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/copy-button.json
 - [dot-loader](/r/dot-loader.json): Minimalist dot pulsation loader for button states or inline progress indicators. (Variance: 2, Motion: 4, Density: 8)
   - Tags: wai-aria-compliant, utility, loader, spinner, minimalist
   - Dependencies: clsx, tailwind-merge
@@ -202,4 +274,200 @@
   - Tags: tailwind-v4, wai-aria-compliant, utility, kbd, shortcut, keyboard, accessibility
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/keyboard-shortcut.json
+- [reui-animated-icons-pack](/r/reui-animated-icons-pack.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, utility
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/reui-animated-icons-pack.json
+
+### Category: ui:editorial
+- [cta-banner-geometric](/r/cta-banner-geometric.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, editorial
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/cta-banner-geometric.json
+- [stats-counter-banner](/r/stats-counter-banner.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: bento-grid, tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/stats-counter-banner.json
+- [callout-card](/r/callout-card.json): High-contrast editorial callout with semantic state themes (info, warning, success, danger). (Variance: 3, Motion: 1, Density: 7)
+  - Tags: lucide-react, wai-aria-compliant, callout, alert, editorial, semantic
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/callout-card.json
+- [code-block](/r/code-block.json): Editorial syntax display card with line numbering, language badge, and instant copy feedback. (Variance: 4, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, code, syntax, editorial, developer-tool, copy
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/code-block.json
+- [cycle-loop-diagram](/r/cycle-loop-diagram.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/cycle-loop-diagram.json
+- [data-stat-grid](/r/data-stat-grid.json): Asymmetrical metric showcase for SaaS analytics with high visual density and clean type. (Variance: 5, Motion: 1, Density: 9)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, svg, zero-dependency, static, analytical, metrics, grid
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/data-stat-grid.json
+- [diagram-card](/r/diagram-card.json): Precision SVG diagramming card with minimal vector lines and zero decorative emojis. (Variance: 5, Motion: 1, Density: 9)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, diagram
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/diagram-card.json
+- [fishbone-root-cause-diagram](/r/fishbone-root-cause-diagram.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/fishbone-root-cause-diagram.json
+- [flowchart-process-graph](/r/flowchart-process-graph.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/flowchart-process-graph.json
+- [funnel-conversion-chart](/r/funnel-conversion-chart.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/funnel-conversion-chart.json
+- [inline-sparkline-chart](/r/inline-sparkline-chart.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 6)
+  - Tags: wai-aria-compliant
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/inline-sparkline-chart.json
+- [minimal-table](/r/minimal-table.json): Clean tabular data display with accessible headers, captions, and responsive overflow. (Variance: 5, Motion: 1, Density: 9)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, table, data-grid
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/minimal-table.json
+- [pyramid-hierarchy-chart](/r/pyramid-hierarchy-chart.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/pyramid-hierarchy-chart.json
+- [stat-metric-card](/r/stat-metric-card.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/stat-metric-card.json
+
+### Category: ui:creative
+- [ai-voice-orb](/r/ai-voice-orb.json): Curated production-grade component. (Variance: 8, Motion: 9, Density: 5)
+  - Tags: webgl, threejs, canvas, neon-scifi, wai-aria-compliant
+  - Dependencies: three, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-voice-orb.json
+- [canvas-fluid-wave](/r/canvas-fluid-wave.json): Interactive HTML5 Canvas fluid simulation with mouse interaction, WebGL / Three.js bridge compatibility, and CSS gradient fallback. (Variance: 9, Motion: 9, Density: 3)
+  - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, framer-motion, interactive, a11y-fallback
+  - Dependencies: three, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/canvas-fluid-wave.json
+- [dot-matrix-loader](/r/dot-matrix-loader.json): Animated dot matrix with wave oscillation, customizable matrix rows, and accessible status role. (Variance: 6, Motion: 5, Density: 7)
+  - Tags: wai-aria-compliant, utility, dot-matrix, canvas-pattern, loader, status
+  - Dependencies: clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/dot-matrix-loader.json
+- [glow-border](/r/glow-border.json): Rotating chromatic gradient glow border wrapper for cards, hero callouts, and featured sections. (Variance: 7, Motion: 7, Density: 5)
+  - Tags: tailwind-v4, neon-scifi, wai-aria-compliant, magic-ui, glow, conic-gradient, creative, border
+  - Dependencies: clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/glow-border.json
+- [liquid-metal-shader](/r/liquid-metal-shader.json): Curated production-grade component. (Variance: 8, Motion: 9, Density: 3)
+  - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant
+  - Dependencies: three, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/liquid-metal-shader.json
+- [matrix-code-stream](/r/matrix-code-stream.json): Curated production-grade component. (Variance: 8, Motion: 9, Density: 5)
+  - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant
+  - Dependencies: three, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/matrix-code-stream.json
+- [noise-texture-card](/r/noise-texture-card.json): High-craft noise-dithered backdrop with crisp typography overlay and zero AI slop. (Variance: 7, Motion: 2, Density: 6)
+  - Tags: tailwind-v4, wai-aria-compliant, svg-noise, editorial, texture, brutalist
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/noise-texture-card.json
+- [particle-field](/r/particle-field.json): GPU-friendly interactive particle web with prefers-reduced-motion fallback. (Variance: 8, Motion: 8, Density: 4)
+  - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, particles, physics, reduced-motion
+  - Dependencies: three, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/particle-field.json
+- [radial-gradient-mask](/r/radial-gradient-mask.json): Interactive radial reveal mask on dotted matrix backdrop with pointer position tracking. (Variance: 7, Motion: 3, Density: 5)
+  - Tags: tailwind-v4, wai-aria-compliant, aceternity, mask, shader-simulation, creative, interactive
+  - Dependencies: clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/radial-gradient-mask.json
+- [threejs-model-viewport](/r/threejs-model-viewport.json): Curated production-grade component. (Variance: 8, Motion: 9, Density: 5)
+  - Tags: lucide-react, webgl, threejs, canvas, tailwind-v4, wai-aria-compliant
+  - Dependencies: lucide-react, three, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/threejs-model-viewport.json
+- [ai-artifact-canvas](/r/ai-artifact-canvas.json): Curated production-grade component. (Variance: 8, Motion: 9, Density: 5)
+  - Tags: lucide-react, webgl, threejs, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, canvas
+  - Dependencies: lucide-react, three, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-artifact-canvas.json
+
+### Category: ui:media
+- [audio-visualizer](/r/audio-visualizer.json): Acoustic frequency waveform visualizer with playback state toggles and live audio synthesis. (Variance: 6, Motion: 7, Density: 6)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, audio, waveform, visualizer, media, player
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/audio-visualizer.json
+- [media-scrubber-timeline](/r/media-scrubber-timeline.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
+  - Dependencies: lucide-react, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/media-scrubber-timeline.json
+- [split-video-comparator](/r/split-video-comparator.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant
+  - Dependencies: lucide-react, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/split-video-comparator.json
+- [timeline-player](/r/timeline-player.json): Precision timeline-based motion and video composition controller with frame scrubbing and timecode. (Variance: 7, Motion: 8, Density: 4)
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, remotion, video, motion, timeline, media, player
+  - Dependencies: motion, lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/timeline-player.json
+- [waveform-audio-player](/r/waveform-audio-player.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
+  - Dependencies: lucide-react, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/waveform-audio-player.json
+- [activity-feed-timeline](/r/activity-feed-timeline.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/activity-feed-timeline.json
+
+### Category: ui:motion
+- [animated-tabs](/r/animated-tabs.json): Smooth spring-bound tab slider with layout ID preservation and zero layout shift. (Variance: 4, Motion: 6, Density: 5)
+  - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, shadcn-compatible, spring-physics, tabs, layoutId
+  - Dependencies: motion, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/animated-tabs.json
+- [counter-odometer](/r/counter-odometer.json): Curated production-grade component. (Variance: 5, Motion: 8, Density: 5)
+  - Tags: framer-motion, motion/react, animation, tailwind-v4, wai-aria-compliant, spring-physics
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/counter-odometer.json
+- [evil-button](/r/evil-button.json): Playful tactile spring-physics button with synthesized audio feedback and chaotic variants. (Variance: 8, Motion: 7, Density: 5)
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, playful, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, sound-physics, interactive, button
+  - Dependencies: motion, lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/evil-button.json
+- [expandable-card](/r/expandable-card.json): Curated production-grade component. (Variance: 5, Motion: 8, Density: 7)
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, spring-physics
+  - Dependencies: motion, lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/expandable-card.json
+- [floating-dock](/r/floating-dock.json): macOS-style interactive dock with mouse proximity magnification and spring physics. (Variance: 6, Motion: 8, Density: 4)
+  - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, micro-interaction, dock, macos-style
+  - Dependencies: motion, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/floating-dock.json
+- [fluid-cursor](/r/fluid-cursor.json): Smooth trailing cursor follower with graceful coarse-pointer (mobile) disablement. (Variance: 8, Motion: 8, Density: 3)
+  - Tags: framer-motion, motion/react, animation, glassmorphism, wai-aria-compliant, spring-physics, cursor-follower, smooth-spring
+  - Dependencies: motion, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/fluid-cursor.json
+- [magnetic-badge](/r/magnetic-badge.json): Curated production-grade component. (Variance: 5, Motion: 8, Density: 7)
+  - Tags: framer-motion, motion/react, animation, lucide-react, wai-aria-compliant, spring-physics
+  - Dependencies: motion, lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/magnetic-badge.json
+- [magnetic-button](/r/magnetic-button.json): Physics-based cursor magnetic attraction button for high-taste calls to action. (Variance: 4, Motion: 6, Density: 5)
+  - Tags: framer-motion, motion/react, animation, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, shadcn-compatible, magnetic-physics, button, interactive
+  - Dependencies: motion, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/magnetic-button.json
+- [marquee](/r/marquee.json): Infinite content stream marquee with pause-on-hover, velocity controls, and reduced-motion disablement. (Variance: 5, Motion: 6, Density: 6)
+  - Tags: wai-aria-compliant, magic-ui, marquee, animation, ticker, loop
+  - Dependencies: clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/marquee.json
+- [morphing-dialog](/r/morphing-dialog.json): Curated production-grade component. (Variance: 5, Motion: 9, Density: 7)
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant
+  - Dependencies: motion, lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/morphing-dialog.json
+- [shimmer-button](/r/shimmer-button.json): Polished call-to-action button featuring smooth rotating radial conic shimmer and micro-spring scale. (Variance: 6, Motion: 5, Density: 5)
+  - Tags: tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, magic-ui, shimmer, button, micro-interaction, cta
+  - Dependencies: clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/shimmer-button.json
+- [sliding-number](/r/sliding-number.json): Curated production-grade component. (Variance: 5, Motion: 8, Density: 5)
+  - Tags: framer-motion, motion/react, animation, wai-aria-compliant, spring-physics
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/sliding-number.json
+- [spotlight-card](/r/spotlight-card.json): Interactive radial cursor spotlight tracking card with smooth proximity illumination. (Variance: 5, Motion: 5, Density: 5)
+  - Tags: tailwind-v4, wai-aria-compliant, aceternity, spotlight, card, mouse-tracking, micro-interaction
+  - Dependencies: clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/spotlight-card.json
+- [spring-dialog](/r/spring-dialog.json): Scale-and-fade physics modal with AnimatePresence and keyboard escape handling. (Variance: 5, Motion: 6, Density: 5)
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, animate-presence, modal
+  - Dependencies: motion, lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/spring-dialog.json
+- [tilt-card](/r/tilt-card.json): Curated production-grade component. (Variance: 5, Motion: 8, Density: 7)
+  - Tags: framer-motion, motion/react, animation, tailwind-v4, wai-aria-compliant, spring-physics
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/tilt-card.json
 

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "karaoke-caption-stream",
+  "type": "registry:ui",
+  "title": "Karaoke Caption Stream",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "tailwind-v4",
+    "brutalist",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/media/karaoke-caption-stream.tsx",
+      "content": "/**\n * @license MIT\n * @origin Remocn / Remotion (https://remotion.dev)\n * @author Remotion & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface CaptionWord {\n  text: string;\n  startMs: number;\n  endMs: number;\n}\n\nexport interface KaraokeCaptionStreamProps extends React.HTMLAttributes<HTMLDivElement> {\n  words?: CaptionWord[];\n  currentPlayheadMs?: number;\n}\n\nconst DEFAULT_WORDS: CaptionWord[] = [\n  { text: \"Machine-First\", startMs: 0, endMs: 400 },\n  { text: \"Design\", startMs: 400, endMs: 700 },\n  { text: \"System\", startMs: 700, endMs: 1100 },\n  { text: \"eliminates\", startMs: 1100, endMs: 1500 },\n  { text: \"AI\", startMs: 1500, endMs: 1800 },\n  { text: \"slop\", startMs: 1800, endMs: 2200 },\n];\n\nexport function KaraokeCaptionStream({\n  words = DEFAULT_WORDS,\n  currentPlayheadMs = 1200,\n  className,\n  ...props\n}: KaraokeCaptionStreamProps) {\n  return (\n    <div\n      className={cn(\n        \"flex flex-wrap items-center justify-center gap-2 p-6 rounded-2xl border border-border bg-black/90 shadow-lg text-center\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Synchronized Audio Caption Stream\"\n      {...props}\n    >\n      {words.map((word, idx) => {\n        const isPast = currentPlayheadMs >= word.endMs;\n        const isCurrent = currentPlayheadMs >= word.startMs && currentPlayheadMs < word.endMs;\n\n        return (\n          <span\n            key={`${word.text}-${idx}`}\n            className={cn(\n              \"text-lg md:text-2xl font-black tracking-tight transition-all duration-150\",\n              isCurrent && \"text-primary scale-110 drop-shadow-[0_0_12px_rgba(59,130,246,0.6)]\",\n              isPast && \"text-white opacity-90\",\n              !isPast && !isCurrent && \"text-neutral-600 opacity-40\"\n            )}\n          >\n            {word.text}\n          </span>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/karaoke-caption-stream.tsx"
+    }
+  ]
+}

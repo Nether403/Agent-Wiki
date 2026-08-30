@@ -1,0 +1,46 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "view-transition-theme-toggle",
+  "type": "registry:ui",
+  "title": "View Transition Theme Toggle",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 6
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/view-transition-theme-toggle.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @author Community Contributor\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Sun, Moon } from \"lucide-react\";\n\nexport interface ViewTransitionThemeToggleProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  onThemeChange?: (theme: \"light\" | \"dark\") => void;\n}\n\nexport function ViewTransitionThemeToggle({\n  onThemeChange,\n  className,\n  ...props\n}: ViewTransitionThemeToggleProps) {\n  const [theme, setTheme] = React.useState<\"light\" | \"dark\">(\"dark\");\n\n  const toggleTheme = (e: React.MouseEvent<HTMLButtonElement>) => {\n    const nextTheme = theme === \"dark\" ? \"light\" : \"dark\";\n\n    if (!(document as any).startViewTransition) {\n      setTheme(nextTheme);\n      document.documentElement.classList.toggle(\"dark\", nextTheme === \"dark\");\n      onThemeChange?.(nextTheme);\n      return;\n    }\n\n    const x = e.clientX;\n    const y = e.clientY;\n    const endRadius = Math.hypot(\n      Math.max(x, window.innerWidth - x),\n      Math.max(y, window.innerHeight - y)\n    );\n\n    const transition = (document as any).startViewTransition(() => {\n      setTheme(nextTheme);\n      document.documentElement.classList.toggle(\"dark\", nextTheme === \"dark\");\n      onThemeChange?.(nextTheme);\n    });\n\n    transition.ready.then(() => {\n      document.documentElement.animate(\n        {\n          clipPath: [\n            `circle(0px at ${x}px ${y}px)`,\n            `circle(${endRadius}px at ${x}px ${y}px)`,\n          ],\n        },\n        {\n          duration: 400,\n          easing: \"ease-in-out\",\n          pseudoElement: \"::view-transition-new(root)\",\n        }\n      );\n    });\n  };\n\n  return (\n    <button\n      type=\"button\"\n      onClick={toggleTheme}\n      className={cn(\n        \"flex items-center justify-center h-9 w-9 rounded-lg border border-border bg-card text-card-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shadow-xs\",\n        className\n      )}\n      aria-label={`Toggle theme (currently ${theme})`}\n      {...props}\n    >\n      {theme === \"dark\" ? (\n        <Sun className=\"h-4 w-4 text-amber-500\" aria-hidden=\"true\" />\n      ) : (\n        <Moon className=\"h-4 w-4 text-primary\" aria-hidden=\"true\" />\n      )}\n    </button>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/view-transition-theme-toggle.tsx"
+    }
+  ]
+}

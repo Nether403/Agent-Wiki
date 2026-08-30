@@ -1,0 +1,41 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "inline-sparkline-chart",
+  "type": "registry:component",
+  "title": "Inline Sparkline Chart",
+  "description": "Curated production-grade component.",
+  "category": "ui:editorial",
+  "tags": [
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/inline-sparkline-chart.tsx",
+      "content": "/**\n * @license MIT\n * @origin shadcn/ui Charts & ReUI (https://reui.io)\n * @author Keenthemes & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface InlineSparklineChartProps extends React.SVGAttributes<SVGSVGElement> {\n  data: number[];\n  width?: number;\n  height?: number;\n  strokeWidth?: number;\n  variant?: \"area\" | \"line\" | \"bar\";\n  color?: string;\n  fillOpacity?: number;\n}\n\nexport function InlineSparklineChart({\n  data = [10, 15, 8, 22, 18, 26, 35],\n  width = 120,\n  height = 36,\n  strokeWidth = 2,\n  variant = \"area\",\n  color = \"currentColor\",\n  fillOpacity = 0.15,\n  className,\n  ...props\n}: InlineSparklineChartProps) {\n  if (!data || data.length === 0) return null;\n\n  const minVal = Math.min(...data);\n  const maxVal = Math.max(...data);\n  const range = maxVal - minVal || 1;\n  const padding = 2;\n\n  const points = data.map((val, idx) => {\n    const x = (idx / (data.length - 1)) * (width - padding * 2) + padding;\n    const y = height - ((val - minVal) / range) * (height - padding * 2 - strokeWidth) - padding;\n    return { x, y };\n  });\n\n  const polylinePoints = points.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(\" \");\n\n  const areaPath = `M ${points[0].x},${height} L ${polylinePoints.replace(/ /g, \" L \")} L ${points[points.length - 1].x},${height} Z`;\n\n  return (\n    <svg\n      viewBox={`0 0 ${width} ${height}`}\n      className={cn(\"overflow-visible text-primary inline-block shrink-0\", className)}\n      role=\"img\"\n      aria-label={`Inline sparkline trend with ${data.length} datapoints`}\n      {...props}\n    >\n      {variant === \"area\" && (\n        <path d={areaPath} fill={color} fillOpacity={fillOpacity} />\n      )}\n\n      {variant === \"bar\" ? (\n        data.map((val, i) => {\n          const barWidth = Math.max(2, (width / data.length) - 2);\n          const barHeight = ((val - minVal) / range) * (height - 4);\n          const x = i * (width / data.length) + 1;\n          const y = height - barHeight - 2;\n          return (\n            <rect\n              key={`bar-${i}`}\n              x={x}\n              y={y}\n              width={barWidth}\n              height={barHeight}\n              rx={1}\n              fill={color}\n              className=\"opacity-80 hover:opacity-100 transition-opacity\"\n            />\n          );\n        })\n      ) : (\n        <polyline\n          fill=\"none\"\n          stroke={color}\n          strokeWidth={strokeWidth}\n          strokeLinecap=\"round\"\n          strokeLinejoin=\"round\"\n          points={polylinePoints}\n        />\n      )}\n    </svg>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/inline-sparkline-chart.tsx"
+    }
+  ]
+}

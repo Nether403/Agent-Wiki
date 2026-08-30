@@ -1,0 +1,44 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "tree-hierarchy-map",
+  "type": "registry:ui",
+  "title": "Tree Hierarchy Map",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/tree-hierarchy-map.tsx",
+      "content": "/**\n * @license MIT\n * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)\n * @author Cathryn Lavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface TreeHierarchyMapProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n}\n\nexport function TreeHierarchyMap({\n  title = \"Taxonomy Taxonomy Tree Graph\",\n  className,\n  ...props\n}: TreeHierarchyMapProps) {\n  return (\n    <figure\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Tree Hierarchy: ${title}`}\n      {...props}\n    >\n      <header className=\"border-b border-border pb-3 mb-6\">\n        <h3 className=\"text-sm font-bold text-foreground\">{title}</h3>\n        <p className=\"text-xs text-muted-foreground mt-0.5\">\n          Radial hierarchical tree map expressing component lineage from root catalog to leaf primitives.\n        </p>\n      </header>\n\n      <div className=\"relative w-full overflow-x-auto py-2\">\n        <svg\n          viewBox=\"0 0 680 180\"\n          className=\"w-full min-w-[620px] h-auto overflow-visible\"\n          role=\"img\"\n          aria-label=\"Tree hierarchy diagram\"\n        >\n          {/* Trunk Lines */}\n          <path d=\"M 120 90 C 180 90, 180 40, 240 40\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" className=\"text-muted-foreground/40\" />\n          <path d=\"M 120 90 L 240 90\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" className=\"text-muted-foreground/40\" />\n          <path d=\"M 120 90 C 180 90, 180 140, 240 140\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" className=\"text-muted-foreground/40\" />\n\n          {/* Root */}\n          <g transform=\"translate(10, 65)\">\n            <rect width=\"110\" height=\"50\" rx=\"8\" fill=\"currentColor\" className=\"text-primary/10 stroke-primary/50 stroke-1\" />\n            <text x=\"55\" y=\"30\" textAnchor=\"middle\" className=\"fill-primary text-[11px] font-black\">Agent Wiki</text>\n          </g>\n\n          {/* Child 1: Primitives */}\n          <g transform=\"translate(240, 20)\">\n            <rect width=\"120\" height=\"40\" rx=\"6\" fill=\"currentColor\" className=\"text-muted/30 stroke-border stroke-1\" />\n            <text x=\"60\" y=\"24\" textAnchor=\"middle\" className=\"fill-foreground text-[10px] font-bold\">ui:primitive (14)</text>\n          </g>\n\n          {/* Child 2: Motion */}\n          <g transform=\"translate(240, 70)\">\n            <rect width=\"120\" height=\"40\" rx=\"6\" fill=\"currentColor\" className=\"text-muted/30 stroke-border stroke-1\" />\n            <text x=\"60\" y=\"24\" textAnchor=\"middle\" className=\"fill-foreground text-[10px] font-bold\">ui:motion (15)</text>\n          </g>\n\n          {/* Child 3: Creative 3D */}\n          <g transform=\"translate(240, 120)\">\n            <rect width=\"120\" height=\"40\" rx=\"6\" fill=\"currentColor\" className=\"text-muted/30 stroke-border stroke-1\" />\n            <text x=\"60\" y=\"24\" textAnchor=\"middle\" className=\"fill-foreground text-[10px] font-bold\">ui:creative (12)</text>\n          </g>\n\n          {/* Sub-branches */}\n          <path d=\"M 360 40 L 440 40\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" className=\"text-muted-foreground/40\" />\n          <path d=\"M 360 90 L 440 90\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" className=\"text-muted-foreground/40\" />\n          <path d=\"M 360 140 L 440 140\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" className=\"text-muted-foreground/40\" />\n\n          <g transform=\"translate(440, 20)\">\n            <rect width=\"140\" height=\"40\" rx=\"6\" fill=\"currentColor\" className=\"text-muted/10 stroke-border stroke-1\" />\n            <text x=\"70\" y=\"24\" textAnchor=\"middle\" className=\"fill-muted-foreground text-[9px] font-mono\">Buttons, Inputs, Modals</text>\n          </g>\n\n          <g transform=\"translate(440, 70)\">\n            <rect width=\"140\" height=\"40\" rx=\"6\" fill=\"currentColor\" className=\"text-muted/10 stroke-border stroke-1\" />\n            <text x=\"70\" y=\"24\" textAnchor=\"middle\" className=\"fill-muted-foreground text-[9px] font-mono\">Docks, Tabs, Springs</text>\n          </g>\n\n          <g transform=\"translate(440, 120)\">\n            <rect width=\"140\" height=\"40\" rx=\"6\" fill=\"currentColor\" className=\"text-muted/10 stroke-border stroke-1\" />\n            <text x=\"70\" y=\"24\" textAnchor=\"middle\" className=\"fill-muted-foreground text-[9px] font-mono\">R3F Viewports, HUDs</text>\n          </g>\n        </svg>\n      </div>\n    </figure>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/tree-hierarchy-map.tsx"
+    }
+  ]
+}
