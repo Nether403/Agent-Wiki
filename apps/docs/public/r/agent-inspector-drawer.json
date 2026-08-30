@@ -1,0 +1,60 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "agent-inspector-drawer",
+  "type": "registry:component",
+  "title": "Agent Inspector Drawer",
+  "description": "Slide-out inspection drawer for agent execution steps, tool call parameters, and runtime payloads.",
+  "category": "ui:workflow",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "lucide-react",
+    "tailwind-v4",
+    "glassmorphism",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "spring-physics",
+    "workflow",
+    "drawer",
+    "inspector",
+    "agent-ui",
+    "debug"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 4,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "dialog",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Machine-First Design Agent Wiki",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/workflow/agent-inspector-drawer.tsx",
+      "content": "/**\n * @origin Machine-First Design Agent Wiki\n * @license MIT\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { motion, AnimatePresence } from \"motion/react\";\nimport { X, Cpu, Clock, CheckCircle2, AlertCircle } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface AgentStepExecution {\n  id: string;\n  tool: string;\n  status: \"success\" | \"running\" | \"failed\";\n  elapsedMs: number;\n  input: Record<string, unknown>;\n  output?: Record<string, unknown> | string;\n}\n\nexport interface AgentInspectorDrawerProps {\n  isOpen: boolean;\n  onClose: () => void;\n  execution?: AgentStepExecution;\n  className?: string;\n}\n\nexport function AgentInspectorDrawer({\n  isOpen,\n  onClose,\n  execution,\n  className,\n}: AgentInspectorDrawerProps) {\n  // Handle escape key listener with cleanup\n  React.useEffect(() => {\n    const handleKeyDown = (e: KeyboardEvent) => {\n      if (e.key === \"Escape\") onClose();\n    };\n    if (isOpen) {\n      window.addEventListener(\"keydown\", handleKeyDown);\n    }\n    return () => window.removeEventListener(\"keydown\", handleKeyDown);\n  }, [isOpen, onClose]);\n\n  return (\n    <AnimatePresence>\n      {isOpen && (\n        <div className=\"fixed inset-0 z-50 flex justify-end\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"drawer-title\">\n          <motion.div\n            initial={{ opacity: 0 }}\n            animate={{ opacity: 1 }}\n            exit={{ opacity: 0 }}\n            className=\"fixed inset-0 bg-background/80 backdrop-blur-sm\"\n            onClick={onClose}\n          />\n\n          <motion.aside\n            initial={{ x: \"100%\" }}\n            animate={{ x: 0 }}\n            exit={{ x: \"100%\" }}\n            transition={{ type: \"spring\", damping: 25, stiffness: 250 }}\n            className={cn(\n              \"relative z-50 h-full w-full max-w-md border-l border-border bg-card p-6 shadow-2xl overflow-y-auto\",\n              className\n            )}\n          >\n            <div className=\"flex items-center justify-between border-b border-border pb-4\">\n              <div className=\"flex items-center gap-2\">\n                <Cpu className=\"h-5 w-5 text-primary\" aria-hidden=\"true\" />\n                <h2 id=\"drawer-title\" className=\"text-lg font-semibold text-foreground\">\n                  Step Inspector\n                </h2>\n              </div>\n              <button\n                type=\"button\"\n                onClick={onClose}\n                aria-label=\"Close Inspector\"\n                className=\"rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n              >\n                <X className=\"h-5 w-5\" aria-hidden=\"true\" />\n              </button>\n            </div>\n\n            {execution ? (\n              <div className=\"mt-6 space-y-6\">\n                <div className=\"flex items-center justify-between rounded-xl bg-muted/40 p-3\">\n                  <div className=\"flex items-center gap-2 text-sm font-medium\">\n                    {execution.status === \"success\" ? (\n                      <CheckCircle2 className=\"h-4 w-4 text-emerald-500\" aria-hidden=\"true\" />\n                    ) : execution.status === \"failed\" ? (\n                      <AlertCircle className=\"h-4 w-4 text-rose-500\" aria-hidden=\"true\" />\n                    ) : (\n                      <Clock className=\"h-4 w-4 text-amber-500 animate-spin\" aria-hidden=\"true\" />\n                    )}\n                    <span className=\"capitalize\">{execution.status}</span>\n                  </div>\n                  <span className=\"font-mono text-xs text-muted-foreground\">\n                    {execution.elapsedMs}ms\n                  </span>\n                </div>\n\n                <div>\n                  <h3 className=\"text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2\">\n                    Executed Tool\n                  </h3>\n                  <code className=\"block rounded-lg bg-background p-2 font-mono text-sm border border-border\">\n                    {execution.tool}\n                  </code>\n                </div>\n\n                <div>\n                  <h3 className=\"text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2\">\n                    Input Parameters\n                  </h3>\n                  <pre className=\"overflow-x-auto rounded-lg bg-background p-3 font-mono text-xs text-muted-foreground border border-border max-h-48\">\n                    {JSON.stringify(execution.input, null, 2)}\n                  </pre>\n                </div>\n\n                {execution.output && (\n                  <div>\n                    <h3 className=\"text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2\">\n                      Result Payload\n                    </h3>\n                    <pre className=\"overflow-x-auto rounded-lg bg-background p-3 font-mono text-xs text-emerald-400 border border-border max-h-60\">\n                      {typeof execution.output === \"string\"\n                        ? execution.output\n                        : JSON.stringify(execution.output, null, 2)}\n                    </pre>\n                  </div>\n                )}\n              </div>\n            ) : (\n              <div className=\"mt-12 text-center text-sm text-muted-foreground\">\n                No active execution selected.\n              </div>\n            )}\n          </motion.aside>\n        </div>\n      )}\n    </AnimatePresence>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/agent-inspector-drawer.tsx"
+    }
+  ]
+}

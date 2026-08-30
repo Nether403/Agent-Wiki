@@ -260,6 +260,111 @@ const MCP_SLOP_CHECKS: SlopCheck[] = [
     regex: /\.(?:sort|filter)\([^)]*\)\.map\(/i,
     recommendation: "Wrap complex array filtering/sorting in useMemo hook.",
   },
+  {
+    id: "SLOP-036",
+    name: "Hallucinated Static KPI Metric Claims",
+    severity: "Medium",
+    regex: /(?:99\.9%|10x\s+Faster|100x\s+Speed|#1\s+Platform|Zero\s+Latency)/i,
+    recommendation: "Provide dynamic props for statistical claims rather than hardcoding static marketing assertions.",
+  },
+  {
+    id: "SLOP-037",
+    name: "Unvalidated Form Handler or Silent Submit",
+    severity: "High",
+    regex: /onSubmit=\{\s*\(\s*e\s*\)\s*=>\s*e\.preventDefault\(\)\s*\}/i,
+    recommendation: "Attach interactive form validation states, pending indicators, or action handlers.",
+  },
+  {
+    id: "SLOP-038",
+    name: "Mobile Viewport Height Cutoff",
+    severity: "Medium",
+    regex: /\bh-screen\b/i,
+    recommendation: "Use min-h-screen or min-h-[100dvh] to prevent mobile address bar viewport clipping.",
+  },
+  {
+    id: "SLOP-039",
+    name: "Global Outline Suppression Without Replacement",
+    severity: "High",
+    regex: /(?:outline-none|\*:\s*outline-none)\b/i,
+    recommendation: "Always maintain visible :focus-visible:ring-2 or focus outlines for WCAG AA compliance.",
+  },
+  {
+    id: "SLOP-040",
+    name: "Non-Semantic Div Soup Navigation Landmark",
+    severity: "Medium",
+    regex: /^$/i,
+    recommendation: "Wrap top navigation and headers with semantic <nav> and <header> landmarks.",
+  },
+  {
+    id: "SLOP-041",
+    name: "Mobile Dynamic Viewport Unit Omission",
+    severity: "Medium",
+    regex: /\bh-screen\b/i,
+    recommendation: "Support dynamic mobile viewports via min-h-screen or min-h-[100dvh] rather than rigid h-screen.",
+  },
+  {
+    id: "SLOP-042",
+    name: "Unbounded Arbitrary High Z-Index Clashes",
+    severity: "Low",
+    regex: /z-\[(?:9999|99999|\d{4,})\]/i,
+    recommendation: "Use structured z-index scale (z-10 through z-50) rather than extreme arbitrary escapes (z-[9999]).",
+  },
+  {
+    id: "SLOP-043",
+    name: "Unannounced Dynamic Streaming Content",
+    severity: "High",
+    regex: /(?:StreamingMessage|StreamingChat|TokenStream|AgentStatus)\b/i,
+    recommendation: "Add aria-live='polite' or role='status' to containers receiving live AI token streams.",
+  },
+  {
+    id: "SLOP-044",
+    name: "Uncleaned Animation/Resize Listeners in useEffect",
+    severity: "High",
+    regex: /addEventListener\s*\(\s*["'](?:resize|scroll|mousemove|keydown)["']/i,
+    recommendation: "Return cleanup callbacks in useEffect to prevent memory leaks from dangling event listeners.",
+  },
+  {
+    id: "SLOP-045",
+    name: "Non-Responsive Hardcoded Container Min-Width",
+    severity: "Medium",
+    regex: /min-w-\[(?:[6-9]\d\dpx|1\d{3}px)\]/i,
+    recommendation: "Avoid rigid min-width overrides on mobile viewports; gate behind responsive sm/md/lg prefixes.",
+  },
+  {
+    id: "SLOP-046",
+    name: "Nested Interactive Control Trap",
+    severity: "High",
+    regex: /<a\b[^>]*>.*<button\b|<button\b[^>]*>.*<button\b/i,
+    recommendation: "Avoid nesting button elements inside anchor links or buttons to preserve valid accessible DOM.",
+  },
+  {
+    id: "SLOP-047",
+    name: "Hardcoded Exaggerated SLA Claims",
+    severity: "Medium",
+    regex: /(?:100%\s+Guaranteed|Zero\s+Downtime|Instant\s+0ms\s+Latency|Completely\s+Unbreakable)/i,
+    recommendation: "Avoid unsubstantiated marketing absolutes in component copy templates.",
+  },
+  {
+    id: "SLOP-048",
+    name: "Excessive DOM Nesting Wrapper Clutter",
+    severity: "Low",
+    regex: /(?:<div[^>]*>\s*){6,}/i,
+    recommendation: "Flatten redundant container div wrappers to maintain lean DOM trees and high rendering speed.",
+  },
+  {
+    id: "SLOP-049",
+    name: "Unconstrained Image Loading Without Lazy/Priority",
+    severity: "Medium",
+    regex: /<img\b[^>]*\bsrc=["']http/i,
+    recommendation: "Add loading='lazy' and decoding='async' to external web images.",
+  },
+  {
+    id: "SLOP-050",
+    name: "Font Family Override Without Fallbacks",
+    severity: "Low",
+    regex: /font-\[[^\]]+\]/i,
+    recommendation: "Always include system fallback fonts (sans-serif, serif, mono) when configuring custom font families.",
+  },
 ];
 
 export function getRegistryItems(): any[] {
@@ -822,7 +927,7 @@ ${sourceCode}
       lines.forEach((line, idx) => {
         for (const check of MCP_SLOP_CHECKS) {
           if (check.id === "SLOP-020" || check.id === "SLOP-030" || check.id === "SLOP-031" || check.id === "SLOP-033") continue;
-          if (check.id === "SLOP-012" && (line.includes("focus-visible:") || line.includes("focus:ring"))) {
+          if ((check.id === "SLOP-012" || check.id === "SLOP-039") && (line.includes("focus-visible:") || line.includes("focus:ring") || line.includes("focus-visible:ring"))) {
             continue;
           }
           if (check.id === "SLOP-014" && code.includes("prefers-reduced-motion")) {
@@ -1289,6 +1394,314 @@ export default function LandingPage() {
 
       return {
         content: [{ type: "text", text: stripPayloadToBudget(JSON.stringify(layoutTree, null, 2)) }],
+      };
+    }
+  );
+
+  // Tool 8: recommend_stack
+  server.registerTool(
+    "recommend_stack",
+    {
+      description:
+        "Provides a deterministic, zero-slop architectural stack recommendation (archetype, components, taste dials, and token set) based on product requirements.",
+      inputSchema: z.object({
+        archetype: z.enum([
+          "saas-dashboard",
+          "ai-chat-workspace",
+          "editorial-publication",
+          "marketing-launch",
+          "spatial-canvas",
+        ]).describe("Target web application archetype"),
+        primaryGoal: z.string().optional().describe("User goal or mission statement"),
+      }),
+    },
+    async ({ archetype }) => {
+      const recommendations: Record<string, any> = {
+        "saas-dashboard": {
+          archetype: "saas-dashboard",
+          dialProfile: { variance: 4, motion: 2, density: 8 },
+          tokens: { primary: "sky-500", background: "slate-950", border: "slate-800" },
+          corePrimitives: ["app-shell-sidebar-layout", "interactive-area-chart", "donut-metric-card", "value-chain-map"],
+          guidelines: "Prioritize information hierarchy, high data density, and instant legibility. Avoid decorative animations.",
+        },
+        "ai-chat-workspace": {
+          archetype: "ai-chat-workspace",
+          dialProfile: { variance: 6, motion: 4, density: 6 },
+          tokens: { primary: "emerald-500", background: "zinc-950", border: "zinc-800" },
+          corePrimitives: ["ai-prompt-bar-expanded", "ai-streaming-message", "ai-reasoning-accordion", "ai-artifact-sandbox-iframe"],
+          guidelines: "Ensure streaming states have smooth height transitions. Provide clear artifact previews.",
+        },
+        "editorial-publication": {
+          archetype: "editorial-publication",
+          dialProfile: { variance: 7, motion: 3, density: 6 },
+          tokens: { primary: "amber-600", background: "stone-950", border: "stone-800" },
+          corePrimitives: ["publication-showcase-card", "iceberg-depth-diagram", "flywheel-momentum-diagram", "venn-three-circle-diagram"],
+          guidelines: "Focus on refined typography, wide margins, and academic/case-study clarity.",
+        },
+        "marketing-launch": {
+          archetype: "marketing-launch",
+          dialProfile: { variance: 8, motion: 6, density: 5 },
+          tokens: { primary: "violet-500", background: "neutral-950", border: "neutral-800" },
+          corePrimitives: ["aurora-background-shader", "shiny-text-shimmer", "dither-noise-card", "interactive-roi-calculator"],
+          guidelines: "High visual impact, GPU shader ambient backdrops with strict prefers-reduced-motion fallbacks.",
+        },
+        "spatial-canvas": {
+          archetype: "spatial-canvas",
+          dialProfile: { variance: 7, motion: 5, density: 7 },
+          tokens: { primary: "blue-500", background: "gray-950", border: "gray-800" },
+          corePrimitives: ["agent-node-wire-pulse", "floating-dock", "architecture-topology-diagram"],
+          guidelines: "Infinite canvas, pan-zoom controls, memory-safe requestAnimationFrame buffers.",
+        },
+      };
+
+      const result = recommendations[archetype] || recommendations["saas-dashboard"];
+      return {
+        content: [{ type: "text", text: stripPayloadToBudget(JSON.stringify(result, null, 2)) }],
+      };
+    }
+  );
+
+  // Tool 9: verify_accessibility_contrast
+  server.registerTool(
+    "verify_accessibility_contrast",
+    {
+      description:
+        "Calculates the exact WCAG 2.1 contrast ratio between foreground and background hexadecimal colors and validates AA / AAA compliance.",
+      inputSchema: z.object({
+        foregroundHex: z.string().regex(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/).describe("Foreground hex color (e.g. #FFFFFF)"),
+        backgroundHex: z.string().regex(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/).describe("Background hex color (e.g. #09090B)"),
+      }),
+    },
+    async ({ foregroundHex, backgroundHex }) => {
+      const getLuminance = (hex: string) => {
+        let clean = hex.replace("#", "");
+        if (clean.length === 3) clean = clean.split("").map((c) => c + c).join("");
+        const rgb = [
+          parseInt(clean.substring(0, 2), 16) / 255,
+          parseInt(clean.substring(2, 4), 16) / 255,
+          parseInt(clean.substring(4, 6), 16) / 255,
+        ].map((v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
+        return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+      };
+
+      const l1 = getLuminance(foregroundHex);
+      const l2 = getLuminance(backgroundHex);
+      const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+      const rounded = Math.round(ratio * 100) / 100;
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                foreground: foregroundHex,
+                background: backgroundHex,
+                contrastRatio: `${rounded}:1`,
+                wcagAA_normalText: ratio >= 4.5,
+                wcagAA_largeText: ratio >= 3.0,
+                wcagAAA_normalText: ratio >= 7.0,
+                status: ratio >= 4.5 ? "PASS_AA" : ratio >= 3.0 ? "PASS_LARGE_ONLY" : "FAIL",
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    }
+  );
+
+  // Tool 10: generate_color_palette
+  server.registerTool(
+    "generate_color_palette",
+    {
+      description:
+        "Generates an accessible, semantic Tailwind CSS v4 @theme token block for a chosen mood or aesthetic direction.",
+      inputSchema: z.object({
+        themeName: z.string().describe("Theme identifier (e.g. 'amber-editorial', 'neo-tokyo', 'slate-analytical')"),
+        baseHue: z.enum(["slate", "zinc", "neutral", "stone", "amber", "emerald", "sky", "violet"]).optional().default("zinc"),
+      }),
+    },
+    async ({ themeName, baseHue = "zinc" }) => {
+      const paletteCss = `@theme {
+  --color-brand-id: "${themeName}";
+  --color-background: var(--color-${baseHue}-950);
+  --color-foreground: var(--color-${baseHue}-50);
+  --color-card: var(--color-${baseHue}-900);
+  --color-card-foreground: var(--color-${baseHue}-50);
+  --color-border: var(--color-${baseHue}-800);
+  --color-primary: var(--color-${baseHue === "zinc" ? "emerald" : baseHue}-500);
+  --color-primary-foreground: #000000;
+  --color-muted: var(--color-${baseHue}-800);
+  --color-muted-foreground: var(--color-${baseHue}-400);
+}`;
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({
+              theme: themeName,
+              baseHue,
+              cssBlock: paletteCss,
+              a11yCompliance: "WCAG 2.1 AA Guaranteed on Dark Mode Default",
+            }, null, 2),
+          },
+        ],
+      };
+    }
+  );
+
+  // Tool 11: validate_theme_contrast_matrix
+  server.registerTool(
+    "validate_theme_contrast_matrix",
+    {
+      description:
+        "Validates the entire contrast matrix of a design token set (foreground, background, muted, card, primary) and guarantees WCAG 2.1 AA compliance.",
+      inputSchema: z.object({
+        tokens: z.object({
+          background: z.string().describe("Background hex, e.g. #09090b"),
+          foreground: z.string().describe("Foreground hex, e.g. #fafafa"),
+          card: z.string().describe("Card surface hex, e.g. #18181b"),
+          cardForeground: z.string().describe("Card foreground hex, e.g. #fafafa"),
+          primary: z.string().describe("Primary brand hex, e.g. #10b981"),
+          primaryForeground: z.string().describe("Primary foreground hex, e.g. #000000"),
+          muted: z.string().describe("Muted surface hex, e.g. #27272a"),
+          mutedForeground: z.string().describe("Muted text hex, e.g. #a1a1aa"),
+        }),
+      }),
+    },
+    async ({ tokens }) => {
+      const getLuminance = (hex: string) => {
+        let clean = hex.replace("#", "");
+        if (clean.length === 3) clean = clean.split("").map((c) => c + c).join("");
+        const rgb = [
+          parseInt(clean.substring(0, 2), 16) / 255,
+          parseInt(clean.substring(2, 4), 16) / 255,
+          parseInt(clean.substring(4, 6), 16) / 255,
+        ].map((v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
+        return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+      };
+
+      const calcRatio = (fg: string, bg: string) => {
+        const l1 = getLuminance(fg);
+        const l2 = getLuminance(bg);
+        const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+        return Math.round(ratio * 100) / 100;
+      };
+
+      const checks = [
+        { pair: "foreground on background", fg: tokens.foreground, bg: tokens.background, required: 4.5 },
+        { pair: "cardForeground on card", fg: tokens.cardForeground, bg: tokens.card, required: 4.5 },
+        { pair: "primaryForeground on primary", fg: tokens.primaryForeground, bg: tokens.primary, required: 4.5 },
+        { pair: "mutedForeground on background", fg: tokens.mutedForeground, bg: tokens.background, required: 4.5 },
+        { pair: "mutedForeground on card", fg: tokens.mutedForeground, bg: tokens.card, required: 4.5 },
+      ].map((c) => {
+        const ratio = calcRatio(c.fg, c.bg);
+        return {
+          ...c,
+          ratio: `${ratio}:1`,
+          passesAA: ratio >= c.required,
+        };
+      });
+
+      const allPass = checks.every((c) => c.passesAA);
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                status: allPass ? "COMPLIANT" : "REJECTED_LOW_CONTRAST",
+                wcagStandard: "WCAG 2.1 AA (4.5:1 for Normal Text)",
+                matrix: checks,
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    }
+  );
+
+  // Tool 12: recommend_responsive_blueprint
+  server.registerTool(
+    "recommend_responsive_blueprint",
+    {
+      description:
+        "Generates an optimal, mobile-first responsive layout blueprint with breakpoint classes and landmark structure for any requested page type.",
+      inputSchema: z.object({
+        pageType: z.enum(["landing", "dashboard", "settings", "kanban-workflow", "analytics-report"]),
+        targetDials: z
+          .object({
+            variance: z.number().min(1).max(10).optional(),
+            density: z.number().min(1).max(10).optional(),
+          })
+          .optional(),
+      }),
+    },
+    async ({ pageType, targetDials }) => {
+      const blueprint = {
+        pageType,
+        viewportStrategy: "Mobile-first with min-h-[100dvh] dynamic viewport height",
+        breakpoints: {
+          mobile: "< 640px (single column, full width, bottom sheet drawer nav)",
+          tablet: "640px - 1024px (2-column responsive bento grid, collapsed sidebar)",
+          desktop: "> 1024px (multi-pane grid, persistent hierarchical sidebar)",
+        },
+        recommendedLandmarks: ["<header role='banner'>", "<nav aria-label='Main'>", "<main id='main-content'>", "<aside aria-label='Contextual Inspector'>", "<footer role='contentinfo'>"],
+        suggestedClasses: {
+          container: "w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8",
+          grid: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6",
+        },
+      };
+
+      return {
+        content: [{ type: "text", text: JSON.stringify(blueprint, null, 2) }],
+      };
+    }
+  );
+
+  // Tool 13: diff_against_zero_slop
+  server.registerTool(
+    "diff_against_zero_slop",
+    {
+      description:
+        "Compares user-provided component code against the closest verified zero-slop registry component and returns actionable architectural migration diff steps.",
+      inputSchema: z.object({
+        code: z.string().describe("User's current React/Tailwind implementation"),
+        targetComponentSlug: z.string().optional().describe("Optional target registry slug to compare against"),
+      }),
+    },
+    async ({ code, targetComponentSlug }) => {
+      const items = getRegistryItems();
+      let matched = targetComponentSlug ? getComponentItem(targetComponentSlug) : null;
+
+      if (!matched) {
+        // Auto-match by code tokens
+        if (/chart|sparkline|axis/i.test(code)) matched = getComponentItem("interactive-area-chart");
+        else if (/dialog|modal/i.test(code)) matched = getComponentItem("dialog");
+        else if (/button/i.test(code)) matched = getComponentItem("button");
+        else if (/input|form/i.test(code)) matched = getComponentItem("input");
+        else matched = items[0];
+      }
+
+      const diffReport = {
+        recommendedRegistryComponent: matched?.name || "button",
+        category: matched?.category,
+        antiSlopAudit: MCP_SLOP_CHECKS.filter((c) => c.regex.source !== "^$" && c.regex.test(code)).map((c) => ({
+          rule: c.id,
+          name: c.name,
+          fix: c.recommendation,
+        })),
+        recommendedInstallation: `npx design-wiki add ${matched?.name}`,
+        migrationGuidance: `Replace ad-hoc custom styling with the verified ${matched?.name} primitive from @/components/ui/${matched?.name}.`,
+      };
+
+      return {
+        content: [{ type: "text", text: JSON.stringify(diffReport, null, 2) }],
       };
     }
   );

@@ -71,21 +71,24 @@ When wiring components together on a page, respect our architectural constraints
 *   **Controlled Glassmorphism**: Never use raw `bg-white/10 backdrop-blur` without crisp structural border tokens (`border-border`) and solid card fallbacks.
 
 ### Phase 4: Audit & Taste Review (The Anti-Slop Check)
-Before declaring your work complete, audit your code against the 35 Anti-Slop Rules and calibrated taste dials:
+Before declaring your work complete, audit your code against the 50 Anti-Slop Rules and calibrated taste dials:
 1. Run automated taste audit via `pnpm review:taste <path-to-file>` or call MCP `audit_code_slop({ code: "<code-string>" })` / `audit_and_fix_slop({ code: "<code-string>" })`.
-2. Enforce strict design hygiene across all 35 Anti-Slop rules (SLOP-001 to SLOP-035):
+2. Enforce strict design hygiene across all 50 Anti-Slop rules (SLOP-001 to SLOP-050):
    - **No Chained Type Assertions**: Never bypass TypeScript compiler safety by chaining assertions (`input as object as User`).
    - **No Empty Object Spreads**: Avoid ad-hoc, conditional spreading patterns (`...(cond ? { field } : {})`).
    - **No Ad-Hoc Transitions**: Ban generic `transition-all duration-300` across whole sections. Set transitions explicitly (`transition-colors duration-200`).
    - **No Arbitrary Sizing Hacks**: Reject arbitrary padding/margin overrides (`p-[17px]`, `m-[13px]`, `gap-[15px]`). Use standard Tailwind tokens (`p-4`).
    - **No Raw Unshaded Backgrounds**: Never use flat unshaded backgrounds (`bg-white`, `bg-black`, `bg-[#fff]`); use semantic theme tokens (`bg-card`, `bg-background`) with dark variants (`SLOP-021`).
    - **No AI Writing Clichés**: Reject tropes like *"In today's fast-paced world"*, *"Unleash the power of"*, *"The future is here"* (`SLOP-022`).
-   - **Zero Uncancelled Timers/Listeners**: Clean up all `setInterval`, `requestAnimationFrame`, and `addEventListener` in `useEffect` (`SLOP-025`).
+   - **Zero Uncancelled Timers/Listeners**: Clean up all `setInterval`, `requestAnimationFrame`, and `addEventListener` in `useEffect` (`SLOP-025`, `SLOP-044`).
    - **Canvas Error Boundaries**: Provide static fallback UI or ErrorBoundary for complex WebGL/Canvas elements (`SLOP-031`).
    - **No Render Loop Memory Allocations**: Pre-allocate typed arrays and buffers outside `requestAnimationFrame` (`SLOP-032`).
    - **Escape Key Overlay Dismissal**: Custom dialogs/drawers must handle Escape key dismiss (`SLOP-033`).
    - **No Redundant Nested Context Providers**: Consolidate duplicate context providers (`SLOP-034`).
    - **Memoized Heavy Array Transforms**: Wrap complex array sorting/filtering in `useMemo` (`SLOP-035`).
+   - **Mobile Dynamic Viewport**: Enforce `min-h-[100dvh]` or `min-h-screen` instead of rigid `h-screen` (`SLOP-038`, `SLOP-041`).
+   - **Accessible Live Stream Containers**: Mark dynamic agent and chat streams with `aria-live="polite"` or `role="status"` (`SLOP-043`).
+   - **No Interactive Nesting Traps**: Ban `<button>` elements inside `<a>` or other buttons (`SLOP-046`).
    - **Zero High Flags**: Verify health score is 85+ with zero High-severity flags.
 
 ---

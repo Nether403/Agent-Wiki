@@ -61,7 +61,7 @@ export function AppShellSidebarLayout({
   return (
     <div
       className={cn(
-        "flex h-screen w-full overflow-hidden bg-background text-foreground select-none",
+        "flex min-h-[100dvh] h-[100dvh] w-full overflow-hidden bg-background text-foreground select-none",
         className
       )}
       {...props}

@@ -1,0 +1,44 @@
+---
+title: "Curated Repositories & Gems Catalogue"
+description: "Directory of all 60 screened open-source repositories, design systems, and component libraries powering the Machine-First Design Agent Wiki."
+---
+
+# Curated Repositories & Ecosystem Catalogue
+
+The Machine-First Design Agent Wiki harvests, normalizes, and curates battle-tested primitives from 60 screened open-source projects. Every component ingested into `/packages/registry` is stripped of AI slop, mapped to Tailwind CSS v4 design tokens, and verified against WCAG 2.1 AA accessibility standards.
+
+---
+
+## 1. Domain Breakdown & Tier-1 Gems
+
+### 💎 Tier-1 Essential Primitives & Layout Engines
+
+| Repository | Origin / Maintainer | Category | License | Core Contribution to Wiki |
+| :--- | :--- | :--- | :--- | :--- |
+| **diagram-design** | Cathryn Lavery | `ui:editorial` | MIT | Strategic blueprints: Flywheels, 3-circle Venns, Value Chains, Icebergs, Matrix grids. |
+| **react-bits** | DavidHDev | `ui:creative` | MIT | GPU shaders, magnetic cursors, shiny text sheen, and fluid particle backdrops. |
+| **magicui** | Magic UI Team | `ui:creative` | MIT | Copy-paste interactive landing section effects, wire pulse connectors, laser glow borders. |
+| **hugoblox** | HugoBlox Team | `ui:block` | MIT | Content-first research showcases, academic publication cards, BibTeX modals. |
+| **ariakit** | Diego Haz | `ui:primitive` | MIT | Headless, rock-solid WAI-ARIA roving tablists, focus traps, and accessible dialogs. |
+| **primer/react** | GitHub Primer | `ui:primitive` | MIT | High-density developer UI, action lists, split buttons, and accessible navigation landmarks. |
+| **xyflow** | XY Flow | `ui:workflow` | MIT | Node-based workflow graphs, minimaps, and bezier cable routing. |
+| **paper-shaders** | Paper Design | `ui:creative` | Apache-2.0 | Zero-dependency halftone dither filters, simplex noise cards, generative patterns. |
+| **tremor** | Tremor Labs | `ui:editorial` | Apache-2.0 | Dense KPI metrics, cohort retention heatmaps, donut breakdown charts. |
+| **daisyui** | Pouya Saadeghi | `ui:primitive` | MIT | Semantic component utility abstractions remapped to Tailwind v4 variables. |
+| **launch-ui** | Launch UI Team | `ui:block` | MIT | Conversion-focused landing sections, hero blocks, and pricing patterns. |
+| **page-ui** | PageAI Pro | `ui:block` | MIT | Production-ready SaaS marketing layouts and feature comparison matrices. |
+| **lenis** | Darkroom Engineering | `ui:motion` | MIT | Lightweight accessible smooth-scroll orchestration for narrative storytelling. |
+| **excalidraw** | Excalidraw Team | `ui:workflow` | MIT | Collaborative infinite whiteboarding and freeform diagramming canvas. |
+| **ark-ui** | Chakra Systems | `ui:primitive` | MIT | State-machine powered headless primitives using Zag.js. |
+
+---
+
+## 2. Ingestion & Codemod Pipeline
+
+When remote code is harvested via `packages/harvester`, it passes through automated AST codemod passes:
+
+1. **Tailwind v4 Remapping** (`tailwind-v4-transform.ts`): Strips legacy `indigo-600` colors and arbitrary pixel overrides (`p-[17px]`), enforcing standard Tailwind CSS v4 `@theme` variables.
+2. **DaisyUI Normalizer** (`daisyui-to-tailwindv4-transform.ts`): Replaces DaisyUI component shorthand (`btn`, `card-body`) with tokenized utility classes.
+3. **Motion React v12 Upgrade** (`framer-motion-v12-transform.ts`): Migrates imports from `framer-motion` to `motion/react` and enforces spring damping parameters (SLOP-028).
+4. **Lucide Standardization** (`lucide-normalizer.ts`): Converts direct package paths to `@/components/ui/` or `lucide-react` tree-shakeable imports.
+5. **Anti-Slop Cleaner** (`unslop-codemod.ts`): Eliminates chained type assertions (`as unknown as User`), placeholder comments, and AI clichés.

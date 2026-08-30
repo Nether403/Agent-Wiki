@@ -7,7 +7,7 @@
 - Raw Markdown Docs: /raw/components/[slug]
 - MCP Server: npx @design-wiki/mcp
 
-## Available Registry Components (173 verified zero-slop items)
+## Available Registry Components (192 verified zero-slop items)
 
 ### Category: ui:ai-native
 - [ai-artifact-sandbox-iframe](/r/ai-artifact-sandbox-iframe.json): Split-screen live preview canvas with responsive device switcher, code/preview toggle, and version history diff slider. (Variance: 7, Motion: 4, Density: 6)
@@ -76,6 +76,10 @@
   - Tags: lucide-react, tailwind-v4, wai-aria-compliant, workflow, node-graph
   - Dependencies: lucide-react, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/agent-step-pipeline.json
+- [agent-inspector-drawer](/r/agent-inspector-drawer.json): Slide-out inspection drawer for agent execution steps, tool call parameters, and runtime payloads. (Variance: 5, Motion: 4, Density: 7)
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, workflow, drawer, inspector, agent-ui, debug
+  - Dependencies: motion, lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/agent-inspector-drawer.json
 - [agent-node-graph](/r/agent-node-graph.json): Dynamic visual canvas representing multi-agent orchestration, pipeline steps, and tool executions. (Variance: 6, Motion: 5, Density: 7)
   - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, workflow, canvas, agent, xyflow, dag, interactive
   - Dependencies: motion, lucide-react, clsx, tailwind-merge
@@ -92,6 +96,10 @@
   - Tags: lucide-react, webgl, threejs, canvas, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, workflow, whiteboard, sketch, excalidraw
   - Dependencies: lucide-react, three, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/embedded-whiteboard.json
+- [workflow-minimap-controls](/r/workflow-minimap-controls.json): Floating viewport toolbar with zoom in/out, fit-view, and canvas reset controls. (Variance: 5, Motion: 3, Density: 7)
+  - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, workflow, node-graph, minimap, zoom, canvas, xyflow
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/workflow-minimap-controls.json
 
 ### Category: ui:block
 - [app-shell-sidebar-layout](/r/app-shell-sidebar-layout.json): Production-ready SaaS dashboard shell with collapsible multi-tier sidebar, breadcrumbs, search bar, and user profile popover. (Variance: 5, Motion: 3, Density: 8)
@@ -170,6 +178,14 @@
   - Tags: lucide-react, tailwind-v4, wai-aria-compliant, layout-block
   - Dependencies: lucide-react
   - Install: npx shadcn@latest add http://localhost:3000/r/decision-tree-node-graph.json
+- [flywheel-momentum-diagram](/r/flywheel-momentum-diagram.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/flywheel-momentum-diagram.json
+- [iceberg-depth-diagram](/r/iceberg-depth-diagram.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/iceberg-depth-diagram.json
 - [matrix-grid-diagram](/r/matrix-grid-diagram.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
   - Tags: bento-grid, tailwind-v4, wai-aria-compliant, layout-block
   - Dependencies: None
@@ -182,6 +198,14 @@
   - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block
   - Dependencies: lucide-react
   - Install: npx shadcn@latest add http://localhost:3000/r/timeline-roadmap-track.json
+- [value-chain-map](/r/value-chain-map.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/value-chain-map.json
+- [venn-three-circle-diagram](/r/venn-three-circle-diagram.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, neon-scifi, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/venn-three-circle-diagram.json
 - [draggable-kanban-board](/r/draggable-kanban-board.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
   - Dependencies: lucide-react
@@ -232,6 +256,10 @@
   - Tags: tailwind-v4, wai-aria-compliant, editorial, chart, cohort, heatmap, matrix, tremor-raw
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/cohort-retention-heatmap.json
+- [comparative-bar-list](/r/comparative-bar-list.json): Analytical proportional bar list displaying categorical metrics with value formatting. (Variance: 4, Motion: 2, Density: 8)
+  - Tags: wai-aria-compliant, editorial, metrics, bar-chart, analytical, tremor
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/comparative-bar-list.json
 - [cycle-loop-diagram](/r/cycle-loop-diagram.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
   - Tags: lucide-react, tailwind-v4, wai-aria-compliant, editorial
   - Dependencies: lucide-react
@@ -292,6 +320,10 @@
   - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, diagram, swot, matrix, strategic, diagram-design
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/swot-analysis-matrix.json
+- [tracker-status-strip](/r/tracker-status-strip.json): Segmented uptime and agent activity status strip with colored state blocks and tooltips. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial, status, uptime, kpi, tremor
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/tracker-status-strip.json
 - [venn-comparison-matrix](/r/venn-comparison-matrix.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
   - Tags: tailwind-v4, wai-aria-compliant, editorial
   - Dependencies: None
@@ -310,6 +342,10 @@
   - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
   - Dependencies: lucide-react
   - Install: npx shadcn@latest add http://localhost:3000/r/footer-mega-menu.json
+- [publication-showcase-card](/r/publication-showcase-card.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/publication-showcase-card.json
 - [ascii-rain](/r/ascii-rain.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
   - Tags: tailwind-v4, wai-aria-compliant
   - Dependencies: motion
@@ -322,10 +358,18 @@
   - Tags: tailwind-v4, wai-aria-compliant
   - Dependencies: None
   - Install: npx shadcn@latest add http://localhost:3000/r/digital-ticker.json
+- [dither-noise-card](/r/dither-noise-card.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/dither-noise-card.json
 - [hacker-decrypt](/r/hacker-decrypt.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 6)
   - Tags: wai-aria-compliant
   - Dependencies: None
   - Install: npx shadcn@latest add http://localhost:3000/r/hacker-decrypt.json
+- [shiny-text-shimmer](/r/shiny-text-shimmer.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 6)
+  - Tags: wai-aria-compliant
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/shiny-text-shimmer.json
 - [text-scrambler](/r/text-scrambler.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 6)
   - Tags: wai-aria-compliant
   - Dependencies: None
@@ -438,6 +482,10 @@
   - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, form, calendar, date-range, heroui
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/rich-date-range-picker.json
+- [roving-tab-list](/r/roving-tab-list.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/roving-tab-list.json
 - [separator](/r/separator.json): Semantic horizontal or vertical divider with decorative and accessible separator roles. (Variance: 1, Motion: 1, Density: 7)
   - Tags: wai-aria-compliant, utility, radix-primitives, separator, divider, layout
   - Dependencies: clsx, tailwind-merge
@@ -446,6 +494,10 @@
   - Tags: wai-aria-compliant, utility, skeleton, placeholder, loading, tailwind-v4
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/skeleton.json
+- [split-button](/r/split-button.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/split-button.json
 - [switch](/r/switch.json): Accessible toggle switch with smooth spring thumb and keyboard space/enter toggling. (Variance: 2, Motion: 3, Density: 7)
   - Tags: radix-primitives, headless, brutalist, accessible, keyboard-accessible, wai-aria-compliant, utility, toggle, form
   - Dependencies: @radix-ui/react-switch, clsx, tailwind-merge
@@ -470,12 +522,20 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
   - Dependencies: lucide-react
   - Install: npx shadcn@latest add http://localhost:3000/r/theme-toggle-dropdown.json
+- [agent-node-wire-pulse](/r/agent-node-wire-pulse.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 6)
+  - Tags: wai-aria-compliant
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/agent-node-wire-pulse.json
 
 ### Category: ui:creative
 - [audio-reactive-3d-sphere](/r/audio-reactive-3d-sphere.json): 3D vertex-displaced wireframe sphere reacting in real time to synthesized audio frequency data. (Variance: 9, Motion: 9, Density: 4)
   - Tags: lucide-react, webgl, threejs, canvas, tailwind-v4, glassmorphism, wai-aria-compliant, creative, 3d, audio-reactive, wireframe, three-ui
   - Dependencies: lucide-react, three, clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/audio-reactive-3d-sphere.json
+- [aurora-background-shader](/r/aurora-background-shader.json): Curated production-grade component. (Variance: 8, Motion: 9, Density: 3)
+  - Tags: webgl, threejs, wai-aria-compliant, canvas
+  - Dependencies: three, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/aurora-background-shader.json
 - [ballpit-physics-canvas](/r/ballpit-physics-canvas.json): Interactive 2D bouncing ball physics simulation responding to gravity and boundary collisions. (Variance: 9, Motion: 9, Density: 3)
   - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, creative, physics, ballpit, react-bits
   - Dependencies: three, clsx, tailwind-merge, motion
@@ -588,6 +648,10 @@
   - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, shadcn-compatible, spring-physics, tabs, layoutId
   - Dependencies: motion, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/animated-tabs.json
+- [border-beam](/r/border-beam.json): Animated border glow highlight tracing container boundaries with gradient light. (Variance: 6, Motion: 6, Density: 5)
+  - Tags: wai-aria-compliant, motion, border, glow, visual-effects, magicui
+  - Dependencies: clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/border-beam.json
 - [counter-odometer](/r/counter-odometer.json): Curated production-grade component. (Variance: 5, Motion: 8, Density: 5)
   - Tags: framer-motion, motion/react, animation, tailwind-v4, wai-aria-compliant, spring-physics
   - Dependencies: motion
@@ -636,6 +700,10 @@
   - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant
   - Dependencies: motion, lucide-react
   - Install: npx shadcn@latest add http://localhost:3000/r/morphing-dialog.json
+- [number-ticker](/r/number-ticker.json): Accessible spring-animated number counter for statistics, metrics, and KPI indicators. (Variance: 5, Motion: 6, Density: 6)
+  - Tags: framer-motion, motion/react, animation, wai-aria-compliant, spring-physics, motion, counter, ticker, spring, magicui
+  - Dependencies: motion, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/number-ticker.json
 - [orbiting-circles](/r/orbiting-circles.json): Nested rotating orbits carrying technology/brand icons with configurable speed and direction. (Variance: 7, Motion: 7, Density: 5)
   - Tags: lucide-react, tailwind-v4, wai-aria-compliant, motion, orbiting-circles, magic-ui, planetary
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -644,6 +712,10 @@
   - Tags: framer-motion, motion/react, animation, tailwind-v4, wai-aria-compliant, motion, parallax, scroll, viewport
   - Dependencies: motion, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/parallax-scroll-container.json
+- [particle-burst-button](/r/particle-burst-button.json): Tactile action button triggering a physics-driven radial particle burst on success or click. (Variance: 6, Motion: 8, Density: 6)
+  - Tags: framer-motion, motion/react, animation, lucide-react, accessible, keyboard-accessible, wai-aria-compliant, motion, button, particles, delight, feedback
+  - Dependencies: motion, lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/particle-burst-button.json
 - [scratch-to-reveal-card](/r/scratch-to-reveal-card.json): Canvas scratch-off surface revealing hidden discount codes or rewards beneath user gestures. (Variance: 7, Motion: 7, Density: 5)
   - Tags: lucide-react, webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, motion, scratch-card, gamification, magic-ui
   - Dependencies: lucide-react, three, clsx, tailwind-merge
@@ -660,6 +732,10 @@
   - Tags: framer-motion, motion/react, animation, wai-aria-compliant, motion, scroll, lenis, smooth-scroll, context
   - Dependencies: motion, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/smooth-scroll-provider.json
+- [sparkles-text](/r/sparkles-text.json): Dynamic SVG sparkle highlights superimposed on bold typographic headlines. (Variance: 7, Motion: 7, Density: 5)
+  - Tags: framer-motion, motion/react, animation, wai-aria-compliant, motion, typography, sparkles, headline, magicui
+  - Dependencies: motion, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/sparkles-text.json
 - [spotlight-card](/r/spotlight-card.json): Interactive radial cursor spotlight tracking card with smooth proximity illumination. (Variance: 5, Motion: 5, Density: 5)
   - Tags: tailwind-v4, wai-aria-compliant, aceternity, spotlight, card, mouse-tracking, micro-interaction
   - Dependencies: clsx, tailwind-merge, motion
@@ -2533,7 +2609,7 @@ export function AppShellSidebarLayout({
   return (
     <div
       className={cn(
-        "flex h-screen w-full overflow-hidden bg-background text-foreground select-none",
+        "flex min-h-[100dvh] h-[100dvh] w-full overflow-hidden bg-background text-foreground select-none",
         className
       )}
       {...props}
@@ -5022,6 +5098,124 @@ export function PricingTable({ plans = DEFAULT_PLANS, className }: PricingTableP
 
 ---
 
+### Publication Showcase Card (`publication-showcase-card`)
+- **Category**: `ui:primitive`
+- **Dependencies**: lucide-react
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin HugoBlox Kit (https://github.com/HugoBlox/kit)
+ * @author HugoBlox & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+import { BookOpen, ExternalLink, FileText, Share2 } from "lucide-react";
+
+export interface PublicationShowcaseCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  title: string;
+  authors: string[];
+  venue: string;
+  year: number | string;
+  doiUrl?: string;
+  pdfUrl?: string;
+  abstract: string;
+  tags?: string[];
+}
+
+export function PublicationShowcaseCard({
+  title,
+  authors,
+  venue,
+  year,
+  doiUrl,
+  pdfUrl,
+  abstract,
+  tags = [],
+  className,
+  ...props
+}: PublicationShowcaseCardProps) {
+  const [isExpanded, setIsExpanded] = React.useState(false);
+
+  return (
+    <article
+      className={cn(
+        "flex flex-col rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground transition-colors duration-200 hover:border-primary/40",
+        className
+      )}
+      {...props}
+    >
+      <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-muted-foreground mb-2">
+        <span className="font-semibold text-primary">{venue}</span>
+        <span>•</span>
+        <span>{year}</span>
+        {tags.map((tag) => (
+          <span
+            key={tag}
+            className="rounded-sm bg-muted/60 px-2 py-0.5 text-[10px] text-muted-foreground"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      <h3 className="text-base font-bold tracking-tight text-foreground leading-snug">
+        {title}
+      </h3>
+
+      <p className="text-xs text-muted-foreground mt-1.5 font-medium">
+        {authors.join(", ")}
+      </p>
+
+      <div className="mt-4 text-xs text-muted-foreground leading-relaxed">
+        <p className={cn(!isExpanded && "line-clamp-2")}>{abstract}</p>
+        <button
+          type="button"
+          onClick={() => setIsExpanded((prev) => !prev)}
+          className="mt-1 font-mono text-[11px] font-semibold text-primary hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+        >
+          {isExpanded ? "Show Less [-]" : "Read Abstract [+]"}
+        </button>
+      </div>
+
+      <div className="mt-5 pt-3 border-t border-border flex items-center gap-3">
+        {doiUrl && (
+          <a
+            href={doiUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-foreground hover:text-primary transition-colors duration-150 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+          >
+            <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>DOI Reference</span>
+          </a>
+        )}
+        {pdfUrl && (
+          <a
+            href={pdfUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-foreground hover:text-primary transition-colors duration-150 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+          >
+            <FileText className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>Download PDF</span>
+          </a>
+        )}
+      </div>
+    </article>
+  );
+}
+
+```
+
+---
+
 ### Saas Hero Browser Mockup (`saas-hero-browser-mockup`)
 - **Category**: `ui:block`
 - **Dependencies**: lucide-react
@@ -5697,6 +5891,98 @@ export function AudioReactive3dSphere({
 
 ---
 
+### Aurora Background Shader (`aurora-background-shader`)
+- **Category**: `ui:creative`
+- **Dependencies**: three, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 8/10, Motion 9/10, Density 3/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin React Bits & Magic UI (https://reactbits.dev / https://magicui.design)
+ * @author React Bits & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+
+export interface AuroraBackgroundShaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  children?: React.ReactNode;
+  showRadialGradient?: boolean;
+}
+
+export function AuroraBackgroundShader({
+  className,
+  children,
+  showRadialGradient = true,
+  ...props
+}: AuroraBackgroundShaderProps) {
+  return (
+    <div
+      className={cn(
+        "relative flex flex-col h-[100dvh] items-center justify-center bg-background text-foreground transition-bg overflow-hidden",
+        className
+      )}
+      {...props}
+    >
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div
+          className={cn(
+            "filter blur-[60px] opacity-50 absolute -inset-[10px]",
+            "[--white-gradient:repeating-linear-gradient(100deg,var(--color-primary)_0%,var(--color-primary)_7%,transparent_10%,transparent_12%,var(--color-primary)_16%)]",
+            "[--dark-gradient:repeating-linear-gradient(100deg,var(--color-primary)_0%,var(--color-primary)_7%,transparent_10%,transparent_12%,var(--color-primary)_16%)]",
+            "[--aurora:repeating-linear-gradient(100deg,#38bdf8_10%,#818cf8_15%,#c084fc_20%,#e879f9_25%,#22d3ee_30%)]",
+            "[background-image:var(--white-gradient),var(--aurora)]",
+            "dark:[background-image:var(--dark-gradient),var(--aurora)]",
+            "[background-size:300%,_200%]",
+            "[background-position:50%_50%,50%_50%]",
+            "animate-aurora will-change-transform"
+          )}
+          style={{
+            animation: "aurora 60s linear infinite",
+          }}
+        />
+      </div>
+
+      {showRadialGradient && (
+        <div
+          className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,transparent_70%)] pointer-events-none"
+          aria-hidden="true"
+        />
+      )}
+
+      <div className="relative z-10 w-full flex flex-col items-center">{children}</div>
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes aurora {
+            from {
+              background-position: 50% 50%, 50% 50%;
+            }
+            to {
+              background-position: 350% 50%, 350% 50%;
+            }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .animate-aurora {
+              animation: none !important;
+              background-position: 50% 50% !important;
+            }
+          }
+        `,
+      }} />
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Interactive Ballpit Physics Canvas (`ballpit-physics-canvas`)
 - **Category**: `ui:creative`
 - **Dependencies**: three, clsx, tailwind-merge, motion
@@ -6179,6 +6465,74 @@ export function DigitalTicker({
           </span>
         ))}
       </div>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Dither Noise Card (`dither-noise-card`)
+- **Category**: `ui:primitive`
+- **Dependencies**: None
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Paper Shaders & React Bits (https://github.com/paper-design/shaders)
+ * @author Paper Design & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+
+export interface DitherNoiseCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  children?: React.ReactNode;
+  grainOpacity?: number;
+  interactive?: boolean;
+}
+
+export function DitherNoiseCard({
+  children,
+  grainOpacity = 0.08,
+  interactive = true,
+  className,
+  ...props
+}: DitherNoiseCardProps) {
+  return (
+    <div
+      className={cn(
+        "relative rounded-xl border border-border bg-card p-6 shadow-xs overflow-hidden text-card-foreground",
+        interactive && "transition-colors duration-200 hover:border-primary/50",
+        className
+      )}
+      {...props}
+    >
+      {/* SVG Dither Filter Overlay */}
+      <svg
+        className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.06] contrast-125 dark:opacity-[0.12]"
+        aria-hidden="true"
+      >
+        <filter id="dither-noise-filter">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.8"
+            numOctaves="3"
+            stitchTiles="stitch"
+          />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#dither-noise-filter)" />
+      </svg>
+
+      {/* Card Content Layer */}
+      <div className="relative z-10">{children}</div>
     </div>
   );
 }
@@ -8000,6 +8354,84 @@ export function RetroGrid({
 
 ---
 
+### Shiny Text Shimmer (`shiny-text-shimmer`)
+- **Category**: `ui:primitive`
+- **Dependencies**: motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 3/10, Motion 2/10, Density 6/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Magic UI & React Bits (https://magicui.design / https://reactbits.dev)
+ * @author Magic UI & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+
+export interface ShinyTextShimmerProps extends React.HTMLAttributes<HTMLSpanElement> {
+  text: string;
+  disabled?: boolean;
+  speed?: number;
+}
+
+export function ShinyTextShimmer({
+  text,
+  disabled = false,
+  speed = 4,
+  className,
+  ...props
+}: ShinyTextShimmerProps) {
+  return (
+    <span
+      className={cn(
+        "inline-block bg-clip-text text-transparent font-medium",
+        !disabled && "animate-shiny-text",
+        className
+      )}
+      style={{
+        backgroundImage:
+          "linear-gradient(120deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0) 60%)",
+        backgroundSize: "200% 100%",
+        WebkitBackgroundClip: "text",
+        animationDuration: `${speed}s`,
+      }}
+      {...props}
+    >
+      <span className="text-foreground">{text}</span>
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes shiny-text {
+            0% {
+              background-position: 100% 0;
+            }
+            100% {
+              background-position: -100% 0;
+            }
+          }
+          .animate-shiny-text {
+            animation: shiny-text 4s linear infinite;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .animate-shiny-text {
+              animation: none !important;
+            }
+          }
+        `,
+      }} />
+    </span>
+  );
+}
+
+```
+
+---
+
 ### Text Scrambler (`text-scrambler`)
 - **Category**: `ui:primitive`
 - **Dependencies**: None
@@ -8874,6 +9306,88 @@ export function CohortRetentionHeatmap({
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Comparative Bar List (`comparative-bar-list`)
+- **Category**: `ui:editorial`
+- **Dependencies**: clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 4/10, Motion 2/10, Density 8/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Tremor (https://github.com/tremorlabs/tremor)
+ * @license Apache-2.0
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+
+export interface BarListItem {
+  name: string;
+  value: number;
+  href?: string;
+  target?: string;
+}
+
+export interface ComparativeBarListProps extends React.HTMLAttributes<HTMLDivElement> {
+  data: BarListItem[];
+  valueFormatter?: (value: number) => string;
+  showAnimation?: boolean;
+}
+
+export function ComparativeBarList({
+  data,
+  valueFormatter = (val) => Intl.NumberFormat("en-US").format(val),
+  showAnimation = true,
+  className,
+  ...props
+}: ComparativeBarListProps) {
+  const maxValue = Math.max(...data.map((item) => item.value), 0);
+
+  return (
+    <div
+      className={cn("flex flex-col space-y-2 w-full", className)}
+      role="region"
+      aria-label="Comparative metric breakdown"
+      {...props}
+    >
+      {data.map((item, idx) => {
+        const percentage = maxValue > 0 ? (item.value / maxValue) * 100 : 0;
+
+        return (
+          <div
+            key={item.name + idx}
+            className="flex items-center justify-between space-x-4 text-sm"
+          >
+            <div className="relative flex-1 flex items-center h-8 rounded-lg bg-muted/40 overflow-hidden">
+              <div
+                className={cn(
+                  "h-full rounded-lg bg-primary/20 transition-all",
+                  showAnimation ? "duration-500" : "duration-0"
+                )}
+                style={{ width: `${Math.max(percentage, 2)}%` }}
+              />
+              <span className="absolute left-3 font-medium text-foreground truncate max-w-[80%]">
+                {item.name}
+              </span>
+            </div>
+            <span className="font-mono text-muted-foreground tabular-nums text-xs sm:text-sm font-semibold">
+              {valueFormatter(item.value)}
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -9779,6 +10293,230 @@ export function FlowchartProcessGraph({
 
 ---
 
+### Flywheel Momentum Diagram (`flywheel-momentum-diagram`)
+- **Category**: `ui:block`
+- **Dependencies**: lucide-react
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 3/10, Density 8/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)
+ * @author Cathryn Lavery & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+import { ArrowRight, RotateCw, Sparkles, TrendingUp, Zap } from "lucide-react";
+
+export interface FlywheelStage {
+  id: string;
+  label: string;
+  subtext: string;
+  metric?: string;
+}
+
+export interface FlywheelMomentumDiagramProps extends React.HTMLAttributes<HTMLDivElement> {
+  title?: string;
+  subtitle?: string;
+  stages?: FlywheelStage[];
+  coreLabel?: string;
+}
+
+const DEFAULT_STAGES: FlywheelStage[] = [
+  { id: "s1", label: "Agent Discovery", subtext: "Zero-latency MCP tools find deterministic primitives", metric: "+4.2x" },
+  { id: "s2", label: "Zero-Slop Assembly", subtext: "Strict AST constraints prevent token hallucination", metric: "0 slop" },
+  { id: "s3", label: "Automated QA Gate", subtext: "WCAG AA, axe-core, and taste dials verify quality", metric: "100/100" },
+  { id: "s4", label: "Compounding Velocity", subtext: "Tested building blocks accelerate release cycles", metric: ">90% 1st-pass" },
+];
+
+export function FlywheelMomentumDiagram({
+  title = "Flywheel Momentum Engine",
+  subtitle = "Self-reinforcing feedback loop that compounds velocity and eliminates AI slop.",
+  stages = DEFAULT_STAGES,
+  coreLabel = "MOMENTUM CORE",
+  className,
+  ...props
+}: FlywheelMomentumDiagramProps) {
+  const [activeStage, setActiveStage] = React.useState<number | null>(null);
+
+  return (
+    <figure
+      className={cn(
+        "flex flex-col w-full rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground",
+        className
+      )}
+      role="region"
+      aria-label={`Flywheel Momentum Diagram: ${title}`}
+      {...props}
+    >
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border pb-4 mb-6 gap-2">
+        <div>
+          <div className="flex items-center gap-2">
+            <RotateCw className="w-4 h-4 text-primary animate-spin" style={{ animationDuration: "12s" }} aria-hidden="true" />
+            <h3 className="text-sm font-bold tracking-tight text-foreground">{title}</h3>
+          </div>
+          <p className="text-xs text-muted-foreground mt-1">{subtitle}</p>
+        </div>
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/50 px-2.5 py-0.5 text-xs font-mono text-muted-foreground">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
+            Compounding Loop
+          </span>
+        </div>
+      </header>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        {/* SVG Circular Flywheel Canvas */}
+        <div className="lg:col-span-6 flex justify-center py-4">
+          <div className="relative w-72 h-72 sm:w-80 sm:h-80">
+            <svg
+              viewBox="0 0 320 320"
+              className="w-full h-full"
+              role="img"
+              aria-label="Flywheel stage visualization with 4 continuous quadrant vectors"
+            >
+              {/* Outer track */}
+              <circle
+                cx="160"
+                cy="160"
+                r="130"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="text-border"
+                strokeDasharray="4 4"
+              />
+
+              {/* 4 Quadrant Arcs */}
+              {[
+                { d: "M 160 30 A 130 130 0 0 1 290 160", index: 0 },
+                { d: "M 290 160 A 130 130 0 0 1 160 290", index: 1 },
+                { d: "M 160 290 A 130 130 0 0 1 30 160", index: 2 },
+                { d: "M 30 160 A 130 130 0 0 1 160 30", index: 3 },
+              ].map((arc) => (
+                <path
+                  key={arc.index}
+                  d={arc.d}
+                  fill="none"
+                  strokeWidth={activeStage === arc.index ? "3.5" : "2"}
+                  className={cn(
+                    "transition-all duration-200 cursor-pointer",
+                    activeStage === arc.index
+                      ? "stroke-primary"
+                      : "stroke-muted-foreground/40 hover:stroke-muted-foreground"
+                  )}
+                  onMouseEnter={() => setActiveStage(arc.index)}
+                  onMouseLeave={() => setActiveStage(null)}
+                />
+              ))}
+
+              {/* Center Core Circle */}
+              <circle
+                cx="160"
+                cy="160"
+                r="56"
+                className="fill-card stroke-border"
+                strokeWidth="2"
+              />
+              <circle
+                cx="160"
+                cy="160"
+                r="48"
+                className="fill-muted/40 stroke-border/50"
+                strokeWidth="1"
+              />
+
+              {/* Center Text */}
+              <text
+                x="160"
+                y="156"
+                textAnchor="middle"
+                className="text-[10px] font-mono uppercase tracking-widest font-semibold fill-foreground"
+              >
+                {coreLabel}
+              </text>
+              <text
+                x="160"
+                y="172"
+                textAnchor="middle"
+                className="text-[9px] font-mono fill-muted-foreground"
+              >
+                Zero-Slop
+              </text>
+            </svg>
+          </div>
+        </div>
+
+        {/* Interactive Stage Cards */}
+        <div className="lg:col-span-6 flex flex-col gap-3">
+          {stages.map((stage, idx) => {
+            const isActive = activeStage === idx;
+            return (
+              <div
+                key={stage.id}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isActive}
+                onMouseEnter={() => setActiveStage(idx)}
+                onMouseLeave={() => setActiveStage(null)}
+                onFocus={() => setActiveStage(idx)}
+                onBlur={() => setActiveStage(null)}
+                className={cn(
+                  "flex items-start justify-between rounded-lg border p-3.5 transition-colors duration-200 text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring",
+                  isActive
+                    ? "border-primary bg-accent/40"
+                    : "border-border bg-card hover:bg-muted/30"
+                )}
+              >
+                <div className="flex items-start gap-3">
+                  <span
+                    className={cn(
+                      "flex h-6 w-6 shrink-0 items-center justify-center rounded-md font-mono text-xs font-bold transition-colors duration-200",
+                      isActive
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground"
+                    )}
+                  >
+                    0{idx + 1}
+                  </span>
+                  <div>
+                    <h4 className="text-xs font-semibold text-foreground">{stage.label}</h4>
+                    <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                      {stage.subtext}
+                    </p>
+                  </div>
+                </div>
+                {stage.metric && (
+                  <span className="shrink-0 font-mono text-xs font-semibold text-primary px-2 py-0.5 rounded-sm bg-primary/10 border border-primary/20">
+                    {stage.metric}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <footer className="mt-6 pt-3 border-t border-border flex items-center justify-between text-xs text-muted-foreground font-mono">
+        <span className="flex items-center gap-1.5">
+          <TrendingUp className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
+          Autonomous compounding feedback loop
+        </span>
+        <span>4-Phase Continuous Cycle</span>
+      </footer>
+    </figure>
+  );
+}
+
+```
+
+---
+
 ### Funnel Conversion Chart (`funnel-conversion-chart`)
 - **Category**: `ui:editorial`
 - **Dependencies**: None
@@ -10030,6 +10768,270 @@ export function GanttRoadmapChart({
         </div>
       </div>
     </div>
+  );
+}
+
+```
+
+---
+
+### Iceberg Depth Diagram (`iceberg-depth-diagram`)
+- **Category**: `ui:block`
+- **Dependencies**: lucide-react, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 3/10, Density 8/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)
+ * @author Cathryn Lavery & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+import { AlertCircle, Eye, HelpCircle, Layers } from "lucide-react";
+
+export interface IcebergLevel {
+  id: string;
+  depth: "surface" | "shallow" | "deep";
+  percentage: string;
+  title: string;
+  items: string[];
+}
+
+export interface IcebergDepthDiagramProps extends React.HTMLAttributes<HTMLDivElement> {
+  title?: string;
+  subtitle?: string;
+  levels?: IcebergLevel[];
+}
+
+const DEFAULT_LEVELS: IcebergLevel[] = [
+  {
+    id: "surface",
+    depth: "surface",
+    percentage: "10%",
+    title: "Surface Symptoms (Visible Slop)",
+    items: [
+      "Indigo-600 buttons & purple-to-blue linear gradients",
+      "Decorative emojis inside card headers and lists",
+      "Arbitrary pixel hacks and non-token margin overrides",
+      "Blanket glassmorphism blur without borders",
+    ],
+  },
+  {
+    id: "shallow",
+    depth: "shallow",
+    percentage: "35%",
+    title: "Structural Defects (Below the Waterline)",
+    items: [
+      "Chained type casting bypassing compiler safety",
+      "Unlabeled icon buttons breaking screen readers",
+      "Suppressed focus rings and focus outline stripping",
+      "Missing reduced-motion checks on canvas loops",
+    ],
+  },
+  {
+    id: "deep",
+    depth: "deep",
+    percentage: "55%",
+    title: "Systemic Root Causes (Cognitive Architecture)",
+    items: [
+      "Agent forced to reinvent UI it cannot visually see",
+      "Absence of deterministic component registry in context",
+      "Uncalibrated taste dials producing generic averages",
+      "Lack of automated AST quality gates before commit",
+    ],
+  },
+];
+
+export function IcebergDepthDiagram({
+  title = "Iceberg Depth Analysis: Root Causes of AI Slop",
+  subtitle = "Visualizing the 10% visible symptoms versus the 90% submerged architectural flaws in AI frontend development.",
+  levels = DEFAULT_LEVELS,
+  className,
+  ...props
+}: IcebergDepthDiagramProps) {
+  const [activeLevel, setActiveLevel] = React.useState<string>("deep");
+
+  return (
+    <figure
+      className={cn(
+        "flex flex-col w-full rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground",
+        className
+      )}
+      role="region"
+      aria-label={`Iceberg Depth Diagram: ${title}`}
+      {...props}
+    >
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border pb-4 mb-6 gap-2">
+        <div>
+          <div className="flex items-center gap-2">
+            <Layers className="w-4 h-4 text-primary" aria-hidden="true" />
+            <h3 className="text-sm font-bold tracking-tight text-foreground">{title}</h3>
+          </div>
+          <p className="text-xs text-muted-foreground mt-1">{subtitle}</p>
+        </div>
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/40 px-2.5 py-0.5 text-xs font-mono text-muted-foreground self-start sm:self-auto">
+          Depth Analysis
+        </span>
+      </header>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        {/* SVG Iceberg Elevation Graphic */}
+        <div className="lg:col-span-6 flex justify-center py-2">
+          <div className="relative w-full max-w-sm h-72 sm:h-80">
+            <svg
+              viewBox="0 0 340 320"
+              className="w-full h-full"
+              role="img"
+              aria-label="Iceberg diagram representing surface symptoms vs submerged systemic causes"
+            >
+              {/* Waterline */}
+              <line
+                x1="20"
+                y1="85"
+                x2="320"
+                y2="85"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeDasharray="6 4"
+                className="text-primary"
+              />
+              <text
+                x="315"
+                y="78"
+                textAnchor="end"
+                className="text-[10px] font-mono font-bold fill-primary uppercase tracking-wider"
+              >
+                Waterline (Visible / Submerged)
+              </text>
+
+              {/* Iceberg Tip (Surface) */}
+              <polygon
+                points="170,25 215,85 125,85"
+                className={cn(
+                  "cursor-pointer transition-all duration-200",
+                  activeLevel === "surface"
+                    ? "fill-primary/30 stroke-primary stroke-2"
+                    : "fill-primary/10 stroke-border hover:stroke-muted-foreground stroke-1"
+                )}
+                onClick={() => setActiveLevel("surface")}
+                tabIndex={0}
+                role="button"
+                aria-label="Surface Level"
+              />
+              <text
+                x="170"
+                y="65"
+                textAnchor="middle"
+                className="pointer-events-none text-[10px] font-mono font-bold fill-foreground"
+              >
+                10% VISIBLE
+              </text>
+
+              {/* Submerged Tier 1 (Shallow) */}
+              <polygon
+                points="125,87 215,87 255,185 85,185"
+                className={cn(
+                  "cursor-pointer transition-all duration-200",
+                  activeLevel === "shallow"
+                    ? "fill-primary/25 stroke-primary stroke-2"
+                    : "fill-muted/40 stroke-border hover:stroke-muted-foreground stroke-1"
+                )}
+                onClick={() => setActiveLevel("shallow")}
+                tabIndex={0}
+                role="button"
+                aria-label="Shallow Level"
+              />
+              <text
+                x="170"
+                y="140"
+                textAnchor="middle"
+                className="pointer-events-none text-[11px] font-mono font-bold fill-foreground"
+              >
+                35% STRUCTURAL DEFECTS
+              </text>
+
+              {/* Submerged Tier 2 (Deep Foundation) */}
+              <polygon
+                points="85,187 255,187 210,295 130,295"
+                className={cn(
+                  "cursor-pointer transition-all duration-200",
+                  activeLevel === "deep"
+                    ? "fill-primary/40 stroke-primary stroke-2"
+                    : "fill-muted/70 stroke-border hover:stroke-muted-foreground stroke-1"
+                )}
+                onClick={() => setActiveLevel("deep")}
+                tabIndex={0}
+                role="button"
+                aria-label="Deep Foundation Level"
+              />
+              <text
+                x="170"
+                y="245"
+                textAnchor="middle"
+                className="pointer-events-none text-[11px] font-mono font-bold fill-foreground"
+              >
+                55% SYSTEMIC ROOTS
+              </text>
+            </svg>
+          </div>
+        </div>
+
+        {/* Level Breakdown Cards */}
+        <div className="lg:col-span-6 flex flex-col gap-3">
+          {levels.map((lvl) => {
+            const isActive = activeLevel === lvl.id;
+            return (
+              <div
+                key={lvl.id}
+                role="button"
+                tabIndex={0}
+                onClick={() => setActiveLevel(lvl.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") setActiveLevel(lvl.id);
+                }}
+                className={cn(
+                  "flex flex-col p-4 rounded-lg border text-left transition-all duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring cursor-pointer",
+                  isActive
+                    ? "border-primary bg-primary/10 shadow-xs"
+                    : "border-border bg-card hover:bg-muted/30"
+                )}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    {lvl.depth === "surface" ? (
+                      <Eye className="w-4 h-4 text-primary" aria-hidden="true" />
+                    ) : lvl.depth === "shallow" ? (
+                      <AlertCircle className="w-4 h-4 text-primary" aria-hidden="true" />
+                    ) : (
+                      <HelpCircle className="w-4 h-4 text-primary" aria-hidden="true" />
+                    )}
+                    <h4 className="text-xs font-bold text-foreground">{lvl.title}</h4>
+                  </div>
+                  <span className="font-mono text-xs font-bold text-primary px-2 py-0.5 rounded-sm bg-primary/15 border border-primary/20">
+                    {lvl.percentage}
+                  </span>
+                </div>
+
+                <ul className="space-y-1 mt-1">
+                  {lvl.items.map((item, i) => (
+                    <li key={i} className="text-xs text-muted-foreground flex items-start gap-2">
+                      <span className="h-1.5 w-1.5 rounded-full bg-primary mt-1.5 shrink-0" aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </figure>
   );
 }
 
@@ -11391,6 +12393,83 @@ export function TimelineRoadmapTrack({
 
 ---
 
+### Tracker Status Strip (`tracker-status-strip`)
+- **Category**: `ui:editorial`
+- **Dependencies**: clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Tremor (https://github.com/tremorlabs/tremor)
+ * @license Apache-2.0
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+
+export interface StatusTrackerItem {
+  color?: "emerald" | "amber" | "rose" | "zinc";
+  tooltip?: string;
+}
+
+export interface TrackerStatusStripProps extends React.HTMLAttributes<HTMLDivElement> {
+  data: StatusTrackerItem[];
+  label?: string;
+  uptimePercentage?: string;
+}
+
+const colorMap = {
+  emerald: "bg-emerald-500 hover:bg-emerald-400",
+  amber: "bg-amber-500 hover:bg-amber-400",
+  rose: "bg-rose-500 hover:bg-rose-400",
+  zinc: "bg-zinc-700 hover:bg-zinc-600",
+};
+
+export function TrackerStatusStrip({
+  data,
+  label = "Agent Execution Uptime",
+  uptimePercentage = "99.9%",
+  className,
+  ...props
+}: TrackerStatusStripProps) {
+  return (
+    <div
+      className={cn("w-full space-y-2 p-4 rounded-xl border border-border bg-card", className)}
+      role="region"
+      aria-label={label}
+      {...props}
+    >
+      <div className="flex items-center justify-between text-xs sm:text-sm">
+        <span className="font-medium text-foreground">{label}</span>
+        <span className="font-mono text-muted-foreground font-semibold">{uptimePercentage}</span>
+      </div>
+
+      <div className="flex items-center gap-1 h-8 w-full overflow-hidden" role="list">
+        {data.map((item, idx) => (
+          <div
+            key={idx}
+            className={cn(
+              "flex-1 h-full rounded-sm transition-colors cursor-pointer",
+              colorMap[item.color || "emerald"]
+            )}
+            title={item.tooltip || `Day ${idx + 1}: Operational`}
+            role="listitem"
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Tree Hierarchy Map (`tree-hierarchy-map`)
 - **Category**: `ui:primitive`
 - **Dependencies**: motion
@@ -11492,6 +12571,180 @@ export function TreeHierarchyMap({
             <text x="70" y="24" textAnchor="middle" className="fill-muted-foreground text-[9px] font-mono">R3F Viewports, HUDs</text>
           </g>
         </svg>
+      </div>
+    </figure>
+  );
+}
+
+```
+
+---
+
+### Value Chain Map (`value-chain-map`)
+- **Category**: `ui:block`
+- **Dependencies**: lucide-react, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 3/10, Density 8/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)
+ * @author Cathryn Lavery & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+import { ArrowRight, ChevronRight, Layers, ShieldCheck } from "lucide-react";
+
+export interface ValueChainStage {
+  id: string;
+  name: string;
+  category: "primary" | "support";
+  activities: string[];
+  marginImpact: string;
+}
+
+export interface ValueChainMapProps extends React.HTMLAttributes<HTMLDivElement> {
+  title?: string;
+  subtitle?: string;
+  stages?: ValueChainStage[];
+}
+
+const DEFAULT_STAGES: ValueChainStage[] = [
+  {
+    id: "inbound",
+    name: "Inbound Sourcing",
+    category: "primary",
+    activities: ["Remote repo scanning", "License verification", "Shallow git harvesting"],
+    marginImpact: "Zero legal risk",
+  },
+  {
+    id: "operations",
+    name: "AST Normalization",
+    category: "primary",
+    activities: ["Tailwind v4 tokens", "React 19 forwardRef removal", "motion/react codemods"],
+    marginImpact: "100% compilation",
+  },
+  {
+    id: "outbound",
+    name: "Registry Distribution",
+    category: "primary",
+    activities: ["Static /r/ endpoints", "Context-budget flat files", "Cloudflare edge worker"],
+    marginImpact: "<15KB payloads",
+  },
+  {
+    id: "marketing",
+    name: "Agent Orchestration",
+    category: "primary",
+    activities: ["MCP JSON-RPC tools", "11 platform rulepacks", "DTCG token binding"],
+    marginImpact: "Zero hallucination",
+  },
+  {
+    id: "service",
+    name: "Continuous Quality QA",
+    category: "primary",
+    activities: ["axe-core WCAG AA", "Anti-slop AST linter", "Taste dial profiling"],
+    marginImpact: "Flawless S-Grade",
+  },
+];
+
+export function ValueChainMap({
+  title = "Strategic Value Chain Architecture",
+  subtitle = "Porter's value chain model adapted for machine-first UI component ingestion, compilation, and agent delivery.",
+  stages = DEFAULT_STAGES,
+  className,
+  ...props
+}: ValueChainMapProps) {
+  const [activeStage, setActiveStage] = React.useState<string>(stages[0]?.id ?? "inbound");
+  const selected = stages.find((s) => s.id === activeStage) || stages[0];
+
+  return (
+    <figure
+      className={cn(
+        "flex flex-col w-full rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground",
+        className
+      )}
+      role="region"
+      aria-label={`Strategic Value Chain Map: ${title}`}
+      {...props}
+    >
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border pb-4 mb-6 gap-2">
+        <div>
+          <div className="flex items-center gap-2">
+            <Layers className="w-4 h-4 text-primary" aria-hidden="true" />
+            <h3 className="text-sm font-bold tracking-tight text-foreground">{title}</h3>
+          </div>
+          <p className="text-xs text-muted-foreground mt-1">{subtitle}</p>
+        </div>
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/40 px-2.5 py-0.5 text-xs font-mono text-muted-foreground self-start sm:self-auto">
+          Operational Flow
+        </span>
+      </header>
+
+      {/* Process Chevron Track */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-2 mb-6">
+        {stages.map((stage, idx) => {
+          const isActive = stage.id === activeStage;
+          return (
+            <button
+              key={stage.id}
+              type="button"
+              onClick={() => setActiveStage(stage.id)}
+              className={cn(
+                "group relative flex flex-col p-3 rounded-lg border text-left transition-all duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring",
+                isActive
+                  ? "border-primary bg-primary/10 shadow-xs"
+                  : "border-border bg-card hover:bg-muted/40"
+              )}
+            >
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="font-mono text-[10px] uppercase font-bold text-muted-foreground">
+                  Step 0{idx + 1}
+                </span>
+                {isActive && <ShieldCheck className="w-3.5 h-3.5 text-primary" aria-hidden="true" />}
+              </div>
+              <span className="text-xs font-semibold text-foreground line-clamp-1">{stage.name}</span>
+              <span className="text-[11px] font-mono text-primary mt-1">{stage.marginImpact}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Selected Step Breakdown */}
+      <div className="rounded-lg border border-border bg-muted/20 p-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-3 mb-4">
+          <div>
+            <span className="text-[10px] font-mono uppercase tracking-widest text-primary font-bold">
+              Active Stage Ingestion
+            </span>
+            <h4 className="text-sm font-bold text-foreground mt-0.5">{selected.name}</h4>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-mono text-muted-foreground">Quality Multiplier:</span>
+            <span className="font-mono text-xs font-bold text-foreground bg-card px-2.5 py-1 rounded-sm border border-border">
+              {selected.marginImpact}
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <span className="text-xs font-semibold text-foreground">Executed Workflows & Guardrails:</span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-2.5">
+            {selected.activities.map((act, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-xs text-foreground"
+              >
+                <span className="h-1.5 w-1.5 rounded-full bg-primary shrink-0" aria-hidden="true" />
+                <span className="truncate">{act}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </figure>
   );
@@ -11643,6 +12896,291 @@ export function VennComparisonMatrix({
         <span>Zero-dependency mathematical SVG geometry</span>
         <span className="font-mono text-[11px]">Radius: 135px · Intersection: 60px</span>
       </footer>
+    </figure>
+  );
+}
+
+```
+
+---
+
+### Venn Three Circle Diagram (`venn-three-circle-diagram`)
+- **Category**: `ui:block`
+- **Dependencies**: lucide-react
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 3/10, Density 8/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)
+ * @author Cathryn Lavery & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+import { CheckCircle2, CircleDot } from "lucide-react";
+
+export interface VennDomain {
+  id: "a" | "b" | "c" | "center";
+  title: string;
+  subtitle: string;
+  colorClass?: string;
+}
+
+export interface VennThreeCircleDiagramProps extends React.HTMLAttributes<HTMLDivElement> {
+  title?: string;
+  subtitle?: string;
+  domains?: {
+    a: VennDomain;
+    b: VennDomain;
+    c: VennDomain;
+    center: VennDomain;
+  };
+}
+
+const DEFAULT_DOMAINS = {
+  a: {
+    id: "a" as const,
+    title: "Agent Intelligence",
+    subtitle: "Context window grounding, tool selection, and cognitive planning loops.",
+  },
+  b: {
+    id: "b" as const,
+    title: "Curated Registries",
+    subtitle: "Pre-tested, deterministic TSX primitives with zero hallucinations.",
+  },
+  c: {
+    id: "c" as const,
+    title: "Quality Release Gates",
+    subtitle: "Automated WCAG AA linter, axe-core audits, and taste dial constraints.",
+  },
+  center: {
+    id: "center" as const,
+    title: "The Zero-Slop Standard",
+    subtitle: "Production-ready, accessible UI shipped autonomously with zero rework.",
+  },
+};
+
+export function VennThreeCircleDiagram({
+  title = "Tripartite Intersection Matrix",
+  subtitle = "Mathematical 3-set Venn diagram illustrating the convergence of elite AI frontend engineering.",
+  domains = DEFAULT_DOMAINS,
+  className,
+  ...props
+}: VennThreeCircleDiagramProps) {
+  const [selectedDomain, setSelectedDomain] = React.useState<"a" | "b" | "c" | "center">("center");
+
+  const currentInfo = domains[selectedDomain];
+
+  return (
+    <figure
+      className={cn(
+        "flex flex-col w-full rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground",
+        className
+      )}
+      role="region"
+      aria-label={`Three Circle Venn Diagram: ${title}`}
+      {...props}
+    >
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border pb-4 mb-6 gap-2">
+        <div>
+          <div className="flex items-center gap-2">
+            <CircleDot className="w-4 h-4 text-primary" aria-hidden="true" />
+            <h3 className="text-sm font-bold tracking-tight text-foreground">{title}</h3>
+          </div>
+          <p className="text-xs text-muted-foreground mt-1">{subtitle}</p>
+        </div>
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/40 px-2.5 py-0.5 text-xs font-mono text-muted-foreground self-start sm:self-auto">
+          3-Set Venn Architecture
+        </span>
+      </header>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        {/* SVG Three Overlapping Circles */}
+        <div className="lg:col-span-7 flex justify-center py-2">
+          <div className="relative w-72 h-72 sm:w-80 sm:h-80">
+            <svg
+              viewBox="0 0 360 360"
+              className="w-full h-full"
+              role="img"
+              aria-label="3-Circle Venn Diagram with selectable overlapping intersections"
+            >
+              <defs>
+                <filter id="venn-glow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.15" />
+                </filter>
+              </defs>
+
+              {/* Circle A: Top-Left */}
+              <circle
+                cx="145"
+                cy="145"
+                r="105"
+                className={cn(
+                  "cursor-pointer transition-all duration-200",
+                  selectedDomain === "a"
+                    ? "fill-primary/20 stroke-primary stroke-[2.5]"
+                    : "fill-primary/5 stroke-border hover:stroke-muted-foreground stroke-1"
+                )}
+                onClick={() => setSelectedDomain("a")}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") setSelectedDomain("a");
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label={`Domain A: ${domains.a.title}`}
+              />
+
+              {/* Circle B: Top-Right */}
+              <circle
+                cx="215"
+                cy="145"
+                r="105"
+                className={cn(
+                  "cursor-pointer transition-all duration-200",
+                  selectedDomain === "b"
+                    ? "fill-primary/20 stroke-primary stroke-[2.5]"
+                    : "fill-primary/5 stroke-border hover:stroke-muted-foreground stroke-1"
+                )}
+                onClick={() => setSelectedDomain("b")}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") setSelectedDomain("b");
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label={`Domain B: ${domains.b.title}`}
+              />
+
+              {/* Circle C: Bottom-Center */}
+              <circle
+                cx="180"
+                cy="225"
+                r="105"
+                className={cn(
+                  "cursor-pointer transition-all duration-200",
+                  selectedDomain === "c"
+                    ? "fill-primary/20 stroke-primary stroke-[2.5]"
+                    : "fill-primary/5 stroke-border hover:stroke-muted-foreground stroke-1"
+                )}
+                onClick={() => setSelectedDomain("c")}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") setSelectedDomain("c");
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label={`Domain C: ${domains.c.title}`}
+              />
+
+              {/* Center Tripartite Intersection Core Circle */}
+              <circle
+                cx="180"
+                cy="172"
+                r="38"
+                filter="url(#venn-glow)"
+                className={cn(
+                  "cursor-pointer transition-all duration-200",
+                  selectedDomain === "center"
+                    ? "fill-primary stroke-primary-foreground stroke-2"
+                    : "fill-card stroke-primary stroke-2 hover:fill-muted"
+                )}
+                onClick={() => setSelectedDomain("center")}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") setSelectedDomain("center");
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label={`Center Intersection: ${domains.center.title}`}
+              />
+
+              {/* Center Text Icon */}
+              <text
+                x="180"
+                y="176"
+                textAnchor="middle"
+                className={cn(
+                  "pointer-events-none text-[11px] font-bold font-mono tracking-wider",
+                  selectedDomain === "center" ? "fill-primary-foreground" : "fill-primary"
+                )}
+              >
+                CORE
+              </text>
+
+              {/* Labels on Outer Circles */}
+              <text
+                x="110"
+                y="110"
+                textAnchor="middle"
+                className="pointer-events-none text-[11px] font-semibold fill-foreground"
+              >
+                Agent Skills
+              </text>
+              <text
+                x="250"
+                y="110"
+                textAnchor="middle"
+                className="pointer-events-none text-[11px] font-semibold fill-foreground"
+              >
+                Registries
+              </text>
+              <text
+                x="180"
+                y="275"
+                textAnchor="middle"
+                className="pointer-events-none text-[11px] font-semibold fill-foreground"
+              >
+                QA Gates
+              </text>
+            </svg>
+          </div>
+        </div>
+
+        {/* Dynamic Detail Card */}
+        <div className="lg:col-span-5 flex flex-col gap-4">
+          <div className="rounded-lg border border-border bg-muted/20 p-4 transition-all duration-200">
+            <div className="flex items-center gap-2 mb-2">
+              <CheckCircle2 className="w-4 h-4 text-primary" aria-hidden="true" />
+              <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+                {selectedDomain === "center" ? "Harmonic Convergence" : `Pillar // 0${selectedDomain.toUpperCase()}`}
+              </span>
+            </div>
+            <h4 className="text-base font-bold text-foreground">{currentInfo.title}</h4>
+            <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
+              {currentInfo.subtitle}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
+            {(["a", "b", "c", "center"] as const).map((key) => {
+              const item = domains[key];
+              const isSelected = selectedDomain === key;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setSelectedDomain(key)}
+                  className={cn(
+                    "flex flex-col p-2.5 rounded-md border text-left transition-colors duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring",
+                    isSelected
+                      ? "border-primary bg-primary/10 text-foreground"
+                      : "border-border bg-card text-muted-foreground hover:bg-muted/40"
+                  )}
+                >
+                  <span className="text-[10px] font-mono uppercase font-bold tracking-wider">
+                    {key === "center" ? "Center" : `Pillar ${key.toUpperCase()}`}
+                  </span>
+                  <span className="text-xs font-semibold mt-0.5 truncate text-foreground">
+                    {item.title}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </figure>
   );
 }
@@ -12876,6 +14414,75 @@ export function AnimatedTabs({
 
 ---
 
+### Border Beam (`border-beam`)
+- **Category**: `ui:motion`
+- **Dependencies**: clsx, tailwind-merge, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 6/10, Density 5/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Magic UI (https://github.com/magicuidesign/magicui)
+ * @license MIT
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+
+export interface BorderBeamProps {
+  className?: string;
+  size?: number;
+  duration?: number;
+  borderWidth?: number;
+  anchor?: number;
+  colorFrom?: string;
+  colorTo?: string;
+  delay?: number;
+}
+
+export function BorderBeam({
+  className,
+  size = 200,
+  duration = 15,
+  anchor = 90,
+  borderWidth = 1.5,
+  colorFrom = "#10b981",
+  colorTo = "#38bdf8",
+  delay = 0,
+}: BorderBeamProps) {
+  return (
+    <div
+      style={
+        {
+          "--size": size,
+          "--duration": duration,
+          "--anchor": anchor,
+          "--border-width": borderWidth,
+          "--color-from": colorFrom,
+          "--color-to": colorTo,
+          "--delay": `-${delay}s`,
+        } as React.CSSProperties
+      }
+      className={cn(
+        "pointer-events-none absolute inset-0 rounded-[inherit] [border:calc(var(--border-width)*1px)_solid_transparent]",
+        "motion-reduce:hidden",
+        "![mask-clip:padding-box,border-box] ![mask-composite:intersect] [mask:linear-gradient(transparent,transparent),linear-gradient(white,white)]",
+        "after:absolute after:aspect-square after:w-[calc(var(--size)*1px)] after:animate-border-beam after:[animation-delay:var(--delay)] after:[background:linear-gradient(to_left,var(--color-from),var(--color-to),transparent)] after:[offset-anchor:calc(var(--anchor)*1%)_50%] after:[offset-path:rect(0_auto_auto_0_round_calc(var(--size)*1px))]",
+        className
+      )}
+      aria-hidden="true"
+    />
+  );
+}
+
+```
+
+---
+
 ### Border Trail (`border-trail`)
 - **Category**: `ui:utility`
 - **Dependencies**: motion
@@ -14096,6 +15703,89 @@ export function MorphingDialog({
 
 ---
 
+### Number Ticker (`number-ticker`)
+- **Category**: `ui:motion`
+- **Dependencies**: motion, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 5/10, Motion 6/10, Density 6/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Magic UI (https://github.com/magicuidesign/magicui)
+ * @license MIT
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { useEffect, useRef } from "react";
+import { useInView, useMotionValue, useSpring } from "motion/react";
+import { cn } from "../lib/utils";
+
+export interface NumberTickerProps extends React.ComponentPropsWithoutRef<"span"> {
+  value: number;
+  direction?: "up" | "down";
+  delay?: number;
+  decimalPlaces?: number;
+}
+
+export function NumberTicker({
+  value,
+  direction = "up",
+  delay = 0,
+  className,
+  decimalPlaces = 0,
+  ...props
+}: NumberTickerProps) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const motionValue = useMotionValue(direction === "down" ? value : 0);
+  const springValue = useSpring(motionValue, {
+    damping: 60,
+    stiffness: 100,
+  });
+  const isInView = useInView(ref, { once: true, margin: "0px" });
+
+  useEffect(() => {
+    if (isInView) {
+      const timer = setTimeout(() => {
+        motionValue.set(direction === "down" ? 0 : value);
+      }, delay * 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [motionValue, isInView, delay, value, direction]);
+
+  useEffect(
+    () =>
+      springValue.on("change", (latest) => {
+        if (ref.current) {
+          ref.current.textContent = Intl.NumberFormat("en-US", {
+            minimumFractionDigits: decimalPlaces,
+            maximumFractionDigits: decimalPlaces,
+          }).format(Number(latest.toFixed(decimalPlaces)));
+        }
+      }),
+    [springValue, decimalPlaces]
+  );
+
+  return (
+    <span
+      ref={ref}
+      className={cn(
+        "inline-block font-mono tracking-wider tabular-nums text-foreground",
+        className
+      )}
+      aria-label={String(value)}
+      {...props}
+    />
+  );
+}
+
+```
+
+---
+
 ### Orbiting Planetary Circles (`orbiting-circles`)
 - **Category**: `ui:motion`
 - **Dependencies**: lucide-react, clsx, tailwind-merge
@@ -14258,6 +15948,122 @@ export function ParallaxScrollContainer({
       <motion.div style={{ y: yOffset }} className="relative w-full">
         {children}
       </motion.div>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Particle Burst Button (`particle-burst-button`)
+- **Category**: `ui:motion`
+- **Dependencies**: motion, lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 8/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Machine-First Design Agent Wiki
+ * @license MIT
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Sparkles } from "lucide-react";
+import { cn } from "../lib/utils";
+
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  color: string;
+  size: number;
+}
+
+export interface ParticleBurstButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  burstColor?: string;
+  particleCount?: number;
+  children: React.ReactNode;
+}
+
+export function ParticleBurstButton({
+  burstColor = "#10b981",
+  particleCount = 12,
+  children,
+  className,
+  onClick,
+  ...props
+}: ParticleBurstButtonProps) {
+  const [particles, setParticles] = React.useState<Particle[]>([]);
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const newParticles: Particle[] = Array.from({ length: particleCount }, (_, i) => {
+      const angle = (i / particleCount) * Math.PI * 2;
+      const distance = Math.random() * 40 + 30;
+      return {
+        id: Date.now() + i,
+        x: Math.cos(angle) * distance,
+        y: Math.sin(angle) * distance,
+        color: burstColor,
+        size: Math.random() * 4 + 3,
+      };
+    });
+
+    setParticles(newParticles);
+    setTimeout(() => setParticles([]), 700);
+
+    if (onClick) onClick(e);
+  };
+
+  return (
+    <div className="relative inline-block">
+      <button
+        ref={buttonRef}
+        type="button"
+        onClick={handleClick}
+        className={cn(
+          "relative inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 font-medium text-sm transition-colors",
+          "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+          className
+        )}
+        {...props}
+      >
+        <Sparkles className="h-4 w-4" aria-hidden="true" />
+        <span>{children}</span>
+      </button>
+
+      <AnimatePresence>
+        {particles.map((p) => (
+          <motion.span
+            key={p.id}
+            className="pointer-events-none absolute left-1/2 top-1/2 rounded-full"
+            style={{
+              backgroundColor: p.color,
+              width: p.size,
+              height: p.size,
+              marginLeft: -p.size / 2,
+              marginTop: -p.size / 2,
+            }}
+            initial={{ scale: 1, x: 0, y: 0, opacity: 1 }}
+            animate={{
+              scale: 0,
+              x: p.x,
+              y: p.y,
+              opacity: 0,
+            }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            aria-hidden="true"
+          />
+        ))}
+      </AnimatePresence>
     </div>
   );
 }
@@ -14794,6 +16600,110 @@ export function SmoothScrollProvider({
     <SmoothScrollContext value={{ isSmoothEnabled, scrollTo }}>
       {children}
     </SmoothScrollContext>
+  );
+}
+
+```
+
+---
+
+### Sparkles Text (`sparkles-text`)
+- **Category**: `ui:motion`
+- **Dependencies**: motion, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 7/10, Motion 7/10, Density 5/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Magic UI (https://github.com/magicuidesign/magicui)
+ * @license MIT
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { cn } from "../lib/utils";
+
+interface Sparkle {
+  id: string;
+  x: string;
+  y: string;
+  color: string;
+  delay: number;
+  scale: number;
+  duration: number;
+}
+
+export interface SparklesTextProps extends React.ComponentPropsWithoutRef<"span"> {
+  text: string;
+  sparklesCount?: number;
+  colors?: { first: string; second: string };
+  className?: string;
+}
+
+export function SparklesText({
+  text,
+  sparklesCount = 8,
+  colors = { first: "#10b981", second: "#38bdf8" },
+  className,
+  ...props
+}: SparklesTextProps) {
+  const [sparkles, setSparkles] = React.useState<Sparkle[]>([]);
+  const shouldReduceMotion = useReducedMotion();
+
+  React.useEffect(() => {
+    if (shouldReduceMotion) return;
+    const generated: Sparkle[] = Array.from({ length: sparklesCount }, (_, i) => ({
+      id: `sparkle-${i}`,
+      x: `${Math.floor(Math.random() * 90)}%`,
+      y: `${Math.floor(Math.random() * 80)}%`,
+      color: i % 2 === 0 ? colors.first : colors.second,
+      delay: Math.random() * 2,
+      scale: Math.random() * 0.5 + 0.6,
+      duration: Math.random() * 1.5 + 1.2,
+    }));
+    setSparkles(generated);
+  }, [sparklesCount, colors.first, colors.second]);
+
+  return (
+    <span
+      className={cn("relative inline-block font-semibold tracking-tight", className)}
+      {...props}
+    >
+      <span className="relative z-10">{text}</span>
+      <span className="pointer-events-none absolute inset-0 block overflow-hidden" aria-hidden="true">
+        {sparkles.map((sp) => (
+          <motion.svg
+            key={sp.id}
+            className="absolute h-4 w-4"
+            style={{ left: sp.x, top: sp.y }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{
+              opacity: [0, 1, 0],
+              scale: [0, sp.scale, 0],
+              rotate: [0, 90, 180],
+            }}
+            transition={{
+              duration: sp.duration,
+              repeat: Infinity,
+              delay: sp.delay,
+              ease: "easeInOut",
+            }}
+            viewBox="0 0 24 24"
+            fill="none"
+            role="presentation"
+          >
+            <path
+              d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"
+              fill={sp.color}
+            />
+          </motion.svg>
+        ))}
+      </span>
+    </span>
   );
 }
 
@@ -20441,6 +22351,135 @@ export function RichDateRangePicker({
 
 ---
 
+### Roving Tab List (`roving-tab-list`)
+- **Category**: `ui:primitive`
+- **Dependencies**: None
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Ariakit & Radix UI (https://ariakit.org / https://radix-ui.com)
+ * @author Ariakit Team & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+
+export interface RovingTabItem {
+  id: string;
+  label: string;
+  badge?: string | number;
+  disabled?: boolean;
+}
+
+export interface RovingTabListProps extends React.HTMLAttributes<HTMLDivElement> {
+  items: RovingTabItem[];
+  selectedId: string;
+  onSelect: (id: string) => void;
+  orientation?: "horizontal" | "vertical";
+}
+
+export function RovingTabList({
+  items,
+  selectedId,
+  onSelect,
+  orientation = "horizontal",
+  className,
+  ...props
+}: RovingTabListProps) {
+  const tabRefs = React.useRef<(HTMLButtonElement | null)[]>([]);
+
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    let nextIndex = index;
+    const count = items.length;
+
+    if (orientation === "horizontal") {
+      if (e.key === "ArrowRight") {
+        nextIndex = (index + 1) % count;
+      } else if (e.key === "ArrowLeft") {
+        nextIndex = (index - 1 + count) % count;
+      } else if (e.key === "Home") {
+        nextIndex = 0;
+      } else if (e.key === "End") {
+        nextIndex = count - 1;
+      } else {
+        return;
+      }
+    } else {
+      if (e.key === "ArrowDown") {
+        nextIndex = (index + 1) % count;
+      } else if (e.key === "ArrowUp") {
+        nextIndex = (index - 1 + count) % count;
+      } else {
+        return;
+      }
+    }
+
+    e.preventDefault();
+    tabRefs.current[nextIndex]?.focus();
+    onSelect(items[nextIndex].id);
+  };
+
+  return (
+    <div
+      role="tablist"
+      aria-orientation={orientation}
+      className={cn(
+        "flex rounded-lg border border-border bg-muted/30 p-1 text-muted-foreground",
+        orientation === "vertical" ? "flex-col gap-1" : "flex-row gap-1 items-center",
+        className
+      )}
+      {...props}
+    >
+      {items.map((item, idx) => {
+        const isSelected = item.id === selectedId;
+        return (
+          <button
+            key={item.id}
+            ref={(el) => {
+              tabRefs.current[idx] = el;
+            }}
+            role="tab"
+            type="button"
+            aria-selected={isSelected}
+            tabIndex={isSelected ? 0 : -1}
+            disabled={item.disabled}
+            onClick={() => onSelect(item.id)}
+            onKeyDown={(e) => handleKeyDown(e, idx)}
+            className={cn(
+              "flex items-center gap-2 rounded-md px-3 py-1.5 text-xs font-semibold transition-colors duration-150 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-40 disabled:pointer-events-none",
+              isSelected
+                ? "bg-card text-foreground shadow-xs border border-border/60"
+                : "hover:text-foreground hover:bg-muted/50"
+            )}
+          >
+            <span>{item.label}</span>
+            {item.badge !== undefined && (
+              <span
+                className={cn(
+                  "rounded-full px-1.5 py-0.2 font-mono text-[10px]",
+                  isSelected ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
+                )}
+              >
+                {item.badge}
+              </span>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Separator (`separator`)
 - **Category**: `ui:primitive`
 - **Dependencies**: clsx, tailwind-merge
@@ -20523,6 +22562,133 @@ export function Skeleton({ className, shimmer = true, ...props }: SkeletonProps)
       )}
       {...props}
     />
+  );
+}
+
+```
+
+---
+
+### Split Button (`split-button`)
+- **Category**: `ui:primitive`
+- **Dependencies**: lucide-react
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin GUI Challenges & React Spectrum (https://github.com/argyleink/gui-challenges)
+ * @author Adam Argyle & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+import { ChevronDown } from "lucide-react";
+
+export interface SplitButtonOption {
+  id: string;
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+}
+
+export interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement> {
+  primaryLabel: string;
+  onPrimaryClick: () => void;
+  options: SplitButtonOption[];
+  disabled?: boolean;
+}
+
+export function SplitButton({
+  primaryLabel,
+  onPrimaryClick,
+  options,
+  disabled = false,
+  className,
+  ...props
+}: SplitButtonProps) {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape" && isOpen) {
+        setIsOpen(false);
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
+  React.useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
+
+  return (
+    <div
+      ref={dropdownRef}
+      className={cn("inline-flex items-center rounded-md shadow-xs relative", className)}
+      {...props}
+    >
+      {/* Primary Action Button */}
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={onPrimaryClick}
+        className="inline-flex items-center justify-center rounded-l-md bg-primary px-3.5 py-2 text-xs font-semibold text-primary-foreground transition-colors duration-200 hover:bg-primary/90 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none"
+      >
+        {primaryLabel}
+      </button>
+
+      {/* Menu Trigger Button */}
+      <button
+        type="button"
+        disabled={disabled}
+        aria-expanded={isOpen}
+        aria-haspopup="menu"
+        aria-label="More actions menu"
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="inline-flex items-center justify-center rounded-r-md border-l border-primary-foreground/20 bg-primary px-2 py-2 text-primary-foreground transition-colors duration-200 hover:bg-primary/90 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none"
+      >
+        <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-200", isOpen && "rotate-180")} aria-hidden="true" />
+      </button>
+
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div
+          role="menu"
+          aria-orientation="vertical"
+          className="absolute right-0 top-full mt-1.5 w-48 rounded-md border border-border bg-popover p-1 shadow-md text-popover-foreground z-50 focus:outline-hidden"
+        >
+          {options.map((opt) => (
+            <button
+              key={opt.id}
+              role="menuitem"
+              disabled={opt.disabled}
+              onClick={() => {
+                opt.onClick();
+                setIsOpen(false);
+              }}
+              className="w-full text-left px-2.5 py-1.5 text-xs rounded-sm transition-colors duration-150 hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -21580,6 +23746,164 @@ export function ThemeToggleDropdown({
 
 ---
 
+### Agent Inspector Drawer (`agent-inspector-drawer`)
+- **Category**: `ui:workflow`
+- **Dependencies**: motion, lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 5/10, Motion 4/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Machine-First Design Agent Wiki
+ * @license MIT
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { X, Cpu, Clock, CheckCircle2, AlertCircle } from "lucide-react";
+import { cn } from "../lib/utils";
+
+export interface AgentStepExecution {
+  id: string;
+  tool: string;
+  status: "success" | "running" | "failed";
+  elapsedMs: number;
+  input: Record<string, unknown>;
+  output?: Record<string, unknown> | string;
+}
+
+export interface AgentInspectorDrawerProps {
+  isOpen: boolean;
+  onClose: () => void;
+  execution?: AgentStepExecution;
+  className?: string;
+}
+
+export function AgentInspectorDrawer({
+  isOpen,
+  onClose,
+  execution,
+  className,
+}: AgentInspectorDrawerProps) {
+  // Handle escape key listener with cleanup
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm"
+            onClick={onClose}
+          />
+
+          <motion.aside
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 250 }}
+            className={cn(
+              "relative z-50 h-full w-full max-w-md border-l border-border bg-card p-6 shadow-2xl overflow-y-auto",
+              className
+            )}
+          >
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <div className="flex items-center gap-2">
+                <Cpu className="h-5 w-5 text-primary" aria-hidden="true" />
+                <h2 id="drawer-title" className="text-lg font-semibold text-foreground">
+                  Step Inspector
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Close Inspector"
+                className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <X className="h-5 w-5" aria-hidden="true" />
+              </button>
+            </div>
+
+            {execution ? (
+              <div className="mt-6 space-y-6">
+                <div className="flex items-center justify-between rounded-xl bg-muted/40 p-3">
+                  <div className="flex items-center gap-2 text-sm font-medium">
+                    {execution.status === "success" ? (
+                      <CheckCircle2 className="h-4 w-4 text-emerald-500" aria-hidden="true" />
+                    ) : execution.status === "failed" ? (
+                      <AlertCircle className="h-4 w-4 text-rose-500" aria-hidden="true" />
+                    ) : (
+                      <Clock className="h-4 w-4 text-amber-500 animate-spin" aria-hidden="true" />
+                    )}
+                    <span className="capitalize">{execution.status}</span>
+                  </div>
+                  <span className="font-mono text-xs text-muted-foreground">
+                    {execution.elapsedMs}ms
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                    Executed Tool
+                  </h3>
+                  <code className="block rounded-lg bg-background p-2 font-mono text-sm border border-border">
+                    {execution.tool}
+                  </code>
+                </div>
+
+                <div>
+                  <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                    Input Parameters
+                  </h3>
+                  <pre className="overflow-x-auto rounded-lg bg-background p-3 font-mono text-xs text-muted-foreground border border-border max-h-48">
+                    {JSON.stringify(execution.input, null, 2)}
+                  </pre>
+                </div>
+
+                {execution.output && (
+                  <div>
+                    <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                      Result Payload
+                    </h3>
+                    <pre className="overflow-x-auto rounded-lg bg-background p-3 font-mono text-xs text-emerald-400 border border-border max-h-60">
+                      {typeof execution.output === "string"
+                        ? execution.output
+                        : JSON.stringify(execution.output, null, 2)}
+                    </pre>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="mt-12 text-center text-sm text-muted-foreground">
+                No active execution selected.
+              </div>
+            )}
+          </motion.aside>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+```
+
+---
+
 ### Agent Node Graph (`agent-node-graph`)
 - **Category**: `ui:workflow`
 - **Dependencies**: motion, lucide-react, clsx, tailwind-merge
@@ -21803,6 +24127,130 @@ export function AgentNodeGraph({
         </div>
       )}
     </div>
+  );
+}
+
+```
+
+---
+
+### Agent Node Wire Pulse (`agent-node-wire-pulse`)
+- **Category**: `ui:primitive`
+- **Dependencies**: motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 3/10, Motion 2/10, Density 6/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin XY Flow & Magic UI (https://xyflow.com / https://magicui.design)
+ * @author XY Flow & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+
+export interface AgentNodeWirePulseProps extends React.SVGProps<SVGSVGElement> {
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  curvature?: number;
+  pulseColor?: string;
+  duration?: number;
+}
+
+export function AgentNodeWirePulse({
+  startX = 50,
+  startY = 50,
+  endX = 250,
+  endY = 150,
+  curvature = 0.5,
+  pulseColor = "currentColor",
+  duration = 2.5,
+  className,
+  ...props
+}: AgentNodeWirePulseProps) {
+  const pathId = React.useId();
+
+  // Compute cubic bezier control points
+  const dx = endX - startX;
+  const dy = endY - startY;
+  const cp1x = startX + dx * curvature;
+  const cp1y = startY;
+  const cp2x = endX - dx * curvature;
+  const cp2y = endY;
+
+  const pathData = `M ${startX} ${startY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
+
+  return (
+    <svg
+      className={cn("pointer-events-none overflow-visible w-full h-full", className)}
+      role="img"
+      aria-label="Workflow node wire with animated data pulse"
+      {...props}
+    >
+      <defs>
+        <linearGradient id={`${pathId}-gradient`} x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="var(--color-primary, #3b82f6)" stopOpacity="0" />
+          <stop offset="50%" stopColor="var(--color-primary, #3b82f6)" stopOpacity="1" />
+          <stop offset="100%" stopColor="var(--color-primary, #3b82f6)" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+
+      {/* Base Connector Wire */}
+      <path
+        d={pathData}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        className="text-border transition-colors duration-200"
+      />
+
+      {/* Animated Pulse Beam along wire */}
+      <path
+        d={pathData}
+        fill="none"
+        stroke={`url(#${pathId}-gradient)`}
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeDasharray="40 120"
+        className="animate-wire-pulse"
+        style={{
+          animationDuration: `${duration}s`,
+        }}
+      />
+
+      {/* Connection Endpoint Anchors */}
+      <circle cx={startX} cy={startY} r="3" className="fill-primary" />
+      <circle cx={endX} cy={endY} r="3" className="fill-primary" />
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes wire-pulse {
+            from {
+              stroke-dashoffset: 160;
+            }
+            to {
+              stroke-dashoffset: 0;
+            }
+          }
+          .animate-wire-pulse {
+            animation: wire-pulse 2.5s linear infinite;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .animate-wire-pulse {
+              animation: none !important;
+              stroke-dasharray: none !important;
+              opacity: 0.5;
+            }
+          }
+        `,
+      }} />
+    </svg>
   );
 }
 
@@ -22261,6 +24709,102 @@ export function EmbeddedWhiteboard({
         <span>STROKES: {strokeCount}</span>
         <span>EXCALIDRAW_PRIMITIVE</span>
       </div>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Workflow Minimap Controls (`workflow-minimap-controls`)
+- **Category**: `ui:workflow`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 5/10, Motion 3/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin XY Flow (https://github.com/xyflow/xyflow)
+ * @license MIT
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { ZoomIn, ZoomOut, Maximize2, RotateCcw } from "lucide-react";
+import { cn } from "../lib/utils";
+
+export interface WorkflowMinimapControlsProps extends React.HTMLAttributes<HTMLDivElement> {
+  zoom?: number;
+  onZoomIn?: () => void;
+  onZoomOut?: () => void;
+  onFitView?: () => void;
+  onReset?: () => void;
+}
+
+export function WorkflowMinimapControls({
+  zoom = 1,
+  onZoomIn,
+  onZoomOut,
+  onFitView,
+  onReset,
+  className,
+  ...props
+}: WorkflowMinimapControlsProps) {
+  return (
+    <div
+      className={cn(
+        "flex items-center gap-1 rounded-xl border border-border bg-card/90 p-1.5 shadow-md backdrop-blur-sm",
+        className
+      )}
+      role="toolbar"
+      aria-label="Workflow Canvas Controls"
+      {...props}
+    >
+      <button
+        type="button"
+        onClick={onZoomIn}
+        aria-label="Zoom In"
+        className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <ZoomIn className="h-4 w-4" aria-hidden="true" />
+      </button>
+
+      <span className="px-2 font-mono text-xs text-muted-foreground font-semibold tabular-nums">
+        {Math.round(zoom * 100)}%
+      </span>
+
+      <button
+        type="button"
+        onClick={onZoomOut}
+        aria-label="Zoom Out"
+        className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <ZoomOut className="h-4 w-4" aria-hidden="true" />
+      </button>
+
+      <div className="h-4 w-px bg-border my-auto mx-1" aria-hidden="true" />
+
+      <button
+        type="button"
+        onClick={onFitView}
+        aria-label="Fit View to Screen"
+        className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <Maximize2 className="h-4 w-4" aria-hidden="true" />
+      </button>
+
+      <button
+        type="button"
+        onClick={onReset}
+        aria-label="Reset Canvas View"
+        className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <RotateCcw className="h-4 w-4" aria-hidden="true" />
+      </button>
     </div>
   );
 }

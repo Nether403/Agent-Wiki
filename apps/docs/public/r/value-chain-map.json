@@ -1,0 +1,50 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "value-chain-map",
+  "type": "registry:block",
+  "title": "Value Chain Map",
+  "description": "Curated production-grade component.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 3,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/value-chain-map.tsx",
+      "content": "/**\n * @license MIT\n * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)\n * @author Cathryn Lavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { ArrowRight, ChevronRight, Layers, ShieldCheck } from \"lucide-react\";\n\nexport interface ValueChainStage {\n  id: string;\n  name: string;\n  category: \"primary\" | \"support\";\n  activities: string[];\n  marginImpact: string;\n}\n\nexport interface ValueChainMapProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  subtitle?: string;\n  stages?: ValueChainStage[];\n}\n\nconst DEFAULT_STAGES: ValueChainStage[] = [\n  {\n    id: \"inbound\",\n    name: \"Inbound Sourcing\",\n    category: \"primary\",\n    activities: [\"Remote repo scanning\", \"License verification\", \"Shallow git harvesting\"],\n    marginImpact: \"Zero legal risk\",\n  },\n  {\n    id: \"operations\",\n    name: \"AST Normalization\",\n    category: \"primary\",\n    activities: [\"Tailwind v4 tokens\", \"React 19 forwardRef removal\", \"motion/react codemods\"],\n    marginImpact: \"100% compilation\",\n  },\n  {\n    id: \"outbound\",\n    name: \"Registry Distribution\",\n    category: \"primary\",\n    activities: [\"Static /r/ endpoints\", \"Context-budget flat files\", \"Cloudflare edge worker\"],\n    marginImpact: \"<15KB payloads\",\n  },\n  {\n    id: \"marketing\",\n    name: \"Agent Orchestration\",\n    category: \"primary\",\n    activities: [\"MCP JSON-RPC tools\", \"11 platform rulepacks\", \"DTCG token binding\"],\n    marginImpact: \"Zero hallucination\",\n  },\n  {\n    id: \"service\",\n    name: \"Continuous Quality QA\",\n    category: \"primary\",\n    activities: [\"axe-core WCAG AA\", \"Anti-slop AST linter\", \"Taste dial profiling\"],\n    marginImpact: \"Flawless S-Grade\",\n  },\n];\n\nexport function ValueChainMap({\n  title = \"Strategic Value Chain Architecture\",\n  subtitle = \"Porter's value chain model adapted for machine-first UI component ingestion, compilation, and agent delivery.\",\n  stages = DEFAULT_STAGES,\n  className,\n  ...props\n}: ValueChainMapProps) {\n  const [activeStage, setActiveStage] = React.useState<string>(stages[0]?.id ?? \"inbound\");\n  const selected = stages.find((s) => s.id === activeStage) || stages[0];\n\n  return (\n    <figure\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Strategic Value Chain Map: ${title}`}\n      {...props}\n    >\n      <header className=\"flex flex-col sm:flex-row sm:items-center justify-between border-b border-border pb-4 mb-6 gap-2\">\n        <div>\n          <div className=\"flex items-center gap-2\">\n            <Layers className=\"w-4 h-4 text-primary\" aria-hidden=\"true\" />\n            <h3 className=\"text-sm font-bold tracking-tight text-foreground\">{title}</h3>\n          </div>\n          <p className=\"text-xs text-muted-foreground mt-1\">{subtitle}</p>\n        </div>\n        <span className=\"inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/40 px-2.5 py-0.5 text-xs font-mono text-muted-foreground self-start sm:self-auto\">\n          Operational Flow\n        </span>\n      </header>\n\n      {/* Process Chevron Track */}\n      <div className=\"grid grid-cols-1 md:grid-cols-5 gap-2 mb-6\">\n        {stages.map((stage, idx) => {\n          const isActive = stage.id === activeStage;\n          return (\n            <button\n              key={stage.id}\n              type=\"button\"\n              onClick={() => setActiveStage(stage.id)}\n              className={cn(\n                \"group relative flex flex-col p-3 rounded-lg border text-left transition-all duration-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring\",\n                isActive\n                  ? \"border-primary bg-primary/10 shadow-xs\"\n                  : \"border-border bg-card hover:bg-muted/40\"\n              )}\n            >\n              <div className=\"flex items-center justify-between mb-1.5\">\n                <span className=\"font-mono text-[10px] uppercase font-bold text-muted-foreground\">\n                  Step 0{idx + 1}\n                </span>\n                {isActive && <ShieldCheck className=\"w-3.5 h-3.5 text-primary\" aria-hidden=\"true\" />}\n              </div>\n              <span className=\"text-xs font-semibold text-foreground line-clamp-1\">{stage.name}</span>\n              <span className=\"text-[11px] font-mono text-primary mt-1\">{stage.marginImpact}</span>\n            </button>\n          );\n        })}\n      </div>\n\n      {/* Selected Step Breakdown */}\n      <div className=\"rounded-lg border border-border bg-muted/20 p-5\">\n        <div className=\"flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-3 mb-4\">\n          <div>\n            <span className=\"text-[10px] font-mono uppercase tracking-widest text-primary font-bold\">\n              Active Stage Ingestion\n            </span>\n            <h4 className=\"text-sm font-bold text-foreground mt-0.5\">{selected.name}</h4>\n          </div>\n          <div className=\"flex items-center gap-2\">\n            <span className=\"text-xs font-mono text-muted-foreground\">Quality Multiplier:</span>\n            <span className=\"font-mono text-xs font-bold text-foreground bg-card px-2.5 py-1 rounded-sm border border-border\">\n              {selected.marginImpact}\n            </span>\n          </div>\n        </div>\n\n        <div>\n          <span className=\"text-xs font-semibold text-foreground\">Executed Workflows & Guardrails:</span>\n          <div className=\"grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-2.5\">\n            {selected.activities.map((act, i) => (\n              <div\n                key={i}\n                className=\"flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-xs text-foreground\"\n              >\n                <span className=\"h-1.5 w-1.5 rounded-full bg-primary shrink-0\" aria-hidden=\"true\" />\n                <span className=\"truncate\">{act}</span>\n              </div>\n            ))}\n          </div>\n        </div>\n      </div>\n    </figure>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/value-chain-map.tsx"
+    }
+  ]
+}

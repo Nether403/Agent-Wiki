@@ -1,0 +1,50 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "border-beam",
+  "type": "registry:component",
+  "title": "Border Beam",
+  "description": "Animated border glow highlight tracing container boundaries with gradient light.",
+  "category": "ui:motion",
+  "tags": [
+    "wai-aria-compliant",
+    "motion",
+    "border",
+    "glow",
+    "visual-effects",
+    "magicui"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 6,
+    "visual_density": 5
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "presentation",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/magicuidesign/magicui",
+    "license_type": "MIT",
+    "author": "Magic UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/border-beam.tsx",
+      "content": "/**\n * @origin Magic UI (https://github.com/magicuidesign/magicui)\n * @license MIT\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface BorderBeamProps {\n  className?: string;\n  size?: number;\n  duration?: number;\n  borderWidth?: number;\n  anchor?: number;\n  colorFrom?: string;\n  colorTo?: string;\n  delay?: number;\n}\n\nexport function BorderBeam({\n  className,\n  size = 200,\n  duration = 15,\n  anchor = 90,\n  borderWidth = 1.5,\n  colorFrom = \"#10b981\",\n  colorTo = \"#38bdf8\",\n  delay = 0,\n}: BorderBeamProps) {\n  return (\n    <div\n      style={\n        {\n          \"--size\": size,\n          \"--duration\": duration,\n          \"--anchor\": anchor,\n          \"--border-width\": borderWidth,\n          \"--color-from\": colorFrom,\n          \"--color-to\": colorTo,\n          \"--delay\": `-${delay}s`,\n        } as React.CSSProperties\n      }\n      className={cn(\n        \"pointer-events-none absolute inset-0 rounded-[inherit] [border:calc(var(--border-width)*1px)_solid_transparent]\",\n        \"motion-reduce:hidden\",\n        \"![mask-clip:padding-box,border-box] ![mask-composite:intersect] [mask:linear-gradient(transparent,transparent),linear-gradient(white,white)]\",\n        \"after:absolute after:aspect-square after:w-[calc(var(--size)*1px)] after:animate-border-beam after:[animation-delay:var(--delay)] after:[background:linear-gradient(to_left,var(--color-from),var(--color-to),transparent)] after:[offset-anchor:calc(var(--anchor)*1%)_50%] after:[offset-path:rect(0_auto_auto_0_round_calc(var(--size)*1px))]\",\n        className\n      )}\n      aria-hidden=\"true\"\n    />\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/border-beam.tsx"
+    }
+  ]
+}

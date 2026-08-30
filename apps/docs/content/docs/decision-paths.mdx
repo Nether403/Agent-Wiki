@@ -1,0 +1,55 @@
+---
+title: "Decision Paths & Archetype Stacks"
+description: "Architectural decision trees for AI agents and human teams to select verified zero-slop component stacks."
+---
+
+# Architectural Decision Paths
+
+Rather than guessing UI layouts, AI coding agents and engineering leads use calibrated decision paths to select validated component combinations for specific application archetypes.
+
+---
+
+## 1. Archetype Decision Matrix
+
+```
+                      [Application Goal]
+                              │
+       ┌──────────────────────┼──────────────────────┐
+       ▼                      ▼                      ▼
+[High-Density SaaS]    [AI Agent Studio]    [Editorial / Research]
+       │                      │                      │
+       ▼                      ▼                      ▼
+• AppShell Sidebar     • PromptBar Expanded   • Publication Card
+• Interactive Area     • Streaming Message    • Flywheel Engine
+• Cohort Heatmap       • Artifact Sandbox     • 3-Circle Venn
+• Value Chain Map      • Reasoning Accordion  • Iceberg Depth Model
+```
+
+---
+
+## 2. Calibrated Taste Dial Profiles
+
+Each archetype operates under an explicit calibration profile across the 3 core dials:
+
+| Archetype | Design Variance (1-10) | Motion Intensity (1-10) | Visual Density (1-10) | Recommended Palette |
+| :--- | :---: | :---: | :---: | :--- |
+| **Analytical Dashboard** | `4` (Rigid, structured) | `2` (Subtle state transitions) | `8` (Compressed data tables) | `slate-analytical` |
+| **AI Chat & Agents** | `6` (Balanced offsets) | `4` (Smooth spring entries) | `6` (Comfortable chat bubbles) | `zinc-emerald` |
+| **Editorial & Research** | `7` (Asymmetrical typography) | `3` (Subtle line transitions) | `6` (Generous reading margins) | `amber-stone` |
+| **Marketing & Launch** | `8` (Expressive visual hero) | `6` (GPU aurora shaders, sheen) | `4` (Breathing room, wide gap) | `violet-neutral` |
+| **Spatial Canvas** | `7` (Infinite workspace) | `5` (Panning & wire pulses) | `7` (Node inspector sidebars) | `blue-gray` |
+
+---
+
+## 3. Querying via MCP Server
+
+Agents running in Cursor, Claude Code, or Windsurf can invoke the `recommend_stack` MCP tool:
+
+```json
+{
+  "archetype": "ai-chat-workspace",
+  "primaryGoal": "Autonomous coding assistant with live code diff sandbox"
+}
+```
+
+The tool returns the full component sequence, peer dependencies, and Tailwind CSS v4 variables ready for direct injection.

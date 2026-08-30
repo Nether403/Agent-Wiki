@@ -1,11 +1,11 @@
 ---
-title: "Anti-Slop 21-Rule Specification"
-description: "The complete 21-rule AST and pattern linter specifications enforced by @design-wiki/audit-linter."
+title: "Anti-Slop 50-Rule Specification"
+description: "The complete 50-rule AST and pattern linter specifications enforced by @design-wiki/audit-linter."
 ---
 
-# Anti-Slop 21-Rule Specification
+# Anti-Slop 50-Rule Specification
 
-Our automated linter checks code across 21 distinct rules before allowing components into the registry or before an agent completes a task:
+Our automated linter checks code across 50 distinct rules before allowing components into the registry or before an agent completes a task:
 
 | Rule ID | Category | Severity | Detection Mechanism | Target Violation |
 | :--- | :--- | :---: | :--- | :--- |
@@ -30,6 +30,35 @@ Our automated linter checks code across 21 distinct rules before allowing compon
 | **SLOP-019** | Architecture | **High** | AST | Deep relative imports bypassing standard aliases |
 | **SLOP-020** | Legal / IP | **High** | Regex | Missing mandatory upstream license attribution headers |
 | **SLOP-021** | Styling / Surface | Medium | Regex | Raw unshaded backgrounds (`bg-white`, `bg-black`, `bg-[#fff]`) without dark-mode or semantic tokens |
+| **SLOP-022** | Copy / Content | Medium | Regex | AI writing clichés ('In today's fast-paced world', 'Unleash the power of') |
+| **SLOP-023** | TypeScript | **High** | AST | Loose TypeScript `any` type escapes bypassing compiler checks |
+| **SLOP-024** | Accessibility | **High** | AST | Strict WCAG contrast violation (<4.5:1 for body copy) |
+| **SLOP-025** | Performance | **High** | AST | Uncancelled timer (`setInterval`) or event listener leak in `useEffect` |
+| **SLOP-026** | Styling / Color | Medium | Regex | Arbitrary hex color escapes in classes (`text-[#6366f1]`) |
+| **SLOP-027** | Code Quality | Medium | AST | Unbounded `.map()` JSX iteration lacking stable `key` prop |
+| **SLOP-028** | Motion | Low | AST | Missing spring damping on high stiffness motion configurations |
+| **SLOP-029** | Iconography | Low | Regex | Hardcoded large SVG pixel dimensions exceeding standard container scaling |
+| **SLOP-030** | Legal / IP | **High** | Regex | Missing clean SPDX license identifier in file header |
+| **SLOP-031** | Runtime Resilience | Medium | AST | Missing static fallback or ErrorBoundary on complex Canvas/WebGL views |
+| **SLOP-032** | Memory / Heap | **High** | AST | Unbounded object allocation inside `requestAnimationFrame` render loops |
+| **SLOP-033** | Accessibility | **High** | AST | Missing Escape key overlay dismissal listener on custom dialogs/modals |
+| **SLOP-034** | Architecture | Medium | AST | Redundant nested identical React context providers |
+| **SLOP-035** | Performance | Medium | AST | Un-memoized heavy array sort or filter directly in JSX render return |
+| **SLOP-036** | Copy / Validity | Medium | Regex | Hallucinated static marketing metrics ('99.9% Faster') hardcoded without dynamic props |
+| **SLOP-037** | Interaction | **High** | AST | Dummy `onSubmit` form handler without validation or loading states |
+| **SLOP-038** | Mobile / Layout | Medium | Regex | Mobile viewport height cutoff (`h-screen` instead of `min-h-[100dvh]`) |
+| **SLOP-039** | Accessibility | **High** | AST | Global focus outline suppression stripping tab accessibility |
+| **SLOP-040** | Semantics | Medium | AST | Non-semantic div soup navigation lacking `<nav>` or `<header>` landmark |
+| **SLOP-041** | Mobile / Layout | Medium | Regex | Dynamic viewport unit omission (`h-screen` lacking `dvh`/`svh` fallback) |
+| **SLOP-042** | Styling / Hierarchy | Low | Regex | Unbounded arbitrary high z-index clashes (`z-[9999]`, `z-[99999]`) |
+| **SLOP-043** | Accessibility | **High** | AST | Dynamic AI message streaming container lacking `aria-live` or `role="status"` |
+| **SLOP-044** | Performance | **High** | AST | Uncleaned window resize or animation listener leak in `useEffect` |
+| **SLOP-045** | Layout | Medium | Regex | Hardcoded large min-width on mobile containers (`min-w-[800px]`) |
+| **SLOP-046** | Semantics / A11y | **High** | AST | Nested interactive control trap (button inside anchor or button) |
+| **SLOP-047** | Copy / Validity | Medium | Regex | Hardcoded non-provable SLA statistics ('100% Guaranteed', 'Zero Downtime') |
+| **SLOP-048** | DOM Health | Low | AST | Excessive redundant wrapper nesting (> 6 adjacent divs) |
+| **SLOP-049** | Web Vitals | Medium | AST | External image lacking lazy loading or decoding attributes |
+| **SLOP-050** | Typography | Low | Regex | Custom font-family override lacking generic system fallbacks |
 
 ---
 

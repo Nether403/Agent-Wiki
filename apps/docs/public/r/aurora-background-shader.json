@@ -1,0 +1,49 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "aurora-background-shader",
+  "type": "registry:component",
+  "title": "Aurora Background Shader",
+  "description": "Curated production-grade component.",
+  "category": "ui:creative",
+  "tags": [
+    "webgl",
+    "threejs",
+    "wai-aria-compliant",
+    "canvas"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 9,
+    "visual_density": 3
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "three",
+    "motion"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/aurora-background-shader.tsx",
+      "content": "/**\n * @license MIT\n * @origin React Bits & Magic UI (https://reactbits.dev / https://magicui.design)\n * @author React Bits & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface AuroraBackgroundShaderProps extends React.HTMLAttributes<HTMLDivElement> {\n  children?: React.ReactNode;\n  showRadialGradient?: boolean;\n}\n\nexport function AuroraBackgroundShader({\n  className,\n  children,\n  showRadialGradient = true,\n  ...props\n}: AuroraBackgroundShaderProps) {\n  return (\n    <div\n      className={cn(\n        \"relative flex flex-col h-[100dvh] items-center justify-center bg-background text-foreground transition-bg overflow-hidden\",\n        className\n      )}\n      {...props}\n    >\n      <div className=\"absolute inset-0 overflow-hidden pointer-events-none\" aria-hidden=\"true\">\n        <div\n          className={cn(\n            \"filter blur-[60px] opacity-50 absolute -inset-[10px]\",\n            \"[--white-gradient:repeating-linear-gradient(100deg,var(--color-primary)_0%,var(--color-primary)_7%,transparent_10%,transparent_12%,var(--color-primary)_16%)]\",\n            \"[--dark-gradient:repeating-linear-gradient(100deg,var(--color-primary)_0%,var(--color-primary)_7%,transparent_10%,transparent_12%,var(--color-primary)_16%)]\",\n            \"[--aurora:repeating-linear-gradient(100deg,#38bdf8_10%,#818cf8_15%,#c084fc_20%,#e879f9_25%,#22d3ee_30%)]\",\n            \"[background-image:var(--white-gradient),var(--aurora)]\",\n            \"dark:[background-image:var(--dark-gradient),var(--aurora)]\",\n            \"[background-size:300%,_200%]\",\n            \"[background-position:50%_50%,50%_50%]\",\n            \"animate-aurora will-change-transform\"\n          )}\n          style={{\n            animation: \"aurora 60s linear infinite\",\n          }}\n        />\n      </div>\n\n      {showRadialGradient && (\n        <div\n          className=\"absolute inset-0 [mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,transparent_70%)] pointer-events-none\"\n          aria-hidden=\"true\"\n        />\n      )}\n\n      <div className=\"relative z-10 w-full flex flex-col items-center\">{children}</div>\n\n      <style dangerouslySetInnerHTML={{\n        __html: `\n          @keyframes aurora {\n            from {\n              background-position: 50% 50%, 50% 50%;\n            }\n            to {\n              background-position: 350% 50%, 350% 50%;\n            }\n          }\n          @media (prefers-reduced-motion: reduce) {\n            .animate-aurora {\n              animation: none !important;\n              background-position: 50% 50% !important;\n            }\n          }\n        `,\n      }} />\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/aurora-background-shader.tsx"
+    }
+  ]
+}

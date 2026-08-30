@@ -393,6 +393,183 @@ export const SLOP_RULES: SlopRule[] = [
       !line.includes("const ") &&
       !line.includes("let "),
   },
+  {
+    id: "SLOP-036",
+    name: "Hallucinated Static KPI Metric Claims",
+    category: "Copy & Production Validity",
+    severity: "Medium",
+    description: "Hardcoding exaggerated vanity statistics ('99.9% Faster', '10x Productivity') into component templates without dynamic props.",
+    check: (line) =>
+      /(?:99\.9%|10x\s+Faster|100x\s+Speed|#1\s+Platform|Zero\s+Latency)/i.test(line) &&
+      !line.includes("//") &&
+      !line.includes("props") &&
+      !line.includes("metric") &&
+      !line.includes("interface ") &&
+      !line.includes("type "),
+  },
+  {
+    id: "SLOP-037",
+    name: "Unvalidated Form Handler or Silent Submit",
+    category: "Interaction & Logic",
+    severity: "High",
+    description: "Form element with dummy onSubmit handler preventing default without state handling or validation feedback.",
+    check: (line, content) =>
+      /<form\b/.test(line) &&
+      /onSubmit=\{\s*\(\s*e\s*\)\s*=>\s*e\.preventDefault\(\)\s*\}/.test(line) &&
+      !content.includes("useState") &&
+      !content.includes("useForm") &&
+      !content.includes("action"),
+  },
+  {
+    id: "SLOP-038",
+    name: "Mobile Viewport Height Cutoff",
+    category: "Layout & Mobile Responsiveness",
+    severity: "Medium",
+    description: "Using hardcoded h-screen instead of min-h-screen or min-h-[100dvh] causing mobile address bar cutoff.",
+    check: (line) =>
+      /\bh-screen\b/.test(line) &&
+      !line.includes("min-h-") &&
+      !line.includes("max-h-") &&
+      !line.includes("dvh") &&
+      !line.includes("//"),
+  },
+  {
+    id: "SLOP-039",
+    name: "Global Outline Suppression Without Replacement",
+    category: "Accessibility & WCAG",
+    severity: "High",
+    description: "Universal CSS or Tailwind rule stripping focus outlines without providing a visible focus indicator.",
+    check: (line) =>
+      /(?:outline-none|\*:\s*outline-none)\b/.test(line) &&
+      !line.includes("focus-visible:") &&
+      !line.includes("focus:") &&
+      !line.includes("ring-"),
+  },
+  {
+    id: "SLOP-040",
+    name: "Non-Semantic Div Soup Navigation Landmark",
+    category: "Accessibility & Semantics",
+    severity: "Medium",
+    description: "Navigation or header section constructed purely of generic div tags lacking semantic nav or header landmarks.",
+    check: (line, content, lineIndex) =>
+      lineIndex === 0 &&
+      (/(?:function|const)\s+(?:[A-Z]\w*NavBar|[A-Z]\w*Navigation|NavBar|NavigationBar)\b/.test(content)) &&
+      !content.includes("<nav") &&
+      !content.includes("role=\"navigation\"") &&
+      !content.includes("role='navigation'"),
+  },
+  {
+    id: "SLOP-041",
+    name: "Mobile Dynamic Viewport Unit Omission",
+    category: "Layout & Responsiveness",
+    severity: "Medium",
+    description: "Using hardcoded h-screen or fixed 100vh on root application views without min-h-screen or dvh/svh unit support.",
+    check: (line) =>
+      /\bh-screen\b/.test(line) &&
+      !line.includes("min-h-") &&
+      !line.includes("max-h-") &&
+      !line.includes("dvh") &&
+      !line.includes("svh") &&
+      !line.includes("//"),
+  },
+  {
+    id: "SLOP-042",
+    name: "Unbounded Arbitrary High Z-Index Clashes",
+    category: "Styling & Hierarchy",
+    severity: "Low",
+    description: "Arbitrary extreme z-index values (e.g. z-[9999], z-[99999]) causing stacking context warfare instead of standard z-10/20/30/40/50 scale.",
+    check: (line) =>
+      /z-\[(?:9999|99999|\d{4,})\]/i.test(line),
+  },
+  {
+    id: "SLOP-043",
+    name: "Unannounced Dynamic Streaming Content",
+    category: "Accessibility & ARIA",
+    severity: "High",
+    description: "Streaming AI message or dynamic status update container lacking aria-live or role='status' / role='log'.",
+    check: (line, content, lineIndex) =>
+      lineIndex === 0 &&
+      (/(?:StreamingMessage|StreamingChat|TokenStream|AgentStatus)\b/.test(content)) &&
+      !content.includes("aria-live") &&
+      !content.includes("role=\"status\"") &&
+      !content.includes("role='status'") &&
+      !content.includes("role=\"log\"") &&
+      !content.includes("role='log'"),
+  },
+  {
+    id: "SLOP-044",
+    name: "Uncleaned Animation/Resize Listeners in useEffect",
+    category: "Performance & Memory",
+    severity: "High",
+    description: "Adding resize/scroll window listeners or animation loops in useEffect without returning a cleanup function.",
+    check: (line, content) =>
+      /addEventListener\s*\(\s*["'](?:resize|scroll|mousemove|keydown)["']/.test(line) &&
+      !content.includes("removeEventListener"),
+  },
+  {
+    id: "SLOP-045",
+    name: "Non-Responsive Hardcoded Container Min-Width",
+    category: "Layout & Responsiveness",
+    severity: "Medium",
+    description: "Hardcoded arbitrary large min-width (e.g. min-w-[700px] or min-w-[800px]) on containers that break on mobile screens.",
+    check: (line) =>
+      /min-w-\[(?:[6-9]\d\dpx|1\d{3}px)\]/i.test(line) &&
+      !line.includes("sm:") &&
+      !line.includes("md:") &&
+      !line.includes("lg:"),
+  },
+  {
+    id: "SLOP-046",
+    name: "Nested Interactive Control Trap",
+    category: "HTML Semantics & A11y",
+    severity: "High",
+    description: "Nesting an interactive button inside an anchor or another button tag, causing accessibility parse errors.",
+    check: (line) =>
+      /<a\b[^>]*>.*<button\b/i.test(line) ||
+      /<button\b[^>]*>.*<button\b/i.test(line),
+  },
+  {
+    id: "SLOP-047",
+    name: "Hardcoded Exaggerated SLA Claims",
+    category: "Copy & Production Validity",
+    severity: "Medium",
+    description: "Hardcoding non-provable SLA statistics ('100% Guaranteed', 'Zero Downtime', 'Instant 0ms Latency') directly into copy.",
+    check: (line) =>
+      /(?:100%\s+Guaranteed|Zero\s+Downtime|Instant\s+0ms\s+Latency|Completely\s+Unbreakable)/i.test(line) &&
+      !line.includes("//"),
+  },
+  {
+    id: "SLOP-048",
+    name: "Excessive DOM Nesting Wrapper Clutter",
+    category: "Performance & DOM Health",
+    severity: "Low",
+    description: "Constructing more than 6 immediately adjacent un-styled nested divs (div soup) without semantic structure.",
+    check: (line, content) =>
+      /(?:<div[^>]*>\s*){6,}/i.test(content),
+  },
+  {
+    id: "SLOP-049",
+    name: "Unconstrained Image Loading Without Lazy/Priority",
+    category: "Performance & Web Vitals",
+    severity: "Medium",
+    description: "External <img> tag lacking loading='lazy' or explicit dimensions and decoding strategy.",
+    check: (line) =>
+      /<img\b[^>]*\bsrc=["']http/i.test(line) &&
+      !line.includes("loading=") &&
+      !line.includes("decoding="),
+  },
+  {
+    id: "SLOP-050",
+    name: "Font Family Override Without Fallbacks",
+    category: "Typography & Web Vitals",
+    severity: "Low",
+    description: "Setting inline or arbitrary font-family without generic system font fallback (sans-serif, serif, monospace).",
+    check: (line) =>
+      /font-\[[^\]]+\]/i.test(line) &&
+      !line.includes("sans") &&
+      !line.includes("serif") &&
+      !line.includes("mono"),
+  },
 ];
 
 export interface CssAntiPatternMatch {

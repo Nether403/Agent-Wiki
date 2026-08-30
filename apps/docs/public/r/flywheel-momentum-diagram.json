@@ -1,0 +1,49 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "flywheel-momentum-diagram",
+  "type": "registry:block",
+  "title": "Flywheel Momentum Diagram",
+  "description": "Curated production-grade component.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 3,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "button",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/flywheel-momentum-diagram.tsx",
+      "content": "/**\n * @license MIT\n * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)\n * @author Cathryn Lavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { ArrowRight, RotateCw, Sparkles, TrendingUp, Zap } from \"lucide-react\";\n\nexport interface FlywheelStage {\n  id: string;\n  label: string;\n  subtext: string;\n  metric?: string;\n}\n\nexport interface FlywheelMomentumDiagramProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  subtitle?: string;\n  stages?: FlywheelStage[];\n  coreLabel?: string;\n}\n\nconst DEFAULT_STAGES: FlywheelStage[] = [\n  { id: \"s1\", label: \"Agent Discovery\", subtext: \"Zero-latency MCP tools find deterministic primitives\", metric: \"+4.2x\" },\n  { id: \"s2\", label: \"Zero-Slop Assembly\", subtext: \"Strict AST constraints prevent token hallucination\", metric: \"0 slop\" },\n  { id: \"s3\", label: \"Automated QA Gate\", subtext: \"WCAG AA, axe-core, and taste dials verify quality\", metric: \"100/100\" },\n  { id: \"s4\", label: \"Compounding Velocity\", subtext: \"Tested building blocks accelerate release cycles\", metric: \">90% 1st-pass\" },\n];\n\nexport function FlywheelMomentumDiagram({\n  title = \"Flywheel Momentum Engine\",\n  subtitle = \"Self-reinforcing feedback loop that compounds velocity and eliminates AI slop.\",\n  stages = DEFAULT_STAGES,\n  coreLabel = \"MOMENTUM CORE\",\n  className,\n  ...props\n}: FlywheelMomentumDiagramProps) {\n  const [activeStage, setActiveStage] = React.useState<number | null>(null);\n\n  return (\n    <figure\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Flywheel Momentum Diagram: ${title}`}\n      {...props}\n    >\n      <header className=\"flex flex-col sm:flex-row sm:items-center justify-between border-b border-border pb-4 mb-6 gap-2\">\n        <div>\n          <div className=\"flex items-center gap-2\">\n            <RotateCw className=\"w-4 h-4 text-primary animate-spin\" style={{ animationDuration: \"12s\" }} aria-hidden=\"true\" />\n            <h3 className=\"text-sm font-bold tracking-tight text-foreground\">{title}</h3>\n          </div>\n          <p className=\"text-xs text-muted-foreground mt-1\">{subtitle}</p>\n        </div>\n        <div className=\"flex items-center gap-2 self-start sm:self-auto\">\n          <span className=\"inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/50 px-2.5 py-0.5 text-xs font-mono text-muted-foreground\">\n            <span className=\"h-1.5 w-1.5 rounded-full bg-emerald-500\" aria-hidden=\"true\" />\n            Compounding Loop\n          </span>\n        </div>\n      </header>\n\n      <div className=\"grid grid-cols-1 lg:grid-cols-12 gap-8 items-center\">\n        {/* SVG Circular Flywheel Canvas */}\n        <div className=\"lg:col-span-6 flex justify-center py-4\">\n          <div className=\"relative w-72 h-72 sm:w-80 sm:h-80\">\n            <svg\n              viewBox=\"0 0 320 320\"\n              className=\"w-full h-full\"\n              role=\"img\"\n              aria-label=\"Flywheel stage visualization with 4 continuous quadrant vectors\"\n            >\n              {/* Outer track */}\n              <circle\n                cx=\"160\"\n                cy=\"160\"\n                r=\"130\"\n                fill=\"none\"\n                stroke=\"currentColor\"\n                strokeWidth=\"1.5\"\n                className=\"text-border\"\n                strokeDasharray=\"4 4\"\n              />\n\n              {/* 4 Quadrant Arcs */}\n              {[\n                { d: \"M 160 30 A 130 130 0 0 1 290 160\", index: 0 },\n                { d: \"M 290 160 A 130 130 0 0 1 160 290\", index: 1 },\n                { d: \"M 160 290 A 130 130 0 0 1 30 160\", index: 2 },\n                { d: \"M 30 160 A 130 130 0 0 1 160 30\", index: 3 },\n              ].map((arc) => (\n                <path\n                  key={arc.index}\n                  d={arc.d}\n                  fill=\"none\"\n                  strokeWidth={activeStage === arc.index ? \"3.5\" : \"2\"}\n                  className={cn(\n                    \"transition-all duration-200 cursor-pointer\",\n                    activeStage === arc.index\n                      ? \"stroke-primary\"\n                      : \"stroke-muted-foreground/40 hover:stroke-muted-foreground\"\n                  )}\n                  onMouseEnter={() => setActiveStage(arc.index)}\n                  onMouseLeave={() => setActiveStage(null)}\n                />\n              ))}\n\n              {/* Center Core Circle */}\n              <circle\n                cx=\"160\"\n                cy=\"160\"\n                r=\"56\"\n                className=\"fill-card stroke-border\"\n                strokeWidth=\"2\"\n              />\n              <circle\n                cx=\"160\"\n                cy=\"160\"\n                r=\"48\"\n                className=\"fill-muted/40 stroke-border/50\"\n                strokeWidth=\"1\"\n              />\n\n              {/* Center Text */}\n              <text\n                x=\"160\"\n                y=\"156\"\n                textAnchor=\"middle\"\n                className=\"text-[10px] font-mono uppercase tracking-widest font-semibold fill-foreground\"\n              >\n                {coreLabel}\n              </text>\n              <text\n                x=\"160\"\n                y=\"172\"\n                textAnchor=\"middle\"\n                className=\"text-[9px] font-mono fill-muted-foreground\"\n              >\n                Zero-Slop\n              </text>\n            </svg>\n          </div>\n        </div>\n\n        {/* Interactive Stage Cards */}\n        <div className=\"lg:col-span-6 flex flex-col gap-3\">\n          {stages.map((stage, idx) => {\n            const isActive = activeStage === idx;\n            return (\n              <div\n                key={stage.id}\n                role=\"button\"\n                tabIndex={0}\n                aria-pressed={isActive}\n                onMouseEnter={() => setActiveStage(idx)}\n                onMouseLeave={() => setActiveStage(null)}\n                onFocus={() => setActiveStage(idx)}\n                onBlur={() => setActiveStage(null)}\n                className={cn(\n                  \"flex items-start justify-between rounded-lg border p-3.5 transition-colors duration-200 text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring\",\n                  isActive\n                    ? \"border-primary bg-accent/40\"\n                    : \"border-border bg-card hover:bg-muted/30\"\n                )}\n              >\n                <div className=\"flex items-start gap-3\">\n                  <span\n                    className={cn(\n                      \"flex h-6 w-6 shrink-0 items-center justify-center rounded-md font-mono text-xs font-bold transition-colors duration-200\",\n                      isActive\n                        ? \"bg-primary text-primary-foreground\"\n                        : \"bg-muted text-muted-foreground\"\n                    )}\n                  >\n                    0{idx + 1}\n                  </span>\n                  <div>\n                    <h4 className=\"text-xs font-semibold text-foreground\">{stage.label}</h4>\n                    <p className=\"text-xs text-muted-foreground mt-0.5 leading-relaxed\">\n                      {stage.subtext}\n                    </p>\n                  </div>\n                </div>\n                {stage.metric && (\n                  <span className=\"shrink-0 font-mono text-xs font-semibold text-primary px-2 py-0.5 rounded-sm bg-primary/10 border border-primary/20\">\n                    {stage.metric}\n                  </span>\n                )}\n              </div>\n            );\n          })}\n        </div>\n      </div>\n\n      <footer className=\"mt-6 pt-3 border-t border-border flex items-center justify-between text-xs text-muted-foreground font-mono\">\n        <span className=\"flex items-center gap-1.5\">\n          <TrendingUp className=\"w-3.5 h-3.5 text-primary\" aria-hidden=\"true\" />\n          Autonomous compounding feedback loop\n        </span>\n        <span>4-Phase Continuous Cycle</span>\n      </footer>\n    </figure>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/flywheel-momentum-diagram.tsx"
+    }
+  ]
+}

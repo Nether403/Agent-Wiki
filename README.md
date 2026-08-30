@@ -3,8 +3,8 @@
 > **A deterministic, pre-tested, zero-slop UI component registry and Model Context Protocol (MCP) ecosystem engineered specifically for AI developer agents.**
 
 [![CI / Quality Gate](https://img.shields.io/badge/Slop%20Audit-100%2F100%20(S--Grade)-emerald?style=flat-square)](./scripts/test-a11y-linter.ts)
-[![A11y CI](https://img.shields.io/badge/A11y%20WCAG%202.1%20AA-112%2F112%20PASS-green?style=flat-square)](./scripts/test-a11y-linter.ts)
-[![Anti-Slop Rules](https://img.shields.io/badge/Anti--Slop%20Rulepack-30%2F30%20Active-blue?style=flat-square)](./packages/audit-linter)
+[![A11y CI](https://img.shields.io/badge/A11y%20WCAG%202.1%20AA-192%2F192%20PASS-green?style=flat-square)](./scripts/test-a11y-linter.ts)
+[![Anti-Slop Rules](https://img.shields.io/badge/Anti--Slop%20Rulepack-50%2F50%20Active-blue?style=flat-square)](./packages/audit-linter)
 [![Taste Dials](https://img.shields.io/badge/Taste%20Dials-100%2F100%20Consistent-blue?style=flat-square)](./packages/audit-linter)
 [![MCP Protocol](https://img.shields.io/badge/MCP%20Server-Cloudflare%20Worker%20%2B%20Stdio-blueviolet?style=flat-square)](./packages/mcp-server)
 [![Agent Ecosystem](https://img.shields.io/badge/Agents-11%20Platforms%20Verified-indigo?style=flat-square)](./scripts/test-agent-ecosystem.ts)
@@ -35,14 +35,14 @@ The platform runs on a **Double-Exposure Architecture**:
 ```
                                   ┌────────────────────────────────────────────────────────┐
                                   │                   Curated Repositories                 │
-                                  │ (HeroUI v3, SmoothUI, Aceternity, KokonutUI, Tailark)  │
+                                  │ (HeroUI, Magic UI, XY Flow, Tremor, Paper, KokonutUI)  │
                                   └───────────────────────────┬────────────────────────────┘
                                                               │
                                                 [1. Ingestion Harvester]
                                                 (ast-parser.ts + dependency-graph.ts)
                                                               │
                                                 [2. Dial Scorer & Slop Gate]
-                                                (30 anti-slop rules + taste-dial-audit.ts)
+                                                (50 anti-slop rules + taste-dial-audit.ts)
                                                               │
                                                 [3. Static Registry Compiler]
                                                 (build-registry.ts dynamic sweeper)

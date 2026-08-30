@@ -1,0 +1,54 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "number-ticker",
+  "type": "registry:component",
+  "title": "Number Ticker",
+  "description": "Accessible spring-animated number counter for statistics, metrics, and KPI indicators.",
+  "category": "ui:motion",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "wai-aria-compliant",
+    "spring-physics",
+    "motion",
+    "counter",
+    "ticker",
+    "spring",
+    "magicui"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 6,
+    "visual_density": 6
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "status",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/magicuidesign/magicui",
+    "license_type": "MIT",
+    "author": "Magic UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/number-ticker.tsx",
+      "content": "/**\n * @origin Magic UI (https://github.com/magicuidesign/magicui)\n * @license MIT\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { useEffect, useRef } from \"react\";\nimport { useInView, useMotionValue, useSpring } from \"motion/react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface NumberTickerProps extends React.ComponentPropsWithoutRef<\"span\"> {\n  value: number;\n  direction?: \"up\" | \"down\";\n  delay?: number;\n  decimalPlaces?: number;\n}\n\nexport function NumberTicker({\n  value,\n  direction = \"up\",\n  delay = 0,\n  className,\n  decimalPlaces = 0,\n  ...props\n}: NumberTickerProps) {\n  const ref = useRef<HTMLSpanElement>(null);\n  const motionValue = useMotionValue(direction === \"down\" ? value : 0);\n  const springValue = useSpring(motionValue, {\n    damping: 60,\n    stiffness: 100,\n  });\n  const isInView = useInView(ref, { once: true, margin: \"0px\" });\n\n  useEffect(() => {\n    if (isInView) {\n      const timer = setTimeout(() => {\n        motionValue.set(direction === \"down\" ? 0 : value);\n      }, delay * 1000);\n      return () => clearTimeout(timer);\n    }\n  }, [motionValue, isInView, delay, value, direction]);\n\n  useEffect(\n    () =>\n      springValue.on(\"change\", (latest) => {\n        if (ref.current) {\n          ref.current.textContent = Intl.NumberFormat(\"en-US\", {\n            minimumFractionDigits: decimalPlaces,\n            maximumFractionDigits: decimalPlaces,\n          }).format(Number(latest.toFixed(decimalPlaces)));\n        }\n      }),\n    [springValue, decimalPlaces]\n  );\n\n  return (\n    <span\n      ref={ref}\n      className={cn(\n        \"inline-block font-mono tracking-wider tabular-nums text-foreground\",\n        className\n      )}\n      aria-label={String(value)}\n      {...props}\n    />\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/number-ticker.tsx"
+    }
+  ]
+}

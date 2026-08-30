@@ -1,0 +1,42 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "shiny-text-shimmer",
+  "type": "registry:ui",
+  "title": "Shiny Text Shimmer",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 6
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/shiny-text-shimmer.tsx",
+      "content": "/**\n * @license MIT\n * @origin Magic UI & React Bits (https://magicui.design / https://reactbits.dev)\n * @author Magic UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface ShinyTextShimmerProps extends React.HTMLAttributes<HTMLSpanElement> {\n  text: string;\n  disabled?: boolean;\n  speed?: number;\n}\n\nexport function ShinyTextShimmer({\n  text,\n  disabled = false,\n  speed = 4,\n  className,\n  ...props\n}: ShinyTextShimmerProps) {\n  return (\n    <span\n      className={cn(\n        \"inline-block bg-clip-text text-transparent font-medium\",\n        !disabled && \"animate-shiny-text\",\n        className\n      )}\n      style={{\n        backgroundImage:\n          \"linear-gradient(120deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0) 60%)\",\n        backgroundSize: \"200% 100%\",\n        WebkitBackgroundClip: \"text\",\n        animationDuration: `${speed}s`,\n      }}\n      {...props}\n    >\n      <span className=\"text-foreground\">{text}</span>\n\n      <style dangerouslySetInnerHTML={{\n        __html: `\n          @keyframes shiny-text {\n            0% {\n              background-position: 100% 0;\n            }\n            100% {\n              background-position: -100% 0;\n            }\n          }\n          .animate-shiny-text {\n            animation: shiny-text 4s linear infinite;\n          }\n          @media (prefers-reduced-motion: reduce) {\n            .animate-shiny-text {\n              animation: none !important;\n            }\n          }\n        `,\n      }} />\n    </span>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/shiny-text-shimmer.tsx"
+    }
+  ]
+}

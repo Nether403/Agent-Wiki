@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "split-button",
+  "type": "registry:ui",
+  "title": "Split Button",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "menuitem",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/split-button.tsx",
+      "content": "/**\n * @license MIT\n * @origin GUI Challenges & React Spectrum (https://github.com/argyleink/gui-challenges)\n * @author Adam Argyle & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { ChevronDown } from \"lucide-react\";\n\nexport interface SplitButtonOption {\n  id: string;\n  label: string;\n  onClick: () => void;\n  disabled?: boolean;\n}\n\nexport interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement> {\n  primaryLabel: string;\n  onPrimaryClick: () => void;\n  options: SplitButtonOption[];\n  disabled?: boolean;\n}\n\nexport function SplitButton({\n  primaryLabel,\n  onPrimaryClick,\n  options,\n  disabled = false,\n  className,\n  ...props\n}: SplitButtonProps) {\n  const [isOpen, setIsOpen] = React.useState(false);\n  const dropdownRef = React.useRef<HTMLDivElement>(null);\n\n  React.useEffect(() => {\n    function handleKeyDown(e: KeyboardEvent) {\n      if (e.key === \"Escape\" && isOpen) {\n        setIsOpen(false);\n      }\n    }\n    window.addEventListener(\"keydown\", handleKeyDown);\n    return () => window.removeEventListener(\"keydown\", handleKeyDown);\n  }, [isOpen]);\n\n  React.useEffect(() => {\n    function handleClickOutside(e: MouseEvent) {\n      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {\n        setIsOpen(false);\n      }\n    }\n    if (isOpen) {\n      document.addEventListener(\"mousedown\", handleClickOutside);\n    }\n    return () => document.removeEventListener(\"mousedown\", handleClickOutside);\n  }, [isOpen]);\n\n  return (\n    <div\n      ref={dropdownRef}\n      className={cn(\"inline-flex items-center rounded-md shadow-xs relative\", className)}\n      {...props}\n    >\n      {/* Primary Action Button */}\n      <button\n        type=\"button\"\n        disabled={disabled}\n        onClick={onPrimaryClick}\n        className=\"inline-flex items-center justify-center rounded-l-md bg-primary px-3.5 py-2 text-xs font-semibold text-primary-foreground transition-colors duration-200 hover:bg-primary/90 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none\"\n      >\n        {primaryLabel}\n      </button>\n\n      {/* Menu Trigger Button */}\n      <button\n        type=\"button\"\n        disabled={disabled}\n        aria-expanded={isOpen}\n        aria-haspopup=\"menu\"\n        aria-label=\"More actions menu\"\n        onClick={() => setIsOpen((prev) => !prev)}\n        className=\"inline-flex items-center justify-center rounded-r-md border-l border-primary-foreground/20 bg-primary px-2 py-2 text-primary-foreground transition-colors duration-200 hover:bg-primary/90 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none\"\n      >\n        <ChevronDown className={cn(\"w-3.5 h-3.5 transition-transform duration-200\", isOpen && \"rotate-180\")} aria-hidden=\"true\" />\n      </button>\n\n      {/* Dropdown Menu */}\n      {isOpen && (\n        <div\n          role=\"menu\"\n          aria-orientation=\"vertical\"\n          className=\"absolute right-0 top-full mt-1.5 w-48 rounded-md border border-border bg-popover p-1 shadow-md text-popover-foreground z-50 focus:outline-hidden\"\n        >\n          {options.map((opt) => (\n            <button\n              key={opt.id}\n              role=\"menuitem\"\n              disabled={opt.disabled}\n              onClick={() => {\n                opt.onClick();\n                setIsOpen(false);\n              }}\n              className=\"w-full text-left px-2.5 py-1.5 text-xs rounded-sm transition-colors duration-150 hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring\"\n            >\n              {opt.label}\n            </button>\n          ))}\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/split-button.tsx"
+    }
+  ]
+}

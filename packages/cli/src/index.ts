@@ -4,6 +4,7 @@ import { addComponent } from "./commands/add";
 import { listComponents } from "./commands/list";
 import { auditLocalPath } from "./commands/audit";
 import { unslopTarget } from "./commands/unslop";
+import { composePage } from "./commands/compose";
 
 function printHelp() {
   console.log(`
@@ -15,6 +16,8 @@ Usage:
 Commands:
   add <slug>          Download and install a component into local UI directory
                       (e.g., npx design-wiki add canvas-fluid-wave)
+  compose <template>  Synthesize an entire zero-slop layout page with all dependencies
+                      (e.g., npx design-wiki compose ai-chat-workspace)
   list                List all curated zero-slop components and taste dials
   search <query>      Search components by name, category, or tag
   audit [path]        Scan local files for AI slop anti-patterns (arbitrary tokens, etc.)
@@ -91,6 +94,24 @@ async function main() {
       overwrite,
       installDeps,
       dryRun,
+    });
+
+    process.exit(success ? 0 : 1);
+  }
+
+  if (command === "compose") {
+    const archetype = args[1];
+    if (!archetype || archetype.startsWith("--")) {
+      console.error("❌ Error: Missing page archetype to compose.");
+      console.error("   Example: npx design-wiki compose ai-chat-workspace");
+      console.error("   Available: 'ai-chat-workspace', 'dashboard', 'saas-landing'");
+      process.exit(1);
+    }
+
+    const success = await composePage(archetype, {
+      cwd: cwdOverride,
+      registry: registryUrl,
+      overwrite,
     });
 
     process.exit(success ? 0 : 1);

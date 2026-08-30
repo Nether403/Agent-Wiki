@@ -1,0 +1,56 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "workflow-minimap-controls",
+  "type": "registry:component",
+  "title": "Workflow Minimap Controls",
+  "description": "Floating viewport toolbar with zoom in/out, fit-view, and canvas reset controls.",
+  "category": "ui:workflow",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "glassmorphism",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "workflow",
+    "node-graph",
+    "minimap",
+    "zoom",
+    "canvas",
+    "xyflow"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 3,
+    "visual_density": 7
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "toolbar",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/xyflow/xyflow",
+    "license_type": "MIT",
+    "author": "webkid / xyflow",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/workflow/workflow-minimap-controls.tsx",
+      "content": "/**\n * @origin XY Flow (https://github.com/xyflow/xyflow)\n * @license MIT\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { ZoomIn, ZoomOut, Maximize2, RotateCcw } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface WorkflowMinimapControlsProps extends React.HTMLAttributes<HTMLDivElement> {\n  zoom?: number;\n  onZoomIn?: () => void;\n  onZoomOut?: () => void;\n  onFitView?: () => void;\n  onReset?: () => void;\n}\n\nexport function WorkflowMinimapControls({\n  zoom = 1,\n  onZoomIn,\n  onZoomOut,\n  onFitView,\n  onReset,\n  className,\n  ...props\n}: WorkflowMinimapControlsProps) {\n  return (\n    <div\n      className={cn(\n        \"flex items-center gap-1 rounded-xl border border-border bg-card/90 p-1.5 shadow-md backdrop-blur-sm\",\n        className\n      )}\n      role=\"toolbar\"\n      aria-label=\"Workflow Canvas Controls\"\n      {...props}\n    >\n      <button\n        type=\"button\"\n        onClick={onZoomIn}\n        aria-label=\"Zoom In\"\n        className=\"rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n      >\n        <ZoomIn className=\"h-4 w-4\" aria-hidden=\"true\" />\n      </button>\n\n      <span className=\"px-2 font-mono text-xs text-muted-foreground font-semibold tabular-nums\">\n        {Math.round(zoom * 100)}%\n      </span>\n\n      <button\n        type=\"button\"\n        onClick={onZoomOut}\n        aria-label=\"Zoom Out\"\n        className=\"rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n      >\n        <ZoomOut className=\"h-4 w-4\" aria-hidden=\"true\" />\n      </button>\n\n      <div className=\"h-4 w-px bg-border my-auto mx-1\" aria-hidden=\"true\" />\n\n      <button\n        type=\"button\"\n        onClick={onFitView}\n        aria-label=\"Fit View to Screen\"\n        className=\"rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n      >\n        <Maximize2 className=\"h-4 w-4\" aria-hidden=\"true\" />\n      </button>\n\n      <button\n        type=\"button\"\n        onClick={onReset}\n        aria-label=\"Reset Canvas View\"\n        className=\"rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n      >\n        <RotateCcw className=\"h-4 w-4\" aria-hidden=\"true\" />\n      </button>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/workflow-minimap-controls.tsx"
+    }
+  ]
+}

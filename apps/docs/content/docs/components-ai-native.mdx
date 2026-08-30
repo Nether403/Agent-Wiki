@@ -1,0 +1,41 @@
+---
+title: "AI-Native & Agentic Components (ui:ai-native)"
+description: "Zero-slop interface primitives engineered specifically for conversational agents, streaming reasoning tokens, artifact rendering, and tool execution state."
+---
+
+# AI-Native & Agentic Components (`ui:ai-native`)
+
+As AI agents take an active role in software execution, interfaces must communicate runtime thought, indeterminate latency, and dynamic context windows without resorting to generic chat bubbles or AI clichés.
+
+---
+
+## 1. Key Primitives
+
+| Component | Description | Taste Profile (V / M / D) | WAI-ARIA & A11y AA |
+| :--- | :--- | :--- | :--- |
+| `ai-chat-bubble` | Streaming markdown chat message with token metrics and status indicators. | `4 / 3 / 6` | `role="article"`, `aria-live="polite"` |
+| `ai-reasoning-foldout` | Collapsible chain-of-thought inspector with elapsed duration timer. | `5 / 4 / 7` | `aria-expanded`, keyboard navigable |
+| `ai-prompt-input` | Multi-line expandable prompt composer with token estimation and file attach. | `4 / 3 / 7` | Accessible label, keyboard submit (`Cmd+Enter`) |
+| `ai-token-meter` | Visual progress meter representing context window consumption. | `3 / 2 / 8` | `role="progressbar"`, `aria-valuenow` |
+| `ai-artifact-canvas` | Side-by-side interactive preview and code split view for agent code generation. | `6 / 5 / 7` | Focus trap on modal, tablist navigation |
+| `ai-model-selector` | Dropdown selector with model context window badges and provider icons. | `4 / 3 / 6` | Keyboard navigation, active descendant |
+
+---
+
+## 2. Installation & Quick Start
+
+```bash
+# Add the full AI conversation workspace
+npx design-wiki add ai-chat-bubble ai-reasoning-foldout ai-prompt-input
+
+# Or query the MCP server directly
+# semantic_search_components({ naturalLanguageQuery: "streaming chat bubble" })
+```
+
+---
+
+## 3. Anti-Slop Discipline for AI Interfaces
+
+1. **No Static SLA Claims (`SLOP-047`)**: Never hardcode claims like "Instant 0ms Latency" or "100% Accuracy".
+2. **Accessible Token Streaming (`SLOP-043`)**: Always wrap streaming token chunks in `aria-live="polite"` so screen readers announce completions without stutter.
+3. **Deterministic Cleanups (`SLOP-044`)**: Cancel all active typing interval timers on unmount.

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "publication-showcase-card",
+  "type": "registry:ui",
+  "title": "Publication Showcase Card",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/publication-showcase-card.tsx",
+      "content": "/**\n * @license MIT\n * @origin HugoBlox Kit (https://github.com/HugoBlox/kit)\n * @author HugoBlox & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { BookOpen, ExternalLink, FileText, Share2 } from \"lucide-react\";\n\nexport interface PublicationShowcaseCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  title: string;\n  authors: string[];\n  venue: string;\n  year: number | string;\n  doiUrl?: string;\n  pdfUrl?: string;\n  abstract: string;\n  tags?: string[];\n}\n\nexport function PublicationShowcaseCard({\n  title,\n  authors,\n  venue,\n  year,\n  doiUrl,\n  pdfUrl,\n  abstract,\n  tags = [],\n  className,\n  ...props\n}: PublicationShowcaseCardProps) {\n  const [isExpanded, setIsExpanded] = React.useState(false);\n\n  return (\n    <article\n      className={cn(\n        \"flex flex-col rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground transition-colors duration-200 hover:border-primary/40\",\n        className\n      )}\n      {...props}\n    >\n      <div className=\"flex flex-wrap items-center gap-2 text-xs font-mono text-muted-foreground mb-2\">\n        <span className=\"font-semibold text-primary\">{venue}</span>\n        <span>•</span>\n        <span>{year}</span>\n        {tags.map((tag) => (\n          <span\n            key={tag}\n            className=\"rounded-sm bg-muted/60 px-2 py-0.5 text-[10px] text-muted-foreground\"\n          >\n            {tag}\n          </span>\n        ))}\n      </div>\n\n      <h3 className=\"text-base font-bold tracking-tight text-foreground leading-snug\">\n        {title}\n      </h3>\n\n      <p className=\"text-xs text-muted-foreground mt-1.5 font-medium\">\n        {authors.join(\", \")}\n      </p>\n\n      <div className=\"mt-4 text-xs text-muted-foreground leading-relaxed\">\n        <p className={cn(!isExpanded && \"line-clamp-2\")}>{abstract}</p>\n        <button\n          type=\"button\"\n          onClick={() => setIsExpanded((prev) => !prev)}\n          className=\"mt-1 font-mono text-[11px] font-semibold text-primary hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring\"\n        >\n          {isExpanded ? \"Show Less [-]\" : \"Read Abstract [+]\"}\n        </button>\n      </div>\n\n      <div className=\"mt-5 pt-3 border-t border-border flex items-center gap-3\">\n        {doiUrl && (\n          <a\n            href={doiUrl}\n            target=\"_blank\"\n            rel=\"noreferrer\"\n            className=\"inline-flex items-center gap-1 text-xs font-semibold text-foreground hover:text-primary transition-colors duration-150 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded-sm\"\n          >\n            <ExternalLink className=\"w-3.5 h-3.5\" aria-hidden=\"true\" />\n            <span>DOI Reference</span>\n          </a>\n        )}\n        {pdfUrl && (\n          <a\n            href={pdfUrl}\n            target=\"_blank\"\n            rel=\"noreferrer\"\n            className=\"inline-flex items-center gap-1 text-xs font-semibold text-foreground hover:text-primary transition-colors duration-150 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded-sm\"\n          >\n            <FileText className=\"w-3.5 h-3.5\" aria-hidden=\"true\" />\n            <span>Download PDF</span>\n          </a>\n        )}\n      </div>\n    </article>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/publication-showcase-card.tsx"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "roving-tab-list",
+  "type": "registry:ui",
+  "title": "Roving Tab List",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "tab",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/roving-tab-list.tsx",
+      "content": "/**\n * @license MIT\n * @origin Ariakit & Radix UI (https://ariakit.org / https://radix-ui.com)\n * @author Ariakit Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface RovingTabItem {\n  id: string;\n  label: string;\n  badge?: string | number;\n  disabled?: boolean;\n}\n\nexport interface RovingTabListProps extends React.HTMLAttributes<HTMLDivElement> {\n  items: RovingTabItem[];\n  selectedId: string;\n  onSelect: (id: string) => void;\n  orientation?: \"horizontal\" | \"vertical\";\n}\n\nexport function RovingTabList({\n  items,\n  selectedId,\n  onSelect,\n  orientation = \"horizontal\",\n  className,\n  ...props\n}: RovingTabListProps) {\n  const tabRefs = React.useRef<(HTMLButtonElement | null)[]>([]);\n\n  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {\n    let nextIndex = index;\n    const count = items.length;\n\n    if (orientation === \"horizontal\") {\n      if (e.key === \"ArrowRight\") {\n        nextIndex = (index + 1) % count;\n      } else if (e.key === \"ArrowLeft\") {\n        nextIndex = (index - 1 + count) % count;\n      } else if (e.key === \"Home\") {\n        nextIndex = 0;\n      } else if (e.key === \"End\") {\n        nextIndex = count - 1;\n      } else {\n        return;\n      }\n    } else {\n      if (e.key === \"ArrowDown\") {\n        nextIndex = (index + 1) % count;\n      } else if (e.key === \"ArrowUp\") {\n        nextIndex = (index - 1 + count) % count;\n      } else {\n        return;\n      }\n    }\n\n    e.preventDefault();\n    tabRefs.current[nextIndex]?.focus();\n    onSelect(items[nextIndex].id);\n  };\n\n  return (\n    <div\n      role=\"tablist\"\n      aria-orientation={orientation}\n      className={cn(\n        \"flex rounded-lg border border-border bg-muted/30 p-1 text-muted-foreground\",\n        orientation === \"vertical\" ? \"flex-col gap-1\" : \"flex-row gap-1 items-center\",\n        className\n      )}\n      {...props}\n    >\n      {items.map((item, idx) => {\n        const isSelected = item.id === selectedId;\n        return (\n          <button\n            key={item.id}\n            ref={(el) => {\n              tabRefs.current[idx] = el;\n            }}\n            role=\"tab\"\n            type=\"button\"\n            aria-selected={isSelected}\n            tabIndex={isSelected ? 0 : -1}\n            disabled={item.disabled}\n            onClick={() => onSelect(item.id)}\n            onKeyDown={(e) => handleKeyDown(e, idx)}\n            className={cn(\n              \"flex items-center gap-2 rounded-md px-3 py-1.5 text-xs font-semibold transition-colors duration-150 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-40 disabled:pointer-events-none\",\n              isSelected\n                ? \"bg-card text-foreground shadow-xs border border-border/60\"\n                : \"hover:text-foreground hover:bg-muted/50\"\n            )}\n          >\n            <span>{item.label}</span>\n            {item.badge !== undefined && (\n              <span\n                className={cn(\n                  \"rounded-full px-1.5 py-0.2 font-mono text-[10px]\",\n                  isSelected ? \"bg-primary/10 text-primary\" : \"bg-muted text-muted-foreground\"\n                )}\n              >\n                {item.badge}\n              </span>\n            )}\n          </button>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/roving-tab-list.tsx"
+    }
+  ]
+}

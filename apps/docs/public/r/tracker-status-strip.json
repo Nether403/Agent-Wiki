@@ -1,0 +1,50 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "tracker-status-strip",
+  "type": "registry:component",
+  "title": "Tracker Status Strip",
+  "description": "Segmented uptime and agent activity status strip with colored state blocks and tooltips.",
+  "category": "ui:editorial",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "editorial",
+    "status",
+    "uptime",
+    "kpi",
+    "tremor"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/tremorlabs/tremor",
+    "license_type": "Apache-2.0",
+    "author": "Tremor Labs",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/tracker-status-strip.tsx",
+      "content": "/**\n * @origin Tremor (https://github.com/tremorlabs/tremor)\n * @license Apache-2.0\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface StatusTrackerItem {\n  color?: \"emerald\" | \"amber\" | \"rose\" | \"zinc\";\n  tooltip?: string;\n}\n\nexport interface TrackerStatusStripProps extends React.HTMLAttributes<HTMLDivElement> {\n  data: StatusTrackerItem[];\n  label?: string;\n  uptimePercentage?: string;\n}\n\nconst colorMap = {\n  emerald: \"bg-emerald-500 hover:bg-emerald-400\",\n  amber: \"bg-amber-500 hover:bg-amber-400\",\n  rose: \"bg-rose-500 hover:bg-rose-400\",\n  zinc: \"bg-zinc-700 hover:bg-zinc-600\",\n};\n\nexport function TrackerStatusStrip({\n  data,\n  label = \"Agent Execution Uptime\",\n  uptimePercentage = \"99.9%\",\n  className,\n  ...props\n}: TrackerStatusStripProps) {\n  return (\n    <div\n      className={cn(\"w-full space-y-2 p-4 rounded-xl border border-border bg-card\", className)}\n      role=\"region\"\n      aria-label={label}\n      {...props}\n    >\n      <div className=\"flex items-center justify-between text-xs sm:text-sm\">\n        <span className=\"font-medium text-foreground\">{label}</span>\n        <span className=\"font-mono text-muted-foreground font-semibold\">{uptimePercentage}</span>\n      </div>\n\n      <div className=\"flex items-center gap-1 h-8 w-full overflow-hidden\" role=\"list\">\n        {data.map((item, idx) => (\n          <div\n            key={idx}\n            className={cn(\n              \"flex-1 h-full rounded-sm transition-colors cursor-pointer\",\n              colorMap[item.color || \"emerald\"]\n            )}\n            title={item.tooltip || `Day ${idx + 1}: Operational`}\n            role=\"listitem\"\n          />\n        ))}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/tracker-status-strip.tsx"
+    }
+  ]
+}

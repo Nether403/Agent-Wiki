@@ -1,0 +1,53 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "sparkles-text",
+  "type": "registry:component",
+  "title": "Sparkles Text",
+  "description": "Dynamic SVG sparkle highlights superimposed on bold typographic headlines.",
+  "category": "ui:motion",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "wai-aria-compliant",
+    "motion",
+    "typography",
+    "sparkles",
+    "headline",
+    "magicui"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 7,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "presentation",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/magicuidesign/magicui",
+    "license_type": "MIT",
+    "author": "Magic UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/sparkles-text.tsx",
+      "content": "/**\n * @origin Magic UI (https://github.com/magicuidesign/magicui)\n * @license MIT\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { motion, useReducedMotion } from \"motion/react\";\nimport { cn } from \"../lib/utils\";\n\ninterface Sparkle {\n  id: string;\n  x: string;\n  y: string;\n  color: string;\n  delay: number;\n  scale: number;\n  duration: number;\n}\n\nexport interface SparklesTextProps extends React.ComponentPropsWithoutRef<\"span\"> {\n  text: string;\n  sparklesCount?: number;\n  colors?: { first: string; second: string };\n  className?: string;\n}\n\nexport function SparklesText({\n  text,\n  sparklesCount = 8,\n  colors = { first: \"#10b981\", second: \"#38bdf8\" },\n  className,\n  ...props\n}: SparklesTextProps) {\n  const [sparkles, setSparkles] = React.useState<Sparkle[]>([]);\n  const shouldReduceMotion = useReducedMotion();\n\n  React.useEffect(() => {\n    if (shouldReduceMotion) return;\n    const generated: Sparkle[] = Array.from({ length: sparklesCount }, (_, i) => ({\n      id: `sparkle-${i}`,\n      x: `${Math.floor(Math.random() * 90)}%`,\n      y: `${Math.floor(Math.random() * 80)}%`,\n      color: i % 2 === 0 ? colors.first : colors.second,\n      delay: Math.random() * 2,\n      scale: Math.random() * 0.5 + 0.6,\n      duration: Math.random() * 1.5 + 1.2,\n    }));\n    setSparkles(generated);\n  }, [sparklesCount, colors.first, colors.second]);\n\n  return (\n    <span\n      className={cn(\"relative inline-block font-semibold tracking-tight\", className)}\n      {...props}\n    >\n      <span className=\"relative z-10\">{text}</span>\n      <span className=\"pointer-events-none absolute inset-0 block overflow-hidden\" aria-hidden=\"true\">\n        {sparkles.map((sp) => (\n          <motion.svg\n            key={sp.id}\n            className=\"absolute h-4 w-4\"\n            style={{ left: sp.x, top: sp.y }}\n            initial={{ opacity: 0, scale: 0 }}\n            animate={{\n              opacity: [0, 1, 0],\n              scale: [0, sp.scale, 0],\n              rotate: [0, 90, 180],\n            }}\n            transition={{\n              duration: sp.duration,\n              repeat: Infinity,\n              delay: sp.delay,\n              ease: \"easeInOut\",\n            }}\n            viewBox=\"0 0 24 24\"\n            fill=\"none\"\n            role=\"presentation\"\n          >\n            <path\n              d=\"M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z\"\n              fill={sp.color}\n            />\n          </motion.svg>\n        ))}\n      </span>\n    </span>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/sparkles-text.tsx"
+    }
+  ]
+}

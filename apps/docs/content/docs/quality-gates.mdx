@@ -1,0 +1,30 @@
+---
+title: "Quality Release Gates"
+description: "The 4 automated release gates certifying zero-slop UI components: Anti-Slop AST Linter, axe-core WCAG AA, Playwright Visual Regressions, and Context Budgeting."
+---
+
+# The 4 Quality Release Gates
+
+To guarantee that no hallucinated or inaccessible code enters the Machine-First Design Agent Wiki, every component and layout scaffold must pass 4 consecutive release gates.
+
+---
+
+## Gate 1: Anti-Slop AST Linter (`@design-wiki/audit-linter`)
+- **Enforcement**: 40 automated rules (`SLOP-001` through `SLOP-040`) plus `scanCssAntiPatterns`.
+- **Threshold**: **100/100 Health Score** with exactly **0 High-Severity Flags**.
+- **Checks**: Banned color escapes, missing accessible labels, chained type assertions, timer leaks, unshaded raw backgrounds.
+
+## Gate 2: Automated WCAG 2.1 AA Audit (`axe-core`)
+- **Enforcement**: Headless DOM evaluation via Playwright and `@axe-core/playwright`.
+- **Threshold**: **0 Critical or Serious Violations**.
+- **Checks**: Color contrast ratio $\ge 4.5:1$ (normal text) and $\ge 3.0:1$ (large text), keyboard focus outlines, ARIA landmark roles.
+
+## Gate 3: Visual & Viewport Regression (`Playwright`)
+- **Enforcement**: Headless multi-viewport snapshot rendering across Mobile (375px), Tablet (768px), and Desktop (1280px).
+- **Threshold**: Zero accidental horizontal overflow (`scrollWidth <= clientWidth`).
+- **Reduced Motion**: Full inspection under `prefers-reduced-motion: reduce` confirming loop animation cancellation.
+
+## Gate 4: Agent Context Budgeting (`<15KB`)
+- **Enforcement**: Automated payload stripping in `@design-wiki/mcp` and compiler.
+- **Threshold**: All registry raw markdown and JSON artifacts must be under **15KB**.
+- **Rationale**: Keeps LLM context windows clean, preventing cognitive degradation during multi-turn agent conversations.

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "dither-noise-card",
+  "type": "registry:ui",
+  "title": "Dither Noise Card",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/dither-noise-card.tsx",
+      "content": "/**\n * @license MIT\n * @origin Paper Shaders & React Bits (https://github.com/paper-design/shaders)\n * @author Paper Design & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface DitherNoiseCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  children?: React.ReactNode;\n  grainOpacity?: number;\n  interactive?: boolean;\n}\n\nexport function DitherNoiseCard({\n  children,\n  grainOpacity = 0.08,\n  interactive = true,\n  className,\n  ...props\n}: DitherNoiseCardProps) {\n  return (\n    <div\n      className={cn(\n        \"relative rounded-xl border border-border bg-card p-6 shadow-xs overflow-hidden text-card-foreground\",\n        interactive && \"transition-colors duration-200 hover:border-primary/50\",\n        className\n      )}\n      {...props}\n    >\n      {/* SVG Dither Filter Overlay */}\n      <svg\n        className=\"pointer-events-none absolute inset-0 h-full w-full opacity-[0.06] contrast-125 dark:opacity-[0.12]\"\n        aria-hidden=\"true\"\n      >\n        <filter id=\"dither-noise-filter\">\n          <feTurbulence\n            type=\"fractalNoise\"\n            baseFrequency=\"0.8\"\n            numOctaves=\"3\"\n            stitchTiles=\"stitch\"\n          />\n          <feColorMatrix type=\"saturate\" values=\"0\" />\n        </filter>\n        <rect width=\"100%\" height=\"100%\" filter=\"url(#dither-noise-filter)\" />\n      </svg>\n\n      {/* Card Content Layer */}\n      <div className=\"relative z-10\">{children}</div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/dither-noise-card.tsx"
+    }
+  ]
+}

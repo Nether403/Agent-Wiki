@@ -1,0 +1,37 @@
+---
+title: "Workflow & Node Graph Canvas (ui:workflow)"
+description: "Interactive canvas surfaces, infinite whiteboard wrappers, node execution graphs, and diagram minimap controls for agent pipelines."
+---
+
+# Workflow & Canvas Components (`ui:workflow`)
+
+Complex multi-agent pipelines require spatial representation. The `ui:workflow` category provides zero-slop components for node graphs, step inspection, data pipelines, and viewport controls.
+
+---
+
+## 1. Key Primitives
+
+| Component | Description | Taste Profile (V / M / D) | Origin & License |
+| :--- | :--- | :--- | :--- |
+| `agent-node-graph` | Visual DAG execution canvas with animated bezier edges and node status indicators. | `6 / 5 / 7` | Adapted from XY Flow (MIT) |
+| `agent-inspector-drawer` | Slide-out step inspector for viewing tool input params and output logs. | `5 / 4 / 7` | Native Wiki Architecture (MIT) |
+| `workflow-minimap-controls` | Floating toolbar providing zoom in/out, fit-view, and canvas reset. | `5 / 3 / 7` | Adapted from XY Flow (MIT) |
+| `data-pipeline-canvas` | Multi-stage pipeline layout with throughput metrics and transform nodes. | `6 / 4 / 8` | Native Wiki Architecture (MIT) |
+| `decision-node-canvas` | Branching decision tree canvas with conditional route weighting. | `6 / 4 / 7` | Native Wiki Architecture (MIT) |
+| `embedded-whiteboard` | Virtual vector whiteboard canvas with shape creation and drawing tools. | `7 / 3 / 5` | Adapted from Excalidraw (MIT) |
+
+---
+
+## 2. Installation & Usage
+
+```bash
+# Install node canvas and execution inspector
+npx design-wiki add agent-node-graph agent-inspector-drawer workflow-minimap-controls
+```
+
+---
+
+## 3. Interaction & Keyboard Accessibility
+
+- **Pan & Zoom**: Standard trackpad gestures supported alongside explicit toolbar button triggers for screen-reader users (`workflow-minimap-controls`).
+- **Drawer Escape Dismissal (`SLOP-033`)**: The inspector drawer listens for the `Escape` key and cleans up listeners on unmount (`SLOP-044`).
