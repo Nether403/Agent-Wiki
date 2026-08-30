@@ -1,0 +1,49 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ai-context-token-flamegraph",
+  "type": "registry:component",
+  "title": "A I Context Token Flamegraph",
+  "description": "Curated production-grade component.",
+  "category": "ui:ai-native",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "neon-scifi",
+    "wai-aria-compliant",
+    "ai-native",
+    "agent-ui"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 4,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ai-native/ai-context-token-flamegraph.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { Cpu, AlertTriangle, Layers, Info } from \"lucide-react\";\n\nexport interface ContextSegment {\n  id: string;\n  name: string;\n  tokens: number;\n  color: string;\n  description: string;\n}\n\nexport interface AIContextTokenFlamegraphProps {\n  maxContextTokens?: number;\n  segments?: ContextSegment[];\n  modelName?: string;\n  className?: string;\n}\n\nexport function AIContextTokenFlamegraph({\n  maxContextTokens = 128000,\n  segments = [\n    { id: \"sys\", name: \"System Instructions & Rules\", tokens: 8400, color: \"bg-blue-500\", description: \"Universal agent guidelines and style rulesets\" },\n    { id: \"rag\", name: \"Retrieved Documentation (RAG)\", tokens: 24500, color: \"bg-emerald-500\", description: \"Context7 and documentation payloads\" },\n    { id: \"hist\", name: \"Conversation Turn History\", tokens: 36200, color: \"bg-amber-500\", description: \"Prior messages and subagent transcripts\" },\n    { id: \"tools\", name: \"Tool Execution Results\", tokens: 18900, color: \"bg-purple-500\", description: \"Command outputs, AST syntax trees and file reads\" },\n    { id: \"draft\", name: \"Active Draft Buffer\", tokens: 4100, color: \"bg-cyan-500\", description: \"Pending generation output token budget\" },\n  ],\n  modelName = \"Gemini 3.7 Flash\",\n  className = \"\",\n}: AIContextTokenFlamegraphProps) {\n  const [hoveredId, setHoveredId] = useState<string | null>(null);\n\n  const totalUsed = segments.reduce((sum, s) => sum + s.tokens, 0);\n  const percentUsed = Math.round((totalUsed / maxContextTokens) * 100);\n  const activeSegment = segments.find((s) => s.id === hoveredId);\n\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm \" + className}>\n      {/* Header */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-border gap-2\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"p-2 rounded-lg bg-primary/10 text-primary\">\n            <Cpu className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <h3 className=\"text-sm font-semibold text-foreground tracking-tight\">Context Window Flamegraph</h3>\n            <span className=\"text-xs text-muted-foreground font-mono\">{modelName} • {maxContextTokens.toLocaleString()} tokens max</span>\n          </div>\n        </div>\n        <div className=\"flex items-center gap-3\">\n          <span className=\"text-xs font-mono text-muted-foreground\">\n            Used: <strong className=\"text-foreground font-mono\">{totalUsed.toLocaleString()}</strong> ({percentUsed}%)\n          </span>\n          {percentUsed > 80 && (\n            <span className=\"inline-flex items-center gap-1 text-xs font-mono text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full\">\n              <AlertTriangle className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n              High Usage\n            </span>\n          )}\n        </div>\n      </div>\n\n      {/* Flamegraph Bar */}\n      <div className=\"my-5\">\n        <div \n          className=\"w-full h-7 rounded-lg overflow-hidden flex bg-muted/60 p-0.5 border border-border/80\"\n          role=\"meter\"\n          aria-valuenow={totalUsed}\n          aria-valuemin={0}\n          aria-valuemax={maxContextTokens}\n          aria-label=\"Context window token allocation\"\n        >\n          {segments.map((seg) => {\n            const widthPct = (seg.tokens / maxContextTokens) * 100;\n            const isHovered = seg.id === hoveredId;\n            return (\n              <div\n                key={seg.id}\n                style={{ width: `${widthPct}%` }}\n                onMouseEnter={() => setHoveredId(seg.id)}\n                onMouseLeave={() => setHoveredId(null)}\n                className={`h-full ${seg.color} transition-opacity cursor-pointer relative ${\n                  hoveredId && !isHovered ? \"opacity-40\" : \"opacity-90 hover:opacity-100\"\n                }`}\n              />\n            );\n          })}\n        </div>\n      </div>\n\n      {/* Segment Legend */}\n      <div className=\"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 pt-2\">\n        {segments.map((seg) => {\n          const isSelected = seg.id === hoveredId;\n          return (\n            <div\n              key={seg.id}\n              onMouseEnter={() => setHoveredId(seg.id)}\n              onMouseLeave={() => setHoveredId(null)}\n              className={\n                \"p-2.5 rounded-lg border transition-all cursor-pointer flex flex-col justify-between \" +\n                (isSelected ? \"border-primary bg-primary/5\" : \"border-border/60 bg-background/50 hover:bg-muted/30\")\n              }\n            >\n              <div className=\"flex items-center gap-2 mb-1\">\n                <span className={`w-2.5 h-2.5 rounded-full ${seg.color}`} aria-hidden=\"true\" />\n                <span className=\"text-xs font-medium text-foreground truncate\">{seg.name}</span>\n              </div>\n              <div className=\"flex items-center justify-between text-xs font-mono text-muted-foreground\">\n                <span>{seg.tokens.toLocaleString()} tok</span>\n                <span>{Math.round((seg.tokens / totalUsed) * 100)}%</span>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Tooltip detail */}\n      {activeSegment && (\n        <div className=\"mt-4 p-3 rounded-lg bg-muted/40 border border-border flex items-start gap-2 text-xs\">\n          <Info className=\"w-4 h-4 text-primary shrink-0 mt-0.5\" role=\"img\" aria-hidden=\"true\" />\n          <div>\n            <span className=\"font-semibold text-foreground\">{activeSegment.name}: </span>\n            <span className=\"text-muted-foreground\">{activeSegment.description}</span>\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/ai-context-token-flamegraph.tsx"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "agent-dag-execution-flow",
+  "type": "registry:block",
+  "title": "Agent D A G Execution Flow",
+  "description": "Curated production-grade component.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 3,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/workflow/agent-dag-execution-flow.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { CheckCircle2, Loader2, AlertCircle, Clock, ArrowRight, Play, RefreshCw } from \"lucide-react\";\n\nexport type DAGStepStatus = \"idle\" | \"running\" | \"completed\" | \"error\";\n\nexport interface DAGStepNode {\n  id: string;\n  name: string;\n  role: string;\n  durationMs?: number;\n  status: DAGStepStatus;\n  outputSummary?: string;\n  dependencies: string[];\n}\n\nexport interface AgentDAGExecutionFlowProps {\n  nodes?: DAGStepNode[];\n  pipelineName?: string;\n  className?: string;\n}\n\nexport function AgentDAGExecutionFlow({\n  nodes = [\n    { id: \"1\", name: \"1. Intent Classifier\", role: \"Router Agent\", durationMs: 240, status: \"completed\", outputSummary: \"Query classified as ui:motion\", dependencies: [] },\n    { id: \"2\", name: \"2. AST Dependency Parser\", role: \"Harvester Agent\", durationMs: 480, status: \"completed\", outputSummary: \"Found motion/react & lucide-react\", dependencies: [\"1\"] },\n    { id: \"3\", name: \"3. Slop & A11y Gate\", role: \"Audit Linter\", durationMs: 310, status: \"running\", outputSummary: \"Evaluating SLOP-001..SLOP-050\", dependencies: [\"2\"] },\n    { id: \"4\", name: \"4. Registry Compiler\", role: \"Builder Agent\", status: \"idle\", outputSummary: \"Waiting for QA certification\", dependencies: [\"3\"] },\n  ],\n  pipelineName = \"Autonomous UI Component Ingestion Pipeline\",\n  className = \"\",\n}: AgentDAGExecutionFlowProps) {\n  const [pipelineNodes, setPipelineNodes] = useState<DAGStepNode[]>(nodes);\n  const [activeStepId, setActiveStepId] = useState<string>(\"3\");\n\n  const activeNode = pipelineNodes.find((n) => n.id === activeStepId);\n\n  const getStatusBadge = (status: DAGStepStatus) => {\n    switch (status) {\n      case \"completed\":\n        return (\n          <span className=\"inline-flex items-center gap-1 text-xs font-mono text-emerald-500 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full\">\n            <CheckCircle2 className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n            PASS\n          </span>\n        );\n      case \"running\":\n        return (\n          <span className=\"inline-flex items-center gap-1 text-xs font-mono text-primary bg-primary/10 px-2 py-0.5 rounded-full animate-pulse\">\n            <Loader2 className=\"w-3.5 h-3.5 animate-spin\" role=\"img\" aria-hidden=\"true\" />\n            ACTIVE\n          </span>\n        );\n      case \"error\":\n        return (\n          <span className=\"inline-flex items-center gap-1 text-xs font-mono text-destructive bg-destructive/10 px-2 py-0.5 rounded-full\">\n            <AlertCircle className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n            FAIL\n          </span>\n        );\n      default:\n        return (\n          <span className=\"inline-flex items-center gap-1 text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded-full\">\n            <Clock className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n            IDLE\n          </span>\n        );\n    }\n  };\n\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm \" + className}>\n      {/* Header */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-border gap-2\">\n        <div>\n          <span className=\"text-xs font-mono text-muted-foreground tracking-wider uppercase\">Multi-Agent DAG</span>\n          <h3 className=\"text-base font-semibold text-foreground tracking-tight\">{pipelineName}</h3>\n        </div>\n        <div className=\"flex items-center gap-2\">\n          <button\n            type=\"button\"\n            onClick={() => {\n              setPipelineNodes((prev) =>\n                prev.map((n) => ({ ...n, status: n.id === \"1\" ? \"running\" : \"idle\" }))\n              );\n            }}\n            className=\"inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n            aria-label=\"Restart DAG Pipeline\"\n          >\n            <RefreshCw className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n            Restart\n          </button>\n        </div>\n      </div>\n\n      {/* DAG Flow Grid */}\n      <div className=\"grid grid-cols-1 md:grid-cols-4 gap-3 my-5\">\n        {pipelineNodes.map((node, index) => {\n          const isSelected = node.id === activeStepId;\n          return (\n            <div\n              key={node.id}\n              onClick={() => setActiveStepId(node.id)}\n              className={\n                \"relative p-3.5 rounded-lg border transition-all cursor-pointer flex flex-col justify-between \" +\n                (isSelected\n                  ? \"border-primary bg-primary/5 shadow-sm\"\n                  : \"border-border bg-background/50 hover:border-muted-foreground/30\")\n              }\n            >\n              <div>\n                <div className=\"flex items-center justify-between gap-2 mb-2\">\n                  <span className=\"text-xs font-mono text-muted-foreground\">{node.role}</span>\n                  {getStatusBadge(node.status)}\n                </div>\n                <h4 className=\"text-sm font-medium text-foreground\">{node.name}</h4>\n              </div>\n\n              {node.durationMs && (\n                <div className=\"mt-3 pt-2 border-t border-border/50 flex items-center justify-between text-xs font-mono text-muted-foreground\">\n                  <span>Latency</span>\n                  <span>{node.durationMs}ms</span>\n                </div>\n              )}\n\n              {/* Connector Arrow */}\n              {index < pipelineNodes.length - 1 && (\n                <div className=\"hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-6 h-6 items-center justify-center rounded-full bg-card border border-border text-muted-foreground\">\n                  <ArrowRight className=\"w-3 h-3\" role=\"img\" aria-hidden=\"true\" />\n                </div>\n              )}\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Active Node Inspector */}\n      {activeNode && (\n        <div className=\"p-4 rounded-lg bg-muted/40 border border-border\">\n          <div className=\"flex items-center justify-between mb-2\">\n            <span className=\"text-xs font-mono text-muted-foreground\">STEP INSPECTOR // {activeNode.name}</span>\n            <span className=\"text-xs font-mono text-muted-foreground\">{activeNode.role}</span>\n          </div>\n          <div className=\"text-sm font-mono text-foreground bg-background p-3 rounded-md border border-border/60\">\n            {activeNode.outputSummary || \"No output telemetry available for this step.\"}\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/agent-dag-execution-flow.tsx"
+    }
+  ]
+}

@@ -57,6 +57,7 @@ export function AiStreamingMessage({
       )}
       role="article"
       aria-label={`${role} message`}
+      aria-live="polite"
       {...props}
     >
       {/* Avatar Indicator */}

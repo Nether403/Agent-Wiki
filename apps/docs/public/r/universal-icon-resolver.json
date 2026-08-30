@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "universal-icon-resolver",
+  "type": "registry:component",
+  "title": "Universal Icon Resolver",
+  "description": "Curated production-grade component.",
+  "category": "ui:utility",
+  "tags": [
+    "lucide-react",
+    "wai-aria-compliant",
+    "utility"
+  ],
+  "dials": {
+    "design_variance": 2,
+    "motion_intensity": 4,
+    "visual_density": 7
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/utility/universal-icon-resolver.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React from \"react\";\nimport * as LucideIcons from \"lucide-react\";\n\nexport type IconSet = \"lucide\" | \"tabler\" | \"iconoir\";\n\nexport interface UniversalIconResolverProps {\n  name: string;\n  size?: number;\n  className?: string;\n  fallbackIcon?: string;\n}\n\nexport function UniversalIconResolver({\n  name,\n  size = 18,\n  className = \"\",\n  fallbackIcon = \"HelpCircle\",\n}: UniversalIconResolverProps) {\n  // 1. Resolve normalized PascalCase name for Lucide registry\n  const formattedName = name\n    .split(/[-_]/)\n    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())\n    .join(\"\");\n\n  const IconComponent =\n    (LucideIcons as Record<string, React.ElementType>)[formattedName] ||\n    (LucideIcons as Record<string, React.ElementType>)[fallbackIcon] ||\n    LucideIcons.HelpCircle;\n\n  return (\n    <span className={\"inline-flex items-center justify-center \" + className} role=\"img\" aria-label={name}>\n      <IconComponent size={size} className=\"currentColor\" role=\"img\" aria-hidden=\"true\" />\n    </span>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/universal-icon-resolver.tsx"
+    }
+  ]
+}

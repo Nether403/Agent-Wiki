@@ -1,0 +1,46 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "screenshot-refactor-sandbox",
+  "type": "registry:ui",
+  "title": "Screenshot Refactor Sandbox",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ai-native/screenshot-refactor-sandbox.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { Sliders, Code2, Image as ImageIcon, CheckCircle, RefreshCw, Sparkles } from \"lucide-react\";\n\nexport interface ScreenshotRefactorSandboxProps {\n  referenceImageUrl?: string;\n  initialCode?: string;\n  className?: string;\n}\n\nexport function ScreenshotRefactorSandbox({\n  referenceImageUrl = \"/images/reference-mockup.png\",\n  initialCode = `<div className=\"p-4 bg-card border border-border rounded-lg\">\\n  <h3 className=\"text-base font-semibold text-foreground\">Zero-Slop Card</h3>\\n  <p className=\"text-sm text-muted-foreground mt-1\">Refactored from vision reference.</p>\\n</div>`,\n  className = \"\",\n}: ScreenshotRefactorSandboxProps) {\n  const [activeTab, setActiveTab] = useState<\"split\" | \"code\" | \"preview\">(\"split\");\n  const [unslopScore, setUnslopScore] = useState<number>(100);\n\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm \" + className}>\n      {/* Header */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-border gap-2\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"p-2 rounded-lg bg-primary/10 text-primary\">\n            <Sparkles className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <h3 className=\"text-sm font-semibold text-foreground tracking-tight\">Screenshot-to-Code Refactor Sandbox</h3>\n            <span className=\"text-xs text-muted-foreground font-mono\">Vision AST Ingestion & Anti-Slop Normalizer</span>\n          </div>\n        </div>\n        <div className=\"flex items-center gap-2\">\n          <span className=\"inline-flex items-center gap-1 text-xs font-mono text-emerald-500 bg-emerald-500/10 px-2.5 py-1 rounded-full\">\n            <CheckCircle className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n            Audit: {unslopScore}/100 S-Grade\n          </span>\n        </div>\n      </div>\n\n      {/* Split Workspace */}\n      <div className=\"grid grid-cols-1 md:grid-cols-2 gap-4 my-4\">\n        {/* Left: Vision Mockup Reference */}\n        <div className=\"p-4 rounded-lg bg-muted/30 border border-border flex flex-col items-center justify-center min-h-[220px] text-center\">\n          <ImageIcon className=\"w-8 h-8 text-muted-foreground mb-2 opacity-50\" role=\"img\" aria-hidden=\"true\" />\n          <span className=\"text-xs font-medium text-foreground\">Visual Reference Target</span>\n          <span className=\"text-xs text-muted-foreground mt-1 max-w-[240px]\">\n            Input screenshot / Figma design deconstructed into semantic tokens and responsive layout.\n          </span>\n        </div>\n\n        {/* Right: Refactored TSX Code */}\n        <div className=\"p-4 rounded-lg bg-background border border-border font-mono text-xs text-foreground overflow-x-auto flex flex-col justify-between\">\n          <pre className=\"text-muted-foreground\">\n            <code>{initialCode}</code>\n          </pre>\n          <div className=\"mt-4 pt-2 border-t border-border/60 flex items-center justify-between text-xs text-muted-foreground\">\n            <span>Tailwind v4 Semantic Tokens</span>\n            <span>WCAG 2.1 AA Certified</span>\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/screenshot-refactor-sandbox.tsx"
+    }
+  ]
+}

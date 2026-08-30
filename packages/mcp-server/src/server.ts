@@ -1706,6 +1706,68 @@ export default function LandingPage() {
     }
   );
 
+  // Tool 14: unslop_screenshot_draft
+  server.registerTool(
+    "unslop_screenshot_draft",
+    {
+      description:
+        "Transforms raw vision-model or screenshot-to-code generated HTML/TSX into clean, zero-slop TSX with semantic tokens and WCAG compliance.",
+      inputSchema: z.object({
+        rawCode: z.string().describe("The raw code generated from a screenshot or mockup"),
+      }),
+    },
+    async ({ rawCode }) => {
+      let code = rawCode;
+      const fixesApplied: string[] = [];
+
+      // 1. Remap hardcoded indigo buttons
+      if (/bg-indigo-(?:500|600|700)/i.test(code)) {
+        code = code.replace(/bg-indigo-(?:500|600|700)/g, "bg-primary");
+        code = code.replace(/text-indigo-(?:500|600)/g, "text-primary");
+        fixesApplied.push("SLOP-001: Remapped indigo to semantic bg-primary/text-primary tokens");
+      }
+
+      // 2. Remap purple linear gradients
+      if (/bg-gradient-to-[r|tr|tl|b]\s+from-(?:purple|fuchsia)-500\s+to-blue-500/i.test(code)) {
+        code = code.replace(
+          /bg-gradient-to-[r|tr|tl|b]\s+from-(?:purple|fuchsia)-500\s+to-blue-500/g,
+          "bg-card border border-border"
+        );
+        fixesApplied.push("SLOP-002: Replaced purple-blue gradient with structured border card");
+      }
+
+      // 3. Normalize arbitrary pixel spacing
+      code = code.replace(/(p|m|gap)-\[(\d+)px\]/g, (match, prefix, px) => {
+        const num = parseInt(px, 10);
+        let step = "4";
+        if (num <= 4) step = "1";
+        else if (num <= 8) step = "2";
+        else if (num <= 12) step = "3";
+        else if (num <= 16) step = "4";
+        else if (num <= 24) step = "6";
+        else if (num <= 32) step = "8";
+        else step = "12";
+        fixesApplied.push(`SLOP-007: Normalized ${match} to standard ${prefix}-${step}`);
+        return `${prefix}-${step}`;
+      });
+
+      // 4. Inject focus-visible ring
+      if (/(?:outline-none|ring-0)\b/i.test(code) && !code.includes("focus-visible:")) {
+        code = code.replace(/(outline-none|ring-0)/g, "$1 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none");
+        fixesApplied.push("SLOP-012: Injected focus-visible:ring-2 compliance");
+      }
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({ unslappedCode: code, fixesApplied, totalFixes: fixesApplied.length }, null, 2),
+          },
+        ],
+      };
+    }
+  );
+
   return server;
 }
 

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ai-multi-agent-orchestrator-console",
+  "type": "registry:component",
+  "title": "A I Multi Agent Orchestrator Console",
+  "description": "Curated production-grade component.",
+  "category": "ui:ai-native",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "ai-native",
+    "agent-ui"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 4,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ai-native/ai-multi-agent-orchestrator-console.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { Terminal, Users, Bot, CheckCircle2, ArrowRight, ShieldCheck } from \"lucide-react\";\n\nexport interface AgentPeer {\n  id: string;\n  name: string;\n  role: string;\n  status: \"idle\" | \"thinking\" | \"executing\";\n  currentTask?: string;\n  turnsCompleted: number;\n}\n\nexport interface AIMultiAgentOrchestratorConsoleProps {\n  agents?: AgentPeer[];\n  className?: string;\n}\n\nexport function AIMultiAgentOrchestratorConsole({\n  agents = [\n    { id: \"planner\", name: \"Architect Agent\", role: \"Supervisory Planner\", status: \"idle\", currentTask: \"Awaiting QA report\", turnsCompleted: 4 },\n    { id: \"coder\", name: \"Code Engineer\", role: \"Implementation\", status: \"executing\", currentTask: \"Injecting screened components\", turnsCompleted: 12 },\n    { id: \"auditor\", name: \"Security Auditor\", role: \"Tripwire Gate\", status: \"idle\", currentTask: \"AST verified clean\", turnsCompleted: 3 },\n    { id: \"qa\", name: \"A11y Reviewer\", role: \"WCAG AA Checker\", status: \"thinking\", currentTask: \"Calculating luminance ratio\", turnsCompleted: 6 },\n  ],\n  className = \"\",\n}: AIMultiAgentOrchestratorConsoleProps) {\n  const [selectedAgentId, setSelectedAgentId] = useState<string>(\"coder\");\n\n  const selectedAgent = agents.find((a) => a.id === selectedAgentId);\n\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm \" + className}>\n      {/* Console Header */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-border gap-2\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"p-2 rounded-lg bg-primary/10 text-primary\">\n            <Users className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <h3 className=\"text-sm font-semibold text-foreground tracking-tight\">Multi-Agent Swarm Orchestrator</h3>\n            <span className=\"text-xs text-muted-foreground font-mono\">4 Subagents Active • Distributed Worktree</span>\n          </div>\n        </div>\n        <span className=\"inline-flex items-center gap-1.5 text-xs font-mono text-emerald-500 bg-emerald-500/10 px-2.5 py-1 rounded-full w-fit\">\n          <ShieldCheck className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n          Sandbox Active\n        </span>\n      </div>\n\n      {/* Agent Roster */}\n      <div className=\"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 my-4\">\n        {agents.map((agent) => {\n          const isSelected = agent.id === selectedAgentId;\n          return (\n            <div\n              key={agent.id}\n              onClick={() => setSelectedAgentId(agent.id)}\n              className={\n                \"p-3 rounded-lg border transition-all cursor-pointer flex flex-col justify-between \" +\n                (isSelected\n                  ? \"border-primary bg-primary/5 shadow-sm\"\n                  : \"border-border bg-background/50 hover:bg-muted/30\")\n              }\n            >\n              <div>\n                <div className=\"flex items-center justify-between gap-2 mb-1.5\">\n                  <span className=\"text-xs font-mono text-muted-foreground\">{agent.role}</span>\n                  <span\n                    className={\n                      \"w-2 h-2 rounded-full \" +\n                      (agent.status === \"executing\"\n                        ? \"bg-primary animate-ping\"\n                        : agent.status === \"thinking\"\n                        ? \"bg-amber-400\"\n                        : \"bg-muted-foreground\")\n                    }\n                    aria-hidden=\"true\"\n                  />\n                </div>\n                <h4 className=\"text-sm font-medium text-foreground\">{agent.name}</h4>\n              </div>\n              <div className=\"mt-3 pt-2 border-t border-border/50 text-xs font-mono text-muted-foreground flex justify-between\">\n                <span>Turns</span>\n                <span>{agent.turnsCompleted}</span>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Active Inspector Terminal */}\n      {selectedAgent && (\n        <div className=\"p-4 rounded-lg bg-background border border-border font-mono text-xs\">\n          <div className=\"flex items-center justify-between pb-2 mb-2 border-b border-border text-muted-foreground\">\n            <span className=\"flex items-center gap-1.5\">\n              <Bot className=\"w-3.5 h-3.5 text-primary\" role=\"img\" aria-hidden=\"true\" />\n              AGENT TELEMETRY // {selectedAgent.id.toUpperCase()}\n            </span>\n            <span>Status: {selectedAgent.status.toUpperCase()}</span>\n          </div>\n          <p className=\"text-foreground\">Current Task: {selectedAgent.currentTask || \"Idle\"}</p>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/ai-multi-agent-orchestrator-console.tsx"
+    }
+  ]
+}

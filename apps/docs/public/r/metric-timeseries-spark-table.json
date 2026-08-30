@@ -1,0 +1,46 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "metric-timeseries-spark-table",
+  "type": "registry:component",
+  "title": "Metric Timeseries Spark Table",
+  "description": "Curated production-grade component.",
+  "category": "ui:editorial",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "editorial"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 1,
+    "visual_density": 10
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/metric-timeseries-spark-table.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { TrendingUp, TrendingDown, Activity, ArrowUpDown } from \"lucide-react\";\n\nexport interface MetricRow {\n  id: string;\n  name: string;\n  category: string;\n  value: string;\n  deltaPct: number;\n  sparkline: number[];\n  status: \"nominal\" | \"warning\" | \"critical\";\n}\n\nexport interface MetricTimeseriesSparkTableProps {\n  metrics?: MetricRow[];\n  title?: string;\n  className?: string;\n}\n\nexport function MetricTimeseriesSparkTable({\n  metrics = [\n    { id: \"1\", name: \"Inference Latency P99\", category: \"Performance\", value: \"312ms\", deltaPct: -14.2, sparkline: [420, 390, 370, 340, 312], status: \"nominal\" },\n    { id: \"2\", name: \"Cache Hit Ratio\", category: \"Memory\", value: \"94.8%\", deltaPct: 4.6, sparkline: [88, 90, 91, 93, 94.8], status: \"nominal\" },\n    { id: \"3\", name: \"WCAG Contrast Violations\", category: \"Accessibility\", value: \"0\", deltaPct: -100, sparkline: [12, 8, 4, 1, 0], status: \"nominal\" },\n    { id: \"4\", name: \"Token Burn Rate\", category: \"Cost\", value: \"1.2k/min\", deltaPct: 28.4, sparkline: [700, 850, 920, 1100, 1200], status: \"warning\" },\n  ],\n  title = \"Telemetry & System Vitals\",\n  className = \"\",\n}: MetricTimeseriesSparkTableProps) {\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm \" + className}>\n      <div className=\"flex items-center justify-between pb-4 border-b border-border\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"p-2 rounded-lg bg-primary/10 text-primary\">\n            <Activity className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <h3 className=\"text-sm font-semibold text-foreground tracking-tight\">{title}</h3>\n            <span className=\"text-xs text-muted-foreground font-mono\">High-Density Telemetry Matrix</span>\n          </div>\n        </div>\n      </div>\n\n      <div className=\"overflow-x-auto my-3\">\n        <table className=\"w-full text-left text-xs font-mono\">\n          <thead>\n            <tr className=\"border-b border-border text-muted-foreground\">\n              <th className=\"pb-2 font-medium\">METRIC</th>\n              <th className=\"pb-2 font-medium\">CATEGORY</th>\n              <th className=\"pb-2 font-medium text-right\">VALUE</th>\n              <th className=\"pb-2 font-medium text-right\">TREND (24H)</th>\n              <th className=\"pb-2 font-medium text-right\">SPARKLINE</th>\n            </tr>\n          </thead>\n          <tbody className=\"divide-y divide-border/60\">\n            {metrics.map((m) => {\n              const isPositive = m.deltaPct >= 0;\n              return (\n                <tr key={m.id} className=\"hover:bg-muted/30 transition-colors\">\n                  <td className=\"py-2.5 font-medium text-foreground\">{m.name}</td>\n                  <td className=\"py-2.5 text-muted-foreground\">{m.category}</td>\n                  <td className=\"py-2.5 text-right font-bold text-foreground\">{m.value}</td>\n                  <td className=\"py-2.5 text-right\">\n                    <span\n                      className={\n                        \"inline-flex items-center gap-0.5 \" +\n                        (m.status === \"warning\" ? \"text-amber-500\" : isPositive ? \"text-emerald-500\" : \"text-blue-500\")\n                      }\n                    >\n                      {isPositive ? <TrendingUp className=\"w-3 h-3\" role=\"img\" aria-hidden=\"true\" /> : <TrendingDown className=\"w-3 h-3\" role=\"img\" aria-hidden=\"true\" />}\n                      {m.deltaPct > 0 ? `+${m.deltaPct}%` : `${m.deltaPct}%`}\n                    </span>\n                  </td>\n                  <td className=\"py-2.5 text-right\">\n                    <svg className=\"w-16 h-5 ml-auto overflow-visible\" role=\"img\" aria-label={`Trend sparkline for ${m.name}`}>\n                      <polyline\n                        fill=\"none\"\n                        stroke=\"currentColor\"\n                        strokeWidth=\"1.5\"\n                        strokeLinecap=\"round\"\n                        strokeLinejoin=\"round\"\n                        className=\"text-primary\"\n                        points={m.sparkline\n                          .map((val, idx) => {\n                            const min = Math.min(...m.sparkline);\n                            const max = Math.max(...m.sparkline) || 1;\n                            const x = (idx / (m.sparkline.length - 1)) * 64;\n                            const y = 18 - ((val - min) / (max - min || 1)) * 16;\n                            return `${x},${y}`;\n                          })\n                          .join(\" \")}\n                      />\n                    </svg>\n                  </td>\n                </tr>\n              );\n            })}\n          </tbody>\n        </table>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/metric-timeseries-spark-table.tsx"
+    }
+  ]
+}

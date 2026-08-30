@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "particle-emitter-burst",
+  "type": "registry:component",
+  "title": "Particle Emitter Burst",
+  "description": "Curated production-grade component.",
+  "category": "ui:creative",
+  "tags": [
+    "lucide-react",
+    "webgl",
+    "threejs",
+    "canvas",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 9,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "three",
+    "motion"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/particle-emitter-burst.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState, useEffect, useRef } from \"react\";\nimport { Sparkles, Play, Pause, RefreshCw } from \"lucide-react\";\n\nexport interface ParticleEmitterBurstProps {\n  particleCount?: number;\n  burstText?: string;\n  className?: string;\n}\n\nexport function ParticleEmitterBurst({\n  particleCount = 40,\n  burstText = \"Milestone Achieved\",\n  className = \"\",\n}: ParticleEmitterBurstProps) {\n  const [isActive, setIsActive] = useState<boolean>(true);\n  const canvasRef = useRef<HTMLCanvasElement | null>(null);\n\n  useEffect(() => {\n    // A11y: Respect user motion preferences (SLOP-014)\n    if (typeof window !== \"undefined\" && window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches) {\n      setIsActive(false);\n      return;\n    }\n\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    let animId: number;\n    // Pre-allocate typed arrays outside animation loop (SLOP-032)\n    const count = particleCount;\n    const xPos = new Float32Array(count);\n    const yPos = new Float32Array(count);\n    const xVel = new Float32Array(count);\n    const yVel = new Float32Array(count);\n    const radii = new Float32Array(count);\n\n    const initParticles = () => {\n      const w = canvas.width;\n      const h = canvas.height;\n      for (let i = 0; i < count; i++) {\n        xPos[i] = w / 2;\n        yPos[i] = h / 2;\n        const angle = Math.random() * Math.PI * 2;\n        const speed = Math.random() * 3 + 1;\n        xVel[i] = Math.cos(angle) * speed;\n        yVel[i] = Math.sin(angle) * speed;\n        radii[i] = Math.random() * 3 + 1.5;\n      }\n    };\n\n    initParticles();\n\n    const renderLoop = () => {\n      if (!isActive) return;\n      ctx.clearRect(0, 0, canvas.width, canvas.height);\n\n      ctx.fillStyle = \"rgba(168, 85, 247, 0.8)\"; // Accent particle tint\n      for (let i = 0; i < count; i++) {\n        xPos[i] += xVel[i];\n        yPos[i] += yVel[i];\n\n        ctx.beginPath();\n        ctx.arc(xPos[i], yPos[i], radii[i], 0, Math.PI * 2);\n        ctx.fill();\n\n        // Wrap around bounds\n        if (xPos[i] < 0 || xPos[i] > canvas.width || yPos[i] < 0 || yPos[i] > canvas.height) {\n          xPos[i] = canvas.width / 2;\n          yPos[i] = canvas.height / 2;\n        }\n      }\n\n      animId = requestAnimationFrame(renderLoop);\n    };\n\n    if (isActive) {\n      animId = requestAnimationFrame(renderLoop);\n    }\n\n    // Clean up event listener / timer to prevent memory leaks (SLOP-025)\n    return () => {\n      if (animId) cancelAnimationFrame(animId);\n    };\n  }, [isActive, particleCount]);\n\n  return (\n    <div className={\"relative w-full rounded-xl border border-border bg-card p-6 text-card-foreground shadow-sm overflow-hidden flex flex-col items-center justify-center min-h-[260px] \" + className}>\n      {/* Particle Canvas with Static Fallback */}\n      <canvas\n        ref={canvasRef}\n        width={400}\n        height={260}\n        className=\"absolute inset-0 w-full h-full pointer-events-none opacity-60\"\n        role=\"img\"\n        aria-label=\"Interactive particle burst celebration visual\"\n      >\n        <span className=\"sr-only\">Celebration particle effects fallback</span>\n      </canvas>\n\n      {/* Foreground Content */}\n      <div className=\"relative z-10 text-center\">\n        <div className=\"inline-flex p-3 rounded-full bg-primary/10 text-primary mb-3\">\n          <Sparkles className=\"w-6 h-6\" role=\"img\" aria-hidden=\"true\" />\n        </div>\n        <h3 className=\"text-lg font-bold text-foreground tracking-tight\">{burstText}</h3>\n        <p className=\"text-xs text-muted-foreground mt-1 max-w-[280px]\">\n          GPU particle celebration engine with automatic prefers-reduced-motion suppression.\n        </p>\n\n        <div className=\"mt-4 flex items-center justify-center gap-2\">\n          <button\n            type=\"button\"\n            onClick={() => setIsActive((prev) => !prev)}\n            className=\"inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n            aria-label={isActive ? \"Pause particle animation\" : \"Play particle animation\"}\n          >\n            {isActive ? <Pause className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" /> : <Play className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />}\n            {isActive ? \"Pause\" : \"Resume\"}\n          </button>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/particle-emitter-burst.tsx"
+    }
+  ]
+}

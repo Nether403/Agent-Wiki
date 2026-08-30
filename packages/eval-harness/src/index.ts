@@ -127,3 +127,6 @@ export function runEvalHarness(targetPaths: string[]): EvalHarnessSummary {
     reports,
   };
 }
+
+export * from "./contrast-checker";
+export * from "./lighthouse-gate";

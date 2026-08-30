@@ -57,6 +57,55 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "ai-context-token-flamegraph",
+    "type": "registry:component",
+    "title": "A I Context Token Flamegraph",
+    "description": "Curated production-grade component.",
+    "category": "ui:ai-native",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "tailwind-v4",
+      "neon-scifi",
+      "wai-aria-compliant",
+      "ai-native",
+      "agent-ui"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 4,
+      "visual_density": 8
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/design-agent-wiki",
+      "license_type": "MIT",
+      "author": "Community Contributor",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/ai-native/ai-context-token-flamegraph.tsx",
+        "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { Cpu, AlertTriangle, Layers, Info } from \"lucide-react\";\n\nexport interface ContextSegment {\n  id: string;\n  name: string;\n  tokens: number;\n  color: string;\n  description: string;\n}\n\nexport interface AIContextTokenFlamegraphProps {\n  maxContextTokens?: number;\n  segments?: ContextSegment[];\n  modelName?: string;\n  className?: string;\n}\n\nexport function AIContextTokenFlamegraph({\n  maxContextTokens = 128000,\n  segments = [\n    { id: \"sys\", name: \"System Instructions & Rules\", tokens: 8400, color: \"bg-blue-500\", description: \"Universal agent guidelines and style rulesets\" },\n    { id: \"rag\", name: \"Retrieved Documentation (RAG)\", tokens: 24500, color: \"bg-emerald-500\", description: \"Context7 and documentation payloads\" },\n    { id: \"hist\", name: \"Conversation Turn History\", tokens: 36200, color: \"bg-amber-500\", description: \"Prior messages and subagent transcripts\" },\n    { id: \"tools\", name: \"Tool Execution Results\", tokens: 18900, color: \"bg-purple-500\", description: \"Command outputs, AST syntax trees and file reads\" },\n    { id: \"draft\", name: \"Active Draft Buffer\", tokens: 4100, color: \"bg-cyan-500\", description: \"Pending generation output token budget\" },\n  ],\n  modelName = \"Gemini 3.7 Flash\",\n  className = \"\",\n}: AIContextTokenFlamegraphProps) {\n  const [hoveredId, setHoveredId] = useState<string | null>(null);\n\n  const totalUsed = segments.reduce((sum, s) => sum + s.tokens, 0);\n  const percentUsed = Math.round((totalUsed / maxContextTokens) * 100);\n  const activeSegment = segments.find((s) => s.id === hoveredId);\n\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm \" + className}>\n      {/* Header */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-border gap-2\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"p-2 rounded-lg bg-primary/10 text-primary\">\n            <Cpu className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <h3 className=\"text-sm font-semibold text-foreground tracking-tight\">Context Window Flamegraph</h3>\n            <span className=\"text-xs text-muted-foreground font-mono\">{modelName} • {maxContextTokens.toLocaleString()} tokens max</span>\n          </div>\n        </div>\n        <div className=\"flex items-center gap-3\">\n          <span className=\"text-xs font-mono text-muted-foreground\">\n            Used: <strong className=\"text-foreground font-mono\">{totalUsed.toLocaleString()}</strong> ({percentUsed}%)\n          </span>\n          {percentUsed > 80 && (\n            <span className=\"inline-flex items-center gap-1 text-xs font-mono text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full\">\n              <AlertTriangle className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n              High Usage\n            </span>\n          )}\n        </div>\n      </div>\n\n      {/* Flamegraph Bar */}\n      <div className=\"my-5\">\n        <div \n          className=\"w-full h-7 rounded-lg overflow-hidden flex bg-muted/60 p-0.5 border border-border/80\"\n          role=\"meter\"\n          aria-valuenow={totalUsed}\n          aria-valuemin={0}\n          aria-valuemax={maxContextTokens}\n          aria-label=\"Context window token allocation\"\n        >\n          {segments.map((seg) => {\n            const widthPct = (seg.tokens / maxContextTokens) * 100;\n            const isHovered = seg.id === hoveredId;\n            return (\n              <div\n                key={seg.id}\n                style={{ width: `${widthPct}%` }}\n                onMouseEnter={() => setHoveredId(seg.id)}\n                onMouseLeave={() => setHoveredId(null)}\n                className={`h-full ${seg.color} transition-opacity cursor-pointer relative ${\n                  hoveredId && !isHovered ? \"opacity-40\" : \"opacity-90 hover:opacity-100\"\n                }`}\n              />\n            );\n          })}\n        </div>\n      </div>\n\n      {/* Segment Legend */}\n      <div className=\"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 pt-2\">\n        {segments.map((seg) => {\n          const isSelected = seg.id === hoveredId;\n          return (\n            <div\n              key={seg.id}\n              onMouseEnter={() => setHoveredId(seg.id)}\n              onMouseLeave={() => setHoveredId(null)}\n              className={\n                \"p-2.5 rounded-lg border transition-all cursor-pointer flex flex-col justify-between \" +\n                (isSelected ? \"border-primary bg-primary/5\" : \"border-border/60 bg-background/50 hover:bg-muted/30\")\n              }\n            >\n              <div className=\"flex items-center gap-2 mb-1\">\n                <span className={`w-2.5 h-2.5 rounded-full ${seg.color}`} aria-hidden=\"true\" />\n                <span className=\"text-xs font-medium text-foreground truncate\">{seg.name}</span>\n              </div>\n              <div className=\"flex items-center justify-between text-xs font-mono text-muted-foreground\">\n                <span>{seg.tokens.toLocaleString()} tok</span>\n                <span>{Math.round((seg.tokens / totalUsed) * 100)}%</span>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Tooltip detail */}\n      {activeSegment && (\n        <div className=\"mt-4 p-3 rounded-lg bg-muted/40 border border-border flex items-start gap-2 text-xs\">\n          <Info className=\"w-4 h-4 text-primary shrink-0 mt-0.5\" role=\"img\" aria-hidden=\"true\" />\n          <div>\n            <span className=\"font-semibold text-foreground\">{activeSegment.name}: </span>\n            <span className=\"text-muted-foreground\">{activeSegment.description}</span>\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/ai-context-token-flamegraph.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "ai-human-in-the-loop-diff",
     "type": "registry:component",
     "title": "AI Human-in-the-Loop Diff Drawer",
@@ -107,6 +156,54 @@
         "content": "/**\n * @license MIT\n * @origin Origin UI / Cult UI (https://originui.com)\n * @author Origin UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport {\n  Check,\n  X,\n  Edit3,\n  GitCommit,\n  FileCode,\n  Sparkles,\n  ChevronRight,\n  ShieldCheck,\n} from \"lucide-react\";\n\nexport interface DiffLine {\n  type: \"add\" | \"delete\" | \"normal\";\n  oldLineNumber?: number;\n  newLineNumber?: number;\n  content: string;\n}\n\nexport interface AiHumanInTheLoopDiffProps extends React.HTMLAttributes<HTMLDivElement> {\n  fileName?: string;\n  diffLines?: DiffLine[];\n  explanation?: string;\n  onApprove?: () => void;\n  onReject?: () => void;\n  onModifyPrompt?: (feedback: string) => void;\n}\n\nexport function AiHumanInTheLoopDiff({\n  fileName = \"components/ui/hero-section.tsx\",\n  diffLines = [\n    { type: \"normal\", oldLineNumber: 12, newLineNumber: 12, content: \"export function HeroSection() {\" },\n    { type: \"delete\", oldLineNumber: 13, content: \"-   return <div className=\\\"bg-blue-600 p-4\\\">\" },\n    { type: \"add\", newLineNumber: 13, content: \"+   return <div className=\\\"bg-card border border-border p-4\\\">\" },\n    { type: \"normal\", oldLineNumber: 14, newLineNumber: 14, content: \"       <h1>Agent Wiki</h1>\" },\n    { type: \"normal\", oldLineNumber: 15, newLineNumber: 15, content: \"     </div>\" },\n  ],\n  explanation = \"Remapped hardcoded indigo colors and arbitrary pixel padding to semantic design tokens (SLOP-001 & SLOP-007 compliant).\",\n  onApprove,\n  onReject,\n  onModifyPrompt,\n  className,\n  ...props\n}: AiHumanInTheLoopDiffProps) {\n  const [isModifying, setIsModifying] = React.useState(false);\n  const [feedbackPrompt, setFeedbackPrompt] = React.useState(\"\");\n\n  const additions = diffLines.filter((l) => l.type === \"add\").length;\n  const deletions = diffLines.filter((l) => l.type === \"delete\").length;\n\n  const handleApprove = () => {\n    onApprove?.();\n  };\n\n  const handleReject = () => {\n    onReject?.();\n  };\n\n  const handleSendFeedback = () => {\n    if (!feedbackPrompt.trim()) return;\n    onModifyPrompt?.(feedbackPrompt);\n    setIsModifying(false);\n    setFeedbackPrompt(\"\");\n  };\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-2xl border border-border bg-card text-card-foreground shadow-xl overflow-hidden\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Human-in-the-loop review for ${fileName}`}\n      {...props}\n    >\n      {/* Header bar */}\n      <div className=\"flex items-center justify-between px-4 py-3 bg-muted/40 border-b border-border\">\n        <div className=\"flex items-center gap-2.5\">\n          <div className=\"flex items-center justify-center h-7 w-7 rounded-lg bg-primary/10 text-primary border border-primary/20\">\n            <FileCode className=\"h-4 w-4\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <div className=\"flex items-center gap-2\">\n              <span className=\"font-mono text-xs font-semibold text-foreground\">{fileName}</span>\n              <span className=\"inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-muted text-muted-foreground text-xs font-mono\">\n                <span className=\"text-emerald-500 font-semibold\">+{additions}</span>\n                <span className=\"text-destructive font-semibold\">-{deletions}</span>\n              </span>\n            </div>\n          </div>\n        </div>\n\n        <div className=\"flex items-center gap-1.5 text-xs text-muted-foreground\">\n          <ShieldCheck className=\"h-4 w-4 text-primary\" aria-hidden=\"true\" />\n          <span>Human Gatekeeper Review</span>\n        </div>\n      </div>\n\n      {/* Rationale explanation */}\n      {explanation && (\n        <div className=\"px-4 py-2.5 bg-primary/5 border-b border-primary/10 flex items-center gap-2 text-xs text-foreground\">\n          <Sparkles className=\"h-3.5 w-3.5 text-primary shrink-0\" aria-hidden=\"true\" />\n          <span>{explanation}</span>\n        </div>\n      )}\n\n      {/* Code Diff Display */}\n      <div className=\"overflow-x-auto bg-muted/20 font-mono text-xs max-h-72\">\n        <table className=\"w-full border-collapse\">\n          <tbody>\n            {diffLines.map((line, idx) => (\n              <tr\n                key={idx}\n                className={cn(\n                  \"hover:bg-muted/40 transition-colors\",\n                  line.type === \"add\" && \"bg-emerald-500/10 text-emerald-600 dark:text-emerald-400\",\n                  line.type === \"delete\" && \"bg-destructive/10 text-destructive dark:text-destructive-foreground/90\"\n                )}\n              >\n                <td className=\"w-10 px-2 py-0.5 text-right text-muted-foreground/60 select-none border-r border-border/40\">\n                  {line.oldLineNumber || \"\"}\n                </td>\n                <td className=\"w-10 px-2 py-0.5 text-right text-muted-foreground/60 select-none border-r border-border/40\">\n                  {line.newLineNumber || \"\"}\n                </td>\n                <td className=\"px-3 py-0.5 whitespace-pre\">\n                  {line.content}\n                </td>\n              </tr>\n            ))}\n          </tbody>\n        </table>\n      </div>\n\n      {/* Modify Feedback Box */}\n      {isModifying && (\n        <div className=\"p-4 border-t border-border bg-card space-y-2\">\n          <label htmlFor=\"refine-prompt\" className=\"text-xs font-semibold text-foreground\">\n            Refine Instructions / Request Modifications\n          </label>\n          <textarea\n            id=\"refine-prompt\"\n            value={feedbackPrompt}\n            onChange={(e) => setFeedbackPrompt(e.target.value)}\n            placeholder=\"Tell the agent what to change (e.g., 'Use rounded-2xl cards instead')...\"\n            rows={2}\n            className=\"w-full p-2.5 rounded-xl border border-border bg-background text-xs text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none\"\n          />\n          <div className=\"flex justify-end gap-2\">\n            <button\n              type=\"button\"\n              onClick={() => setIsModifying(false)}\n              className=\"px-3 py-1.5 rounded-xl border border-border text-xs text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n            >\n              Cancel\n            </button>\n            <button\n              type=\"button\"\n              onClick={handleSendFeedback}\n              disabled={!feedbackPrompt.trim()}\n              className=\"px-3 py-1.5 rounded-xl bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 disabled:opacity-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              Send Refinement\n            </button>\n          </div>\n        </div>\n      )}\n\n      {/* Action Footer */}\n      {!isModifying && (\n        <div className=\"flex items-center justify-between px-4 py-3 bg-muted/40 border-t border-border\">\n          <button\n            type=\"button\"\n            onClick={() => setIsModifying(true)}\n            className=\"inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-border bg-background hover:bg-muted text-xs font-medium text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <Edit3 className=\"h-3.5 w-3.5 text-muted-foreground\" aria-hidden=\"true\" />\n            Modify Prompt\n          </button>\n\n          <div className=\"flex items-center gap-2\">\n            <button\n              type=\"button\"\n              onClick={handleReject}\n              className=\"inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-destructive/30 bg-destructive/10 text-destructive hover:bg-destructive/20 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <X className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n              Reject Changes\n            </button>\n\n            <button\n              type=\"button\"\n              onClick={handleApprove}\n              className=\"inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 text-xs font-semibold shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\"\n            >\n              <Check className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n              Approve & Apply\n            </button>\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n",
         "type": "registry:component",
         "target": "components/ui/ai-human-in-the-loop-diff.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "ai-multi-agent-orchestrator-console",
+    "type": "registry:component",
+    "title": "A I Multi Agent Orchestrator Console",
+    "description": "Curated production-grade component.",
+    "category": "ui:ai-native",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "tailwind-v4",
+      "wai-aria-compliant",
+      "ai-native",
+      "agent-ui"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 4,
+      "visual_density": 8
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/design-agent-wiki",
+      "license_type": "MIT",
+      "author": "Community Contributor",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/ai-native/ai-multi-agent-orchestrator-console.tsx",
+        "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { Terminal, Users, Bot, CheckCircle2, ArrowRight, ShieldCheck } from \"lucide-react\";\n\nexport interface AgentPeer {\n  id: string;\n  name: string;\n  role: string;\n  status: \"idle\" | \"thinking\" | \"executing\";\n  currentTask?: string;\n  turnsCompleted: number;\n}\n\nexport interface AIMultiAgentOrchestratorConsoleProps {\n  agents?: AgentPeer[];\n  className?: string;\n}\n\nexport function AIMultiAgentOrchestratorConsole({\n  agents = [\n    { id: \"planner\", name: \"Architect Agent\", role: \"Supervisory Planner\", status: \"idle\", currentTask: \"Awaiting QA report\", turnsCompleted: 4 },\n    { id: \"coder\", name: \"Code Engineer\", role: \"Implementation\", status: \"executing\", currentTask: \"Injecting screened components\", turnsCompleted: 12 },\n    { id: \"auditor\", name: \"Security Auditor\", role: \"Tripwire Gate\", status: \"idle\", currentTask: \"AST verified clean\", turnsCompleted: 3 },\n    { id: \"qa\", name: \"A11y Reviewer\", role: \"WCAG AA Checker\", status: \"thinking\", currentTask: \"Calculating luminance ratio\", turnsCompleted: 6 },\n  ],\n  className = \"\",\n}: AIMultiAgentOrchestratorConsoleProps) {\n  const [selectedAgentId, setSelectedAgentId] = useState<string>(\"coder\");\n\n  const selectedAgent = agents.find((a) => a.id === selectedAgentId);\n\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm \" + className}>\n      {/* Console Header */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-border gap-2\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"p-2 rounded-lg bg-primary/10 text-primary\">\n            <Users className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <h3 className=\"text-sm font-semibold text-foreground tracking-tight\">Multi-Agent Swarm Orchestrator</h3>\n            <span className=\"text-xs text-muted-foreground font-mono\">4 Subagents Active • Distributed Worktree</span>\n          </div>\n        </div>\n        <span className=\"inline-flex items-center gap-1.5 text-xs font-mono text-emerald-500 bg-emerald-500/10 px-2.5 py-1 rounded-full w-fit\">\n          <ShieldCheck className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n          Sandbox Active\n        </span>\n      </div>\n\n      {/* Agent Roster */}\n      <div className=\"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 my-4\">\n        {agents.map((agent) => {\n          const isSelected = agent.id === selectedAgentId;\n          return (\n            <div\n              key={agent.id}\n              onClick={() => setSelectedAgentId(agent.id)}\n              className={\n                \"p-3 rounded-lg border transition-all cursor-pointer flex flex-col justify-between \" +\n                (isSelected\n                  ? \"border-primary bg-primary/5 shadow-sm\"\n                  : \"border-border bg-background/50 hover:bg-muted/30\")\n              }\n            >\n              <div>\n                <div className=\"flex items-center justify-between gap-2 mb-1.5\">\n                  <span className=\"text-xs font-mono text-muted-foreground\">{agent.role}</span>\n                  <span\n                    className={\n                      \"w-2 h-2 rounded-full \" +\n                      (agent.status === \"executing\"\n                        ? \"bg-primary animate-ping\"\n                        : agent.status === \"thinking\"\n                        ? \"bg-amber-400\"\n                        : \"bg-muted-foreground\")\n                    }\n                    aria-hidden=\"true\"\n                  />\n                </div>\n                <h4 className=\"text-sm font-medium text-foreground\">{agent.name}</h4>\n              </div>\n              <div className=\"mt-3 pt-2 border-t border-border/50 text-xs font-mono text-muted-foreground flex justify-between\">\n                <span>Turns</span>\n                <span>{agent.turnsCompleted}</span>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Active Inspector Terminal */}\n      {selectedAgent && (\n        <div className=\"p-4 rounded-lg bg-background border border-border font-mono text-xs\">\n          <div className=\"flex items-center justify-between pb-2 mb-2 border-b border-border text-muted-foreground\">\n            <span className=\"flex items-center gap-1.5\">\n              <Bot className=\"w-3.5 h-3.5 text-primary\" role=\"img\" aria-hidden=\"true\" />\n              AGENT TELEMETRY // {selectedAgent.id.toUpperCase()}\n            </span>\n            <span>Status: {selectedAgent.status.toUpperCase()}</span>\n          </div>\n          <p className=\"text-foreground\">Current Task: {selectedAgent.currentTask || \"Idle\"}</p>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/ai-multi-agent-orchestrator-console.tsx"
       }
     ]
   },
@@ -326,7 +423,7 @@
     "files": [
       {
         "path": "registry/ai-native/ai-streaming-message.tsx",
-        "content": "/**\n * @license MIT\n * @origin Cult UI / Vercel AI SDK (https://cult-ui.com)\n * @author Cult UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Copy, Check, ThumbsUp, ThumbsDown, Bot, User, Sparkles } from \"lucide-react\";\n\nexport interface AiStreamingMessageProps extends React.HTMLAttributes<HTMLDivElement> {\n  role?: \"user\" | \"assistant\" | \"system\";\n  content: string;\n  isStreaming?: boolean;\n  modelName?: string;\n  timestamp?: string;\n  onFeedback?: (type: \"up\" | \"down\") => void;\n}\n\nexport function AiStreamingMessage({\n  role = \"assistant\",\n  content,\n  isStreaming = false,\n  modelName = \"Claude 3.7 Sonnet\",\n  timestamp,\n  onFeedback,\n  className,\n  ...props\n}: AiStreamingMessageProps) {\n  const [copied, setCopied] = React.useState(false);\n  const [feedback, setFeedback] = React.useState<\"up\" | \"down\" | null>(null);\n\n  const handleCopy = () => {\n    navigator.clipboard.writeText(content);\n    setCopied(true);\n    setTimeout(() => setCopied(false), 2000);\n  };\n\n  const handleFeedback = (type: \"up\" | \"down\") => {\n    setFeedback(type);\n    onFeedback?.(type);\n  };\n\n  const isAssistant = role === \"assistant\";\n  const isUser = role === \"user\";\n\n  return (\n    <div\n      className={cn(\n        \"flex w-full gap-3 p-4 rounded-2xl transition-colors\",\n        isUser\n          ? \"bg-muted/40 border border-border/60 ml-auto max-w-2xl\"\n          : \"bg-card border border-border max-w-3xl\",\n        className\n      )}\n      role=\"article\"\n      aria-label={`${role} message`}\n      {...props}\n    >\n      {/* Avatar Indicator */}\n      <div className=\"shrink-0 pt-0.5\">\n        {isAssistant ? (\n          <div className=\"flex items-center justify-center h-8 w-8 rounded-xl bg-primary/10 border border-primary/20 text-primary\">\n            <Sparkles className=\"h-4 w-4\" aria-hidden=\"true\" />\n          </div>\n        ) : isUser ? (\n          <div className=\"flex items-center justify-center h-8 w-8 rounded-xl bg-secondary border border-border text-secondary-foreground\">\n            <User className=\"h-4 w-4\" aria-hidden=\"true\" />\n          </div>\n        ) : (\n          <div className=\"flex items-center justify-center h-8 w-8 rounded-xl bg-muted border border-border text-muted-foreground\">\n            <Bot className=\"h-4 w-4\" aria-hidden=\"true\" />\n          </div>\n        )}\n      </div>\n\n      {/* Main Content Area */}\n      <div className=\"flex-1 flex flex-col min-w-0 space-y-2\">\n        {/* Header meta */}\n        <div className=\"flex items-center justify-between text-xs\">\n          <div className=\"flex items-center gap-2\">\n            <span className=\"font-semibold text-foreground\">\n              {isAssistant ? modelName : isUser ? \"You\" : \"System\"}\n            </span>\n            {isStreaming && (\n              <span className=\"inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-primary/10 text-primary text-xs font-mono\">\n                <span className=\"h-1.5 w-1.5 rounded-full bg-primary animate-ping\" />\n                streaming\n              </span>\n            )}\n          </div>\n          {timestamp && (\n            <span className=\"text-muted-foreground text-xs\">{timestamp}</span>\n          )}\n        </div>\n\n        {/* Message Body with Streaming Cursor */}\n        <div className=\"text-sm text-foreground leading-relaxed whitespace-pre-wrap break-words\">\n          {content}\n          {isStreaming && (\n            <span\n              className=\"inline-block w-2 h-4 ml-0.5 align-middle bg-primary animate-pulse\"\n              aria-hidden=\"true\"\n            />\n          )}\n        </div>\n\n        {/* Action Controls for Assistant Messages */}\n        {isAssistant && !isStreaming && (\n          <div className=\"flex items-center gap-1 pt-2 border-t border-border/40 text-muted-foreground\">\n            <button\n              type=\"button\"\n              onClick={handleCopy}\n              aria-label={copied ? \"Copied message\" : \"Copy message\"}\n              className=\"inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n            >\n              {copied ? (\n                <>\n                  <Check className=\"h-3.5 w-3.5 text-emerald-500\" aria-hidden=\"true\" />\n                  <span className=\"text-emerald-500 font-medium\">Copied</span>\n                </>\n              ) : (\n                <>\n                  <Copy className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                  <span>Copy</span>\n                </>\n              )}\n            </button>\n\n            <div className=\"h-3 w-px bg-border mx-1\" aria-hidden=\"true\" />\n\n            <button\n              type=\"button\"\n              onClick={() => handleFeedback(\"up\")}\n              aria-label=\"Thumbs up good response\"\n              className={cn(\n                \"p-1 rounded-md text-xs hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n                feedback === \"up\" ? \"text-primary bg-primary/10\" : \"hover:text-foreground\"\n              )}\n            >\n              <ThumbsUp className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n            </button>\n\n            <button\n              type=\"button\"\n              onClick={() => handleFeedback(\"down\")}\n              aria-label=\"Thumbs down poor response\"\n              className={cn(\n                \"p-1 rounded-md text-xs hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n                feedback === \"down\" ? \"text-destructive bg-destructive/10\" : \"hover:text-foreground\"\n              )}\n            >\n              <ThumbsDown className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n            </button>\n          </div>\n        )}\n      </div>\n    </div>\n  );\n}\n",
+        "content": "/**\n * @license MIT\n * @origin Cult UI / Vercel AI SDK (https://cult-ui.com)\n * @author Cult UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Copy, Check, ThumbsUp, ThumbsDown, Bot, User, Sparkles } from \"lucide-react\";\n\nexport interface AiStreamingMessageProps extends React.HTMLAttributes<HTMLDivElement> {\n  role?: \"user\" | \"assistant\" | \"system\";\n  content: string;\n  isStreaming?: boolean;\n  modelName?: string;\n  timestamp?: string;\n  onFeedback?: (type: \"up\" | \"down\") => void;\n}\n\nexport function AiStreamingMessage({\n  role = \"assistant\",\n  content,\n  isStreaming = false,\n  modelName = \"Claude 3.7 Sonnet\",\n  timestamp,\n  onFeedback,\n  className,\n  ...props\n}: AiStreamingMessageProps) {\n  const [copied, setCopied] = React.useState(false);\n  const [feedback, setFeedback] = React.useState<\"up\" | \"down\" | null>(null);\n\n  const handleCopy = () => {\n    navigator.clipboard.writeText(content);\n    setCopied(true);\n    setTimeout(() => setCopied(false), 2000);\n  };\n\n  const handleFeedback = (type: \"up\" | \"down\") => {\n    setFeedback(type);\n    onFeedback?.(type);\n  };\n\n  const isAssistant = role === \"assistant\";\n  const isUser = role === \"user\";\n\n  return (\n    <div\n      className={cn(\n        \"flex w-full gap-3 p-4 rounded-2xl transition-colors\",\n        isUser\n          ? \"bg-muted/40 border border-border/60 ml-auto max-w-2xl\"\n          : \"bg-card border border-border max-w-3xl\",\n        className\n      )}\n      role=\"article\"\n      aria-label={`${role} message`}\n      aria-live=\"polite\"\n      {...props}\n    >\n      {/* Avatar Indicator */}\n      <div className=\"shrink-0 pt-0.5\">\n        {isAssistant ? (\n          <div className=\"flex items-center justify-center h-8 w-8 rounded-xl bg-primary/10 border border-primary/20 text-primary\">\n            <Sparkles className=\"h-4 w-4\" aria-hidden=\"true\" />\n          </div>\n        ) : isUser ? (\n          <div className=\"flex items-center justify-center h-8 w-8 rounded-xl bg-secondary border border-border text-secondary-foreground\">\n            <User className=\"h-4 w-4\" aria-hidden=\"true\" />\n          </div>\n        ) : (\n          <div className=\"flex items-center justify-center h-8 w-8 rounded-xl bg-muted border border-border text-muted-foreground\">\n            <Bot className=\"h-4 w-4\" aria-hidden=\"true\" />\n          </div>\n        )}\n      </div>\n\n      {/* Main Content Area */}\n      <div className=\"flex-1 flex flex-col min-w-0 space-y-2\">\n        {/* Header meta */}\n        <div className=\"flex items-center justify-between text-xs\">\n          <div className=\"flex items-center gap-2\">\n            <span className=\"font-semibold text-foreground\">\n              {isAssistant ? modelName : isUser ? \"You\" : \"System\"}\n            </span>\n            {isStreaming && (\n              <span className=\"inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-primary/10 text-primary text-xs font-mono\">\n                <span className=\"h-1.5 w-1.5 rounded-full bg-primary animate-ping\" />\n                streaming\n              </span>\n            )}\n          </div>\n          {timestamp && (\n            <span className=\"text-muted-foreground text-xs\">{timestamp}</span>\n          )}\n        </div>\n\n        {/* Message Body with Streaming Cursor */}\n        <div className=\"text-sm text-foreground leading-relaxed whitespace-pre-wrap break-words\">\n          {content}\n          {isStreaming && (\n            <span\n              className=\"inline-block w-2 h-4 ml-0.5 align-middle bg-primary animate-pulse\"\n              aria-hidden=\"true\"\n            />\n          )}\n        </div>\n\n        {/* Action Controls for Assistant Messages */}\n        {isAssistant && !isStreaming && (\n          <div className=\"flex items-center gap-1 pt-2 border-t border-border/40 text-muted-foreground\">\n            <button\n              type=\"button\"\n              onClick={handleCopy}\n              aria-label={copied ? \"Copied message\" : \"Copy message\"}\n              className=\"inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs hover:bg-muted hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n            >\n              {copied ? (\n                <>\n                  <Check className=\"h-3.5 w-3.5 text-emerald-500\" aria-hidden=\"true\" />\n                  <span className=\"text-emerald-500 font-medium\">Copied</span>\n                </>\n              ) : (\n                <>\n                  <Copy className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                  <span>Copy</span>\n                </>\n              )}\n            </button>\n\n            <div className=\"h-3 w-px bg-border mx-1\" aria-hidden=\"true\" />\n\n            <button\n              type=\"button\"\n              onClick={() => handleFeedback(\"up\")}\n              aria-label=\"Thumbs up good response\"\n              className={cn(\n                \"p-1 rounded-md text-xs hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n                feedback === \"up\" ? \"text-primary bg-primary/10\" : \"hover:text-foreground\"\n              )}\n            >\n              <ThumbsUp className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n            </button>\n\n            <button\n              type=\"button\"\n              onClick={() => handleFeedback(\"down\")}\n              aria-label=\"Thumbs down poor response\"\n              className={cn(\n                \"p-1 rounded-md text-xs hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n                feedback === \"down\" ? \"text-destructive bg-destructive/10\" : \"hover:text-foreground\"\n              )}\n            >\n              <ThumbsDown className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n            </button>\n          </div>\n        )}\n      </div>\n    </div>\n  );\n}\n",
         "type": "registry:component",
         "target": "components/ui/ai-streaming-message.tsx"
       }
@@ -384,6 +481,52 @@
         "content": "/**\n * @license MIT\n * @origin Cult UI / Agent Wiki (https://cult-ui.com)\n * @author Cult UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport {\n  Terminal,\n  CheckCircle,\n  AlertTriangle,\n  RotateCw,\n  Copy,\n  Check,\n  ChevronDown,\n  Server,\n  Code2,\n} from \"lucide-react\";\n\nexport interface AiToolCallCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  serverName?: string;\n  toolName: string;\n  status: \"idle\" | \"running\" | \"success\" | \"error\";\n  inputParameters: Record<string, unknown>;\n  outputResult?: Record<string, unknown> | string;\n  executionTimeMs?: number;\n  errorMessage?: string;\n  onRetry?: () => void;\n}\n\nexport function AiToolCallCard({\n  serverName = \"design-agent-wiki\",\n  toolName,\n  status = \"success\",\n  inputParameters = {},\n  outputResult,\n  executionTimeMs = 180,\n  errorMessage,\n  onRetry,\n  className,\n  ...props\n}: AiToolCallCardProps) {\n  const [copied, setCopied] = React.useState(false);\n  const [activeTab, setActiveTab] = React.useState<\"input\" | \"output\">(\"input\");\n  const [isCollapsed, setIsCollapsed] = React.useState(false);\n\n  const handleCopy = () => {\n    const dataToCopy =\n      activeTab === \"input\"\n        ? JSON.stringify(inputParameters, null, 2)\n        : typeof outputResult === \"string\"\n        ? outputResult\n        : JSON.stringify(outputResult, null, 2);\n    navigator.clipboard.writeText(dataToCopy);\n    setCopied(true);\n    setTimeout(() => setCopied(false), 2000);\n  };\n\n  const isRunning = status === \"running\";\n  const isSuccess = status === \"success\";\n  const isError = status === \"error\";\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-2xl border bg-card text-card-foreground shadow-sm transition-colors overflow-hidden\",\n        isError ? \"border-destructive/60\" : isRunning ? \"border-primary/60\" : \"border-border\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`MCP Tool Call: ${toolName}`}\n      {...props}\n    >\n      {/* Header Bar */}\n      <div className=\"flex items-center justify-between px-4 py-3 bg-muted/30 border-b border-border\">\n        <div className=\"flex items-center gap-2.5\">\n          <div className=\"flex items-center justify-center h-7 w-7 rounded-lg bg-primary/10 text-primary border border-primary/20\">\n            <Terminal className=\"h-4 w-4\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <div className=\"flex items-center gap-2\">\n              <span className=\"font-mono text-xs font-semibold text-foreground\">\n                {toolName}\n              </span>\n              <span className=\"inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-muted text-muted-foreground text-xs font-mono\">\n                <Server className=\"h-3 w-3\" aria-hidden=\"true\" />\n                {serverName}\n              </span>\n            </div>\n          </div>\n        </div>\n\n        {/* Status Pill & Collapse Toggle */}\n        <div className=\"flex items-center gap-2\">\n          {isRunning ? (\n            <span className=\"inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium\">\n              <RotateCw className=\"h-3 w-3 animate-spin\" aria-hidden=\"true\" />\n              Executing ({executionTimeMs}ms)\n            </span>\n          ) : isSuccess ? (\n            <span className=\"inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-medium\">\n              <CheckCircle className=\"h-3 w-3\" aria-hidden=\"true\" />\n              Passed ({executionTimeMs}ms)\n            </span>\n          ) : (\n            <span className=\"inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-destructive/10 text-destructive text-xs font-medium\">\n              <AlertTriangle className=\"h-3 w-3\" aria-hidden=\"true\" />\n              Failed\n            </span>\n          )}\n\n          {isError && onRetry && (\n            <button\n              type=\"button\"\n              onClick={onRetry}\n              aria-label=\"Retry failed tool execution\"\n              className=\"p-1 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n            >\n              <RotateCw className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n            </button>\n          )}\n\n          <button\n            type=\"button\"\n            onClick={() => setIsCollapsed((prev) => !prev)}\n            aria-expanded={!isCollapsed}\n            aria-label={isCollapsed ? \"Expand tool parameters\" : \"Collapse tool parameters\"}\n            className=\"p-1 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n          >\n            <ChevronDown\n              className={cn(\"h-4 w-4 transition-transform duration-200\", isCollapsed && \"-rotate-90\")}\n              aria-hidden=\"true\"\n            />\n          </button>\n        </div>\n      </div>\n\n      {/* Main Body */}\n      {!isCollapsed && (\n        <div className=\"flex flex-col p-4 space-y-3\">\n          {/* Error Banner */}\n          {isError && errorMessage && (\n            <div className=\"p-3 rounded-xl bg-destructive/10 border border-destructive/30 text-xs text-destructive flex items-start gap-2\">\n              <AlertTriangle className=\"h-4 w-4 shrink-0 mt-0.5\" aria-hidden=\"true\" />\n              <span className=\"font-mono\">{errorMessage}</span>\n            </div>\n          )}\n\n          {/* Sub-Tabs: Input / Output */}\n          <div className=\"flex items-center justify-between border-b border-border pb-2\">\n            <div className=\"flex items-center gap-1.5\">\n              <button\n                type=\"button\"\n                onClick={() => setActiveTab(\"input\")}\n                className={cn(\n                  \"px-2.5 py-1 rounded-lg text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n                  activeTab === \"input\"\n                    ? \"bg-muted text-foreground font-semibold\"\n                    : \"text-muted-foreground hover:text-foreground\"\n                )}\n              >\n                Arguments\n              </button>\n              {outputResult !== undefined && (\n                <button\n                  type=\"button\"\n                  onClick={() => setActiveTab(\"output\")}\n                  className={cn(\n                    \"px-2.5 py-1 rounded-lg text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n                    activeTab === \"output\"\n                      ? \"bg-muted text-foreground font-semibold\"\n                      : \"text-muted-foreground hover:text-foreground\"\n                  )}\n                >\n                  Result Payload\n                </button>\n              )}\n            </div>\n\n            <button\n              type=\"button\"\n              onClick={handleCopy}\n              aria-label={copied ? \"Copied JSON payload\" : \"Copy JSON payload\"}\n              className=\"inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n            >\n              {copied ? (\n                <>\n                  <Check className=\"h-3 w-3 text-emerald-500\" aria-hidden=\"true\" />\n                  <span className=\"text-emerald-500 font-medium\">Copied</span>\n                </>\n              ) : (\n                <>\n                  <Copy className=\"h-3 w-3\" aria-hidden=\"true\" />\n                  <span>Copy JSON</span>\n                </>\n              )}\n            </button>\n          </div>\n\n          {/* JSON Inspector View */}\n          <div className=\"relative rounded-xl border border-border bg-muted/40 p-3 font-mono text-xs text-foreground overflow-x-auto max-h-64\">\n            <pre>\n              {activeTab === \"input\"\n                ? JSON.stringify(inputParameters, null, 2)\n                : typeof outputResult === \"string\"\n                ? outputResult\n                : JSON.stringify(outputResult, null, 2)}\n            </pre>\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n",
         "type": "registry:component",
         "target": "components/ui/ai-tool-call-card.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "screenshot-refactor-sandbox",
+    "type": "registry:ui",
+    "title": "Screenshot Refactor Sandbox",
+    "description": "Curated production-grade component.",
+    "category": "ui:primitive",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "tailwind-v4",
+      "wai-aria-compliant"
+    ],
+    "dials": {
+      "design_variance": 3,
+      "motion_intensity": 2,
+      "visual_density": 8
+    },
+    "complexity": "low",
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/design-agent-wiki",
+      "license_type": "MIT",
+      "author": "Community Contributor",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/ai-native/screenshot-refactor-sandbox.tsx",
+        "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { Sliders, Code2, Image as ImageIcon, CheckCircle, RefreshCw, Sparkles } from \"lucide-react\";\n\nexport interface ScreenshotRefactorSandboxProps {\n  referenceImageUrl?: string;\n  initialCode?: string;\n  className?: string;\n}\n\nexport function ScreenshotRefactorSandbox({\n  referenceImageUrl = \"/images/reference-mockup.png\",\n  initialCode = `<div className=\"p-4 bg-card border border-border rounded-lg\">\\n  <h3 className=\"text-base font-semibold text-foreground\">Zero-Slop Card</h3>\\n  <p className=\"text-sm text-muted-foreground mt-1\">Refactored from vision reference.</p>\\n</div>`,\n  className = \"\",\n}: ScreenshotRefactorSandboxProps) {\n  const [activeTab, setActiveTab] = useState<\"split\" | \"code\" | \"preview\">(\"split\");\n  const [unslopScore, setUnslopScore] = useState<number>(100);\n\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm \" + className}>\n      {/* Header */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-border gap-2\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"p-2 rounded-lg bg-primary/10 text-primary\">\n            <Sparkles className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <h3 className=\"text-sm font-semibold text-foreground tracking-tight\">Screenshot-to-Code Refactor Sandbox</h3>\n            <span className=\"text-xs text-muted-foreground font-mono\">Vision AST Ingestion & Anti-Slop Normalizer</span>\n          </div>\n        </div>\n        <div className=\"flex items-center gap-2\">\n          <span className=\"inline-flex items-center gap-1 text-xs font-mono text-emerald-500 bg-emerald-500/10 px-2.5 py-1 rounded-full\">\n            <CheckCircle className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n            Audit: {unslopScore}/100 S-Grade\n          </span>\n        </div>\n      </div>\n\n      {/* Split Workspace */}\n      <div className=\"grid grid-cols-1 md:grid-cols-2 gap-4 my-4\">\n        {/* Left: Vision Mockup Reference */}\n        <div className=\"p-4 rounded-lg bg-muted/30 border border-border flex flex-col items-center justify-center min-h-[220px] text-center\">\n          <ImageIcon className=\"w-8 h-8 text-muted-foreground mb-2 opacity-50\" role=\"img\" aria-hidden=\"true\" />\n          <span className=\"text-xs font-medium text-foreground\">Visual Reference Target</span>\n          <span className=\"text-xs text-muted-foreground mt-1 max-w-[240px]\">\n            Input screenshot / Figma design deconstructed into semantic tokens and responsive layout.\n          </span>\n        </div>\n\n        {/* Right: Refactored TSX Code */}\n        <div className=\"p-4 rounded-lg bg-background border border-border font-mono text-xs text-foreground overflow-x-auto flex flex-col justify-between\">\n          <pre className=\"text-muted-foreground\">\n            <code>{initialCode}</code>\n          </pre>\n          <div className=\"mt-4 pt-2 border-t border-border/60 flex items-center justify-between text-xs text-muted-foreground\">\n            <span>Tailwind v4 Semantic Tokens</span>\n            <span>WCAG 2.1 AA Certified</span>\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:ui",
+        "target": "components/ui/screenshot-refactor-sandbox.tsx"
       }
     ]
   },
@@ -2475,6 +2618,62 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "interactive-3d-pin-canvas",
+    "type": "registry:component",
+    "title": "Interactive3 D Pin Canvas",
+    "description": "Curated production-grade component.",
+    "category": "ui:creative",
+    "tags": [
+      "lucide-react",
+      "webgl",
+      "threejs",
+      "tailwind-v4",
+      "brutalist",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "canvas"
+    ],
+    "dials": {
+      "design_variance": 10,
+      "motion_intensity": 9,
+      "visual_density": 5
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/design-agent-wiki",
+      "license_type": "MIT",
+      "author": "Community Contributor",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "three",
+      "motion"
+    ],
+    "devDependencies": [
+      "@types/three"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/creative/interactive-3d-pin-canvas.tsx",
+        "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { Box, RotateCw, MapPin, Eye } from \"lucide-react\";\n\nexport interface PinItem {\n  id: string;\n  title: string;\n  description: string;\n  topPct: number;\n  leftPct: number;\n}\n\nexport interface Interactive3DPinCanvasProps {\n  pins?: PinItem[];\n  modelTitle?: string;\n  className?: string;\n}\n\nexport function Interactive3DPinCanvas({\n  pins = [\n    { id: \"1\", title: \"Optical Sensor Array\", description: \"Multi-axis tracking sensor with zero drift\", topPct: 35, leftPct: 40 },\n    { id: \"2\", title: \"Thermal Dissipation Core\", description: \"Ceramic heat spreader with passive airflow channels\", topPct: 55, leftPct: 65 },\n    { id: \"3\", title: \"Lithium Power Module\", description: \"Fast-charging solid state cell with 48h autonomy\", topPct: 70, leftPct: 30 },\n  ],\n  modelTitle = \"Industrial Telemetry Unit\",\n  className = \"\",\n}: Interactive3DPinCanvasProps) {\n  const [activePinId, setActivePinId] = useState<string | null>(\"1\");\n  const [rotationAngle, setRotationAngle] = useState<number>(0);\n\n  const activePin = pins.find((p) => p.id === activePinId);\n\n  const handleRotate = () => {\n    setRotationAngle((prev) => (prev + 45) % 360);\n  };\n\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm flex flex-col \" + className}>\n      {/* Header */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-border gap-2\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"p-2 rounded-lg bg-primary/10 text-primary\">\n            <Box className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <h3 className=\"text-sm font-semibold text-foreground tracking-tight\">{modelTitle}</h3>\n            <span className=\"text-xs text-muted-foreground font-mono\">Interactive 3D Spatial Canvas • WebGL Ready</span>\n          </div>\n        </div>\n        <button\n          type=\"button\"\n          onClick={handleRotate}\n          className=\"inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none w-fit\"\n          aria-label=\"Rotate 3D model 45 degrees\"\n        >\n          <RotateCw className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n          Rotate 45°\n        </button>\n      </div>\n\n      {/* 3D Viewport Simulation Surface with Hotspot Pins */}\n      <div \n        className=\"relative w-full h-64 my-4 rounded-lg bg-gradient-to-b from-muted/30 to-muted/80 border border-border overflow-hidden flex items-center justify-center\"\n        role=\"region\"\n        aria-label=\"3D Model Viewport\"\n      >\n        {/* Isometric 3D Wireframe Silhouette */}\n        <div\n          style={{ transform: `rotate(${rotationAngle}deg)`, transition: \"transform 0.4s ease-out\" }}\n          className=\"w-36 h-36 rounded-2xl border-2 border-dashed border-primary/40 flex items-center justify-center bg-card/60 shadow-lg relative motion-reduce:transition-none\"\n        >\n          <Box className=\"w-16 h-16 text-primary/60\" role=\"img\" aria-hidden=\"true\" />\n        </div>\n\n        {/* Hotspot Pins */}\n        {pins.map((pin) => {\n          const isActive = pin.id === activePinId;\n          return (\n            <button\n              key={pin.id}\n              type=\"button\"\n              onClick={() => setActivePinId(pin.id)}\n              style={{ top: `${pin.topPct}%`, left: `${pin.leftPct}%` }}\n              className={\n                \"absolute -translate-x-1/2 -translate-y-1/2 p-2 rounded-full transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none \" +\n                (isActive\n                  ? \"bg-primary text-primary-foreground scale-110 shadow-md ring-4 ring-primary/20\"\n                  : \"bg-card border border-border text-foreground hover:scale-105\")\n              }\n              aria-label={`View annotation: ${pin.title}`}\n            >\n              <MapPin className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n            </button>\n          );\n        })}\n      </div>\n\n      {/* Active Pin Detail Card */}\n      {activePin && (\n        <div className=\"p-3.5 rounded-lg bg-background border border-border flex items-start justify-between gap-3\">\n          <div>\n            <h4 className=\"text-xs font-semibold text-foreground\">{activePin.title}</h4>\n            <p className=\"text-xs text-muted-foreground mt-0.5\">{activePin.description}</p>\n          </div>\n          <span className=\"text-xs font-mono text-primary shrink-0 flex items-center gap-1\">\n            <Eye className=\"w-3 h-3\" role=\"img\" aria-hidden=\"true\" />\n            Active\n          </span>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/interactive-3d-pin-canvas.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "iridescence-shader-plane",
     "type": "registry:component",
     "title": "Iridescence Chromatic Shader Plane",
@@ -2790,6 +2989,61 @@
         "content": "/**\n * @license MIT\n * @origin React Bits (https://reactbits.dev)\n * @author React Bits Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface NoiseTextureCardProps {\n  title: string;\n  subtitle?: string;\n  description: string;\n  tag?: string;\n  className?: string;\n}\n\nexport function NoiseTextureCard({\n  title,\n  subtitle,\n  description,\n  tag = \"Creative Engine\",\n  className,\n}: NoiseTextureCardProps) {\n  return (\n    <div\n      className={cn(\n        \"group relative overflow-hidden rounded-2xl border border-border bg-card p-8 text-card-foreground shadow-sm transition-all hover:border-border/80 hover:shadow-md\",\n        className\n      )}\n    >\n      {/* Micro SVG Noise Texture Pattern */}\n      <svg\n        className=\"pointer-events-none absolute inset-0 h-full w-full opacity-20 transition-opacity group-hover:opacity-30\"\n        aria-hidden=\"true\"\n      >\n        <filter id=\"noiseFilter\">\n          <feTurbulence\n            type=\"fractalNoise\"\n            baseFrequency=\"0.8\"\n            numOctaves=\"3\"\n            stitchTiles=\"stitch\"\n          />\n        </filter>\n        <rect width=\"100%\" height=\"100%\" filter=\"url(#noiseFilter)\" />\n      </svg>\n\n      <div className=\"relative z-10\">\n        <div className=\"inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary\">\n          {tag}\n        </div>\n        <h3 className=\"mt-4 text-xl font-bold tracking-tight text-foreground\">\n          {title}\n        </h3>\n        {subtitle && (\n          <p className=\"mt-1 text-xs font-medium uppercase tracking-wider text-muted-foreground\">\n            {subtitle}\n          </p>\n        )}\n        <p className=\"mt-3 text-sm leading-relaxed text-muted-foreground\">\n          {description}\n        </p>\n      </div>\n    </div>\n  );\n}\n",
         "type": "registry:component",
         "target": "components/ui/noise-texture-card.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "particle-emitter-burst",
+    "type": "registry:component",
+    "title": "Particle Emitter Burst",
+    "description": "Curated production-grade component.",
+    "category": "ui:creative",
+    "tags": [
+      "lucide-react",
+      "webgl",
+      "threejs",
+      "canvas",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant"
+    ],
+    "dials": {
+      "design_variance": 8,
+      "motion_intensity": 9,
+      "visual_density": 5
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": true
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/design-agent-wiki",
+      "license_type": "MIT",
+      "author": "Community Contributor",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "three",
+      "motion"
+    ],
+    "devDependencies": [
+      "@types/three"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/creative/particle-emitter-burst.tsx",
+        "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState, useEffect, useRef } from \"react\";\nimport { Sparkles, Play, Pause, RefreshCw } from \"lucide-react\";\n\nexport interface ParticleEmitterBurstProps {\n  particleCount?: number;\n  burstText?: string;\n  className?: string;\n}\n\nexport function ParticleEmitterBurst({\n  particleCount = 40,\n  burstText = \"Milestone Achieved\",\n  className = \"\",\n}: ParticleEmitterBurstProps) {\n  const [isActive, setIsActive] = useState<boolean>(true);\n  const canvasRef = useRef<HTMLCanvasElement | null>(null);\n\n  useEffect(() => {\n    // A11y: Respect user motion preferences (SLOP-014)\n    if (typeof window !== \"undefined\" && window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches) {\n      setIsActive(false);\n      return;\n    }\n\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    let animId: number;\n    // Pre-allocate typed arrays outside animation loop (SLOP-032)\n    const count = particleCount;\n    const xPos = new Float32Array(count);\n    const yPos = new Float32Array(count);\n    const xVel = new Float32Array(count);\n    const yVel = new Float32Array(count);\n    const radii = new Float32Array(count);\n\n    const initParticles = () => {\n      const w = canvas.width;\n      const h = canvas.height;\n      for (let i = 0; i < count; i++) {\n        xPos[i] = w / 2;\n        yPos[i] = h / 2;\n        const angle = Math.random() * Math.PI * 2;\n        const speed = Math.random() * 3 + 1;\n        xVel[i] = Math.cos(angle) * speed;\n        yVel[i] = Math.sin(angle) * speed;\n        radii[i] = Math.random() * 3 + 1.5;\n      }\n    };\n\n    initParticles();\n\n    const renderLoop = () => {\n      if (!isActive) return;\n      ctx.clearRect(0, 0, canvas.width, canvas.height);\n\n      ctx.fillStyle = \"rgba(168, 85, 247, 0.8)\"; // Accent particle tint\n      for (let i = 0; i < count; i++) {\n        xPos[i] += xVel[i];\n        yPos[i] += yVel[i];\n\n        ctx.beginPath();\n        ctx.arc(xPos[i], yPos[i], radii[i], 0, Math.PI * 2);\n        ctx.fill();\n\n        // Wrap around bounds\n        if (xPos[i] < 0 || xPos[i] > canvas.width || yPos[i] < 0 || yPos[i] > canvas.height) {\n          xPos[i] = canvas.width / 2;\n          yPos[i] = canvas.height / 2;\n        }\n      }\n\n      animId = requestAnimationFrame(renderLoop);\n    };\n\n    if (isActive) {\n      animId = requestAnimationFrame(renderLoop);\n    }\n\n    // Clean up event listener / timer to prevent memory leaks (SLOP-025)\n    return () => {\n      if (animId) cancelAnimationFrame(animId);\n    };\n  }, [isActive, particleCount]);\n\n  return (\n    <div className={\"relative w-full rounded-xl border border-border bg-card p-6 text-card-foreground shadow-sm overflow-hidden flex flex-col items-center justify-center min-h-[260px] \" + className}>\n      {/* Particle Canvas with Static Fallback */}\n      <canvas\n        ref={canvasRef}\n        width={400}\n        height={260}\n        className=\"absolute inset-0 w-full h-full pointer-events-none opacity-60\"\n        role=\"img\"\n        aria-label=\"Interactive particle burst celebration visual\"\n      >\n        <span className=\"sr-only\">Celebration particle effects fallback</span>\n      </canvas>\n\n      {/* Foreground Content */}\n      <div className=\"relative z-10 text-center\">\n        <div className=\"inline-flex p-3 rounded-full bg-primary/10 text-primary mb-3\">\n          <Sparkles className=\"w-6 h-6\" role=\"img\" aria-hidden=\"true\" />\n        </div>\n        <h3 className=\"text-lg font-bold text-foreground tracking-tight\">{burstText}</h3>\n        <p className=\"text-xs text-muted-foreground mt-1 max-w-[280px]\">\n          GPU particle celebration engine with automatic prefers-reduced-motion suppression.\n        </p>\n\n        <div className=\"mt-4 flex items-center justify-center gap-2\">\n          <button\n            type=\"button\"\n            onClick={() => setIsActive((prev) => !prev)}\n            className=\"inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n            aria-label={isActive ? \"Pause particle animation\" : \"Play particle animation\"}\n          >\n            {isActive ? <Pause className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" /> : <Play className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />}\n            {isActive ? \"Pause\" : \"Resume\"}\n          </button>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/particle-emitter-burst.tsx"
       }
     ]
   },
@@ -4050,6 +4304,52 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "metric-timeseries-spark-table",
+    "type": "registry:component",
+    "title": "Metric Timeseries Spark Table",
+    "description": "Curated production-grade component.",
+    "category": "ui:editorial",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "wai-aria-compliant",
+      "editorial"
+    ],
+    "dials": {
+      "design_variance": 5,
+      "motion_intensity": 1,
+      "visual_density": 10
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/design-agent-wiki",
+      "license_type": "MIT",
+      "author": "Community Contributor",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/editorial/metric-timeseries-spark-table.tsx",
+        "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { TrendingUp, TrendingDown, Activity, ArrowUpDown } from \"lucide-react\";\n\nexport interface MetricRow {\n  id: string;\n  name: string;\n  category: string;\n  value: string;\n  deltaPct: number;\n  sparkline: number[];\n  status: \"nominal\" | \"warning\" | \"critical\";\n}\n\nexport interface MetricTimeseriesSparkTableProps {\n  metrics?: MetricRow[];\n  title?: string;\n  className?: string;\n}\n\nexport function MetricTimeseriesSparkTable({\n  metrics = [\n    { id: \"1\", name: \"Inference Latency P99\", category: \"Performance\", value: \"312ms\", deltaPct: -14.2, sparkline: [420, 390, 370, 340, 312], status: \"nominal\" },\n    { id: \"2\", name: \"Cache Hit Ratio\", category: \"Memory\", value: \"94.8%\", deltaPct: 4.6, sparkline: [88, 90, 91, 93, 94.8], status: \"nominal\" },\n    { id: \"3\", name: \"WCAG Contrast Violations\", category: \"Accessibility\", value: \"0\", deltaPct: -100, sparkline: [12, 8, 4, 1, 0], status: \"nominal\" },\n    { id: \"4\", name: \"Token Burn Rate\", category: \"Cost\", value: \"1.2k/min\", deltaPct: 28.4, sparkline: [700, 850, 920, 1100, 1200], status: \"warning\" },\n  ],\n  title = \"Telemetry & System Vitals\",\n  className = \"\",\n}: MetricTimeseriesSparkTableProps) {\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm \" + className}>\n      <div className=\"flex items-center justify-between pb-4 border-b border-border\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"p-2 rounded-lg bg-primary/10 text-primary\">\n            <Activity className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <h3 className=\"text-sm font-semibold text-foreground tracking-tight\">{title}</h3>\n            <span className=\"text-xs text-muted-foreground font-mono\">High-Density Telemetry Matrix</span>\n          </div>\n        </div>\n      </div>\n\n      <div className=\"overflow-x-auto my-3\">\n        <table className=\"w-full text-left text-xs font-mono\">\n          <thead>\n            <tr className=\"border-b border-border text-muted-foreground\">\n              <th className=\"pb-2 font-medium\">METRIC</th>\n              <th className=\"pb-2 font-medium\">CATEGORY</th>\n              <th className=\"pb-2 font-medium text-right\">VALUE</th>\n              <th className=\"pb-2 font-medium text-right\">TREND (24H)</th>\n              <th className=\"pb-2 font-medium text-right\">SPARKLINE</th>\n            </tr>\n          </thead>\n          <tbody className=\"divide-y divide-border/60\">\n            {metrics.map((m) => {\n              const isPositive = m.deltaPct >= 0;\n              return (\n                <tr key={m.id} className=\"hover:bg-muted/30 transition-colors\">\n                  <td className=\"py-2.5 font-medium text-foreground\">{m.name}</td>\n                  <td className=\"py-2.5 text-muted-foreground\">{m.category}</td>\n                  <td className=\"py-2.5 text-right font-bold text-foreground\">{m.value}</td>\n                  <td className=\"py-2.5 text-right\">\n                    <span\n                      className={\n                        \"inline-flex items-center gap-0.5 \" +\n                        (m.status === \"warning\" ? \"text-amber-500\" : isPositive ? \"text-emerald-500\" : \"text-blue-500\")\n                      }\n                    >\n                      {isPositive ? <TrendingUp className=\"w-3 h-3\" role=\"img\" aria-hidden=\"true\" /> : <TrendingDown className=\"w-3 h-3\" role=\"img\" aria-hidden=\"true\" />}\n                      {m.deltaPct > 0 ? `+${m.deltaPct}%` : `${m.deltaPct}%`}\n                    </span>\n                  </td>\n                  <td className=\"py-2.5 text-right\">\n                    <svg className=\"w-16 h-5 ml-auto overflow-visible\" role=\"img\" aria-label={`Trend sparkline for ${m.name}`}>\n                      <polyline\n                        fill=\"none\"\n                        stroke=\"currentColor\"\n                        strokeWidth=\"1.5\"\n                        strokeLinecap=\"round\"\n                        strokeLinejoin=\"round\"\n                        className=\"text-primary\"\n                        points={m.sparkline\n                          .map((val, idx) => {\n                            const min = Math.min(...m.sparkline);\n                            const max = Math.max(...m.sparkline) || 1;\n                            const x = (idx / (m.sparkline.length - 1)) * 64;\n                            const y = 18 - ((val - min) / (max - min || 1)) * 16;\n                            return `${x},${y}`;\n                          })\n                          .join(\" \")}\n                      />\n                    </svg>\n                  </td>\n                </tr>\n              );\n            })}\n          </tbody>\n        </table>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/metric-timeseries-spark-table.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "minimal-table",
     "type": "registry:component",
     "title": "Minimal Table",
@@ -4277,6 +4577,51 @@
         "content": "/**\n * @license MIT\n * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)\n * @author Cathryn Lavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface QuadrantItem {\n  id: string;\n  name: string;\n  x: number; // 0 to 100\n  y: number; // 0 to 100\n  category?: string;\n}\n\nexport interface StrategicQuadrantMatrixProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  xAxisLabel?: string;\n  yAxisLabel?: string;\n  topLeftLabel?: string;\n  topRightLabel?: string;\n  bottomLeftLabel?: string;\n  bottomRightLabel?: string;\n  items?: QuadrantItem[];\n}\n\nconst DEFAULT_ITEMS: QuadrantItem[] = [\n  { id: \"1\", name: \"AI Artifact Canvas\", x: 85, y: 90 },\n  { id: \"2\", name: \"ReUI Data Grid\", x: 80, y: 75 },\n  { id: \"3\", name: \"Motion Dialog\", x: 65, y: 60 },\n  { id: \"4\", name: \"Generic Indigo Button\", x: 20, y: 15 },\n  { id: \"5\", name: \"Standard Input\", x: 25, y: 70 },\n];\n\nexport function StrategicQuadrantMatrix({\n  title = \"Impact vs. Implementation Effort Matrix\",\n  xAxisLabel = \"Implementation Effort →\",\n  yAxisLabel = \"User Value & Impact ↑\",\n  topLeftLabel = \"Quick Wins (High Value, Low Effort)\",\n  topRightLabel = \"Strategic Bets (High Value, High Effort)\",\n  bottomLeftLabel = \"Low Priority\",\n  bottomRightLabel = \"Time Traps (Low Value, High Effort)\",\n  items = DEFAULT_ITEMS,\n  className,\n  ...props\n}: StrategicQuadrantMatrixProps) {\n  return (\n    <figure\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Strategic 2x2 Quadrant Matrix: ${title}`}\n      {...props}\n    >\n      <header className=\"border-b border-border pb-3 mb-6\">\n        <h3 className=\"text-sm font-bold text-foreground\">{title}</h3>\n        <p className=\"text-xs text-muted-foreground mt-0.5\">\n          2x2 analytical decision quadrant plotting components by architectural complexity and design impact.\n        </p>\n      </header>\n\n      <div className=\"relative w-full max-w-xl mx-auto aspect-square border border-border rounded-xl bg-muted/10 p-6\">\n        {/* Quadrant Axis Dividers */}\n        <div className=\"absolute left-1/2 top-0 bottom-0 w-px bg-border/80\" aria-hidden=\"true\" />\n        <div className=\"absolute top-1/2 left-0 right-0 h-px bg-border/80\" aria-hidden=\"true\" />\n\n        {/* Quadrant Region Labels */}\n        <div className=\"absolute top-3 left-4 text-[10px] font-bold text-emerald-600 dark:text-emerald-400\">\n          {topLeftLabel}\n        </div>\n        <div className=\"absolute top-3 right-4 text-[10px] font-bold text-primary\">\n          {topRightLabel}\n        </div>\n        <div className=\"absolute bottom-3 left-4 text-[10px] font-bold text-muted-foreground\">\n          {bottomLeftLabel}\n        </div>\n        <div className=\"absolute bottom-3 right-4 text-[10px] font-bold text-destructive\">\n          {bottomRightLabel}\n        </div>\n\n        {/* Plotted Items */}\n        {items.map((item) => {\n          return (\n            <div\n              key={item.id}\n              style={{\n                left: `${item.x}%`,\n                bottom: `${item.y}%`,\n                transform: \"translate(-50%, 50%)\",\n              }}\n              className=\"absolute group z-10 cursor-pointer\"\n            >\n              <div className=\"flex items-center gap-1 px-2 py-1 rounded-md bg-background border border-border shadow-xs text-[10px] font-semibold hover:border-primary transition-colors\">\n                <span className=\"h-1.5 w-1.5 rounded-full bg-primary\" aria-hidden=\"true\" />\n                <span>{item.name}</span>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n\n      <footer className=\"mt-6 flex items-center justify-between text-xs text-muted-foreground font-mono\">\n        <span>{yAxisLabel}</span>\n        <span>{xAxisLabel}</span>\n      </footer>\n    </figure>\n  );\n}\n",
         "type": "registry:component",
         "target": "components/ui/strategic-quadrant-matrix.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "structured-sla-slo-gauge",
+    "type": "registry:ui",
+    "title": "Structured S L A S L O Gauge",
+    "description": "Curated production-grade component.",
+    "category": "ui:primitive",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "wai-aria-compliant"
+    ],
+    "dials": {
+      "design_variance": 3,
+      "motion_intensity": 2,
+      "visual_density": 8
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/design-agent-wiki",
+      "license_type": "MIT",
+      "author": "Community Contributor",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/editorial/structured-sla-slo-gauge.tsx",
+        "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React from \"react\";\nimport { ShieldCheck, AlertCircle } from \"lucide-react\";\n\nexport interface StructuredSLASLOGaugeProps {\n  targetPercent?: number;\n  currentPercent?: number;\n  serviceName?: string;\n  errorBudgetBurnRate?: string;\n  className?: string;\n}\n\nexport function StructuredSLASLOGauge({\n  targetPercent = 99.9,\n  currentPercent = 99.95,\n  serviceName = \"Agent Wiki Edge Gateway\",\n  errorBudgetBurnRate = \"0.2x (Nominal)\",\n  className = \"\",\n}: StructuredSLASLOGaugeProps) {\n  const isHealthy = currentPercent >= targetPercent;\n\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm flex flex-col items-center \" + className}>\n      <div className=\"w-full flex items-center justify-between pb-3 border-b border-border mb-4\">\n        <div>\n          <span className=\"text-xs font-mono text-muted-foreground uppercase tracking-wider\">Service Level Objective</span>\n          <h3 className=\"text-sm font-semibold text-foreground tracking-tight\">{serviceName}</h3>\n        </div>\n        <span\n          className={\n            \"inline-flex items-center gap-1 text-xs font-mono px-2.5 py-0.5 rounded-full \" +\n            (isHealthy ? \"text-emerald-500 bg-emerald-500/10\" : \"text-destructive bg-destructive/10\")\n          }\n        >\n          {isHealthy ? <ShieldCheck className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" /> : <AlertCircle className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />}\n          {isHealthy ? \"TARGET MET\" : \"BREACH\"}\n        </span>\n      </div>\n\n      {/* SVG Semi-Circle Gauge */}\n      <div className=\"relative w-48 h-28 my-2 flex items-center justify-center\">\n        <svg className=\"w-48 h-48 -rotate-90\" viewBox=\"0 0 100 100\" role=\"img\" aria-label={`SLO Gauge: ${currentPercent}%`}>\n          <circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"currentColor\" strokeWidth=\"8\" fill=\"none\" className=\"text-muted/40\" strokeDasharray=\"125 250\" />\n          <circle\n            cx=\"50\"\n            cy=\"50\"\n            r=\"40\"\n            stroke=\"currentColor\"\n            strokeWidth=\"8\"\n            fill=\"none\"\n            strokeLinecap=\"round\"\n            className=\"text-primary transition-[stroke-dashoffset] duration-500\"\n            strokeDasharray=\"125 250\"\n            strokeDashoffset={125 - 125 * (currentPercent / 100)}\n          />\n        </svg>\n        <div className=\"absolute bottom-2 flex flex-col items-center\">\n          <span className=\"text-2xl font-bold font-mono tracking-tight text-foreground\">{currentPercent}%</span>\n          <span className=\"text-xs font-mono text-muted-foreground\">Target: {targetPercent}%</span>\n        </div>\n      </div>\n\n      {/* Footer Metrics */}\n      <div className=\"w-full mt-4 pt-3 border-t border-border/80 flex items-center justify-between text-xs font-mono text-muted-foreground\">\n        <span>Error Budget Burn</span>\n        <span className=\"text-foreground\">{errorBudgetBurnRate}</span>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:ui",
+        "target": "components/ui/structured-sla-slo-gauge.tsx"
       }
     ]
   },
@@ -5574,6 +5919,52 @@
         "content": "/**\n * @license MIT\n * @origin Groot Studio (https://groot.studio)\n * @author Groot Studio Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { motion, useMotionValue, useSpring } from \"motion/react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface FluidCursorProps {\n  className?: string;\n  size?: number;\n}\n\nexport function FluidCursor({ className, size = 32 }: FluidCursorProps) {\n  const mouseX = useMotionValue(-100);\n  const mouseY = useMotionValue(-100);\n  const [isVisible, setIsVisible] = React.useState(false);\n\n  const springConfig = { damping: 20, stiffness: 200, mass: 0.2 };\n  const smoothX = useSpring(mouseX, springConfig);\n  const smoothY = useSpring(mouseY, springConfig);\n\n  React.useEffect(() => {\n    // Only activate on devices with a mouse\n    if (window.matchMedia(\"(pointer: coarse)\").matches) return;\n\n    const handleMouseMove = (e: MouseEvent) => {\n      mouseX.set(e.clientX - size / 2);\n      mouseY.set(e.clientY - size / 2);\n      if (!isVisible) setIsVisible(true);\n    };\n\n    const handleMouseLeave = () => setIsVisible(false);\n    const handleMouseEnter = () => setIsVisible(true);\n\n    window.addEventListener(\"mousemove\", handleMouseMove);\n    document.addEventListener(\"mouseleave\", handleMouseLeave);\n    document.addEventListener(\"mouseenter\", handleMouseEnter);\n\n    return () => {\n      window.removeEventListener(\"mousemove\", handleMouseMove);\n      document.removeEventListener(\"mouseleave\", handleMouseLeave);\n      document.removeEventListener(\"mouseenter\", handleMouseEnter);\n    };\n  }, [mouseX, mouseY, size, isVisible]);\n\n  if (!isVisible) return null;\n\n  return (\n    <motion.div\n      style={{\n        x: smoothX,\n        y: smoothY,\n        width: size,\n        height: size,\n      }}\n      className={cn(\n        \"pointer-events-none fixed left-0 top-0 z-50 rounded-full border border-primary/40 bg-primary/10 backdrop-blur-xs\",\n        className\n      )}\n      aria-hidden=\"true\"\n    />\n  );\n}\n",
         "type": "registry:component",
         "target": "components/ui/fluid-cursor.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "gsap-scroll-trigger-timeline",
+    "type": "registry:component",
+    "title": "G S A P Scroll Trigger Timeline",
+    "description": "Curated production-grade component.",
+    "category": "ui:media",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "brutalist",
+      "wai-aria-compliant"
+    ],
+    "dials": {
+      "design_variance": 5,
+      "motion_intensity": 2,
+      "visual_density": 8
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/design-agent-wiki",
+      "license_type": "MIT",
+      "author": "Community Contributor",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/motion/gsap-scroll-trigger-timeline.tsx",
+        "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { GitCommit, ArrowDown, Check, Layers } from \"lucide-react\";\n\nexport interface TimelineStep {\n  stepNumber: string;\n  title: string;\n  description: string;\n  badge: string;\n}\n\nexport interface GSAPScrollTriggerTimelineProps {\n  steps?: TimelineStep[];\n  className?: string;\n}\n\nexport function GSAPScrollTriggerTimeline({\n  steps = [\n    { stepNumber: \"01\", title: \"AST Static Harvest\", description: \"Extracts imports, JSX structure, and peer dependencies from git repositories.\", badge: \"PARSER\" },\n    { stepNumber: \"02\", title: \"50-Rule Anti-Slop Audit\", description: \"Verifies zero arbitrary units, proper contrast, and WAI-ARIA labels.\", badge: \"LINTER\" },\n    { stepNumber: \"03\", title: \"Dual Registry Compilation\", description: \"Builds token-efficient /r/ JSON schemas and /llms.txt manifests.\", badge: \"COMPILER\" },\n    { stepNumber: \"04\", title: \"Zero-Draft Certification\", description: \"Executes headless Playwright tests across mobile, tablet, and desktop viewports.\", badge: \"EVAL\" },\n  ],\n  className = \"\",\n}: GSAPScrollTriggerTimelineProps) {\n  const [activeStepIndex, setActiveStepIndex] = useState<number>(1);\n\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-6 text-card-foreground shadow-sm \" + className}>\n      <div className=\"pb-4 mb-6 border-b border-border flex items-center justify-between\">\n        <div>\n          <span className=\"text-xs font-mono text-muted-foreground uppercase tracking-wider\">Kinetic Journey</span>\n          <h3 className=\"text-base font-semibold text-foreground tracking-tight\">Kinetic Execution Timeline</h3>\n        </div>\n        <span className=\"text-xs font-mono text-muted-foreground\">\n          Step {activeStepIndex + 1} of {steps.length}\n        </span>\n      </div>\n\n      {/* Vertical Stepper Timeline */}\n      <div className=\"relative pl-6 space-y-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-border\">\n        {steps.map((step, idx) => {\n          const isActive = idx === activeStepIndex;\n          const isPassed = idx < activeStepIndex;\n          return (\n            <div\n              key={step.stepNumber}\n              onClick={() => setActiveStepIndex(idx)}\n              className={\n                \"relative transition-all cursor-pointer p-3 rounded-lg \" +\n                (isActive ? \"bg-muted text-foreground border border-border\" : \"hover:bg-muted/40 text-muted-foreground\")\n              }\n            >\n              {/* Bullet Node */}\n              <div\n                className={\n                  \"absolute -left-[31px] top-4 w-5 h-5 rounded-full flex items-center justify-center text-xs font-mono transition-colors \" +\n                  (isPassed\n                    ? \"bg-primary text-primary-foreground\"\n                    : isActive\n                    ? \"bg-card border-2 border-primary text-primary\"\n                    : \"bg-muted border border-border text-muted-foreground\")\n                }\n              >\n                {isPassed ? <Check className=\"w-3 h-3\" role=\"img\" aria-hidden=\"true\" /> : idx + 1}\n              </div>\n\n              <div className=\"flex items-center justify-between gap-2 mb-1\">\n                <span className=\"text-xs font-mono tracking-wide\">{step.badge}</span>\n                <span className=\"text-xs font-mono text-muted-foreground\">{step.stepNumber}</span>\n              </div>\n              <h4 className={\"text-sm font-medium \" + (isActive ? \"text-foreground\" : \"text-foreground/80\")}>\n                {step.title}\n              </h4>\n              <p className=\"text-xs text-muted-foreground mt-1\">{step.description}</p>\n            </div>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/gsap-scroll-trigger-timeline.tsx"
       }
     ]
   },
@@ -9321,6 +9712,101 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "universal-icon-resolver",
+    "type": "registry:component",
+    "title": "Universal Icon Resolver",
+    "description": "Curated production-grade component.",
+    "category": "ui:utility",
+    "tags": [
+      "lucide-react",
+      "wai-aria-compliant",
+      "utility"
+    ],
+    "dials": {
+      "design_variance": 2,
+      "motion_intensity": 4,
+      "visual_density": 7
+    },
+    "complexity": "low",
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/design-agent-wiki",
+      "license_type": "MIT",
+      "author": "Community Contributor",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/utility/universal-icon-resolver.tsx",
+        "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React from \"react\";\nimport * as LucideIcons from \"lucide-react\";\n\nexport type IconSet = \"lucide\" | \"tabler\" | \"iconoir\";\n\nexport interface UniversalIconResolverProps {\n  name: string;\n  size?: number;\n  className?: string;\n  fallbackIcon?: string;\n}\n\nexport function UniversalIconResolver({\n  name,\n  size = 18,\n  className = \"\",\n  fallbackIcon = \"HelpCircle\",\n}: UniversalIconResolverProps) {\n  // 1. Resolve normalized PascalCase name for Lucide registry\n  const formattedName = name\n    .split(/[-_]/)\n    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())\n    .join(\"\");\n\n  const IconComponent =\n    (LucideIcons as Record<string, React.ElementType>)[formattedName] ||\n    (LucideIcons as Record<string, React.ElementType>)[fallbackIcon] ||\n    LucideIcons.HelpCircle;\n\n  return (\n    <span className={\"inline-flex items-center justify-center \" + className} role=\"img\" aria-label={name}>\n      <IconComponent size={size} className=\"currentColor\" role=\"img\" aria-hidden=\"true\" />\n    </span>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/universal-icon-resolver.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "agent-dag-execution-flow",
+    "type": "registry:block",
+    "title": "Agent D A G Execution Flow",
+    "description": "Curated production-grade component.",
+    "category": "ui:block",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 3,
+      "visual_density": 8
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/design-agent-wiki",
+      "license_type": "MIT",
+      "author": "Community Contributor",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/workflow/agent-dag-execution-flow.tsx",
+        "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { CheckCircle2, Loader2, AlertCircle, Clock, ArrowRight, Play, RefreshCw } from \"lucide-react\";\n\nexport type DAGStepStatus = \"idle\" | \"running\" | \"completed\" | \"error\";\n\nexport interface DAGStepNode {\n  id: string;\n  name: string;\n  role: string;\n  durationMs?: number;\n  status: DAGStepStatus;\n  outputSummary?: string;\n  dependencies: string[];\n}\n\nexport interface AgentDAGExecutionFlowProps {\n  nodes?: DAGStepNode[];\n  pipelineName?: string;\n  className?: string;\n}\n\nexport function AgentDAGExecutionFlow({\n  nodes = [\n    { id: \"1\", name: \"1. Intent Classifier\", role: \"Router Agent\", durationMs: 240, status: \"completed\", outputSummary: \"Query classified as ui:motion\", dependencies: [] },\n    { id: \"2\", name: \"2. AST Dependency Parser\", role: \"Harvester Agent\", durationMs: 480, status: \"completed\", outputSummary: \"Found motion/react & lucide-react\", dependencies: [\"1\"] },\n    { id: \"3\", name: \"3. Slop & A11y Gate\", role: \"Audit Linter\", durationMs: 310, status: \"running\", outputSummary: \"Evaluating SLOP-001..SLOP-050\", dependencies: [\"2\"] },\n    { id: \"4\", name: \"4. Registry Compiler\", role: \"Builder Agent\", status: \"idle\", outputSummary: \"Waiting for QA certification\", dependencies: [\"3\"] },\n  ],\n  pipelineName = \"Autonomous UI Component Ingestion Pipeline\",\n  className = \"\",\n}: AgentDAGExecutionFlowProps) {\n  const [pipelineNodes, setPipelineNodes] = useState<DAGStepNode[]>(nodes);\n  const [activeStepId, setActiveStepId] = useState<string>(\"3\");\n\n  const activeNode = pipelineNodes.find((n) => n.id === activeStepId);\n\n  const getStatusBadge = (status: DAGStepStatus) => {\n    switch (status) {\n      case \"completed\":\n        return (\n          <span className=\"inline-flex items-center gap-1 text-xs font-mono text-emerald-500 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full\">\n            <CheckCircle2 className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n            PASS\n          </span>\n        );\n      case \"running\":\n        return (\n          <span className=\"inline-flex items-center gap-1 text-xs font-mono text-primary bg-primary/10 px-2 py-0.5 rounded-full animate-pulse\">\n            <Loader2 className=\"w-3.5 h-3.5 animate-spin\" role=\"img\" aria-hidden=\"true\" />\n            ACTIVE\n          </span>\n        );\n      case \"error\":\n        return (\n          <span className=\"inline-flex items-center gap-1 text-xs font-mono text-destructive bg-destructive/10 px-2 py-0.5 rounded-full\">\n            <AlertCircle className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n            FAIL\n          </span>\n        );\n      default:\n        return (\n          <span className=\"inline-flex items-center gap-1 text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded-full\">\n            <Clock className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n            IDLE\n          </span>\n        );\n    }\n  };\n\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm \" + className}>\n      {/* Header */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-border gap-2\">\n        <div>\n          <span className=\"text-xs font-mono text-muted-foreground tracking-wider uppercase\">Multi-Agent DAG</span>\n          <h3 className=\"text-base font-semibold text-foreground tracking-tight\">{pipelineName}</h3>\n        </div>\n        <div className=\"flex items-center gap-2\">\n          <button\n            type=\"button\"\n            onClick={() => {\n              setPipelineNodes((prev) =>\n                prev.map((n) => ({ ...n, status: n.id === \"1\" ? \"running\" : \"idle\" }))\n              );\n            }}\n            className=\"inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n            aria-label=\"Restart DAG Pipeline\"\n          >\n            <RefreshCw className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n            Restart\n          </button>\n        </div>\n      </div>\n\n      {/* DAG Flow Grid */}\n      <div className=\"grid grid-cols-1 md:grid-cols-4 gap-3 my-5\">\n        {pipelineNodes.map((node, index) => {\n          const isSelected = node.id === activeStepId;\n          return (\n            <div\n              key={node.id}\n              onClick={() => setActiveStepId(node.id)}\n              className={\n                \"relative p-3.5 rounded-lg border transition-all cursor-pointer flex flex-col justify-between \" +\n                (isSelected\n                  ? \"border-primary bg-primary/5 shadow-sm\"\n                  : \"border-border bg-background/50 hover:border-muted-foreground/30\")\n              }\n            >\n              <div>\n                <div className=\"flex items-center justify-between gap-2 mb-2\">\n                  <span className=\"text-xs font-mono text-muted-foreground\">{node.role}</span>\n                  {getStatusBadge(node.status)}\n                </div>\n                <h4 className=\"text-sm font-medium text-foreground\">{node.name}</h4>\n              </div>\n\n              {node.durationMs && (\n                <div className=\"mt-3 pt-2 border-t border-border/50 flex items-center justify-between text-xs font-mono text-muted-foreground\">\n                  <span>Latency</span>\n                  <span>{node.durationMs}ms</span>\n                </div>\n              )}\n\n              {/* Connector Arrow */}\n              {index < pipelineNodes.length - 1 && (\n                <div className=\"hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-6 h-6 items-center justify-center rounded-full bg-card border border-border text-muted-foreground\">\n                  <ArrowRight className=\"w-3 h-3\" role=\"img\" aria-hidden=\"true\" />\n                </div>\n              )}\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Active Node Inspector */}\n      {activeNode && (\n        <div className=\"p-4 rounded-lg bg-muted/40 border border-border\">\n          <div className=\"flex items-center justify-between mb-2\">\n            <span className=\"text-xs font-mono text-muted-foreground\">STEP INSPECTOR // {activeNode.name}</span>\n            <span className=\"text-xs font-mono text-muted-foreground\">{activeNode.role}</span>\n          </div>\n          <div className=\"text-sm font-mono text-foreground bg-background p-3 rounded-md border border-border/60\">\n            {activeNode.outputSummary || \"No output telemetry available for this step.\"}\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+        "type": "registry:block",
+        "target": "components/ui/agent-dag-execution-flow.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "agent-inspector-drawer",
     "type": "registry:component",
     "title": "Agent Inspector Drawer",
@@ -9479,6 +9965,51 @@
         "content": "/**\n * @license MIT\n * @origin XY Flow & Magic UI (https://xyflow.com / https://magicui.design)\n * @author XY Flow & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface AgentNodeWirePulseProps extends React.SVGProps<SVGSVGElement> {\n  startX: number;\n  startY: number;\n  endX: number;\n  endY: number;\n  curvature?: number;\n  pulseColor?: string;\n  duration?: number;\n}\n\nexport function AgentNodeWirePulse({\n  startX = 50,\n  startY = 50,\n  endX = 250,\n  endY = 150,\n  curvature = 0.5,\n  pulseColor = \"currentColor\",\n  duration = 2.5,\n  className,\n  ...props\n}: AgentNodeWirePulseProps) {\n  const pathId = React.useId();\n\n  // Compute cubic bezier control points\n  const dx = endX - startX;\n  const dy = endY - startY;\n  const cp1x = startX + dx * curvature;\n  const cp1y = startY;\n  const cp2x = endX - dx * curvature;\n  const cp2y = endY;\n\n  const pathData = `M ${startX} ${startY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;\n\n  return (\n    <svg\n      className={cn(\"pointer-events-none overflow-visible w-full h-full\", className)}\n      role=\"img\"\n      aria-label=\"Workflow node wire with animated data pulse\"\n      {...props}\n    >\n      <defs>\n        <linearGradient id={`${pathId}-gradient`} x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"0%\">\n          <stop offset=\"0%\" stopColor=\"var(--color-primary, #3b82f6)\" stopOpacity=\"0\" />\n          <stop offset=\"50%\" stopColor=\"var(--color-primary, #3b82f6)\" stopOpacity=\"1\" />\n          <stop offset=\"100%\" stopColor=\"var(--color-primary, #3b82f6)\" stopOpacity=\"0\" />\n        </linearGradient>\n      </defs>\n\n      {/* Base Connector Wire */}\n      <path\n        d={pathData}\n        fill=\"none\"\n        stroke=\"currentColor\"\n        strokeWidth=\"2\"\n        className=\"text-border transition-colors duration-200\"\n      />\n\n      {/* Animated Pulse Beam along wire */}\n      <path\n        d={pathData}\n        fill=\"none\"\n        stroke={`url(#${pathId}-gradient)`}\n        strokeWidth=\"3\"\n        strokeLinecap=\"round\"\n        strokeDasharray=\"40 120\"\n        className=\"animate-wire-pulse\"\n        style={{\n          animationDuration: `${duration}s`,\n        }}\n      />\n\n      {/* Connection Endpoint Anchors */}\n      <circle cx={startX} cy={startY} r=\"3\" className=\"fill-primary\" />\n      <circle cx={endX} cy={endY} r=\"3\" className=\"fill-primary\" />\n\n      <style dangerouslySetInnerHTML={{\n        __html: `\n          @keyframes wire-pulse {\n            from {\n              stroke-dashoffset: 160;\n            }\n            to {\n              stroke-dashoffset: 0;\n            }\n          }\n          .animate-wire-pulse {\n            animation: wire-pulse 2.5s linear infinite;\n          }\n          @media (prefers-reduced-motion: reduce) {\n            .animate-wire-pulse {\n              animation: none !important;\n              stroke-dasharray: none !important;\n              opacity: 0.5;\n            }\n          }\n        `,\n      }} />\n    </svg>\n  );\n}\n",
         "type": "registry:ui",
         "target": "components/ui/agent-node-wire-pulse.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "branch-diff-tree-inspector",
+    "type": "registry:ui",
+    "title": "Branch Diff Tree Inspector",
+    "description": "Curated production-grade component.",
+    "category": "ui:primitive",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "wai-aria-compliant"
+    ],
+    "dials": {
+      "design_variance": 3,
+      "motion_intensity": 2,
+      "visual_density": 8
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/design-agent-wiki",
+      "license_type": "MIT",
+      "author": "Community Contributor",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/workflow/branch-diff-tree-inspector.tsx",
+        "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { GitBranch, GitCommit, GitMerge, FileCode, Check, AlertCircle } from \"lucide-react\";\n\nexport interface CommitNode {\n  id: string;\n  sha: string;\n  message: string;\n  author: string;\n  timestamp: string;\n  status: \"clean\" | \"conflict\" | \"merged\";\n  filesChanged: number;\n}\n\nexport interface BranchDiffTreeInspectorProps {\n  branchName?: string;\n  baseBranch?: string;\n  commits?: CommitNode[];\n  className?: string;\n}\n\nexport function BranchDiffTreeInspector({\n  branchName = \"feature/screened-gems-ingest\",\n  baseBranch = \"main\",\n  commits = [\n    { id: \"1\", sha: \"7fa29c1\", message: \"feat: add 47 screened repositories into harvester catalog\", author: \"Antigravity Agent\", timestamp: \"10m ago\", status: \"clean\", filesChanged: 3 },\n    { id: \"2\", sha: \"3cd408f\", message: \"codemod: implement screenshot-unslop AST normalizer\", author: \"Antigravity Agent\", timestamp: \"6m ago\", status: \"clean\", filesChanged: 2 },\n    { id: \"3\", sha: \"e901ab2\", message: \"a11y: inject WCAG 2.1 AA luminance contrast checker\", author: \"Antigravity Agent\", timestamp: \"2m ago\", status: \"merged\", filesChanged: 4 },\n  ],\n  className = \"\",\n}: BranchDiffTreeInspectorProps) {\n  const [selectedSha, setSelectedSha] = useState<string>(commits[0]?.sha || \"\");\n\n  const activeCommit = commits.find((c) => c.sha === selectedSha);\n\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm \" + className}>\n      {/* Branch Header */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-border gap-2\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"p-2 rounded-lg bg-primary/10 text-primary\">\n            <GitBranch className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <div className=\"flex items-center gap-2\">\n              <span className=\"text-sm font-semibold text-foreground font-mono\">{branchName}</span>\n              <span className=\"text-xs text-muted-foreground font-mono\">into {baseBranch}</span>\n            </div>\n            <span className=\"text-xs text-muted-foreground\">3 commits ahead of base</span>\n          </div>\n        </div>\n        <span className=\"inline-flex items-center gap-1 text-xs font-mono text-emerald-500 bg-emerald-500/10 px-2.5 py-1 rounded-full w-fit\">\n          <Check className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n          Able to Merge\n        </span>\n      </div>\n\n      {/* Commit Tree List */}\n      <div className=\"divide-y divide-border my-3\">\n        {commits.map((commit) => {\n          const isSelected = commit.sha === selectedSha;\n          return (\n            <div\n              key={commit.sha}\n              onClick={() => setSelectedSha(commit.sha)}\n              className={\n                \"p-3 rounded-lg flex items-center justify-between gap-4 cursor-pointer transition-colors \" +\n                (isSelected ? \"bg-muted text-foreground\" : \"hover:bg-muted/40 text-foreground/80\")\n              }\n            >\n              <div className=\"flex items-center gap-3\">\n                <GitCommit className=\"w-4 h-4 text-muted-foreground shrink-0\" role=\"img\" aria-hidden=\"true\" />\n                <div>\n                  <p className=\"text-sm font-medium text-foreground\">{commit.message}</p>\n                  <div className=\"flex items-center gap-2 text-xs font-mono text-muted-foreground mt-0.5\">\n                    <span className=\"bg-background px-1.5 py-0.5 rounded border border-border\">{commit.sha}</span>\n                    <span>{commit.author}</span>\n                    <span>•</span>\n                    <span>{commit.timestamp}</span>\n                  </div>\n                </div>\n              </div>\n              <div className=\"flex items-center gap-2 shrink-0 text-xs font-mono text-muted-foreground\">\n                <FileCode className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n                <span>{commit.filesChanged} files</span>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Selected Diff Inspector */}\n      {activeCommit && (\n        <div className=\"mt-3 p-3.5 rounded-lg bg-background border border-border\">\n          <div className=\"flex items-center justify-between text-xs font-mono text-muted-foreground mb-1.5\">\n            <span>COMMIT DETAIL // {activeCommit.sha}</span>\n            <span>Status: {activeCommit.status.toUpperCase()}</span>\n          </div>\n          <p className=\"text-xs text-foreground font-mono\">{activeCommit.message}</p>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+        "type": "registry:ui",
+        "target": "components/ui/branch-diff-tree-inspector.tsx"
       }
     ]
   },
@@ -9669,6 +10200,62 @@
         "content": "/**\n * @license MIT\n * @origin Excalidraw (https://github.com/excalidraw/excalidraw)\n * @author Excalidraw & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useRef, useState, useEffect } from \"react\";\nimport { PenTool, Eraser, RotateCcw, Download, Sparkles } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface EmbeddedWhiteboardProps {\n  initialText?: string;\n  className?: string;\n}\n\nexport function EmbeddedWhiteboard({\n  initialText = \"AI Agent Workflow Whiteboard Annotation\",\n  className,\n}: EmbeddedWhiteboardProps) {\n  const canvasRef = useRef<HTMLCanvasElement | null>(null);\n  const [tool, setTool] = useState<\"pen\" | \"eraser\">(\"pen\");\n  const [isDrawing, setIsDrawing] = useState<boolean>(false);\n  const [strokeCount, setStrokeCount] = useState<number>(0);\n\n  useEffect(() => {\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    // Set high-DPI scaling\n    const dpr = window.devicePixelRatio || 1;\n    const rect = canvas.getBoundingClientRect();\n    canvas.width = rect.width * dpr;\n    canvas.height = rect.height * dpr;\n    ctx.scale(dpr, dpr);\n\n    // Initial sketch prompt text\n    ctx.fillStyle = \"#888888\";\n    ctx.font = \"14px monospace\";\n    ctx.fillText(`// ${initialText}`, 20, 30);\n  }, [initialText]);\n\n  const clearCanvas = () => {\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n    ctx.clearRect(0, 0, canvas.width, canvas.height);\n    setStrokeCount(0);\n  };\n\n  const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    setIsDrawing(true);\n    const rect = canvas.getBoundingClientRect();\n    ctx.beginPath();\n    ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);\n  };\n\n  const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {\n    if (!isDrawing) return;\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    const rect = canvas.getBoundingClientRect();\n    ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);\n    ctx.strokeStyle = tool === \"pen\" ? \"currentColor\" : \"var(--background, #fff)\";\n    ctx.lineWidth = tool === \"pen\" ? 2 : 16;\n    ctx.lineCap = \"round\";\n    ctx.stroke();\n  };\n\n  const handlePointerUp = () => {\n    setIsDrawing(false);\n    setStrokeCount((prev) => prev + 1);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card text-foreground overflow-hidden shadow-sm\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Embedded Vector Whiteboard\"\n    >\n      <div className=\"flex items-center justify-between border-b border-border bg-muted/30 px-4 py-2.5\">\n        <div className=\"flex items-center gap-2\">\n          <PenTool className=\"h-4 w-4 text-primary\" aria-hidden=\"true\" />\n          <span className=\"text-xs font-mono font-medium tracking-tight\">\n            WHITEBOARD // ANNOTATION_CANVAS\n          </span>\n        </div>\n        <div className=\"flex items-center gap-2\">\n          <button\n            type=\"button\"\n            onClick={() => setTool(\"pen\")}\n            aria-pressed={tool === \"pen\"}\n            aria-label=\"Select pen tool\"\n            className={cn(\n              \"p-1.5 rounded-md border text-xs transition-colors focus-visible:ring-2 focus-visible:ring-ring\",\n              tool === \"pen\" ? \"bg-primary text-primary-foreground border-primary\" : \"bg-background border-border hover:bg-muted\"\n            )}\n          >\n            <PenTool className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n          </button>\n          <button\n            type=\"button\"\n            onClick={() => setTool(\"eraser\")}\n            aria-pressed={tool === \"eraser\"}\n            aria-label=\"Select eraser tool\"\n            className={cn(\n              \"p-1.5 rounded-md border text-xs transition-colors focus-visible:ring-2 focus-visible:ring-ring\",\n              tool === \"eraser\" ? \"bg-primary text-primary-foreground border-primary\" : \"bg-background border-border hover:bg-muted\"\n            )}\n          >\n            <Eraser className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n          </button>\n          <button\n            type=\"button\"\n            onClick={clearCanvas}\n            aria-label=\"Clear whiteboard canvas\"\n            className=\"p-1.5 rounded-md border border-border bg-background text-xs transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <RotateCcw className=\"h-3.5 w-3.5 text-muted-foreground\" aria-hidden=\"true\" />\n          </button>\n        </div>\n      </div>\n\n      <div className=\"relative h-64 w-full bg-background\">\n        <canvas\n          ref={canvasRef}\n          onPointerDown={handlePointerDown}\n          onPointerMove={handlePointerMove}\n          onPointerUp={handlePointerUp}\n          onPointerLeave={handlePointerUp}\n          className=\"h-full w-full cursor-crosshair touch-none\"\n        >\n          {/* Static accessible text fallback for screen-readers & non-canvas clients (SLOP-031) */}\n          <div className=\"p-4 text-xs text-muted-foreground\">\n            Fallback view: {initialText}. Interactive vector sketching is not supported on this device.\n          </div>\n        </canvas>\n      </div>\n\n      <div className=\"flex items-center justify-between border-t border-border bg-muted/20 px-4 py-2 text-[11px] font-mono text-muted-foreground\">\n        <span>STROKES: {strokeCount}</span>\n        <span>EXCALIDRAW_PRIMITIVE</span>\n      </div>\n    </div>\n  );\n}\n",
         "type": "registry:component",
         "target": "components/ui/embedded-whiteboard.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "infinite-canvas-whiteboard",
+    "type": "registry:component",
+    "title": "Infinite Canvas Whiteboard",
+    "description": "Curated production-grade component.",
+    "category": "ui:creative",
+    "tags": [
+      "lucide-react",
+      "webgl",
+      "threejs",
+      "tailwind-v4",
+      "glassmorphism",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "canvas"
+    ],
+    "dials": {
+      "design_variance": 8,
+      "motion_intensity": 9,
+      "visual_density": 5
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/design-agent-wiki",
+      "license_type": "MIT",
+      "author": "Community Contributor",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "three",
+      "motion"
+    ],
+    "devDependencies": [
+      "@types/three"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/workflow/infinite-canvas-whiteboard.tsx",
+        "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState, useRef, useEffect } from \"react\";\nimport { \n  Square, \n  Circle, \n  ArrowUpRight, \n  Type, \n  ZoomIn, \n  ZoomOut, \n  Maximize2, \n  Download,\n  MousePointer,\n  Trash2\n} from \"lucide-react\";\n\nexport type CanvasTool = \"select\" | \"rectangle\" | \"circle\" | \"arrow\" | \"text\";\n\nexport interface CanvasElement {\n  id: string;\n  type: CanvasTool;\n  x: number;\n  y: number;\n  width: number;\n  height: number;\n  label?: string;\n  color?: string;\n}\n\nexport interface InfiniteCanvasWhiteboardProps {\n  initialElements?: CanvasElement[];\n  className?: string;\n}\n\nexport function InfiniteCanvasWhiteboard({\n  initialElements = [\n    { id: \"1\", type: \"rectangle\", x: 120, y: 100, width: 160, height: 90, label: \"Frontend Agent\", color: \"var(--primary)\" },\n    { id: \"2\", type: \"circle\", x: 380, y: 100, width: 100, height: 100, label: \"MCP Server\", color: \"var(--muted-foreground)\" },\n    { id: \"3\", type: \"arrow\", x: 280, y: 145, width: 100, height: 0, label: \"JSON-RPC\" },\n  ],\n  className = \"\",\n}: InfiniteCanvasWhiteboardProps) {\n  const [elements, setElements] = useState<CanvasElement[]>(initialElements);\n  const [selectedTool, setSelectedTool] = useState<CanvasTool>(\"select\");\n  const [selectedId, setSelectedId] = useState<string | null>(null);\n  const [zoom, setZoom] = useState<number>(1);\n  const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });\n  const [isPanning, setIsPanning] = useState<boolean>(false);\n  const startPanRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });\n\n  const handleZoomIn = () => setZoom((prev) => Math.min(2, Math.round((prev + 0.1) * 10) / 10));\n  const handleZoomOut = () => setZoom((prev) => Math.max(0.5, Math.round((prev - 0.1) * 10) / 10));\n  const handleResetView = () => {\n    setZoom(1);\n    setPan({ x: 0, y: 0 });\n  };\n\n  const handleDeleteSelected = () => {\n    if (!selectedId) return;\n    setElements((prev) => prev.filter((el) => el.id !== selectedId));\n    setSelectedId(null);\n  };\n\n  const handleAddElement = (tool: CanvasTool) => {\n    const newEl: CanvasElement = {\n      id: \"el-\" + Date.now(),\n      type: tool,\n      x: 200 - pan.x,\n      y: 180 - pan.y,\n      width: tool === \"circle\" ? 100 : tool === \"rectangle\" ? 140 : 120,\n      height: tool === \"circle\" ? 100 : tool === \"rectangle\" ? 80 : 40,\n      label: tool.toUpperCase(),\n      color: \"var(--foreground)\",\n    };\n    setElements((prev) => [...prev, newEl]);\n    setSelectedId(newEl.id);\n  };\n\n  return (\n    <div \n      className={\"relative w-full h-[520px] rounded-xl border border-border bg-background overflow-hidden select-none flex flex-col \" + className}\n      role=\"region\"\n      aria-label=\"Infinite Canvas Whiteboard\"\n    >\n      {/* Top Toolbar */}\n      <div className=\"absolute top-4 left-4 z-10 flex items-center gap-1 bg-card/90 backdrop-blur-sm border border-border p-1.5 rounded-lg shadow-sm\">\n        <button\n          type=\"button\"\n          onClick={() => setSelectedTool(\"select\")}\n          className={\"p-2 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none \" + (selectedTool === \"select\" ? \"bg-muted text-foreground\" : \"text-muted-foreground hover:text-foreground\")}\n          aria-label=\"Select tool\"\n        >\n          <MousePointer className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          onClick={() => handleAddElement(\"rectangle\")}\n          className=\"p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          aria-label=\"Add Rectangle\"\n        >\n          <Square className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          onClick={() => handleAddElement(\"circle\")}\n          className=\"p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          aria-label=\"Add Circle\"\n        >\n          <Circle className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          onClick={() => handleAddElement(\"text\")}\n          className=\"p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          aria-label=\"Add Text Node\"\n        >\n          <Type className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n        {selectedId && (\n          <button\n            type=\"button\"\n            onClick={handleDeleteSelected}\n            className=\"p-2 rounded-md text-destructive hover:bg-destructive/10 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ml-1 border-l border-border pl-2\"\n            aria-label=\"Delete Selected Node\"\n          >\n            <Trash2 className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n          </button>\n        )}\n      </div>\n\n      {/* Viewport Controls */}\n      <div className=\"absolute bottom-4 right-4 z-10 flex items-center gap-1 bg-card/90 backdrop-blur-sm border border-border p-1.5 rounded-lg shadow-sm\">\n        <button\n          type=\"button\"\n          onClick={handleZoomOut}\n          className=\"p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          aria-label=\"Zoom Out\"\n        >\n          <ZoomOut className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n        <span className=\"text-xs font-mono px-2 text-muted-foreground min-w-[48px] text-center\" aria-live=\"polite\">\n          {Math.round(zoom * 100)}%\n        </span>\n        <button\n          type=\"button\"\n          onClick={handleZoomIn}\n          className=\"p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          aria-label=\"Zoom In\"\n        >\n          <ZoomIn className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          onClick={handleResetView}\n          className=\"p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ml-1 border-l border-border pl-2\"\n          aria-label=\"Reset View\"\n        >\n          <Maximize2 className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n      </div>\n\n      {/* SVG Canvas Area */}\n      <svg\n        role=\"img\"\n        aria-label=\"Interactive visual canvas surface\"\n        className=\"w-full h-full cursor-grab active:cursor-grabbing bg-dot-grid motion-reduce:transition-none\"\n        style={{\n          backgroundImage: \"radial-gradient(var(--border) 1px, transparent 1px)\",\n          backgroundSize: `${20 * zoom}px ${20 * zoom}px`,\n          backgroundPosition: `${pan.x}px ${pan.y}px`,\n        }}\n        onMouseDown={(e) => {\n          if (e.target === e.currentTarget) {\n            setSelectedId(null);\n            setIsPanning(true);\n            startPanRef.current = { x: e.clientX - pan.x, y: e.clientY - pan.y };\n          }\n        }}\n        onMouseMove={(e) => {\n          if (isPanning) {\n            setPan({\n              x: e.clientX - startPanRef.current.x,\n              y: e.clientY - startPanRef.current.y,\n            });\n          }\n        }}\n        onMouseUp={() => setIsPanning(false)}\n        onMouseLeave={() => setIsPanning(false)}\n      >\n        <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`}>\n          {elements.map((el) => {\n            const isSelected = el.id === selectedId;\n            return (\n              <g\n                key={el.id}\n                transform={`translate(${el.x}, ${el.y})`}\n                onClick={(e) => {\n                  e.stopPropagation();\n                  setSelectedId(el.id);\n                }}\n                className=\"cursor-pointer\"\n              >\n                {el.type === \"rectangle\" && (\n                  <rect\n                    width={el.width}\n                    height={el.height}\n                    rx={8}\n                    className={\"fill-card stroke-2 \" + (isSelected ? \"stroke-primary\" : \"stroke-border\")}\n                  />\n                )}\n                {el.type === \"circle\" && (\n                  <circle\n                    cx={el.width / 2}\n                    cy={el.height / 2}\n                    r={el.width / 2}\n                    className={\"fill-card stroke-2 \" + (isSelected ? \"stroke-primary\" : \"stroke-border\")}\n                  />\n                )}\n                {el.type === \"text\" && (\n                  <rect\n                    width={el.width}\n                    height={el.height}\n                    rx={4}\n                    className={\"fill-muted/30 stroke-1 \" + (isSelected ? \"stroke-primary\" : \"stroke-border/40\")}\n                  />\n                )}\n                {el.label && (\n                  <text\n                    x={el.width / 2}\n                    y={el.height / 2}\n                    textAnchor=\"middle\"\n                    dominantBaseline=\"middle\"\n                    className=\"text-xs font-mono fill-foreground select-none pointer-events-none\"\n                  >\n                    {el.label}\n                  </text>\n                )}\n              </g>\n            );\n          })}\n        </g>\n      </svg>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/infinite-canvas-whiteboard.tsx"
       }
     ]
   },
