@@ -62,28 +62,50 @@ Add the MCP server to your Codex plugin configuration in `.codex/config.json`:
 }
 ```
 
----
+### Remote Cloudflare Worker Edge MCP (Universal / Browser / v0)
 
-## Global IDE Rulepack Distribution
-
-In addition to the MCP server, the Design Agent Wiki distributes the canonical agent execution contract and taste dials to all supported IDE rule formats automatically:
+Deployable to Cloudflare Workers with embedded snapshot catalog (0ms disk access):
 
 ```bash
-# Distribute SKILL.md rules to all supported IDE configurations
+# JSON-RPC Endpoint
+https://mcp.design-wiki.dev/mcp
+
+# SSE Stream Endpoint
+https://mcp.design-wiki.dev/sse
+
+# Health Check Probe
+https://mcp.design-wiki.dev/health
+```
+
+---
+
+## Global Agent Ecosystem Rulepack Distribution
+
+In addition to the MCP server, the Design Agent Wiki distributes the canonical agent execution contract and taste dials to all 11 supported agent platforms automatically:
+
+```bash
+# Distribute SKILL.md rules to all 11 supported agent configurations
 pnpm sync:rules
+
+# Test compatibility across all 11 platforms
+pnpm test:agents
 ```
 
 This command reads `SKILL.md` from the repository root and writes synchronized rule files to:
 
-| Target File | IDE / Tool |
+| Target File | Agent / Platform |
 | :--- | :--- |
-| `.cursorrules` | Cursor |
+| `SKILL.md` | Anthropic / Claude Code / Antigravity |
+| `.cursorrules` | Cursor IDE |
+| `.cursor/rules/design-wiki.mdc` | Cursor Rules v2 format |
 | `.windsurfrules` | Windsurf / Codeium |
 | `.github/copilot-instructions.md` | GitHub Copilot |
-| `.codex-plugin/rules.json` | OpenAI Codex |
+| `AGENTS.md` | Universal Agent Standard (OpenClaw, Devin, Pi) |
+| `CLAUDE.md` | Claude Code Workspace |
+| `.codex-plugin/rules.json` | OpenAI Codex / Plugins |
+| `.openclaw/instructions.md` | OpenClaw Agent |
+| `.hermes/instructions.md` | Hermes Agent |
 | `apps/docs/public/SKILL.md` | Remote endpoint for LLM agents |
-
-Run `pnpm sync:rules` after any change to `SKILL.md` to keep all IDE configurations in sync. The `apps/docs/public/SKILL.md` endpoint is served at `https://<your-domain>/SKILL.md` and can be referenced by remote agents for rule discovery.
 
 ---
 
@@ -109,7 +131,13 @@ All tools are optimized to deliver structured responses well under **15KB**, ens
    { "name": "floating-dock", "packageManager": "pnpm", "baseUrl": "http://localhost:3000" }
    ```
 
-4. **`audit_code_slop`**:
+4. **`get_dependency_graph`**:
+   Return the dynamic DAG dependency topology, topological installation sequence, and required npm peer dependencies for a component or the full registry.
+   ```json
+   { "name": "pricing-table", "includeMermaid": true }
+   ```
+
+5. **`audit_code_slop`**:
    Scan arbitrary user code against the 21 anti-slop rules, checking arbitrary pixel escapes (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), blanket transitions, and accessibility compliance, receiving a health scorecard (0–100) with line-by-line remediation recommendations.
    ```json
    { "code": "<your-tsx-code>" }

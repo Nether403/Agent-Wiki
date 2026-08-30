@@ -2,9 +2,11 @@
 
 > **A deterministic, pre-tested, zero-slop UI component registry and Model Context Protocol (MCP) ecosystem engineered specifically for AI developer agents.**
 
-[![CI / Quality Gate](https://img.shields.io/badge/Slop%20Audit-100%2F100%20(S--Grade)-emerald?style=flat-square)](./COMPLETED-DESIGN-AUDIT.md)
-[![A11y CI](https://img.shields.io/badge/A11y%20WCAG%202.1%20AA-30%2F30%20PASS-green?style=flat-square)](./scripts/test-a11y-linter.ts)
-[![MCP Protocol](https://img.shields.io/badge/MCP%20Server-Compliant%20v1.0-blue?style=flat-square)](./packages/mcp-server)
+[![CI / Quality Gate](https://img.shields.io/badge/Slop%20Audit-100%2F100%20(S--Grade)-emerald?style=flat-square)](./verify-audit.py)
+[![A11y CI](https://img.shields.io/badge/A11y%20WCAG%202.1%20AA-45%2F45%20PASS-green?style=flat-square)](./scripts/test-a11y-linter.ts)
+[![Taste Dials](https://img.shields.io/badge/Taste%20Dials-100%2F100%20Consistent-blue?style=flat-square)](./packages/audit-linter)
+[![MCP Protocol](https://img.shields.io/badge/MCP%20Server-Cloudflare%20Worker%20%2B%20Stdio-blueviolet?style=flat-square)](./packages/mcp-server)
+[![Agent Ecosystem](https://img.shields.io/badge/Agents-11%20Platforms%20Verified-indigo?style=flat-square)](./scripts/test-agent-ecosystem.ts)
 [![React 19 & Tailwind v4](https://img.shields.io/badge/Stack-React%2019%20%7C%20Tailwind%20v4-violet?style=flat-square)](./apps/docs)
 [![License](https://img.shields.io/badge/License-MIT-gray?style=flat-square)](./LICENSE)
 
@@ -12,7 +14,7 @@
 
 ## 📖 Executive Summary
 
-Modern frontend engineering is undergoing a tectonic shift: **AI coding agents (Claude Code, Cursor, Codex, v0) are becoming the primary assemblers of code primitives**, while human engineers focus on visual curation, high-level architecture, and quality assurance.
+Modern frontend engineering is undergoing a tectonic shift: **AI coding agents (Claude Code, Cursor, Codex, OpenClaw, Hermes, Antigravity) are becoming the primary assemblers of code primitives**, while human engineers focus on visual curation, high-level architecture, and quality assurance.
 
 Traditional component libraries were designed for human visual browsing—relying on heavy DOM payloads, extensive explanatory prose, and visual trial-and-error. When an AI agent is forced to build interfaces from generic training weights or unstructured documentation, it inevitably produces **"AI Slop"**:
 * ❌ Hallucinated component props and nonexistent imports.
@@ -36,10 +38,10 @@ The platform runs on a **Double-Exposure Architecture**:
                                   └───────────────────────────┬────────────────────────────┘
                                                               │
                                                 [1. Ingestion Harvester]
-                                                (ast-parser.ts + git cloner)
+                                                (ast-parser.ts + dependency-graph.ts)
                                                               │
                                                 [2. Dial Scorer & Slop Gate]
-                                                (21 anti-slop rules + LLM review)
+                                                (21 anti-slop rules + taste-dial-audit.ts)
                                                               │
                                                 [3. Static Registry Compiler]
                                                 (build-registry.ts dynamic sweeper)
@@ -52,8 +54,8 @@ The platform runs on a **Double-Exposure Architecture**:
                 │ - Interactive Component Demos│                              │  - /raw/components/*.md      │
                 │ - Taste Dial Playground      │                              │  - /r/[name].json (shadcn v3)│
                 │ - Architecture Documentation │                              │  - /r/registry.json Master   │
-                └──────────────────────────────┘                              │  - @design-wiki/mcp Server   │
-                                                                              │  - /SKILL.md (agent rules)   │
+                └──────────────────────────────┘                              │  - @design-wiki/mcp (Worker) │
+                                                                              │  - /SKILL.md (11 rulepacks)  │
                                                                               └──────────────────────────────┘
 ```
 
@@ -68,7 +70,7 @@ Agent Wiki/
 ├── apps/
 │   └── docs/                        # Next.js 15 App Router + Tailwind v4 human docs & static /r/ host
 │       ├── app/                     # Web routes, /llms.txt, /r/[name]/route.ts, /raw/
-│       ├── content/docs/            # MDX architectural guides and setup manuals
+│       ├── content/docs/            # MDX architectural guides, category manuals, and setup docs
 │       └── public/                  # Static build artifacts served by the docs app
 │           ├── r/                   # Compiled shadcn JSON schemas and registry.json index
 │           ├── raw/components/      # Machine-first markdown with YAML frontmatter and TSX source
@@ -76,49 +78,49 @@ Agent Wiki/
 │           ├── llms.txt             # Flat agent discovery index
 │           └── llms-full.txt        # Full-context machine manifest with embedded source
 ├── packages/
-│   ├── harvester/                   # Ingestion engine, shallow git cloner, AST analyzer, slop blocker
+│   ├── harvester/                   # Ingestion engine, shallow git cloner, AST analyzer, DAG dependency graph
 │   │   ├── src/ast-parser.ts        # TypeScript Compiler API AST extractor & 8-library repo manifests
+│   │   ├── src/dependency-graph.ts  # Directed Acyclic Graph (DAG) analyzer, cycle detector & Mermaid generator
 │   │   ├── src/dial-classifier.ts   # Taste-dial scoring heuristics & 21-rule slop review
 │   │   ├── src/codemods/            # Tailwind v4 & React 19 / motion/react transformers
 │   │   ├── src/attribution.ts       # Open-source SPDX license header injector
-│   │   └── src/cli.ts               # Standalone Harvester CLI (pnpm harvest ingest <repo>)
-│   ├── registry/                    # 30 seed zero-slop components & dynamic registry compiler
-│   │   ├── src/                     # TSX source files (primitives, motion, creative, editorial, blocks, media, utility)
+│   │   └── src/cli.ts               # Standalone Harvester CLI (pnpm harvest graph / ingest)
+│   ├── registry/                    # 45 curated zero-slop components & dynamic registry compiler
+│   │   ├── src/                     # TSX sources (primitives, motion, creative, editorial, blocks, media, utility)
 │   │   ├── compiler/build-registry.ts # Dynamic component sweeper and /r/ JSON compiler
 │   │   └── schema.json              # Component JSON Schema extending shadcn registry-item
 │   ├── mcp-server/                  # Model Context Protocol (MCP) service for developer agents
-│   │   ├── src/server.ts            # search_library, fetch_raw_markup, get_installation_schema (<15KB budget)
+│   │   ├── src/server.ts            # Core MCP server, get_dependency_graph, audit_code_slop (<15KB budget)
+│   │   ├── src/worker.ts            # Cloudflare Worker edge deployment (JSON-RPC & SSE streaming)
+│   │   ├── src/embedded-catalog.ts  # 0ms disk dependency embedded snapshot catalog
 │   │   ├── src/index.ts             # Stdio transport entrypoint
-│   │   └── test/agent-sandbox.test.ts # Autonomous end-to-end sandbox verification test
+│   │   ├── test/agent-sandbox.test.ts # Autonomous end-to-end sandbox verification test
+│   │   └── test/worker.test.ts      # Cloudflare Worker deployment verification test
 │   ├── cli/                         # Native installer CLI (npx design-wiki add <slug>)
 │   │   ├── src/commands/add.ts      # Path map resolver, recursive downloader & peer installer
 │   │   ├── src/commands/list.ts     # Component catalog browser with taste dials
 │   │   ├── src/commands/audit.ts    # Standalone anti-slop audit scanner
 │   │   └── src/index.ts             # Executable CLI router with --cwd & --path support
-│   └── audit-linter/                # 21-rule AST + regex anti-slop verification & taste auditing
+│   └── audit-linter/                # 21-rule AST + regex anti-slop verification & taste dial auditor
 │       ├── src/rules.ts             # Rule definitions (SLOP-001 through SLOP-021) & scanCssAntiPatterns
+│       ├── src/taste-dial-audit.ts  # 1-10 Dial consistency auditor (Variance, Motion, Density)
 │       ├── src/dial-classifier.ts   # Standalone dial classifier with defaultDials preset support
-etch_raw_markup, get_installation_schema (<15KB)
-│   │   ├── src/index.ts             # Stdio transport entrypoint
-│   │   └── test/agent-sandbox.test.ts # Autonomous end-to-end sandbox verification test
-│   ├── cli/                         # Native installer CLI (npx design-wiki add <slug>)
-│   │   ├── src/commands/add.ts      # Path map resolver, recursive downloader & peer installer
-│   │   ├── src/commands/list.ts     # Component catalog browser with taste dials
-│   │   ├── src/commands/audit.ts    # Standalone anti-slop audit scanner
-│   │   └── src/index.ts             # Executable CLI router
-│   └── audit-linter/                # 21-rule AST + regex anti-slop verification & taste auditing
-│       ├── src/rules.ts             # Rule definitions (SLOP-001 through SLOP-021) & scanCssAntiPatterns
-│       ├── src/dial-classifier.ts   # Standalone dial classifier with defaultDials preset support
-│       ├── src/llm-review.ts        # Automated LLM taste audit & 1-10 dial calibration engine
+│       ├── src/llm-review.ts        # Automated LLM taste audit engine
 │       └── src/cli.ts               # verify-audit & taste review CLI (pnpm review:taste)
 ├── scripts/
-│   ├── sync-rulepacks.ts            # IDE rulepack synchronizer: SKILL.md → .cursorrules, .windsurfrules, copilot, codex
-│   └── test-a11y-linter.ts          # WCAG 2.1 AA CI linter: checks all 29 registry components
-├── SKILL.md                         # Agent execution contract, 4-phase loop, active taste dials
+│   ├── sync-rulepacks.ts            # Multi-agent rules synchronizer across 11 ecosystem platforms
+│   ├── test-agent-ecosystem.ts      # Automated compatibility test across 11 agent targets
+│   └── test-a11y-linter.ts          # WCAG 2.1 AA CI linter: checks all 45 registry components
+├── SKILL.md                         # Canonical agent execution contract, 4-phase loop, active taste dials
 ├── .cursorrules                     # Cursor IDE agent instructions (auto-synced from SKILL.md)
+├── .cursor/rules/design-wiki.mdc    # Cursor Rules v2 format (auto-synced from SKILL.md)
 ├── .windsurfrules                   # Windsurf IDE agent instructions (auto-synced from SKILL.md)
 ├── .github/copilot-instructions.md  # GitHub Copilot agent instructions (auto-synced from SKILL.md)
+├── AGENTS.md                        # Universal agent standard instructions (auto-synced from SKILL.md)
+├── CLAUDE.md                        # Claude Code workspace instructions (auto-synced from SKILL.md)
 ├── .codex-plugin/rules.json         # OpenAI Codex ruleset (auto-synced from SKILL.md)
+├── .openclaw/instructions.md        # OpenClaw agent rules (auto-synced from SKILL.md)
+├── .hermes/instructions.md          # Hermes agent rules (auto-synced from SKILL.md)
 ├── registry-item-schema.json        # Canonical JSON schema for registry items
 └── pnpm-workspace.yaml              # Workspace package configuration
 ```
@@ -127,56 +129,23 @@ etch_raw_markup, get_installation_schema (<15KB)
 
 ## 🏷️ Standardized Taxonomy Framework
 
-All components are classified into a canonical taxonomy framework:
+All **45 curated components** are classified into a canonical taxonomy framework:
 
-| Category | Description | Representative Upstream Libraries |
-| :--- | :--- | :--- |
-| `ui:primitive` | Accessible, headless, battle-tested UI controls (buttons, dialogs, dropdowns, inputs, tabs). | HeroUI v3, Radix UI, Ark UI, beUI |
-| `ui:motion` | Micro-interactions, spring physics, and animated transitions built with `motion/react`. | SmoothUI, KokonutUI, Aceternity UI, Evil-Buttons |
-| `ui:creative` | Interactive HTML5 Canvas simulations, WebGL shaders, Three.js scenes with graceful CSS fallbacks. | Canvas UI, ThreeUI, React Bits |
-| `ui:editorial` | Clean, static, typography-disciplined analytical cards and SVG diagrams free of decorative clutter. | diagram-design |
-| `ui:block` | Complete multi-component sections, bento grids, navigation headers, and marketing hero wrappers. | Tailark, Kairo UI, Shadcn blocks |
-| `ui:utility` | Fast micro-assets, status indicators, and specialized dot matrix loaders. | Dot Matrix, icons0 |
-| `ui:media` | Timeline-based motion wrappers, audio visualizers, and video compositions. | Remocn |
-
-### Curated Library Mapping Matrix
-
-All incoming components from our 7 primary curated libraries are pre-classified with standardized technical tags and preset taste dials:
-
-| Library | Category | Technical Tags | Preset Dials (Var / Mot / Den) |
-| :--- | :--- | :--- | :--- |
-| **Aceternity UI** | `ui:motion` | `framer-motion`, `tailwind-v4`, `micro-interaction` | Var: 6 · Mot: 8 · Den: 4 |
-| **Canvas UI** | `ui:creative` | `threejs`, `webgl`, `framer-motion`, `interactive` | Var: 9 · Mot: 9 · Den: 3 |
-| **diagram-design** | `ui:editorial` | `svg`, `zero-dependency`, `static`, `analytical` | Var: 5 · Mot: 1 · Den: 9 |
-| **HeroUI v3** | `ui:primitive` | `react`, `tailwind-v4`, `headless`, `accessible` | Var: 3 · Mot: 3 · Den: 6 |
-| **Evil-Buttons** | `ui:motion` | `playful`, `framer-motion`, `sound-physics` | Var: 8 · Mot: 7 · Den: 5 |
-| **SmoothUI** | `ui:motion` | `framer-motion`, `shadcn-compatible`, `spring-physics` | Var: 4 · Mot: 6 · Den: 5 |
-| **Tailark** | `ui:block` | `tailwind-v4`, `marketing`, `bento-grid` | Var: 5 · Mot: 4 · Den: 6 |
-
----
-
-## 🎛️ The Taste-Dial Matrix
-
-AI coding agents calibrate interface generation using three quantifiable **1–10 Taste Dials**:
-
-```
-Dial Axis            Low (1 - 3)                    Medium (4 - 7)                   High (8 - 10)
-───────────────────────────────────────────────────────────────────────────────────────────────────
-DESIGN_VARIANCE      Rigid, centered grid;          Subtle asymmetrical offsets;     Avant-garde editorial;
-                     conservative padding           editorial line dividers          brutalist overlaps
-───────────────────────────────────────────────────────────────────────────────────────────────────
-MOTION_INTENSITY     CSS hover transitions;         Spring-based layout animations;  GPU WebGL shaders;
-                     static cards                   staggered entrances              canvas mouse trackers
-───────────────────────────────────────────────────────────────────────────────────────────────────
-VISUAL_DENSITY       Generous whitespace;           Balanced SaaS presentation;      Dense analytical tables;
-                     py-24 sections                 comfortable rhythm               compact multi-pane UI
-```
+| Category | Description | Representative Upstream Libraries | Total Items |
+| :--- | :--- | :--- | :---: |
+| `ui:primitive` | Accessible, headless, battle-tested UI controls (buttons, dialogs, dropdowns, inputs, tabs, accordions, skeletons, command menus). | Radix UI, Ark UI, HeroUI v3, cmdk, Shadcn | **13** |
+| `ui:motion` | Micro-interactions, spring physics, and animated transitions built with `motion/react` and GPU transforms. | SmoothUI, KokonutUI, Aceternity UI, Evil-Buttons, Magic UI | **10** |
+| `ui:creative` | Interactive HTML5 Canvas simulations, WebGL shaders, Three.js scenes, and generative background surfaces. | Canvas UI, ThreeUI, Aceternity, Magic UI | **6** |
+| `ui:editorial` | Clean, static, typography-disciplined analytical cards, code blocks, callouts, and SVG diagrams. | diagram-design, Design Wiki | **5** |
+| `ui:block` | Complete multi-component sections, bento grids, navigation headers, and SaaS feature blueprints. | Tailark, Kairo UI, Shadcn blocks | **5** |
+| `ui:media` | Timeline-based motion wrappers, video frame scrubbers, and synthesized audio visualizers. | Remocn, Design Wiki | **2** |
+| `ui:utility` | Fast micro-assets, status indicators, dot loaders, SVG morphs, and keyboard shortcuts. | icons0, ReUI, Design Wiki | **4** |
 
 ---
 
 ## 🔌 Model Context Protocol (MCP) Server
 
-AI developer agents connect to the registry via the `@design-wiki/mcp` server.
+AI developer agents connect to the registry via the `@design-wiki/mcp` server (deployable as a local stdio process or a globally distributed Cloudflare Worker).
 
 ### Configuration
 
@@ -197,13 +166,19 @@ claude mcp add design-wiki npx @design-wiki/mcp
 }
 ```
 
+#### Remote Cloudflare Worker Edge MCP (Universal / Browser / v0)
+- **HTTP POST endpoint**: `https://mcp.design-wiki.dev/mcp`
+- **SSE Stream endpoint**: `https://mcp.design-wiki.dev/sse`
+- **Health Check probe**: `https://mcp.design-wiki.dev/health`
+
 ### Core MCP Tools
 
 | Tool Name | Parameters | Description |
 | :--- | :--- | :--- |
-| `search_library` / `search_components` | `query`, `category`, `tag`, `minMotionIntensity`, `maxVisualDensity`, `minDesignVariance` | Searches the catalog with multi-dimensional filtering across 29+ zero-slop components (< 15KB payload). |
+| `search_library` / `search_components` | `query`, `category`, `tag`, `minMotionIntensity`, `maxVisualDensity`, `minDesignVariance` | Searches the catalog with multi-dimensional filtering across all 45 zero-slop components (< 15KB payload). |
 | `fetch_raw_markup` / `fetch_raw_markdown` | `name` (slug) | Returns complete raw Markdown with structured YAML frontmatter contract, taxonomy, complexity, taste dials, accessibility, and verified TSX source. *(Alias: `get_component_markup`)* |
 | `get_installation_schema` / `get_installation_commands` | `name` (slug), `packageManager` (`pnpm`, `npm`, `bun`, `yarn`), `baseUrl` | Returns exact CLI commands (`npx design-wiki add <slug>`, `npx shadcn@latest add ...`), peer npm install strings, import snippets, and instructions. *(Alias: `get_install_recipe`)* |
+| `get_dependency_graph` | `name` (slug, optional), `includeMermaid` (boolean, optional) | Returns the dynamic DAG dependency topology, topological installation sequence, and required npm peer packages for any component or the full registry. |
 | `audit_code_slop` | `code` (string) | Scans arbitrary React/Tailwind code against 21 anti-slop rules, checking arbitrary pixel escapes (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), and returns a health score (0–100). |
 
 ---
@@ -262,25 +237,55 @@ Scans all workspace components against the 21-rule linter and generates `COMPLET
 # Workspace wide 21-rule anti-slop audit
 pnpm lint:slop
 
-# Automated taste audit & 1-10 dial calibration on a specific component
-pnpm review:taste packages/registry/src/creative/canvas-fluid-wave.tsx
+### 3. Run Anti-Slop Audit & Taste Review
+Scans all workspace components against the 21-rule linter and executes the 1-10 Taste Dial consistency auditor:
+```bash
+# Workspace wide 21-rule anti-slop audit (Python CI script)
+python verify-audit.py
+
+# Full catalog taste dial calibration & consistency verification
+pnpm review:taste
 ```
 
 ### 4. Run Automated Accessibility CI Linter
-Validates WCAG 2.1 AA compliance, keyboard navigability, WAI-ARIA contracts, and motion fallbacks across all 30 registry components:
+Validates WCAG 2.1 AA compliance, keyboard navigability, WAI-ARIA contracts, and motion fallbacks across all 45 registry components:
 ```bash
 pnpm test:a11y
 ```
 
-### 5. Sync IDE Rulepacks from SKILL.md
-Distributes the canonical agent rules from `SKILL.md` into all supported IDE configurations:
+### 5. Validate Multi-Agent Ecosystem Rulepacks
+Distributes and tests the canonical agent rules across 11 agent platforms:
 ```bash
+# Synchronize all 11 agent rulepack targets from SKILL.md
 pnpm sync:rules
-# Synchronizes: .cursorrules, .windsurfrules, .github/copilot-instructions.md, .codex-plugin/rules.json
-# Also publishes: apps/docs/public/SKILL.md (remote endpoint for LLM agents)
+
+# Run automated validation test suite across all 11 platforms
+pnpm test:agents
 ```
 
-### 6. Use the Native Installer CLI (`design-wiki`)
+### 6. Dynamic DAG Dependency Resolution & Cycle Detection
+Generates topological installation sequences and Mermaid flowcharts for the component catalog:
+```bash
+# Generate dynamic DAG dependency topology for full catalog
+pnpm harvest graph packages/registry/src
+
+# Generate dependency graph for a specific component
+pnpm harvest graph pricing-table
+```
+
+### 7. Run Cloudflare Worker Edge & MCP Sandbox Tests
+```bash
+# Run MCP sandbox integration test
+pnpm test:sandbox
+
+# Run Cloudflare Worker edge deployment test suite (JSON-RPC & SSE)
+pnpm --filter @design-wiki/mcp test:worker
+
+# Run all test suites
+pnpm test
+```
+
+### 8. Use the Native Installer CLI (`design-wiki`)
 Install zero-slop components directly into your local Next.js / Vite UI directories:
 ```bash
 # Add a component (resolves components.json, tsconfig path maps, and missing peer dependencies)
@@ -289,7 +294,7 @@ npx design-wiki add canvas-fluid-wave
 # Install into a specific directory or sandbox with recursive dependency resolution
 npx design-wiki add pricing-table --cwd staging/sandbox-nextjs
 
-# List all 30 verified zero-slop components with dials & tags
+# List all 45 verified zero-slop components with dials & tags
 npx design-wiki list
 
 # Search components by keyword or category
@@ -297,37 +302,6 @@ npx design-wiki search dock
 
 # Audit a local folder for AI slop anti-patterns (p-[17px], emojis, etc.)
 npx design-wiki audit ./components/ui
-```
-
-### 7. Run Autonomous Agent Sandbox Trial & MCP Tests
-Simulates an AI agent executing the 4-phase loop (**Discover → Inspect → Install → Audit**) with zero human intervention:
-```bash
-# Run MCP sandbox integration test
-pnpm --filter @design-wiki/mcp test:sandbox
-
-# Run end-to-end Agent Sandbox trial (Pricing table discovery & installation in Next.js sandbox)
-pnpm tsx scripts/run-agent-sandbox.ts
-```
-
-### 8. Harvest Upstream Repositories & Ingest Components
-Run the end-to-end ingestion engine to clone, parse AST, score taste dials, inject YAML frontmatter, and rebuild the registry:
-```bash
-# End-to-end ingestion pipeline (e.g. KokonutUI)
-node ast-parse-ingest.js kokonutui
-# Or via harvester CLI
-pnpm harvest ingest kokonutui
-
-# Harvest a specific repository
-pnpm harvest repo smoothui
-
-# Harvest a local directory
-pnpm harvest dir ./packages/registry/src/motion
-
-# Audit a single file
-pnpm harvest file ./packages/registry/src/creative/canvas-fluid-wave.tsx
-
-# List available upstream catalog targets
-pnpm harvest list
 ```
 
 ### 9. Start the Documentation Web Showcase

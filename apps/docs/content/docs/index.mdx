@@ -33,11 +33,12 @@ The Design Agent Wiki solves this by implementing a dual-interface model:
 
 ## Platform Modules
 
-- **`apps/docs`**: Next.js 15 App Router documentation and static registry host.
-- **`packages/registry`**: 29 seed zero-slop components across all 7 taxonomy categories with dynamic static compiler (`build-registry.ts`) and 7-library preset mapping.
-- **`packages/harvester`**: AST static analysis engine, repository shallow cloner, dial scorer, and automated anti-slop review gate. Supports `KNOWN_REPOSITORIES` for Aceternity UI, Canvas UI, diagram-design, HeroUI v3, Evil-Buttons, SmoothUI, and Tailark.
-- **`packages/mcp-server`**: Model Context Protocol stdio service for Claude Code, Cursor, and Codex.
-- **`packages/audit-linter`**: 21-rule AST + regex anti-slop linter and automated taste review engine, including the standalone `dial-classifier.ts` with `defaultDials` preset support.
-- **`scripts/test-a11y-linter.ts`**: Automated WCAG 2.1 AA CI linter. Validates keyboard navigability, WAI-ARIA roles, and motion fallbacks across all 29 registry components (`pnpm test:a11y`).
-- **`scripts/sync-rulepacks.ts`**: IDE rulepack synchronizer that distributes `SKILL.md` rules into `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`, `.codex-plugin/rules.json`, and `apps/docs/public/SKILL.md` (`pnpm sync:rules`).
+- **`apps/docs`**: Next.js 15 App Router documentation and double-exposure static registry host (`/raw/` for agents, HTML for humans).
+- **`packages/registry`**: **45 curated zero-slop components** across all 7 taxonomy categories (`ui:primitive`, `ui:motion`, `ui:creative`, `ui:editorial`, `ui:block`, `ui:media`, `ui:utility`) with dynamic static compiler (`build-registry.ts`).
+- **`packages/harvester`**: AST static analysis engine, Directed Acyclic Graph (DAG) dependency analyzer (`dependency-graph.ts`), repository shallow cloner, dial scorer, and automated anti-slop review gate.
+- **`packages/mcp-server`**: Model Context Protocol server deployable as a local stdio process or a high-performance Cloudflare Worker edge service with embedded snapshot catalog (0ms disk access), SSE streaming, and sub-15KB payload budget.
+- **`packages/audit-linter`**: 21-rule AST + regex anti-slop linter, standalone dial classifier, and Taste Dial consistency auditor (`taste-dial-audit.ts`) scoring **100/100** across the full catalog.
+- **`scripts/test-a11y-linter.ts`**: Automated WCAG 2.1 AA CI linter. Validates keyboard navigability, WAI-ARIA roles, and motion fallbacks across all 45 registry components (`pnpm test:a11y`).
+- **`scripts/sync-rulepacks.ts`**: Multi-agent rulepack synchronizer that distributes `SKILL.md` rules into 11 agent ecosystem configurations (Claude Code, Cursor, Windsurf, Copilot, Codex, OpenClaw, Hermes, Pi, AGENTS.md, Antigravity) (`pnpm sync:rules`).
+- **`scripts/test-agent-ecosystem.ts`**: Automated compatibility test suite verifying 100% ecosystem rule adherence across all 11 platforms (`pnpm test:agents`).
 
