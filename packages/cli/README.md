@@ -1,8 +1,8 @@
 # 📦 @design-wiki/cli (`design-wiki`)
 
-The official standalone installer CLI for the **Machine-First Design Agent Wiki**. 
+The official standalone installer and refactoring CLI for the **Machine-First Design Agent Wiki**. 
 
-Designed for both human developers and autonomous AI coding agents (Claude Code, Cursor, Codex), `design-wiki` resolves project path aliases (`components.json` and `tsconfig.json`), downloads clean, zero-slop UI components, recursively links dependencies, scaffolds utility helpers (`lib/utils.ts`), and verifies missing peer packages.
+Designed for both human developers and autonomous AI coding agents (Claude Code, Cursor, Codex, OpenClaw, Hermes), `design-wiki` resolves project path aliases (`components.json` and `tsconfig.json`), downloads clean, zero-slop UI components, recursively links dependencies, scaffolds utility helpers (`lib/utils.ts`), and auto-remediates messy code into high-craft design systems using the `unslop` engine.
 
 ---
 
@@ -31,13 +31,13 @@ Downloads and writes a component directly into your local components directory w
 
 ```bash
 # Add a component by name
-npx design-wiki add canvas-fluid-wave
+npx design-wiki add floating-dock
 
 # Target a specific workspace / sandbox directory
 npx design-wiki add pricing-table --cwd staging/sandbox-nextjs
 
 # Specify target component folder
-npx design-wiki add floating-dock --path src/components/ui
+npx design-wiki add ai-prompt-input --path src/components/ui
 
 # Overwrite existing files
 npx design-wiki add bento-grid --overwrite
@@ -55,8 +55,30 @@ npx design-wiki add spring-dialog --install-deps
 
 ---
 
-### 2. `list`
-Lists all 30 verified zero-slop components indexed in the registry with their taxonomy categories, taste dials, and tags.
+### 2. `unslop <path>`
+Automatically refactors vibe-coded, AI-slop, or messy React components into clean, accessible, zero-slop TSX conforming to the 30 Anti-Slop Rules and calibrated aesthetic themes.
+
+```bash
+# Refactor a single file with the Neo-Tokyo cyberpunk theme
+npx design-wiki unslop ./components/ui/hero.tsx --theme neo-tokyo
+
+# Preview changes without modifying files
+npx design-wiki unslop ./components/ui --theme midnight --dry-run
+
+# Refactor an entire directory in-place
+npx design-wiki unslop ./components/ui --theme minimal --overwrite
+```
+
+**Supported Themes:**
+* `default`: Clean, accessible semantic design tokens with balanced contrast.
+* `neo-tokyo`: High-tech cyberpunk aesthetic with emerald/cyan structural accents.
+* `midnight`: Deep dark obsidian surfaces with indigo/violet highlights.
+* `minimal`: Pure monochrome typography with brutalist borders.
+
+---
+
+### 3. `list`
+Lists all 112 verified zero-slop components indexed in the registry with their taxonomy categories, taste dials, and tags.
 
 ```bash
 npx design-wiki list
@@ -64,7 +86,7 @@ npx design-wiki list
 
 ---
 
-### 3. `search <query>`
+### 4. `search <query>`
 Searches the component registry by keyword, category, or tag.
 
 ```bash
@@ -74,8 +96,8 @@ npx design-wiki search creative
 
 ---
 
-### 4. `audit [path]`
-Runs the 21 Anti-Slop Rules against a local file or directory, flagging arbitrary pixel overrides (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), blanket transitions, and accessibility issues.
+### 5. `audit [path]`
+Runs the 30 Anti-Slop Rules against a local file or directory, flagging arbitrary pixel overrides (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), AI clichés, blanket transitions, and accessibility issues.
 
 ```bash
 npx design-wiki audit ./components/ui
@@ -89,7 +111,9 @@ npx design-wiki audit ./components/ui
 | :--- | :--- | :--- |
 | `--cwd <dir>` | Project root working directory | `process.cwd()` |
 | `-p, --path <dir>` | Destination folder for component files | Auto-detected from `components.json` |
+| `-t, --theme <theme>` | Design theme for unslop refactoring (`default`, `neo-tokyo`, `midnight`, `minimal`) | `default` |
 | `-o, --overwrite` | Overwrite existing local component files | `false` |
+| `-d, --dry-run` | Preview unslop changes without writing to disk | `false` |
 | `-y, --yes` | Skip confirmation prompts | `false` |
 | `-i, --install-deps` | Automatically install missing peer dependencies via detected package manager | `false` |
 | `--registry <url>` | Custom registry base URL | `http://localhost:3000` |

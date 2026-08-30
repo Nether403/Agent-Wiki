@@ -1,33 +1,33 @@
 # 🌾 @design-wiki/harvester
 
-The automated ingestion engine and AST static analyzer for the **Machine-First Design Agent Wiki**.
+The automated ingestion engine, AST static analyzer, and DAG dependency solver for the **Machine-First Design Agent Wiki**.
 
-Connects to eight curated upstream repositories (HeroUI v3, SmoothUI, Aceternity UI, KokonutUI, Canvas UI, Evil-Buttons, diagram-design, Tailark) and any local staging directory, parses TypeScript AST structures, scores structural complexity, and generates clean, machine-readable YAML frontmatter contracts.
+Connects to remote UI registries, GitHub repositories (HeroUI v3, SmoothUI, Aceternity UI, KokonutUI, Canvas UI, Evil-Buttons, diagram-design, Tailark), and local directories, parses TypeScript AST structures, generates Directed Acyclic Graphs (DAG), and outputs machine-readable JSON/YAML contracts.
 
 ---
 
 ## 🚀 Features
 
-* **End-to-End Automated Ingestion**: Chains shallow clone $\rightarrow$ AST static analysis $\rightarrow$ Taste Dial scoring $\rightarrow$ anti-slop gate $\rightarrow$ YAML frontmatter generation $\rightarrow$ registry rebuild.
+* **Universal Multi-Registry Ingestion**: Ingests remote shadcn-compatible JSON schemas (`pnpm harvest ingest <url>`), applies AST codemods, validates against the 30 Anti-Slop Rules, and compiles components into the registry.
+* **DAG Dependency Graph & Topological Sorting**: Builds full dependency topologies, detects circular dependencies, calculates installation sequences, and exports Mermaid diagram flowcharts.
 * **AST Parsing & Dependency Extraction**: Statically extracts third-party packages (`motion`, `lucide-react`, `three`, `@radix-ui/*`, `@ark-ui/react`), props interfaces, and local shadcn dependencies using the TypeScript Compiler API.
-* **Radix/Ark Primitive Auto-Binding**: When a component imports from `@radix-ui/react-*` or `@ark-ui/react`, those package names are automatically injected into `registryDependencies` and `peerDependencies` to ensure clean downstream installation without manual override.
-* **Three.js, WebGL & Media Auto-Cross-Referencing**: When scanning creative canvas or WebGL shader files, automatically injects `three` into `dependencies`, adds `@types/three` to `devDependencies`, and cross-references taxonomy tags (`webgl`, `threejs`, `canvas`).
-* **`defaultDials` Preset Support**: Each entry in `KNOWN_REPOSITORIES` defines a `defaultDials` preset (`{ design_variance, motion_intensity, visual_density }`). When parsing a component from a known library, the repo-level preset is merged into the component's dial calibration before per-component scoring overrides are applied, ensuring consistent library-wide taste profiles.
-* **`prefers-reduced-motion` Detection**: The parser scans for `prefers-reduced-motion` media query usage in TSX source (`window.matchMedia`). Components that handle this fallback correctly automatically receive `reduced_motion_supported: true` in their accessibility contract and the `motion-safe` tag in their taxonomy output.
-* **Structural Complexity Scoring**: Evaluates mathematical oscillation loops (`requestAnimationFrame`), shader setups, and lines of code to classify components into `low`, `medium`, or `high` complexity.
-* **YAML Frontmatter Injection**: Injects standardized metadata and taste dial contracts into generated component documentation.
-* **Normalization Codemods**: Transforms legacy Tailwind v3 values and imports to Tailwind v4 and React 19 / `motion/react`.
-* **Legal Attribution**: Injects immutable SPDX license headers and repository source links.
+* **Radix/Ark Primitive Auto-Binding**: Automatically maps upstream primitives to `registryDependencies` and `peerDependencies` for zero-configuration installation.
+* **`prefers-reduced-motion` Detection**: Automatically analyzes motion hooks and media queries to inject accessibility contracts (`reduced_motion_supported: true`).
+* **Taste Dial Scoring Heuristics**: Automatically calculates 1–10 dials for Design Variance, Motion Intensity, and Visual Density.
+* **Legal Attribution**: Injects immutable SPDX license headers and repository source links (`@origin`, `@license`, `@curated-by`).
 
 ---
 
 ## 🛠️ CLI Usage
 
 ```bash
-# Full end-to-end ingestion and registry rebuild
+# Full end-to-end remote registry or repository ingestion
 pnpm harvest ingest kokonutui
-# or via root runner
-node ast-parse-ingest.js kokonutui
+# or via remote URL
+pnpm harvest ingest https://kokonutui.com/r/ai-input-search.json
+
+# Generate DAG dependency graph and topological install order
+pnpm harvest graph packages/registry/src
 
 # Harvest a specific upstream repository
 pnpm harvest repo smoothui
@@ -47,21 +47,24 @@ pnpm harvest list
 ## 📦 Programmatic Usage
 
 ```typescript
-import { parseComponentAst, generateYamlFrontmatter, injectYamlFrontmatter } from "@design-wiki/harvester";
+import {
+  parseComponentAst,
+  buildDependencyGraph,
+  generateYamlFrontmatter,
+  harvestDirectory,
+} from "@design-wiki/harvester";
 
+// 1. Build DAG Dependency Graph
+const graph = buildDependencyGraph("./packages/registry/src");
+const report = graph.generateReport();
+console.log("Topological Install Order:", report.topologicalInstallOrder);
+console.log("Mermaid Topology:\n", graph.exportMermaid());
+
+// 2. Parse Single Component AST
 const sourceCode = `...`;
 const parsed = parseComponentAst("canvas-fluid-wave.tsx", sourceCode);
-
-console.log("Complexity:", parsed.complexity); // "low" | "medium" | "high"
+console.log("Complexity:", parsed.complexity);
 console.log("Dependencies:", parsed.dependencies);
-console.log("Tags:", parsed.tags);
-
-const frontmatter = generateYamlFrontmatter({
-  id: "canvas-fluid-wave",
-  name: "Canvas Fluid Wave",
-  category: "ui:creative",
-  parsed,
-});
 ```
 
 ---
