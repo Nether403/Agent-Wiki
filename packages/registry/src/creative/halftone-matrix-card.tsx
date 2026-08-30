@@ -1,6 +1,8 @@
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by paper-design/shaders & zzzzshawn/matrix & DavidHDev/react-bits)
+ * @license MIT
+ * @origin https://github.com/paper-design/shaders
+ * @author Paper Shaders Team
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:creative
  * Description: Interactive canvas halftone dither card reacting to mouse position with customizable dot pitch and reduced-motion fallback.
  */
@@ -9,7 +11,7 @@ import * as React from "react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 

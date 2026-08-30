@@ -17,6 +17,7 @@ import {
   Flame,
 } from "lucide-react";
 import registryData from "../public/r/registry.json";
+import { InteractiveHallOfShame } from "./(home)/components/interactive-hall-of-shame";
 
 interface ComponentCardData {
   name: string;
@@ -308,6 +309,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Interactive Anti-Slop Visual Comparator */}
+      <InteractiveHallOfShame />
 
       {/* Component Registry Explorer */}
       <section className="mt-16">

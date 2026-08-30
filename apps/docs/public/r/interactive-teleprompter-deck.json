@@ -1,0 +1,65 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "interactive-teleprompter-deck",
+  "type": "registry:component",
+  "title": "Interactive Teleprompter Deck",
+  "description": "Smooth speech-paced scrolling teleprompter with adjustable WPM speed slider, font scale controller, and mirror mode toggle.",
+  "category": "ui:media",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "webgl",
+    "threejs",
+    "canvas",
+    "ai-native",
+    "agent-ui",
+    "video",
+    "teleprompter",
+    "speech",
+    "media",
+    "remocn",
+    "player"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 6,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://remocn.dev",
+    "license_type": "MIT",
+    "author": "Remocn Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "three",
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/media/interactive-teleprompter-deck.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Category: ui:media\n * Name: interactive-teleprompter-deck\n */\n\nimport * as React from \"react\";\nimport { Play, Pause, RotateCcw, FlipHorizontal, Type, Gauge } from \"lucide-react\";\n\nexport interface TeleprompterDeckProps {\n  initialScript?: string;\n  initialWpm?: number;\n  fontSizeRem?: number;\n  className?: string;\n}\n\nexport const InteractiveTeleprompterDeck: React.FC<TeleprompterDeckProps> = ({\n  initialScript = `Welcome to the Machine-First Design Agent Wiki presentation.\n\nToday, we demonstrate how autonomous AI coding agents move away from brittle pixel-pushing to deterministic, high-craft architectural assembly.\n\nBy utilizing pre-tested, zero-slop component registries, agents generate WCAG 2.1 AA compliant interfaces with zero hallucinated tokens.\n\nNotice how the teleprompter maintains smooth, readable pacing calibrated directly to natural speaking velocity.`,\n  initialWpm = 130,\n  fontSizeRem = 1.5,\n  className = \"\",\n}) => {\n  const [isPlaying, setIsPlaying] = React.useState(false);\n  const [wpm, setWpm] = React.useState(initialWpm);\n  const [fontSize, setFontSize] = React.useState(fontSizeRem);\n  const [isMirrored, setIsMirrored] = React.useState(false);\n  const scrollContainerRef = React.useRef<HTMLDivElement | null>(null);\n\n  React.useEffect(() => {\n    let animId: number;\n    let lastTime = performance.now();\n    const prefersReducedMotion = typeof window !== \"undefined\" && window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches;\n\n    const scrollLoop = (time: number) => {\n      const delta = time - lastTime;\n      lastTime = time;\n\n      if (isPlaying && scrollContainerRef.current && !prefersReducedMotion) {\n        // Calculate scroll speed based on words per minute (approx 200 words = 1000px height)\n        const pixelsPerSecond = (wpm / 60) * 18;\n        scrollContainerRef.current.scrollTop += (pixelsPerSecond * delta) / 1000;\n      }\n\n      if (isPlaying && !prefersReducedMotion) {\n        animId = requestAnimationFrame(scrollLoop);\n      }\n    };\n\n    if (isPlaying && !prefersReducedMotion) {\n      animId = requestAnimationFrame(scrollLoop);\n    }\n\n    return () => {\n      if (animId) cancelAnimationFrame(animId);\n    };\n  }, [isPlaying, wpm]);\n\n  const handleReset = () => {\n    setIsPlaying(false);\n    if (scrollContainerRef.current) {\n      scrollContainerRef.current.scrollTop = 0;\n    }\n  };\n\n  return (\n    <section\n      aria-label=\"Interactive Teleprompter Deck\"\n      className={`flex flex-col w-full max-w-3xl mx-auto rounded-2xl bg-card border border-border text-card-foreground shadow-2xl overflow-hidden ${className}`}\n    >\n      {/* Control Header */}\n      <header className=\"flex flex-wrap items-center justify-between gap-3 p-4 border-b border-border bg-muted/40 text-xs font-mono\">\n        <div className=\"flex items-center gap-2\">\n          <button\n            type=\"button\"\n            onClick={() => setIsPlaying(!isPlaying)}\n            aria-label={isPlaying ? \"Pause Prompter\" : \"Play Prompter\"}\n            className=\"flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            {isPlaying ? <Pause className=\"w-4 h-4\" /> : <Play className=\"w-4 h-4\" />}\n            {isPlaying ? \"Pause\" : \"Start\"}\n          </button>\n          <button\n            type=\"button\"\n            onClick={handleReset}\n            aria-label=\"Reset Prompter\"\n            className=\"p-1.5 rounded-md bg-background border border-border text-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <RotateCcw className=\"w-4 h-4\" />\n          </button>\n        </div>\n\n        {/* Speed & Font Dials */}\n        <div className=\"flex items-center gap-4\">\n          <div className=\"flex items-center gap-1.5\">\n            <Gauge className=\"w-4 h-4 text-primary\" role=\"img\" aria-label=\"Speed dial\" />\n            <span>{wpm} WPM</span>\n            <input\n              type=\"range\"\n              min=\"80\"\n              max=\"240\"\n              step=\"10\"\n              value={wpm}\n              onChange={(e) => setWpm(parseInt(e.target.value, 10))}\n              aria-label=\"Words per minute slider\"\n              className=\"w-20 accent-primary\"\n            />\n          </div>\n\n          <div className=\"flex items-center gap-1.5\">\n            <Type className=\"w-4 h-4 text-primary\" role=\"img\" aria-label=\"Font size dial\" />\n            <span>{fontSize}rem</span>\n            <input\n              type=\"range\"\n              min=\"1\"\n              max=\"3\"\n              step=\"0.25\"\n              value={fontSize}\n              onChange={(e) => setFontSize(parseFloat(e.target.value))}\n              aria-label=\"Font size slider\"\n              className=\"w-20 accent-primary\"\n            />\n          </div>\n\n          <button\n            type=\"button\"\n            onClick={() => setIsMirrored(!isMirrored)}\n            aria-label=\"Toggle Mirror Mode\"\n            className={`p-1.5 rounded-md border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${\n              isMirrored\n                ? \"bg-primary/20 border-primary text-primary\"\n                : \"bg-background border-border text-muted-foreground hover:text-foreground\"\n            }`}\n          >\n            <FlipHorizontal className=\"w-4 h-4\" />\n          </button>\n        </div>\n      </header>\n\n      {/* Prompter Visual Viewport */}\n      <div className=\"relative w-full h-80 bg-zinc-950 text-zinc-100 dark:bg-black overflow-hidden\">\n        {/* Reading Marker Overlay Line */}\n        <div\n          className=\"absolute top-1/3 left-0 right-0 h-12 bg-primary/10 border-y border-primary/30 pointer-events-none z-10 flex items-center justify-end px-4\"\n          aria-hidden=\"true\"\n        >\n          <span className=\"text-[10px] font-mono text-primary uppercase tracking-widest\">Eye-Level Guide</span>\n        </div>\n\n        {/* Scroll Container */}\n        <div\n          ref={scrollContainerRef}\n          role=\"region\"\n          aria-label=\"Teleprompter Text Scroll Area\"\n          tabIndex={0}\n          style={{\n            transform: isMirrored ? \"scaleX(-1)\" : \"none\",\n          }}\n          className=\"w-full h-full overflow-y-auto px-8 py-32 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary select-none\"\n        >\n          <div\n            style={{ fontSize: `${fontSize}rem`, lineHeight: \"1.8\" }}\n            className=\"font-sans font-medium text-center text-zinc-100 max-w-xl mx-auto whitespace-pre-line tracking-wide\"\n          >\n            {initialScript}\n          </div>\n        </div>\n      </div>\n\n      {/* Footer Instructions */}\n      <footer className=\"flex items-center justify-between p-3 border-t border-border bg-muted/20 text-xs text-muted-foreground font-mono\">\n        <span>Remocn & Remotion Video Workflow Compatible</span>\n        <span className=\"text-primary\">Zero Layout Slop</span>\n      </footer>\n    </section>\n  );\n};\nexport default InteractiveTeleprompterDeck;\n",
+      "type": "registry:component",
+      "target": "components/ui/interactive-teleprompter-deck.tsx"
+    }
+  ]
+}

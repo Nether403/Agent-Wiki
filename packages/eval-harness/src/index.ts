@@ -130,3 +130,5 @@ export function runEvalHarness(targetPaths: string[]): EvalHarnessSummary {
 
 export * from "./contrast-checker";
 export * from "./lighthouse-gate";
+export * from "./a11y-runner";
+export * from "./storybook-story-generator";

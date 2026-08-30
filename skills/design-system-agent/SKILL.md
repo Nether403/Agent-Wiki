@@ -54,6 +54,10 @@ Before writing code, query our machine-readable discovery endpoints:
    - `get_installation_schema({ name: "floating-dock", packageManager: "pnpm" })` (or `get_installation_commands`)
    - `audit_code_slop({ code: "<raw-code>" })` / `audit_and_fix_slop({ code: "<raw-code>" })` (auto-remaps anti-patterns to zero-slop TSX)
    - `get_dependency_graph({ name: "dock-magnification" })` (topological dependency sequence)
+   - `export_style_dictionary_tokens({ target: "tailwind-v4" })` (multi-platform token compilation)
+   - `generate_storybook_story({ name: "voice-call-session-hud" })` (generates isolated CSF3 Storybook story)
+   - `compare_design_tokens({ paletteA, paletteB })` (computes theme contrast and token delta)
+   - `generate_playwright_test({ routeName: "/pricing" })` (generates automated Axe + Playwright a11y test spec)
 2. Or load and parse `/public/llms.txt` and `/raw/components/<name>.md`.
 
 ### Phase 2: Install

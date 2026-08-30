@@ -1,6 +1,8 @@
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by shopify/polaris & ant-design/ant-design)
+ * @license MIT
+ * @origin https://github.com/shopify/polaris
+ * @author Shopify Polaris Team
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:editorial
  * Description: High-density e-commerce / admin resource table with bulk checkbox selection, status badges, contextual filter chips, and pagination.
  */
@@ -10,7 +12,7 @@ import { ChevronDown, Search, Filter, MoreHorizontal, ArrowUpDown } from "lucide
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 

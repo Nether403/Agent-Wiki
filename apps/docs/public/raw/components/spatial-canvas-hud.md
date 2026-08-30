@@ -62,8 +62,10 @@ npx shadcn@latest add http://localhost:3000/r/spatial-canvas-hud.json
 ## Verified TypeScript Source
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by tldraw/tldraw & xyflow/xyflow)
+ * @license MIT
+ * @origin https://github.com/tldraw/tldraw
+ * @author tldraw Team & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:workflow
  * Description: Floating viewport HUD overlay with zoom level slider, pan reset, snapping grid toggle, and layer management.
  */
@@ -73,7 +75,7 @@ import { ZoomIn, ZoomOut, Maximize2, Grid, Layers, MousePointer2, Move, Undo2, R
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 

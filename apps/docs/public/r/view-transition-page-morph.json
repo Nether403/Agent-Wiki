@@ -1,0 +1,58 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "view-transition-page-morph",
+  "type": "registry:component",
+  "title": "View Transition Page Morph",
+  "description": "React 19 / Next.js View Transition coordinator primitive supporting seamless element morphs and layout transitions with cross-browser fallback.",
+  "category": "ui:motion",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "view-transition",
+    "react-19",
+    "page-morph",
+    "spring-physics"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 6,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://beui.dev",
+    "license_type": "MIT",
+    "author": "beUI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/view-transition-page-morph.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Category: ui:motion\n * Name: view-transition-page-morph\n */\n\nimport * as React from \"react\";\nimport { motion, AnimatePresence } from \"motion/react\";\nimport { ArrowLeft, Sparkles, MoveRight, Layers } from \"lucide-react\";\n\nexport interface MorphItem {\n  id: string;\n  title: string;\n  category: string;\n  summary: string;\n  details: string;\n  accentColor: string;\n}\n\nexport interface ViewTransitionMorphProps {\n  items?: MorphItem[];\n  className?: string;\n}\n\nexport const ViewTransitionPageMorph: React.FC<ViewTransitionMorphProps> = ({\n  items = [\n    {\n      id: \"agent-mcp\",\n      title: \"Model Context Protocol Bridge\",\n      category: \"Transport & Tools\",\n      summary: \"Connect AI coding agents to local and remote UI component registries with <15KB payload limits.\",\n      details: \"The MCP server uses SSE streaming and Stdio transports to supply Claude Code, Cursor, and Codex with zero-slop component ASTs, automatic alias mapping, and topological installation sequences.\",\n      accentColor: \"border-primary/40 bg-primary/5 text-primary\",\n    },\n    {\n      id: \"anti-slop-engine\",\n      title: \"50-Rule Anti-Slop Linter\",\n      category: \"Quality Governance\",\n      summary: \"Deterministic AST & regex guardrails blocking bad colors, type bypasses, and accessibility regressions.\",\n      details: \"Detects chained assertions (SLOP-004), arbitrary non-token units (SLOP-007), missing focus rings (SLOP-012), unannounced AI token streams (SLOP-043), and un-memoized heavy render transforms (SLOP-035).\",\n      accentColor: \"border-emerald-500/40 bg-emerald-500/5 text-emerald-400\",\n    },\n    {\n      id: \"style-dict-tokens\",\n      title: \"DTCG & Style Dictionary v4\",\n      category: \"Design Systems\",\n      summary: \"Single source of truth exporting tokens to Tailwind v4, Swift, Kotlin, and Figma Tokens.\",\n      details: \"Transforms W3C DTCG design tokens across mobile and web targets, guaranteeing WCAG 2.1 AA contrast matrices across all semantic foreground and background pairs.\",\n      accentColor: \"border-sky-500/40 bg-sky-500/5 text-sky-400\",\n    },\n  ],\n  className = \"\",\n}) => {\n  const [selectedId, setSelectedId] = React.useState<string | null>(null);\n\n  const selectedItem = items.find((i) => i.id === selectedId);\n\n  const handleSelect = (id: string) => {\n    // If native document.startViewTransition is available, coordinate with browser\n    if (typeof document !== \"undefined\" && \"startViewTransition\" in document) {\n      (document as unknown as { startViewTransition: (cb: () => void) => void }).startViewTransition(() => {\n        setSelectedId(id);\n      });\n    } else {\n      setSelectedId(id);\n    }\n  };\n\n  const handleBack = () => {\n    if (typeof document !== \"undefined\" && \"startViewTransition\" in document) {\n      (document as unknown as { startViewTransition: (cb: () => void) => void }).startViewTransition(() => {\n        setSelectedId(null);\n      });\n    } else {\n      setSelectedId(null);\n    }\n  };\n\n  return (\n    <section\n      aria-label=\"View Transition Layout Morph\"\n      className={`flex flex-col w-full max-w-2xl mx-auto p-6 rounded-2xl bg-card border border-border text-card-foreground shadow-2xl overflow-hidden min-h-[420px] ${className}`}\n    >\n      <header className=\"flex items-center justify-between pb-4 border-b border-border mb-6\">\n        <div className=\"flex items-center gap-2\">\n          <Layers className=\"w-5 h-5 text-primary\" role=\"img\" aria-label=\"View Transition Icon\" />\n          <h2 className=\"text-sm font-semibold text-foreground\">React 19 View Transition Coordinator</h2>\n        </div>\n        <span className=\"px-2 py-0.5 rounded-full text-xs font-mono bg-muted border border-border text-muted-foreground\">\n          {selectedId ? \"Detail Morph\" : \"List Grid\"}\n        </span>\n      </header>\n\n      <AnimatePresence mode=\"wait\">\n        {!selectedItem ? (\n          <motion.div\n            key=\"grid\"\n            initial={{ opacity: 0, y: 8 }}\n            animate={{ opacity: 1, y: 0 }}\n            exit={{ opacity: 0, y: -8 }}\n            transition={{ duration: 0.2 }}\n            className=\"grid grid-cols-1 gap-4\"\n          >\n            {items.map((item) => (\n              <motion.article\n                key={item.id}\n                layoutId={`card-${item.id}`}\n                onClick={() => handleSelect(item.id)}\n                className=\"flex flex-col justify-between p-4 rounded-xl border border-border bg-background hover:border-foreground/40 cursor-pointer transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n                tabIndex={0}\n                onKeyDown={(e) => {\n                  if (e.key === \"Enter\" || e.key === \" \") {\n                    e.preventDefault();\n                    handleSelect(item.id);\n                  }\n                }}\n              >\n                <div className=\"space-y-1.5\">\n                  <div className=\"flex items-center justify-between\">\n                    <span className={`px-2 py-0.5 rounded text-[11px] font-mono border ${item.accentColor}`}>\n                      {item.category}\n                    </span>\n                    <MoveRight className=\"w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors group-hover:translate-x-1 duration-200\" />\n                  </div>\n                  <h3 className=\"text-base font-semibold text-foreground pt-1\">{item.title}</h3>\n                  <p className=\"text-xs text-muted-foreground\">{item.summary}</p>\n                </div>\n              </motion.article>\n            ))}\n          </motion.div>\n        ) : (\n          <motion.article\n            key={`detail-${selectedItem.id}`}\n            layoutId={`card-${selectedItem.id}`}\n            initial={{ opacity: 0 }}\n            animate={{ opacity: 1 }}\n            exit={{ opacity: 0 }}\n            className=\"flex flex-col flex-1 p-6 rounded-xl border border-border bg-background space-y-4\"\n          >\n            <div className=\"flex items-center justify-between\">\n              <button\n                type=\"button\"\n                onClick={handleBack}\n                aria-label=\"Back to component list\"\n                className=\"inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted border border-border text-foreground hover:bg-muted/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n              >\n                <ArrowLeft className=\"w-4 h-4\" />\n                Back to List\n              </button>\n              <span className={`px-2.5 py-0.5 rounded-full text-xs font-mono border ${selectedItem.accentColor}`}>\n                {selectedItem.category}\n              </span>\n            </div>\n\n            <div className=\"space-y-2 pt-2\">\n              <h3 className=\"text-xl font-bold text-foreground\">{selectedItem.title}</h3>\n              <p className=\"text-sm font-medium text-primary\">{selectedItem.summary}</p>\n            </div>\n\n            <div className=\"p-4 rounded-lg bg-muted/30 border border-border text-xs text-muted-foreground leading-relaxed\">\n              {selectedItem.details}\n            </div>\n\n            <footer className=\"mt-auto pt-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground font-mono\">\n              <span className=\"flex items-center gap-1\">\n                <Sparkles className=\"w-3.5 h-3.5 text-primary\" />\n                beUI & Vercel View Transitions Spec\n              </span>\n              <span>100% WCAG 2.1 AA</span>\n            </footer>\n          </motion.article>\n        )}\n      </AnimatePresence>\n    </section>\n  );\n};\nexport default ViewTransitionPageMorph;\n",
+      "type": "registry:component",
+      "target": "components/ui/view-transition-page-morph.tsx"
+    }
+  ]
+}

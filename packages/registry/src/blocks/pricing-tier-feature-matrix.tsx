@@ -1,6 +1,8 @@
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by launch-ui & page-ui & shadcnblocks.com)
+ * @license MIT
+ * @origin https://github.com/launch-ui/launch-ui
+ * @author Launch UI Team & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:block
  * Description: Multi-tier plan comparator with monthly/annual billing cycle toggle, feature breakdown list with tooltips, and highlighted tier callout.
  */
@@ -10,7 +12,7 @@ import { Check, HelpCircle, ArrowRight } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 

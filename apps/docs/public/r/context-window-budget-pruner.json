@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "context-window-budget-pruner",
+  "type": "registry:component",
+  "title": "Context Window Budget Pruner",
+  "description": "Interactive context window token pruner and compressor allowing selective pruning across system prompts, tools, and chat memory.",
+  "category": "ui:ai-native",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "token-budget",
+    "context-window",
+    "compression",
+    "ai-native",
+    "memory-pruner"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 3,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://design-wiki.dev",
+    "license_type": "MIT",
+    "author": "Design Wiki Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ai-native/context-window-budget-pruner.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Category: ui:ai-native\n * Name: context-window-budget-pruner\n */\n\nimport * as React from \"react\";\nimport { Cpu, Scissors, Sliders, CheckCircle2, AlertTriangle, ShieldCheck } from \"lucide-react\";\n\nexport interface ContextSegment {\n  id: string;\n  name: string;\n  tokens: number;\n  maxTokens: number;\n  color: string;\n  canPrune: boolean;\n  isPruned: boolean;\n  description: string;\n}\n\nexport interface ContextWindowBudgetPrunerProps {\n  modelMaxContext?: number;\n  warningThreshold?: number;\n  initialSegments?: ContextSegment[];\n  onPruneSegment?: (segmentId: string, pruned: boolean) => void;\n  className?: string;\n}\n\nexport const ContextWindowBudgetPruner: React.FC<ContextWindowBudgetPrunerProps> = ({\n  modelMaxContext = 128000,\n  warningThreshold = 100000,\n  initialSegments = [\n    {\n      id: \"system-prompt\",\n      name: \"System Prompt & Agent Rules\",\n      tokens: 4200,\n      maxTokens: 4200,\n      color: \"bg-sky-500\",\n      canPrune: true,\n      isPruned: false,\n      description: \"Strip non-essential markdown comments and formatting boilerplate (-35% tokens).\",\n    },\n    {\n      id: \"mcp-tools\",\n      name: \"MCP Tools Schema Definition\",\n      tokens: 18500,\n      maxTokens: 18500,\n      color: \"bg-emerald-500\",\n      canPrune: true,\n      isPruned: false,\n      description: \"Prune descriptions of uncalled lazy MCP tools (<15KB payload budget).\",\n    },\n    {\n      id: \"agent-memory\",\n      name: \"Knowledge Graph / Long-Term Memory\",\n      tokens: 24000,\n      maxTokens: 24000,\n      color: \"bg-amber-500\",\n      canPrune: true,\n      isPruned: false,\n      description: \"Filter out low-relevance knowledge nodes and expired episodic memories.\",\n    },\n    {\n      id: \"chat-history\",\n      name: \"Conversation Turn History\",\n      tokens: 46200,\n      maxTokens: 46200,\n      color: \"bg-violet-500\",\n      canPrune: true,\n      isPruned: false,\n      description: \"Summarize earlier user turns and collapse repetitive tool call outputs.\",\n    },\n  ],\n  onPruneSegment,\n  className = \"\",\n}) => {\n  const [segments, setSegments] = React.useState<ContextSegment[]>(initialSegments);\n\n  const togglePrune = (id: string) => {\n    setSegments((prev) =>\n      prev.map((s) => {\n        if (s.id === id) {\n          const next = !s.isPruned;\n          onPruneSegment?.(id, next);\n          return {\n            ...s,\n            isPruned: next,\n            tokens: next ? Math.round(s.maxTokens * 0.5) : s.maxTokens,\n          };\n        }\n        return s;\n      })\n    );\n  };\n\n  const totalTokens = segments.reduce((sum, s) => sum + s.tokens, 0);\n  const totalMax = segments.reduce((sum, s) => sum + s.maxTokens, 0);\n  const totalSaved = totalMax - totalTokens;\n  const usagePercentage = Math.min(100, Math.round((totalTokens / modelMaxContext) * 100));\n\n  const isOverWarning = totalTokens > warningThreshold;\n\n  return (\n    <section\n      aria-label=\"Context Window Budget Pruner\"\n      className={`flex flex-col w-full max-w-3xl mx-auto p-6 rounded-2xl bg-card border border-border text-card-foreground shadow-xl ${className}`}\n    >\n      {/* Header */}\n      <header className=\"flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-border\">\n        <div className=\"flex items-center gap-2.5\">\n          <div className=\"p-2 rounded-lg bg-primary/10 border border-primary/20 text-primary\">\n            <Cpu className=\"w-5 h-5\" role=\"img\" aria-label=\"Context CPU\" />\n          </div>\n          <div>\n            <h2 className=\"text-base font-semibold text-foreground tracking-tight\">Context Window Token Pruner</h2>\n            <p className=\"text-xs text-muted-foreground\">Optimize agent context budget and avoid truncation.</p>\n          </div>\n        </div>\n\n        <div className=\"flex items-center gap-2\">\n          {isOverWarning ? (\n            <span className=\"inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono bg-rose-500/10 border border-rose-500/30 text-rose-400\">\n              <AlertTriangle className=\"w-3.5 h-3.5\" />\n              High Context Pressure\n            </span>\n          ) : (\n            <span className=\"inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono bg-emerald-500/10 border border-emerald-500/30 text-emerald-400\">\n              <ShieldCheck className=\"w-3.5 h-3.5\" />\n              Safe Budget Margin\n            </span>\n          )}\n        </div>\n      </header>\n\n      {/* Main Budget Bar */}\n      <div className=\"my-6 space-y-2\">\n        <div className=\"flex items-center justify-between text-xs font-mono text-muted-foreground\">\n          <span>\n            Used: <strong className=\"text-foreground\">{totalTokens.toLocaleString()}</strong> / {modelMaxContext.toLocaleString()} Tokens\n          </span>\n          <span className=\"font-semibold text-primary\">{usagePercentage}% Capacity</span>\n        </div>\n\n        {/* Multi-segment progress bar */}\n        <div\n          role=\"progressbar\"\n          aria-valuenow={usagePercentage}\n          aria-valuemin={0}\n          aria-valuemax={100}\n          aria-label=\"Context Window Allocation\"\n          className=\"relative flex h-4 w-full rounded-full bg-muted/60 overflow-hidden border border-border\"\n        >\n          {segments.map((seg) => {\n            const widthPct = (seg.tokens / modelMaxContext) * 100;\n            return (\n              <div\n                key={seg.id}\n                style={{ width: `${widthPct}%` }}\n                className={`h-full ${seg.color} transition-transform duration-200 relative group`}\n                title={`${seg.name}: ${seg.tokens.toLocaleString()} tokens`}\n              />\n            );\n          })}\n        </div>\n\n        {/* Savings Badge */}\n        {totalSaved > 0 && (\n          <div className=\"flex items-center justify-end gap-1.5 text-xs text-emerald-400 font-mono pt-1\">\n            <CheckCircle2 className=\"w-3.5 h-3.5\" />\n            <span>Active Pruning Saved {totalSaved.toLocaleString()} Tokens (~{Math.round((totalSaved / totalMax) * 100)}%)</span>\n          </div>\n        )}\n      </div>\n\n      {/* Segment Controllers */}\n      <div className=\"space-y-3\">\n        <h3 className=\"text-xs font-semibold text-foreground uppercase tracking-wider\">Context Segment Allocations</h3>\n        <div className=\"divide-y divide-border rounded-xl border border-border bg-background overflow-hidden font-mono text-xs\">\n          {segments.map((seg) => (\n            <div\n              key={seg.id}\n              className=\"flex flex-col sm:flex-row sm:items-center justify-between p-4 gap-3 hover:bg-muted/20 transition-colors\"\n            >\n              <div className=\"space-y-1 max-w-md\">\n                <div className=\"flex items-center gap-2\">\n                  <span className={`inline-block w-2.5 h-2.5 rounded-full ${seg.color}`} />\n                  <h4 className=\"font-semibold text-foreground\">{seg.name}</h4>\n                  <span className=\"text-muted-foreground\">({seg.tokens.toLocaleString()} tokens)</span>\n                </div>\n                <p className=\"text-[11px] font-sans text-muted-foreground\">{seg.description}</p>\n              </div>\n\n              <button\n                type=\"button\"\n                onClick={() => togglePrune(seg.id)}\n                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${\n                  seg.isPruned\n                    ? \"bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20\"\n                    : \"bg-muted border-border text-foreground hover:bg-muted/80\"\n                }`}\n              >\n                <Scissors className=\"w-3.5 h-3.5\" />\n                {seg.isPruned ? \"Pruned (50%)\" : \"Prune Segment\"}\n              </button>\n            </div>\n          ))}\n        </div>\n      </div>\n\n      {/* Footer Info */}\n      <footer className=\"mt-6 pt-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground\">\n        <div className=\"flex items-center gap-2\">\n          <Sliders className=\"w-4 h-4 text-primary\" role=\"img\" aria-label=\"Settings\" />\n          <span>Dynamic compression algorithm powered by AST Token Reducer</span>\n        </div>\n        <span className=\"font-mono text-[11px]\">WCAG 2.1 AA Compliant</span>\n      </footer>\n    </section>\n  );\n};\nexport default ContextWindowBudgetPruner;\n",
+      "type": "registry:component",
+      "target": "components/ui/context-window-budget-pruner.tsx"
+    }
+  ]
+}

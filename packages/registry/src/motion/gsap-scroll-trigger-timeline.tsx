@@ -63,7 +63,7 @@ export function GSAPScrollTriggerTimeline({
               {/* Bullet Node */}
               <div
                 className={
-                  "absolute -left-[31px] top-4 w-5 h-5 rounded-full flex items-center justify-center text-xs font-mono transition-colors " +
+                  "absolute -left-8 top-4 w-5 h-5 rounded-full flex items-center justify-center text-xs font-mono transition-colors " +
                   (isPassed
                     ? "bg-primary text-primary-foreground"
                     : isActive

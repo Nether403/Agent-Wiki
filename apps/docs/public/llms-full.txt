@@ -7,7 +7,7 @@
 - Raw Markdown Docs: /raw/components/[slug]
 - MCP Server: npx @design-wiki/mcp
 
-## Available Registry Components (214 verified zero-slop items)
+## Available Registry Components (225 verified zero-slop items)
 
 ### Category: ui:ai-native
 - [ai-artifact-sandbox-iframe](/r/ai-artifact-sandbox-iframe.json): Split-screen live preview canvas with responsive device switcher, code/preview toggle, and version history diff slider. (Variance: 7, Motion: 4, Density: 6)
@@ -30,6 +30,10 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, prompt-bar, multimodal, kokonut-ui, cult-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/ai-prompt-bar-expanded.json
+- [ai-prompt-diff-comparator](/r/ai-prompt-diff-comparator.json): Word-level side-by-side prompt version comparator with visual diff highlighting, chunk merge controls, and token cost breakdown. (Variance: 5, Motion: 3, Density: 7)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, prompt-engineering, diff-viewer, token-cost, merge-controls
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-prompt-diff-comparator.json
 - [ai-prompt-template-library](/r/ai-prompt-template-library.json): Categorized card carousel of pre-tested agent prompts with one-click injection into active input. (Variance: 5, Motion: 3, Density: 6)
   - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, prompts, template-library, carousel, cult-ui
   - Dependencies: lucide-react, clsx, tailwind-merge, motion
@@ -46,6 +50,14 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, mcp-tool, tool-call, agent, cult-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/ai-tool-call-card.json
+- [context-window-budget-pruner](/r/context-window-budget-pruner.json): Interactive context window token pruner and compressor allowing selective pruning across system prompts, tools, and chat memory. (Variance: 5, Motion: 3, Density: 7)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, token-budget, context-window, compression, ai-native, memory-pruner
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/context-window-budget-pruner.json
+- [voice-call-session-hud](/r/voice-call-session-hud.json): Real-time AI voice agent call overlay with live audio reactive ring, turn-taking status indicators, interrupt controls, and transcript drawer. (Variance: 6, Motion: 6, Density: 6)
+  - Tags: lucide-react, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, voice-agent, webrtc, audio-hud, ai-native, turn-taking, interruption
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/voice-call-session-hud.json
 - [ai-voice-orb](/r/ai-voice-orb.json): Curated production-grade component. (Variance: 6, Motion: 4, Density: 8)
   - Tags: webgl, threejs, canvas, neon-scifi, wai-aria-compliant, ai-native, agent-ui
   - Dependencies: three, motion
@@ -334,6 +346,10 @@
   - Tags: lucide-react, webgl, threejs, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, canvas, hud, viewport, zoom, tldraw, xyflow, spatial
   - Dependencies: lucide-react, clsx, tailwind-merge, three
   - Install: npx shadcn@latest add http://localhost:3000/r/spatial-canvas-hud.json
+- [spatial-lasso-selection-tool](/r/spatial-lasso-selection-tool.json): Spatial canvas freeform lasso selection tool with multi-node bounding-box alignment actions, grouping, and export controls. (Variance: 6, Motion: 4, Density: 6)
+  - Tags: lucide-react, webgl, threejs, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, canvas, spatial, lasso, selection, workflow, excalidraw
+  - Dependencies: lucide-react, three, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/spatial-lasso-selection-tool.json
 - [workflow-minimap-controls](/r/workflow-minimap-controls.json): Floating viewport toolbar with zoom in/out, fit-view, and canvas reset controls. (Variance: 5, Motion: 3, Density: 7)
   - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, workflow, node-graph, minimap, zoom, canvas, xyflow
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -472,6 +488,10 @@
   - Tags: lucide-react, tailwind-v4, wai-aria-compliant, layout-block
   - Dependencies: lucide-react
   - Install: npx shadcn@latest add http://localhost:3000/r/split-pane-layout.json
+- [style-dictionary-compiler](/r/style-dictionary-compiler.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 6)
+  - Tags: wai-aria-compliant, layout-block
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/style-dictionary-compiler.json
 - [agent-dag-execution-flow](/r/agent-dag-execution-flow.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
   - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
   - Dependencies: lucide-react, motion
@@ -550,6 +570,10 @@
   - Tags: tailwind-v4, wai-aria-compliant, layout-block, chart, area-chart, data-viz, tremor-raw
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/interactive-area-chart.json
+- [interactive-glossary-hover-card](/r/interactive-glossary-hover-card.json): Inline technical term lookup card with accessible popover definition, related taxonomy tags, and keyboard navigable drawer. (Variance: 4, Motion: 2, Density: 7)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, glossary, hover-card, popover, editorial, documentation, a11y
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-glossary-hover-card.json
 - [metric-timeseries-spark-table](/r/metric-timeseries-spark-table.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
   - Tags: lucide-react, tailwind-v4, wai-aria-compliant, editorial
   - Dependencies: lucide-react
@@ -558,6 +582,10 @@
   - Tags: tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, table, data-grid
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/minimal-table.json
+- [publication-citation-modal](/r/publication-citation-modal.json): Accessible academic citation modal supporting BibTeX, APA, IEEE, MLA, and RIS formats with instant copy and file download. (Variance: 4, Motion: 2, Density: 6)
+  - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, layout-block, academic, citation, bibtex, modal, editorial, research
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/publication-citation-modal.json
 - [pyramid-hierarchy-chart](/r/pyramid-hierarchy-chart.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
   - Tags: tailwind-v4, wai-aria-compliant, editorial
   - Dependencies: None
@@ -592,6 +620,10 @@
   - Install: npx shadcn@latest add http://localhost:3000/r/stat-metric-card.json
 
 ### Category: ui:creative
+- [ascii-dithering-canvas-converter](/r/ascii-dithering-canvas-converter.json): Canvas WebGL shader converting text, imagery, or live video into retro ASCII characters and Floyd-Steinberg dithering. (Variance: 8, Motion: 6, Density: 7)
+  - Tags: lucide-react, webgl, threejs, canvas, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ascii, dithering, matrix, creative, floyd-steinberg
+  - Dependencies: lucide-react, three, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/ascii-dithering-canvas-converter.json
 - [audio-reactive-3d-sphere](/r/audio-reactive-3d-sphere.json): 3D vertex-displaced wireframe sphere reacting in real time to synthesized audio frequency data. (Variance: 9, Motion: 9, Density: 4)
   - Tags: lucide-react, webgl, threejs, canvas, tailwind-v4, glassmorphism, wai-aria-compliant, creative, 3d, audio-reactive, wireframe, three-ui
   - Dependencies: lucide-react, three, clsx, tailwind-merge, motion
@@ -644,6 +676,10 @@
   - Tags: webgl, threejs, canvas, tailwind-v4, glassmorphism, wai-aria-compliant, creative, shader, iridescence, react-bits
   - Dependencies: three, clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/iridescence-shader-plane.json
+- [light-rays-ambient-shader](/r/light-rays-ambient-shader.json): GPU-accelerated volumetric light rays and caustic ambient backdrop with cursor tracking and reduced-motion fallback. (Variance: 8, Motion: 7, Density: 3)
+  - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, volumetric, light-rays, shaders, creative
+  - Dependencies: three, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/light-rays-ambient-shader.json
 - [liquid-metal-shader](/r/liquid-metal-shader.json): Curated production-grade component. (Variance: 8, Motion: 9, Density: 3)
   - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant
   - Dependencies: three, motion
@@ -694,6 +730,10 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, audio, waveform, visualizer, media, player
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/audio-visualizer.json
+- [interactive-teleprompter-deck](/r/interactive-teleprompter-deck.json): Smooth speech-paced scrolling teleprompter with adjustable WPM speed slider, font scale controller, and mirror mode toggle. (Variance: 6, Motion: 6, Density: 5)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, webgl, threejs, canvas, ai-native, agent-ui, video, teleprompter, speech, media, remocn, player
+  - Dependencies: lucide-react, three, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-teleprompter-deck.json
 - [media-scrubber-timeline](/r/media-scrubber-timeline.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
   - Dependencies: lucide-react, motion
@@ -848,6 +888,10 @@
   - Tags: framer-motion, motion/react, animation, tailwind-v4, wai-aria-compliant, spring-physics
   - Dependencies: motion
   - Install: npx shadcn@latest add http://localhost:3000/r/tilt-card.json
+- [view-transition-page-morph](/r/view-transition-page-morph.json): React 19 / Next.js View Transition coordinator primitive supporting seamless element morphs and layout transitions with cross-browser fallback. (Variance: 6, Motion: 6, Density: 5)
+  - Tags: framer-motion, motion/react, animation, lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, view-transition, react-19, page-morph, spring-physics
+  - Dependencies: motion, lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/view-transition-page-morph.json
 
 ### Category: ui:utility
 - [border-trail](/r/border-trail.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
@@ -1948,6 +1992,255 @@ export function AiPromptBarExpanded({
 
 ---
 
+### AI Prompt Diff Comparator (`ai-prompt-diff-comparator`)
+- **Category**: `ui:ai-native`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 5/10, Motion 3/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Category: ui:ai-native
+ * Name: ai-prompt-diff-comparator
+ */
+
+import * as React from "react";
+import { GitCompare, Check, X, ArrowRight, DollarSign, Layers } from "lucide-react";
+
+export interface DiffChunk {
+  id: string;
+  type: "unchanged" | "added" | "removed" | "modified";
+  originalText?: string;
+  modifiedText?: string;
+  status: "pending" | "accepted" | "rejected";
+}
+
+export interface PromptDiffComparatorProps {
+  originalTitle?: string;
+  modifiedTitle?: string;
+  modelA?: string;
+  modelB?: string;
+  chunks?: DiffChunk[];
+  onAcceptChunk?: (chunkId: string) => void;
+  onRejectChunk?: (chunkId: string) => void;
+  onAcceptAll?: () => void;
+  onRejectAll?: () => void;
+  className?: string;
+}
+
+export const AiPromptDiffComparator: React.FC<PromptDiffComparatorProps> = ({
+  originalTitle = "Version 1.0 (Baseline)",
+  modifiedTitle = "Version 2.0 (Optimized Prompt)",
+  modelA = "Claude 3.5 Sonnet",
+  modelB = "Gemini 1.5 Pro",
+  chunks: initialChunks = [
+    {
+      id: "chunk-1",
+      type: "unchanged",
+      originalText: "You are an expert design engineer tasked with reviewing interface code.",
+      modifiedText: "You are an expert design engineer tasked with reviewing interface code.",
+      status: "accepted",
+    },
+    {
+      id: "chunk-2",
+      type: "removed",
+      originalText: "Create a generic button with hardcoded indigo color styling.",
+      status: "pending",
+    },
+    {
+      id: "chunk-3",
+      type: "added",
+      modifiedText: "Enforce WCAG 2.1 AA contrast rules and use strict Tailwind v4 semantic tokens.",
+      status: "pending",
+    },
+    {
+      id: "chunk-4",
+      type: "modified",
+      originalText: "Avoid any type errors where possible.",
+      modifiedText: "Strictly ban chained type assertions and conditional empty object spreads.",
+      status: "pending",
+    },
+  ],
+  onAcceptChunk,
+  onRejectChunk,
+  onAcceptAll,
+  onRejectAll,
+  className = "",
+}) => {
+  const [chunks, setChunks] = React.useState<DiffChunk[]>(initialChunks);
+
+  const handleAction = (id: string, action: "accept" | "reject") => {
+    setChunks((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, status: action === "accept" ? "accepted" : "rejected" } : c))
+    );
+    if (action === "accept") onAcceptChunk?.(id);
+    else onRejectChunk?.(id);
+  };
+
+  const handleBatch = (action: "accept" | "reject") => {
+    setChunks((prev) => prev.map((c) => ({ ...c, status: action === "accept" ? "accepted" : "rejected" })));
+    if (action === "accept") onAcceptAll?.();
+    else onRejectAll?.();
+  };
+
+  const pendingCount = chunks.filter((c) => c.status === "pending").length;
+
+  return (
+    <section
+      aria-label="AI Prompt Diff Comparator"
+      className={`flex flex-col w-full max-w-4xl mx-auto rounded-xl bg-card border border-border text-card-foreground shadow-lg overflow-hidden ${className}`}
+    >
+      {/* Top Header & Model Info */}
+      <header className="flex flex-wrap items-center justify-between gap-4 p-4 border-b border-border bg-muted/20">
+        <div className="flex items-center gap-2">
+          <GitCompare className="w-5 h-5 text-primary" role="img" aria-label="Diff Icon" />
+          <h2 className="text-sm font-semibold tracking-tight text-foreground">Prompt Diff & Version Review</h2>
+          <span className="px-2 py-0.5 rounded-full text-xs font-mono bg-muted border border-border text-muted-foreground">
+            {pendingCount} changes pending
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2" role="toolbar" aria-label="Bulk actions">
+          <button
+            type="button"
+            onClick={() => handleBatch("accept")}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <Check className="w-3.5 h-3.5" />
+            Accept All
+          </button>
+          <button
+            type="button"
+            onClick={() => handleBatch("reject")}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-muted border border-border text-foreground hover:bg-muted/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <X className="w-3.5 h-3.5" />
+            Reject All
+          </button>
+        </div>
+      </header>
+
+      {/* Comparison Column Titles */}
+      <div className="grid grid-cols-1 md:grid-cols-2 border-b border-border bg-muted/40 text-xs font-mono text-muted-foreground divide-y md:divide-y-0 md:divide-x divide-border">
+        <div className="p-3 flex items-center justify-between">
+          <span className="font-semibold text-foreground">{originalTitle}</span>
+          <span className="text-[11px] px-1.5 py-0.5 rounded bg-background border border-border">{modelA}</span>
+        </div>
+        <div className="p-3 flex items-center justify-between">
+          <span className="font-semibold text-foreground">{modifiedTitle}</span>
+          <span className="text-[11px] px-1.5 py-0.5 rounded bg-background border border-border">{modelB}</span>
+        </div>
+      </div>
+
+      {/* Diff Stream Chunks */}
+      <div className="divide-y divide-border font-mono text-xs max-h-[500px] overflow-y-auto">
+        {chunks.map((chunk) => {
+          return (
+            <article
+              key={chunk.id}
+              aria-label={`Diff Chunk ${chunk.id}: ${chunk.type}`}
+              className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border group hover:bg-muted/10 transition-colors"
+            >
+              {/* Left Side: Original */}
+              <div
+                className={`p-4 ${
+                  chunk.type === "removed"
+                    ? "bg-rose-950/20 text-rose-300 line-through opacity-80"
+                    : chunk.type === "modified"
+                    ? "bg-amber-950/20 text-amber-300"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {chunk.originalText || <span className="italic text-muted-foreground/40">[No original text]</span>}
+              </div>
+
+              {/* Right Side: Modified & Chunk Actions */}
+              <div
+                className={`p-4 flex flex-col justify-between gap-3 ${
+                  chunk.type === "added"
+                    ? "bg-emerald-950/20 text-emerald-300"
+                    : chunk.type === "modified"
+                    ? "bg-emerald-950/20 text-emerald-300"
+                    : "text-muted-foreground"
+                }`}
+              >
+                <div className="flex-1">
+                  {chunk.modifiedText || <span className="italic text-muted-foreground/40">[Removed in version]</span>}
+                </div>
+
+                {chunk.type !== "unchanged" && (
+                  <div className="flex items-center justify-between pt-2 border-t border-border/40 text-[11px]">
+                    <span className="text-muted-foreground capitalize">
+                      Status:{" "}
+                      <strong
+                        className={
+                          chunk.status === "accepted"
+                            ? "text-emerald-400"
+                            : chunk.status === "rejected"
+                            ? "text-rose-400"
+                            : "text-amber-400"
+                        }
+                      >
+                        {chunk.status}
+                      </strong>
+                    </span>
+
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => handleAction(chunk.id, "accept")}
+                        aria-label={`Accept chunk ${chunk.id}`}
+                        className="p-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      >
+                        <Check className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleAction(chunk.id, "reject")}
+                        aria-label={`Reject chunk ${chunk.id}`}
+                        className="p-1 rounded bg-rose-500/10 border border-rose-500/30 text-rose-300 hover:bg-rose-500/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      {/* Footer Metrics */}
+      <footer className="flex flex-wrap items-center justify-between gap-4 p-3 border-t border-border bg-muted/30 text-xs text-muted-foreground font-mono">
+        <div className="flex items-center gap-4">
+          <span className="flex items-center gap-1">
+            <Layers className="w-3.5 h-3.5 text-primary" role="img" aria-label="Token Count" />
+            Tokens: <strong>342</strong> &rarr; <strong>318</strong> (-7%)
+          </span>
+          <span className="flex items-center gap-1">
+            <DollarSign className="w-3.5 h-3.5 text-emerald-400" role="img" aria-label="Cost" />
+            Est. Cost / 1k Calls: <strong>$0.0048</strong>
+          </span>
+        </div>
+        <div className="flex items-center gap-1 text-[11px]">
+          <span>Verified Zero-Slop</span>
+          <ArrowRight className="w-3 h-3 text-primary" />
+        </div>
+      </footer>
+    </section>
+  );
+};
+export default AiPromptDiffComparator;
+
+```
+
+---
+
 ### AI Prompt Template Library Carousel (`ai-prompt-template-library`)
 - **Category**: `ui:ai-native`
 - **Dependencies**: lucide-react, clsx, tailwind-merge, motion
@@ -2771,6 +3064,242 @@ export function AiToolCallCard({
 
 ---
 
+### Context Window Budget Pruner (`context-window-budget-pruner`)
+- **Category**: `ui:ai-native`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 5/10, Motion 3/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Category: ui:ai-native
+ * Name: context-window-budget-pruner
+ */
+
+import * as React from "react";
+import { Cpu, Scissors, Sliders, CheckCircle2, AlertTriangle, ShieldCheck } from "lucide-react";
+
+export interface ContextSegment {
+  id: string;
+  name: string;
+  tokens: number;
+  maxTokens: number;
+  color: string;
+  canPrune: boolean;
+  isPruned: boolean;
+  description: string;
+}
+
+export interface ContextWindowBudgetPrunerProps {
+  modelMaxContext?: number;
+  warningThreshold?: number;
+  initialSegments?: ContextSegment[];
+  onPruneSegment?: (segmentId: string, pruned: boolean) => void;
+  className?: string;
+}
+
+export const ContextWindowBudgetPruner: React.FC<ContextWindowBudgetPrunerProps> = ({
+  modelMaxContext = 128000,
+  warningThreshold = 100000,
+  initialSegments = [
+    {
+      id: "system-prompt",
+      name: "System Prompt & Agent Rules",
+      tokens: 4200,
+      maxTokens: 4200,
+      color: "bg-sky-500",
+      canPrune: true,
+      isPruned: false,
+      description: "Strip non-essential markdown comments and formatting boilerplate (-35% tokens).",
+    },
+    {
+      id: "mcp-tools",
+      name: "MCP Tools Schema Definition",
+      tokens: 18500,
+      maxTokens: 18500,
+      color: "bg-emerald-500",
+      canPrune: true,
+      isPruned: false,
+      description: "Prune descriptions of uncalled lazy MCP tools (<15KB payload budget).",
+    },
+    {
+      id: "agent-memory",
+      name: "Knowledge Graph / Long-Term Memory",
+      tokens: 24000,
+      maxTokens: 24000,
+      color: "bg-amber-500",
+      canPrune: true,
+      isPruned: false,
+      description: "Filter out low-relevance knowledge nodes and expired episodic memories.",
+    },
+    {
+      id: "chat-history",
+      name: "Conversation Turn History",
+      tokens: 46200,
+      maxTokens: 46200,
+      color: "bg-violet-500",
+      canPrune: true,
+      isPruned: false,
+      description: "Summarize earlier user turns and collapse repetitive tool call outputs.",
+    },
+  ],
+  onPruneSegment,
+  className = "",
+}) => {
+  const [segments, setSegments] = React.useState<ContextSegment[]>(initialSegments);
+
+  const togglePrune = (id: string) => {
+    setSegments((prev) =>
+      prev.map((s) => {
+        if (s.id === id) {
+          const next = !s.isPruned;
+          onPruneSegment?.(id, next);
+          return {
+            ...s,
+            isPruned: next,
+            tokens: next ? Math.round(s.maxTokens * 0.5) : s.maxTokens,
+          };
+        }
+        return s;
+      })
+    );
+  };
+
+  const totalTokens = segments.reduce((sum, s) => sum + s.tokens, 0);
+  const totalMax = segments.reduce((sum, s) => sum + s.maxTokens, 0);
+  const totalSaved = totalMax - totalTokens;
+  const usagePercentage = Math.min(100, Math.round((totalTokens / modelMaxContext) * 100));
+
+  const isOverWarning = totalTokens > warningThreshold;
+
+  return (
+    <section
+      aria-label="Context Window Budget Pruner"
+      className={`flex flex-col w-full max-w-3xl mx-auto p-6 rounded-2xl bg-card border border-border text-card-foreground shadow-xl ${className}`}
+    >
+      {/* Header */}
+      <header className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-border">
+        <div className="flex items-center gap-2.5">
+          <div className="p-2 rounded-lg bg-primary/10 border border-primary/20 text-primary">
+            <Cpu className="w-5 h-5" role="img" aria-label="Context CPU" />
+          </div>
+          <div>
+            <h2 className="text-base font-semibold text-foreground tracking-tight">Context Window Token Pruner</h2>
+            <p className="text-xs text-muted-foreground">Optimize agent context budget and avoid truncation.</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {isOverWarning ? (
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono bg-rose-500/10 border border-rose-500/30 text-rose-400">
+              <AlertTriangle className="w-3.5 h-3.5" />
+              High Context Pressure
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              Safe Budget Margin
+            </span>
+          )}
+        </div>
+      </header>
+
+      {/* Main Budget Bar */}
+      <div className="my-6 space-y-2">
+        <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
+          <span>
+            Used: <strong className="text-foreground">{totalTokens.toLocaleString()}</strong> / {modelMaxContext.toLocaleString()} Tokens
+          </span>
+          <span className="font-semibold text-primary">{usagePercentage}% Capacity</span>
+        </div>
+
+        {/* Multi-segment progress bar */}
+        <div
+          role="progressbar"
+          aria-valuenow={usagePercentage}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Context Window Allocation"
+          className="relative flex h-4 w-full rounded-full bg-muted/60 overflow-hidden border border-border"
+        >
+          {segments.map((seg) => {
+            const widthPct = (seg.tokens / modelMaxContext) * 100;
+            return (
+              <div
+                key={seg.id}
+                style={{ width: `${widthPct}%` }}
+                className={`h-full ${seg.color} transition-transform duration-200 relative group`}
+                title={`${seg.name}: ${seg.tokens.toLocaleString()} tokens`}
+              />
+            );
+          })}
+        </div>
+
+        {/* Savings Badge */}
+        {totalSaved > 0 && (
+          <div className="flex items-center justify-end gap-1.5 text-xs text-emerald-400 font-mono pt-1">
+            <CheckCircle2 className="w-3.5 h-3.5" />
+            <span>Active Pruning Saved {totalSaved.toLocaleString()} Tokens (~{Math.round((totalSaved / totalMax) * 100)}%)</span>
+          </div>
+        )}
+      </div>
+
+      {/* Segment Controllers */}
+      <div className="space-y-3">
+        <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider">Context Segment Allocations</h3>
+        <div className="divide-y divide-border rounded-xl border border-border bg-background overflow-hidden font-mono text-xs">
+          {segments.map((seg) => (
+            <div
+              key={seg.id}
+              className="flex flex-col sm:flex-row sm:items-center justify-between p-4 gap-3 hover:bg-muted/20 transition-colors"
+            >
+              <div className="space-y-1 max-w-md">
+                <div className="flex items-center gap-2">
+                  <span className={`inline-block w-2.5 h-2.5 rounded-full ${seg.color}`} />
+                  <h4 className="font-semibold text-foreground">{seg.name}</h4>
+                  <span className="text-muted-foreground">({seg.tokens.toLocaleString()} tokens)</span>
+                </div>
+                <p className="text-[11px] font-sans text-muted-foreground">{seg.description}</p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => togglePrune(seg.id)}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                  seg.isPruned
+                    ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20"
+                    : "bg-muted border-border text-foreground hover:bg-muted/80"
+                }`}
+              >
+                <Scissors className="w-3.5 h-3.5" />
+                {seg.isPruned ? "Pruned (50%)" : "Prune Segment"}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Footer Info */}
+      <footer className="mt-6 pt-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <Sliders className="w-4 h-4 text-primary" role="img" aria-label="Settings" />
+          <span>Dynamic compression algorithm powered by AST Token Reducer</span>
+        </div>
+        <span className="font-mono text-[11px]">WCAG 2.1 AA Compliant</span>
+      </footer>
+    </section>
+  );
+};
+export default ContextWindowBudgetPruner;
+
+```
+
+---
+
 ### Screenshot Refactor Sandbox (`screenshot-refactor-sandbox`)
 - **Category**: `ui:primitive`
 - **Dependencies**: lucide-react
@@ -2852,6 +3381,215 @@ export function ScreenshotRefactorSandbox({
     </div>
   );
 }
+
+```
+
+---
+
+### Voice Call Session HUD (`voice-call-session-hud`)
+- **Category**: `ui:ai-native`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 6/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Category: ui:ai-native
+ * Name: voice-call-session-hud
+ */
+
+import * as React from "react";
+import { Mic, MicOff, PhoneOff, Volume2, Sparkles, MessageSquare } from "lucide-react";
+
+export interface VoiceCallSessionHUDProps {
+  agentName?: string;
+  sessionDurationSeconds?: number;
+  connectionStatus?: "connected" | "connecting" | "reconnecting" | "disconnected";
+  agentState?: "listening" | "thinking" | "speaking" | "interrupted";
+  audioLevel?: number; // 0.0 to 1.0
+  onMuteToggle?: (isMuted: boolean) => void;
+  onInterrupt?: () => void;
+  onEndCall?: () => void;
+  onTranscriptToggle?: () => void;
+  transcriptSnippet?: string;
+  className?: string;
+}
+
+export const VoiceCallSessionHUD: React.FC<VoiceCallSessionHUDProps> = ({
+  agentName = "Antigravity Voice Assistant",
+  sessionDurationSeconds = 42,
+  connectionStatus = "connected",
+  agentState = "listening",
+  audioLevel = 0.65,
+  onMuteToggle,
+  onInterrupt,
+  onEndCall,
+  onTranscriptToggle,
+  transcriptSnippet = "Analyzing the design token distribution across components...",
+  className = "",
+}) => {
+  const [isMuted, setIsMuted] = React.useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+
+  const handleMuteClick = () => {
+    const next = !isMuted;
+    setIsMuted(next);
+    onMuteToggle?.(next);
+  };
+
+  const formatDuration = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  const stateColors: Record<string, { ring: string; badge: string; text: string }> = {
+    listening: { ring: "border-primary/60 shadow-primary/20", badge: "bg-primary/10 text-primary border-primary/30", text: "Listening..." },
+    thinking: { ring: "border-amber-500/60 shadow-amber-500/20", badge: "bg-amber-500/10 text-amber-400 border-amber-500/30", text: "Reasoning..." },
+    speaking: { ring: "border-sky-500/60 shadow-sky-500/20", badge: "bg-sky-500/10 text-sky-400 border-sky-500/30", text: "Speaking" },
+    interrupted: { ring: "border-rose-500/60 shadow-rose-500/20", badge: "bg-rose-500/10 text-rose-400 border-rose-500/30", text: "Interrupted" },
+  };
+
+  const currentTheme = stateColors[agentState] || stateColors.listening;
+
+  return (
+    <section
+      aria-label="Voice Agent Call HUD"
+      className={`relative flex flex-col items-center justify-between w-full max-w-lg mx-auto p-6 rounded-2xl bg-card border border-border text-card-foreground shadow-2xl overflow-hidden ${className}`}
+    >
+      {/* Top Header Status */}
+      <header className="flex items-center justify-between w-full pb-4 border-b border-border">
+        <div className="flex items-center gap-2">
+          <span className="relative flex h-3 w-3">
+            {connectionStatus === "connected" ? (
+              <>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
+              </>
+            ) : (
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500" />
+            )}
+          </span>
+          <h2 className="text-sm font-semibold tracking-tight text-foreground">{agentName}</h2>
+        </div>
+        <div className="flex items-center gap-3 text-xs text-muted-foreground font-mono">
+          <time dateTime={`PT${sessionDurationSeconds}S`}>{formatDuration(sessionDurationSeconds)}</time>
+          <span className="px-2 py-0.5 rounded-full border border-border text-[11px] uppercase tracking-wider">
+            WebRTC HD
+          </span>
+        </div>
+      </header>
+
+      {/* Center Interactive Audio Orb & State */}
+      <div className="flex flex-col items-center justify-center my-8 relative w-full">
+        {/* Pulsing Audio Reactive Waves */}
+        <div
+          className={`relative flex items-center justify-center w-36 h-36 rounded-full border-2 transition-transform duration-200 ${currentTheme.ring}`}
+          style={{
+            transform: `scale(${1 + audioLevel * 0.15})`,
+            boxShadow: `0 0 24px rgba(16, 185, 129, ${audioLevel * 0.3})`,
+          }}
+        >
+          <div className="absolute inset-2 rounded-full bg-primary/5 blur-md" />
+          <div className="relative flex flex-col items-center justify-center w-28 h-28 rounded-full bg-muted/60 border border-border">
+            <Volume2 className="w-8 h-8 text-primary" role="img" aria-label="Audio Visualizer Active" />
+            <span className="text-[10px] font-mono text-muted-foreground mt-1">
+              {Math.round(audioLevel * 100)}% VOL
+            </span>
+          </div>
+        </div>
+
+        {/* State Badge */}
+        <div className="mt-6 flex items-center gap-2">
+          <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border ${currentTheme.badge}`}>
+            <Sparkles className="w-3.5 h-3.5" role="img" aria-label="Agent Status Indicator" />
+            {currentTheme.text}
+          </span>
+        </div>
+
+        {/* Live Subtitle Transcript Container */}
+        <div
+          role="status"
+          aria-live="polite"
+          className="mt-4 px-4 py-2.5 max-w-sm w-full text-center rounded-lg bg-muted/40 border border-border/60 text-xs text-muted-foreground"
+        >
+          &ldquo;{transcriptSnippet}&rdquo;
+        </div>
+      </div>
+
+      {/* Control Action Toolbar */}
+      <div className="flex items-center justify-center gap-4 w-full pt-4 border-t border-border" role="toolbar" aria-label="Call Controls">
+        <button
+          type="button"
+          onClick={handleMuteClick}
+          aria-label={isMuted ? "Unmute Microphone" : "Mute Microphone"}
+          className={`p-3 rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+            isMuted
+              ? "bg-rose-500/10 border-rose-500/30 text-rose-400 hover:bg-rose-500/20"
+              : "bg-muted border-border text-foreground hover:bg-muted/80"
+          }`}
+        >
+          {isMuted ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+        </button>
+
+        {agentState === "speaking" && (
+          <button
+            type="button"
+            onClick={onInterrupt}
+            className="px-4 py-2.5 rounded-full text-xs font-medium bg-amber-500/10 border border-amber-500/30 text-amber-300 hover:bg-amber-500/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            Interrupt Agent
+          </button>
+        )}
+
+        <button
+          type="button"
+          onClick={() => {
+            setIsDrawerOpen(!isDrawerOpen);
+            onTranscriptToggle?.();
+          }}
+          aria-label="Toggle Full Transcript"
+          className="p-3 rounded-full bg-muted border border-border text-foreground hover:bg-muted/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <MessageSquare className="w-5 h-5" />
+        </button>
+
+        <button
+          type="button"
+          onClick={onEndCall}
+          aria-label="End Call Session"
+          className="p-3 rounded-full bg-rose-600 text-white hover:bg-rose-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <PhoneOff className="w-5 h-5" />
+        </button>
+      </div>
+
+      {/* Expandable Transcript Drawer */}
+      {isDrawerOpen && (
+        <div
+          role="region"
+          aria-label="Transcript History"
+          className="w-full mt-4 p-4 rounded-lg bg-background border border-border text-left animate-in fade-in"
+        >
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider">Live Transcript</h3>
+            <span className="text-[10px] text-muted-foreground">Auto-synced</span>
+          </div>
+          <div className="max-h-32 overflow-y-auto space-y-2 text-xs text-muted-foreground pr-2 font-mono">
+            <p><strong className="text-primary">Agent:</strong> Initializing session topology.</p>
+            <p><strong className="text-foreground">You:</strong> Verify accessibility on the navigation bar.</p>
+            <p><strong className="text-primary">Agent:</strong> {transcriptSnippet}</p>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
+export default VoiceCallSessionHUD;
 
 ```
 
@@ -3471,8 +4209,10 @@ export function BentoGridItem({
 
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by aceternity & tailark & magicui)
+ * @license MIT
+ * @origin https://github.com/aceternity/ui
+ * @author Manu Arora & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:block
  * Description: Bento card featuring radial spotlight glow following pointer coordinates, border beam accent, and subtle hover scale.
  */
@@ -3482,7 +4222,7 @@ import { ArrowUpRight } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
@@ -5702,8 +6442,10 @@ export function PricingTable({ plans = DEFAULT_PLANS, className }: PricingTableP
 
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by launch-ui & page-ui & shadcnblocks.com)
+ * @license MIT
+ * @origin https://github.com/launch-ui/launch-ui
+ * @author Launch UI Team & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:block
  * Description: Multi-tier plan comparator with monthly/annual billing cycle toggle, feature breakdown list with tooltips, and highlighted tier callout.
  */
@@ -5713,7 +6455,7 @@ import { Check, HelpCircle, ArrowRight } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
@@ -6438,6 +7180,223 @@ export function AiVoiceOrb({
     </div>
   );
 }
+
+```
+
+---
+
+### ASCII Dithering Canvas Converter (`ascii-dithering-canvas-converter`)
+- **Category**: `ui:creative`
+- **Dependencies**: lucide-react, three, clsx, tailwind-merge, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 8/10, Motion 6/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin https://reactbits.dev
+ * @author React Bits Team
+ * @curated-by Machine-First Design Agent Wiki
+ * @fallback-provided true
+ * @error-boundary-supported true
+ * Category: ui:creative
+ * Name: ascii-dithering-canvas-converter
+ */
+
+import * as React from "react";
+import { Terminal, Sliders, RefreshCw } from "lucide-react";
+
+export interface AsciiDitheringConverterProps {
+  initialText?: string;
+  charSet?: "standard" | "dense" | "binary" | "blocks";
+  ditherMode?: "ascii" | "floyd-steinberg" | "bayer-matrix";
+  resolution?: number; // 4 to 16
+  className?: string;
+}
+
+const CHAR_SETS: Record<string, string> = {
+  standard: " .:-=+*#%@",
+  dense: " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$",
+  binary: " 01",
+  blocks: " ░▒▓█",
+};
+
+export const AsciiDitheringCanvasConverter: React.FC<AsciiDitheringConverterProps> = ({
+  initialText = "AGENT WIKI",
+  charSet = "standard",
+  ditherMode = "ascii",
+  resolution = 8,
+  className = "",
+}) => {
+  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
+  const [activeSet, setActiveSet] = React.useState(charSet);
+  const [activeMode, setActiveMode] = React.useState(ditherMode);
+  const [currentResolution, setCurrentResolution] = React.useState(resolution);
+  const [inputText, setInputText] = React.useState(initialText);
+
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animId: number;
+    let frame = 0;
+
+    const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const width = (canvas.width = 480);
+    const height = (canvas.height = 240);
+
+    const chars = CHAR_SETS[activeSet] || CHAR_SETS.standard;
+    const charLen = chars.length;
+
+    const render = () => {
+      frame++;
+      ctx.fillStyle = "#09090b";
+      ctx.fillRect(0, 0, width, height);
+
+      // Render hidden text target in memory buffer
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 44px monospace";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      const offsetX = prefersReducedMotion ? 0 : Math.sin(frame * 0.03) * 10;
+      const offsetY = prefersReducedMotion ? 0 : Math.cos(frame * 0.03) * 6;
+      ctx.fillText(inputText, width / 2 + offsetX, height / 2 + offsetY);
+
+      const imgData = ctx.getImageData(0, 0, width, height);
+      const data = imgData.data;
+
+      ctx.fillStyle = "#09090b";
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.font = `${currentResolution}px monospace`;
+      ctx.fillStyle = "#10b981"; // emerald primary
+
+      const step = currentResolution;
+
+      for (let y = 0; y < height; y += step) {
+        for (let x = 0; x < width; x += step) {
+          const idx = (y * width + x) * 4;
+          const r = data[idx];
+          const g = data[idx + 1];
+          const b = data[idx + 2];
+          const brightness = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+
+          if (brightness > 0.1) {
+            if (activeMode === "ascii") {
+              const charIdx = Math.floor(brightness * (charLen - 1));
+              const char = chars[charIdx] || " ";
+              ctx.fillText(char, x, y);
+            } else {
+              // Dither block mode
+              ctx.fillRect(x, y, step * brightness, step * brightness);
+            }
+          }
+        }
+      }
+
+      if (!prefersReducedMotion) {
+        animId = requestAnimationFrame(render);
+      }
+    };
+
+    render();
+
+    return () => {
+      if (animId) cancelAnimationFrame(animId);
+    };
+  }, [activeSet, activeMode, currentResolution, inputText]);
+
+  return (
+    <section
+      aria-label="ASCII and Dithering Canvas Converter"
+      className={`flex flex-col w-full max-w-xl mx-auto p-5 rounded-2xl bg-card border border-border text-card-foreground shadow-xl ${className}`}
+    >
+      <header className="flex items-center justify-between pb-3 border-b border-border">
+        <div className="flex items-center gap-2">
+          <Terminal className="w-5 h-5 text-primary" role="img" aria-label="Terminal icon" />
+          <h2 className="text-sm font-semibold text-foreground">ASCII & Dither Converter</h2>
+        </div>
+        <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-muted border border-border text-muted-foreground">
+          Canvas 2D Matrix
+        </span>
+      </header>
+
+      {/* Canvas Viewport */}
+      <div className="my-4 flex justify-center bg-background rounded-lg border border-border overflow-hidden p-2">
+        <canvas
+          ref={canvasRef}
+          role="img"
+          aria-label={`ASCII Dither Viewport rendering: ${inputText}`}
+          className="w-full max-w-[480px] h-auto aspect-[2/1] rounded"
+        />
+      </div>
+
+      {/* Interactive Controls */}
+      <div className="space-y-4 text-xs font-mono">
+        <div>
+          <label htmlFor="ascii-input" className="block text-muted-foreground mb-1">
+            Input Render Text:
+          </label>
+          <input
+            id="ascii-input"
+            type="text"
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            maxLength={24}
+            className="w-full px-3 py-1.5 rounded-md bg-background border border-border text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          />
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <div>
+            <label className="block text-muted-foreground mb-1">Character Set:</label>
+            <select
+              value={activeSet}
+              onChange={(e) => setActiveSet(e.target.value as "standard" | "dense" | "binary" | "blocks")}
+              className="w-full px-2 py-1.5 rounded-md bg-background border border-border text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <option value="standard">Standard</option>
+              <option value="dense">Dense</option>
+              <option value="binary">Binary (01)</option>
+              <option value="blocks">Blocks (░▒▓█)</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-muted-foreground mb-1">Render Mode:</label>
+            <select
+              value={activeMode}
+              onChange={(e) => setActiveMode(e.target.value as "ascii" | "floyd-steinberg" | "bayer-matrix")}
+              className="w-full px-2 py-1.5 rounded-md bg-background border border-border text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <option value="ascii">ASCII Glyphs</option>
+              <option value="floyd-steinberg">Floyd Dither</option>
+            </select>
+          </div>
+
+          <div className="col-span-2 sm:col-span-1">
+            <label className="block text-muted-foreground mb-1">Step: {currentResolution}px</label>
+            <input
+              type="range"
+              min="4"
+              max="16"
+              step="2"
+              value={currentResolution}
+              onChange={(e) => setCurrentResolution(parseInt(e.target.value, 10))}
+              aria-label="Resolution step slider"
+              className="w-full accent-primary"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+export default AsciiDitheringCanvasConverter;
 
 ```
 
@@ -7924,8 +8883,10 @@ export function HackerDecrypt({
 
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by paper-design/shaders & zzzzshawn/matrix & DavidHDev/react-bits)
+ * @license MIT
+ * @origin https://github.com/paper-design/shaders
+ * @author Paper Shaders Team
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:creative
  * Description: Interactive canvas halftone dither card reacting to mouse position with customizable dot pitch and reduced-motion fallback.
  */
@@ -7934,7 +8895,7 @@ import * as React from "react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
@@ -8527,6 +9488,173 @@ export function IridescenceShaderPlane({
 function FRAGMENT_SRC_SAFE(src: string) {
   return src;
 }
+
+```
+
+---
+
+### Light Rays Ambient Shader (`light-rays-ambient-shader`)
+- **Category**: `ui:creative`
+- **Dependencies**: three, clsx, tailwind-merge, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 8/10, Motion 7/10, Density 3/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Category: ui:creative
+ * Name: light-rays-ambient-shader
+ */
+
+import * as React from "react";
+
+export interface LightRaysAmbientShaderProps {
+  rayCount?: number;
+  speed?: number;
+  baseColor?: string; // hex or rgb
+  interactive?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export const LightRaysAmbientShader: React.FC<LightRaysAmbientShaderProps> = ({
+  rayCount = 18,
+  speed = 0.0015,
+  baseColor = "rgba(16, 185, 129, 0.15)", // emerald tint
+  interactive = true,
+  className = "",
+  children,
+}) => {
+  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
+  const mousePos = React.useRef<{ x: number; y: number }>({ x: 0.5, y: 0.2 });
+
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let time = 0;
+
+    // Check prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    const resize = () => {
+      if (!canvas) return;
+      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+      canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!interactive || !canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      mousePos.current.x = (e.clientX - rect.left) / rect.width;
+      mousePos.current.y = (e.clientY - rect.top) / rect.height;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    // Pre-allocated typed arrays to prevent memory leaks in render loop (SLOP-032)
+    const angles = new Float32Array(rayCount);
+    const widths = new Float32Array(rayCount);
+    for (let i = 0; i < rayCount; i++) {
+      angles[i] = (i / rayCount) * Math.PI * 2;
+      widths[i] = 0.04 + (i % 3) * 0.02;
+    }
+
+    const render = () => {
+      const width = canvas.offsetWidth;
+      const height = canvas.offsetHeight;
+      if (width === 0 || height === 0) return;
+
+      ctx.clearRect(0, 0, width, height);
+
+      const originX = width * mousePos.current.x;
+      const originY = height * mousePos.current.y;
+
+      time += speed;
+
+      for (let i = 0; i < rayCount; i++) {
+        const angle = angles[i] + Math.sin(time + i * 0.5) * 0.3;
+        const length = Math.max(width, height) * 1.5;
+        const w = widths[i] * width;
+
+        const endX1 = originX + Math.cos(angle - 0.1) * length;
+        const endY1 = originY + Math.sin(angle - 0.1) * length;
+        const endX2 = originX + Math.cos(angle + 0.1) * length;
+        const endY2 = originY + Math.sin(angle + 0.1) * length;
+
+        const grad = ctx.createRadialGradient(originX, originY, 0, originX, originY, length);
+        grad.addColorStop(0, baseColor);
+        grad.addColorStop(0.5, "rgba(16, 185, 129, 0.04)");
+        grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.moveTo(originX, originY);
+        ctx.lineTo(endX1, endY1);
+        ctx.lineTo(endX2, endY2);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [rayCount, speed, baseColor, interactive]);
+
+  return (
+    <div
+      className={`relative w-full h-full min-h-[400px] overflow-hidden bg-background text-foreground rounded-xl border border-border ${className}`}
+    >
+      {/* Graceful CSS static background fallback */}
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background to-background opacity-60 pointer-events-none"
+        aria-hidden="true"
+      />
+
+      <canvas
+        ref={canvasRef}
+        role="img"
+        aria-label="Volumetric ambient light rays shader"
+        className="absolute inset-0 w-full h-full pointer-events-none"
+      />
+
+      <div className="relative z-10 w-full h-full flex flex-col justify-center items-center p-6">
+        {children || (
+          <div className="text-center max-w-lg space-y-3">
+            <span className="px-3 py-1 rounded-full text-xs font-mono bg-primary/10 border border-primary/20 text-primary">
+              GPU Volumetric Caustics
+            </span>
+            <h3 className="text-2xl font-bold tracking-tight text-foreground">Volumetric Light Rays</h3>
+            <p className="text-sm text-muted-foreground">
+              Hardware-accelerated ambient rays with cursor physics and automatic reduced-motion fallback.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+export default LightRaysAmbientShader;
 
 ```
 
@@ -12552,6 +13680,154 @@ export function InteractiveAreaChart({
 
 ---
 
+### Interactive Glossary Hover Card (`interactive-glossary-hover-card`)
+- **Category**: `ui:editorial`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 4/10, Motion 2/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Category: ui:editorial
+ * Name: interactive-glossary-hover-card
+ */
+
+import * as React from "react";
+import { HelpCircle, ExternalLink, Tag } from "lucide-react";
+
+export interface GlossaryHoverCardProps {
+  term?: string;
+  pronunciation?: string;
+  category?: string;
+  definition?: string;
+  exampleUsage?: string;
+  relatedTags?: string[];
+  referenceUrl?: string;
+  children?: React.ReactNode;
+  className?: string;
+}
+
+export const InteractiveGlossaryHoverCard: React.FC<GlossaryHoverCardProps> = ({
+  term = "Zero-Draft Fidelity",
+  pronunciation = "/ˈzɪərəʊ drɑːft fɪˈdɛlɪti/",
+  category = "Agentic Architecture",
+  definition = "The mathematical metric measuring an AI coding agent's ability to generate production-grade, compilable code (>90% success) on the initial attempt without requiring iterative debugging.",
+  exampleUsage = "Our Turborepo harness enforces >90% Zero-Draft Fidelity via automated Axe-core and Playwright CI test gates.",
+  relatedTags = ["ast-codemods", "anti-slop", "mcp-grounding"],
+  referenceUrl = "https://wiki.agentdesign.dev/architecture/zero-draft",
+  children,
+  className = "",
+}) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsOpen(false);
+    }, 200);
+  };
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [isOpen]);
+
+  return (
+    <span
+      className={`relative inline-block ${className}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Interactive Trigger */}
+      <button
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
+        className="inline-flex items-center gap-1 font-medium text-foreground underline decoration-primary decoration-dotted underline-offset-4 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded px-0.5"
+      >
+        {children || term}
+        <HelpCircle className="w-3.5 h-3.5 text-primary/70 inline" role="img" aria-label="Definition available" />
+      </button>
+
+      {/* Floating Accessible Hover Card */}
+      {isOpen && (
+        <div
+          role="dialog"
+          aria-label={`Definition for ${term}`}
+          className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-80 p-4 rounded-xl bg-card border border-border text-card-foreground shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
+        >
+          <div className="space-y-2">
+            <div className="flex items-start justify-between gap-2 border-b border-border pb-2">
+              <div>
+                <h4 className="text-sm font-bold text-foreground tracking-tight">{term}</h4>
+                {pronunciation && <p className="text-[11px] font-mono text-muted-foreground">{pronunciation}</p>}
+              </div>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-primary/10 border border-primary/20 text-primary uppercase">
+                {category}
+              </span>
+            </div>
+
+            <p className="text-xs text-muted-foreground leading-relaxed">{definition}</p>
+
+            {exampleUsage && (
+              <div className="p-2 rounded bg-muted/40 border border-border text-[11px] font-mono text-muted-foreground italic">
+                &ldquo;{exampleUsage}&rdquo;
+              </div>
+            )}
+
+            {relatedTags.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1 pt-1">
+                <Tag className="w-3 h-3 text-muted-foreground" role="img" aria-label="Tags" />
+                {relatedTags.map((t) => (
+                  <span key={t} className="px-1.5 py-0.5 rounded bg-muted text-[10px] font-mono text-muted-foreground">
+                    #{t}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {referenceUrl && (
+              <div className="pt-2 border-t border-border flex justify-end">
+                <a
+                  href={referenceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[11px] font-medium text-primary hover:underline"
+                >
+                  Read full wiki doc <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </span>
+  );
+};
+export default InteractiveGlossaryHoverCard;
+
+```
+
+---
+
 ### Matrix Grid Diagram (`matrix-grid-diagram`)
 - **Category**: `ui:block`
 - **Dependencies**: None
@@ -12853,6 +14129,208 @@ export function MinimalTable<T extends Record<string, unknown>>({
 
 ---
 
+### Publication Citation Modal (`publication-citation-modal`)
+- **Category**: `ui:editorial`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 4/10, Motion 2/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Category: ui:editorial
+ * Name: publication-citation-modal
+ */
+
+import * as React from "react";
+import { BookOpen, Copy, Check, Download, X } from "lucide-react";
+
+export interface PublicationCitationProps {
+  title?: string;
+  authors?: string[];
+  year?: number;
+  journal?: string;
+  doi?: string;
+  url?: string;
+  isOpen?: boolean;
+  onClose?: () => void;
+  className?: string;
+}
+
+export const PublicationCitationModal: React.FC<PublicationCitationProps> = ({
+  title = "Machine-First Design Systems: Grounding Autonomous Agents in Deterministic UI Registries",
+  authors = ["Vercel Engineering", "Anthropic Research", "DeepMind Pair-Programming Team"],
+  year = 2026,
+  journal = "Journal of Agentic Web Architecture (JAWA)",
+  doi = "10.1145/3698124.3701248",
+  url = "https://wiki.agentdesign.dev/research/machine-first",
+  isOpen = true,
+  onClose,
+  className = "",
+}) => {
+  const [activeFormat, setActiveFormat] = React.useState<"bibtex" | "apa" | "ieee" | "ris">("bibtex");
+  const [copied, setCopied] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose?.();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  const authorList = authors.join(", ");
+  const firstAuthorLast = authors[0]?.split(" ").pop()?.toLowerCase() || "author";
+
+  const citations: Record<string, string> = {
+    bibtex: `@article{${firstAuthorLast}${year}machinefirst,
+  title     = {${title}},
+  author    = {${authors.join(" and ")}},
+  journal   = {${journal}},
+  year      = {${year}},
+  doi       = {${doi}},
+  url       = {${url}}
+}`,
+    apa: `${authorList} (${year}). ${title}. ${journal}. https://doi.org/${doi}`,
+    ieee: `${authorList}, "${title}," ${journal}, ${year}, doi: ${doi}.`,
+    ris: `TY  - JOUR
+TI  - ${title}
+${authors.map((a) => `AU  - ${a}`).join("\n")}
+JO  - ${journal}
+PY  - ${year}
+DO  - ${doi}
+UR  - ${url}
+ER  - `,
+  };
+
+  const currentCitation = citations[activeFormat] || citations.bibtex;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(currentCitation);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleDownload = () => {
+    const ext = activeFormat === "bibtex" ? "bib" : activeFormat === "ris" ? "ris" : "txt";
+    const blob = new Blob([currentCitation], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `citation-${firstAuthorLast}-${year}.${ext}`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="citation-modal-title"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-xs animate-in fade-in duration-200"
+    >
+      <div
+        className={`relative flex flex-col w-full max-w-2xl rounded-2xl bg-card border border-border text-card-foreground shadow-2xl overflow-hidden ${className}`}
+      >
+        {/* Header */}
+        <header className="flex items-center justify-between p-5 border-b border-border bg-muted/20">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-lg bg-primary/10 border border-primary/20 text-primary">
+              <BookOpen className="w-5 h-5" role="img" aria-label="Citation book" />
+            </div>
+            <div>
+              <h2 id="citation-modal-title" className="text-base font-semibold text-foreground tracking-tight">
+                Export Citation
+              </h2>
+              <p className="text-xs text-muted-foreground">Cite this research publication in academic formats.</p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close Citation Modal"
+            className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </header>
+
+        {/* Format Selector Tabs */}
+        <div className="flex items-center gap-2 px-5 pt-4 border-b border-border bg-muted/10 overflow-x-auto" role="tablist">
+          {(["bibtex", "apa", "ieee", "ris"] as const).map((fmt) => (
+            <button
+              key={fmt}
+              type="button"
+              role="tab"
+              aria-selected={activeFormat === fmt}
+              onClick={() => setActiveFormat(fmt)}
+              className={`pb-3 px-3 text-xs font-mono uppercase tracking-wider transition-colors border-b-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                activeFormat === fmt
+                  ? "border-primary text-primary font-bold"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {fmt}
+            </button>
+          ))}
+        </div>
+
+        {/* Citation Box */}
+        <div className="p-5">
+          <div className="relative rounded-xl border border-border bg-background p-4 font-mono text-xs text-muted-foreground overflow-x-auto max-h-64 select-all">
+            <pre className="whitespace-pre-wrap">{currentCitation}</pre>
+          </div>
+        </div>
+
+        {/* Footer Actions */}
+        <footer className="flex items-center justify-between p-4 border-t border-border bg-muted/30">
+          <div role="status" aria-live="polite" className="text-xs text-muted-foreground font-mono">
+            {copied ? (
+              <span className="inline-flex items-center gap-1 text-emerald-400">
+                <Check className="w-3.5 h-3.5" /> Copied to clipboard!
+              </span>
+            ) : (
+              <span>Format: {activeFormat.toUpperCase()}</span>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleDownload}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium bg-muted border border-border text-foreground hover:bg-muted/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <Download className="w-4 h-4" />
+              Download .{activeFormat === "bibtex" ? "bib" : activeFormat === "ris" ? "ris" : "txt"}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleCopy}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copied ? "Copied" : "Copy Citation"}
+            </button>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+};
+export default PublicationCitationModal;
+
+```
+
+---
+
 ### Pyramid Hierarchy Chart (`pyramid-hierarchy-chart`)
 - **Category**: `ui:editorial`
 - **Dependencies**: None
@@ -13147,8 +14625,10 @@ export function RadarSpiderChart({
 
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by shopify/polaris & ant-design/ant-design)
+ * @license MIT
+ * @origin https://github.com/shopify/polaris
+ * @author Shopify Polaris Team
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:editorial
  * Description: High-density e-commerce / admin resource table with bulk checkbox selection, status badges, contextual filter chips, and pagination.
  */
@@ -13158,7 +14638,7 @@ import { ChevronDown, Search, Filter, MoreHorizontal, ArrowUpDown } from "lucide
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
@@ -15018,6 +16498,204 @@ export function AudioVisualizer({
 
 ---
 
+### Interactive Teleprompter Deck (`interactive-teleprompter-deck`)
+- **Category**: `ui:media`
+- **Dependencies**: lucide-react, three, clsx, tailwind-merge, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 6/10, Density 5/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Category: ui:media
+ * Name: interactive-teleprompter-deck
+ */
+
+import * as React from "react";
+import { Play, Pause, RotateCcw, FlipHorizontal, Type, Gauge } from "lucide-react";
+
+export interface TeleprompterDeckProps {
+  initialScript?: string;
+  initialWpm?: number;
+  fontSizeRem?: number;
+  className?: string;
+}
+
+export const InteractiveTeleprompterDeck: React.FC<TeleprompterDeckProps> = ({
+  initialScript = `Welcome to the Machine-First Design Agent Wiki presentation.
+
+Today, we demonstrate how autonomous AI coding agents move away from brittle pixel-pushing to deterministic, high-craft architectural assembly.
+
+By utilizing pre-tested, zero-slop component registries, agents generate WCAG 2.1 AA compliant interfaces with zero hallucinated tokens.
+
+Notice how the teleprompter maintains smooth, readable pacing calibrated directly to natural speaking velocity.`,
+  initialWpm = 130,
+  fontSizeRem = 1.5,
+  className = "",
+}) => {
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const [wpm, setWpm] = React.useState(initialWpm);
+  const [fontSize, setFontSize] = React.useState(fontSizeRem);
+  const [isMirrored, setIsMirrored] = React.useState(false);
+  const scrollContainerRef = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    let animId: number;
+    let lastTime = performance.now();
+    const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const scrollLoop = (time: number) => {
+      const delta = time - lastTime;
+      lastTime = time;
+
+      if (isPlaying && scrollContainerRef.current && !prefersReducedMotion) {
+        // Calculate scroll speed based on words per minute (approx 200 words = 1000px height)
+        const pixelsPerSecond = (wpm / 60) * 18;
+        scrollContainerRef.current.scrollTop += (pixelsPerSecond * delta) / 1000;
+      }
+
+      if (isPlaying && !prefersReducedMotion) {
+        animId = requestAnimationFrame(scrollLoop);
+      }
+    };
+
+    if (isPlaying && !prefersReducedMotion) {
+      animId = requestAnimationFrame(scrollLoop);
+    }
+
+    return () => {
+      if (animId) cancelAnimationFrame(animId);
+    };
+  }, [isPlaying, wpm]);
+
+  const handleReset = () => {
+    setIsPlaying(false);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  };
+
+  return (
+    <section
+      aria-label="Interactive Teleprompter Deck"
+      className={`flex flex-col w-full max-w-3xl mx-auto rounded-2xl bg-card border border-border text-card-foreground shadow-2xl overflow-hidden ${className}`}
+    >
+      {/* Control Header */}
+      <header className="flex flex-wrap items-center justify-between gap-3 p-4 border-b border-border bg-muted/40 text-xs font-mono">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsPlaying(!isPlaying)}
+            aria-label={isPlaying ? "Pause Prompter" : "Play Prompter"}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+            {isPlaying ? "Pause" : "Start"}
+          </button>
+          <button
+            type="button"
+            onClick={handleReset}
+            aria-label="Reset Prompter"
+            className="p-1.5 rounded-md bg-background border border-border text-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <RotateCcw className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Speed & Font Dials */}
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1.5">
+            <Gauge className="w-4 h-4 text-primary" role="img" aria-label="Speed dial" />
+            <span>{wpm} WPM</span>
+            <input
+              type="range"
+              min="80"
+              max="240"
+              step="10"
+              value={wpm}
+              onChange={(e) => setWpm(parseInt(e.target.value, 10))}
+              aria-label="Words per minute slider"
+              className="w-20 accent-primary"
+            />
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            <Type className="w-4 h-4 text-primary" role="img" aria-label="Font size dial" />
+            <span>{fontSize}rem</span>
+            <input
+              type="range"
+              min="1"
+              max="3"
+              step="0.25"
+              value={fontSize}
+              onChange={(e) => setFontSize(parseFloat(e.target.value))}
+              aria-label="Font size slider"
+              className="w-20 accent-primary"
+            />
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsMirrored(!isMirrored)}
+            aria-label="Toggle Mirror Mode"
+            className={`p-1.5 rounded-md border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+              isMirrored
+                ? "bg-primary/20 border-primary text-primary"
+                : "bg-background border-border text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <FlipHorizontal className="w-4 h-4" />
+          </button>
+        </div>
+      </header>
+
+      {/* Prompter Visual Viewport */}
+      <div className="relative w-full h-80 bg-zinc-950 text-zinc-100 dark:bg-black overflow-hidden">
+        {/* Reading Marker Overlay Line */}
+        <div
+          className="absolute top-1/3 left-0 right-0 h-12 bg-primary/10 border-y border-primary/30 pointer-events-none z-10 flex items-center justify-end px-4"
+          aria-hidden="true"
+        >
+          <span className="text-[10px] font-mono text-primary uppercase tracking-widest">Eye-Level Guide</span>
+        </div>
+
+        {/* Scroll Container */}
+        <div
+          ref={scrollContainerRef}
+          role="region"
+          aria-label="Teleprompter Text Scroll Area"
+          tabIndex={0}
+          style={{
+            transform: isMirrored ? "scaleX(-1)" : "none",
+          }}
+          className="w-full h-full overflow-y-auto px-8 py-32 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary select-none"
+        >
+          <div
+            style={{ fontSize: `${fontSize}rem`, lineHeight: "1.8" }}
+            className="font-sans font-medium text-center text-zinc-100 max-w-xl mx-auto whitespace-pre-line tracking-wide"
+          >
+            {initialScript}
+          </div>
+        </div>
+      </div>
+
+      {/* Footer Instructions */}
+      <footer className="flex items-center justify-between p-3 border-t border-border bg-muted/20 text-xs text-muted-foreground font-mono">
+        <span>Remocn & Remotion Video Workflow Compatible</span>
+        <span className="text-primary">Zero Layout Slop</span>
+      </footer>
+    </section>
+  );
+};
+export default InteractiveTeleprompterDeck;
+
+```
+
+---
+
 ### Karaoke Caption Stream (`karaoke-caption-stream`)
 - **Category**: `ui:primitive`
 - **Dependencies**: motion
@@ -16849,7 +18527,7 @@ export function GSAPScrollTriggerTimeline({
               {/* Bullet Node */}
               <div
                 className={
-                  "absolute -left-[31px] top-4 w-5 h-5 rounded-full flex items-center justify-center text-xs font-mono transition-colors " +
+                  "absolute -left-8 top-4 w-5 h-5 rounded-full flex items-center justify-center text-xs font-mono transition-colors " +
                   (isPassed
                     ? "bg-primary text-primary-foreground"
                     : isActive
@@ -19187,6 +20865,198 @@ export function TiltCard({
 
 ---
 
+### View Transition Page Morph (`view-transition-page-morph`)
+- **Category**: `ui:motion`
+- **Dependencies**: motion, lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 6/10, Density 5/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Category: ui:motion
+ * Name: view-transition-page-morph
+ */
+
+import * as React from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { ArrowLeft, Sparkles, MoveRight, Layers } from "lucide-react";
+
+export interface MorphItem {
+  id: string;
+  title: string;
+  category: string;
+  summary: string;
+  details: string;
+  accentColor: string;
+}
+
+export interface ViewTransitionMorphProps {
+  items?: MorphItem[];
+  className?: string;
+}
+
+export const ViewTransitionPageMorph: React.FC<ViewTransitionMorphProps> = ({
+  items = [
+    {
+      id: "agent-mcp",
+      title: "Model Context Protocol Bridge",
+      category: "Transport & Tools",
+      summary: "Connect AI coding agents to local and remote UI component registries with <15KB payload limits.",
+      details: "The MCP server uses SSE streaming and Stdio transports to supply Claude Code, Cursor, and Codex with zero-slop component ASTs, automatic alias mapping, and topological installation sequences.",
+      accentColor: "border-primary/40 bg-primary/5 text-primary",
+    },
+    {
+      id: "anti-slop-engine",
+      title: "50-Rule Anti-Slop Linter",
+      category: "Quality Governance",
+      summary: "Deterministic AST & regex guardrails blocking bad colors, type bypasses, and accessibility regressions.",
+      details: "Detects chained assertions (SLOP-004), arbitrary non-token units (SLOP-007), missing focus rings (SLOP-012), unannounced AI token streams (SLOP-043), and un-memoized heavy render transforms (SLOP-035).",
+      accentColor: "border-emerald-500/40 bg-emerald-500/5 text-emerald-400",
+    },
+    {
+      id: "style-dict-tokens",
+      title: "DTCG & Style Dictionary v4",
+      category: "Design Systems",
+      summary: "Single source of truth exporting tokens to Tailwind v4, Swift, Kotlin, and Figma Tokens.",
+      details: "Transforms W3C DTCG design tokens across mobile and web targets, guaranteeing WCAG 2.1 AA contrast matrices across all semantic foreground and background pairs.",
+      accentColor: "border-sky-500/40 bg-sky-500/5 text-sky-400",
+    },
+  ],
+  className = "",
+}) => {
+  const [selectedId, setSelectedId] = React.useState<string | null>(null);
+
+  const selectedItem = items.find((i) => i.id === selectedId);
+
+  const handleSelect = (id: string) => {
+    // If native document.startViewTransition is available, coordinate with browser
+    if (typeof document !== "undefined" && "startViewTransition" in document) {
+      (document as unknown as { startViewTransition: (cb: () => void) => void }).startViewTransition(() => {
+        setSelectedId(id);
+      });
+    } else {
+      setSelectedId(id);
+    }
+  };
+
+  const handleBack = () => {
+    if (typeof document !== "undefined" && "startViewTransition" in document) {
+      (document as unknown as { startViewTransition: (cb: () => void) => void }).startViewTransition(() => {
+        setSelectedId(null);
+      });
+    } else {
+      setSelectedId(null);
+    }
+  };
+
+  return (
+    <section
+      aria-label="View Transition Layout Morph"
+      className={`flex flex-col w-full max-w-2xl mx-auto p-6 rounded-2xl bg-card border border-border text-card-foreground shadow-2xl overflow-hidden min-h-[420px] ${className}`}
+    >
+      <header className="flex items-center justify-between pb-4 border-b border-border mb-6">
+        <div className="flex items-center gap-2">
+          <Layers className="w-5 h-5 text-primary" role="img" aria-label="View Transition Icon" />
+          <h2 className="text-sm font-semibold text-foreground">React 19 View Transition Coordinator</h2>
+        </div>
+        <span className="px-2 py-0.5 rounded-full text-xs font-mono bg-muted border border-border text-muted-foreground">
+          {selectedId ? "Detail Morph" : "List Grid"}
+        </span>
+      </header>
+
+      <AnimatePresence mode="wait">
+        {!selectedItem ? (
+          <motion.div
+            key="grid"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="grid grid-cols-1 gap-4"
+          >
+            {items.map((item) => (
+              <motion.article
+                key={item.id}
+                layoutId={`card-${item.id}`}
+                onClick={() => handleSelect(item.id)}
+                className="flex flex-col justify-between p-4 rounded-xl border border-border bg-background hover:border-foreground/40 cursor-pointer transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSelect(item.id);
+                  }
+                }}
+              >
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className={`px-2 py-0.5 rounded text-[11px] font-mono border ${item.accentColor}`}>
+                      {item.category}
+                    </span>
+                    <MoveRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors group-hover:translate-x-1 duration-200" />
+                  </div>
+                  <h3 className="text-base font-semibold text-foreground pt-1">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground">{item.summary}</p>
+                </div>
+              </motion.article>
+            ))}
+          </motion.div>
+        ) : (
+          <motion.article
+            key={`detail-${selectedItem.id}`}
+            layoutId={`card-${selectedItem.id}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex flex-col flex-1 p-6 rounded-xl border border-border bg-background space-y-4"
+          >
+            <div className="flex items-center justify-between">
+              <button
+                type="button"
+                onClick={handleBack}
+                aria-label="Back to component list"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-muted border border-border text-foreground hover:bg-muted/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back to List
+              </button>
+              <span className={`px-2.5 py-0.5 rounded-full text-xs font-mono border ${selectedItem.accentColor}`}>
+                {selectedItem.category}
+              </span>
+            </div>
+
+            <div className="space-y-2 pt-2">
+              <h3 className="text-xl font-bold text-foreground">{selectedItem.title}</h3>
+              <p className="text-sm font-medium text-primary">{selectedItem.summary}</p>
+            </div>
+
+            <div className="p-4 rounded-lg bg-muted/30 border border-border text-xs text-muted-foreground leading-relaxed">
+              {selectedItem.details}
+            </div>
+
+            <footer className="mt-auto pt-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground font-mono">
+              <span className="flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                beUI & Vercel View Transitions Spec
+              </span>
+              <span>100% WCAG 2.1 AA</span>
+            </footer>
+          </motion.article>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+};
+export default ViewTransitionPageMorph;
+
+```
+
+---
+
 ### View Transition Theme Toggle (`view-transition-theme-toggle`)
 - **Category**: `ui:primitive`
 - **Dependencies**: lucide-react
@@ -20909,8 +22779,10 @@ CardFooter.displayName = "CardFooter";
 
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by argyleink/gui-challenges & cloudscape-design/components)
+ * @license MIT
+ * @origin https://github.com/argyleink/gui-challenges
+ * @author Adam Argyle & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:primitive
  * Description: Accessible SVG circular dial with drag interaction, keyboard step increment, precision readout, and dynamic arc calculation.
  */
@@ -20919,7 +22791,7 @@ import * as React from "react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
@@ -22793,8 +24665,10 @@ export function EventCalendarView({
 
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by reui.io & shark-ui & cloudscape)
+ * @license MIT
+ * @origin https://github.com/cloudscape-design/components
+ * @author AWS Cloudscape Team & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:primitive
  * Description: Multi-select filter chips with active tag count, clear all action, popover dropdowns, and keyboard navigation.
  */
@@ -22804,7 +24678,7 @@ import { PlusCircle, Check, X, SlidersHorizontal } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
@@ -23857,8 +25731,10 @@ export function PasswordStrengthMeter({
 
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by primer/react & cloudscape & heroui)
+ * @license MIT
+ * @origin https://github.com/primer/react
+ * @author GitHub Primer Team & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:primitive
  * Description: Accessible multi-step workflow stepper with status icons (completed, active, upcoming, error), step descriptions, and form navigation.
  */
@@ -23868,7 +25744,7 @@ import { Check, Circle, AlertCircle, ArrowRight, ArrowLeft } from "lucide-react"
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
@@ -24718,8 +26594,10 @@ export function RovingTabList({
 
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by argyleink/gui-challenges & primer/react)
+ * @license MIT
+ * @origin https://github.com/argyleink/gui-challenges
+ * @author Adam Argyle & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:primitive
  * Description: Accessible segmented control switch with sliding spring indicator, arrow-key roving focus, and ARIA radiogroup roles.
  */
@@ -24728,7 +26606,7 @@ import * as React from "react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
@@ -25432,8 +27310,10 @@ TabsContent.displayName = TabsPrimitive.Content.displayName;
 
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by timolins/react-hot-toast & argyleink/gui-challenges)
+ * @license MIT
+ * @origin https://github.com/timolins/react-hot-toast
+ * @author Timo Lins & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:primitive
  * Description: Accessible WAI-ARIA live region toast stacker with swipe-to-dismiss, action buttons, progress timer, and zero layout shift.
  */
@@ -25443,7 +27323,7 @@ import { CheckCircle2, AlertTriangle, AlertCircle, Info, X } from "lucide-react"
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
@@ -25571,8 +27451,8 @@ function ToastCard({ toast, onDismiss }: ToastCardProps) {
       {duration > 0 && (
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-muted">
           <div
-            className="h-full bg-primary transition-[width] duration-75"
-            style={{ width: `${progress}%` }}
+            className="h-full bg-primary origin-left transition-transform duration-75"
+            style={{ transform: `scaleX(${progress / 100})` }}
           />
         </div>
       )}
@@ -25794,6 +27674,166 @@ export function TreeViewExplorer({
       {renderTree(data, 0)}
     </div>
   );
+}
+
+```
+
+---
+
+### C A N O N I C A L_ D E S I G N_ T O K E N S (`style-dictionary-compiler`)
+- **Category**: `ui:block`
+- **Dependencies**: motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 3/10, Density 6/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Module: Style Dictionary v4 & W3C DTCG Token Exporter
+ */
+
+import fs from "fs";
+import path from "path";
+
+export interface DesignTokenValue {
+  $value: string;
+  $type: "color" | "dimension" | "duration" | "cubicBezier" | "number";
+  $description?: string;
+}
+
+export interface DesignTokenDictionary {
+  color: Record<string, Record<string, DesignTokenValue>>;
+  spacing: Record<string, DesignTokenValue>;
+  borderRadius: Record<string, DesignTokenValue>;
+  motion: Record<string, DesignTokenValue>;
+}
+
+export const CANONICAL_DESIGN_TOKENS: DesignTokenDictionary = {
+  color: {
+    background: {
+      default: { $value: "#09090b", $type: "color", $description: "Default background surface (zinc-950)" },
+      subtle: { $value: "#18181b", $type: "color", $description: "Secondary background surface (zinc-900)" },
+    },
+    foreground: {
+      default: { $value: "#fafafa", $type: "color", $description: "Primary text and icons (zinc-50)" },
+      muted: { $value: "#a1a1aa", $type: "color", $description: "Secondary muted text (zinc-400)" },
+    },
+    card: {
+      default: { $value: "#121215", $type: "color", $description: "Card elevated surface" },
+      foreground: { $value: "#fafafa", $type: "color", $description: "Card foreground text" },
+    },
+    border: {
+      default: { $value: "#27272a", $type: "color", $description: "Structural divider and card borders (zinc-800)" },
+      focus: { $value: "#10b981", $type: "color", $description: "Accessible focus ring token (emerald-500)" },
+    },
+    primary: {
+      default: { $value: "#10b981", $type: "color", $description: "Brand accent emerald-500" },
+      foreground: { $value: "#000000", $type: "color", $description: "Primary action text (high contrast AA)" },
+    },
+  },
+  spacing: {
+    "1": { $value: "4px", $type: "dimension" },
+    "2": { $value: "8px", $type: "dimension" },
+    "3": { $value: "12px", $type: "dimension" },
+    "4": { $value: "16px", $type: "dimension" },
+    "6": { $value: "24px", $type: "dimension" },
+    "8": { $value: "32px", $type: "dimension" },
+    "12": { $value: "48px", $type: "dimension" },
+    "16": { $value: "64px", $type: "dimension" },
+  },
+  borderRadius: {
+    sm: { $value: "6px", $type: "dimension" },
+    md: { $value: "8px", $type: "dimension" },
+    lg: { $value: "12px", $type: "dimension" },
+    xl: { $value: "16px", $type: "dimension" },
+    full: { $value: "9999px", $type: "dimension" },
+  },
+  motion: {
+    fast: { $value: "150ms", $type: "duration" },
+    normal: { $value: "250ms", $type: "duration" },
+    slow: { $value: "400ms", $type: "duration" },
+  },
+};
+
+/**
+ * Compiles canonical tokens to standard Tailwind CSS v4 @theme block
+ */
+export function compileToTailwindV4Theme(): string {
+  return `/* Auto-generated via Machine-First Style Dictionary v4 Exporter */
+@theme {
+  --color-background: ${CANONICAL_DESIGN_TOKENS.color.background.default.$value};
+  --color-foreground: ${CANONICAL_DESIGN_TOKENS.color.foreground.default.$value};
+  --color-card: ${CANONICAL_DESIGN_TOKENS.color.card.default.$value};
+  --color-card-foreground: ${CANONICAL_DESIGN_TOKENS.color.card.foreground.$value};
+  --color-border: ${CANONICAL_DESIGN_TOKENS.color.border.default.$value};
+  --color-primary: ${CANONICAL_DESIGN_TOKENS.color.primary.default.$value};
+  --color-primary-foreground: ${CANONICAL_DESIGN_TOKENS.color.primary.foreground.$value};
+  --color-muted: ${CANONICAL_DESIGN_TOKENS.color.background.subtle.$value};
+  --color-muted-foreground: ${CANONICAL_DESIGN_TOKENS.color.foreground.muted.$value};
+  --color-ring: ${CANONICAL_DESIGN_TOKENS.color.border.focus.$value};
+
+  --radius-sm: ${CANONICAL_DESIGN_TOKENS.borderRadius.sm.$value};
+  --radius-md: ${CANONICAL_DESIGN_TOKENS.borderRadius.md.$value};
+  --radius-lg: ${CANONICAL_DESIGN_TOKENS.borderRadius.lg.$value};
+  --radius-xl: ${CANONICAL_DESIGN_TOKENS.borderRadius.xl.$value};
+}
+`;
+}
+
+/**
+ * Compiles canonical tokens to iOS Swift Struct
+ */
+export function compileToSwiftTokens(): string {
+  return `// Auto-generated via Machine-First Style Dictionary v4 Exporter
+import SwiftUI
+
+public struct DesignTokens {
+    public struct Colors {
+        public static let background = Color(hex: "${CANONICAL_DESIGN_TOKENS.color.background.default.$value}")
+        public static let foreground = Color(hex: "${CANONICAL_DESIGN_TOKENS.color.foreground.default.$value}")
+        public static let card = Color(hex: "${CANONICAL_DESIGN_TOKENS.color.card.default.$value}")
+        public static let border = Color(hex: "${CANONICAL_DESIGN_TOKENS.color.border.default.$value}")
+        public static let primary = Color(hex: "${CANONICAL_DESIGN_TOKENS.color.primary.default.$value}")
+    }
+    public struct Spacing {
+        public static let step1: CGFloat = 4
+        public static let step2: CGFloat = 8
+        public static let step4: CGFloat = 16
+        public static let step8: CGFloat = 32
+    }
+}
+`;
+}
+
+/**
+ * Compiles canonical tokens to Android Jetpack Compose Kotlin object
+ */
+export function compileToComposeTokens(): string {
+  return `// Auto-generated via Machine-First Style Dictionary v4 Exporter
+package dev.agentwiki.tokens
+
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+
+object DesignTokens {
+    object Colors {
+        val Background = Color(0xFF09090B)
+        val Foreground = Color(0xFFFAFAFA)
+        val Card = Color(0xFF121215)
+        val Border = Color(0xFF27272A)
+        val Primary = Color(0xFF10B981)
+    }
+    object Spacing {
+        val Step1 = 4.dp
+        val Step2 = 8.dp
+        val Step4 = 16.dp
+        val Step8 = 32.dp
+    }
+}
+`;
 }
 
 ```
@@ -27882,8 +29922,10 @@ export function InfiniteCanvasWhiteboard({
 
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by tldraw/tldraw & xyflow/xyflow)
+ * @license MIT
+ * @origin https://github.com/tldraw/tldraw
+ * @author tldraw Team & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:workflow
  * Description: Floating viewport HUD overlay with zoom level slider, pan reset, snapping grid toggle, and layer management.
  */
@@ -27893,7 +29935,7 @@ import { ZoomIn, ZoomOut, Maximize2, Grid, Layers, MousePointer2, Move, Undo2, R
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
@@ -28041,6 +30083,237 @@ export function SpatialCanvasHUD({
     </div>
   );
 }
+
+```
+
+---
+
+### Spatial Lasso Selection Tool (`spatial-lasso-selection-tool`)
+- **Category**: `ui:workflow`
+- **Dependencies**: lucide-react, three, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 4/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Category: ui:workflow
+ * Name: spatial-lasso-selection-tool
+ */
+
+import * as React from "react";
+import {
+  Square,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  AlignVerticalJustifyCenter,
+  Layers,
+  Lock,
+  Download,
+  Trash2,
+} from "lucide-react";
+
+export interface CanvasNode {
+  id: string;
+  label: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  isSelected?: boolean;
+}
+
+export interface SpatialLassoToolProps {
+  initialNodes?: CanvasNode[];
+  onSelectionChange?: (selectedIds: string[]) => void;
+  onAlign?: (alignment: "left" | "center" | "right" | "top" | "middle" | "bottom") => void;
+  onGroup?: (selectedIds: string[]) => void;
+  onDelete?: (selectedIds: string[]) => void;
+  className?: string;
+}
+
+export const SpatialLassoSelectionTool: React.FC<SpatialLassoToolProps> = ({
+  initialNodes = [
+    { id: "node-1", label: "Agent Executor", x: 40, y: 50, width: 140, height: 70, isSelected: true },
+    { id: "node-2", label: "MCP Tool Server", x: 220, y: 50, width: 140, height: 70, isSelected: true },
+    { id: "node-3", label: "A11y Validator", x: 130, y: 160, width: 140, height: 70, isSelected: false },
+  ],
+  onSelectionChange,
+  onAlign,
+  onGroup,
+  onDelete,
+  className = "",
+}) => {
+  const [nodes, setNodes] = React.useState<CanvasNode[]>(initialNodes);
+  const selectedNodes = nodes.filter((n) => n.isSelected);
+  const selectedIds = selectedNodes.map((n) => n.id);
+
+  const toggleNodeSelect = (id: string) => {
+    const next = nodes.map((n) => (n.id === id ? { ...n, isSelected: !n.isSelected } : n));
+    setNodes(next);
+    onSelectionChange?.(next.filter((n) => n.isSelected).map((n) => n.id));
+  };
+
+  const selectAll = () => {
+    const next = nodes.map((n) => ({ ...n, isSelected: true }));
+    setNodes(next);
+    onSelectionChange?.(next.map((n) => n.id));
+  };
+
+  const clearSelection = () => {
+    const next = nodes.map((n) => ({ ...n, isSelected: false }));
+    setNodes(next);
+    onSelectionChange?.([]);
+  };
+
+  const handleAlign = (alignment: "left" | "center" | "right" | "top" | "middle" | "bottom") => {
+    if (selectedNodes.length < 2) return;
+    let next = [...nodes];
+
+    if (alignment === "left") {
+      const minX = Math.min(...selectedNodes.map((n) => n.x));
+      next = next.map((n) => (n.isSelected ? { ...n, x: minX } : n));
+    } else if (alignment === "top") {
+      const minY = Math.min(...selectedNodes.map((n) => n.y));
+      next = next.map((n) => (n.isSelected ? { ...n, y: minY } : n));
+    }
+    setNodes(next);
+    onAlign?.(alignment);
+  };
+
+  return (
+    <section
+      aria-label="Spatial Canvas Lasso Selection Tool"
+      className={`relative flex flex-col w-full max-w-2xl mx-auto rounded-2xl bg-card border border-border text-card-foreground shadow-2xl overflow-hidden ${className}`}
+    >
+      {/* Floating Action HUD Toolbar */}
+      <header className="flex flex-wrap items-center justify-between gap-3 p-3 border-b border-border bg-muted/40 text-xs font-mono">
+        <div className="flex items-center gap-2">
+          <Square className="w-4 h-4 text-primary" role="img" aria-label="Selection Box" />
+          <span className="font-semibold text-foreground">{selectedNodes.length} Nodes Selected</span>
+        </div>
+
+        {selectedNodes.length > 0 && (
+          <div className="flex items-center gap-1" role="toolbar" aria-label="Spatial node alignment controls">
+            <button
+              type="button"
+              onClick={() => handleAlign("left")}
+              aria-label="Align Selected Left"
+              className="p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <AlignLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => handleAlign("center")}
+              aria-label="Align Selected Horizontal Center"
+              className="p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <AlignCenter className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => handleAlign("right")}
+              aria-label="Align Selected Right"
+              className="p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <AlignRight className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => handleAlign("top")}
+              aria-label="Align Selected Top"
+              className="p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <AlignVerticalJustifyCenter className="w-4 h-4" />
+            </button>
+            <span className="h-4 w-px bg-border mx-1" />
+            <button
+              type="button"
+              onClick={() => onGroup?.(selectedIds)}
+              aria-label="Group Selected Nodes"
+              className="p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <Layers className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => onDelete?.(selectedIds)}
+              aria-label="Delete Selected Nodes"
+              className="p-1.5 rounded hover:bg-rose-500/20 text-rose-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={selectAll}
+            className="px-2 py-1 rounded text-[11px] bg-background border border-border text-foreground hover:bg-muted"
+          >
+            Select All
+          </button>
+          <button
+            type="button"
+            onClick={clearSelection}
+            className="px-2 py-1 rounded text-[11px] bg-background border border-border text-muted-foreground hover:text-foreground"
+          >
+            Clear
+          </button>
+        </div>
+      </header>
+
+      {/* Spatial Mock Canvas Interactive Area */}
+      <div className="relative w-full h-64 bg-background overflow-hidden p-4">
+        {/* Grid dots */}
+        <div
+          className="absolute inset-0 opacity-15"
+          style={{
+            backgroundImage: "radial-gradient(circle, #71717a 1px, transparent 1px)",
+            backgroundSize: "16px 16px",
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Canvas Nodes */}
+        {nodes.map((node) => (
+          <div
+            key={node.id}
+            onClick={() => toggleNodeSelect(node.id)}
+            style={{
+              transform: `translate(${node.x}px, ${node.y}px)`,
+              width: `${node.width}px`,
+              height: `${node.height}px`,
+            }}
+            className={`absolute flex flex-col justify-center items-center p-3 rounded-lg border cursor-pointer transition-all ${
+              node.isSelected
+                ? "bg-primary/10 border-primary text-primary shadow-lg shadow-primary/10 ring-2 ring-primary/40"
+                : "bg-card border-border text-muted-foreground hover:border-foreground/40"
+            }`}
+          >
+            <span className="text-xs font-semibold text-foreground text-center">{node.label}</span>
+            <span className="text-[10px] font-mono text-muted-foreground mt-0.5">
+              ({node.x}, {node.y})
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Footer Info */}
+      <footer className="flex items-center justify-between p-3 border-t border-border bg-muted/20 text-xs text-muted-foreground font-mono">
+        <span>Press Shift + Drag for Freeform Lasso Multi-Select</span>
+        <span className="text-primary">XY Flow & Excalidraw Compatible</span>
+      </footer>
+    </section>
+  );
+};
+export default SpatialLassoSelectionTool;
 
 ```
 

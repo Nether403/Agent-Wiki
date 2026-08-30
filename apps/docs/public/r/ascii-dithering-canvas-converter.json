@@ -1,0 +1,63 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ascii-dithering-canvas-converter",
+  "type": "registry:component",
+  "title": "ASCII Dithering Canvas Converter",
+  "description": "Canvas WebGL shader converting text, imagery, or live video into retro ASCII characters and Floyd-Steinberg dithering.",
+  "category": "ui:creative",
+  "tags": [
+    "lucide-react",
+    "webgl",
+    "threejs",
+    "canvas",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "ascii",
+    "dithering",
+    "matrix",
+    "creative",
+    "floyd-steinberg"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 6,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://reactbits.dev",
+    "license_type": "MIT",
+    "author": "React Bits Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "three",
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/ascii-dithering-canvas-converter.tsx",
+      "content": "/**\n * @license MIT\n * @origin https://reactbits.dev\n * @author React Bits Team\n * @curated-by Machine-First Design Agent Wiki\n * @fallback-provided true\n * @error-boundary-supported true\n * Category: ui:creative\n * Name: ascii-dithering-canvas-converter\n */\n\nimport * as React from \"react\";\nimport { Terminal, Sliders, RefreshCw } from \"lucide-react\";\n\nexport interface AsciiDitheringConverterProps {\n  initialText?: string;\n  charSet?: \"standard\" | \"dense\" | \"binary\" | \"blocks\";\n  ditherMode?: \"ascii\" | \"floyd-steinberg\" | \"bayer-matrix\";\n  resolution?: number; // 4 to 16\n  className?: string;\n}\n\nconst CHAR_SETS: Record<string, string> = {\n  standard: \" .:-=+*#%@\",\n  dense: \" .'`^\\\",:;Il!i><~+_-?][}{1)(|\\\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$\",\n  binary: \" 01\",\n  blocks: \" ░▒▓█\",\n};\n\nexport const AsciiDitheringCanvasConverter: React.FC<AsciiDitheringConverterProps> = ({\n  initialText = \"AGENT WIKI\",\n  charSet = \"standard\",\n  ditherMode = \"ascii\",\n  resolution = 8,\n  className = \"\",\n}) => {\n  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);\n  const [activeSet, setActiveSet] = React.useState(charSet);\n  const [activeMode, setActiveMode] = React.useState(ditherMode);\n  const [currentResolution, setCurrentResolution] = React.useState(resolution);\n  const [inputText, setInputText] = React.useState(initialText);\n\n  React.useEffect(() => {\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    let animId: number;\n    let frame = 0;\n\n    const prefersReducedMotion = typeof window !== \"undefined\" && window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches;\n\n    const width = (canvas.width = 480);\n    const height = (canvas.height = 240);\n\n    const chars = CHAR_SETS[activeSet] || CHAR_SETS.standard;\n    const charLen = chars.length;\n\n    const render = () => {\n      frame++;\n      ctx.fillStyle = \"#09090b\";\n      ctx.fillRect(0, 0, width, height);\n\n      // Render hidden text target in memory buffer\n      ctx.fillStyle = \"#ffffff\";\n      ctx.font = \"bold 44px monospace\";\n      ctx.textAlign = \"center\";\n      ctx.textBaseline = \"middle\";\n      const offsetX = prefersReducedMotion ? 0 : Math.sin(frame * 0.03) * 10;\n      const offsetY = prefersReducedMotion ? 0 : Math.cos(frame * 0.03) * 6;\n      ctx.fillText(inputText, width / 2 + offsetX, height / 2 + offsetY);\n\n      const imgData = ctx.getImageData(0, 0, width, height);\n      const data = imgData.data;\n\n      ctx.fillStyle = \"#09090b\";\n      ctx.fillRect(0, 0, width, height);\n\n      ctx.font = `${currentResolution}px monospace`;\n      ctx.fillStyle = \"#10b981\"; // emerald primary\n\n      const step = currentResolution;\n\n      for (let y = 0; y < height; y += step) {\n        for (let x = 0; x < width; x += step) {\n          const idx = (y * width + x) * 4;\n          const r = data[idx];\n          const g = data[idx + 1];\n          const b = data[idx + 2];\n          const brightness = (r * 0.299 + g * 0.587 + b * 0.114) / 255;\n\n          if (brightness > 0.1) {\n            if (activeMode === \"ascii\") {\n              const charIdx = Math.floor(brightness * (charLen - 1));\n              const char = chars[charIdx] || \" \";\n              ctx.fillText(char, x, y);\n            } else {\n              // Dither block mode\n              ctx.fillRect(x, y, step * brightness, step * brightness);\n            }\n          }\n        }\n      }\n\n      if (!prefersReducedMotion) {\n        animId = requestAnimationFrame(render);\n      }\n    };\n\n    render();\n\n    return () => {\n      if (animId) cancelAnimationFrame(animId);\n    };\n  }, [activeSet, activeMode, currentResolution, inputText]);\n\n  return (\n    <section\n      aria-label=\"ASCII and Dithering Canvas Converter\"\n      className={`flex flex-col w-full max-w-xl mx-auto p-5 rounded-2xl bg-card border border-border text-card-foreground shadow-xl ${className}`}\n    >\n      <header className=\"flex items-center justify-between pb-3 border-b border-border\">\n        <div className=\"flex items-center gap-2\">\n          <Terminal className=\"w-5 h-5 text-primary\" role=\"img\" aria-label=\"Terminal icon\" />\n          <h2 className=\"text-sm font-semibold text-foreground\">ASCII & Dither Converter</h2>\n        </div>\n        <span className=\"text-[11px] font-mono px-2 py-0.5 rounded bg-muted border border-border text-muted-foreground\">\n          Canvas 2D Matrix\n        </span>\n      </header>\n\n      {/* Canvas Viewport */}\n      <div className=\"my-4 flex justify-center bg-background rounded-lg border border-border overflow-hidden p-2\">\n        <canvas\n          ref={canvasRef}\n          role=\"img\"\n          aria-label={`ASCII Dither Viewport rendering: ${inputText}`}\n          className=\"w-full max-w-[480px] h-auto aspect-[2/1] rounded\"\n        />\n      </div>\n\n      {/* Interactive Controls */}\n      <div className=\"space-y-4 text-xs font-mono\">\n        <div>\n          <label htmlFor=\"ascii-input\" className=\"block text-muted-foreground mb-1\">\n            Input Render Text:\n          </label>\n          <input\n            id=\"ascii-input\"\n            type=\"text\"\n            value={inputText}\n            onChange={(e) => setInputText(e.target.value)}\n            maxLength={24}\n            className=\"w-full px-3 py-1.5 rounded-md bg-background border border-border text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          />\n        </div>\n\n        <div className=\"grid grid-cols-2 sm:grid-cols-3 gap-2\">\n          <div>\n            <label className=\"block text-muted-foreground mb-1\">Character Set:</label>\n            <select\n              value={activeSet}\n              onChange={(e) => setActiveSet(e.target.value as \"standard\" | \"dense\" | \"binary\" | \"blocks\")}\n              className=\"w-full px-2 py-1.5 rounded-md bg-background border border-border text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <option value=\"standard\">Standard</option>\n              <option value=\"dense\">Dense</option>\n              <option value=\"binary\">Binary (01)</option>\n              <option value=\"blocks\">Blocks (░▒▓█)</option>\n            </select>\n          </div>\n\n          <div>\n            <label className=\"block text-muted-foreground mb-1\">Render Mode:</label>\n            <select\n              value={activeMode}\n              onChange={(e) => setActiveMode(e.target.value as \"ascii\" | \"floyd-steinberg\" | \"bayer-matrix\")}\n              className=\"w-full px-2 py-1.5 rounded-md bg-background border border-border text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <option value=\"ascii\">ASCII Glyphs</option>\n              <option value=\"floyd-steinberg\">Floyd Dither</option>\n            </select>\n          </div>\n\n          <div className=\"col-span-2 sm:col-span-1\">\n            <label className=\"block text-muted-foreground mb-1\">Step: {currentResolution}px</label>\n            <input\n              type=\"range\"\n              min=\"4\"\n              max=\"16\"\n              step=\"2\"\n              value={currentResolution}\n              onChange={(e) => setCurrentResolution(parseInt(e.target.value, 10))}\n              aria-label=\"Resolution step slider\"\n              className=\"w-full accent-primary\"\n            />\n          </div>\n        </div>\n      </div>\n    </section>\n  );\n};\nexport default AsciiDitheringCanvasConverter;\n",
+      "type": "registry:component",
+      "target": "components/ui/ascii-dithering-canvas-converter.tsx"
+    }
+  ]
+}

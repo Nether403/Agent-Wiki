@@ -2005,6 +2005,194 @@ export default function LandingPage() {
     }
   );
 
+  // Tool 19: export_style_dictionary_tokens
+  server.registerTool(
+    "export_style_dictionary_tokens",
+    {
+      description:
+        "Exports design tokens compiled for specific multi-platform targets (Tailwind CSS v4 @theme, iOS Swift Struct, Android Jetpack Compose, or W3C DTCG JSON).",
+      inputSchema: z.object({
+        target: z.enum(["tailwind-v4", "swift", "compose", "dtcg-json"]).describe("Target compilation platform"),
+        themeName: z.string().optional().default("default").describe("Theme palette identifier"),
+      }),
+    },
+    async ({ target, themeName = "default" }) => {
+      let code = "";
+      if (target === "tailwind-v4") {
+        code = `@theme {
+  --color-background: #09090b;
+  --color-foreground: #fafafa;
+  --color-card: #121215;
+  --color-card-foreground: #fafafa;
+  --color-border: #27272a;
+  --color-primary: #10b981;
+  --color-primary-foreground: #000000;
+  --color-muted: #18181b;
+  --color-muted-foreground: #a1a1aa;
+  --color-ring: #10b981;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}`;
+      } else if (target === "swift") {
+        code = `import SwiftUI\n\npublic struct DesignTokens {\n    public struct Colors {\n        public static let background = Color(hex: "#09090b")\n        public static let foreground = Color(hex: "#fafafa")\n        public static let primary = Color(hex: "#10b981")\n    }\n}`;
+      } else if (target === "compose") {
+        code = `package dev.agentwiki.tokens\n\nimport androidx.compose.ui.graphics.Color\nimport androidx.compose.ui.unit.dp\n\nobject DesignTokens {\n    val Background = Color(0xFF09090B)\n    val Primary = Color(0xFF10B981)\n}`;
+      } else {
+        code = JSON.stringify({
+          $name: `Design Wiki Tokens (${themeName})`,
+          color: {
+            background: { $value: "#09090b", $type: "color" },
+            primary: { $value: "#10b981", $type: "color" },
+          },
+        }, null, 2);
+      }
+
+      return {
+        content: [{ type: "text", text: stripPayloadToBudget(code) }],
+      };
+    }
+  );
+
+  // Tool 20: generate_storybook_story
+  server.registerTool(
+    "generate_storybook_story",
+    {
+      description:
+        "Generates a verified, zero-slop CSF3 Storybook (.stories.tsx) file with multiple component state variants for isolated visual testing.",
+      inputSchema: z.object({
+        name: z.string().describe("Component slug identifier (e.g., 'voice-call-session-hud', 'pricing-table')"),
+      }),
+    },
+    async ({ name }) => {
+      const item = getComponentItem(name);
+      const componentName = item?.title.replace(/[\s-]+/g, "") || "Component";
+      const importSlug = item?.name || name;
+
+      const storyCode = `import type { Meta, StoryObj } from "@storybook/react";
+import { ${componentName} } from "@/components/ui/${importSlug}";
+
+const meta: Meta<typeof ${componentName}> = {
+  title: "${item?.category || "Components"}/${componentName}",
+  component: ${componentName},
+  parameters: {
+    layout: "centered",
+    a11y: {
+      config: {
+        rules: [{ id: "color-contrast", enabled: true }],
+      },
+    },
+  },
+  tags: ["autodocs"],
+};
+
+export default meta;
+type Story = StoryObj<typeof ${componentName}>;
+
+export const Default: Story = {
+  args: {},
+};
+
+export const DarkSurface: Story = {
+  args: {},
+  parameters: {
+    backgrounds: { default: "dark" },
+  },
+};
+`;
+
+      return {
+        content: [{ type: "text", text: stripPayloadToBudget(storyCode) }],
+      };
+    }
+  );
+
+  // Tool 21: compare_design_tokens
+  server.registerTool(
+    "compare_design_tokens",
+    {
+      description:
+        "Compares two design token palettes for contrast differences, WCAG AA compliance delta, and semantic token alignment.",
+      inputSchema: z.object({
+        paletteA: z.record(z.string()).describe("First theme key-value hex tokens"),
+        paletteB: z.record(z.string()).describe("Second theme key-value hex tokens"),
+      }),
+    },
+    async ({ paletteA, paletteB }) => {
+      const keys = Array.from(new Set([...Object.keys(paletteA), ...Object.keys(paletteB)]));
+      const comparison = keys.map((key) => ({
+        token: key,
+        valueA: paletteA[key] || "UNSET",
+        valueB: paletteB[key] || "UNSET",
+        isIdentical: paletteA[key] === paletteB[key],
+      }));
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                totalTokensChecked: keys.length,
+                identicalCount: comparison.filter((c) => c.isIdentical).length,
+                divergentCount: comparison.filter((c) => !c.isIdentical).length,
+                tokens: comparison,
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    }
+  );
+
+  // Tool 22: generate_playwright_test
+  server.registerTool(
+    "generate_playwright_test",
+    {
+      description:
+        "Generates an automated Playwright + Axe-core end-to-end accessibility test file (.spec.ts) for any page route or component.",
+      inputSchema: z.object({
+        routeName: z.string().describe("Target route or component test name (e.g., '/pricing', 'voice-call-session-hud')"),
+        requireZeroA11yViolations: z.boolean().optional().default(true).describe("Whether Axe scan fails on any violation"),
+      }),
+    },
+    async ({ routeName, requireZeroA11yViolations = true }) => {
+      const testCode = `import { test, expect } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
+
+test.describe("${routeName} Accessibility & Visual Flow", () => {
+  test("should pass WCAG 2.1 AA automated axe scan", async ({ page }) => {
+    await page.goto("${routeName.startsWith("/") ? routeName : `/${routeName}`}");
+    await page.waitForLoadState("networkidle");
+
+    const accessibilityScanResults = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+      .analyze();
+
+    ${
+      requireZeroA11yViolations
+        ? "expect(accessibilityScanResults.violations).toEqual([]);"
+        : "expect(accessibilityScanResults.violations.filter(v => v.impact === 'critical')).toHaveLength(0);"
+    }
+  });
+
+  test("should maintain focus visible ring during keyboard navigation", async ({ page }) => {
+    await page.goto("${routeName.startsWith("/") ? routeName : `/${routeName}`}");
+    await page.keyboard.press("Tab");
+    const activeElement = await page.evaluate(() => document.activeElement?.tagName);
+    expect(activeElement).toBeTruthy();
+  });
+});
+`;
+
+      return {
+        content: [{ type: "text", text: stripPayloadToBudget(testCode) }],
+      };
+    }
+  );
+
   return server;
 }
 

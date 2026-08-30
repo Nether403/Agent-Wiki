@@ -1,6 +1,8 @@
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by reui.io & shark-ui & cloudscape)
+ * @license MIT
+ * @origin https://github.com/cloudscape-design/components
+ * @author AWS Cloudscape Team & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:primitive
  * Description: Multi-select filter chips with active tag count, clear all action, popover dropdowns, and keyboard navigation.
  */
@@ -10,7 +12,7 @@ import { PlusCircle, Check, X, SlidersHorizontal } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 

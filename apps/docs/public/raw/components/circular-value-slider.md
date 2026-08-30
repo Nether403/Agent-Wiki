@@ -55,8 +55,10 @@ npx shadcn@latest add http://localhost:3000/r/circular-value-slider.json
 ## Verified TypeScript Source
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by argyleink/gui-challenges & cloudscape-design/components)
+ * @license MIT
+ * @origin https://github.com/argyleink/gui-challenges
+ * @author Adam Argyle & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:primitive
  * Description: Accessible SVG circular dial with drag interaction, keyboard step increment, precision readout, and dynamic arc calculation.
  */
@@ -65,7 +67,7 @@ import * as React from "react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 

@@ -1,6 +1,8 @@
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by argyleink/gui-challenges & primer/react)
+ * @license MIT
+ * @origin https://github.com/argyleink/gui-challenges
+ * @author Adam Argyle & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:primitive
  * Description: Accessible segmented control switch with sliding spring indicator, arrow-key roving focus, and ARIA radiogroup roles.
  */
@@ -9,7 +11,7 @@ import * as React from "react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 

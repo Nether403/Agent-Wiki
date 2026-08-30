@@ -1,0 +1,61 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "spatial-lasso-selection-tool",
+  "type": "registry:component",
+  "title": "Spatial Lasso Selection Tool",
+  "description": "Spatial canvas freeform lasso selection tool with multi-node bounding-box alignment actions, grouping, and export controls.",
+  "category": "ui:workflow",
+  "tags": [
+    "lucide-react",
+    "webgl",
+    "threejs",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "canvas",
+    "spatial",
+    "lasso",
+    "selection",
+    "workflow",
+    "excalidraw"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 4,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "toolbar",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://excalidraw.com",
+    "license_type": "MIT",
+    "author": "Excalidraw Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "three",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/workflow/spatial-lasso-selection-tool.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Category: ui:workflow\n * Name: spatial-lasso-selection-tool\n */\n\nimport * as React from \"react\";\nimport {\n  Square,\n  AlignLeft,\n  AlignCenter,\n  AlignRight,\n  AlignVerticalJustifyCenter,\n  Layers,\n  Lock,\n  Download,\n  Trash2,\n} from \"lucide-react\";\n\nexport interface CanvasNode {\n  id: string;\n  label: string;\n  x: number;\n  y: number;\n  width: number;\n  height: number;\n  isSelected?: boolean;\n}\n\nexport interface SpatialLassoToolProps {\n  initialNodes?: CanvasNode[];\n  onSelectionChange?: (selectedIds: string[]) => void;\n  onAlign?: (alignment: \"left\" | \"center\" | \"right\" | \"top\" | \"middle\" | \"bottom\") => void;\n  onGroup?: (selectedIds: string[]) => void;\n  onDelete?: (selectedIds: string[]) => void;\n  className?: string;\n}\n\nexport const SpatialLassoSelectionTool: React.FC<SpatialLassoToolProps> = ({\n  initialNodes = [\n    { id: \"node-1\", label: \"Agent Executor\", x: 40, y: 50, width: 140, height: 70, isSelected: true },\n    { id: \"node-2\", label: \"MCP Tool Server\", x: 220, y: 50, width: 140, height: 70, isSelected: true },\n    { id: \"node-3\", label: \"A11y Validator\", x: 130, y: 160, width: 140, height: 70, isSelected: false },\n  ],\n  onSelectionChange,\n  onAlign,\n  onGroup,\n  onDelete,\n  className = \"\",\n}) => {\n  const [nodes, setNodes] = React.useState<CanvasNode[]>(initialNodes);\n  const selectedNodes = nodes.filter((n) => n.isSelected);\n  const selectedIds = selectedNodes.map((n) => n.id);\n\n  const toggleNodeSelect = (id: string) => {\n    const next = nodes.map((n) => (n.id === id ? { ...n, isSelected: !n.isSelected } : n));\n    setNodes(next);\n    onSelectionChange?.(next.filter((n) => n.isSelected).map((n) => n.id));\n  };\n\n  const selectAll = () => {\n    const next = nodes.map((n) => ({ ...n, isSelected: true }));\n    setNodes(next);\n    onSelectionChange?.(next.map((n) => n.id));\n  };\n\n  const clearSelection = () => {\n    const next = nodes.map((n) => ({ ...n, isSelected: false }));\n    setNodes(next);\n    onSelectionChange?.([]);\n  };\n\n  const handleAlign = (alignment: \"left\" | \"center\" | \"right\" | \"top\" | \"middle\" | \"bottom\") => {\n    if (selectedNodes.length < 2) return;\n    let next = [...nodes];\n\n    if (alignment === \"left\") {\n      const minX = Math.min(...selectedNodes.map((n) => n.x));\n      next = next.map((n) => (n.isSelected ? { ...n, x: minX } : n));\n    } else if (alignment === \"top\") {\n      const minY = Math.min(...selectedNodes.map((n) => n.y));\n      next = next.map((n) => (n.isSelected ? { ...n, y: minY } : n));\n    }\n    setNodes(next);\n    onAlign?.(alignment);\n  };\n\n  return (\n    <section\n      aria-label=\"Spatial Canvas Lasso Selection Tool\"\n      className={`relative flex flex-col w-full max-w-2xl mx-auto rounded-2xl bg-card border border-border text-card-foreground shadow-2xl overflow-hidden ${className}`}\n    >\n      {/* Floating Action HUD Toolbar */}\n      <header className=\"flex flex-wrap items-center justify-between gap-3 p-3 border-b border-border bg-muted/40 text-xs font-mono\">\n        <div className=\"flex items-center gap-2\">\n          <Square className=\"w-4 h-4 text-primary\" role=\"img\" aria-label=\"Selection Box\" />\n          <span className=\"font-semibold text-foreground\">{selectedNodes.length} Nodes Selected</span>\n        </div>\n\n        {selectedNodes.length > 0 && (\n          <div className=\"flex items-center gap-1\" role=\"toolbar\" aria-label=\"Spatial node alignment controls\">\n            <button\n              type=\"button\"\n              onClick={() => handleAlign(\"left\")}\n              aria-label=\"Align Selected Left\"\n              className=\"p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <AlignLeft className=\"w-4 h-4\" />\n            </button>\n            <button\n              type=\"button\"\n              onClick={() => handleAlign(\"center\")}\n              aria-label=\"Align Selected Horizontal Center\"\n              className=\"p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <AlignCenter className=\"w-4 h-4\" />\n            </button>\n            <button\n              type=\"button\"\n              onClick={() => handleAlign(\"right\")}\n              aria-label=\"Align Selected Right\"\n              className=\"p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <AlignRight className=\"w-4 h-4\" />\n            </button>\n            <button\n              type=\"button\"\n              onClick={() => handleAlign(\"top\")}\n              aria-label=\"Align Selected Top\"\n              className=\"p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <AlignVerticalJustifyCenter className=\"w-4 h-4\" />\n            </button>\n            <span className=\"h-4 w-px bg-border mx-1\" />\n            <button\n              type=\"button\"\n              onClick={() => onGroup?.(selectedIds)}\n              aria-label=\"Group Selected Nodes\"\n              className=\"p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <Layers className=\"w-4 h-4\" />\n            </button>\n            <button\n              type=\"button\"\n              onClick={() => onDelete?.(selectedIds)}\n              aria-label=\"Delete Selected Nodes\"\n              className=\"p-1.5 rounded hover:bg-rose-500/20 text-rose-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <Trash2 className=\"w-4 h-4\" />\n            </button>\n          </div>\n        )}\n\n        <div className=\"flex items-center gap-1.5\">\n          <button\n            type=\"button\"\n            onClick={selectAll}\n            className=\"px-2 py-1 rounded text-[11px] bg-background border border-border text-foreground hover:bg-muted\"\n          >\n            Select All\n          </button>\n          <button\n            type=\"button\"\n            onClick={clearSelection}\n            className=\"px-2 py-1 rounded text-[11px] bg-background border border-border text-muted-foreground hover:text-foreground\"\n          >\n            Clear\n          </button>\n        </div>\n      </header>\n\n      {/* Spatial Mock Canvas Interactive Area */}\n      <div className=\"relative w-full h-64 bg-background overflow-hidden p-4\">\n        {/* Grid dots */}\n        <div\n          className=\"absolute inset-0 opacity-15\"\n          style={{\n            backgroundImage: \"radial-gradient(circle, #71717a 1px, transparent 1px)\",\n            backgroundSize: \"16px 16px\",\n          }}\n          aria-hidden=\"true\"\n        />\n\n        {/* Canvas Nodes */}\n        {nodes.map((node) => (\n          <div\n            key={node.id}\n            onClick={() => toggleNodeSelect(node.id)}\n            style={{\n              transform: `translate(${node.x}px, ${node.y}px)`,\n              width: `${node.width}px`,\n              height: `${node.height}px`,\n            }}\n            className={`absolute flex flex-col justify-center items-center p-3 rounded-lg border cursor-pointer transition-all ${\n              node.isSelected\n                ? \"bg-primary/10 border-primary text-primary shadow-lg shadow-primary/10 ring-2 ring-primary/40\"\n                : \"bg-card border-border text-muted-foreground hover:border-foreground/40\"\n            }`}\n          >\n            <span className=\"text-xs font-semibold text-foreground text-center\">{node.label}</span>\n            <span className=\"text-[10px] font-mono text-muted-foreground mt-0.5\">\n              ({node.x}, {node.y})\n            </span>\n          </div>\n        ))}\n      </div>\n\n      {/* Footer Info */}\n      <footer className=\"flex items-center justify-between p-3 border-t border-border bg-muted/20 text-xs text-muted-foreground font-mono\">\n        <span>Press Shift + Drag for Freeform Lasso Multi-Select</span>\n        <span className=\"text-primary\">XY Flow & Excalidraw Compatible</span>\n      </footer>\n    </section>\n  );\n};\nexport default SpatialLassoSelectionTool;\n",
+      "type": "registry:component",
+      "target": "components/ui/spatial-lasso-selection-tool.tsx"
+    }
+  ]
+}

@@ -58,8 +58,10 @@ npx shadcn@latest add http://localhost:3000/r/toast-notification-center.json
 ## Verified TypeScript Source
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by timolins/react-hot-toast & argyleink/gui-challenges)
+ * @license MIT
+ * @origin https://github.com/timolins/react-hot-toast
+ * @author Timo Lins & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:primitive
  * Description: Accessible WAI-ARIA live region toast stacker with swipe-to-dismiss, action buttons, progress timer, and zero layout shift.
  */
@@ -69,7 +71,7 @@ import { CheckCircle2, AlertTriangle, AlertCircle, Info, X } from "lucide-react"
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
@@ -197,8 +199,8 @@ function ToastCard({ toast, onDismiss }: ToastCardProps) {
       {duration > 0 && (
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-muted">
           <div
-            className="h-full bg-primary transition-[width] duration-75"
-            style={{ width: `${progress}%` }}
+            className="h-full bg-primary origin-left transition-transform duration-75"
+            style={{ transform: `scaleX(${progress / 100})` }}
           />
         </div>
       )}

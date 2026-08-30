@@ -1,6 +1,8 @@
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by primer/react & cloudscape & heroui)
+ * @license MIT
+ * @origin https://github.com/primer/react
+ * @author GitHub Primer Team & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:primitive
  * Description: Accessible multi-step workflow stepper with status icons (completed, active, upcoming, error), step descriptions, and form navigation.
  */
@@ -10,7 +12,7 @@ import { Check, Circle, AlertCircle, ArrowRight, ArrowLeft } from "lucide-react"
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 

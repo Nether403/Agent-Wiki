@@ -59,8 +59,10 @@ npx shadcn@latest add http://localhost:3000/r/bento-spotlight-card.json
 ## Verified TypeScript Source
 ```tsx
 /**
- * SPDX-License-Identifier: MIT
- * Source: Machine-First Design Agent Wiki (Inspired by aceternity & tailark & magicui)
+ * @license MIT
+ * @origin https://github.com/aceternity/ui
+ * @author Manu Arora & Community
+ * @curated-by Machine-First Design Agent Wiki
  * Category: ui:block
  * Description: Bento card featuring radial spotlight glow following pointer coordinates, border beam accent, and subtle hover scale.
  */
@@ -70,7 +72,7 @@ import { ArrowUpRight } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-function cn(...inputs: any[]) {
+function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
