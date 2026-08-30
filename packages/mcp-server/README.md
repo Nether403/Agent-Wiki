@@ -44,15 +44,15 @@ claude mcp add design-wiki npx @design-wiki/mcp
 
 ---
 
-## 🛠️ Available MCP Tools
+## 🛠️ Available MCP Tools (19 Tools)
 
 All tools are engineered with strict **Tripwire Security Guardrails** and deliver deterministic payloads strictly **< 15KB** (15,360 bytes) via our built-in `enforceTokenBudget` optimizer, ensuring lightning-fast responses without agent context flooding.
 
 ### 1. `search_library` / `search_components`
-Searches the 112 component catalog across all 8 taxonomy categories with multi-dimensional taste dial filtering.
+Searches the 192 component catalog across all 10 taxonomy categories with multi-dimensional taste dial filtering.
 * **Parameters**:
   - `query` (string, optional)
-  - `category` (`ui:primitive` | `ui:motion` | `ui:creative` | `ui:editorial` | `ui:block` | `ui:media` | `ui:utility`, optional)
+  - `category` (`ui:ai-native` | `ui:workflow` | `ui:primitive` | `ui:motion` | `ui:creative` | `ui:editorial` | `ui:block` | `ui:media` | `ui:utility`, optional)
   - `tag` (string, optional)
   - `minMotionIntensity` (number 1–10, optional)
   - `maxVisualDensity` (number 1–10, optional)
@@ -81,7 +81,7 @@ Returns the dynamic DAG dependency topology, topological installation sequence, 
   - `includeMermaid` (boolean, optional, default: `false`)
 
 ### 5. `audit_code_slop`
-Lints user or agent-generated React/Tailwind code against the 30 Anti-Slop Rules, catching arbitrary pixel offsets (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), AI writing clichés, blanket transitions, and accessibility gaps.
+Lints user or agent-generated React/Tailwind code against the 50 Anti-Slop Rules, catching arbitrary pixel offsets (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), AI writing clichés, blanket transitions, and accessibility gaps.
 * **Parameters**:
   - `code` (string, required): TSX/JSX code to analyze
 
@@ -90,6 +90,30 @@ Automatically remediates slop TSX source code into zero-slop 100/100 TSX, normal
 * **Parameters**:
   - `code` (string, required): The slop TSX code to refactor
   - `theme` (`default` | `neo-tokyo` | `midnight` | `minimal`, optional, default: `default`)
+
+### 7. `semantic_search_components`
+Calibrated natural language vector search matching user prompt descriptions directly to verified components.
+
+### 8. `compose_layout_tree`
+Generates full-page multi-component composition layouts with topological dependency graphs.
+
+### 9. `recommend_stack`
+Synthesizes full architecture framework and library recommendations tailored to product requirements.
+
+### 10. `verify_accessibility_contrast`
+Mathematical WCAG 2.1 AA and AAA contrast ratio calculator for foreground and background color combinations.
+
+### 11. `generate_color_palette`
+Generates semantic Tailwind CSS v4 `@theme` palette blocks adhering to token contracts.
+
+### 12. `validate_theme_contrast_matrix`
+Validates an entire design token color matrix (background, foreground, card, primary, muted) against AA compliance.
+
+### 13. `recommend_responsive_blueprint`
+Emits mobile-first breakpoint classes and semantic HTML landmark structure for landing, dashboard, and analytics views.
+
+### 14. `diff_against_zero_slop`
+Compares arbitrary React code to the closest zero-slop component and emits step-by-step AST migration diffs.
 
 ---
 

@@ -2,13 +2,13 @@
 
 The anti-slop verification, automated unslop refactoring, and taste-auditing engine for the **Machine-First Design Agent Wiki**.
 
-Evaluates TypeScript, React, and Tailwind CSS code against 30 anti-slop rules, scans arbitrary CSS pixel hacks (`p-[17px]`), computes calibrated 1–10 taste dials (`Design Variance`, `Motion Intensity`, `Visual Density`), and provides an automated AST `unslop` engine for auto-remediating vibe-coded components.
+Evaluates TypeScript, React, and Tailwind CSS code against 50 anti-slop rules, scans arbitrary CSS pixel hacks (`p-[17px]`), computes calibrated 1–10 taste dials (`Design Variance`, `Motion Intensity`, `Visual Density`), and provides an automated AST `unslop` engine for auto-remediating vibe-coded components.
 
 ---
 
 ## 🚀 Features
 
-* **30 Anti-Slop Rules (SLOP-001 to SLOP-030)**: Targets hardcoded indigo, purple-to-blue gradients, blanket glassmorphism, chained type assertions (`as any as`), unshaded flat backgrounds (`bg-white`), AI writing clichés, timer leaks in `useEffect`, unconstrained `any`, missing focus rings, and contrast violations.
+* **50 Anti-Slop Rules (SLOP-001 to SLOP-050)**: Targets hardcoded indigo, purple-to-blue gradients, blanket glassmorphism, chained type assertions (`as any as`), unshaded flat backgrounds (`bg-white`), AI writing clichés, timer leaks in `useEffect`, unconstrained `any`, missing focus rings, contrast violations, dynamic mobile viewport units (`100dvh`), uncleaned listeners, and streaming `aria-live` containers.
 * **Automated `unslop` Refactoring Engine**: Transforms messy, vibe-coded components into clean TSX conforming to semantic tokens, dark-mode styling, and 4 distinct design themes (`default`, `neo-tokyo`, `midnight`, `minimal`).
 * **CSS Anti-Pattern Scanner (`scanCssAntiPatterns`)**: Detects un-tokenized arbitrary pixel values (`p-[17px]`, `m-[13px]`, `gap-[15px]`) and normalizes them to standard Tailwind CSS tokens.
 * **Automated Taste Review & LLM Gating**: Computes health scores (0–100) and assigns calibrated 1–10 ratings for Design Variance, Motion Intensity, and Visual Density.
@@ -23,7 +23,7 @@ Evaluates TypeScript, React, and Tailwind CSS code against 30 anti-slop rules, s
 ## 🛠️ CLI Usage
 
 ```bash
-# Run the 30-rule linter across all registry components
+# Run the 50-rule linter across all registry components
 pnpm lint:slop
 
 # Full catalog taste dial calibration & consistency verification

@@ -56,7 +56,7 @@ npx design-wiki add spring-dialog --install-deps
 ---
 
 ### 2. `unslop <path>`
-Automatically refactors vibe-coded, AI-slop, or messy React components into clean, accessible, zero-slop TSX conforming to the 30 Anti-Slop Rules and calibrated aesthetic themes.
+Automatically refactors vibe-coded, AI-slop, or messy React components into clean, accessible, zero-slop TSX conforming to the 50 Anti-Slop Rules and calibrated aesthetic themes.
 
 ```bash
 # Refactor a single file with the Neo-Tokyo cyberpunk theme
@@ -77,8 +77,17 @@ npx design-wiki unslop ./components/ui --theme minimal --overwrite
 
 ---
 
-### 3. `list`
-Lists all 112 verified zero-slop components indexed in the registry with their taxonomy categories, taste dials, and tags.
+### 3. `compose <page-type>`
+Synthesizes a complete multi-component page scaffold (e.g. `ai-chat-workspace`, `saas-landing`, `executive-analytics-cockpit`) into your project directory.
+
+```bash
+npx design-wiki compose ai-chat-workspace
+```
+
+---
+
+### 4. `list`
+Lists all 192 verified zero-slop components indexed in the registry with their taxonomy categories, taste dials, and tags.
 
 ```bash
 npx design-wiki list
@@ -86,7 +95,7 @@ npx design-wiki list
 
 ---
 
-### 4. `search <query>`
+### 5. `search <query>`
 Searches the component registry by keyword, category, or tag.
 
 ```bash
@@ -96,8 +105,8 @@ npx design-wiki search creative
 
 ---
 
-### 5. `audit [path]`
-Runs the 30 Anti-Slop Rules against a local file or directory, flagging arbitrary pixel overrides (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), AI clichés, blanket transitions, and accessibility issues.
+### 6. `audit [path]`
+Runs the 50 Anti-Slop Rules against a local file or directory, flagging arbitrary pixel overrides (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), AI clichés, blanket transitions, and accessibility issues.
 
 ```bash
 npx design-wiki audit ./components/ui

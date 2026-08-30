@@ -76,36 +76,37 @@ Agent Wiki/
 │           ├── r/                   # Compiled shadcn JSON schemas and registry.json index
 │           ├── raw/components/      # Machine-first markdown with YAML frontmatter and TSX source
 │           ├── SKILL.md             # Public endpoint for remote LLM agent skill discovery
-│           ├── llms.txt             # Flat agent discovery index (112 items)
+│           ├── llms.txt             # Flat agent discovery index (192 items)
 │           └── llms-full.txt        # Full-context machine manifest with embedded source
 ├── packages/
 │   ├── harvester/                   # Ingestion engine, remote JSON fetcher, AST analyzer, DAG dependency graph
-│   │   ├── src/ast-parser.ts        # TypeScript Compiler API AST extractor & 8-library repo manifests
+│   │   ├── src/ast-parser.ts        # TypeScript Compiler API AST extractor & 25+ library repo manifests
 │   │   ├── src/dependency-graph.ts  # Directed Acyclic Graph (DAG) analyzer, cycle detector & Mermaid generator
-│   │   ├── src/dial-classifier.ts   # Taste-dial scoring heuristics & 30-rule slop review
+│   │   ├── src/dial-classifier.ts   # Taste-dial scoring heuristics & 50-rule slop review
 │   │   ├── src/codemods/            # Tailwind v4 & React 19 / motion/react transformers
 │   │   ├── src/attribution.ts       # Open-source SPDX license header injector
 │   │   └── src/cli.ts               # Standalone Harvester CLI (pnpm harvest graph / ingest)
-│   ├── registry/                    # 112 curated zero-slop components & dynamic registry compiler
-│   │   ├── src/                     # TSX sources (primitives, motion, creative, editorial, blocks, media, utility)
+│   ├── registry/                    # 192 curated zero-slop components & dynamic registry compiler
+│   │   ├── src/                     # TSX sources (ai-native, workflow, primitives, motion, creative, editorial, blocks, media, utility)
 │   │   ├── compiler/build-registry.ts # Dynamic component sweeper and /r/ JSON compiler
 │   │   └── schema.json              # Component JSON Schema extending shadcn registry-item
 │   ├── mcp-server/                  # Model Context Protocol (MCP) service for developer agents
-│   │   ├── src/server.ts            # Core MCP server, audit_and_fix_slop, get_dependency_graph (<15KB budget)
+│   │   ├── src/server.ts            # Core MCP server, audit_and_fix_slop, 19 registered tools (<15KB budget)
 │   │   ├── src/security.ts          # Tripwire Security Sandbox (malicious AST scanner, prompt injection defense)
 │   │   ├── src/worker.ts            # Cloudflare Worker edge deployment (JSON-RPC & SSE streaming)
 │   │   ├── src/embedded-catalog.ts  # 0ms disk dependency embedded snapshot catalog
 │   │   ├── src/index.ts             # Stdio transport entrypoint
 │   │   ├── test/agent-sandbox.test.ts # Autonomous end-to-end sandbox verification test
 │   │   └── test/worker.test.ts      # Cloudflare Worker deployment verification test
-│   ├── cli/                         # Native installer & unslop CLI (npx design-wiki add / unslop)
+│   ├── cli/                         # Native installer & unslop CLI (npx design-wiki add / unslop / compose)
 │   │   ├── src/commands/add.ts      # Path map resolver, recursive downloader & peer installer
 │   │   ├── src/commands/unslop.ts   # Automated AST/regex refactoring & aesthetic themer
+│   │   ├── src/commands/compose.ts  # Full page layout synthesis engine
 │   │   ├── src/commands/list.ts     # Component catalog browser with taste dials
 │   │   ├── src/commands/audit.ts    # Standalone anti-slop audit scanner
 │   │   └── src/index.ts             # Executable CLI router with --theme, --dry-run & --cwd support
-│   └── audit-linter/                # 30-rule AST + regex anti-slop verification & unslop refactoring engine
-│       ├── src/rules.ts             # 30 Rule definitions (SLOP-001 through SLOP-030)
+│   └── audit-linter/                # 50-rule AST + regex anti-slop verification & unslop refactoring engine
+│       ├── src/rules.ts             # 50 Rule definitions (SLOP-001 through SLOP-050)
 │       ├── src/unslop.ts            # Automated AST unslop & aesthetic theme engine (Neo-Tokyo, Midnight, Minimal)
 │       ├── src/taste-dial-audit.ts  # 1-10 Dial consistency auditor (Variance, Motion, Density)
 │       ├── src/dial-classifier.ts   # Standalone dial classifier with defaultDials preset support
@@ -114,7 +115,7 @@ Agent Wiki/
 ├── scripts/
 │   ├── sync-rulepacks.ts            # Multi-agent rules synchronizer across 11 ecosystem platforms
 │   ├── test-agent-ecosystem.ts      # Automated compatibility test across 11 agent targets
-│   └── test-a11y-linter.ts          # WCAG 2.1 AA CI linter: checks all 112 registry components
+│   └── test-a11y-linter.ts          # WCAG 2.1 AA CI linter: checks all 192 registry components
 ├── SKILL.md                         # Canonical agent execution contract, 4-phase loop, active taste dials
 ├── .cursorrules                     # Cursor IDE agent instructions (auto-synced from SKILL.md)
 ├── .cursor/rules/design-wiki.mdc    # Cursor Rules v2 format (auto-synced from SKILL.md)
@@ -133,17 +134,19 @@ Agent Wiki/
 
 ## 🏷️ Standardized Taxonomy Framework
 
-All **112 curated components** are classified across 8 canonical taxonomy domains:
+All **192 curated components** are classified across 10 canonical taxonomy domains:
 
-| Category | Description | Representative Upstream Libraries | Total Items |
-| :--- | :--- | :--- | :---: |
-| `ui:primitive` | Accessible, headless UI controls, AI-native prompts, message threads, tokens, and data grids. | Radix UI, Ark UI, HeroUI v3, KokonutUI, ReUI | **22** |
-| `ui:editorial` | 39 SVG Diagram blueprints (Cathryn Lavery taxonomy), analytical cards, and interactive sparklines. | diagram-design, Design Wiki | **14** |
-| `ui:motion` | Micro-interactions, morphing dialogs, sliding numbers, and spring physics built with `motion/react`. | SmoothUI, KokonutUI, Aceternity UI, ibelick | **15** |
-| `ui:creative` | WebGL shaders, Three.js viewports, AI voice orbs, matrix streams, and dot-matrix scoreboards. | Canvas UI, ThreeUI, Aceternity, Cult UI | **17** |
-| `ui:block` | Asymmetrical SaaS hero mockups, feature cyclers, competitor matrix grids, and customer stories. | Tailark, Kairo UI, Shadcn blocks | **14** |
-| `ui:media` | Programmatic kinetic title cards, karaoke captions, split video comparators, and audio waveforms. | Remocn, Remotion, Design Wiki | **7** |
-| `ui:utility` | Animated icon packs (ReUI), copy buttons, scroll progress bars, and theme dropdowns. | icons0, ReUI, Design Wiki | **23** |
+| Category | Description | Representative Upstream Libraries |
+| :--- | :--- | :--- |
+| `ui:ai-native` | Agent conversation interfaces, reasoning accordions, streaming tokens, prompt bars, and artifact sandbox frames. | Design Wiki, 21st-dev |
+| `ui:workflow` | Interactive node graph canvases, minimap controls, DAG execution inspectors, and whiteboard sketchpads. | XY Flow, Excalidraw, Design Wiki |
+| `ui:primitive` | Accessible, headless UI controls, rich date-range pickers, roving tablists, and virtualized comboboxes. | Radix UI, Ark UI, Ariakit, Primer React |
+| `ui:editorial` | Strategic blueprints (Cathryn Lavery taxonomy), comparative bar lists, status trackers, and analytical scoreboards. | diagram-design, Tremor, Design Wiki |
+| `ui:motion` | Micro-interactions, number tickers, border beams, sparkles text, particle bursts, and spring physics. | Magic UI, SmoothUI, Motion Primitives |
+| `ui:creative` | WebGL shaders, Three.js viewports, AI voice orbs, fluid waves, and generative canvas textures. | Paper Shaders, Canvas UI, ThreeUI, Cult UI |
+| `ui:block` | Asymmetrical SaaS hero mockups, feature cyclers, competitor matrix grids, and customer stories. | Launch UI, Page UI, Tailark, Kairo UI |
+| `ui:media` | Programmatic kinetic title cards, karaoke captions, split video comparators, and audio waveforms. | Remocn, Remotion, Design Wiki |
+| `ui:utility` | Animated icon packs, copy buttons, scroll progress bars, and theme dropdowns. | icons0, ReUI, Design Wiki |
 
 ---
 
@@ -175,55 +178,83 @@ claude mcp add design-wiki npx @design-wiki/mcp
 - **SSE Stream endpoint**: `https://mcp.design-wiki.dev/sse`
 - **Health Check probe**: `https://mcp.design-wiki.dev/health`
 
-### Core MCP Tools
+### Core MCP Tools (19 Registered Tools)
 
 | Tool Name | Parameters | Description |
 | :--- | :--- | :--- |
-| `search_library` / `search_components` | `query`, `category`, `tag`, `minMotionIntensity`, `maxVisualDensity`, `minDesignVariance` | Searches the catalog with multi-dimensional filtering across all 112 zero-slop components (< 15KB payload budget). |
+| `search_library` / `search_components` | `query`, `category`, `tag`, `minMotionIntensity`, `maxVisualDensity`, `minDesignVariance` | Searches the catalog with multi-dimensional filtering across all 192 zero-slop components (< 15KB payload budget). |
 | `fetch_raw_markup` / `fetch_raw_markdown` | `name` (slug) | Returns complete raw Markdown with structured YAML frontmatter contract, taxonomy, complexity, taste dials, accessibility, and verified TSX source. *(Alias: `get_component_markup`)* |
 | `get_installation_schema` / `get_installation_commands` | `name` (slug), `packageManager` (`pnpm`, `npm`, `bun`, `yarn`), `baseUrl` | Returns exact CLI commands (`npx design-wiki add <slug>`, `npx shadcn@latest add ...`), peer npm install strings, import snippets, and instructions. *(Alias: `get_install_recipe`)* |
 | `get_dependency_graph` | `name` (slug, optional), `includeMermaid` (boolean, optional) | Returns the dynamic DAG dependency topology, topological installation sequence, and required npm peer packages for any component or the full registry. |
-| `audit_code_slop` | `code` (string) | Scans arbitrary React/Tailwind code against 30 anti-slop rules, checking arbitrary pixel escapes (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), AI clichés, and returns a health score (0–100). |
+| `audit_code_slop` | `code` (string) | Scans arbitrary React/Tailwind code against 50 anti-slop rules, checking arbitrary pixel escapes (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), AI clichés, and returns a health score (0–100). |
 | `audit_and_fix_slop` | `code` (string), `theme` (`default`, `neo-tokyo`, `midnight`, `minimal`) | Automatically remediates slop TSX code into zero-slop 100/100 TSX, injecting SPDX headers, normalizing spacing, fixing contrast, and applying calibrated themes. |
+| `semantic_search_components` | `naturalLanguageQuery`, `targetDialProfile` | Vector/dial-calibrated natural language search finding exact component matches for user intent. |
+| `compose_layout_tree` | `pageType`, `targetDials` | Synthesizes a full multi-component page layout tree with verified registry dependencies. |
+| `recommend_stack` | `projectType` | Emits an opinionated architecture stack recommendation with optimal taste dial ranges. |
+| `verify_accessibility_contrast` | `foregroundHex`, `backgroundHex` | Evaluates contrast mathematically against WCAG 2.1 AA (4.5:1 / 3.0:1) and AAA standards. |
+| `generate_color_palette` | `themeName`, `baseHue` | Emits an accessible Tailwind CSS v4 `@theme` block adhering to token standards. |
+| `validate_theme_contrast_matrix` | `tokens` | Validates complete color token sets (foreground, background, card, primary, muted) against AA criteria. |
+| `recommend_responsive_blueprint` | `pageType`, `targetDials` | Generates mobile-first responsive breakpoint structures and semantic HTML landmarks. |
+| `diff_against_zero_slop` | `code`, `targetComponentSlug` | Compares arbitrary user code to the nearest registry component and outputs migration diffs. |
 
 ---
 
-## 🛡️ Anti-Slop 30-Rule Specification
+## 🛡️ Anti-Slop 50-Rule Specification
 
-Every component ingested or generated is validated against our 30 Anti-Slop Rules:
+Every component ingested or generated is validated against our 50 Anti-Slop Rules:
 
 | Rule ID | Category | Severity | Detection | Target Violation |
 | :--- | :--- | :---: | :---: | :--- |
-| **SLOP-001** | Styling / Motion | Low | Regex | Blanket `transition-all duration-300` across structural wrappers |
-| **SLOP-002** | Styling / Blur | Low | Regex | Unconstrained blur radius (`backdrop-blur-3xl` without bounds) |
-| **SLOP-003** | Iconography | Medium | Regex | Decorative emojis inside buttons/cards instead of SVG icons |
+| **SLOP-001** | Styling / Color | Medium | Regex | Hardcoded indigo button or palette (`bg-indigo-600`, `#4f46e5`) |
+| **SLOP-002** | Styling / Color | Medium | Regex | Generic purple-to-blue linear gradients (`from-purple-500 to-blue-500`) |
+| **SLOP-003** | Styling / Surface | Low | Regex | Blanket unanchored glassmorphism (`bg-white/10 backdrop-blur-md`) |
 | **SLOP-004** | TypeScript | **High** | AST | Chained type assertions (`as unknown as`, `as any as`) |
 | **SLOP-005** | TypeScript | **High** | AST | Conditional empty object spreads (`...(cond ? { a } : {})`) |
-| **SLOP-006** | Code Completeness | **High** | Regex | Truncated code comments (`// TODO: implement logic`, mock placeholders) |
+| **SLOP-006** | Motion | Low | Regex | Blanket `transition-all duration-300` across structural wrappers |
 | **SLOP-007** | Layout / Spacing | Low | Regex | Non-token arbitrary pixel units (`p-[17px]`, `m-[13px]`, `gap-[15px]`) |
-| **SLOP-008** | Styling / Color | Medium | Regex | Cliché purple-to-blue linear gradients (`from-purple-500 to-blue-500`) |
-| **SLOP-009** | Styling / Color | Medium | Regex | Generic vibe-coded indigo button (`bg-indigo-600`, `#4f46e5`) |
-| **SLOP-010** | Styling / Surface | Low | Regex | Unanchored floating glassmorphism (`bg-white/10` without `border-border`) |
-| **SLOP-011** | Accessibility | Medium | AST | Inline SVGs without `role="img"` or accessible title |
+| **SLOP-008** | Iconography | Medium | Regex | Decorative emojis inside buttons/cards instead of SVG vector icons |
+| **SLOP-009** | Code Completeness | **High** | Regex | Truncated code comments (`// TODO: implement logic`, mock placeholders) |
+| **SLOP-010** | Accessibility | **High** | AST | Interactive elements without accessible text or `aria-label` |
+| **SLOP-011** | Accessibility | Medium | AST | Inline SVGs without `role="img"` or accessible `<title>` |
 | **SLOP-012** | Accessibility | **High** | AST | Focus outline suppression (`outline-none` without `:focus-visible:ring-2`) |
-| **SLOP-013** | Architecture | Low | AST | Unbounded z-index escalation (`z-[9999]`) |
+| **SLOP-013** | Performance | Medium | AST | Layout-triggering transitions (`transition-[height]`) |
 | **SLOP-014** | Performance | Medium | AST | Canvas render loop missing `prefers-reduced-motion` media check |
 | **SLOP-015** | Performance | Medium | AST | HTML5 Canvas missing static fallback provision |
-| **SLOP-016** | Accessibility | **High** | AST | Low-contrast text on gradient surfaces (< 4.5:1 ratio) |
-| **SLOP-017** | Layout | Low | Regex | Hardcoded pixel breakpoints outside Tailwind tokens |
-| **SLOP-018** | Security | **High** | AST | Unsafe external CDN script injections (`<script src="...">`) |
-| **SLOP-019** | Accessibility | **High** | AST | Custom interactive toggles missing keyboard navigation |
+| **SLOP-016** | Motion | Low | AST | Missing `LayoutGroup` or `AnimatePresence` keys |
+| **SLOP-017** | TypeScript | Medium | AST | Implicit `any` props on component exports |
+| **SLOP-018** | Styling / Layout | Medium | Regex | Repetitive centered card layouts |
+| **SLOP-019** | Architecture | **High** | AST | Deep relative imports bypassing standard aliases |
 | **SLOP-020** | Legal / IP | **High** | Regex | Missing mandatory upstream license attribution headers |
 | **SLOP-021** | Styling / Surface | Medium | Regex | Raw unshaded backgrounds (`bg-white`, `bg-black`, `bg-[#fff]`) without dark variants |
 | **SLOP-022** | AI Prose | Medium | Regex | AI writing clichés (*"In today's fast-paced world"*, *"Unleash the power"*) |
 | **SLOP-023** | TypeScript | **High** | AST | Oxlint contract hygiene: rejects loose `any` signatures |
-| **SLOP-024** | Accessibility | **High** | AST | Strict WCAG 2.1 AA contrast ratio validation |
-| **SLOP-025** | Memory / Leak | **High** | AST | Uncancelled timers & event listeners in `useEffect` |
-| **SLOP-026** | Styling / Color | Low | Regex | Arbitrary color token escapes (`bg-[#123456]`) |
+| **SLOP-024** | Accessibility | **High** | AST | Strict WCAG 2.1 AA contrast ratio validation (< 4.5:1 ratio) |
+| **SLOP-025** | Memory / Leak | **High** | AST | Uncancelled timers (`setInterval`) & event listeners in `useEffect` |
+| **SLOP-026** | Styling / Color | Medium | Regex | Arbitrary hex color escapes in classes (`text-[#6366f1]`) |
 | **SLOP-027** | React Hygiene | Medium | AST | Unbounded list rendering without stable `key` props |
 | **SLOP-028** | Motion Physics | Low | AST | Missing spring fallback damping parameters |
 | **SLOP-029** | SVG Scalability | Low | AST | Hardcoded SVG dimensions without scalable `viewBox` |
 | **SLOP-030** | Legal / SPDX | **High** | Regex | Clean SPDX & origin header verification (`@origin`, `@license`, `@curated-by`) |
+| **SLOP-031** | Runtime Resilience | Medium | AST | Missing static fallback UI or ErrorBoundary for complex Canvas/WebGL views |
+| **SLOP-032** | Memory / Heap | **High** | AST | Unbounded object allocation inside `requestAnimationFrame` render loops |
+| **SLOP-033** | Accessibility | **High** | AST | Missing Escape key overlay dismissal listener on custom dialogs/modals |
+| **SLOP-034** | Architecture | Medium | AST | Redundant nested identical React context providers |
+| **SLOP-035** | Performance | Medium | AST | Un-memoized heavy array sort or filter directly in JSX render return |
+| **SLOP-036** | Copy / Validity | Medium | Regex | Hallucinated static marketing metrics ('99.9% Faster') without dynamic props |
+| **SLOP-037** | Interaction | **High** | AST | Dummy `onSubmit` form handler without validation or loading states |
+| **SLOP-038** | Mobile / Layout | Medium | Regex | Mobile viewport height cutoff (`h-screen` instead of `min-h-[100dvh]`) |
+| **SLOP-039** | Accessibility | **High** | AST | Global focus outline suppression stripping tab accessibility |
+| **SLOP-040** | Semantics | Medium | AST | Non-semantic div soup navigation lacking `<nav>` or `<header>` landmark |
+| **SLOP-041** | Mobile / Layout | Medium | Regex | Dynamic viewport unit omission (`h-screen` lacking `dvh`/`svh` fallback) |
+| **SLOP-042** | Styling / Hierarchy | Low | Regex | Unbounded arbitrary high z-index clashes (`z-[9999]`, `z-[99999]`) |
+| **SLOP-043** | Accessibility | **High** | AST | Dynamic AI message streaming container lacking `aria-live` or `role="status"` |
+| **SLOP-044** | Performance | **High** | AST | Uncleaned window resize or animation listener leak in `useEffect` |
+| **SLOP-045** | Layout | Medium | Regex | Hardcoded large min-width on mobile containers (`min-w-[800px]`) |
+| **SLOP-046** | Semantics / A11y | **High** | AST | Nested interactive control trap (button inside anchor or button) |
+| **SLOP-047** | Copy / Validity | Medium | Regex | Hardcoded non-provable SLA statistics ('100% Guaranteed', 'Zero Downtime') |
+| **SLOP-048** | DOM Health | Low | AST | Excessive redundant wrapper nesting (> 6 adjacent divs) |
+| **SLOP-049** | Web Vitals | Medium | AST | External image lacking lazy loading or decoding attributes |
+| **SLOP-050** | Typography | Low | Regex | Custom font-family override lacking generic system fallbacks |
 
 ---
 

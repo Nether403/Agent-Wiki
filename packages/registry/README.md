@@ -6,16 +6,18 @@ Contains 112+ verified zero-slop UI components across 8 taxonomy domains, compil
 
 ---
 
-## 🏷️ Taxonomy Domains (112 Components)
+## 🏷️ Taxonomy Domains (192 Components)
 
-1. **AI-Native Primitives (`ui:primitive`, `ui:block`)**: `ai-prompt-input`, `ai-message-thread`, `ai-reasoning-foldout`, `ai-artifact-canvas`, `ai-chat-bubble`, `ai-model-selector`, `ai-token-meter`, `agent-step-pipeline`.
-2. **Diagram Design System (`ui:editorial`, `ui:block`)**: 14 pure SVG diagrams based on Cathryn Lavery's 39 taxonomy (`architecture-topology-diagram`, `decision-tree-node-graph`, `venn-comparison-matrix`, `pyramid-hierarchy-chart`, `strategic-quadrant-matrix`, `timeline-roadmap-track`, `funnel-conversion-chart`, `matrix-grid-diagram`, `cycle-loop-diagram`, `fishbone-root-cause-diagram`, `radar-spider-chart`, `flowchart-process-graph`, `tree-hierarchy-map`, `inline-sparkline-chart`).
-3. **Motion & Micro-Interactions (`ui:motion`)**: `morphing-dialog`, `sliding-number`, `border-trail`, `progressive-blur`, `view-transition-theme-toggle`, `text-shimmer-wave`, `counter-odometer`, `expandable-card`, `magnetic-badge`, `ripple-button`, `floating-dock`, `animated-tabs`.
-4. **Procedural 3D & WebGL (`ui:creative`)**: `threejs-model-viewport`, `matrix-code-stream`, `dot-matrix-scoreboard`, `liquid-metal-shader`, `text-scrambler`, `ascii-rain`, `digital-ticker`, `cyber-hud-frame`, `hacker-decrypt`, `canvas-fluid-wave`.
-5. **Enterprise Application (`ui:primitive`, `ui:block`)**: `reui-data-grid`, `draggable-kanban-board`, `event-calendar-view`, `stat-metric-card`, `filter-builder-toolbar`, `activity-feed-timeline`, `split-pane-layout`, `command-menu`.
-6. **Programmatic Media (`ui:media`)**: `kinetic-title-card`, `karaoke-caption-stream`, `split-video-comparator`, `media-scrubber-timeline`, `waveform-audio-player`, `timeline-player`, `audio-visualizer`.
-7. **SaaS Architecture Blocks (`ui:block`)**: `saas-hero-browser-mockup`, `interactive-feature-cycler`, `competitor-comparison-matrix`, `customer-story-masonry`, `integration-grid-showcase`, `cta-banner-geometric`, `stats-counter-banner`, `footer-mega-menu`, `bento-grid`, `hero-section`, `pricing-table`.
-8. **Utility & Micro-Primitives (`ui:utility`, `ui:primitive`)**: `reui-animated-icons-pack`, `copy-button`, `scroll-progress-bar`, `theme-toggle-dropdown`, `button`, `input`, `dialog`, `tabs`, `switch`, `tooltip`, `card`, `badge`, `dot-loader`.
+1. **AI-Native Primitives (`ui:ai-native`)**: `ai-chat-bubble`, `ai-reasoning-foldout`, `ai-prompt-input`, `ai-token-meter`, `ai-artifact-canvas`, `ai-model-selector`, `ai-human-in-the-loop-diff`, `ai-artifact-sandbox-iframe`, `ai-tool-call-card`, `ai-voice-orb`.
+2. **Workflow & Canvas System (`ui:workflow`)**: `agent-node-graph`, `agent-inspector-drawer`, `workflow-minimap-controls`, `data-pipeline-canvas`, `decision-node-canvas`, `embedded-whiteboard`, `agent-step-pipeline`.
+3. **Diagram Design System (`ui:editorial`)**: Strategic SVG diagrams based on Cathryn Lavery's taxonomy (`flywheel-momentum-diagram`, `venn-three-circle-diagram`, `value-chain-map`, `iceberg-depth-diagram`, `matrix-grid-diagram`, `pyramid-hierarchy-chart`, `timeline-roadmap-track`).
+4. **Analytical Data & Metrics (`ui:editorial`)**: `comparative-bar-list`, `tracker-status-strip`, `stat-metric-card`, `dot-matrix-scoreboard`, `stats-counter-banner`.
+5. **Motion & Micro-Interactions (`ui:motion`)**: `number-ticker`, `sparkles-text`, `border-beam`, `particle-burst-button`, `morphing-dialog`, `sliding-number`, `scratch-to-reveal-card`, `smooth-scroll-provider`, `spring-dialog`, `dock-magnification`, `floating-dock`.
+6. **Procedural 3D & WebGL (`ui:creative`)**: `paper-mesh-shader`, `aurora-background-shader`, `grain-noise-shader`, `three-interactive-scene`, `matrix-code-stream`, `liquid-metal-shader`, `canvas-fluid-wave`, `dither-noise-card`.
+7. **Enterprise Application (`ui:primitive`, `ui:block`)**: `reui-data-grid`, `draggable-kanban-board`, `event-calendar-view`, `filter-builder-toolbar`, `split-pane-layout`, `command-menu`.
+8. **Programmatic Media (`ui:media`)**: `kinetic-title-card`, `karaoke-caption-stream`, `split-video-comparator`, `media-scrubber-timeline`, `waveform-audio-player`, `activity-feed-timeline`.
+9. **SaaS Architecture Blocks (`ui:block`)**: `saas-hero-browser-mockup`, `interactive-feature-cycler`, `competitor-comparison-matrix`, `customer-story-masonry`, `integration-grid-showcase`, `cta-banner-geometric`, `pricing-table`, `bento-grid`.
+10. **Headless & Utility Primitives (`ui:primitive`, `ui:utility`)**: `color-picker-primitive`, `date-range-picker-popover`, `roving-tab-list`, `split-button`, `reui-animated-icons-pack`, `copy-button`, `theme-toggle-dropdown`, `button`, `input`, `dialog`, `tabs`, `switch`, `tooltip`.
 
 ---
 
