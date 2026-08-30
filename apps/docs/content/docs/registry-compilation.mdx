@@ -1,0 +1,65 @@
+---
+title: "Registry Compilation & Packaging"
+description: "How the static compiler sweeps components, maps dependencies, escapes source, and outputs shadcn-compatible endpoints."
+---
+
+# Registry Compilation & Packaging
+
+The **Registry Compiler** (`@design-wiki/registry/compiler/build-registry.ts`) dynamically sweeps component source directories, analyzes dependencies, escapes source files into JSON strings, and generates production registry endpoints.
+
+## Compilation Pipeline
+
+```
+[packages/registry/src/ & /components] 
+               │
+               ▼
+   [Dynamic Directory Sweeper]
+               │
+               ▼
+    [AST Dependency Extractor]
+  (Extracts peer & registry dependencies)
+               │
+               ▼
+     [Schema Item Serializer]
+    (Escapes JSX/TSX source into JSON)
+               │
+               ▼
+┌──────────────────────────────┴──────────────────────────────┐
+▼                                                             ▼
+/r/[name].json & /r/registry.json                             /llms.txt & /llms-full.txt
+(shadcn v3 CLI installation schemas)                          (Agent discovery manifests)
+```
+
+## Features
+
+### 1. Dynamic Asset Sweeper
+Recursively scans `packages/registry/src/` (primitives, motion, creative, editorial, blocks, utility) and any candidate `/components` folders. If a component lacks manual metadata overrides, the compiler dynamically infers titles, descriptions, categories, taste dials, and tags using the Harvester AST engine.
+
+### 2. Dependency Auto-Mapping
+Peer npm dependencies are automatically identified from AST import specifiers:
+- `motion/react`, `framer-motion` &rarr; `motion`
+- `lucide-react` &rarr; `lucide-react`
+- `three` &rarr; `three`
+- `@radix-ui/react-*` &rarr; `@radix-ui/react-*`
+- `@ark-ui/react` &rarr; `@ark-ui/react`
+- `clsx`, `tailwind-merge`, `class-variance-authority` &rarr; appended to `dependencies`
+- `@/components/ui/[primitive]` &rarr; appended to `registryDependencies`
+
+### 3. Schema Conformance
+Every generated JSON item complies with `registry-item-schema.json` (extending the shadcn v3 registry item schema).
+
+### 4. Output Artifacts
+
+| Destination | Format | Description |
+| :--- | :--- | :--- |
+| `apps/docs/public/r/[name].json` | JSON | Component installation schema consumed by `npx shadcn add` |
+| `apps/docs/public/r/registry.json` | JSON | Master index of all registered components |
+| `apps/docs/public/llms.txt` | Plain Text | Flat machine discovery index summarizing components and dials |
+| `apps/docs/public/llms-full.txt` | Markdown | Complete flat context payload with embedded component code |
+
+## Running the Compiler
+
+```bash
+# Compile all registry artifacts
+pnpm build:registry
+```

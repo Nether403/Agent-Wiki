@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpen, ShieldAlert, Sliders, Server, ArrowLeft } from "lucide-react";
+import { BookOpen, ShieldAlert, Sliders, Server, ArrowLeft, Workflow, Layers } from "lucide-react";
 
 export default function DocsLayout({
   children,
@@ -8,6 +8,8 @@ export default function DocsLayout({
 }) {
   const navItems = [
     { label: "Introduction", href: "/docs", icon: BookOpen },
+    { label: "Harvester Pipeline", href: "/docs/harvester-pipeline", icon: Workflow },
+    { label: "Registry Compilation", href: "/docs/registry-compilation", icon: Layers },
     { label: "Anti-Slop Rules", href: "/docs/anti-slop-rules", icon: ShieldAlert },
     { label: "Taste-Dial Matrix", href: "/docs/taste-dials", icon: Sliders },
     { label: "MCP Setup", href: "/docs/mcp-setup", icon: Server },

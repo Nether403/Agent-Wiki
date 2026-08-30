@@ -9,7 +9,7 @@ Welcome to the **Design Agent Wiki**, the first design engineering platform engi
 
 ## Why Machine-First?
 
-Modern frontend engineering is undergoing a shift: developer agents are becoming the primary consumers and assemblers of code primitives, while human engineers focus on visual curation, high-level architecture, and quality assurance.
+Modern frontend engineering is undergoing a tectonic shift: developer agents are becoming the primary consumers and assemblers of code primitives, while human engineers focus on visual curation, high-level architecture, and quality assurance.
 
 Traditional component libraries were designed for human visual browsing—relying on heavy DOM payloads, extensive explanatory prose, and visual trial-and-error. When an AI agent is forced to build interfaces from generic training weights or unstructured documentation, it inevitably produces **"AI Slop"**:
 - Hallucinated component props and nonexistent imports.
@@ -18,10 +18,23 @@ Traditional component libraries were designed for human visual browsing—relyin
 - Banned visual clichés (the indigo-600 button, the purple-to-blue linear gradient, decorative emoji grids, and blanket glassmorphism).
 - Catastrophic accessibility failures (unlabeled icons, missing ARIA bindings, unhandled keyboard navigation).
 
-## Core Endpoints
+## Double-Exposure Architecture
 
-- `/llms.txt`: Machine discovery index summarizing available categories, component slugs, taste dials, and installation commands.
-- `/llms-full.txt`: Complete flat markdown specification with embedded TypeScript source.
-- `/raw/components/[slug]`: Clean, token-efficient Markdown representations of component usage.
-- `/r/[name].json`: Programmatic endpoint adhering to the shadcn v3 registry schema.
-- `/r/registry.json`: Master index of all registered items for rapid agent discovery.
+The Design Agent Wiki solves this by implementing a dual-interface model:
+1. **Human Interface**: Aesthetic Next.js + Tailwind v4 documentation with interactive playgrounds, theme toggles, and live sandboxes.
+2. **Machine Interface**: Ultra-lean, token-efficient programmatic endpoints designed specifically for LLM context windows:
+   - `/llms.txt`: Flat discovery index summarizing categories, components, and taste dials.
+   - `/llms-full.txt`: Complete flat markdown specification with embedded TypeScript source.
+   - `/raw/components/[slug]`: Clean, token-efficient Markdown representations of component usage.
+   - `/r/[name].json`: Programmatic endpoint adhering to the shadcn v3 registry schema.
+   - `/r/registry.json`: Master index of all registered items for rapid agent discovery.
+   - `@design-wiki/mcp`: Official Model Context Protocol server exposing `search_components`, `fetch_raw_markup`, `get_installation_schema`, and `audit_code_slop`.
+
+## Platform Modules
+
+- **`apps/docs`**: Next.js 15 App Router documentation and static registry host.
+- **`packages/registry`**: 27+ seed zero-slop components and the dynamic static compiler (`build-registry.ts`).
+- **`packages/harvester`**: AST static analysis engine, repository shallow cloner, and automated anti-slop review gate.
+- **`packages/mcp-server`**: Model Context Protocol stdio service for Claude Code, Cursor, and Codex.
+- **`packages/audit-linter`**: 20-rule AST + regex anti-slop linter (`verify-audit`).
+- **`skills/design-system-agent`**: Portable agent skill packs and `.cursorrules` for autonomous agent pair-programming.

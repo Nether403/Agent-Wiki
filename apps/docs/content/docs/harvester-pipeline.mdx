@@ -1,0 +1,69 @@
+---
+title: "Ingestion Harvester Pipeline"
+description: "How the harvester ingests upstream repositories, parses AST metadata, tags standardized taxonomy, and blocks slop."
+---
+
+# Ingestion Harvester Pipeline
+
+The **Harvester Engine** (`@design-wiki/harvester`) connects the Design Agent Wiki to upstream open-source repositories (HeroUI, SmoothUI, Aceternity, Canvas UI, KokonutUI, Tailark, Dot Matrix, etc.), ensuring all imported assets are normalized, typed, and guaranteed zero-slop.
+
+## Architecture
+
+```
+[Upstream Repos] ──► [1. Cloner] ──► [2. AST Parser] ──► [3. Codemods] ──► [4. Dial Scorer & Slop Gate]
+```
+
+### 1. Repository Manifest & Automated Cloner
+
+The cloner manages shallow clones (`git clone --depth 1`) from verified upstream repositories into a local staging sandbox (`staging/clones/`).
+
+Supported upstream repositories:
+- **HeroUI** (`ui:primitive`): Accessible form controls and navigation
+- **SmoothUI** (`ui:motion`): Spring-physics micro-interactions
+- **Aceternity UI** (`ui:motion`): Landing page motion primitives
+- **Canvas UI** (`ui:creative`): WebGL and Canvas shaders
+- **diagram-design** (`ui:editorial`): Analytical data cards and SVG diagrams
+- **Evil-Buttons** (`ui:motion`): Tactile physics button interactions
+- **Tailark** (`ui:block`): Asymmetrical bento grid layouts
+- **KokonutUI** (`ui:motion`): Spring dialogs and modals
+- **Dot Matrix** (`ui:utility`): Specialized canvas dot loaders
+- **ReUI** (`ui:primitive`): Radix primitives and animated icons
+- **beUI** (`ui:primitive`): Tailwind v4 & View Transition API controls
+
+### 2. AST Static Analysis
+
+Using the TypeScript Compiler API (`ts.createSourceFile`), the parser statically extracts:
+- **Exported Signatures**: Components, functions, and TypeScript prop interfaces
+- **Dependencies**: Third-party packages (`motion/react`, `three`, `@radix-ui/*`, `@ark-ui/*`, `lucide-react`)
+- **Registry Dependencies**: Local shadcn primitives (`@/components/ui/button`)
+- **Graphics & Motion Signals**: `WebGLRenderer`, `<canvas>`, `AnimatePresence`, `useSpring`
+- **Accessibility Markers**: WAI-ARIA roles, attributes, keyboard handlers, and `prefers-reduced-motion`
+
+### 3. Normalization Codemods
+
+Incoming code is sanitized automatically:
+- **Tailwind v4 Converter**: Replaces legacy v3 arbitrary values (`p-[17px]`) with semantic system tokens
+- **React 19 & Motion Adapter**: Migrates legacy `framer-motion` imports to `motion/react`
+- **Attribution Injector**: Appends immutable SPDX open-source license and origin headers
+
+### 4. Taste-Dial Scoring & Anti-Slop Gate
+
+Components are scored on the three Taste Dials (1–10) and evaluated against the 20 Anti-Slop Rules:
+- **Health Score**: Starts at 100 with deductions (15 for High, 8 for Medium, 3 for Low)
+- **Automated Gating**: Any component with High-severity slop (`as any as`, fake TODOs, missing accessible labels) is blocked from ingestion.
+
+## CLI Usage
+
+```bash
+# Harvest a specific repository
+pnpm harvest repo smoothui
+
+# Harvest a local directory
+pnpm harvest dir ./packages/registry/src/creative
+
+# Audit a single component file
+pnpm harvest file ./packages/registry/src/motion/floating-dock.tsx
+
+# List all configured upstream repositories
+pnpm harvest list
+```

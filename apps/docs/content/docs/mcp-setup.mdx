@@ -5,7 +5,7 @@ description: "How to connect Claude Code, Cursor, and Codex to the @design-wiki/
 
 # Model Context Protocol (MCP) Setup
 
-The `@design-wiki/mcp` server connects your AI coding agent directly to the curated registry.
+The `@design-wiki/mcp` server connects your AI coding agent directly to the curated component registry.
 
 ### Claude Code Setup
 
@@ -30,9 +30,28 @@ Add into `.cursor/mcp.json`:
 }
 ```
 
-### Available MCP Tools
+### Core MCP Tools
 
-1. `search_components`: Search the catalog by query, category, tags, or taste dial parameters.
-2. `get_component_markup`: Fetch complete, production-grade TSX source and dependencies.
-3. `get_install_recipe`: Retrieve exact `npx shadcn add ...` command and peer npm packages.
-4. `audit_code_slop`: Scan arbitrary user code against the 20 anti-slop rules and receive a health scorecard.
+1. **`search_components`**:
+   Search the catalog by query, category, tags, or taste dial parameters (`minMotionIntensity`, `maxVisualDensity`, `minDesignVariance`).
+   ```json
+   { "query": "dock", "category": "ui:motion", "minMotionIntensity": 6 }
+   ```
+
+2. **`fetch_raw_markup`** *(alias: `get_component_markup`)*:
+   Fetch complete, un-truncated production TSX/JSX source code, peer dependencies, and styling recipes.
+   ```json
+   { "name": "floating-dock" }
+   ```
+
+3. **`get_installation_schema`** *(alias: `get_install_recipe`)*:
+   Retrieve the complete shadcn v3 registry JSON installation schema, file definitions, and exact CLI install commands (`npx shadcn@latest add ...`).
+   ```json
+   { "name": "floating-dock", "baseUrl": "http://localhost:3000" }
+   ```
+
+4. **`audit_code_slop`**:
+   Scan arbitrary user code against the 20 anti-slop rules and receive a health scorecard with line-by-line remediation recommendations.
+   ```json
+   { "code": "<your-tsx-code>" }
+   ```
