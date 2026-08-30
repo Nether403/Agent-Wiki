@@ -39,9 +39,7 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": [
-    "tooltip"
-  ],
+  "registryDependencies": [],
   "files": [
     {
       "path": "registry/primitives/tooltip.tsx",

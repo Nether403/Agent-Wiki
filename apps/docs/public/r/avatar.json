@@ -36,9 +36,7 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": [
-    "avatar"
-  ],
+  "registryDependencies": [],
   "files": [
     {
       "path": "registry/primitives/avatar.tsx",

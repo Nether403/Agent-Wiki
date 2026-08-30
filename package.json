@@ -10,10 +10,12 @@
     "build:cli": "pnpm --filter design-wiki build",
     "design-wiki": "node packages/cli/dist/index.js",
     "lint:slop": "pnpm --filter @design-wiki/audit-linter run check-slop",
-    "review:taste": "pnpm --filter @design-wiki/audit-linter review",
+    "review:taste": "pnpm --filter @design-wiki/audit-linter taste",
     "harvest": "pnpm --filter @design-wiki/harvester harvest",
     "test:sandbox": "pnpm --filter @design-wiki/mcp test:sandbox",
     "test:a11y": "tsx scripts/test-a11y-linter.ts",
+    "test:agents": "tsx scripts/test-agent-ecosystem.ts",
+    "test": "pnpm test:sandbox && pnpm test:a11y && pnpm test:agents && pnpm review:taste",
     "sync:rules": "tsx scripts/sync-rulepacks.ts",
     "mcp": "pnpm --filter @design-wiki/mcp start",
     "clean": "turbo clean"

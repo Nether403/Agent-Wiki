@@ -1,0 +1,48 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "skeleton",
+  "type": "registry:ui",
+  "title": "Skeleton",
+  "description": "Subtle pulse skeleton loader with zero cumulative layout shift and reduced motion support.",
+  "category": "ui:primitive",
+  "tags": [
+    "wai-aria-compliant",
+    "utility",
+    "skeleton",
+    "placeholder",
+    "loading",
+    "tailwind-v4"
+  ],
+  "dials": {
+    "design_variance": 1,
+    "motion_intensity": 2,
+    "visual_density": 7
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://ui.shadcn.com",
+    "license_type": "MIT",
+    "author": "Shadcn & Community",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/skeleton.tsx",
+      "content": "/**\n * @license MIT\n * @origin Shadcn UI (https://ui.shadcn.com)\n * @author Shadcn & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {\n  shimmer?: boolean;\n}\n\nexport function Skeleton({ className, shimmer = true, ...props }: SkeletonProps) {\n  return (\n    <div\n      aria-hidden=\"true\"\n      className={cn(\n        \"rounded-xl bg-muted/60\",\n        shimmer && \"animate-pulse\",\n        className\n      )}\n      {...props}\n    />\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/skeleton.tsx"
+    }
+  ]
+}

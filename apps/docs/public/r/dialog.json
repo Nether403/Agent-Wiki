@@ -41,9 +41,7 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": [
-    "dialog"
-  ],
+  "registryDependencies": [],
   "files": [
     {
       "path": "registry/primitives/dialog.tsx",

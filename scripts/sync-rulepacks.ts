@@ -95,9 +95,29 @@ ${cleanBody}`;
     skillSource: "https://design-wiki.dev/SKILL.md",
   };
   fs.writeFileSync(path.join(codexDir, "rules.json"), JSON.stringify(codexJson, null, 2), "utf-8");
-  console.log("  ✓ Synchronized: .codex-plugin/rules.json");
+  // 8. Format root AGENTS.md
+  const agentsMdPath = path.join(rootDir, "AGENTS.md");
+  fs.writeFileSync(agentsMdPath, cursorRulesHeader + cleanBody, "utf-8");
+  console.log("  ✓ Synchronized: AGENTS.md");
 
-  console.log("🎉 All IDE Rulepacks & Ecosystem Configs synchronized successfully!");
+  // 9. Format root CLAUDE.md
+  const claudeMdPath = path.join(rootDir, "CLAUDE.md");
+  fs.writeFileSync(claudeMdPath, cursorRulesHeader + cleanBody, "utf-8");
+  console.log("  ✓ Synchronized: CLAUDE.md");
+
+  // 10. Format .openclaw/instructions.md
+  const openclawDir = path.join(rootDir, ".openclaw");
+  fs.mkdirSync(openclawDir, { recursive: true });
+  fs.writeFileSync(path.join(openclawDir, "instructions.md"), cursorRulesHeader + cleanBody, "utf-8");
+  console.log("  ✓ Synchronized: .openclaw/instructions.md");
+
+  // 11. Format .hermes/instructions.md
+  const hermesDir = path.join(rootDir, ".hermes");
+  fs.mkdirSync(hermesDir, { recursive: true });
+  fs.writeFileSync(path.join(hermesDir, "instructions.md"), cursorRulesHeader + cleanBody, "utf-8");
+  console.log("  ✓ Synchronized: .hermes/instructions.md");
+
+  console.log("🎉 All IDE Rulepacks & Ecosystem Configs synchronized successfully across 11 agent platforms!");
 }
 
 syncRulepacks();

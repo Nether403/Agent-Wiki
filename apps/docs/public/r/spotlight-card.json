@@ -1,0 +1,52 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "spotlight-card",
+  "type": "registry:component",
+  "title": "Spotlight Card",
+  "description": "Interactive radial cursor spotlight tracking card with smooth proximity illumination.",
+  "category": "ui:motion",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "aceternity",
+    "spotlight",
+    "card",
+    "mouse-tracking",
+    "micro-interaction"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 5,
+    "visual_density": 5
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://ui.aceternity.com",
+    "license_type": "MIT",
+    "author": "Manu Arora",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [
+    "card"
+  ],
+  "files": [
+    {
+      "path": "registry/motion/spotlight-card.tsx",
+      "content": "/**\n * @license MIT\n * @origin Aceternity UI (https://ui.aceternity.com)\n * @author Manu Arora & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  spotlightColor?: string;\n}\n\nexport function SpotlightCard({\n  children,\n  className,\n  ...props\n}: SpotlightCardProps) {\n  const divRef = React.useRef<HTMLDivElement>(null);\n  const [position, setPosition] = React.useState({ x: 0, y: 0 });\n  const [opacity, setOpacity] = React.useState(0);\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {\n    if (!divRef.current) return;\n    const rect = divRef.current.getBoundingClientRect();\n    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });\n  };\n\n  const handleFocus = () => setOpacity(1);\n  const handleBlur = () => setOpacity(0);\n  const handleMouseEnter = () => setOpacity(1);\n  const handleMouseLeave = () => setOpacity(0);\n\n  return (\n    <div\n      ref={divRef}\n      onMouseMove={handleMouseMove}\n      onFocus={handleFocus}\n      onBlur={handleBlur}\n      onMouseEnter={handleMouseEnter}\n      onMouseLeave={handleMouseLeave}\n      className={cn(\n        \"relative overflow-hidden rounded-3xl border border-border bg-card p-8 text-card-foreground shadow-xs transition-colors hover:border-primary/50\",\n        className\n      )}\n      {...props}\n    >\n      <div\n        aria-hidden=\"true\"\n        className=\"pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 motion-reduce:hidden\"\n        style={{\n          opacity,\n          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, hsl(var(--primary) / 0.12), transparent 80%)`,\n        }}\n      />\n      <div className=\"relative z-10\">{children}</div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/spotlight-card.tsx"
+    }
+  ]
+}

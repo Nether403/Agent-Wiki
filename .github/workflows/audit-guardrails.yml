@@ -39,6 +39,12 @@ jobs:
       - name: 🛡️ Run Anti-Slop 21-Rule AST Audit Gate
         run: python3 verify-audit.py --strict
 
+      - name: 🎛️ Run Taste-Dial Calibration & Consistency Audit
+        run: pnpm review:taste
+
+      - name: 🕸️ Run Dynamic DAG Dependency Graph Verification
+        run: pnpm harvest graph packages/registry/src
+
       - name: ♿ Run Automated Accessibility (WCAG AA) Checks
         run: pnpm test:a11y
 

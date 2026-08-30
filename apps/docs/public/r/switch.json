@@ -41,9 +41,7 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": [
-    "switch"
-  ],
+  "registryDependencies": [],
   "files": [
     {
       "path": "registry/primitives/switch.tsx",

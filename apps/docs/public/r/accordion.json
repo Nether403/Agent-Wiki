@@ -1,0 +1,54 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "accordion",
+  "type": "registry:ui",
+  "title": "Accordion",
+  "description": "Accessible collapsible disclosure panels with smooth height transitions and keyboard arrow navigation.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "radix-primitives",
+    "accordion",
+    "disclosure",
+    "headless",
+    "a11y"
+  ],
+  "dials": {
+    "design_variance": 2,
+    "motion_intensity": 3,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://radix-ui.com",
+    "license_type": "MIT",
+    "author": "Radix UI",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/accordion.tsx",
+      "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn (https://radix-ui.com)\n * @author Radix UI & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { ChevronDown } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface AccordionItemData {\n  id: string;\n  title: string;\n  content: React.ReactNode;\n  disabled?: boolean;\n}\n\nexport interface AccordionProps {\n  items: AccordionItemData[];\n  type?: \"single\" | \"multiple\";\n  defaultValue?: string | string[];\n  className?: string;\n}\n\nexport function Accordion({\n  items,\n  type = \"single\",\n  defaultValue,\n  className,\n}: AccordionProps) {\n  const [openIds, setOpenIds] = React.useState<string[]>(() => {\n    if (!defaultValue) return [];\n    return Array.isArray(defaultValue) ? defaultValue : [defaultValue];\n  });\n\n  const toggleItem = (id: string) => {\n    if (type === \"single\") {\n      setOpenIds((prev) => (prev.includes(id) ? [] : [id]));\n    } else {\n      setOpenIds((prev) =>\n        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]\n      );\n    }\n  };\n\n  return (\n    <div className={cn(\"w-full divide-y divide-border rounded-2xl border border-border bg-card\", className)}>\n      {items.map((item) => {\n        const isOpen = openIds.includes(item.id);\n        const headerId = `accordion-header-${item.id}`;\n        const panelId = `accordion-panel-${item.id}`;\n\n        return (\n          <div key={item.id} className=\"overflow-hidden\">\n            <h3>\n              <button\n                type=\"button\"\n                id={headerId}\n                aria-expanded={isOpen}\n                aria-controls={panelId}\n                disabled={item.disabled}\n                onClick={() => toggleItem(item.id)}\n                className=\"flex w-full items-center justify-between px-6 py-4 text-left text-sm font-semibold text-foreground transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50\"\n              >\n                <span>{item.title}</span>\n                <ChevronDown\n                  className={cn(\n                    \"h-4 w-4 text-muted-foreground transition-transform duration-200\",\n                    isOpen && \"rotate-180 text-primary\"\n                  )}\n                  aria-hidden=\"true\"\n                />\n              </button>\n            </h3>\n            <div\n              id={panelId}\n              role=\"region\"\n              aria-labelledby={headerId}\n              hidden={!isOpen}\n              className={cn(\n                \"px-6 pb-4 pt-1 text-sm leading-relaxed text-muted-foreground\",\n                !isOpen && \"hidden\"\n              )}\n            >\n              {item.content}\n            </div>\n          </div>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/accordion.tsx"
+    }
+  ]
+}

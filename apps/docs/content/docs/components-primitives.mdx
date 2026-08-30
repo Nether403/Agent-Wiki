@@ -1,0 +1,57 @@
+---
+title: "Primitives (ui:primitive)"
+description: "Zero-slop baseline interactive primitives built with Radix UI, Tailwind CSS v4, and WCAG AA accessibility."
+---
+
+# UI Primitives (`ui:primitive`)
+
+Primitives form the foundational interaction layer of the Design Agent Wiki. Every primitive is strictly audited for:
+- 100% WAI-ARIA compliance and keyboard accessibility
+- Semantic Tailwind tokens (`bg-primary`, `bg-card`, `border-border`, `focus-visible:ring-ring`)
+- Zero arbitrary pixel spacing overrides
+- Full TypeScript variant props via `class-variance-authority`
+
+---
+
+## Available Primitives
+
+### 1. Button (`button`)
+Polymorphic button supporting variants (`default`, `destructive`, `outline`, `secondary`, `ghost`, `link`) and sizes (`sm`, `default`, `lg`, `icon`).
+
+```bash
+# Agent MCP Query
+fetch_raw_markup({ slug: "button" })
+
+# CLI Install
+npx design-wiki add button
+```
+
+### 2. Dialog (`dialog`)
+Accessible modal dialog with backdrop blur, focus lock, and escape dismissal.
+
+### 3. Accordion (`accordion`)
+Collapsible disclosure panels supporting single or multiple expansion states with smooth height transitions.
+
+### 4. Dropdown Menu (`dropdown-menu`)
+Positioned context menu with keyboard arrow navigation, submenu support, and focus restoration.
+
+### 5. Input (`input`)
+Form text input with accessible focus rings, placeholder styling, and error states.
+
+### 6. Switch (`switch`)
+Smooth toggle switch with keyboard space/enter toggling and screen-reader status announcement.
+
+### 7. Tabs (`tabs`)
+WAI-ARIA `tablist`, `tab`, and `tabpanel` implementation for multi-section content routing.
+
+### 8. Tooltip (`tooltip`)
+Hover and focus-triggered contextual tooltip with collision detection.
+
+### 9. Separator (`separator`)
+Semantic horizontal and vertical divider with decorative role support.
+
+### 10. Skeleton (`skeleton`)
+Layout-shift preventing placeholder loader with reduced-motion compliance.
+
+### 11. Command Menu (`command-menu`)
+Keyboard-first palette dialog with fuzzy search, categorized actions, and shortcut badges.

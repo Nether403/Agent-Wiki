@@ -42,9 +42,7 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": [
-    "dropdown-menu"
-  ],
+  "registryDependencies": [],
   "files": [
     {
       "path": "registry/primitives/dropdown-menu.tsx",

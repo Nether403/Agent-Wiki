@@ -1,0 +1,54 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "audio-visualizer",
+  "type": "registry:component",
+  "title": "Audio Visualizer",
+  "description": "Acoustic frequency waveform visualizer with playback state toggles and live audio synthesis.",
+  "category": "ui:media",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "audio",
+    "waveform",
+    "visualizer",
+    "media",
+    "player"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 7,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/remocn/remocn",
+    "license_type": "MIT",
+    "author": "Remocn Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/media/audio-visualizer.tsx",
+      "content": "/**\n * @license MIT\n * @origin Remocn / Machine-First Design Agent Wiki\n * @author Remocn Team & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Play, Pause, Volume2 } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface AudioVisualizerProps extends React.HTMLAttributes<HTMLDivElement> {\n  barCount?: number;\n  initialPlaying?: boolean;\n}\n\nexport function AudioVisualizer({\n  barCount = 32,\n  initialPlaying = false,\n  className,\n  ...props\n}: AudioVisualizerProps) {\n  const [isPlaying, setIsPlaying] = React.useState(initialPlaying);\n  const [frequencies, setFrequencies] = React.useState<number[]>(() =>\n    Array.from({ length: barCount }, () => Math.random() * 0.5 + 0.2)\n  );\n\n  React.useEffect(() => {\n    if (!isPlaying) return;\n\n    const interval = setInterval(() => {\n      setFrequencies(\n        Array.from({ length: barCount }, () => Math.random() * 0.8 + 0.2)\n      );\n    }, 120);\n\n    return () => clearInterval(interval);\n  }, [isPlaying, barCount]);\n\n  return (\n    <div\n      role=\"region\"\n      aria-label=\"Audio Waveform Visualizer\"\n      className={cn(\n        \"flex flex-col gap-4 rounded-3xl border border-border bg-card p-6 text-card-foreground shadow-xs\",\n        className\n      )}\n      {...props}\n    >\n      <div className=\"flex items-center justify-between\">\n        <div className=\"flex items-center gap-2\">\n          <Volume2 className=\"h-4 w-4 text-primary\" aria-hidden=\"true\" />\n          <span className=\"text-xs font-semibold text-foreground\">\n            Acoustic Signal Stream\n          </span>\n        </div>\n        <button\n          type=\"button\"\n          onClick={() => setIsPlaying(!isPlaying)}\n          aria-label={isPlaying ? \"Pause audio stream\" : \"Play audio stream\"}\n          className=\"inline-flex items-center gap-1.5 rounded-xl bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        >\n          {isPlaying ? (\n            <>\n              <Pause className=\"h-3.5 w-3.5\" />\n              <span>Pause</span>\n            </>\n          ) : (\n            <>\n              <Play className=\"h-3.5 w-3.5\" />\n              <span>Synthesize</span>\n            </>\n          )}\n        </button>\n      </div>\n\n      {/* Waveform Bar Graphic */}\n      <div\n        aria-hidden=\"true\"\n        className=\"flex h-20 items-end justify-between gap-1 rounded-2xl bg-muted/40 px-4 py-3\"\n      >\n        {frequencies.map((freq, idx) => (\n          <div\n            key={idx}\n            style={{\n              transform: `scaleY(${isPlaying ? freq : 0.2})`,\n            }}\n            className=\"h-full w-full max-w-1.5 origin-bottom rounded-full bg-primary transition-transform duration-100 ease-out\"\n          />\n        ))}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/audio-visualizer.tsx"
+    }
+  ]
+}

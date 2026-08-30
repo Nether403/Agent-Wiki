@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "shimmer-button",
+  "type": "registry:component",
+  "title": "Shimmer Button",
+  "description": "Polished call-to-action button featuring smooth rotating radial conic shimmer and micro-spring scale.",
+  "category": "ui:motion",
+  "tags": [
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "magic-ui",
+    "shimmer",
+    "button",
+    "micro-interaction",
+    "cta"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 5,
+    "visual_density": 5
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "button",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://magicui.design",
+    "license_type": "MIT",
+    "author": "Magic UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "registry/motion/shimmer-button.tsx",
+      "content": "/**\n * @license MIT\n * @origin Magic UI (https://magicui.design)\n * @author Dillion Verma & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface ShimmerButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  shimmerColor?: string;\n  shimmerDuration?: string;\n  borderRadius?: string;\n}\n\nexport const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonProps>(\n  (\n    {\n      children,\n      className,\n      shimmerDuration = \"3s\",\n      borderRadius = \"12px\",\n      ...props\n    },\n    ref\n  ) => {\n    return (\n      <button\n        ref={ref}\n        style={{ borderRadius }}\n        className={cn(\n          \"group relative inline-flex cursor-pointer items-center justify-center overflow-hidden border border-border bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\",\n          className\n        )}\n        {...props}\n      >\n        {/* Shimmer sweep */}\n        <div\n          aria-hidden=\"true\"\n          style={{ animationDuration: shimmerDuration }}\n          className=\"absolute -inset-full animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0%,hsl(var(--primary-foreground)/0.3)_50%,transparent_100%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100 motion-reduce:hidden\"\n        />\n\n        {/* Content wrapper */}\n        <span className=\"relative z-10 flex items-center gap-2\">\n          {children}\n        </span>\n      </button>\n    );\n  }\n);\nShimmerButton.displayName = \"ShimmerButton\";\n",
+      "type": "registry:component",
+      "target": "components/ui/shimmer-button.tsx"
+    }
+  ]
+}

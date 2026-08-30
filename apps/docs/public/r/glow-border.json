@@ -1,0 +1,51 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "glow-border",
+  "type": "registry:component",
+  "title": "Glow Border",
+  "description": "Rotating chromatic gradient glow border wrapper for cards, hero callouts, and featured sections.",
+  "category": "ui:creative",
+  "tags": [
+    "tailwind-v4",
+    "neon-scifi",
+    "wai-aria-compliant",
+    "magic-ui",
+    "glow",
+    "conic-gradient",
+    "creative",
+    "border"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 7,
+    "visual_density": 5
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://magicui.design",
+    "license_type": "MIT",
+    "author": "Magic UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/glow-border.tsx",
+      "content": "/**\n * @license MIT\n * @origin Magic UI / Aceternity (https://ui.aceternity.com)\n * @author Magic UI & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface GlowBorderProps extends React.HTMLAttributes<HTMLDivElement> {\n  borderRadius?: number;\n  color?: string[];\n  duration?: number;\n}\n\nexport function GlowBorder({\n  borderRadius = 16,\n  duration = 10,\n  className,\n  children,\n  ...props\n}: GlowBorderProps) {\n  return (\n    <div\n      style={{ borderRadius: `${borderRadius}px` }}\n      className={cn(\n        \"relative min-h-16 w-full p-px overflow-hidden bg-card text-card-foreground border border-border\",\n        className\n      )}\n      {...props}\n    >\n      {/* Animated glow ray */}\n      <div\n        aria-hidden=\"true\"\n        style={{\n          borderRadius: `${borderRadius}px`,\n          animationDuration: `${duration}s`,\n        }}\n        className=\"absolute inset-0 -z-10 animate-spin bg-[conic-gradient(from_0deg_at_50%_50%,hsl(var(--primary))_0deg,transparent_60deg,transparent_300deg,hsl(var(--primary))_360deg)] opacity-40 motion-reduce:hidden\"\n      />\n\n      {/* Surface content container */}\n      <div\n        style={{ borderRadius: `${Math.max(0, borderRadius - 1)}px` }}\n        className=\"relative z-10 h-full w-full bg-card p-6\"\n      >\n        {children}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/glow-border.tsx"
+    }
+  ]
+}

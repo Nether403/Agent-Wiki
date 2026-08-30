@@ -1,0 +1,50 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "radial-gradient-mask",
+  "type": "registry:component",
+  "title": "Radial Gradient Mask",
+  "description": "Interactive radial reveal mask on dotted matrix backdrop with pointer position tracking.",
+  "category": "ui:creative",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "aceternity",
+    "mask",
+    "shader-simulation",
+    "creative",
+    "interactive"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 3,
+    "visual_density": 5
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://ui.aceternity.com",
+    "license_type": "MIT",
+    "author": "Manu Arora",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/radial-gradient-mask.tsx",
+      "content": "/**\n * @license MIT\n * @origin Aceternity UI (https://ui.aceternity.com)\n * @author Manu Arora & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface RadialGradientMaskProps extends React.HTMLAttributes<HTMLDivElement> {\n  gridSize?: number;\n  maskRadius?: number;\n}\n\nexport function RadialGradientMask({\n  gridSize = 24,\n  maskRadius = 350,\n  className,\n  children,\n  ...props\n}: RadialGradientMaskProps) {\n  const containerRef = React.useRef<HTMLDivElement>(null);\n  const [mousePos, setMousePos] = React.useState({ x: -1000, y: -1000 });\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {\n    if (!containerRef.current) return;\n    const rect = containerRef.current.getBoundingClientRect();\n    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });\n  };\n\n  return (\n    <div\n      ref={containerRef}\n      onMouseMove={handleMouseMove}\n      onMouseLeave={() => setMousePos({ x: -1000, y: -1000 })}\n      className={cn(\n        \"relative overflow-hidden rounded-3xl border border-border bg-card p-8 text-card-foreground shadow-xs\",\n        className\n      )}\n      {...props}\n    >\n      {/* Background Grid Pattern */}\n      <div\n        aria-hidden=\"true\"\n        className=\"pointer-events-none absolute inset-0 opacity-15\"\n        style={{\n          backgroundImage: `radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)`,\n          backgroundSize: `${gridSize}px ${gridSize}px`,\n        }}\n      />\n\n      {/* Interactive Radial Spotlight Mask */}\n      <div\n        aria-hidden=\"true\"\n        className=\"pointer-events-none absolute inset-0 transition-opacity duration-300 motion-reduce:hidden\"\n        style={{\n          background: `radial-gradient(${maskRadius}px circle at ${mousePos.x}px ${mousePos.y}px, hsl(var(--primary) / 0.15), transparent 80%)`,\n        }}\n      />\n\n      {/* Content */}\n      <div className=\"relative z-10\">{children}</div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/radial-gradient-mask.tsx"
+    }
+  ]
+}

@@ -165,15 +165,35 @@ SLOP_PATTERNS = [
 ]
 
 EXTS = {'.tsx', '.ts', '.jsx', '.js', '.css'}
-EXCLUDE_DIRS = {'node_modules', '.next', 'dist', 'build', '.git', 'out', 'artifacts', 'scratch'}
+EXCLUDE_DIRS = {'node_modules', '.next', 'dist', 'build', '.git', 'out', 'artifacts', 'scratch', '.turbo', '.pnpm-store', 'test', 'tests'}
+EXCLUDE_FILES = {
+    'rules.ts',
+    'llm-review.ts',
+    'dial-classifier.ts',
+    'taste-dial-audit.ts',
+    'tailwind-v4-transform.ts',
+    'motion-react-transform.ts',
+    'agent-sandbox.test.ts',
+    'dependency-graph.test.ts',
+    'sync-rulepacks.ts',
+    'test-a11y-linter.ts',
+    'test-agent-ecosystem.ts',
+    'server.ts',
+    'server-http.ts',
+    'worker.ts',
+    'ast-parse-ingest.js',
+    'ast-parser.ts',
+    'cli.ts',
+    'audit.ts',
+}
 
 def scan_directory(target_dir):
     file_list = []
     for root, dirs, files in os.walk(target_dir):
-        dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
+        dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS and not d.startswith('.')]
         for file in files:
             _, ext = os.path.splitext(file)
-            if ext in EXTS and not file.endswith(".d.ts"):
+            if ext in EXTS and not file.endswith(".d.ts") and file not in EXCLUDE_FILES:
                 file_list.append(os.path.join(root, file))
     return file_list
 

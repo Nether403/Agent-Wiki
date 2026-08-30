@@ -1,0 +1,30 @@
+---
+title: "Motion & Physics (ui:motion)"
+description: "Spring physics, cursor followers, magnetic attractions, and micro-interactions powered by motion/react."
+---
+
+# Motion & Physics (`ui:motion`)
+
+The Motion category provides tactile, physics-based interactions calibrated via the `MOTION_INTENSITY` dial (1–10).
+
+All motion components guarantee:
+- **Reduced Motion Support**: `prefers-reduced-motion` compliance across all CSS animations and Framer springs.
+- **GPU-Accelerated Transforms**: `transform` and `opacity` only; zero layout-triggering properties (`width`, `height`, `top`).
+- **Smooth Layout Transitions**: Shared `layoutId` preservation without cumulative layout shifts.
+
+---
+
+## Curated Components
+
+| Slug | Description | Dials (V/M/D) | Dependencies |
+| :--- | :--- | :--- | :--- |
+| `floating-dock` | macOS-style proximity scaling dock | `6 / 8 / 4` | `motion`, `clsx`, `tailwind-merge` |
+| `animated-tabs` | Spring-bound sliding indicator tabs | `4 / 6 / 5` | `motion`, `clsx`, `tailwind-merge` |
+| `spring-dialog` | Physics-based scale and fade dialog | `5 / 6 / 5` | `motion`, `lucide-react` |
+| `magnetic-button` | Magnetic cursor attraction button | `4 / 6 / 5` | `motion`, `clsx`, `tailwind-merge` |
+| `fluid-cursor` | Trailing spring cursor follower | `8 / 8 / 3` | `motion`, `clsx`, `tailwind-merge` |
+| `evil-button` | Playful tactile button with sound synthesis | `8 / 7 / 5` | `motion`, `lucide-react` |
+| `shimmer-button` | Conic shimmer ray CTA button | `6 / 5 / 5` | `clsx`, `tailwind-merge` |
+| `spotlight-card` | Radial cursor illumination card | `5 / 5 / 5` | `clsx`, `tailwind-merge` |
+| `tilt-card` | 3D gyroscope and mouse perspective tilt | `5 / 8 / 7` | `clsx`, `tailwind-merge` |
+| `marquee` | Seamless loop infinite ticker | `5 / 6 / 6` | `clsx`, `tailwind-merge` |

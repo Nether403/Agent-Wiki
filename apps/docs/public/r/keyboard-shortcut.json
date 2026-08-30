@@ -1,0 +1,49 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "keyboard-shortcut",
+  "type": "registry:component",
+  "title": "Keyboard Shortcut",
+  "description": "Accessible platform-adaptive keyboard key combo pill with monospace token styling.",
+  "category": "ui:utility",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "utility",
+    "kbd",
+    "shortcut",
+    "keyboard",
+    "accessibility"
+  ],
+  "dials": {
+    "design_variance": 2,
+    "motion_intensity": 1,
+    "visual_density": 8
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://design-wiki.dev",
+    "license_type": "MIT",
+    "author": "Design Wiki Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/utility/keyboard-shortcut.tsx",
+      "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @author Design Wiki Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface KeyboardShortcutProps extends React.HTMLAttributes<HTMLElement> {\n  keys: string[];\n  size?: \"sm\" | \"md\" | \"lg\";\n}\n\nexport function KeyboardShortcut({\n  keys,\n  size = \"md\",\n  className,\n  ...props\n}: KeyboardShortcutProps) {\n  const sizeMap = {\n    sm: \"px-1.5 py-0.5 text-[10px]\",\n    md: \"px-2 py-1 text-xs\",\n    lg: \"px-2.5 py-1.5 text-sm\",\n  };\n\n  return (\n    <span\n      className={cn(\"inline-flex items-center gap-1\", className)}\n      {...props}\n    >\n      {keys.map((k, idx) => (\n        <kbd\n          key={idx}\n          className={cn(\n            \"inline-flex items-center justify-center font-mono font-medium rounded-lg border border-border bg-muted/80 text-muted-foreground shadow-xs select-none\",\n            sizeMap[size]\n          )}\n        >\n          {k}\n        </kbd>\n      ))}\n    </span>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/keyboard-shortcut.tsx"
+    }
+  ]
+}

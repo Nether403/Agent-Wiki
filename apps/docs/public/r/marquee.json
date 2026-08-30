@@ -1,0 +1,49 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "marquee",
+  "type": "registry:component",
+  "title": "Marquee",
+  "description": "Infinite content stream marquee with pause-on-hover, velocity controls, and reduced-motion disablement.",
+  "category": "ui:motion",
+  "tags": [
+    "wai-aria-compliant",
+    "magic-ui",
+    "marquee",
+    "animation",
+    "ticker",
+    "loop"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 6,
+    "visual_density": 6
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://magicui.design",
+    "license_type": "MIT",
+    "author": "Magic UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/marquee.tsx",
+      "content": "/**\n * @license MIT\n * @origin Magic UI (https://magicui.design)\n * @author Dillion Verma & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface MarqueeProps extends React.HTMLAttributes<HTMLDivElement> {\n  pauseOnHover?: boolean;\n  direction?: \"left\" | \"right\";\n  speed?: \"slow\" | \"normal\" | \"fast\";\n  vertical?: boolean;\n  repeat?: number;\n}\n\nexport function Marquee({\n  className,\n  children,\n  pauseOnHover = true,\n  direction = \"left\",\n  speed = \"normal\",\n  vertical = false,\n  repeat = 4,\n  ...props\n}: MarqueeProps) {\n  const durationMap = {\n    slow: \"40s\",\n    normal: \"25s\",\n    fast: \"15s\",\n  };\n\n  return (\n    <div\n      aria-label=\"Scrolling Content Stream\"\n      className={cn(\n        \"group flex overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)]\",\n        vertical ? \"flex-col\" : \"flex-row\",\n        className\n      )}\n      {...props}\n    >\n      {Array.from({ length: repeat }).map((_, i) => (\n        <div\n          key={i}\n          style={{ animationDuration: durationMap[speed] }}\n          className={cn(\n            \"flex shrink-0 justify-around [gap:var(--gap)] animate-marquee\",\n            vertical && \"flex-col\",\n            direction === \"right\" && \"[animation-direction:reverse]\",\n            pauseOnHover && \"group-hover:[animation-play-state:paused]\",\n            \"motion-reduce:animate-none\"\n          )}\n        >\n          {children}\n        </div>\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/marquee.tsx"
+    }
+  ]
+}

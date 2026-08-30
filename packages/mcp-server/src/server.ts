@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import fs from "fs";
 import path from "path";
+import { loadCatalogSnapshot } from "./embedded-catalog";
 
 // 20 anti-slop rules embedded for self-contained audit tool
 interface SlopCheck {
@@ -163,26 +164,7 @@ const MCP_SLOP_CHECKS: SlopCheck[] = [
 ];
 
 export function getRegistryItems(): any[] {
-  const possiblePaths = [
-    path.resolve(__dirname, "../../../apps/docs/public/r/registry.json"),
-    path.resolve(__dirname, "../../registry/dist/r/registry.json"),
-    path.resolve(__dirname, "../../apps/docs/public/r/registry.json"),
-    path.resolve(__dirname, "../../../packages/registry/dist/r/registry.json"),
-    path.resolve(process.cwd(), "apps/docs/public/r/registry.json"),
-    path.resolve(process.cwd(), "packages/registry/dist/r/registry.json"),
-    path.resolve(process.cwd(), "../../apps/docs/public/r/registry.json"),
-  ];
-
-  for (const p of possiblePaths) {
-    if (fs.existsSync(p)) {
-      try {
-        return JSON.parse(fs.readFileSync(p, "utf-8"));
-      } catch (e) {
-        console.error(`Failed to parse registry at ${p}`, e);
-      }
-    }
-  }
-  return [];
+  return loadCatalogSnapshot();
 }
 
 export function getComponentItem(slug: string): any | null {
@@ -768,6 +750,91 @@ ${sourceCode}
             ),
           },
         ],
+      };
+    }
+  );
+
+  // Tool 5: get_dependency_graph
+  server.registerTool(
+    "get_dependency_graph",
+    {
+      description:
+        "Return the dynamic DAG dependency topology, topological installation sequence, and required npm packages for a component or the full registry.",
+      inputSchema: z.object({
+        name: z.string().optional().describe("Component slug to inspect (e.g., 'pricing-table', 'floating-dock'). If omitted, returns entire catalog topology."),
+        includeMermaid: z.boolean().optional().describe("Whether to include Mermaid.js flowchart string in response."),
+      }),
+    },
+    async ({ name, includeMermaid }) => {
+      const items = getRegistryItems();
+
+      if (name) {
+        const item = getComponentItem(name);
+        if (!item) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: JSON.stringify({ error: `Component '${name}' not found in registry.` }),
+              },
+            ],
+          };
+        }
+
+        const regDeps: string[] = item.registryDependencies || [];
+        const npmDeps: string[] = item.dependencies || [];
+        const devDeps: string[] = item.devDependencies || [];
+
+        // Build topological installation order for this component
+        const installOrder = [...regDeps, item.name];
+
+        const payload = JSON.stringify(
+          {
+            component: item.name,
+            category: item.category,
+            topologicalInstallSequence: installOrder,
+            directRegistryDependencies: regDeps,
+            npmDependencies: npmDeps,
+            devDependencies: devDeps,
+            mermaid: includeMermaid
+              ? `graph TD\n  ${item.name}["${item.title} (${item.category})"]\n` +
+                regDeps.map((d) => `  ${item.name} -->|requires| ${d}`).join("\n")
+              : undefined,
+          },
+          null,
+          2
+        );
+
+        return {
+          content: [{ type: "text", text: stripPayloadToBudget(payload) }],
+        };
+      }
+
+      // Full catalog graph summary
+      const nodes: Record<string, { category: string; registryDependencies: string[]; dependencies: string[] }> = {};
+      const allNpm = new Set<string>();
+
+      items.forEach((it) => {
+        nodes[it.name] = {
+          category: it.category,
+          registryDependencies: it.registryDependencies || [],
+          dependencies: it.dependencies || [],
+        };
+        (it.dependencies || []).forEach((d: string) => allNpm.add(d));
+      });
+
+      const fullPayload = JSON.stringify(
+        {
+          totalComponents: items.length,
+          totalNpmDependencies: Array.from(allNpm),
+          nodes,
+        },
+        null,
+        2
+      );
+
+      return {
+        content: [{ type: "text", text: stripPayloadToBudget(fullPayload) }],
       };
     }
   );

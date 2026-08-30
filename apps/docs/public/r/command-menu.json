@@ -1,0 +1,56 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "command-menu",
+  "type": "registry:ui",
+  "title": "Command Menu",
+  "description": "Keyboard-first command palette dialog with fuzzy filtering, category grouping, and shortcut badges.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "glassmorphism",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "cmdk",
+    "command-palette",
+    "keyboard-first",
+    "modal",
+    "a11y"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 3,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "dialog",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/pacocoursey/cmdk",
+    "license_type": "MIT",
+    "author": "Paco Coursey",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/command-menu.tsx",
+      "content": "/**\n * @license MIT\n * @origin cmdk / Paco Coursey (https://github.com/pacocoursey/cmdk)\n * @author Paco Coursey & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Search, X } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface CommandItem {\n  id: string;\n  label: string;\n  category?: string;\n  shortcut?: string;\n  onSelect: () => void;\n}\n\nexport interface CommandMenuProps {\n  isOpen: boolean;\n  onClose: () => void;\n  items: CommandItem[];\n  placeholder?: string;\n}\n\nexport function CommandMenu({\n  isOpen,\n  onClose,\n  items,\n  placeholder = \"Type a command or search...\",\n}: CommandMenuProps) {\n  const [query, setQuery] = React.useState(\"\");\n  const [selectedIndex, setSelectedIndex] = React.useState(0);\n\n  const filteredItems = React.useMemo(() => {\n    if (!query) return items;\n    return items.filter(\n      (item) =>\n        item.label.toLowerCase().includes(query.toLowerCase()) ||\n        item.category?.toLowerCase().includes(query.toLowerCase())\n    );\n  }, [items, query]);\n\n  React.useEffect(() => {\n    setSelectedIndex(0);\n  }, [query]);\n\n  React.useEffect(() => {\n    const handleKeyDown = (e: KeyboardEvent) => {\n      if (!isOpen) return;\n\n      if (e.key === \"Escape\") {\n        onClose();\n      } else if (e.key === \"ArrowDown\") {\n        e.preventDefault();\n        setSelectedIndex((prev) => (prev + 1) % Math.max(1, filteredItems.length));\n      } else if (e.key === \"ArrowUp\") {\n        e.preventDefault();\n        setSelectedIndex((prev) =>\n          prev === 0 ? Math.max(0, filteredItems.length - 1) : prev - 1\n        );\n      } else if (e.key === \"Enter\" && filteredItems[selectedIndex]) {\n        e.preventDefault();\n        filteredItems[selectedIndex].onSelect();\n        onClose();\n      }\n    };\n\n    window.addEventListener(\"keydown\", handleKeyDown);\n    return () => window.removeEventListener(\"keydown\", handleKeyDown);\n  }, [isOpen, filteredItems, selectedIndex, onClose]);\n\n  if (!isOpen) return null;\n\n  return (\n    <div\n      role=\"dialog\"\n      aria-modal=\"true\"\n      aria-label=\"Command Palette\"\n      className=\"fixed inset-0 z-50 flex items-start justify-center pt-20 p-4\"\n    >\n      {/* Backdrop */}\n      <div\n        className=\"fixed inset-0 bg-background/80 backdrop-blur-sm transition-opacity\"\n        onClick={onClose}\n        aria-hidden=\"true\"\n      />\n\n      {/* Dialog Window */}\n      <div className=\"relative w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-card shadow-2xl text-card-foreground\">\n        <div className=\"flex items-center border-b border-border px-4 py-3\">\n          <Search className=\"mr-3 h-4 w-4 shrink-0 text-muted-foreground\" aria-hidden=\"true\" />\n          <input\n            type=\"text\"\n            value={query}\n            onChange={(e) => setQuery(e.target.value)}\n            placeholder={placeholder}\n            className=\"flex h-6 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground focus:ring-0 focus-visible:outline-none\"\n            autoFocus\n          />\n          <button\n            type=\"button\"\n            onClick={onClose}\n            aria-label=\"Close command palette\"\n            className=\"rounded-md p-1 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <X className=\"h-4 w-4\" />\n          </button>\n        </div>\n\n        <div className=\"max-h-72 overflow-y-auto p-2\">\n          {filteredItems.length === 0 ? (\n            <p className=\"p-4 text-center text-xs text-muted-foreground\">\n              No matching commands found.\n            </p>\n          ) : (\n            <ul role=\"listbox\" className=\"space-y-1\">\n              {filteredItems.map((item, index) => {\n                const isSelected = index === selectedIndex;\n                return (\n                  <li\n                    key={item.id}\n                    role=\"option\"\n                    aria-selected={isSelected}\n                    onClick={() => {\n                      item.onSelect();\n                      onClose();\n                    }}\n                    onMouseEnter={() => setSelectedIndex(index)}\n                    className={cn(\n                      \"flex cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-xs font-medium transition-colors\",\n                      isSelected\n                        ? \"bg-primary text-primary-foreground font-semibold\"\n                        : \"text-foreground hover:bg-muted\"\n                    )}\n                  >\n                    <span>{item.label}</span>\n                    {item.shortcut && (\n                      <kbd\n                        className={cn(\n                          \"rounded-md border px-1.5 py-0.5 text-[10px] font-mono\",\n                          isSelected\n                            ? \"border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground\"\n                            : \"border-border bg-muted text-muted-foreground\"\n                        )}\n                      >\n                        {item.shortcut}\n                      </kbd>\n                    )}\n                  </li>\n                );\n              })}\n            </ul>\n          )}\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/command-menu.tsx"
+    }
+  ]
+}

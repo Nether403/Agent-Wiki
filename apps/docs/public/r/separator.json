@@ -1,0 +1,48 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "separator",
+  "type": "registry:ui",
+  "title": "Separator",
+  "description": "Semantic horizontal or vertical divider with decorative and accessible separator roles.",
+  "category": "ui:primitive",
+  "tags": [
+    "wai-aria-compliant",
+    "utility",
+    "radix-primitives",
+    "separator",
+    "divider",
+    "layout"
+  ],
+  "dials": {
+    "design_variance": 1,
+    "motion_intensity": 1,
+    "visual_density": 7
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://radix-ui.com",
+    "license_type": "MIT",
+    "author": "Radix UI",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/separator.tsx",
+      "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn (https://radix-ui.com)\n * @author Radix UI & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {\n  orientation?: \"horizontal\" | \"vertical\";\n  decorative?: boolean;\n}\n\nexport function Separator({\n  className,\n  orientation = \"horizontal\",\n  decorative = true,\n  ...props\n}: SeparatorProps) {\n  return (\n    <div\n      role={decorative ? \"none\" : \"separator\"}\n      aria-orientation={decorative ? undefined : orientation}\n      className={cn(\n        \"shrink-0 bg-border\",\n        orientation === \"horizontal\" ? \"h-px w-full\" : \"h-full w-px\",\n        className\n      )}\n      {...props}\n    />\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/separator.tsx"
+    }
+  ]
+}

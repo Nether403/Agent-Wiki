@@ -1,0 +1,26 @@
+---
+title: "Creative & WebGL (ui:creative)"
+description: "HTML5 Canvas simulations, WebGL shaders, particle fields, and generative backdrop surfaces."
+---
+
+# Creative & WebGL (`ui:creative`)
+
+The Creative category houses experimental shaders, fluid simulations, and generative backgrounds.
+
+Every creative element enforces:
+- **Zero-Draft A11y Fallback**: If WebGL context is lost, high-contrast CSS gradients or static SVG fallbacks render immediately.
+- **CPU Throttling & Visibility Observers**: Canvas loops automatically pause when tab is in background or scrolled out of viewport.
+- **No Blanket Glassmorphism**: Controlled opacity surfaces that maintain WCAG contrast ratios.
+
+---
+
+## Curated Components
+
+| Slug | Description | Dials (V/M/D) | Tech Stack |
+| :--- | :--- | :--- | :--- |
+| `canvas-fluid-wave` | Multi-harmonic fluid wave canvas | `9 / 9 / 3` | HTML5 Canvas / Three.js bridge |
+| `particle-field` | Constellation particle simulation | `8 / 8 / 4` | Canvas 2D / Vector Physics |
+| `dot-matrix-loader` | Oscillating wave dot grid loader | `6 / 5 / 7` | Canvas 2D / Sinusoidal Wave |
+| `glow-border` | Chromatic conic glow ray wrapper | `7 / 7 / 5` | Tailwind v4 Conic Gradient |
+| `radial-gradient-mask` | Interactive cursor mask on dot matrix | `7 / 3 / 5` | Radial Mask Shader Sim |
+| `noise-texture-card` | Tactile film grain noise surface | `7 / 2 / 6` | SVG FeTurbulence Filter |

@@ -39,9 +39,7 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": [
-    "tabs"
-  ],
+  "registryDependencies": [],
   "files": [
     {
       "path": "registry/primitives/tabs.tsx",

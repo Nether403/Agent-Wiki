@@ -12,7 +12,9 @@
     "build": "tsc",
     "start": "tsx src/index.ts",
     "start:http": "tsx src/server-http.ts",
-    "test:sandbox": "tsx test/agent-sandbox.test.ts"
+    "test": "tsx test/agent-sandbox.test.ts && tsx test/worker.test.ts",
+    "test:sandbox": "tsx test/agent-sandbox.test.ts",
+    "test:worker": "tsx test/worker.test.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.6.1",

@@ -367,7 +367,9 @@ export function parseComponentAST(
         depSet.add(specifier);
         if (specifier.startsWith("@radix-ui/react-")) {
           const primitive = specifier.replace("@radix-ui/react-", "");
-          regDepSet.add(primitive);
+          if (primitive !== rawSlug && primitive !== metadata.name) {
+            regDepSet.add(primitive);
+          }
         }
       } else if (specifier.startsWith("@ark-ui/")) {
         tagSet.add("ark-ui");
@@ -375,7 +377,9 @@ export function parseComponentAST(
         depSet.add(specifier);
         if (specifier.startsWith("@ark-ui/react/")) {
           const primitive = specifier.replace("@ark-ui/react/", "");
-          regDepSet.add(primitive);
+          if (primitive !== rawSlug && primitive !== metadata.name) {
+            regDepSet.add(primitive);
+          }
         }
       } else if (specifier === "lucide-react") {
         tagSet.add("lucide-react");
@@ -398,7 +402,9 @@ export function parseComponentAST(
         depSet.add(specifier);
       } else if (specifier.startsWith("@/components/ui/")) {
         const primitive = specifier.split("/").pop()!;
-        regDepSet.add(primitive);
+        if (primitive !== rawSlug && primitive !== metadata.name) {
+          regDepSet.add(primitive);
+        }
       }
     }
 

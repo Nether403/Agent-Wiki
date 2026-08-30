@@ -16,7 +16,7 @@ Commands:
                       (e.g., npx design-wiki add canvas-fluid-wave)
   list                List all curated zero-slop components and taste dials
   search <query>      Search components by name, category, or tag
-  audit [path]        Scan local files for AI slop anti-patterns (p-[17px], etc.)
+  audit [path]        Scan local files for AI slop anti-patterns (arbitrary tokens, etc.)
 
 Options:
   --path <dir>        Custom target directory (default: components/ui or src/components/ui)

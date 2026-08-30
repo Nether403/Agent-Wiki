@@ -2,18 +2,69 @@
 
 import fs from "fs";
 import path from "path";
-import { runAudit, runLlmTasteReview } from "./index";
+import { runAudit, runLlmTasteReview, auditCatalogTasteDials, auditTasteDials } from "./index";
 
 function main() {
   const args = process.argv.slice(2);
   const baseDir = process.env.INIT_CWD || process.cwd();
+
+  if (args[0] === "taste" || args[0] === "taste-dials") {
+    const candidatePaths = [
+      args[1] ? (path.isAbsolute(args[1]) ? args[1] : path.resolve(baseDir, args[1])) : null,
+      path.resolve(baseDir, "packages/registry/src"),
+      path.resolve(process.cwd(), "packages/registry/src"),
+      path.resolve(process.cwd(), "../registry/src"),
+      path.resolve(process.cwd(), "../../packages/registry/src"),
+      path.resolve(process.cwd(), "src"),
+    ].filter(Boolean) as string[];
+
+    const target = candidatePaths.find((p) => fs.existsSync(p)) || process.cwd();
+
+    console.log(`\n🎛️ =======================================================`);
+    console.log(`🎛️ DESIGN AGENT WIKI: TASTE DIAL CONSISTENCY AUDITOR`);
+    console.log(`🎛️ Verifying 1-10 Dial Calibration (Variance, Motion, Density)`);
+    console.log(`🎛️ Target: ${target}`);
+    console.log(`🎛️ =======================================================\n`);
+
+    if (fs.existsSync(target) && fs.statSync(target).isDirectory()) {
+      const summary = auditCatalogTasteDials(target);
+      console.log(`📊 Catalog Taste Summary:`);
+      console.log(`   - Components Audited: ${summary.totalAudited}`);
+      console.log(`   - Consistent Dials:   ${summary.consistentCount} (${Math.round((summary.consistentCount / summary.totalAudited) * 100)}%)`);
+      console.log(`   - Flagged Dials:      ${summary.flaggedCount}`);
+      console.log(`   - Average Score:      ${summary.averageScore}/100\n`);
+
+      console.log(`| Component | Variance | Motion | Density | Consistency | Score |`);
+      console.log(`| :--- | :--- | :--- | :--- | :--- | :--- |`);
+      summary.results.forEach((r) => {
+        const status = r.consistent ? "✅ Consistent" : "⚠️ Needs Calibration";
+        console.log(`| ${r.slug.padEnd(20)} | ${r.declaredDials.design_variance.toString().padEnd(8)} | ${r.declaredDials.motion_intensity.toString().padEnd(6)} | ${r.declaredDials.visual_density.toString().padEnd(7)} | ${status.padEnd(17)} | ${r.score}/100 |`);
+      });
+
+      if (summary.flaggedCount > 0) {
+        console.log(`\n⚠️ Calibration Recommendations:`);
+        summary.results
+          .filter((r) => !r.consistent)
+          .forEach((r) => {
+            console.log(`  - [${r.slug}]:`);
+            r.findings.forEach((f) => console.log(`      * [${f.dial}] ${f.recommendation}`));
+          });
+      }
+
+      console.log(`\n🎉 Taste Dial Consistency Verification Complete! Score: ${summary.averageScore}/100\n`);
+      process.exit(0);
+    } else {
+      console.log(`❌ Target not found or not a directory: ${target}`);
+      process.exit(1);
+    }
+  }
 
   if (args[0] === "review") {
     const targetFile = args[1]
       ? path.isAbsolute(args[1])
         ? args[1]
         : path.resolve(baseDir, args[1])
-      : null;
+      : path.resolve(process.cwd(), "packages/registry/src/primitives/button.tsx");
 
     if (!targetFile || !fs.existsSync(targetFile)) {
       console.error(`❌ Error: Must specify a valid component file to review. Example: pnpm --filter @design-wiki/audit-linter review ./components/ui/button.tsx`);

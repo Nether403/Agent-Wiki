@@ -41,7 +41,7 @@ export async function GET(
 
     const complexity =
       data.complexity ||
-      (file?.content?.length > 3500 || file?.content?.includes("requestAnimationFrame")
+      (file?.content?.length > 3500 || data.category === "ui:creative"
         ? "high"
         : file?.content?.length < 1500
         ? "low"

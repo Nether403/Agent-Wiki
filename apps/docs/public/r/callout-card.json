@@ -1,0 +1,50 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "callout-card",
+  "type": "registry:component",
+  "title": "Callout Card",
+  "description": "High-contrast editorial callout with semantic state themes (info, warning, success, danger).",
+  "category": "ui:editorial",
+  "tags": [
+    "lucide-react",
+    "wai-aria-compliant",
+    "callout",
+    "alert",
+    "editorial",
+    "semantic"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 1,
+    "visual_density": 7
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "note",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://design-wiki.dev",
+    "license_type": "MIT",
+    "author": "Design Wiki Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/callout-card.tsx",
+      "content": "/**\n * @license MIT\n * @origin diagram-design / Machine-First Design Agent Wiki\n * @author diagram-design & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { Info, AlertTriangle, CheckCircle, AlertCircle } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport type CalloutType = \"info\" | \"warning\" | \"success\" | \"danger\";\n\nexport interface CalloutCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  type?: CalloutType;\n  title?: string;\n}\n\nconst calloutConfig = {\n  info: {\n    icon: Info,\n    borderColor: \"border-primary/40\",\n    bgClass: \"bg-primary/5\",\n    iconColor: \"text-primary\",\n  },\n  warning: {\n    icon: AlertTriangle,\n    borderColor: \"border-amber-500/40\",\n    bgClass: \"bg-amber-500/5\",\n    iconColor: \"text-amber-500\",\n  },\n  success: {\n    icon: CheckCircle,\n    borderColor: \"border-emerald-500/40\",\n    bgClass: \"bg-emerald-500/5\",\n    iconColor: \"text-emerald-500\",\n  },\n  danger: {\n    icon: AlertCircle,\n    borderColor: \"border-destructive/40\",\n    bgClass: \"bg-destructive/5\",\n    iconColor: \"text-destructive\",\n  },\n};\n\nexport function CalloutCard({\n  type = \"info\",\n  title,\n  children,\n  className,\n  ...props\n}: CalloutCardProps) {\n  const config = calloutConfig[type];\n  const Icon = config.icon;\n\n  return (\n    <aside\n      role=\"note\"\n      className={cn(\n        \"rounded-2xl border p-5 shadow-xs transition-colors\",\n        config.borderColor,\n        config.bgClass,\n        className\n      )}\n      {...props}\n    >\n      <div className=\"flex items-start gap-3\">\n        <Icon className={cn(\"mt-0.5 h-4 w-4 shrink-0\", config.iconColor)} aria-hidden=\"true\" />\n        <div className=\"space-y-1\">\n          {title && (\n            <h4 className=\"text-sm font-semibold text-foreground\">\n              {title}\n            </h4>\n          )}\n          <div className=\"text-xs leading-relaxed text-muted-foreground\">\n            {children}\n          </div>\n        </div>\n      </div>\n    </aside>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/callout-card.tsx"
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import {
   harvestRepository,
   harvestFile,
   generateYamlFrontmatter,
+  buildDependencyGraph,
 } from "./index";
 
 function printUsage() {
@@ -22,6 +23,7 @@ Commands:
   repo <repo-name>      Clone and harvest a known repository (e.g. heroui, smoothui, aceternity, tailark)
   dir <directory-path>  Harvest all components in a local directory
   file <file-path>      Harvest, analyze, and review a single component file
+  graph [dir-or-slug]   Generate dynamic DAG dependency graph and install ordering
   list                  List all configured upstream repositories
 
 Options:
@@ -32,6 +34,7 @@ Examples:
   pnpm harvest repo heroui
   pnpm harvest dir ./packages/registry/src/primitives
   pnpm harvest file ./packages/registry/src/motion/floating-dock.tsx
+  pnpm harvest graph ./packages/registry/src
 `);
 }
 
@@ -151,6 +154,42 @@ function main() {
     }
     console.log(`\n💡 LLM Craft Critique:\n   ${result.llmReview.critique}`);
     console.log(`\n📄 Generated YAML Frontmatter Contract:\n${generateYamlFrontmatter(result.metadata, result.dials)}`);
+    process.exit(0);
+  }
+
+  if (command === "graph") {
+    const baseDir = process.env.INIT_CWD || process.cwd();
+    const scanDir = target
+      ? path.isAbsolute(target)
+        ? target
+        : fs.existsSync(path.resolve(baseDir, target))
+        ? path.resolve(baseDir, target)
+        : path.resolve(process.cwd(), target)
+      : path.resolve(process.cwd(), "packages/registry/src");
+
+    console.log(`\n🕸️ Generating Dynamic DAG Dependency Graph from: ${scanDir}`);
+    const graph = buildDependencyGraph(scanDir);
+    const report = graph.generateReport();
+
+    console.log(`\n📊 Dependency Graph Metrics:`);
+    console.log(`   - Total Components:     ${report.totalComponents}`);
+    console.log(`   - Total Dependencies:   ${report.totalNpmDependencies.length} (${report.totalNpmDependencies.join(", ")})`);
+    console.log(`   - Circular Dependencies: ${report.hasCircularDependency ? "❌ FOUND" : "✅ NONE (Pure DAG)"}`);
+
+    if (report.hasCircularDependency) {
+      console.log(`   ⚠️ Circular Chains:`);
+      report.circularChains.forEach((chain) => console.log(`      - ${chain.join(" -> ")}`));
+    }
+
+    console.log(`\n📥 Topological Install Sequence:`);
+    report.topologicalInstallOrder.forEach((slug, idx) => {
+      const node = report.nodes[slug];
+      const depsStr = node?.registryDependencies.length > 0 ? ` (depends on: ${node.registryDependencies.join(", ")})` : "";
+      console.log(`   ${idx + 1}. [${node?.category || "ui"}] ${slug}${depsStr}`);
+    });
+
+    console.log(`\n🎨 Mermaid Dependency Topology:\n`);
+    console.log(graph.exportMermaid());
     process.exit(0);
   }
 

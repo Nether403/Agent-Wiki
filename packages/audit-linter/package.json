@@ -11,7 +11,9 @@
   "scripts": {
     "build": "tsc",
     "check-slop": "tsx src/cli.ts",
-    "review": "tsx src/cli.ts review"
+    "review": "tsx src/cli.ts review",
+    "taste": "tsx src/cli.ts taste",
+    "test": "tsx src/cli.ts taste"
   },
   "dependencies": {},
   "devDependencies": {

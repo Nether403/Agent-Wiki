@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "navbar-sticky",
+  "type": "registry:block",
+  "title": "Navbar Sticky",
+  "description": "Sticky responsive top navigation bar with blur backdrop, link routing, and mobile drawer.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "glassmorphism",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "navbar",
+    "navigation",
+    "header",
+    "layout-block",
+    "responsive"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 3,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "banner",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://tailark.com",
+    "license_type": "MIT",
+    "author": "Tailark Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "registry/blocks/navbar-sticky.tsx",
+      "content": "/**\n * @license MIT\n * @origin Tailark / Shadcn (https://tailark.com)\n * @author Tailark Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Menu, X, Terminal } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface NavLink {\n  label: string;\n  href: string;\n}\n\nexport interface NavbarStickyProps {\n  brandName?: string;\n  links?: NavLink[];\n  actionLabel?: string;\n  onActionClick?: () => void;\n  className?: string;\n}\n\nconst defaultLinks: NavLink[] = [\n  { label: \"Overview\", href: \"#overview\" },\n  { label: \"Components\", href: \"#components\" },\n  { label: \"Taste Matrix\", href: \"#matrix\" },\n  { label: \"MCP Protocol\", href: \"#mcp\" },\n];\n\nexport function NavbarSticky({\n  brandName = \"Design Wiki\",\n  links = defaultLinks,\n  actionLabel = \"Get Started\",\n  onActionClick,\n  className,\n}: NavbarStickyProps) {\n  const [mobileOpen, setMobileOpen] = React.useState(false);\n\n  return (\n    <header\n      className={cn(\n        \"sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur-md\",\n        className\n      )}\n    >\n      <div className=\"mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8\">\n        {/* Brand */}\n        <div className=\"flex items-center gap-2.5\">\n          <div className=\"flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground font-mono font-bold\">\n            W\n          </div>\n          <span className=\"text-base font-bold tracking-tight text-foreground\">\n            {brandName}\n          </span>\n        </div>\n\n        {/* Desktop Nav */}\n        <nav className=\"hidden md:flex items-center gap-6\" aria-label=\"Main Navigation\">\n          {links.map((link) => (\n            <a\n              key={link.href}\n              href={link.href}\n              className=\"text-xs font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md px-2 py-1\"\n            >\n              {link.label}\n            </a>\n          ))}\n        </nav>\n\n        {/* Action Button */}\n        <div className=\"hidden md:flex items-center gap-3\">\n          <button\n            type=\"button\"\n            onClick={onActionClick}\n            className=\"inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-xs transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\"\n          >\n            <Terminal className=\"h-3.5 w-3.5\" />\n            <span>{actionLabel}</span>\n          </button>\n        </div>\n\n        {/* Mobile menu trigger */}\n        <div className=\"flex md:hidden\">\n          <button\n            type=\"button\"\n            onClick={() => setMobileOpen(!mobileOpen)}\n            aria-expanded={mobileOpen}\n            aria-label=\"Toggle navigation menu\"\n            className=\"rounded-xl border border-border p-2 text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            {mobileOpen ? <X className=\"h-5 w-5\" /> : <Menu className=\"h-5 w-5\" />}\n          </button>\n        </div>\n      </div>\n\n      {/* Mobile Drawer */}\n      {mobileOpen && (\n        <div className=\"md:hidden border-b border-border bg-card px-4 py-6 space-y-4\">\n          <nav className=\"flex flex-col space-y-3\" aria-label=\"Mobile Navigation\">\n            {links.map((link) => (\n              <a\n                key={link.href}\n                href={link.href}\n                onClick={() => setMobileOpen(false)}\n                className=\"text-sm font-medium text-foreground hover:text-primary transition-colors py-1\"\n              >\n                {link.label}\n              </a>\n            ))}\n          </nav>\n          <div className=\"pt-4 border-t border-border\">\n            <button\n              type=\"button\"\n              onClick={() => {\n                setMobileOpen(false);\n                onActionClick?.();\n              }}\n              className=\"w-full rounded-xl bg-primary py-2.5 text-xs font-semibold text-primary-foreground text-center\"\n            >\n              {actionLabel}\n            </button>\n          </div>\n        </div>\n      )}\n    </header>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/navbar-sticky.tsx"
+    }
+  ]
+}
