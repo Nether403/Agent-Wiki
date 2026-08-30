@@ -48,6 +48,7 @@ async function main() {
   // Parse common flags
   let pathOverride: string | undefined;
   let registryUrl: string | undefined;
+  let cwdOverride: string | undefined;
   let overwrite = false;
   let installDeps = false;
   let dryRun = false;
@@ -55,6 +56,8 @@ async function main() {
   for (let i = 1; i < args.length; i++) {
     if (args[i] === "--path" && args[i + 1]) {
       pathOverride = args[++i];
+    } else if (args[i] === "--cwd" && args[i + 1]) {
+      cwdOverride = args[++i];
     } else if (args[i] === "--registry" && args[i + 1]) {
       registryUrl = args[++i];
     } else if (args[i] === "--overwrite") {
@@ -75,6 +78,7 @@ async function main() {
     }
 
     const success = await addComponent(slug, {
+      cwd: cwdOverride,
       path: pathOverride,
       registry: registryUrl,
       overwrite,

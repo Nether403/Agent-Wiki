@@ -1,3 +1,43 @@
+---
+id: "spring-dialog"
+name: "Spring Dialog"
+category: "ui:motion"
+library_origin: "KokonutUI"
+dependencies:
+  - "motion"
+  - "lucide-react"
+tags:
+  - "motion/react"
+  - "spring-physics"
+  - "micro-interaction"
+  - "dialog"
+  - "framer-motion"
+  - "lucide-react"
+dials:
+  design_variance: 5      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: 8     # 1: Basic hover · 10: Canvas/WebGL springs
+  visual_density: 5       # 1: Generous whitespace · 10: Dense analytical UI
+complexity: "medium"
+a11y:
+  keyboard_navigable: true
+  wai_aria_compliant: true
+  fallback_provided: true
+---
+
+# Spring Dialog (`spring-dialog`)
+> Harvested component from KokonutUI.
+
+- **Category**: `ui:motion`
+- **Taste Dials**: Variance 5/10 · Motion 8/10 · Density 5/10
+- **A11y Standards**: Keyboard Nav: true, ARIA: true
+
+## Installation Recipe
+```bash
+npx design-wiki add spring-dialog
+```
+
+## Verified TypeScript Source
+```tsx
 "use client";
 /**
  * @origin KokonutUI (https://github.com/kokonut-dev/kokonutui)
@@ -90,3 +130,5 @@ export function SpringDialog({
     </AnimatePresence>
   );
 }
+
+```

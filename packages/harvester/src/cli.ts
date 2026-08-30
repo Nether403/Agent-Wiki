@@ -2,6 +2,7 @@
 
 import path from "path";
 import fs from "fs";
+import { execSync } from "child_process";
 import {
   KNOWN_REPOSITORIES,
   harvestDirectory,
@@ -74,6 +75,20 @@ function main() {
     fs.writeFileSync(outPath, JSON.stringify(harvestResult, null, 2));
     console.log(`📁 Ingestion catalog saved to: ${outPath}`);
     process.exit(0);
+  }
+
+  if (command === "ingest") {
+    const repoKey = target || "kokonutui";
+    console.log(`\n🌾 Running End-to-End Ingestion for ${repoKey}...`);
+    try {
+      const scriptPath = path.resolve(process.cwd(), "ast-parse-ingest.js");
+      const rootScript = fs.existsSync(scriptPath) ? scriptPath : path.resolve(__dirname, "../../../ast-parse-ingest.js");
+      execSync(`node "${rootScript}" ${repoKey}`, { stdio: "inherit" });
+      process.exit(0);
+    } catch (err: any) {
+      console.error(`❌ Ingest failed:`, err.message);
+      process.exit(1);
+    }
   }
 
   if (command === "dir") {

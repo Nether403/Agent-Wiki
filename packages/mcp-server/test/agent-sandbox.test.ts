@@ -60,6 +60,22 @@ async function runAutonomySandboxTest() {
   }
   console.log(`✅ Phase 1 Succeeded: search_library discovered component within <15KB payload.`);
 
+  // Phase 1B: Pricing Layout Discovery Scenario (User Prompt: "Build a pricing section...")
+  console.log(`\n🔍 --- PHASE 1B: PRICING LAYOUT DISCOVERY SCENARIO ---`);
+  console.log(`Prompt: "Build a pricing section using the Machine-First Design Agent Wiki. Find a suitable layout and install it."`);
+  const pricingSearchResult: McpToolResponse = await searchTool.handler({ query: "pricing", category: "ui:block" });
+  const pricingSearchBytes = Buffer.byteLength(pricingSearchResult.content[0].text, "utf-8");
+  console.log(`   - search_library(pricing) payload size: ${pricingSearchBytes} bytes (< 15KB)`);
+  if (pricingSearchBytes >= MAX_PAYLOAD_BYTES) {
+    throw new Error(`❌ Token budget exceeded for pricing search: ${pricingSearchBytes} bytes.`);
+  }
+  const parsedPricing = JSON.parse(pricingSearchResult.content[0].text);
+  if (parsedPricing.matchCount === 0 || parsedPricing.components[0].name !== "pricing-table") {
+    throw new Error("❌ Discovery failed: 'pricing-table' was not found for pricing layout search.");
+  }
+  console.log(`   ✓ Found layout: [${parsedPricing.components[0].category}] ${parsedPricing.components[0].name} (${parsedPricing.components[0].title})`);
+  console.log(`✅ Phase 1B Succeeded: Autonomous pricing layout discovery verified.`);
+
   // Phase 2: Inspect Raw Markdown (with YAML frontmatter) & Markup
   console.log(`\n🔬 --- PHASE 2: INSPECT RAW MARKDOWN (YAML FRONTMATTER) ---`);
   console.log(`Agent calls fetch_raw_markdown({ name: "floating-dock" })...`);

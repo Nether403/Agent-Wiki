@@ -211,6 +211,33 @@ export function getComponentItem(slug: string): any | null {
   return null;
 }
 
+/**
+ * Stripping utility to guarantee context payloads do not exceed the 15KB per component threshold
+ */
+export function stripPayloadToBudget(content: string, maxBytes: number = 15 * 1024): string {
+  const currentBytes = Buffer.byteLength(content, "utf-8");
+  if (currentBytes <= maxBytes) {
+    return content;
+  }
+
+  // 1. Strip non-essential multi-line block comments (preserving frontmatter)
+  let stripped = content.replace(/\/\*[\s\S]*?\*\//g, "");
+
+  // 2. Strip redundant single-line comment annotations
+  stripped = stripped.replace(/\n\s*\/\/[^\n]*/g, "");
+
+  // 3. Normalize multiple whitespace and empty lines
+  stripped = stripped.replace(/\n{3,}/g, "\n\n").trim();
+
+  if (Buffer.byteLength(stripped, "utf-8") <= maxBytes) {
+    return stripped;
+  }
+
+  // 4. Safe slice ensuring strict conformance to 15KB context budget
+  const maxSafeChars = Math.floor(maxBytes * 0.95);
+  return stripped.slice(0, maxSafeChars) + "\n// [Payload trimmed for context budget: <15KB]";
+}
+
 export function createDesignWikiMcpServer(): McpServer {
   const server = new McpServer({
     name: "design-agent-wiki",
@@ -218,7 +245,7 @@ export function createDesignWikiMcpServer(): McpServer {
   });
 
   const searchInputSchema = z.object({
-    query: z.string().optional().describe("Search keywords (e.g., 'dialog', 'matrix', 'dock', 'bento')"),
+    query: z.string().optional().describe("Search keywords (e.g., 'dialog', 'matrix', 'dock', 'bento', 'pricing')"),
     category: z
       .enum([
         "ui:primitive",
@@ -290,21 +317,23 @@ export function createDesignWikiMcpServer(): McpServer {
       a11y: i.a11y,
       dependencies: i.dependencies,
       registryDependencies: i.registryDependencies,
-      installCommand: `npx shadcn@latest add http://localhost:3000/r/${i.name}.json`,
+      installCommand: `npx design-wiki add ${i.name}`,
     }));
+
+    const rawJson = JSON.stringify(
+      {
+        matchCount: results.length,
+        components: results,
+      },
+      null,
+      2
+    );
 
     return {
       content: [
         {
           type: "text" as const,
-          text: JSON.stringify(
-            {
-              matchCount: results.length,
-              components: results,
-            },
-            null,
-            2
-          ),
+          text: stripPayloadToBudget(rawJson),
         },
       ],
     };
@@ -418,7 +447,7 @@ ${sourceCode}
       content: [
         {
           type: "text" as const,
-          text: markdownDoc,
+          text: stripPayloadToBudget(markdownDoc),
         },
       ],
     };
@@ -458,7 +487,7 @@ ${sourceCode}
       content: [
         {
           type: "text" as const,
-          text: JSON.stringify(response, null, 2),
+          text: stripPayloadToBudget(JSON.stringify(response, null, 2)),
         },
       ],
     };
@@ -568,7 +597,7 @@ ${sourceCode}
       content: [
         {
           type: "text" as const,
-          text: JSON.stringify(response, null, 2),
+          text: stripPayloadToBudget(JSON.stringify(response, null, 2)),
         },
       ],
     };
@@ -620,7 +649,7 @@ ${sourceCode}
       content: [
         {
           type: "text" as const,
-          text: JSON.stringify(schemaResponse, null, 2),
+          text: stripPayloadToBudget(JSON.stringify(schemaResponse, null, 2)),
         },
       ],
     };

@@ -58,18 +58,16 @@ npx shadcn@latest add http://localhost:3000/r/spring-dialog.json
 
 ## Verified TypeScript Source
 ```tsx
+"use client";
 /**
+ * @origin KokonutUI (https://github.com/kokonut-dev/kokonutui)
  * @license MIT
- * @origin KokonutUI (https://kokonutui.com)
- * @author KokonutUI
- * @curated-by Machine-First Design Agent Wiki
- * Maintained under upstream open-source license terms.
+ * @author KokonutUI Team
  */
-
 import * as React from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
-import { cn } from "../lib/utils";
+import { cn } from "@/lib/utils";
 
 export interface SpringDialogProps {
   isOpen: boolean;
@@ -94,67 +92,58 @@ export function SpringDialog({
     };
     if (isOpen) {
       window.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";
     }
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "unset";
-    };
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="spring-dialog-title"
-        >
-          {/* Backdrop */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm"
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-xs"
           />
-
-          {/* Modal Card */}
           <motion.div
-            initial={{ scale: 0.92, opacity: 0, y: 16 }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="spring-dialog-title"
+            aria-describedby={description ? "spring-dialog-description" : undefined}
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.95, opacity: 0, y: 8 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            exit={{ scale: 0.95, opacity: 0, y: 10 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 25,
+            }}
             className={cn(
-              "relative z-10 w-full max-w-lg rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-2xl",
+              "relative z-50 w-full max-w-lg rounded-xl border border-border bg-card p-6 shadow-xl text-card-foreground",
               className
             )}
           >
-            <div className="flex items-start justify-between pb-4">
-              <div>
-                <h2
-                  id="spring-dialog-title"
-                  className="text-lg font-semibold tracking-tight text-foreground"
-                >
-                  {title}
-                </h2>
-                {description && (
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {description}
-                  </p>
-                )}
-              </div>
+            <div className="flex items-center justify-between pb-4">
+              <h2 id="spring-dialog-title" className="text-lg font-semibold leading-none tracking-tight">
+                {title}
+              </h2>
               <button
+                type="button"
                 onClick={onClose}
                 aria-label="Close dialog"
-                className="rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="rounded-md p-1 text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none transition-colors"
               >
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <div className="py-2">{children}</div>
+            {description && (
+              <p id="spring-dialog-description" className="text-sm text-muted-foreground pb-4">
+                {description}
+              </p>
+            )}
+            <div className="pt-2">{children}</div>
           </motion.div>
         </div>
       )}

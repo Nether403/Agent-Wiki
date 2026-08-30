@@ -7,7 +7,7 @@
 - Raw Markdown Docs: /raw/components/[slug]
 - MCP Server: npx @design-wiki/mcp
 
-## Available Registry Components (29 verified zero-slop items)
+## Available Registry Components (30 verified zero-slop items)
 
 ### Category: ui:block
 - [bento-grid](/r/bento-grid.json): Multi-pane asymmetrical layout grid with responsive column spans and structural borders. (Variance: 5, Motion: 4, Density: 6)
@@ -86,6 +86,10 @@
   - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, animate-presence, modal
   - Dependencies: motion, lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/spring-dialog.json
+- [tilt-card](/r/tilt-card.json): Curated production-grade component. (Variance: 5, Motion: 8, Density: 7)
+  - Tags: framer-motion, motion/react, animation, tailwind-v4, wai-aria-compliant, spring-physics
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/tilt-card.json
 
 ### Category: ui:primitive
 - [avatar](/r/avatar.json): Fallback-aware image avatar with initials display and smooth loading states. (Variance: 2, Motion: 1, Density: 6)

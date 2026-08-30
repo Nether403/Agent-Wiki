@@ -914,9 +914,56 @@
     "files": [
       {
         "path": "registry/motion/spring-dialog.tsx",
-        "content": "/**\n * @license MIT\n * @origin KokonutUI (https://kokonutui.com)\n * @author KokonutUI\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { motion, AnimatePresence } from \"motion/react\";\nimport { X } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface SpringDialogProps {\n  isOpen: boolean;\n  onClose: () => void;\n  title: string;\n  description?: string;\n  children: React.ReactNode;\n  className?: string;\n}\n\nexport function SpringDialog({\n  isOpen,\n  onClose,\n  title,\n  description,\n  children,\n  className,\n}: SpringDialogProps) {\n  React.useEffect(() => {\n    const handleKeyDown = (e: KeyboardEvent) => {\n      if (e.key === \"Escape\") onClose();\n    };\n    if (isOpen) {\n      window.addEventListener(\"keydown\", handleKeyDown);\n      document.body.style.overflow = \"hidden\";\n    }\n    return () => {\n      window.removeEventListener(\"keydown\", handleKeyDown);\n      document.body.style.overflow = \"unset\";\n    };\n  }, [isOpen, onClose]);\n\n  return (\n    <AnimatePresence>\n      {isOpen && (\n        <div\n          className=\"fixed inset-0 z-50 flex items-center justify-center p-4\"\n          role=\"dialog\"\n          aria-modal=\"true\"\n          aria-labelledby=\"spring-dialog-title\"\n        >\n          {/* Backdrop */}\n          <motion.div\n            initial={{ opacity: 0 }}\n            animate={{ opacity: 1 }}\n            exit={{ opacity: 0 }}\n            transition={{ duration: 0.2 }}\n            onClick={onClose}\n            className=\"fixed inset-0 bg-black/60 backdrop-blur-xs\"\n          />\n\n          {/* Modal Card */}\n          <motion.div\n            initial={{ scale: 0.92, opacity: 0, y: 16 }}\n            animate={{ scale: 1, opacity: 1, y: 0 }}\n            exit={{ scale: 0.95, opacity: 0, y: 8 }}\n            transition={{ type: \"spring\", damping: 25, stiffness: 300 }}\n            className={cn(\n              \"relative z-10 w-full max-w-lg rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-2xl\",\n              className\n            )}\n          >\n            <div className=\"flex items-start justify-between pb-4\">\n              <div>\n                <h2\n                  id=\"spring-dialog-title\"\n                  className=\"text-lg font-semibold tracking-tight text-foreground\"\n                >\n                  {title}\n                </h2>\n                {description && (\n                  <p className=\"mt-1 text-sm text-muted-foreground\">\n                    {description}\n                  </p>\n                )}\n              </div>\n              <button\n                onClick={onClose}\n                aria-label=\"Close dialog\"\n                className=\"rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n              >\n                <X className=\"h-4 w-4\" />\n              </button>\n            </div>\n            <div className=\"py-2\">{children}</div>\n          </motion.div>\n        </div>\n      )}\n    </AnimatePresence>\n  );\n}\n",
+        "content": "\"use client\";\n/**\n * @origin KokonutUI (https://github.com/kokonut-dev/kokonutui)\n * @license MIT\n * @author KokonutUI Team\n */\nimport * as React from \"react\";\nimport { motion, AnimatePresence } from \"motion/react\";\nimport { X } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SpringDialogProps {\n  isOpen: boolean;\n  onClose: () => void;\n  title: string;\n  description?: string;\n  children: React.ReactNode;\n  className?: string;\n}\n\nexport function SpringDialog({\n  isOpen,\n  onClose,\n  title,\n  description,\n  children,\n  className,\n}: SpringDialogProps) {\n  React.useEffect(() => {\n    const handleKeyDown = (e: KeyboardEvent) => {\n      if (e.key === \"Escape\") onClose();\n    };\n    if (isOpen) {\n      window.addEventListener(\"keydown\", handleKeyDown);\n    }\n    return () => window.removeEventListener(\"keydown\", handleKeyDown);\n  }, [isOpen, onClose]);\n\n  return (\n    <AnimatePresence>\n      {isOpen && (\n        <div className=\"fixed inset-0 z-50 flex items-center justify-center p-4\">\n          <motion.div\n            initial={{ opacity: 0 }}\n            animate={{ opacity: 1 }}\n            exit={{ opacity: 0 }}\n            className=\"fixed inset-0 bg-background/80 backdrop-blur-sm\"\n            onClick={onClose}\n          />\n          <motion.div\n            role=\"dialog\"\n            aria-modal=\"true\"\n            aria-labelledby=\"spring-dialog-title\"\n            aria-describedby={description ? \"spring-dialog-description\" : undefined}\n            initial={{ scale: 0.9, opacity: 0, y: 20 }}\n            animate={{ scale: 1, opacity: 1, y: 0 }}\n            exit={{ scale: 0.95, opacity: 0, y: 10 }}\n            transition={{\n              type: \"spring\",\n              stiffness: 300,\n              damping: 25,\n            }}\n            className={cn(\n              \"relative z-50 w-full max-w-lg rounded-xl border border-border bg-card p-6 shadow-xl text-card-foreground\",\n              className\n            )}\n          >\n            <div className=\"flex items-center justify-between pb-4\">\n              <h2 id=\"spring-dialog-title\" className=\"text-lg font-semibold leading-none tracking-tight\">\n                {title}\n              </h2>\n              <button\n                type=\"button\"\n                onClick={onClose}\n                aria-label=\"Close dialog\"\n                className=\"rounded-md p-1 text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none transition-colors\"\n              >\n                <X className=\"h-4 w-4\" />\n              </button>\n            </div>\n            {description && (\n              <p id=\"spring-dialog-description\" className=\"text-sm text-muted-foreground pb-4\">\n                {description}\n              </p>\n            )}\n            <div className=\"pt-2\">{children}</div>\n          </motion.div>\n        </div>\n      )}\n    </AnimatePresence>\n  );\n}\n",
         "type": "registry:component",
         "target": "components/ui/spring-dialog.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "tilt-card",
+    "type": "registry:component",
+    "title": "Tilt Card",
+    "description": "Curated production-grade component.",
+    "category": "ui:motion",
+    "tags": [
+      "framer-motion",
+      "motion/react",
+      "animation",
+      "tailwind-v4",
+      "wai-aria-compliant",
+      "spring-physics"
+    ],
+    "dials": {
+      "design_variance": 5,
+      "motion_intensity": 8,
+      "visual_density": 7
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "fallback_provided": true,
+      "reduced_motion_supported": true
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/design-agent-wiki",
+      "license_type": "MIT",
+      "author": "Community Contributor",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/motion/tilt-card.tsx",
+        "content": "\"use client\";\n/**\n * @origin KokonutUI (https://github.com/kokonut-dev/kokonutui)\n * @license MIT\n * @author KokonutUI Team\n */\nimport * as React from \"react\";\nimport { motion, useMotionValue, useSpring, useTransform } from \"motion/react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface TiltCardProps {\n  title: string;\n  description: string;\n  tag?: string;\n  className?: string;\n  children?: React.ReactNode;\n}\n\nexport function TiltCard({\n  title,\n  description,\n  tag,\n  className,\n  children,\n}: TiltCardProps) {\n  const x = useMotionValue(0);\n  const y = useMotionValue(0);\n\n  const mouseXSpring = useSpring(x, { stiffness: 200, damping: 20 });\n  const mouseYSpring = useSpring(y, { stiffness: 200, damping: 20 });\n\n  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [\"12deg\", \"-12deg\"]);\n  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [\"-12deg\", \"12deg\"]);\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {\n    const rect = e.currentTarget.getBoundingClientRect();\n    const width = rect.width;\n    const height = rect.height;\n    const mouseX = e.clientX - rect.left;\n    const mouseY = e.clientY - rect.top;\n\n    const xPct = mouseX / width - 0.5;\n    const yPct = mouseY / height - 0.5;\n\n    x.set(xPct);\n    y.set(yPct);\n  };\n\n  const handleMouseLeave = () => {\n    x.set(0);\n    y.set(0);\n  };\n\n  return (\n    <motion.div\n      onMouseMove={handleMouseMove}\n      onMouseLeave={handleMouseLeave}\n      style={{\n        rotateX,\n        rotateY,\n        transformStyle: \"preserve-3d\",\n      }}\n      className={cn(\n        \"relative rounded-xl border border-border bg-card p-6 shadow-md transition-shadow hover:shadow-lg text-card-foreground\",\n        className\n      )}\n    >\n      <div style={{ transform: \"translateZ(30px)\" }} className=\"space-y-3\">\n        {tag && (\n          <span className=\"inline-flex items-center rounded-md bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary\">\n            {tag}\n          </span>\n        )}\n        <h3 className=\"text-lg font-semibold tracking-tight\">{title}</h3>\n        <p className=\"text-sm text-muted-foreground\">{description}</p>\n        {children && <div className=\"pt-2\">{children}</div>}\n      </div>\n    </motion.div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/tilt-card.tsx"
       }
     ]
   },
