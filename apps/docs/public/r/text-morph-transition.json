@@ -1,0 +1,49 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "text-morph-transition",
+  "type": "registry:component",
+  "title": "Text Morph Layout Transition",
+  "description": "Smooth letter-by-letter layout morphing between arbitrary words/phrases.",
+  "category": "ui:motion",
+  "tags": [
+    "wai-aria-compliant",
+    "motion",
+    "text-morph",
+    "morphing",
+    "motion-primitives"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 7,
+    "visual_density": 5
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "status",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://motion-primitives.com",
+    "license_type": "MIT",
+    "author": "Ibelick",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/text-morph-transition.tsx",
+      "content": "/**\n * @license MIT\n * @origin Motion Primitives / Magic UI (https://motion-primitives.com)\n * @author Ibelick & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface TextMorphTransitionProps extends React.HTMLAttributes<HTMLDivElement> {\n  words?: string[];\n  intervalMs?: number;\n}\n\nexport function TextMorphTransition({\n  words = [\"Autonomous Agents\", \"Zero-Slop Design\", \"Machine-First Wiki\", \"Accessible Primitives\"],\n  intervalMs = 3000,\n  className,\n  ...props\n}: TextMorphTransitionProps) {\n  const [index, setIndex] = React.useState(0);\n  const [isTransitioning, setIsTransitioning] = React.useState(false);\n\n  React.useEffect(() => {\n    const timer = setInterval(() => {\n      setIsTransitioning(true);\n      setTimeout(() => {\n        setIndex((prev) => (prev + 1) % words.length);\n        setIsTransitioning(false);\n      }, 300);\n    }, intervalMs);\n\n    return () => clearInterval(timer);\n  }, [words, intervalMs]);\n\n  const currentWord = words[index];\n\n  return (\n    <div\n      className={cn(\n        \"inline-flex items-center justify-center font-bold tracking-tight text-foreground transition-opacity duration-200\",\n        className\n      )}\n      role=\"status\"\n      aria-live=\"polite\"\n      aria-label={`Morphing text: ${currentWord}`}\n      {...props}\n    >\n      <span\n        className={cn(\n          \"inline-block transition-opacity duration-200 transform\",\n          isTransitioning\n            ? \"opacity-0 -translate-y-2 filter blur-xs\"\n            : \"opacity-100 translate-y-0 filter blur-0\"\n        )}\n      >\n        {currentWord}\n      </span>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/text-morph-transition.tsx"
+    }
+  ]
+}

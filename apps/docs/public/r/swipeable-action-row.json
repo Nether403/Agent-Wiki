@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "swipeable-action-row",
+  "type": "registry:component",
+  "title": "Swipeable Mobile Action Row",
+  "description": "Mobile-first list item supporting horizontal swipe gestures to reveal delete, archive, and pin action triggers.",
+  "category": "ui:motion",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "motion",
+    "gesture",
+    "swipeable",
+    "mobile",
+    "smooth-ui"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 6,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "listitem",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://smoothui.dev",
+    "license_type": "MIT",
+    "author": "SmoothUI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/swipeable-action-row.tsx",
+      "content": "/**\n * @license MIT\n * @origin SmoothUI (https://smoothui.dev)\n * @author SmoothUI Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Trash2, Archive, Pin, ChevronLeft } from \"lucide-react\";\n\nexport interface SwipeableActionRowProps extends React.HTMLAttributes<HTMLDivElement> {\n  title: string;\n  subtitle?: string;\n  badge?: string;\n  onDelete?: () => void;\n  onArchive?: () => void;\n  onPin?: () => void;\n}\n\nexport function SwipeableActionRow({\n  title = \"Refactor components to Tailwind v4 tokens\",\n  subtitle = \"Modified 14 files · 35 rules checked\",\n  badge = \"Updated\",\n  onDelete,\n  onArchive,\n  onPin,\n  className,\n  ...props\n}: SwipeableActionRowProps) {\n  const [offsetX, setOffsetX] = React.useState(0);\n  const startXRef = React.useRef(0);\n  const isDraggingRef = React.useRef(false);\n\n  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {\n    startXRef.current = e.touches[0].clientX;\n    isDraggingRef.current = true;\n  };\n\n  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {\n    if (!isDraggingRef.current) return;\n    const currentX = e.touches[0].clientX;\n    const diff = currentX - startXRef.current;\n    if (diff < 0) {\n      setOffsetX(Math.max(-160, diff));\n    } else {\n      setOffsetX(Math.min(60, diff));\n    }\n  };\n\n  const handleTouchEnd = () => {\n    isDraggingRef.current = false;\n    if (offsetX < -80) {\n      setOffsetX(-150);\n    } else {\n      setOffsetX(0);\n    }\n  };\n\n  return (\n    <div\n      className={cn(\n        \"relative flex w-full overflow-hidden rounded-2xl border border-border bg-card shadow-xs select-none\",\n        className\n      )}\n      role=\"listitem\"\n      aria-label={`Action item: ${title}`}\n      {...props}\n    >\n      {/* Background Action Triggers (Revealed on Swipe) */}\n      <div className=\"absolute inset-y-0 right-0 flex items-center gap-1 px-3 bg-muted/80\">\n        <button\n          type=\"button\"\n          onClick={() => {\n            onPin?.();\n            setOffsetX(0);\n          }}\n          aria-label=\"Pin Item\"\n          className=\"flex flex-col items-center justify-center h-10 w-10 rounded-xl bg-blue-500 text-white shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n        >\n          <Pin className=\"h-4 w-4\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          onClick={() => {\n            onArchive?.();\n            setOffsetX(0);\n          }}\n          aria-label=\"Archive Item\"\n          className=\"flex flex-col items-center justify-center h-10 w-10 rounded-xl bg-amber-500 text-white shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n        >\n          <Archive className=\"h-4 w-4\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          onClick={() => {\n            onDelete?.();\n            setOffsetX(0);\n          }}\n          aria-label=\"Delete Item\"\n          className=\"flex flex-col items-center justify-center h-10 w-10 rounded-xl bg-destructive text-destructive-foreground shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n        >\n          <Trash2 className=\"h-4 w-4\" aria-hidden=\"true\" />\n        </button>\n      </div>\n\n      {/* Foreground Content Card */}\n      <div\n        onTouchStart={handleTouchStart}\n        onTouchMove={handleTouchMove}\n        onTouchEnd={handleTouchEnd}\n        style={{ transform: `translateX(${offsetX}px)` }}\n        className=\"relative z-10 flex items-center justify-between w-full p-4 bg-card border-r border-border/40 transition-transform duration-150\"\n      >\n        <div className=\"flex flex-col space-y-1 min-w-0 pr-4\">\n          <div className=\"flex items-center gap-2\">\n            <span className=\"font-semibold text-xs text-foreground truncate\">{title}</span>\n            {badge && (\n              <span className=\"px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-medium\">\n                {badge}\n              </span>\n            )}\n          </div>\n          {subtitle && (\n            <p className=\"text-xs text-muted-foreground truncate\">{subtitle}</p>\n          )}\n        </div>\n\n        <button\n          type=\"button\"\n          onClick={() => setOffsetX((prev) => (prev === 0 ? -150 : 0))}\n          aria-label=\"Reveal actions\"\n          className=\"p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n        >\n          <ChevronLeft className=\"h-4 w-4\" aria-hidden=\"true\" />\n        </button>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/swipeable-action-row.tsx"
+    }
+  ]
+}

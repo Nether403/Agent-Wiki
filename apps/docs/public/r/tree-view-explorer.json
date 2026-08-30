@@ -1,0 +1,54 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "tree-view-explorer",
+  "type": "registry:ui",
+  "title": "Tree View File Explorer",
+  "description": "Accessible hierarchical file/folder tree view with expand/collapse animations, keyboard navigation, and custom node icons.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "tree-view",
+    "file-explorer",
+    "hierarchy",
+    "shark-ui"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 3,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://shark.vini.one",
+    "license_type": "MIT",
+    "author": "Shark UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/tree-view-explorer.tsx",
+      "content": "/**\n * @license MIT\n * @origin Shark UI / ReUI (https://reui.io)\n * @author Shark UI Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { ChevronRight, Folder, FolderOpen, FileCode, FileText, File } from \"lucide-react\";\n\nexport interface TreeNode {\n  id: string;\n  name: string;\n  type: \"folder\" | \"file\";\n  children?: TreeNode[];\n  iconType?: \"code\" | \"text\" | \"default\";\n}\n\nexport interface TreeViewExplorerProps extends React.HTMLAttributes<HTMLDivElement> {\n  data: TreeNode[];\n  selectedId?: string;\n  onSelectNode?: (node: TreeNode) => void;\n  defaultExpandedIds?: string[];\n}\n\nexport function TreeViewExplorer({\n  data = [\n    {\n      id: \"root\",\n      name: \"src\",\n      type: \"folder\",\n      children: [\n        {\n          id: \"components\",\n          name: \"components\",\n          type: \"folder\",\n          children: [\n            { id: \"button\", name: \"button.tsx\", type: \"file\", iconType: \"code\" },\n            { id: \"dialog\", name: \"dialog.tsx\", type: \"file\", iconType: \"code\" },\n          ],\n        },\n        { id: \"index\", name: \"index.ts\", type: \"file\", iconType: \"code\" },\n        { id: \"readme\", name: \"README.md\", type: \"file\", iconType: \"text\" },\n      ],\n    },\n  ],\n  selectedId,\n  onSelectNode,\n  defaultExpandedIds = [\"root\", \"components\"],\n  className,\n  ...props\n}: TreeViewExplorerProps) {\n  const [expandedIds, setExpandedIds] = React.useState<Set<string>>(\n    new Set(defaultExpandedIds)\n  );\n  const [currentSelectedId, setCurrentSelectedId] = React.useState<string | undefined>(\n    selectedId\n  );\n\n  const toggleExpand = (id: string) => {\n    setExpandedIds((prev) => {\n      const next = new Set(prev);\n      if (next.has(id)) next.delete(id);\n      else next.add(id);\n      return next;\n    });\n  };\n\n  const handleSelect = (node: TreeNode) => {\n    setCurrentSelectedId(node.id);\n    if (node.type === \"folder\") {\n      toggleExpand(node.id);\n    }\n    onSelectNode?.(node);\n  };\n\n  const renderTree = (nodes: TreeNode[], depth: number = 0) => {\n    return (\n      <ul role={depth === 0 ? \"tree\" : \"group\"} className=\"space-y-0.5\">\n        {nodes.map((node) => {\n          const isExpanded = expandedIds.has(node.id);\n          const isSelected = currentSelectedId === node.id;\n          const isFolder = node.type === \"folder\";\n\n          return (\n            <li key={node.id} role=\"treeitem\" aria-expanded={isFolder ? isExpanded : undefined}>\n              <button\n                type=\"button\"\n                onClick={() => handleSelect(node)}\n                style={{ paddingLeft: `${depth * 14 + 8}px` }}\n                className={cn(\n                  \"flex items-center gap-2 w-full py-1.5 pr-3 rounded-lg text-xs font-medium text-left transition-colors\",\n                  \"focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n                  isSelected\n                    ? \"bg-primary text-primary-foreground font-semibold\"\n                    : \"text-foreground hover:bg-muted\"\n                )}\n              >\n                {isFolder ? (\n                  <>\n                    <ChevronRight\n                      className={cn(\n                        \"h-3.5 w-3.5 text-muted-foreground transition-transform duration-150 shrink-0\",\n                        isExpanded && \"rotate-90\",\n                        isSelected && \"text-primary-foreground\"\n                      )}\n                      aria-hidden=\"true\"\n                    />\n                    {isExpanded ? (\n                      <FolderOpen className=\"h-4 w-4 text-amber-500 shrink-0\" aria-hidden=\"true\" />\n                    ) : (\n                      <Folder className=\"h-4 w-4 text-amber-500 shrink-0\" aria-hidden=\"true\" />\n                    )}\n                  </>\n                ) : (\n                  <>\n                    <span className=\"w-3.5 shrink-0\" />\n                    {node.iconType === \"code\" ? (\n                      <FileCode className=\"h-4 w-4 text-blue-500 shrink-0\" aria-hidden=\"true\" />\n                    ) : node.iconType === \"text\" ? (\n                      <FileText className=\"h-4 w-4 text-emerald-500 shrink-0\" aria-hidden=\"true\" />\n                    ) : (\n                      <File className=\"h-4 w-4 text-muted-foreground shrink-0\" aria-hidden=\"true\" />\n                    )}\n                  </>\n                )}\n                <span className=\"truncate\">{node.name}</span>\n              </button>\n\n              {isFolder && isExpanded && node.children && (\n                <div className=\"mt-0.5\">\n                  {renderTree(node.children, depth + 1)}\n                </div>\n              )}\n            </li>\n          );\n        })}\n      </ul>\n    );\n  };\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-2xl border border-border bg-card p-3 shadow-xs select-none\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Hierarchical File Tree Explorer\"\n      {...props}\n    >\n      {renderTree(data, 0)}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/tree-view-explorer.tsx"
+    }
+  ]
+}

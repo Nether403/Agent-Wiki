@@ -1,0 +1,49 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "image-mouse-trail",
+  "type": "registry:component",
+  "title": "Image Pointer Mouse Trail",
+  "description": "Interactive pointer trail displaying trailing layered images with velocity-sensitive rotation and fade-out.",
+  "category": "ui:motion",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "motion",
+    "mouse-trail",
+    "interactive",
+    "react-bits"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 8,
+    "visual_density": 4
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://reactbits.dev",
+    "license_type": "MIT",
+    "author": "React Bits Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/image-mouse-trail.tsx",
+      "content": "/**\n * @license MIT\n * @origin Motion Primitives / React Bits (https://reactbits.dev)\n * @author React Bits & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface TrailItem {\n  id: number;\n  x: number;\n  y: number;\n  rotation: number;\n  imageUrl: string;\n}\n\nexport interface ImageMouseTrailProps extends React.HTMLAttributes<HTMLDivElement> {\n  images?: string[];\n  maxItems?: number;\n  distanceThreshold?: number;\n}\n\nconst DEFAULT_IMAGES = [\n  \"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200&q=80\",\n  \"https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=200&q=80\",\n  \"https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=200&q=80\",\n];\n\nexport function ImageMouseTrail({\n  images = DEFAULT_IMAGES,\n  maxItems = 6,\n  distanceThreshold = 50,\n  children,\n  className,\n  ...props\n}: ImageMouseTrailProps) {\n  const [trail, setTrail] = React.useState<TrailItem[]>([]);\n  const lastPosRef = React.useRef<{ x: number; y: number }>({ x: 0, y: 0 });\n  const countRef = React.useRef(0);\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {\n    const rect = e.currentTarget.getBoundingClientRect();\n    const x = e.clientX - rect.left;\n    const y = e.clientY - rect.top;\n\n    const dist = Math.hypot(x - lastPosRef.current.x, y - lastPosRef.current.y);\n\n    if (dist > distanceThreshold) {\n      lastPosRef.current = { x, y };\n      countRef.current += 1;\n      const img = images[countRef.current % images.length];\n      const rot = (Math.random() - 0.5) * 20;\n\n      setTrail((prev) => [\n        ...prev.slice(-maxItems + 1),\n        { id: countRef.current, x, y, rotation: rot, imageUrl: img },\n      ]);\n    }\n  };\n\n  return (\n    <div\n      onMouseMove={handleMouseMove}\n      className={cn(\"relative w-full h-96 overflow-hidden rounded-2xl border border-border bg-card select-none\", className)}\n      role=\"region\"\n      aria-label=\"Image Mouse Pointer Trail\"\n      {...props}\n    >\n      {/* Background/Content Slot */}\n      <div className=\"absolute inset-0 flex items-center justify-center pointer-events-none z-10\">\n        {children || (\n          <p className=\"text-xs font-semibold uppercase tracking-widest text-muted-foreground\">\n            Move mouse cursor to reveal image trail\n          </p>\n        )}\n      </div>\n\n      {/* Trailing Floating Images */}\n      {trail.map((item) => (\n        <div\n          key={item.id}\n          style={{\n            left: `${item.x}px`,\n            top: `${item.y}px`,\n            transform: `translate(-50%, -50%) rotate(${item.rotation}deg)`,\n          }}\n          className=\"absolute pointer-events-none h-24 w-24 rounded-xl border border-border/80 shadow-2xl overflow-hidden animate-in fade-in zoom-in-75 duration-200\"\n        >\n          <img\n            src={item.imageUrl}\n            alt=\"Pointer Trail Element\"\n            className=\"h-full w-full object-cover\"\n          />\n        </div>\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/image-mouse-trail.tsx"
+    }
+  ]
+}

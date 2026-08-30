@@ -98,6 +98,11 @@ export function AiReasoningFoldout({
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
+        onKeyDown={(e) => {
+          if (e.key === "Escape" && isOpen) {
+            setIsOpen(false);
+          }
+        }}
         className="flex items-center justify-between w-full px-4 py-2.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         aria-expanded={isOpen}
         aria-label={`Toggle AI reasoning steps (${thoughtDurationSeconds}s elapsed)`}

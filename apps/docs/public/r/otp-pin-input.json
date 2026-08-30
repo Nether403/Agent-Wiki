@@ -1,0 +1,52 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "otp-pin-input",
+  "type": "registry:ui",
+  "title": "OTP PIN One-Time Input",
+  "description": "Accessible 6-digit PIN/OTP input with auto-focus advance, backspace regression, paste-handling, and masked character support.",
+  "category": "ui:primitive",
+  "tags": [
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "form",
+    "otp",
+    "pin-input",
+    "origin-ui"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 3,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "group",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://originui.com",
+    "license_type": "MIT",
+    "author": "Origin UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/otp-pin-input.tsx",
+      "content": "/**\n * @license MIT\n * @origin Origin UI / Shark UI (https://originui.com)\n * @author Origin UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface OtpPinInputProps extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\"> {\n  length?: number;\n  value?: string;\n  onChange?: (value: string) => void;\n  onComplete?: (value: string) => void;\n  masked?: boolean;\n  disabled?: boolean;\n  autoFocus?: boolean;\n}\n\nexport function OtpPinInput({\n  length = 6,\n  value = \"\",\n  onChange,\n  onComplete,\n  masked = false,\n  disabled = false,\n  autoFocus = false,\n  className,\n  ...props\n}: OtpPinInputProps) {\n  const [pin, setPin] = React.useState<string[]>(() => {\n    const initial = value.split(\"\").slice(0, length);\n    while (initial.length < length) initial.push(\"\");\n    return initial;\n  });\n\n  const inputRefs = React.useRef<(HTMLInputElement | null)[]>([]);\n\n  React.useEffect(() => {\n    if (value !== undefined) {\n      const updated = value.split(\"\").slice(0, length);\n      while (updated.length < length) updated.push(\"\");\n      setPin(updated);\n    }\n  }, [value, length]);\n\n  React.useEffect(() => {\n    if (autoFocus && inputRefs.current[0]) {\n      inputRefs.current[0].focus();\n    }\n  }, [autoFocus]);\n\n  const handleChange = (idx: number, e: React.ChangeEvent<HTMLInputElement>) => {\n    const val = e.target.value;\n    const char = val.slice(-1); // Take last entered character\n\n    if (val && !/^\\d+$/.test(char)) return; // Digits only\n\n    const newPin = [...pin];\n    newPin[idx] = char;\n    setPin(newPin);\n\n    const combined = newPin.join(\"\");\n    onChange?.(combined);\n\n    if (char && idx < length - 1) {\n      inputRefs.current[idx + 1]?.focus();\n    }\n\n    if (combined.length === length && !newPin.includes(\"\")) {\n      onComplete?.(combined);\n    }\n  };\n\n  const handleKeyDown = (idx: number, e: React.KeyboardEvent<HTMLInputElement>) => {\n    if (e.key === \"Backspace\") {\n      if (!pin[idx] && idx > 0) {\n        const newPin = [...pin];\n        newPin[idx - 1] = \"\";\n        setPin(newPin);\n        inputRefs.current[idx - 1]?.focus();\n        onChange?.(newPin.join(\"\"));\n      } else {\n        const newPin = [...pin];\n        newPin[idx] = \"\";\n        setPin(newPin);\n        onChange?.(newPin.join(\"\"));\n      }\n    } else if (e.key === \"ArrowLeft\" && idx > 0) {\n      inputRefs.current[idx - 1]?.focus();\n    } else if (e.key === \"ArrowRight\" && idx < length - 1) {\n      inputRefs.current[idx + 1]?.focus();\n    }\n  };\n\n  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {\n    e.preventDefault();\n    const pasted = e.clipboardData.getData(\"text/plain\").trim().replace(/\\D/g, \"\").slice(0, length);\n    if (!pasted) return;\n\n    const newPin = pasted.split(\"\");\n    while (newPin.length < length) newPin.push(\"\");\n    setPin(newPin);\n\n    const combined = newPin.join(\"\");\n    onChange?.(combined);\n\n    const nextIndex = Math.min(pasted.length, length - 1);\n    inputRefs.current[nextIndex]?.focus();\n\n    if (pasted.length === length) {\n      onComplete?.(combined);\n    }\n  };\n\n  return (\n    <div\n      className={cn(\"flex items-center gap-2\", className)}\n      role=\"group\"\n      aria-label=\"PIN One-Time Password Input\"\n      {...props}\n    >\n      {Array.from({ length }).map((_, idx) => (\n        <input\n          key={idx}\n          ref={(el) => {\n            inputRefs.current[idx] = el;\n          }}\n          type={masked ? \"password\" : \"text\"}\n          inputMode=\"numeric\"\n          pattern=\"[0-9]*\"\n          maxLength={1}\n          value={pin[idx] || \"\"}\n          disabled={disabled}\n          onChange={(e) => handleChange(idx, e)}\n          onKeyDown={(e) => handleKeyDown(idx, e)}\n          onPaste={handlePaste}\n          aria-label={`Digit ${idx + 1} of ${length}`}\n          className={cn(\n            \"h-12 w-10 text-center text-lg font-mono font-semibold rounded-xl border border-input bg-background text-foreground shadow-xs transition-colors\",\n            \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-ring\",\n            \"disabled:cursor-not-allowed disabled:opacity-50\",\n            pin[idx] ? \"border-primary text-primary\" : \"border-border\"\n          )}\n        />\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/otp-pin-input.tsx"
+    }
+  ]
+}

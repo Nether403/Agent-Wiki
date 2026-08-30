@@ -1,9 +1,10 @@
-"use client";
 /**
  * @origin KokonutUI (https://github.com/kokonut-dev/kokonutui)
  * @license MIT
  * @author KokonutUI Team
+ * @curated-by Machine-First Design Agent Wiki
  */
+"use client";
 import * as React from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { cn } from "@/lib/utils";

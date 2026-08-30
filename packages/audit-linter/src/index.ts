@@ -137,9 +137,68 @@ export function runAudit(targetDir: string): AuditReport {
   };
 }
 
+export interface LinterResult {
+  filePath: string;
+  healthScore: number;
+  grade: string;
+  findings: AuditFinding[];
+  metrics: {
+    highSeverityCount: number;
+    mediumSeverityCount: number;
+    lowSeverityCount: number;
+    totalFindings: number;
+  };
+}
+
+export function lintComponentSource(filePath: string, content: string): LinterResult {
+  const lines = content.split("\n");
+  const findings: AuditFinding[] = [];
+
+  lines.forEach((line, index) => {
+    for (const rule of SLOP_RULES) {
+      if (rule.check(line, content, index, filePath)) {
+        findings.push({
+          ruleId: rule.id,
+          ruleName: rule.name,
+          category: rule.category,
+          severity: rule.severity,
+          lineNum: index + 1,
+          lineText: line.trim(),
+          filePath: filePath,
+        });
+      }
+    }
+  });
+
+  const highCount = findings.filter((f) => f.severity === "High").length;
+  const medCount = findings.filter((f) => f.severity === "Medium").length;
+  const lowCount = findings.filter((f) => f.severity === "Low").length;
+  const healthScore = Math.max(0, 100 - (highCount * 15 + medCount * 8 + lowCount * 3));
+
+  let grade = "S";
+  if (healthScore < 50) grade = "F";
+  else if (healthScore < 70) grade = "C";
+  else if (healthScore < 85) grade = "B";
+  else if (healthScore < 98) grade = "A";
+
+  return {
+    filePath,
+    healthScore,
+    grade,
+    findings,
+    metrics: {
+      highSeverityCount: highCount,
+      mediumSeverityCount: medCount,
+      lowSeverityCount: lowCount,
+      totalFindings: findings.length,
+    },
+  };
+}
+
 export * from "./rules";
 export * from "./llm-review";
 export * from "./dial-classifier";
 export * from "./taste-dial-audit";
 export * from "./unslop";
+
 

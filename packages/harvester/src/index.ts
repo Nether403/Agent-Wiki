@@ -18,6 +18,7 @@ import {
 } from "./dial-classifier";
 import { transformTailwindV4 } from "./codemods/tailwind-v4-transform";
 import { transformMotionReact } from "./codemods/motion-react-transform";
+import { transformReact19 } from "./codemods/react-19-transform";
 import { injectAttributionHeader } from "./attribution";
 
 export interface HarvesterResult {
@@ -54,6 +55,7 @@ export function harvestFile(
   // 1. Apply automated codemods
   content = transformTailwindV4(content);
   content = transformMotionReact(content);
+  content = transformReact19(content);
 
   // 2. Add attribution header if needed
   content = injectAttributionHeader(content, {
@@ -170,4 +172,5 @@ export * from "./llm-enricher";
 export * from "./dependency-graph";
 export * from "./codemods/tailwind-v4-transform";
 export * from "./codemods/motion-react-transform";
+export * from "./codemods/react-19-transform";
 

@@ -146,7 +146,7 @@ export function DotMatrixScoreboard({
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-3 p-4 rounded-xl border border-border bg-black shadow-inner",
+        "inline-flex items-center gap-3 p-4 rounded-xl border border-border bg-card dark:bg-black shadow-inner",
         className
       )}
       role="status"

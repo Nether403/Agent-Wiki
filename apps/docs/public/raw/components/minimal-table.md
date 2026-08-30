@@ -75,7 +75,7 @@ export interface MinimalTableProps<T> {
   className?: string;
 }
 
-export function MinimalTable<T extends Record<string, any>>({
+export function MinimalTable<T extends Record<string, unknown>>({
   data,
   columns,
   caption,

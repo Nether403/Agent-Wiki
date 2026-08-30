@@ -39,7 +39,7 @@ export function AsciiRain({ density = 30, className, ...props }: AsciiRainProps)
   return (
     <pre
       className={cn(
-        "p-4 rounded-xl border border-border bg-black font-mono text-[10px] text-emerald-500/80 leading-none overflow-hidden select-none",
+        "p-4 rounded-xl border border-border bg-card dark:bg-black font-mono text-xs text-emerald-500/80 leading-none overflow-hidden select-none",
         className
       )}
       role="region"

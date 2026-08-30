@@ -75,7 +75,7 @@ export const SLOP_RULES: SlopRule[] = [
     severity: "Low",
     description: "Use of arbitrary pixel escapes (e.g. p-[17px], m-[13px], gap-[15px]) instead of standard Tailwind system spacing tokens.",
     check: (line) =>
-      /(?:p[xytrbl]?|m[xytrbl]?|gap|w|h|top|left|right|bottom|inset|space-[xy]|max-w|min-w)-\[(?:\d+px|\d+rem)\]/i.test(line) &&
+      /(?:p[xytrbl]?|m[xytrbl]?|gap|space-[xy])-\[(?:\d+px|\d+rem)\]/i.test(line) &&
       !line.includes("left-[50%]") &&
       !line.includes("top-[50%]"),
   },
@@ -325,6 +325,73 @@ export const SLOP_RULES: SlopRule[] = [
       lineIndex === 0 &&
       Boolean(filePath && (filePath.includes("registry") || filePath.includes("components"))) &&
       (!content.includes("@origin") || !content.includes("@license") || !content.includes("@curated-by")),
+  },
+  {
+    id: "SLOP-031",
+    name: "Missing Error Boundary Fallback",
+    category: "Production Runtime Resilience",
+    severity: "Medium",
+    description: "Complex canvas/WebGL/media component missing a fallback UI or error boundary handling.",
+    check: (line, content, lineIndex, filePath) =>
+      lineIndex === 0 &&
+      Boolean(content.includes("<canvas") || content.includes("getContext('webgl')") || content.includes("WebGLRenderer")) &&
+      !content.includes("fallback") &&
+      !content.includes("Fallback") &&
+      !content.includes("ErrorBoundary") &&
+      !content.includes("prefers-reduced-motion"),
+  },
+  {
+    id: "SLOP-032",
+    name: "Unbounded Canvas Memory Allocation",
+    category: "Performance & Memory",
+    severity: "High",
+    description: "Allocating new objects or arrays inside requestAnimationFrame animation loop causing garbage collection stutter.",
+    check: (line, content) =>
+      /requestAnimationFrame/i.test(content) &&
+      !line.trim().startsWith("const ") &&
+      !line.trim().startsWith("let ") &&
+      /new\s+(?:Array|Object|Float32Array|Uint8Array|Path2D)\s*\(|new\s+\w+\(/i.test(line) &&
+      !line.includes("new Date") &&
+      !line.includes("new RegExp"),
+  },
+  {
+    id: "SLOP-033",
+    name: "Missing Escape Key Overlay Dismiss",
+    category: "Accessibility & Interaction",
+    severity: "High",
+    description: "Custom modal dialog, popover, or drawer lacking Escape key dismiss listener or onKeyDown handler.",
+    check: (line, content, lineIndex) =>
+      lineIndex === 0 &&
+      (content.includes("role=\"dialog\"") || content.includes("role='dialog'") || /const\s+\[(?:open|isOpen),\s*set(?:Open|IsOpen)\]/.test(content)) &&
+      (/\bmodal\b/i.test(content) || /\bdialog\b/i.test(content) || /\bdrawer\b/i.test(content)) &&
+      !content.includes("Escape") &&
+      !content.includes("onKeyDown") &&
+      !content.includes("@radix-ui/react-dialog") &&
+      !content.includes("@radix-ui/react-popover") &&
+      !content.includes("@radix-ui/react-dropdown-menu"),
+  },
+  {
+    id: "SLOP-034",
+    name: "Redundant Nested Context Providers",
+    category: "Architecture & Performance",
+    severity: "Medium",
+    description: "Duplicate nested context providers of identical types causing redundant React sub-tree re-renders.",
+    check: (line, content) =>
+      /<\s*([A-Z]\w+Context)\.Provider/i.test(line) &&
+      (content.match(new RegExp(`<\\s*${(line.match(/<\s*([A-Z]\w+Context)\.Provider/i) || [])[1]}\\.Provider`, "g")) || []).length > 2,
+  },
+  {
+    id: "SLOP-035",
+    name: "Un-memoized Heavy Array Sort/Filter in Render",
+    category: "Performance & React Discipline",
+    severity: "Medium",
+    description: "Performing in-place or heavy array sorting/filtering directly in render return without useMemo.",
+    check: (line) =>
+      /return\s*\(/.test(line) === false &&
+      /\.(?:sort|filter)\([^)]*\)\.map\(/i.test(line) &&
+      !line.includes("useMemo") &&
+      !line.includes("const ") &&
+      !line.includes("let "),
   },
 ];
 

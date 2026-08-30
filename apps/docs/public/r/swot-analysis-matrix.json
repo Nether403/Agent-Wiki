@@ -1,0 +1,54 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "swot-analysis-matrix",
+  "type": "registry:component",
+  "title": "SWOT Strategic Analysis Matrix",
+  "description": "2x2 grid layout for Strengths, Weaknesses, Opportunities, and Threats with distinct visual accents.",
+  "category": "ui:editorial",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "layout-block",
+    "diagram",
+    "swot",
+    "matrix",
+    "strategic",
+    "diagram-design"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/cathrynlavery/diagram-design",
+    "license_type": "MIT",
+    "author": "cathrynlavery",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/swot-analysis-matrix.tsx",
+      "content": "/**\n * @license MIT\n * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)\n * @author cathrynlavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { ShieldCheck, AlertTriangle, TrendingUp, Zap } from \"lucide-react\";\n\nexport interface SwotQuadrant {\n  title: string;\n  items: string[];\n}\n\nexport interface SwotAnalysisMatrixProps extends React.HTMLAttributes<HTMLDivElement> {\n  strengths?: SwotQuadrant;\n  weaknesses?: SwotQuadrant;\n  opportunities?: SwotQuadrant;\n  threats?: SwotQuadrant;\n}\n\nconst DEFAULT_STRENGTHS: SwotQuadrant = {\n  title: \"Strengths (Internal)\",\n  items: [\n    \"Strict 35 Anti-Slop AST rules enforcing high visual craft\",\n    \"Tailwind CSS v4 and native CSS variables alignment\",\n    \"Sub-15KB token-optimized MCP payload delivery\",\n    \"100% WCAG 2.1 AA verified accessible components\",\n  ],\n};\n\nconst DEFAULT_WEAKNESSES: SwotQuadrant = {\n  title: \"Weaknesses (Internal)\",\n  items: [\n    \"Learning curve for legacy Tailwind v3 syntax users\",\n    \"Strict TS compiler options reject loose 'any' assertions\",\n  ],\n};\n\nconst DEFAULT_OPPORTUNITIES: SwotQuadrant = {\n  title: \"Opportunities (External)\",\n  items: [\n    \"Deep MCP integration with Claude Code, Cursor, and Windsurf\",\n    \"Ecosystem transition to React 19 forwardRef-free primitives\",\n    \"Zero-slop automated codemods for enterprise repos\",\n  ],\n};\n\nconst DEFAULT_THREATS: SwotQuadrant = {\n  title: \"Threats (External)\",\n  items: [\n    \"Unanchored LLMs generating raw unstyled hex slop\",\n    \"Rapidly shifting upstream dependencies in animation libraries\",\n  ],\n};\n\nexport function SwotAnalysisMatrix({\n  strengths = DEFAULT_STRENGTHS,\n  weaknesses = DEFAULT_WEAKNESSES,\n  opportunities = DEFAULT_OPPORTUNITIES,\n  threats = DEFAULT_THREATS,\n  className,\n  ...props\n}: SwotAnalysisMatrixProps) {\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm space-y-6\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"SWOT Strategic Matrix\"\n      {...props}\n    >\n      <div>\n        <h3 className=\"text-xs font-semibold uppercase tracking-wider text-muted-foreground\">\n          Strategic Matrix\n        </h3>\n        <p className=\"text-base font-bold text-foreground mt-0.5\">\n          SWOT Architectural Assessment\n        </p>\n      </div>\n\n      {/* 2x2 Grid Quadrants */}\n      <div className=\"grid grid-cols-1 md:grid-cols-2 gap-4\">\n        {/* Quadrant 1: Strengths */}\n        <div className=\"p-5 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 space-y-3\">\n          <div className=\"flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-xs uppercase tracking-wider\">\n            <ShieldCheck className=\"h-4 w-4 shrink-0\" aria-hidden=\"true\" />\n            <span>{strengths.title}</span>\n          </div>\n          <ul className=\"space-y-1.5 text-xs text-foreground\">\n            {strengths.items.map((item, idx) => (\n              <li key={idx} className=\"flex items-start gap-2\">\n                <span className=\"text-emerald-500 font-bold\">•</span>\n                <span>{item}</span>\n              </li>\n            ))}\n          </ul>\n        </div>\n\n        {/* Quadrant 2: Weaknesses */}\n        <div className=\"p-5 rounded-2xl border border-amber-500/30 bg-amber-500/5 space-y-3\">\n          <div className=\"flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold text-xs uppercase tracking-wider\">\n            <AlertTriangle className=\"h-4 w-4 shrink-0\" aria-hidden=\"true\" />\n            <span>{weaknesses.title}</span>\n          </div>\n          <ul className=\"space-y-1.5 text-xs text-foreground\">\n            {weaknesses.items.map((item, idx) => (\n              <li key={idx} className=\"flex items-start gap-2\">\n                <span className=\"text-amber-500 font-bold\">•</span>\n                <span>{item}</span>\n              </li>\n            ))}\n          </ul>\n        </div>\n\n        {/* Quadrant 3: Opportunities */}\n        <div className=\"p-5 rounded-2xl border border-blue-500/30 bg-blue-500/5 space-y-3\">\n          <div className=\"flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold text-xs uppercase tracking-wider\">\n            <TrendingUp className=\"h-4 w-4 shrink-0\" aria-hidden=\"true\" />\n            <span>{opportunities.title}</span>\n          </div>\n          <ul className=\"space-y-1.5 text-xs text-foreground\">\n            {opportunities.items.map((item, idx) => (\n              <li key={idx} className=\"flex items-start gap-2\">\n                <span className=\"text-blue-500 font-bold\">•</span>\n                <span>{item}</span>\n              </li>\n            ))}\n          </ul>\n        </div>\n\n        {/* Quadrant 4: Threats */}\n        <div className=\"p-5 rounded-2xl border border-destructive/30 bg-destructive/5 space-y-3\">\n          <div className=\"flex items-center gap-2 text-destructive font-semibold text-xs uppercase tracking-wider\">\n            <Zap className=\"h-4 w-4 shrink-0\" aria-hidden=\"true\" />\n            <span>{threats.title}</span>\n          </div>\n          <ul className=\"space-y-1.5 text-xs text-foreground\">\n            {threats.items.map((item, idx) => (\n              <li key={idx} className=\"flex items-start gap-2\">\n                <span className=\"text-destructive font-bold\">•</span>\n                <span>{item}</span>\n              </li>\n            ))}\n          </ul>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/swot-analysis-matrix.tsx"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "multi-tag-input",
+  "type": "registry:ui",
+  "title": "Multi-Tag Keyboard Input",
+  "description": "Keyboard-navigable badge input with tag creation, backspace deletion, autocomplete suggestions, and duplicate prevention.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "form",
+    "tags",
+    "multi-input",
+    "autocomplete",
+    "shark-ui"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 3,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "option",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://shark.vini.one",
+    "license_type": "MIT",
+    "author": "Shark UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/multi-tag-input.tsx",
+      "content": "/**\n * @license MIT\n * @origin Shark UI / Origin UI (https://originui.com)\n * @author Shark UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { X, Plus, Tag } from \"lucide-react\";\n\nexport interface MultiTagInputProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\"> {\n  value?: string[];\n  onChange?: (tags: string[]) => void;\n  suggestions?: string[];\n  placeholder?: string;\n  maxTags?: number;\n  disabled?: boolean;\n}\n\nexport function MultiTagInput({\n  value = [],\n  onChange,\n  suggestions = [\"React\", \"TypeScript\", \"TailwindCSS\", \"Next.js\", \"Zustand\", \"A11y\"],\n  placeholder = \"Add tag and press Enter...\",\n  maxTags = 12,\n  disabled = false,\n  className,\n  ...props\n}: MultiTagInputProps) {\n  const [tags, setTags] = React.useState<string[]>(value);\n  const [inputValue, setInputValue] = React.useState(\"\");\n  const [isFocused, setIsFocused] = React.useState(false);\n  const inputRef = React.useRef<HTMLInputElement>(null);\n\n  React.useEffect(() => {\n    if (value !== undefined) setTags(value);\n  }, [value]);\n\n  const addTag = (newTag: string) => {\n    const trimmed = newTag.trim();\n    if (!trimmed || tags.includes(trimmed) || tags.length >= maxTags) return;\n    const nextTags = [...tags, trimmed];\n    setTags(nextTags);\n    onChange?.(nextTags);\n    setInputValue(\"\");\n  };\n\n  const removeTag = (tagToRemove: string) => {\n    const nextTags = tags.filter((t) => t !== tagToRemove);\n    setTags(nextTags);\n    onChange?.(nextTags);\n  };\n\n  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {\n    if (e.key === \"Enter\" || e.key === \",\") {\n      e.preventDefault();\n      addTag(inputValue);\n    } else if (e.key === \"Backspace\" && !inputValue && tags.length > 0) {\n      removeTag(tags[tags.length - 1]);\n    }\n  };\n\n  const filteredSuggestions = suggestions.filter(\n    (s) =>\n      !tags.includes(s) &&\n      s.toLowerCase().includes(inputValue.toLowerCase()) &&\n      inputValue.trim().length > 0\n  );\n\n  return (\n    <div className={cn(\"relative flex flex-col w-full space-y-1.5\", className)} {...props}>\n      <div\n        onClick={() => inputRef.current?.focus()}\n        className={cn(\n          \"flex flex-wrap items-center gap-1.5 p-2 rounded-xl border bg-background transition-colors cursor-text min-h-11\",\n          isFocused ? \"border-ring ring-2 ring-ring ring-offset-background\" : \"border-input\",\n          disabled && \"opacity-50 cursor-not-allowed bg-muted\"\n        )}\n      >\n        {tags.map((tag) => (\n          <span\n            key={tag}\n            className=\"inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-primary/10 text-primary border border-primary/20 text-xs font-medium\"\n          >\n            <Tag className=\"h-3 w-3\" aria-hidden=\"true\" />\n            <span>{tag}</span>\n            {!disabled && (\n              <button\n                type=\"button\"\n                onClick={(e) => {\n                  e.stopPropagation();\n                  removeTag(tag);\n                }}\n                aria-label={`Remove ${tag} tag`}\n                className=\"p-0.5 rounded-full hover:bg-primary/20 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n              >\n                <X className=\"h-3 w-3\" aria-hidden=\"true\" />\n              </button>\n            )}\n          </span>\n        ))}\n\n        {!disabled && tags.length < maxTags && (\n          <input\n            ref={inputRef}\n            type=\"text\"\n            value={inputValue}\n            onChange={(e) => setInputValue(e.target.value)}\n            onKeyDown={handleKeyDown}\n            onFocus={() => setIsFocused(true)}\n            onBlur={() => setTimeout(() => setIsFocused(false), 150)}\n            placeholder={tags.length === 0 ? placeholder : \"\"}\n            className=\"flex-1 min-w-24 bg-transparent text-xs text-foreground placeholder:text-muted-foreground focus-visible:outline-none\"\n            aria-label=\"Add new tag\"\n          />\n        )}\n      </div>\n\n      {/* Autocomplete dropdown */}\n      {isFocused && filteredSuggestions.length > 0 && (\n        <div\n          className=\"absolute top-full left-0 mt-1 w-full rounded-xl border border-border bg-popover p-1 shadow-lg z-50 text-popover-foreground animate-in fade-in-50\"\n          role=\"listbox\"\n          aria-label=\"Suggested Tags\"\n        >\n          {filteredSuggestions.map((suggestion) => (\n            <button\n              key={suggestion}\n              type=\"button\"\n              onMouseDown={(e) => {\n                e.preventDefault();\n                addTag(suggestion);\n              }}\n              className=\"w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs text-left hover:bg-accent hover:text-accent-foreground text-foreground transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n              role=\"option\"\n              aria-selected={false}\n            >\n              <span>{suggestion}</span>\n              <Plus className=\"h-3 w-3 text-muted-foreground\" aria-hidden=\"true\" />\n            </button>\n          ))}\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/multi-tag-input.tsx"
+    }
+  ]
+}

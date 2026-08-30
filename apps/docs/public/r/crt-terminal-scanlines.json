@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "crt-terminal-scanlines",
+  "type": "registry:component",
+  "title": "CRT Terminal Scanline Display",
+  "description": "Retro CRT monitor emulator with animated horizontal scanlines, phosphor glow, screen curvature, and text flicker.",
+  "category": "ui:creative",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "brutalist",
+    "neon-scifi",
+    "wai-aria-compliant",
+    "creative",
+    "retro",
+    "crt",
+    "scanlines",
+    "terminal",
+    "cult-ui"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 6,
+    "visual_density": 6
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://cult-ui.com",
+    "license_type": "MIT",
+    "author": "Cult UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/crt-terminal-scanlines.tsx",
+      "content": "/**\n * @license MIT\n * @origin Cult UI / NeonBlade UI (https://cult-ui.com)\n * @author Cult UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Terminal, Shield } from \"lucide-react\";\n\nexport interface CrtTerminalScanlinesProps extends React.HTMLAttributes<HTMLDivElement> {\n  promptText?: string;\n  outputLines?: string[];\n}\n\nconst DEFAULT_OUTPUT = [\n  \"ANTIGRAVITY OS [Version 2.4.0-VERIFIED]\",\n  \"(c) 2026 Machine-First Design Agent Wiki. All rights reserved.\",\n  \"\",\n  \"> mcp audit --rules=35 --a11y=AA\",\n  \"[OK] 35/35 Anti-Slop verification gates passed.\",\n  \"[OK] Zero unhandled promise rejections detected.\",\n  \"[OK] WCAG 2.1 AA contrast integrity verified.\",\n  \"\",\n  \"> ready for autonomous execution.\",\n];\n\nexport function CrtTerminalScanlines({\n  promptText = \"agent@wiki-host:~$\",\n  outputLines = DEFAULT_OUTPUT,\n  className,\n  ...props\n}: CrtTerminalScanlinesProps) {\n  return (\n    <div\n      className={cn(\n        \"relative flex flex-col w-full rounded-2xl border border-emerald-500/40 bg-card dark:bg-black text-emerald-500 font-mono shadow-2xl overflow-hidden p-5 select-none\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Retro CRT Monitor Terminal\"\n      {...props}\n    >\n      {/* Top Monitor Header Bar */}\n      <div className=\"flex items-center justify-between pb-3 mb-3 border-b border-emerald-500/20 text-xs\">\n        <div className=\"flex items-center gap-2\">\n          <Terminal className=\"h-4 w-4\" aria-hidden=\"true\" />\n          <span className=\"font-bold tracking-wider\">CRT-PHOSPHOR-DISPLAY // VT100</span>\n        </div>\n        <div className=\"flex items-center gap-1 text-[10px] bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/30\">\n          <Shield className=\"h-3 w-3\" aria-hidden=\"true\" />\n          <span>SECURE_SHELL</span>\n        </div>\n      </div>\n\n      {/* Terminal Content Lines with Phosphor Glow */}\n      <div className=\"space-y-1 text-xs leading-relaxed drop-shadow-[0_0_8px_rgba(16,185,129,0.6)]\">\n        {outputLines.map((line, idx) => (\n          <div key={idx} className=\"min-h-4 whitespace-pre-wrap\">\n            {line}\n          </div>\n        ))}\n        <div className=\"flex items-center gap-1 pt-1\">\n          <span className=\"font-bold\">{promptText}</span>\n          <span className=\"h-4 w-2 bg-emerald-500 animate-pulse\" aria-hidden=\"true\" />\n        </div>\n      </div>\n\n      {/* Scanline & Curvature Visual Overlay */}\n      <div\n        className=\"absolute inset-0 pointer-events-none opacity-20 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.5)_50%)] bg-[length:100%_4px]\"\n        aria-hidden=\"true\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/crt-terminal-scanlines.tsx"
+    }
+  ]
+}

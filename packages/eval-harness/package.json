@@ -1,0 +1,25 @@
+{
+  "name": "@design-wiki/eval-harness",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Headless automated evaluation harness for Design Agent Wiki validating zero-slop AST, A11y, type-safety, and context budget",
+  "bin": {
+    "eval-harness": "dist/cli.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "eval": "tsx src/cli.ts",
+    "test": "tsx src/cli.ts run"
+  },
+  "dependencies": {
+    "@design-wiki/audit-linter": "workspace:*",
+    "@design-wiki/harvester": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}

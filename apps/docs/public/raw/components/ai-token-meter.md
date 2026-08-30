@@ -103,20 +103,20 @@ export function AiTokenMeter({
       >
         <div
           className={cn(
-            "h-full transition-all duration-300 rounded-full",
+            "h-full transition-colors duration-200 rounded-full",
             isHigh ? "bg-destructive" : isMed ? "bg-amber-500" : "bg-primary"
           )}
           style={{ width: `${percentage}%` }}
         />
       </div>
 
-      <div className="flex items-center justify-between text-[11px] text-muted-foreground font-mono">
+      <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
         <span>{(usedTokens / 1000).toFixed(1)}k used</span>
         <span>{(maxTokens / 1000).toFixed(0)}k limit</span>
       </div>
 
       {costEstimateUsd !== undefined && (
-        <div className="pt-1.5 border-t border-border/40 flex items-center justify-between text-[10px] text-muted-foreground">
+        <div className="pt-1.5 border-t border-border/40 flex items-center justify-between text-xs text-muted-foreground">
           <span>Est. Session Cost:</span>
           <span className="font-mono font-semibold text-foreground">${costEstimateUsd.toFixed(4)}</span>
         </div>

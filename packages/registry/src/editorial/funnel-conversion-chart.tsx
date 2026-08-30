@@ -65,7 +65,7 @@ export function FunnelConversionChart({
                 <div
                   style={{ width: `${widthPct}%` }}
                   className={cn(
-                    "h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-all duration-300 shadow-xs border",
+                    "h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-colors duration-200 shadow-xs border",
                     idx === 0 && "bg-primary/20 text-primary border-primary/40",
                     idx === 1 && "bg-primary/30 text-primary border-primary/50",
                     idx === 2 && "bg-primary/50 text-primary-foreground border-primary/70",

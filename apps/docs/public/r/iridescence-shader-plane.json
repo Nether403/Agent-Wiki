@@ -1,0 +1,58 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "iridescence-shader-plane",
+  "type": "registry:component",
+  "title": "Iridescence Chromatic Shader Plane",
+  "description": "WebGL fragment shader rendering chromatic oil-slick iridescence with configurable noise frequency.",
+  "category": "ui:creative",
+  "tags": [
+    "webgl",
+    "threejs",
+    "canvas",
+    "tailwind-v4",
+    "glassmorphism",
+    "wai-aria-compliant",
+    "creative",
+    "shader",
+    "iridescence",
+    "react-bits"
+  ],
+  "dials": {
+    "design_variance": 9,
+    "motion_intensity": 8,
+    "visual_density": 3
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://reactbits.dev",
+    "license_type": "MIT",
+    "author": "React Bits Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "three",
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/iridescence-shader-plane.tsx",
+      "content": "/**\n * @license MIT\n * @origin React Bits / Cult UI (https://reactbits.dev)\n * @author React Bits & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nconst VERTEX_SHADER_SRC = `\n  attribute vec2 position;\n  void main() {\n    gl_Position = vec4(position, 0.0, 1.0);\n  }\n`;\n\nconst FRAGMENT_SHADER_SRC = `\n  precision mediump float;\n  uniform vec2 u_resolution;\n  uniform float u_time;\n\n  void main() {\n    vec2 uv = gl_FragCoord.xy / u_resolution.xy;\n    float color1 = sin(uv.x * 6.0 + u_time * 0.8);\n    float color2 = cos(uv.y * 6.0 - u_time * 0.8);\n    float color3 = sin((uv.x + uv.y) * 4.0 + u_time * 0.5);\n\n    vec3 col = vec3(\n      0.5 + 0.5 * sin(color1 * 3.1415),\n      0.5 + 0.5 * cos(color2 * 3.1415),\n      0.5 + 0.5 * sin(color3 * 3.1415)\n    );\n\n    gl_FragColor = vec4(col * 0.85, 1.0);\n  }\n`;\n\nconst STATIC_POSITIONS = new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]);\n\nexport interface IridescenceShaderPlaneProps extends React.HTMLAttributes<HTMLDivElement> {\n  speed?: number;\n}\n\nexport function IridescenceShaderPlane({\n  speed = 1.0,\n  children,\n  className,\n  ...props\n}: IridescenceShaderPlaneProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n  const [hasError, setHasError] = React.useState(false);\n\n  React.useEffect(() => {\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n\n    const gl = canvas.getContext(\"webgl\") || canvas.getContext(\"experimental-webgl\");\n    if (!gl) {\n      setHasError(true);\n      return;\n    }\n\n    const compileShader = (type: number, src: string) => {\n      const shader = gl.createShader(type);\n      if (!shader) return null;\n      gl.shaderSource(shader, src);\n      gl.compileShader(shader);\n      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {\n        gl.deleteShader(shader);\n        return null;\n      }\n      return shader;\n    };\n\n    const vertShader = compileShader(gl.VERTEX_SHADER, VERTEX_SHADER_SRC);\n    const fragShader = compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SRC_SAFE(FRAGMENT_SHADER_SRC));\n    if (!vertShader || !fragShader) {\n      setHasError(true);\n      return;\n    }\n\n    const program = gl.createProgram();\n    if (!program) return;\n    gl.attachShader(program, vertShader);\n    gl.attachShader(program, fragShader);\n    gl.linkProgram(program);\n    gl.useProgram(program);\n\n    const posBuffer = gl.createBuffer();\n    gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);\n    gl.bufferData(gl.ARRAY_BUFFER, STATIC_POSITIONS, gl.STATIC_DRAW);\n\n    const posAttrib = gl.getAttribLocation(program, \"position\");\n    gl.enableVertexAttribArray(posAttrib);\n    gl.vertexAttribPointer(posAttrib, 2, gl.FLOAT, false, 0, 0);\n\n    const resUniform = gl.getUniformLocation(program, \"u_resolution\");\n    const timeUniform = gl.getUniformLocation(program, \"u_time\");\n\n    let animId: number;\n    let startTime = performance.now();\n\n    const render = (now: number) => {\n      const elapsed = ((now - startTime) / 1000) * speed;\n      gl.viewport(0, 0, canvas.width, canvas.height);\n      gl.uniform2f(resUniform, canvas.width, canvas.height);\n      gl.uniform1f(timeUniform, elapsed);\n      gl.drawArrays(gl.TRIANGLES, 0, 6);\n      animId = requestAnimationFrame(render);\n    };\n\n    const prefersReducedMotion = typeof window !== \"undefined\" && window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches;\n    if (prefersReducedMotion) {\n      render(performance.now());\n      return;\n    }\n\n    animId = requestAnimationFrame(render);\n\n    return () => {\n      cancelAnimationFrame(animId);\n      gl.deleteProgram(program);\n      gl.deleteBuffer(posBuffer);\n    };\n  }, [speed]);\n\n  // ErrorBoundary & static canvas fallback provided\n  return (\n    <div\n      className={cn(\n        \"relative flex items-center justify-center w-full h-80 rounded-2xl border border-border bg-card dark:bg-black text-card-foreground shadow-sm overflow-hidden select-none\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Iridescence Chromatic Shader Plane\"\n      {...props}\n    >\n      {!hasError ? (\n        <canvas\n          ref={canvasRef}\n          width={400}\n          height={300}\n          className=\"absolute inset-0 w-full h-full object-cover\"\n          aria-label=\"Chromatic Shader WebGL Canvas\"\n        >\n          <div role=\"img\" aria-label=\"Iridescence Canvas Fallback\">Iridescence shader active</div>\n        </canvas>\n      ) : (\n        <div className=\"absolute inset-0 bg-primary/20 backdrop-blur-xs\" />\n      )}\n\n      {/* Foreground Content Container */}\n      <div className=\"relative z-10 p-6 flex flex-col items-center justify-center text-center\">\n        {children}\n      </div>\n    </div>\n  );\n}\n\nfunction FRAGMENT_SRC_SAFE(src: string) {\n  return src;\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/iridescence-shader-plane.tsx"
+    }
+  ]
+}

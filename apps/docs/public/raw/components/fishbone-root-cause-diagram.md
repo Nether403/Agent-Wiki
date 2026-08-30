@@ -127,27 +127,27 @@ export function FishboneRootCauseDiagram({
 
           {/* Rib 2: Styling (Top Right) */}
           <line x1="380" y1="140" x2="440" y2="40" stroke="currentColor" strokeWidth="2" className="text-muted-foreground/60" />
-          <text x="440" y="30" textAnchor="middle" className="fill-primary text-[10px] font-bold">
+          <text x="440" y="30" textAnchor="middle" className="fill-primary text-xs font-bold">
             Styling Escapes
           </text>
-          <text x="380" y="70" textAnchor="end" className="fill-muted-foreground text-[9px]">• Indigo Defaults</text>
-          <text x="395" y="100" textAnchor="end" className="fill-muted-foreground text-[9px]">• Arbitrary p-[17px]</text>
+          <text x="380" y="70" textAnchor="end" className="fill-muted-foreground text-xs">• Indigo Defaults</text>
+          <text x="395" y="100" textAnchor="end" className="fill-muted-foreground text-xs">• Non-Token Pixel Escapes</text>
 
           {/* Rib 3: Architecture (Bottom Left) */}
           <line x1="160" y1="140" x2="220" y2="240" stroke="currentColor" strokeWidth="2" className="text-muted-foreground/60" />
-          <text x="220" y="255" textAnchor="middle" className="fill-primary text-[10px] font-bold">
+          <text x="220" y="255" textAnchor="middle" className="fill-primary text-xs font-bold">
             Architecture
           </text>
-          <text x="160" y="180" textAnchor="end" className="fill-muted-foreground text-[9px]">• No A11y AA</text>
-          <text x="175" y="210" textAnchor="end" className="fill-muted-foreground text-[9px]">• Timer Leaks</text>
+          <text x="160" y="180" textAnchor="end" className="fill-muted-foreground text-xs">• No A11y AA</text>
+          <text x="175" y="210" textAnchor="end" className="fill-muted-foreground text-xs">• Timer Leaks</text>
 
           {/* Rib 4: Verification (Bottom Right) */}
           <line x1="380" y1="140" x2="440" y2="240" stroke="currentColor" strokeWidth="2" className="text-muted-foreground/60" />
-          <text x="440" y="255" textAnchor="middle" className="fill-primary text-[10px] font-bold">
+          <text x="440" y="255" textAnchor="middle" className="fill-primary text-xs font-bold">
             Missing Quality Gates
           </text>
-          <text x="380" y="180" textAnchor="end" className="fill-muted-foreground text-[9px]">• No AST Linter</text>
-          <text x="395" y="210" textAnchor="end" className="fill-muted-foreground text-[9px]">• No Tripwire Sandbox</text>
+          <text x="380" y="180" textAnchor="end" className="fill-muted-foreground text-xs">• No AST Linter</text>
+          <text x="395" y="210" textAnchor="end" className="fill-muted-foreground text-xs">• No Tripwire Sandbox</text>
         </svg>
       </div>
     </figure>

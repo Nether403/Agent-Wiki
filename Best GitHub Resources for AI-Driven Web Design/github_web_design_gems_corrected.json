@@ -1,0 +1,181 @@
+[
+  {
+    "repo": "saadeghi/daisyui",
+    "url": "https://github.com/saadeghi/daisyui",
+    "description": "\ud83c\udf3c \ud83c\udf3c \ud83c\udf3c \ud83c\udf3c \ud83c\udf3c \u2003The most popular, free and open-source Tailwind CSS component library",
+    "stars": 42247,
+    "forks": 1676,
+    "license": "MIT",
+    "pushed_at": "2026-08-24T06:25:46Z",
+    "archived": false,
+    "topics": [
+      "component",
+      "component-library",
+      "components",
+      "css",
+      "css-components",
+      "css-framework",
+      "daisyui",
+      "design-system",
+      "design-systems",
+      "front-end",
+      "postcss",
+      "svelte",
+      "tailwind",
+      "tailwind-css",
+      "tailwindcss",
+      "ui-design",
+      "ui-framework",
+      "ui-kit",
+      "ui-library",
+      "ui-pattern"
+    ]
+  },
+  {
+    "repo": "darkroomengineering/lenis",
+    "url": "https://github.com/darkroomengineering/lenis",
+    "description": "Smooth scroll as it should be",
+    "stars": 15629,
+    "forks": 675,
+    "license": "MIT",
+    "pushed_at": "2026-08-27T22:07:21Z",
+    "archived": false,
+    "topics": [
+      "darkroom-engineering",
+      "performance",
+      "react",
+      "scroll",
+      "smooth",
+      "smooth-scroll",
+      "snap",
+      "vanilla",
+      "vue"
+    ]
+  },
+  {
+    "repo": "primer/react",
+    "url": "https://github.com/primer/react",
+    "description": "An implementation of GitHub's Primer Design System using React",
+    "stars": 3895,
+    "forks": 676,
+    "license": "MIT",
+    "pushed_at": "2026-08-28T20:53:57Z",
+    "archived": false,
+    "topics": [
+      "component-library",
+      "design-system",
+      "primer",
+      "react"
+    ]
+  },
+  {
+    "repo": "primer/css",
+    "url": "https://github.com/primer/css",
+    "description": "Primer is GitHub's design system. This is the CSS implementation",
+    "stars": 13012,
+    "forks": 1287,
+    "license": "MIT",
+    "pushed_at": "2026-08-28T16:16:01Z",
+    "archived": false,
+    "topics": [
+      "css",
+      "design-system",
+      "design-systems",
+      "framework",
+      "meta",
+      "primer",
+      "primer-css",
+      "sass",
+      "styleguide",
+      "ui-components"
+    ]
+  },
+  {
+    "repo": "Visual-Regression-Tracker/Visual-Regression-Tracker",
+    "url": "https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker",
+    "description": "Backend and Frontend application for tracking differences via image comparison",
+    "stars": 709,
+    "forks": 68,
+    "license": "Apache-2.0",
+    "pushed_at": "2026-08-23T06:57:39Z",
+    "archived": false,
+    "topics": [
+      "cypress",
+      "docker",
+      "hacktoberfest",
+      "image-comparison",
+      "playwright",
+      "regression-tests",
+      "testing",
+      "visual-testing",
+      "visual-tests"
+    ]
+  },
+  {
+    "repo": "argyleink/gui-challenges",
+    "url": "https://github.com/argyleink/gui-challenges",
+    "description": "Components from the YouTube show GUI Challenges: accessible, responsive, adaptive and cross browser components.",
+    "stars": 2989,
+    "forks": 389,
+    "license": "Apache-2.0",
+    "pushed_at": "2025-02-19T18:50:50Z",
+    "archived": false,
+    "topics": [
+      "accessibility",
+      "creativity",
+      "css",
+      "educational",
+      "html",
+      "interfaces",
+      "javascript",
+      "webdev"
+    ]
+  },
+  {
+    "repo": "timolins/react-hot-toast",
+    "url": "https://github.com/timolins/react-hot-toast",
+    "description": "Smoking Hot React Notifications \ud83d\udd25 ",
+    "stars": 10974,
+    "forks": 371,
+    "license": "MIT",
+    "pushed_at": "2025-08-16T12:19:29Z",
+    "archived": false,
+    "topics": [
+      "notifications",
+      "react",
+      "snackbar",
+      "toast-notifications"
+    ]
+  },
+  {
+    "repo": "ariakit/ariakit",
+    "url": "https://github.com/ariakit/ariakit",
+    "description": "Toolkit with accessible components, styles, and examples for your next web app",
+    "stars": 8607,
+    "forks": 415,
+    "license": null,
+    "pushed_at": "2026-08-30T18:48:05Z",
+    "archived": false,
+    "topics": [
+      "a11y",
+      "accessibility",
+      "accessible",
+      "aria",
+      "ariakit",
+      "components",
+      "css",
+      "react",
+      "reactjs",
+      "tailwindcss",
+      "wai-aria"
+    ]
+  },
+  {
+    "repo": "zag-js/zag",
+    "error": "HTTP 404"
+  },
+  {
+    "repo": "gamcoh/stytch-ui",
+    "error": "HTTP 404"
+  }
+]

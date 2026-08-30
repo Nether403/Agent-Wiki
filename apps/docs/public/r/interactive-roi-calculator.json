@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "interactive-roi-calculator",
+  "type": "registry:block",
+  "title": "Interactive ROI & Savings Calculator",
+  "description": "Marketing block with interactive price sliders, team size selectors, and dynamic cost savings calculations.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "block",
+    "roi-calculator",
+    "marketing",
+    "pricing",
+    "tailark"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 3,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://tailark.com",
+    "license_type": "MIT",
+    "author": "Tailark Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/interactive-roi-calculator.tsx",
+      "content": "/**\n * @license MIT\n * @origin Tailark / Shadcnblocks (https://tailark.com)\n * @author Tailark Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Calculator, DollarSign, Clock, Users, ArrowRight } from \"lucide-react\";\n\nexport interface InteractiveRoiCalculatorProps extends React.HTMLAttributes<HTMLDivElement> {\n  hourlyDevRate?: number;\n  hoursSavedPerWeekPerDev?: number;\n}\n\nexport function InteractiveRoiCalculator({\n  hourlyDevRate = 95,\n  hoursSavedPerWeekPerDev = 6,\n  className,\n  ...props\n}: InteractiveRoiCalculatorProps) {\n  const [teamSize, setTeamSize] = React.useState(12);\n  const [rate, setRate] = React.useState(hourlyDevRate);\n\n  const annualSavings = React.useMemo(() => {\n    return teamSize * rate * hoursSavedPerWeekPerDev * 50;\n  }, [teamSize, rate, hoursSavedPerWeekPerDev]);\n\n  const annualHoursSaved = React.useMemo(() => {\n    return teamSize * hoursSavedPerWeekPerDev * 50;\n  }, [teamSize, hoursSavedPerWeekPerDev]);\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-2xl border border-border bg-card p-6 sm:p-8 text-card-foreground shadow-lg space-y-6\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Interactive Agent ROI Calculator\"\n      {...props}\n    >\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-4\">\n        <div>\n          <h3 className=\"text-sm font-semibold uppercase tracking-wider text-primary flex items-center gap-2\">\n            <Calculator className=\"h-4 w-4\" aria-hidden=\"true\" />\n            ROI & Efficiency Calculator\n          </h3>\n          <p className=\"text-xs text-muted-foreground mt-0.5\">\n            Estimate yearly engineering savings by adopting zero-slop design system automation.\n          </p>\n        </div>\n      </div>\n\n      <div className=\"grid grid-cols-1 md:grid-cols-2 gap-8 items-center\">\n        {/* Sliders Area */}\n        <div className=\"space-y-5\">\n          {/* Slider 1: Team Size */}\n          <div className=\"space-y-2\">\n            <div className=\"flex items-center justify-between text-xs font-semibold text-foreground\">\n              <span className=\"flex items-center gap-1.5\">\n                <Users className=\"h-3.5 w-3.5 text-primary\" aria-hidden=\"true\" /> Team Engineers:\n              </span>\n              <span className=\"font-mono text-sm text-primary font-bold\">{teamSize} devs</span>\n            </div>\n            <input\n              type=\"range\"\n              min={1}\n              max={100}\n              value={teamSize}\n              onChange={(e) => setTeamSize(Number(e.target.value))}\n              aria-label=\"Number of software engineers on team\"\n              className=\"w-full h-2 rounded-full bg-muted appearance-none cursor-pointer accent-primary focus-visible:outline-none\"\n            />\n          </div>\n\n          {/* Slider 2: Blended Hourly Rate */}\n          <div className=\"space-y-2\">\n            <div className=\"flex items-center justify-between text-xs font-semibold text-foreground\">\n              <span className=\"flex items-center gap-1.5\">\n                <DollarSign className=\"h-3.5 w-3.5 text-primary\" aria-hidden=\"true\" /> Hourly Dev Cost:\n              </span>\n              <span className=\"font-mono text-sm text-primary font-bold\">${rate}/hr</span>\n            </div>\n            <input\n              type=\"range\"\n              min={50}\n              max={250}\n              step={5}\n              value={rate}\n              onChange={(e) => setRate(Number(e.target.value))}\n              aria-label=\"Blended hourly engineering cost in USD\"\n              className=\"w-full h-2 rounded-full bg-muted appearance-none cursor-pointer accent-primary focus-visible:outline-none\"\n            />\n          </div>\n        </div>\n\n        {/* Output Metric Cards */}\n        <div className=\"grid grid-cols-2 gap-4 p-6 rounded-2xl border border-primary/20 bg-primary/5\">\n          <div className=\"space-y-1\">\n            <span className=\"text-[11px] text-muted-foreground uppercase font-semibold flex items-center gap-1\">\n              <DollarSign className=\"h-3.5 w-3.5 text-emerald-500\" aria-hidden=\"true\" />\n              Annual Value\n            </span>\n            <p className=\"text-2xl sm:text-3xl font-extrabold font-mono text-foreground\">\n              ${annualSavings.toLocaleString()}\n            </p>\n          </div>\n\n          <div className=\"space-y-1\">\n            <span className=\"text-[11px] text-muted-foreground uppercase font-semibold flex items-center gap-1\">\n              <Clock className=\"h-3.5 w-3.5 text-primary\" aria-hidden=\"true\" />\n              Hours Saved\n            </span>\n            <p className=\"text-2xl sm:text-3xl font-extrabold font-mono text-foreground\">\n              {annualHoursSaved.toLocaleString()}h\n            </p>\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/interactive-roi-calculator.tsx"
+    }
+  ]
+}

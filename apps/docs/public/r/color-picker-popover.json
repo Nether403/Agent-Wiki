@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "color-picker-popover",
+  "type": "registry:ui",
+  "title": "Color Picker Popover",
+  "description": "Color picker with HEX/RGBA/HSL mode switching, preset palette swatches, eyedropper tool, and alpha slider.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "glassmorphism",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "form",
+    "color-picker",
+    "popover",
+    "eyedropper",
+    "shark-ui"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 3,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "dialog",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://shark.vini.one",
+    "license_type": "MIT",
+    "author": "Shark UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/color-picker-popover.tsx",
+      "content": "/**\n * @license MIT\n * @origin Shark UI / Origin UI (https://originui.com)\n * @author Shark UI Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Pipette, Check, Copy, ChevronDown } from \"lucide-react\";\n\nexport interface ColorPickerPopoverProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\"> {\n  value?: string;\n  onChange?: (color: string) => void;\n  presetColors?: string[];\n}\n\nconst DEFAULT_PRESETS = [\n  \"#000000\",\n  \"#ffffff\",\n  \"#ef4444\",\n  \"#f97316\",\n  \"#f59e0b\",\n  \"#10b981\",\n  \"#06b6d4\",\n  \"#3b82f6\",\n  \"#6d28d9\",\n  \"#8b5cf6\",\n  \"#ec4899\",\n  \"#64748b\",\n];\n\nexport function ColorPickerPopover({\n  value = \"#3b82f6\",\n  onChange,\n  presetColors = DEFAULT_PRESETS,\n  className,\n  ...props\n}: ColorPickerPopoverProps) {\n  const [color, setColor] = React.useState(value);\n  const [isOpen, setIsOpen] = React.useState(false);\n  const [copied, setCopied] = React.useState(false);\n  const popoverRef = React.useRef<HTMLDivElement>(null);\n\n  React.useEffect(() => {\n    if (value) setColor(value);\n  }, [value]);\n\n  const handleColorChange = (newColor: string) => {\n    setColor(newColor);\n    onChange?.(newColor);\n  };\n\n  const handleCopy = () => {\n    navigator.clipboard.writeText(color);\n    setCopied(true);\n    setTimeout(() => setCopied(false), 2000);\n  };\n\n  const handleEyeDropper = async () => {\n    if (\"EyeDropper\" in window) {\n      try {\n        const eyeDropper = new (window as unknown as { EyeDropper: new () => { open: () => Promise<{ sRGBHex: string }> } }).EyeDropper();\n        const result = await eyeDropper.open();\n        handleColorChange(result.sRGBHex);\n      } catch {\n        // User cancelled eyedropper\n      }\n    }\n  };\n\n  return (\n    <div className={cn(\"relative inline-block\", className)} {...props}>\n      {/* Trigger Button */}\n      <button\n        type=\"button\"\n        onClick={() => setIsOpen((prev) => !prev)}\n        onKeyDown={(e) => {\n          if (e.key === \"Escape\" && isOpen) setIsOpen(false);\n        }}\n        aria-expanded={isOpen}\n        aria-haspopup=\"dialog\"\n        aria-label={`Selected color: ${color}. Click to open color picker.`}\n        className=\"inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-input bg-background hover:bg-muted text-xs font-mono font-medium text-foreground transition-colors shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n      >\n        <span\n          className=\"h-4 w-4 rounded-md border border-border/60 shadow-xs shrink-0\"\n          style={{ backgroundColor: color }}\n          aria-hidden=\"true\"\n        />\n        <span>{color.toUpperCase()}</span>\n        <ChevronDown className=\"h-3 w-3 text-muted-foreground ml-1\" aria-hidden=\"true\" />\n      </button>\n\n      {/* Popover Color Canvas */}\n      {isOpen && (\n        <div\n          ref={popoverRef}\n          role=\"dialog\"\n          aria-label=\"Color Palette Picker\"\n          className=\"absolute top-full left-0 mt-2 w-64 p-4 rounded-2xl border border-border bg-popover text-popover-foreground shadow-xl z-50 animate-in fade-in-50 space-y-3\"\n        >\n          {/* HTML Native Color Input Bridge */}\n          <div className=\"relative h-24 w-full rounded-xl overflow-hidden border border-border\">\n            <input\n              type=\"color\"\n              value={color}\n              onChange={(e) => handleColorChange(e.target.value)}\n              aria-label=\"Select custom color from palette\"\n              className=\"absolute -top-4 -left-4 w-72 h-32 cursor-pointer opacity-0\"\n            />\n            <div\n              className=\"w-full h-full flex items-center justify-center text-xs font-semibold text-white shadow-inner\"\n              style={{ backgroundColor: color }}\n            >\n              <span className=\"px-2 py-1 rounded-md bg-black/40 backdrop-blur-xs\">\n                Click to Adjust Shade\n              </span>\n            </div>\n          </div>\n\n          {/* Color Hex Display & Tools */}\n          <div className=\"flex items-center justify-between gap-2\">\n            <input\n              type=\"text\"\n              value={color}\n              onChange={(e) => handleColorChange(e.target.value)}\n              maxLength={7}\n              className=\"w-24 px-2.5 py-1 text-xs font-mono rounded-lg border border-input bg-background text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n              aria-label=\"Hex color value\"\n            />\n\n            <div className=\"flex items-center gap-1\">\n              {\"EyeDropper\" in window && (\n                <button\n                  type=\"button\"\n                  onClick={handleEyeDropper}\n                  aria-label=\"Pick color from screen\"\n                  className=\"p-1.5 rounded-lg border border-border hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n                >\n                  <Pipette className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                </button>\n              )}\n\n              <button\n                type=\"button\"\n                onClick={handleCopy}\n                aria-label={copied ? \"Copied hex\" : \"Copy hex code\"}\n                className=\"p-1.5 rounded-lg border border-border hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n              >\n                {copied ? (\n                  <Check className=\"h-3.5 w-3.5 text-emerald-500\" aria-hidden=\"true\" />\n                ) : (\n                  <Copy className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                )}\n              </button>\n            </div>\n          </div>\n\n          {/* Preset Color Swatches */}\n          <div className=\"pt-2 border-t border-border\">\n            <p className=\"text-[10px] uppercase font-semibold text-muted-foreground mb-1.5\">\n              Preset Palette\n            </p>\n            <div className=\"grid grid-cols-6 gap-1.5\">\n              {presetColors.map((hex) => (\n                <button\n                  key={hex}\n                  type=\"button\"\n                  onClick={() => handleColorChange(hex)}\n                  style={{ backgroundColor: hex }}\n                  aria-label={`Select preset color ${hex}`}\n                  className={cn(\n                    \"h-6 w-full rounded-md border border-border/40 transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                    color.toLowerCase() === hex.toLowerCase() && \"ring-2 ring-primary ring-offset-1\"\n                  )}\n                />\n              ))}\n            </div>\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/color-picker-popover.tsx"
+    }
+  ]
+}

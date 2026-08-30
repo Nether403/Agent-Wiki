@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ai-prompt-template-library",
+  "type": "registry:component",
+  "title": "AI Prompt Template Library Carousel",
+  "description": "Categorized card carousel of pre-tested agent prompts with one-click injection into active input.",
+  "category": "ui:ai-native",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "ai-native",
+    "prompts",
+    "template-library",
+    "carousel",
+    "cult-ui"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 3,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://cult-ui.com",
+    "license_type": "MIT",
+    "author": "Cult UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ai-native/ai-prompt-template-library.tsx",
+      "content": "/**\n * @license MIT\n * @origin Cult UI / 21st.dev (https://cult-ui.com)\n * @author Cult UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport {\n  Sparkles,\n  Code2,\n  Palette,\n  ShieldAlert,\n  TestTube2,\n  Copy,\n  Check,\n  ArrowRight,\n  Search,\n} from \"lucide-react\";\n\nexport interface PromptTemplate {\n  id: string;\n  category: \"coding\" | \"design\" | \"security\" | \"testing\" | \"refactor\";\n  title: string;\n  description: string;\n  prompt: string;\n  tokenCount: number;\n  tags: string[];\n}\n\nexport interface AiPromptTemplateLibraryProps extends React.HTMLAttributes<HTMLDivElement> {\n  templates?: PromptTemplate[];\n  onSelectPrompt?: (prompt: string) => void;\n}\n\nconst DEFAULT_TEMPLATES: PromptTemplate[] = [\n  {\n    id: \"p1\",\n    category: \"design\",\n    title: \"Zero-Slop UI Refactor\",\n    description: \"Audit raw markup, remap arbitrary pixel units to Tailwind v4 tokens, and check WCAG AA contrast.\",\n    prompt: \"Refactor this component to strictly satisfy the 35 Anti-Slop Rules. Remap arbitrary pixel units to Tailwind system tokens, enforce semantic dark mode colors, and add full keyboard accessibility.\",\n    tokenCount: 42,\n    tags: [\"tailwind-v4\", \"anti-slop\", \"a11y\"],\n  },\n  {\n    id: \"p2\",\n    category: \"coding\",\n    title: \"Headless State Machine Architecture\",\n    description: \"Extract complex UI state into an accessible Zag.js/Ark UI headless state machine.\",\n    prompt: \"Extract the state management logic from this React component into a headless custom hook with full keyboard navigation, aria-expanded states, and unit tests.\",\n    tokenCount: 38,\n    tags: [\"react19\", \"typescript\", \"architecture\"],\n  },\n  {\n    id: \"p3\",\n    category: \"security\",\n    title: \"Tripwire Security Audit\",\n    description: \"Scan code for prompt injection, arbitrary script evaluation, and dangerous HTML injection.\",\n    prompt: \"Perform a security code review on this component. Identify any dangerous innerHTML injections, prompt injection vectors, or un-sanitized user inputs.\",\n    tokenCount: 35,\n    tags: [\"security\", \"tripwire\", \"ast\"],\n  },\n  {\n    id: \"p4\",\n    category: \"testing\",\n    title: \"Playwright + Axe-Core E2E Suite\",\n    description: \"Generate end-to-end tests validating 100% WCAG 2.1 AA compliance and spring motion fallbacks.\",\n    prompt: \"Write a comprehensive Playwright test suite with axe-core automated accessibility audits covering keyboard tab order, focus visible rings, and prefers-reduced-motion fallbacks.\",\n    tokenCount: 45,\n    tags: [\"playwright\", \"axe-core\", \"testing\"],\n  },\n];\n\nexport function AiPromptTemplateLibrary({\n  templates = DEFAULT_TEMPLATES,\n  onSelectPrompt,\n  className,\n  ...props\n}: AiPromptTemplateLibraryProps) {\n  const [selectedCategory, setSelectedCategory] = React.useState<string>(\"all\");\n  const [searchQuery, setSearchQuery] = React.useState(\"\");\n  const [copiedId, setCopiedId] = React.useState<string | null>(null);\n\n  const categories = [\n    { id: \"all\", label: \"All Prompts\" },\n    { id: \"design\", label: \"Design & Taste\", icon: Palette },\n    { id: \"coding\", label: \"Architecture\", icon: Code2 },\n    { id: \"security\", label: \"Security Audit\", icon: ShieldAlert },\n    { id: \"testing\", label: \"A11y & Tests\", icon: TestTube2 },\n  ];\n\n  const filteredTemplates = templates.filter((t) => {\n    const matchesCategory = selectedCategory === \"all\" || t.category === selectedCategory;\n    const matchesSearch =\n      t.title.toLowerCase().includes(searchQuery.toLowerCase()) ||\n      t.description.toLowerCase().includes(searchQuery.toLowerCase()) ||\n      t.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));\n    return matchesCategory && matchesSearch;\n  });\n\n  const handleCopy = (id: string, promptText: string) => {\n    navigator.clipboard.writeText(promptText);\n    setCopiedId(id);\n    setTimeout(() => setCopiedId(null), 2000);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-2xl border border-border bg-card text-card-foreground p-6 shadow-lg space-y-5\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"AI Prompt Template Library\"\n      {...props}\n    >\n      {/* Header and Search */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between gap-4\">\n        <div>\n          <h3 className=\"text-base font-semibold text-foreground flex items-center gap-2\">\n            <Sparkles className=\"h-4 w-4 text-primary\" aria-hidden=\"true\" />\n            Agent Prompt Template Library\n          </h3>\n          <p className=\"text-xs text-muted-foreground\">\n            Curated, deterministic prompts calibrated for zero-slop code generation.\n          </p>\n        </div>\n\n        <div className=\"relative w-full sm:w-64\">\n          <Search className=\"absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground\" aria-hidden=\"true\" />\n          <input\n            type=\"text\"\n            value={searchQuery}\n            onChange={(e) => setSearchQuery(e.target.value)}\n            placeholder=\"Filter templates...\"\n            className=\"w-full pl-9 pr-3 py-1.5 rounded-xl border border-border bg-background text-xs text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            aria-label=\"Filter prompt templates\"\n          />\n        </div>\n      </div>\n\n      {/* Category Filter Pills */}\n      <div className=\"flex flex-wrap items-center gap-1.5 border-b border-border pb-3\">\n        {categories.map((cat) => (\n          <button\n            key={cat.id}\n            type=\"button\"\n            onClick={() => setSelectedCategory(cat.id)}\n            className={cn(\n              \"inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n              selectedCategory === cat.id\n                ? \"bg-primary text-primary-foreground font-semibold shadow-xs\"\n                : \"bg-muted hover:bg-accent text-muted-foreground hover:text-foreground\"\n            )}\n          >\n            {cat.icon && <cat.icon className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />}\n            <span>{cat.label}</span>\n          </button>\n        ))}\n      </div>\n\n      {/* Grid of Prompt Cards */}\n      <div className=\"grid grid-cols-1 md:grid-cols-2 gap-4\">\n        {filteredTemplates.map((template) => (\n          <div\n            key={template.id}\n            className=\"flex flex-col justify-between p-4 rounded-xl border border-border/80 bg-muted/20 hover:bg-muted/40 transition-colors shadow-xs group\"\n          >\n            <div className=\"space-y-2\">\n              <div className=\"flex items-center justify-between\">\n                <span className=\"font-semibold text-xs text-foreground\">{template.title}</span>\n                <span className=\"text-xs font-mono text-muted-foreground\">\n                  ~{template.tokenCount} tok\n                </span>\n              </div>\n              <p className=\"text-xs text-muted-foreground line-clamp-2\">\n                {template.description}\n              </p>\n              <div className=\"flex flex-wrap gap-1 pt-1\">\n                {template.tags.map((tag) => (\n                  <span\n                    key={tag}\n                    className=\"px-1.5 py-0.5 rounded-md bg-background border border-border text-[10px] text-muted-foreground font-mono\"\n                  >\n                    #{tag}\n                  </span>\n                ))}\n              </div>\n            </div>\n\n            <div className=\"flex items-center justify-between pt-4 mt-2 border-t border-border/40\">\n              <button\n                type=\"button\"\n                onClick={() => handleCopy(template.id, template.prompt)}\n                aria-label={`Copy prompt: ${template.title}`}\n                className=\"inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n              >\n                {copiedId === template.id ? (\n                  <>\n                    <Check className=\"h-3.5 w-3.5 text-emerald-500\" aria-hidden=\"true\" />\n                    <span className=\"text-emerald-500 font-medium\">Copied</span>\n                  </>\n                ) : (\n                  <>\n                    <Copy className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                    <span>Copy</span>\n                  </>\n                )}\n              </button>\n\n              <button\n                type=\"button\"\n                onClick={() => onSelectPrompt?.(template.prompt)}\n                className=\"inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n              >\n                <span>Use Prompt</span>\n                <ArrowRight className=\"h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5\" aria-hidden=\"true\" />\n              </button>\n            </div>\n          </div>\n        ))}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/ai-prompt-template-library.tsx"
+    }
+  ]
+}

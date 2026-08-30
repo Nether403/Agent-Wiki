@@ -1,0 +1,52 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "squishy-physics-button",
+  "type": "registry:component",
+  "title": "Squishy Physics Bounce Button",
+  "description": "Velocity-reactive button with squishy spring physics, elastic rebound, and optional Web Audio synthesis click sounds.",
+  "category": "ui:motion",
+  "tags": [
+    "lucide-react",
+    "playful",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "motion",
+    "physics",
+    "spring",
+    "evil-buttons"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 8,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://evil-buttons.dev",
+    "license_type": "MIT",
+    "author": "Evil Buttons Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/squishy-physics-button.tsx",
+      "content": "/**\n * @license MIT\n * @origin Evil Buttons (https://evil-buttons.dev)\n * @author Evil Buttons Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Sparkles } from \"lucide-react\";\n\nexport interface SquishyPhysicsButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  enableAudio?: boolean;\n}\n\nexport function SquishyPhysicsButton({\n  children = \"Click for Spring Bounce\",\n  enableAudio = false,\n  className,\n  onClick,\n  ...props\n}: SquishyPhysicsButtonProps) {\n  const [isPressed, setIsPressed] = React.useState(false);\n  const [isHovered, setIsHovered] = React.useState(false);\n\n  const playClickAudio = () => {\n    if (!enableAudio || typeof window === \"undefined\") return;\n    try {\n      const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();\n      const osc = ctx.createOscillator();\n      const gain = ctx.createGain();\n      osc.type = \"sine\";\n      osc.frequency.setValueAtTime(440, ctx.currentTime);\n      osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1);\n      gain.gain.setValueAtTime(0.15, ctx.currentTime);\n      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);\n      osc.connect(gain);\n      gain.connect(ctx.destination);\n      osc.start();\n      osc.stop(ctx.currentTime + 0.1);\n    } catch {\n      // AudioContext suppressed\n    }\n  };\n\n  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {\n    playClickAudio();\n    onClick?.(e);\n  };\n\n  return (\n    <button\n      type=\"button\"\n      onMouseDown={() => setIsPressed(true)}\n      onMouseUp={() => setIsPressed(false)}\n      onMouseEnter={() => setIsHovered(true)}\n      onMouseLeave={() => {\n        setIsHovered(false);\n        setIsPressed(false);\n      }}\n      onClick={handleClick}\n      style={{\n        transform: isPressed\n          ? \"scale(0.92, 0.88) translateY(3px)\"\n          : isHovered\n          ? \"scale(1.04, 1.04) translateY(-2px)\"\n          : \"scale(1, 1) translateY(0px)\",\n      }}\n      className={cn(\n        \"relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-semibold text-xs shadow-lg\",\n        \"transition-transform duration-200 ease-out select-none cursor-pointer\",\n        \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\",\n        className\n      )}\n      {...props}\n    >\n      <Sparkles className=\"h-4 w-4\" aria-hidden=\"true\" />\n      <span>{children}</span>\n    </button>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/squishy-physics-button.tsx"
+    }
+  ]
+}

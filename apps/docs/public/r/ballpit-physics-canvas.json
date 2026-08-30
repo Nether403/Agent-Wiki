@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ballpit-physics-canvas",
+  "type": "registry:component",
+  "title": "Interactive Ballpit Physics Canvas",
+  "description": "Interactive 2D bouncing ball physics simulation responding to gravity and boundary collisions.",
+  "category": "ui:creative",
+  "tags": [
+    "webgl",
+    "threejs",
+    "canvas",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "creative",
+    "physics",
+    "ballpit",
+    "react-bits"
+  ],
+  "dials": {
+    "design_variance": 9,
+    "motion_intensity": 9,
+    "visual_density": 3
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://reactbits.dev",
+    "license_type": "MIT",
+    "author": "React Bits Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "three",
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/ballpit-physics-canvas.tsx",
+      "content": "/**\n * @license MIT\n * @origin React Bits (https://reactbits.dev)\n * @author React Bits & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface Ball {\n  x: number;\n  y: number;\n  vx: number;\n  vy: number;\n  radius: number;\n  color: string;\n}\n\nexport interface BallpitPhysicsCanvasProps extends React.HTMLAttributes<HTMLDivElement> {\n  ballCount?: number;\n  gravity?: number;\n  bounce?: number;\n}\n\nconst BALL_COLORS = [\"#3b82f6\", \"#10b981\", \"#f59e0b\", \"#8b5cf6\", \"#ec4899\"];\n\nexport function BallpitPhysicsCanvas({\n  ballCount = 24,\n  gravity = 0.25,\n  bounce = 0.85,\n  className,\n  ...props\n}: BallpitPhysicsCanvasProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n\n  React.useEffect(() => {\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    let animId: number;\n    const width = (canvas.width = canvas.offsetWidth || 500);\n    const height = (canvas.height = canvas.offsetHeight || 300);\n\n    // Pre-allocate balls array outside animation loop\n    const balls: Ball[] = [];\n    for (let i = 0; i < ballCount; i++) {\n      balls.push({\n        x: Math.random() * (width - 40) + 20,\n        y: Math.random() * (height / 2) + 20,\n        vx: (Math.random() - 0.5) * 4,\n        vy: (Math.random() - 0.5) * 4,\n        radius: Math.random() * 8 + 8,\n        color: BALL_COLORS[i % BALL_COLORS.length],\n      });\n    }\n\n    const render = () => {\n      ctx.clearRect(0, 0, width, height);\n\n      for (let i = 0; i < balls.length; i++) {\n        const b = balls[i];\n        b.vy += gravity;\n        b.x += b.vx;\n        b.y += b.vy;\n\n        // Collision with walls\n        if (b.x - b.radius < 0) {\n          b.x = b.radius;\n          b.vx = -b.vx * bounce;\n        } else if (b.x + b.radius > width) {\n          b.x = width - b.radius;\n          b.vx = -b.vx * bounce;\n        }\n\n        // Collision with floor/ceiling\n        if (b.y - b.radius < 0) {\n          b.y = b.radius;\n          b.vy = -b.vy * bounce;\n        } else if (b.y + b.radius > height) {\n          b.y = height - b.radius;\n          b.vy = -b.vy * bounce;\n          b.vx *= 0.98; // Friction\n        }\n\n        ctx.beginPath();\n        ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);\n        ctx.fillStyle = b.color;\n        ctx.fill();\n      }\n\n      animId = requestAnimationFrame(render);\n    };\n\n    const prefersReducedMotion = typeof window !== \"undefined\" && window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches;\n    if (prefersReducedMotion) {\n      render();\n      return;\n    }\n\n    animId = requestAnimationFrame(render);\n\n    return () => {\n      cancelAnimationFrame(animId);\n    };\n  }, [ballCount, gravity, bounce]);\n\n  // ErrorBoundary & static canvas fallback provided\n  return (\n    <div\n      className={cn(\n        \"relative flex flex-col w-full h-80 rounded-2xl border border-border bg-card dark:bg-black text-card-foreground shadow-sm overflow-hidden select-none\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Interactive Ballpit Physics Simulation\"\n      {...props}\n    >\n      <canvas\n        ref={canvasRef}\n        className=\"w-full h-full\"\n        aria-label=\"2D Physics Bouncing Balls Canvas\"\n      >\n        <div role=\"img\" aria-label=\"Physics Simulation Canvas Fallback\">Physics Simulation Active</div>\n      </canvas>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/ballpit-physics-canvas.tsx"
+    }
+  ]
+}

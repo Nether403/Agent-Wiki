@@ -58,12 +58,13 @@ npx shadcn@latest add http://localhost:3000/r/spring-dialog.json
 
 ## Verified TypeScript Source
 ```tsx
-"use client";
 /**
  * @origin KokonutUI (https://github.com/kokonut-dev/kokonutui)
  * @license MIT
  * @author KokonutUI Team
+ * @curated-by Machine-First Design Agent Wiki
  */
+"use client";
 import * as React from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";

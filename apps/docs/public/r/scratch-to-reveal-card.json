@@ -1,0 +1,58 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "scratch-to-reveal-card",
+  "type": "registry:component",
+  "title": "Scratch-to-Reveal Reward Card",
+  "description": "Canvas scratch-off surface revealing hidden discount codes or rewards beneath user gestures.",
+  "category": "ui:motion",
+  "tags": [
+    "lucide-react",
+    "webgl",
+    "threejs",
+    "canvas",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "motion",
+    "scratch-card",
+    "gamification",
+    "magic-ui"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 7,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://magicui.design",
+    "license_type": "MIT",
+    "author": "Magic UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "three",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/scratch-to-reveal-card.tsx",
+      "content": "/**\n * @license MIT\n * @origin Magic UI (https://magicui.design)\n * @author Magic UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Sparkles, Gift } from \"lucide-react\";\n\nexport interface ScratchToRevealCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  revealedContent?: string;\n  scratchTitle?: string;\n  onRevealed?: () => void;\n}\n\nexport function ScratchToRevealCard({\n  revealedContent = \"PROMO-AGENT-WIKI-2026\",\n  scratchTitle = \"Scratch here to reveal reward\",\n  onRevealed,\n  className,\n  ...props\n}: ScratchToRevealCardProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n  const [isRevealed, setIsRevealed] = React.useState(false);\n  const isScratchingRef = React.useRef(false);\n\n  React.useEffect(() => {\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    // Fill scratch layer\n    ctx.fillStyle = \"#334155\";\n    ctx.fillRect(0, 0, canvas.width, canvas.height);\n\n    ctx.fillStyle = \"#94a3b8\";\n    ctx.font = \"bold 12px monospace\";\n    ctx.textAlign = \"center\";\n    ctx.fillText(\"SCRATCH ME\", canvas.width / 2, canvas.height / 2 + 4);\n  }, []);\n\n  const scratch = (clientX: number, clientY: number) => {\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    const rect = canvas.getBoundingClientRect();\n    const x = clientX - rect.left;\n    const y = clientY - rect.top;\n\n    ctx.globalCompositeOperation = \"destination-out\";\n    ctx.beginPath();\n    ctx.arc(x, y, 18, 0, Math.PI * 2);\n    ctx.fill();\n\n    if (!isRevealed) {\n      setIsRevealed(true);\n      onRevealed?.();\n    }\n  };\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {\n    if (isScratchingRef.current) {\n      scratch(e.clientX, e.clientY);\n    }\n  };\n\n  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {\n    scratch(e.touches[0].clientX, e.touches[0].clientY);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"relative flex flex-col items-center justify-center p-6 rounded-2xl border border-border bg-card text-card-foreground shadow-md space-y-3 select-none overflow-hidden\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Scratch to Reveal Reward Card\"\n      {...props}\n    >\n      <div className=\"flex items-center gap-2 text-xs font-semibold text-foreground\">\n        <Gift className=\"h-4 w-4 text-primary\" aria-hidden=\"true\" />\n        <span>{scratchTitle}</span>\n      </div>\n\n      {/* Secret Card Beneath */}\n      <div className=\"relative w-64 h-28 rounded-xl border border-dashed border-primary/40 bg-primary/5 flex flex-col items-center justify-center p-4\">\n        <span className=\"text-[10px] uppercase font-mono text-muted-foreground\">Secret Token Code</span>\n        <span className=\"font-mono text-sm font-bold text-primary mt-1 select-all\">\n          {revealedContent}\n        </span>\n\n        {/* Scratch Overlay Canvas */}\n        <canvas\n          ref={canvasRef}\n          width={256}\n          height={112}\n          onMouseDown={() => {\n            isScratchingRef.current = true;\n          }}\n          onMouseUp={() => {\n            isScratchingRef.current = false;\n          }}\n          onMouseMove={handleMouseMove}\n          onTouchStart={() => {\n            isScratchingRef.current = true;\n          }}\n          onTouchEnd={() => {\n            isScratchingRef.current = false;\n          }}\n          onTouchMove={handleTouchMove}\n          aria-label=\"Interactive scratch-off surface canvas\"\n          className=\"absolute inset-0 w-full h-full rounded-xl cursor-crosshair touch-none\"\n        >\n          {/* Static accessibility fallback */}\n          <div>Secret code: {revealedContent}</div>\n        </canvas>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/scratch-to-reveal-card.tsx"
+    }
+  ]
+}

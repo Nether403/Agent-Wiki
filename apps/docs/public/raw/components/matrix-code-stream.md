@@ -116,7 +116,7 @@ export function MatrixCodeStream({
   return (
     <div
       className={cn(
-        "relative w-full h-64 rounded-xl overflow-hidden border border-border bg-black shadow-inner",
+        "relative w-full h-64 rounded-xl overflow-hidden border border-border bg-card dark:bg-black shadow-inner",
         className
       )}
       role="region"
@@ -124,7 +124,7 @@ export function MatrixCodeStream({
       {...props}
     >
       <canvas ref={canvasRef} width={600} height={256} className="w-full h-full block" aria-hidden="true" />
-      <div className="absolute bottom-3 left-4 text-[10px] font-mono text-emerald-400/80 bg-black/60 px-2 py-0.5 rounded border border-emerald-500/20">
+      <div className="absolute bottom-3 left-4 text-xs font-mono text-emerald-400/80 bg-black/60 px-2 py-0.5 rounded border border-emerald-500/20">
         SYS.MATRIX_STREAM // LIVE
       </div>
     </div>

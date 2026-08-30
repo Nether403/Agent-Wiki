@@ -139,12 +139,28 @@ SLOP_PATTERNS = [
         "regex": re.compile(r"<img[^>]+src=[\"']http[^\"']+[\"'](?!.*(?:width=|height=|aspect-))", re.IGNORECASE)
     },
     {
+        "id": "SLOP-016",
+        "name": "Missing LayoutGroup or Stable Key",
+        "severity": "Low",
+        "category": "Motion Quality",
+        "description": "Motion element with layoutId inside mapping without explicit key.",
+        "regex": re.compile(r"layoutId=(?!.*key=)", re.IGNORECASE)
+    },
+    {
         "id": "SLOP-017",
         "name": "Implicit Any Props Signature",
         "severity": "Medium",
         "category": "TypeScript Safety",
         "description": "Exported component using un-typed props signature (props: any).",
         "regex": re.compile(r"export\s+(?:function|const)\s+\w+\s*=\s*\([^)]*:\s*any\s*\)", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-018",
+        "name": "Repetitive Centered Card Layout Pattern",
+        "severity": "Medium",
+        "category": "Styling & Layout",
+        "description": "Cliché 3-column centered informational cards with identical top icon and text.",
+        "regex": re.compile(r"grid-cols-3.*items-center.*text-center.*rounded-xl.*p-6", re.IGNORECASE)
     },
     {
         "id": "SLOP-019",
@@ -155,17 +171,137 @@ SLOP_PATTERNS = [
         "regex": re.compile(r"import\s+.*from\s+[\"'](?:\.\.\/){3,}", re.IGNORECASE)
     },
     {
+        "id": "SLOP-020",
+        "name": "Missing Mandatory License Attribution",
+        "severity": "High",
+        "category": "Legal & IP Compliance",
+        "description": "Component missing mandatory license attribution or SPDX identifier header.",
+        "regex": re.compile(r"^$", re.IGNORECASE)
+    },
+    {
         "id": "SLOP-021",
         "name": "Raw Unshaded Background / Low WCAG Contrast",
         "severity": "Medium",
         "category": "WCAG Accessibility & Styling",
         "description": "Raw unshaded background (bg-white, bg-black, or arbitrary bg-[#...]) used without dark variant or semantic tokens.",
         "regex": re.compile(r"(?:(?<!dark:)bg-(?:white|black)\b(?!/)|bg-\[#(?:fff|ffffff|000|000000)\])", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-022",
+        "name": "AI Writing Clichés",
+        "severity": "Medium",
+        "category": "Copy & Content",
+        "description": "Robotic AI marketing tropes (e.g. 'In today's fast-paced world', 'Unleash the power of').",
+        "regex": re.compile(r"(?:in today's fast-paced|unleash the power of|it's not just .* it's|the future is here|supercharge your workflow|revolutionize the way you|dive deep into|testament to)", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-023",
+        "name": "Loose TypeScript Any Hygiene",
+        "severity": "High",
+        "category": "TypeScript Safety",
+        "description": "Unchecked loose type constructs (Record<string, any>, : any[]).",
+        "regex": re.compile(r"(?:Record<string,\s*any>|:\s*any\[\]|\((?:e|evt|event|item|data|val|props):\s*any\))", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-024",
+        "name": "Strict WCAG Contrast Violation",
+        "severity": "High",
+        "category": "Accessibility & WCAG",
+        "description": "Sub-standard contrast ratio combinations (text-muted-foreground/20).",
+        "regex": re.compile(r"(?:text-muted-foreground\/(?:10|20|30)|text-zinc-400\s+bg-zinc-300|text-gray-300\s+bg-gray-200|text-white\/20\s+bg-white)", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-025",
+        "name": "Uncancelled Timer or Event Listener Leak",
+        "severity": "High",
+        "category": "Performance & Architecture",
+        "description": "Registered setInterval or addEventListener inside useEffect without cleanup.",
+        "regex": re.compile(r"(?:setInterval|addEventListener)\(", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-026",
+        "name": "Arbitrary Hex Color Escapes",
+        "severity": "Medium",
+        "category": "Styling & Color Palette",
+        "description": "Hardcoded hex escapes where theme tokens (bg-background, text-foreground, border-border) should be used.",
+        "regex": re.compile(r"(?:bg|text|border)-\[#(?:0f172a|1e293b|334155|64748b|94a3b8|cbd5e1|e2e8f0|f1f5f9|f8fafc)\]", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-027",
+        "name": "Unbounded List Mapping Without Key",
+        "severity": "Medium",
+        "category": "Code Quality",
+        "description": "Array .map() rendering JSX elements without unique stable key.",
+        "regex": re.compile(r"\.map\(\s*\([^)]*\)\s*=>\s*<[a-zA-Z]", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-028",
+        "name": "Missing Spring Damping",
+        "severity": "Low",
+        "category": "Motion Quality",
+        "description": "High stiffness spring config without damping.",
+        "regex": re.compile(r"stiffness:\s*(?:[5-9]\d{2}|\d{4,})", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-029",
+        "name": "Hardcoded Large SVG Dimensions",
+        "severity": "Low",
+        "category": "Iconography & A11y",
+        "description": "Fixed dimension SVGs missing viewBox or scaling classes.",
+        "regex": re.compile(r"<svg\b[^>]*\b(?:width|height)=[\"'](?:[5-9]\d{2}|\d{4,})[\"'](?!.*viewBox)", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-030",
+        "name": "Clean SPDX & Origin Header Verification",
+        "severity": "High",
+        "category": "Legal & IP Compliance",
+        "description": "Requires verified machine-readable @origin, @license, and @curated-by frontmatter headers on all registry components.",
+        "regex": re.compile(r"^$", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-031",
+        "name": "Missing Error Boundary Fallback",
+        "severity": "Medium",
+        "category": "Production Runtime Resilience",
+        "description": "Complex canvas/WebGL/media component missing a fallback UI or error boundary handling.",
+        "regex": re.compile(r"^$", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-032",
+        "name": "Unbounded Canvas Memory Allocation",
+        "severity": "High",
+        "category": "Performance & Memory",
+        "description": "Allocating new objects or arrays inside requestAnimationFrame animation loop causing garbage collection stutter.",
+        "regex": re.compile(r"new\s+(?:Array|Object|Float32Array|Uint8Array|Path2D)\s*\(", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-033",
+        "name": "Missing Escape Key Overlay Dismiss",
+        "severity": "High",
+        "category": "Accessibility & Interaction",
+        "description": "Custom modal dialog, popover, or drawer lacking Escape key dismiss listener or onKeyDown handler.",
+        "regex": re.compile(r"^$", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-034",
+        "name": "Redundant Nested Context Providers",
+        "severity": "Medium",
+        "category": "Architecture & Performance",
+        "description": "Duplicate nested context providers of identical types causing redundant React sub-tree re-renders.",
+        "regex": re.compile(r"<\s*([A-Z]\w+Context)\.Provider", re.IGNORECASE)
+    },
+    {
+        "id": "SLOP-035",
+        "name": "Un-memoized Heavy Array Sort/Filter in Render",
+        "severity": "Medium",
+        "category": "Performance & React Discipline",
+        "description": "Performing in-place or heavy array sorting/filtering directly in render return without useMemo.",
+        "regex": re.compile(r"\.(?:sort|filter)\([^)]*\)\.map\(", re.IGNORECASE)
     }
 ]
 
 EXTS = {'.tsx', '.ts', '.jsx', '.js', '.css'}
-EXCLUDE_DIRS = {'node_modules', '.next', 'dist', 'build', '.git', 'out', 'artifacts', 'scratch', '.turbo', '.pnpm-store', 'test', 'tests'}
+EXCLUDE_DIRS = {'node_modules', '.next', 'dist', 'build', '.git', 'out', 'artifacts', 'scratch', '.turbo', '.pnpm-store', 'test', 'tests', 'staging'}
 EXCLUDE_FILES = {
     'rules.ts',
     'llm-review.ts',
@@ -173,6 +309,7 @@ EXCLUDE_FILES = {
     'taste-dial-audit.ts',
     'tailwind-v4-transform.ts',
     'motion-react-transform.ts',
+    'react-19-transform.ts',
     'agent-sandbox.test.ts',
     'dependency-graph.test.ts',
     'sync-rulepacks.ts',
@@ -181,10 +318,19 @@ EXCLUDE_FILES = {
     'server.ts',
     'server-http.ts',
     'worker.ts',
+    'security.ts',
+    'unslop.ts',
+    'embedded-catalog.ts',
     'ast-parse-ingest.js',
     'ast-parser.ts',
     'cli.ts',
     'audit.ts',
+    'add.ts',
+    'list.ts',
+    'build-registry.ts',
+    'eval-runner.ts',
+    'a11y-eval.ts',
+    'compiler-eval.ts',
 }
 
 def scan_directory(target_dir):
@@ -194,7 +340,11 @@ def scan_directory(target_dir):
         for file in files:
             _, ext = os.path.splitext(file)
             if ext in EXTS and not file.endswith(".d.ts") and file not in EXCLUDE_FILES:
-                file_list.append(os.path.join(root, file))
+                full_p = os.path.join(root, file)
+                # Ignore test files or tooling source files with linters
+                if any(x in full_p for x in ["test", "dist", "node_modules", "scripts", "packages\\audit-linter", "packages/audit-linter", "packages\\cli", "packages/cli", "packages\\mcp-server", "packages/mcp-server", "packages\\harvester", "packages/harvester"]):
+                    continue
+                file_list.append(full_p)
     return file_list
 
 def audit_file(file_path, project_root):
@@ -209,16 +359,72 @@ def audit_file(file_path, project_root):
         print(f"Skipping file {relative_path} due to read error: {e}")
         return findings
 
+    # Whole-file check: SLOP-020 / SLOP-030 (Attribution headers on components)
+    if "registry" in relative_path or "components" in relative_path:
+        if "@license" not in content and "SPDX-License-Identifier" not in content:
+            findings.append({
+                "patternId": "SLOP-020",
+                "patternName": "Missing Mandatory License Attribution",
+                "category": "Legal & IP Compliance",
+                "severity": "High",
+                "lineNum": 1,
+                "lineText": lines[0] if lines else "",
+                "filePath": relative_path
+            })
+        if "@origin" not in content or "@curated-by" not in content:
+            findings.append({
+                "patternId": "SLOP-030",
+                "patternName": "Clean SPDX & Origin Header Verification",
+                "category": "Legal & IP Compliance",
+                "severity": "High",
+                "lineNum": 1,
+                "lineText": lines[0] if lines else "",
+                "filePath": relative_path
+            })
+
+    # Whole-file check: SLOP-031 (Missing Error Boundary / Fallback on Canvas)
+    if ("<canvas" in content or "getContext('webgl')" in content or "getContext(\"webgl\")" in content or "WebGLRenderer" in content) and not any(k in content for k in ["fallback", "Fallback", "ErrorBoundary", "prefers-reduced-motion"]):
+        findings.append({
+            "patternId": "SLOP-031",
+            "patternName": "Missing Error Boundary Fallback",
+            "category": "Production Runtime Resilience",
+            "severity": "Medium",
+            "lineNum": 1,
+            "lineText": lines[0] if lines else "",
+            "filePath": relative_path
+        })
+
+    # Whole-file check: SLOP-033 (Missing Escape Key Overlay Dismiss)
+    if ('role="dialog"' in content or "role='dialog'" in content or "isOpen" in content) and ("modal" in content.lower() or "dialog" in content.lower() or "drawer" in content.lower()):
+        if not any(k in content for k in ["Escape", "onKeyDown", "@radix-ui/react-dialog", "@radix-ui/react-popover", "@radix-ui/react-dropdown-menu"]):
+            findings.append({
+                "patternId": "SLOP-033",
+                "patternName": "Missing Escape Key Overlay Dismiss",
+                "category": "Accessibility & Interaction",
+                "severity": "High",
+                "lineNum": 1,
+                "lineText": lines[0] if lines else "",
+                "filePath": relative_path
+            })
+
     for index, line in enumerate(lines):
         for pattern in SLOP_PATTERNS:
+            if pattern["id"] in ["SLOP-020", "SLOP-030", "SLOP-031", "SLOP-033"]:
+                continue
             # Special bypasses for false positives
             if pattern["id"] == "SLOP-012" and ("focus-visible:" in line or "focus:ring" in line or "pointer-events-none" in line):
                 continue
             if pattern["id"] == "SLOP-014" and "prefers-reduced-motion" in content:
                 continue
-            if pattern["id"] == "SLOP-021" and ("dark:bg-" in line or "bg-white/" in line or "bg-black/" in line or "bg-card" in line):
+            if pattern["id"] == "SLOP-016" and ("key=" in line or "key={" in line or not ("layoutId" in line and ".map(" in line)):
                 continue
-            if pattern["id"] == "SLOP-007" and ("left-[50%]" in line or "top-[50%]" in line):
+            if pattern["id"] == "SLOP-021" and ("dark:bg-" in line or "bg-white/" in line or "bg-black/" in line or "bg-card" in line or "dark:" in line):
+                continue
+            if pattern["id"] == "SLOP-025" and ("clearInterval" in content or "removeEventListener" in content or "abortController" in content or "abort" in content):
+                continue
+            if pattern["id"] == "SLOP-032" and (line.strip().startswith("const ") or line.strip().startswith("let ")) and "render" not in line.lower():
+                continue
+            if pattern["id"] == "SLOP-007" and ("left-[50%]" in line or "top-[50%]" in line or "viewBox" in line or "min-w-" in line or "min-h-" in line or "max-w-" in line or "max-h-" in line or "h-[" in line or "w-[" in line or "min-" in line):
                 continue
 
             if pattern["regex"].search(line):

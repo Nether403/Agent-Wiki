@@ -1,0 +1,50 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "cohort-retention-heatmap",
+  "type": "registry:component",
+  "title": "Cohort Retention Heatmap Matrix",
+  "description": "Matrix grid displaying user cohort retention percentages over time with conditional color intensity scaling.",
+  "category": "ui:editorial",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "chart",
+    "cohort",
+    "heatmap",
+    "matrix",
+    "tremor-raw"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 2,
+    "visual_density": 9
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://tremor.so",
+    "license_type": "MIT",
+    "author": "Tremor Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/cohort-retention-heatmap.tsx",
+      "content": "/**\n * @license MIT\n * @origin Tremor Raw / ReUI (https://tremor.so)\n * @author Tremor Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface CohortRow {\n  cohort: string;\n  size: number;\n  retention: number[]; // e.g. [100, 82, 65, 54, 48, 42]\n}\n\nexport interface CohortRetentionHeatmapProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  periods?: string[];\n  data?: CohortRow[];\n}\n\nconst DEFAULT_PERIODS = [\"M0\", \"M1\", \"M2\", \"M3\", \"M4\", \"M5\"];\n\nconst DEFAULT_COHORTS: CohortRow[] = [\n  { cohort: \"Jan 2026\", size: 1240, retention: [100, 78, 64, 58, 52, 49] },\n  { cohort: \"Feb 2026\", size: 1450, retention: [100, 81, 68, 61, 55] },\n  { cohort: \"Mar 2026\", size: 1820, retention: [100, 84, 72, 65] },\n  { cohort: \"Apr 2026\", size: 2100, retention: [100, 86, 75] },\n  { cohort: \"May 2026\", size: 2450, retention: [100, 88] },\n  { cohort: \"Jun 2026\", size: 2900, retention: [100] },\n];\n\nexport function CohortRetentionHeatmap({\n  title = \"User Retention Heatmap by Cohort\",\n  periods = DEFAULT_PERIODS,\n  data = DEFAULT_COHORTS,\n  className,\n  ...props\n}: CohortRetentionHeatmapProps) {\n  const getCellColor = (pct: number) => {\n    if (pct >= 85) return \"bg-primary text-primary-foreground font-bold\";\n    if (pct >= 70) return \"bg-primary/80 text-primary-foreground font-semibold\";\n    if (pct >= 55) return \"bg-primary/50 text-foreground font-medium\";\n    if (pct >= 40) return \"bg-primary/30 text-foreground\";\n    return \"bg-primary/10 text-muted-foreground\";\n  };\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm space-y-4 overflow-x-auto\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Cohort Heatmap: ${title}`}\n      {...props}\n    >\n      <div className=\"flex items-center justify-between\">\n        <div>\n          <h3 className=\"text-xs font-semibold uppercase tracking-wider text-muted-foreground\">\n            {title}\n          </h3>\n          <p className=\"text-sm font-semibold text-foreground mt-0.5\">\n            Active Workspace Retention\n          </p>\n        </div>\n      </div>\n\n      {/* Heatmap Grid Table */}\n      <table className=\"w-full text-left text-xs border-collapse\">\n        <thead>\n          <tr className=\"border-b border-border text-muted-foreground font-mono\">\n            <th className=\"py-2.5 px-3 font-semibold\">Cohort</th>\n            <th className=\"py-2.5 px-3 font-semibold text-right\">Users</th>\n            {periods.map((p) => (\n              <th key={p} className=\"py-2.5 px-3 font-semibold text-center\">\n                {p}\n              </th>\n            ))}\n          </tr>\n        </thead>\n        <tbody>\n          {data.map((row) => (\n            <tr key={row.cohort} className=\"border-b border-border/40 hover:bg-muted/20 transition-colors\">\n              <td className=\"py-2 px-3 font-medium text-foreground whitespace-nowrap\">\n                {row.cohort}\n              </td>\n              <td className=\"py-2 px-3 text-right font-mono text-muted-foreground\">\n                {row.size.toLocaleString()}\n              </td>\n              {periods.map((_, idx) => {\n                const val = row.retention[idx];\n                if (val === undefined) {\n                  return <td key={idx} className=\"py-2 px-3 text-center bg-muted/20\" />;\n                }\n                return (\n                  <td key={idx} className=\"p-1\">\n                    <div\n                      className={cn(\n                        \"h-8 rounded-lg flex items-center justify-center font-mono text-xs transition-colors\",\n                        getCellColor(val)\n                      )}\n                    >\n                      {val}%\n                    </div>\n                  </td>\n                );\n              })}\n            </tr>\n          ))}\n        </tbody>\n      </table>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/cohort-retention-heatmap.tsx"
+    }
+  ]
+}

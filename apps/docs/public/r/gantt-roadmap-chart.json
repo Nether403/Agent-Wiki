@@ -1,0 +1,54 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "gantt-roadmap-chart",
+  "type": "registry:component",
+  "title": "Gantt Project Roadmap Chart",
+  "description": "Timeline schedule view with milestone bars, category grouping, and progress percentage markers.",
+  "category": "ui:editorial",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "layout-block",
+    "chart",
+    "gantt",
+    "roadmap",
+    "timeline",
+    "diagram-design"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 3,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/cathrynlavery/diagram-design",
+    "license_type": "MIT",
+    "author": "cathrynlavery",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/gantt-roadmap-chart.tsx",
+      "content": "/**\n * @license MIT\n * @origin diagram-design / ReUI (https://reui.io)\n * @author cathrynlavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Calendar, CheckCircle2, Clock } from \"lucide-react\";\n\nexport interface GanttTask {\n  id: string;\n  name: string;\n  category?: string;\n  startMonth: number; // 0 to 5 (Jan to Jun)\n  durationMonths: number; // e.g. 2\n  progress: number; // 0 to 100\n  color?: string;\n}\n\nexport interface GanttRoadmapChartProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  months?: string[];\n  tasks?: GanttTask[];\n}\n\nconst DEFAULT_MONTHS = [\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"Jun\"];\n\nconst DEFAULT_TASKS: GanttTask[] = [\n  { id: \"t1\", name: \"35 Anti-Slop Rule Matrix\", category: \"Core Guardrails\", startMonth: 0, durationMonths: 2, progress: 100, color: \"bg-primary\" },\n  { id: \"t2\", name: \"AI-Native Component Primitives\", category: \"Component Kit\", startMonth: 1, durationMonths: 3, progress: 85, color: \"bg-emerald-500\" },\n  { id: \"t3\", name: \"Semantic Vector Search in MCP\", category: \"MCP Server\", startMonth: 2, durationMonths: 2, progress: 60, color: \"bg-blue-500\" },\n  { id: \"t4\", name: \"Headless Axe-Core Eval Runner\", category: \"CI Harness\", startMonth: 3, durationMonths: 2, progress: 30, color: \"bg-amber-500\" },\n  { id: \"t5\", name: \"175+ Component Full Catalog Sync\", category: \"Release\", startMonth: 4, durationMonths: 2, progress: 10, color: \"bg-purple-500\" },\n];\n\nexport function GanttRoadmapChart({\n  title = \"Machine-First Design Agent Wiki Roadmap\",\n  months = DEFAULT_MONTHS,\n  tasks = DEFAULT_TASKS,\n  className,\n  ...props\n}: GanttRoadmapChartProps) {\n  const [hoveredTaskId, setHoveredTaskId] = React.useState<string | null>(null);\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm space-y-4 overflow-x-auto\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Gantt Project Schedule Roadmap: ${title}`}\n      {...props}\n    >\n      <div className=\"flex items-center justify-between\">\n        <div>\n          <h3 className=\"text-xs font-semibold uppercase tracking-wider text-muted-foreground\">\n            {title}\n          </h3>\n          <p className=\"text-sm font-semibold text-foreground mt-0.5\">\n            Engineering & Component Sprint Horizon\n          </p>\n        </div>\n      </div>\n\n      {/* Gantt Matrix Grid */}\n      <div className=\"min-w-[620px] space-y-3\">\n        {/* Timeline Months Header */}\n        <div className=\"grid grid-cols-12 gap-2 text-xs font-mono font-semibold text-muted-foreground border-b border-border pb-2\">\n          <div className=\"col-span-4\">Milestone / Initiative</div>\n          {months.map((m) => (\n            <div key={m} className=\"col-span-1 text-center font-medium\">\n              {m}\n            </div>\n          ))}\n          <div className=\"col-span-2 text-right\">Progress</div>\n        </div>\n\n        {/* Task Rows */}\n        <div className=\"space-y-2\">\n          {tasks.map((task) => {\n            const isHovered = hoveredTaskId === task.id;\n            const leftCol = task.startMonth;\n            const widthCol = task.durationMonths;\n\n            return (\n              <div\n                key={task.id}\n                onMouseEnter={() => setHoveredTaskId(task.id)}\n                onMouseLeave={() => setHoveredTaskId(null)}\n                className={cn(\n                  \"grid grid-cols-12 gap-2 items-center py-2 px-2 rounded-xl transition-colors\",\n                  isHovered ? \"bg-muted/60\" : \"hover:bg-muted/30\"\n                )}\n              >\n                {/* Task Name & Category */}\n                <div className=\"col-span-4 pr-2\">\n                  <span className=\"font-semibold text-xs text-foreground block truncate\">\n                    {task.name}\n                  </span>\n                  {task.category && (\n                    <span className=\"text-[10px] text-muted-foreground block truncate\">\n                      {task.category}\n                    </span>\n                  )}\n                </div>\n\n                {/* Timeline Bar Range */}\n                <div className=\"col-span-6 relative h-6 flex items-center\">\n                  <div\n                    style={{\n                      left: `${(leftCol / months.length) * 100}%`,\n                      width: `${(widthCol / months.length) * 100}%`,\n                    }}\n                    className={cn(\n                      \"absolute h-5 rounded-lg text-primary-foreground text-[10px] font-mono font-semibold flex items-center px-2 shadow-xs transition-all duration-150 overflow-hidden\",\n                      task.color || \"bg-primary\"\n                    )}\n                  >\n                    {/* Progress Fill inside Bar */}\n                    <div\n                      style={{ width: `${task.progress}%` }}\n                      className=\"absolute inset-0 bg-white/20\"\n                    />\n                    <span className=\"relative z-10 truncate\">{task.progress}%</span>\n                  </div>\n                </div>\n\n                {/* Status Column */}\n                <div className=\"col-span-2 text-right text-xs font-mono text-muted-foreground flex items-center justify-end gap-1.5\">\n                  {task.progress === 100 ? (\n                    <CheckCircle2 className=\"h-3.5 w-3.5 text-emerald-500\" aria-hidden=\"true\" />\n                  ) : (\n                    <Clock className=\"h-3.5 w-3.5 text-muted-foreground\" aria-hidden=\"true\" />\n                  )}\n                  <span>{task.progress}%</span>\n                </div>\n              </div>\n            );\n          })}\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/gantt-roadmap-chart.tsx"
+    }
+  ]
+}

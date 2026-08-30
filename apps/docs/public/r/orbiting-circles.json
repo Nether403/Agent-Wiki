@@ -1,0 +1,51 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "orbiting-circles",
+  "type": "registry:component",
+  "title": "Orbiting Planetary Circles",
+  "description": "Nested rotating orbits carrying technology/brand icons with configurable speed and direction.",
+  "category": "ui:motion",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "motion",
+    "orbiting-circles",
+    "magic-ui",
+    "planetary"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 7,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://magicui.design",
+    "license_type": "MIT",
+    "author": "Magic UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/orbiting-circles.tsx",
+      "content": "/**\n * @license MIT\n * @origin Magic UI (https://magicui.design)\n * @author Magic UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Sparkles, Terminal, Code2, Cpu, Globe, Database } from \"lucide-react\";\n\nexport interface OrbitItem {\n  icon: React.ComponentType<{ className?: string; \"aria-hidden\"?: boolean | \"true\" | \"false\" }>;\n  radius: number;\n  durationSeconds: number;\n  reverse?: boolean;\n}\n\nexport interface OrbitingCirclesProps extends React.HTMLAttributes<HTMLDivElement> {\n  centerIcon?: React.ReactNode;\n  orbits?: OrbitItem[];\n}\n\nconst DEFAULT_ORBITS: OrbitItem[] = [\n  { icon: Terminal, radius: 80, durationSeconds: 20 },\n  { icon: Code2, radius: 80, durationSeconds: 20, reverse: true },\n  { icon: Cpu, radius: 140, durationSeconds: 30 },\n  { icon: Database, radius: 140, durationSeconds: 30, reverse: true },\n  { icon: Globe, radius: 190, durationSeconds: 40 },\n];\n\nexport function OrbitingCircles({\n  centerIcon,\n  orbits = DEFAULT_ORBITS,\n  className,\n  ...props\n}: OrbitingCirclesProps) {\n  return (\n    <div\n      className={cn(\n        \"relative flex items-center justify-center h-96 w-full overflow-hidden rounded-2xl border border-border bg-card select-none\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Orbiting Circles Animation\"\n      {...props}\n    >\n      {/* Central Core Icon */}\n      <div className=\"relative z-10 flex items-center justify-center h-14 w-14 rounded-2xl bg-primary text-primary-foreground shadow-xl border border-primary/40\">\n        {centerIcon || <Sparkles className=\"h-6 w-6\" aria-hidden=\"true\" />}\n      </div>\n\n      {/* SVG Orbit Tracks */}\n      <svg className=\"absolute inset-0 h-full w-full pointer-events-none\" role=\"img\" aria-hidden=\"true\">\n        {[80, 140, 190].map((r) => (\n          <circle\n            key={r}\n            cx=\"50%\"\n            cy=\"50%\"\n            r={r}\n            fill=\"none\"\n            stroke=\"currentColor\"\n            strokeWidth=\"1\"\n            className=\"text-border\"\n            strokeDasharray=\"4 4\"\n          />\n        ))}\n      </svg>\n\n      {/* Orbiting Elements */}\n      {orbits.map((item, idx) => {\n        const IconComponent = item.icon;\n        const animDuration = `${item.durationSeconds}s`;\n\n        return (\n          <div\n            key={idx}\n            style={{\n              width: `${item.radius * 2}px`,\n              height: `${item.radius * 2}px`,\n              animation: `spin ${animDuration} linear infinite ${item.reverse ? \"reverse\" : \"normal\"}`,\n            }}\n            className=\"absolute rounded-full pointer-events-none flex items-start justify-center\"\n          >\n            <div className=\"flex items-center justify-center h-9 w-9 rounded-xl border border-border bg-background shadow-md text-foreground -translate-y-1/2\">\n              <IconComponent className=\"h-4 w-4 text-primary\" aria-hidden=\"true\" />\n            </div>\n          </div>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/orbiting-circles.tsx"
+    }
+  ]
+}

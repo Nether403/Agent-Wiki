@@ -225,6 +225,41 @@ const MCP_SLOP_CHECKS: SlopCheck[] = [
     regex: /^$/i,
     recommendation: "Inject machine-readable @origin, @license, and @curated-by frontmatter headers.",
   },
+  {
+    id: "SLOP-031",
+    name: "Missing Error Boundary Fallback",
+    severity: "Medium",
+    regex: /^$/i,
+    recommendation: "Provide a static fallback UI or ErrorBoundary for complex canvas/WebGL elements.",
+  },
+  {
+    id: "SLOP-032",
+    name: "Unbounded Canvas Memory Allocation",
+    severity: "High",
+    regex: /new\s+(?:Array|Object|Float32Array|Uint8Array|Path2D)\s*\(/i,
+    recommendation: "Pre-allocate memory and typed arrays outside requestAnimationFrame loop.",
+  },
+  {
+    id: "SLOP-033",
+    name: "Missing Escape Key Overlay Dismiss",
+    severity: "High",
+    regex: /^$/i,
+    recommendation: "Implement Escape key dismissal handler or use Radix primitive dialogs.",
+  },
+  {
+    id: "SLOP-034",
+    name: "Redundant Nested Context Providers",
+    severity: "Medium",
+    regex: /<\s*([A-Z]\w+Context)\.Provider/i,
+    recommendation: "Consolidate duplicate React context providers at page boundary.",
+  },
+  {
+    id: "SLOP-035",
+    name: "Un-memoized Heavy Array Sort/Filter",
+    severity: "Medium",
+    regex: /\.(?:sort|filter)\([^)]*\)\.map\(/i,
+    recommendation: "Wrap complex array filtering/sorting in useMemo hook.",
+  },
 ];
 
 export function getRegistryItems(): any[] {
@@ -301,6 +336,8 @@ export function createDesignWikiMcpServer(): McpServer {
         "ui:block",
         "ui:media",
         "ui:utility",
+        "ui:ai-native",
+        "ui:workflow",
       ])
       .optional()
       .describe("Taxonomy category filter"),
@@ -784,7 +821,7 @@ ${sourceCode}
 
       lines.forEach((line, idx) => {
         for (const check of MCP_SLOP_CHECKS) {
-          if (check.id === "SLOP-020" || check.id === "SLOP-030") continue;
+          if (check.id === "SLOP-020" || check.id === "SLOP-030" || check.id === "SLOP-031" || check.id === "SLOP-033") continue;
           if (check.id === "SLOP-012" && (line.includes("focus-visible:") || line.includes("focus:ring"))) {
             continue;
           }
@@ -794,8 +831,11 @@ ${sourceCode}
           if (check.id === "SLOP-021" && (line.includes("dark:bg-") || line.includes("bg-white/") || line.includes("bg-black/"))) {
             continue;
           }
+          if (check.id === "SLOP-025" && (code.includes("clearInterval") || code.includes("removeEventListener"))) {
+            continue;
+          }
 
-          if (check.regex.test(line)) {
+          if (check.regex.source !== "^$" && check.regex.test(line)) {
             findings.push({
               ruleId: check.id,
               name: check.name,
@@ -1042,5 +1082,217 @@ ${sourceCode}
     }
   );
 
+  // Tool 6: semantic_search_components
+  server.registerTool(
+    "semantic_search_components",
+    {
+      description:
+        "Perform semantic natural language and dial-calibrated search across all registry components to find the ideal UI primitives for a given user prompt or architectural specification.",
+      inputSchema: z.object({
+        naturalLanguageQuery: z.string().describe("Natural language query (e.g., 'accessible confirmation drawer for AI agent tool diff', 'hero section with laser glow', 'interactive cohort chart')"),
+        targetDialProfile: z
+          .object({
+            variance: z.number().min(1).max(10).optional().describe("Desired design variance dial (1-10)"),
+            motion: z.number().min(1).max(10).optional().describe("Desired motion intensity dial (1-10)"),
+            density: z.number().min(1).max(10).optional().describe("Desired visual density dial (1-10)"),
+          })
+          .optional()
+          .describe("Target dial calibration for ranking"),
+        topK: z.number().min(1).max(15).optional().default(5).describe("Number of top matching components to return"),
+      }),
+    },
+    async ({ naturalLanguageQuery, targetDialProfile, topK = 5 }) => {
+      const items = getRegistryItems();
+      const queryTokens = naturalLanguageQuery.toLowerCase().split(/\s+/).filter(Boolean);
+
+      const scored = items.map((item) => {
+        let textScore = 0;
+        const corpus = `${item.name} ${item.title} ${item.description} ${item.category} ${(item.tags || []).join(" ")}`.toLowerCase();
+
+        queryTokens.forEach((token) => {
+          if (item.name.toLowerCase().includes(token)) textScore += 5;
+          if (item.title.toLowerCase().includes(token)) textScore += 4;
+          if ((item.tags || []).some((t: string) => t.toLowerCase().includes(token))) textScore += 3;
+          if (item.description.toLowerCase().includes(token)) textScore += 2;
+          if (corpus.includes(token)) textScore += 1;
+        });
+
+        // Dial distance penalty
+        let dialPenalty = 0;
+        if (targetDialProfile) {
+          if (targetDialProfile.variance !== undefined && item.dials?.design_variance !== undefined) {
+            dialPenalty += Math.abs(targetDialProfile.variance - item.dials.design_variance) * 0.5;
+          }
+          if (targetDialProfile.motion !== undefined && item.dials?.motion_intensity !== undefined) {
+            dialPenalty += Math.abs(targetDialProfile.motion - item.dials.motion_intensity) * 0.5;
+          }
+          if (targetDialProfile.density !== undefined && item.dials?.visual_density !== undefined) {
+            dialPenalty += Math.abs(targetDialProfile.density - item.dials.visual_density) * 0.5;
+          }
+        }
+
+        const finalScore = Math.max(0, textScore - dialPenalty);
+
+        return {
+          slug: item.name,
+          title: item.title,
+          category: item.category,
+          description: item.description,
+          tags: item.tags || [],
+          dials: item.dials,
+          similarityScore: Number(finalScore.toFixed(2)),
+          installCommand: `npx design-wiki add ${item.name}`,
+        };
+      });
+
+      scored.sort((a, b) => b.similarityScore - a.similarityScore);
+      const results = scored.slice(0, topK);
+
+      const payload = JSON.stringify(
+        {
+          query: naturalLanguageQuery,
+          targetDialProfile: targetDialProfile || "Unspecified (Neutral)",
+          matchCount: results.length,
+          topMatches: results,
+        },
+        null,
+        2
+      );
+
+      return {
+        content: [{ type: "text", text: stripPayloadToBudget(payload) }],
+      };
+    }
+  );
+
+  // Tool 7: compose_layout_tree
+  server.registerTool(
+    "compose_layout_tree",
+    {
+      description:
+        "Synthesize a cohesive, zero-slop multi-component layout tree for a specified page type, assembling verified registry components with import paths and layout TSX scaffolding.",
+      inputSchema: z.object({
+        pageType: z
+          .enum(["saas-landing", "dashboard", "settings", "auth-flow", "pricing", "ai-chat-workspace"])
+          .describe("Target page blueprint archetype"),
+        requiredFeatures: z.array(z.string()).optional().describe("Key capabilities or blocks needed in the layout"),
+        targetDials: z
+          .object({
+            variance: z.number().min(1).max(10).optional(),
+            motion: z.number().min(1).max(10).optional(),
+            density: z.number().min(1).max(10).optional(),
+          })
+          .optional(),
+      }),
+    },
+    async ({ pageType, requiredFeatures = [], targetDials }) => {
+      let layoutTree: {
+        archetype: string;
+        recommendedComponents: Array<{ position: string; slug: string; title: string; rationale: string }>;
+        scaffoldTsx: string;
+      };
+
+      if (pageType === "ai-chat-workspace") {
+        layoutTree = {
+          archetype: "AI-Native Multi-Agent Workspace",
+          recommendedComponents: [
+            { position: "Layout Shell", slug: "app-shell-sidebar-layout", title: "App Shell Sidebar", rationale: "Persistent navigation and workspace frame" },
+            { position: "Main Feed", slug: "ai-streaming-message", title: "AI Streaming Message", rationale: "Flicker-free streaming token chat container" },
+            { position: "Reasoning Accordion", slug: "ai-reasoning-accordion", title: "AI Reasoning Foldout", rationale: "Chain-of-thought inspector" },
+            { position: "Tool Inspector", slug: "ai-tool-call-card", title: "AI Tool Call Inspector", rationale: "Real-time MCP execution verification" },
+            { position: "Input Footer", slug: "ai-prompt-bar-expanded", title: "Expanded AI Prompt Bar", rationale: "Multimodal attachments, token meter, and slash menu" },
+          ],
+          scaffoldTsx: `import * as React from "react";
+import { AppShellSidebarLayout } from "@/components/ui/app-shell-sidebar-layout";
+import { AiPromptBarExpanded } from "@/components/ui/ai-prompt-bar-expanded";
+import { AiStreamingMessage } from "@/components/ui/ai-streaming-message";
+import { AiReasoningAccordion } from "@/components/ui/ai-reasoning-accordion";
+import { AiToolCallCard } from "@/components/ui/ai-tool-call-card";
+
+export default function AiWorkspacePage() {
+  return (
+    <AppShellSidebarLayout activeTabId="ai-native">
+      <div className="flex flex-col h-full max-w-4xl mx-auto space-y-4">
+        <AiStreamingMessage role="assistant" content="Hello! How can I assist with your design architecture today?" />
+        <AiReasoningAccordion defaultOpen={false} />
+        <AiToolCallCard toolName="search_components" status="success" inputParameters={{ query: "dialog" }} />
+        <div className="mt-auto pt-4">
+          <AiPromptBarExpanded onSubmit={(p) => console.log(p)} />
+        </div>
+      </div>
+    </AppShellSidebarLayout>
+  );
+}`,
+        };
+      } else if (pageType === "dashboard") {
+        layoutTree = {
+          archetype: "Analytical SaaS Executive Dashboard",
+          recommendedComponents: [
+            { position: "Shell", slug: "app-shell-sidebar-layout", title: "App Shell Sidebar", rationale: "Multi-tier collapsible navigation" },
+            { position: "Velocity Chart", slug: "interactive-area-chart", title: "Interactive Area Chart", rationale: "Time-series token volume trend" },
+            { position: "Distribution Card", slug: "donut-metric-card", title: "Donut Metric Breakdown", rationale: "Model share categorization" },
+            { position: "Retention Grid", slug: "cohort-retention-heatmap", title: "Cohort Retention Heatmap", rationale: "User retention matrix" },
+          ],
+          scaffoldTsx: `import * as React from "react";
+import { AppShellSidebarLayout } from "@/components/ui/app-shell-sidebar-layout";
+import { InteractiveAreaChart } from "@/components/ui/interactive-area-chart";
+import { DonutMetricCard } from "@/components/ui/donut-metric-card";
+import { CohortRetentionHeatmap } from "@/components/ui/cohort-retention-heatmap";
+
+export default function DashboardPage() {
+  return (
+    <AppShellSidebarLayout activeTabId="dashboard">
+      <div className="flex flex-col gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <InteractiveAreaChart title="Token Velocity" />
+          </div>
+          <div>
+            <DonutMetricCard title="Traffic Share" />
+          </div>
+        </div>
+        <CohortRetentionHeatmap />
+      </div>
+    </AppShellSidebarLayout>
+  );
+}`,
+        };
+      } else {
+        layoutTree = {
+          archetype: "SaaS Marketing Showcase",
+          recommendedComponents: [
+            { position: "Hero Section", slug: "google-gemini-glow-hero", title: "Gemini Laser Glow Hero", rationale: "High-contrast dark-mode hero banner" },
+            { position: "Interactive Block", slug: "interactive-roi-calculator", title: "Interactive ROI Calculator", rationale: "Dynamic savings estimator" },
+            { position: "Product Showcase", slug: "device-mockup-showcase", title: "Device Mockup Showcase", rationale: "Desktop Safari and Mobile device preview" },
+            { position: "Social Proof", slug: "testimonial-masonry-marquee", title: "Testimonial Masonry Marquee", rationale: "User quotes and verified reviews" },
+          ],
+          scaffoldTsx: `import * as React from "react";
+import { GoogleGeminiGlowHero } from "@/components/ui/google-gemini-glow-hero";
+import { InteractiveRoiCalculator } from "@/components/ui/interactive-roi-calculator";
+import { DeviceMockupShowcase } from "@/components/ui/device-mockup-showcase";
+import { TestimonialMasonryMarquee } from "@/components/ui/testimonial-masonry-marquee";
+
+export default function LandingPage() {
+  return (
+    <main className="flex flex-col w-full bg-background text-foreground min-h-screen">
+      <GoogleGeminiGlowHero />
+      <div className="max-w-6xl mx-auto px-4 py-16 w-full space-y-16">
+        <DeviceMockupShowcase />
+        <InteractiveRoiCalculator />
+        <TestimonialMasonryMarquee />
+      </div>
+    </main>
+  );
+}`,
+        };
+      }
+
+      return {
+        content: [{ type: "text", text: stripPayloadToBudget(JSON.stringify(layoutTree, null, 2)) }],
+      };
+    }
+  );
+
   return server;
 }
+

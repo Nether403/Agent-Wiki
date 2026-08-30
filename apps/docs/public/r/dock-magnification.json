@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "dock-magnification",
+  "type": "registry:component",
+  "title": "macOS Dock Magnification",
+  "description": "macOS-style dock with mouse proximity magnification and smooth spring icon popups.",
+  "category": "ui:motion",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "glassmorphism",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "motion",
+    "dock",
+    "magnification",
+    "macos",
+    "magic-ui"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 8,
+    "visual_density": 4
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "toolbar",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://magicui.design",
+    "license_type": "MIT",
+    "author": "Magic UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/dock-magnification.tsx",
+      "content": "/**\n * @license MIT\n * @origin Magic UI / Motion Primitives (https://magicui.design)\n * @author Magic UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport {\n  Terminal,\n  Folder,\n  Settings,\n  Sparkles,\n  Layers,\n  Code2,\n} from \"lucide-react\";\n\nexport interface DockItem {\n  id: string;\n  label: string;\n  icon: React.ComponentType<{ className?: string; \"aria-hidden\"?: boolean | \"true\" | \"false\" }>;\n  onClick?: () => void;\n}\n\nexport interface DockMagnificationProps extends React.HTMLAttributes<HTMLDivElement> {\n  items?: DockItem[];\n}\n\nconst DEFAULT_ITEMS: DockItem[] = [\n  { id: \"term\", label: \"Terminal\", icon: Terminal },\n  { id: \"files\", label: \"Files\", icon: Folder },\n  { id: \"code\", label: \"Editor\", icon: Code2 },\n  { id: \"agent\", label: \"AI Agent\", icon: Sparkles },\n  { id: \"layers\", label: \"Design Wiki\", icon: Layers },\n  { id: \"settings\", label: \"Preferences\", icon: Settings },\n];\n\nexport function DockMagnification({\n  items = DEFAULT_ITEMS,\n  className,\n  ...props\n}: DockMagnificationProps) {\n  const [hoveredIdx, setHoveredIdx] = React.useState<number | null>(null);\n\n  const getScale = (idx: number) => {\n    if (hoveredIdx === null) return 1;\n    const distance = Math.abs(hoveredIdx - idx);\n    if (distance === 0) return 1.45;\n    if (distance === 1) return 1.25;\n    if (distance === 2) return 1.1;\n    return 1;\n  };\n\n  return (\n    <div\n      onMouseLeave={() => setHoveredIdx(null)}\n      className={cn(\n        \"inline-flex items-center gap-3 px-4 py-3 rounded-2xl border border-border bg-card/80 backdrop-blur-md shadow-2xl transition-all select-none\",\n        className\n      )}\n      role=\"toolbar\"\n      aria-label=\"Application Quick Access Dock\"\n      {...props}\n    >\n      {items.map((item, idx) => {\n        const IconComponent = item.icon;\n        const scale = getScale(idx);\n\n        return (\n          <button\n            key={item.id}\n            type=\"button\"\n            onClick={item.onClick}\n            onMouseEnter={() => setHoveredIdx(idx)}\n            style={{\n              transform: `scale(${scale}) translateY(${scale > 1 ? -(scale - 1) * 12 : 0}px)`,\n            }}\n            aria-label={item.label}\n            className=\"relative group flex items-center justify-center h-10 w-10 rounded-xl bg-background border border-border shadow-xs text-foreground transition-transform duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <IconComponent className=\"h-5 w-5 text-primary\" aria-hidden=\"true\" />\n\n            {/* Hover Tooltip Title */}\n            <span className=\"absolute -top-8 px-2 py-0.5 rounded-md bg-popover border border-border text-popover-foreground text-[10px] font-medium shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap\">\n              {item.label}\n            </span>\n          </button>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/dock-magnification.tsx"
+    }
+  ]
+}

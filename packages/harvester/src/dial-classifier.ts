@@ -276,7 +276,21 @@ export function classifyComponentDials(
 
   // 1. Dial Scoring: Category & Structure tells (if defaultDials not explicitly preset)
   if (!meta.defaultDials) {
-    if (meta.hasWebGL || meta.hasCanvas) {
+    if (/^ai-|^ai[A-Z]|Prompt|Reasoning|Streaming|ToolCall|ArtifactSandbox/i.test(meta.name)) {
+      category = "ui:ai-native";
+      designVariance = 6;
+      motionIntensity = 4;
+      visualDensity = 6;
+      tags.add("ai-native");
+      tags.add("agent-ui");
+    } else if (/Workflow|Pipeline|NodeGraph|FlowCanvas/i.test(meta.name)) {
+      category = "ui:workflow";
+      designVariance = 6;
+      motionIntensity = 5;
+      visualDensity = 7;
+      tags.add("workflow");
+      tags.add("node-graph");
+    } else if (meta.hasWebGL || meta.hasCanvas) {
       category = "ui:creative";
       motionIntensity = 9;
       designVariance = 8;
@@ -295,7 +309,7 @@ export function classifyComponentDials(
       motionIntensity = 3;
       visualDensity = 6;
       tags.add("layout-block");
-    } else if (/Diagram|Metric|Stat|Table|Analytics/i.test(meta.name)) {
+    } else if (/Diagram|Metric|Stat|Table|Analytics|Chart|Heatmap|Matrix|Sankey|Gantt/i.test(meta.name)) {
       category = "ui:editorial";
       designVariance = 5;
       motionIntensity = 1;

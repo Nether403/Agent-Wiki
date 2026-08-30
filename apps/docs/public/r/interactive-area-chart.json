@@ -1,0 +1,50 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "interactive-area-chart",
+  "type": "registry:component",
+  "title": "Interactive Area Chart",
+  "description": "Responsive SVG area chart with linear gradient fill, brush timeline zoom, and interactive cursor tooltip.",
+  "category": "ui:editorial",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "layout-block",
+    "chart",
+    "area-chart",
+    "data-viz",
+    "tremor-raw"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 3,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://tremor.so",
+    "license_type": "MIT",
+    "author": "Tremor Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/interactive-area-chart.tsx",
+      "content": "/**\n * @license MIT\n * @origin Tremor Raw / Shadcn Chart (https://tremor.so)\n * @author Tremor Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface DataPoint {\n  date: string;\n  value: number;\n  secondaryValue?: number;\n}\n\nexport interface InteractiveAreaChartProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  data?: DataPoint[];\n  valuePrefix?: string;\n  valueSuffix?: string;\n}\n\nconst DEFAULT_DATA: DataPoint[] = [\n  { date: \"Jan\", value: 1200, secondaryValue: 800 },\n  { date: \"Feb\", value: 1900, secondaryValue: 1100 },\n  { date: \"Mar\", value: 3000, secondaryValue: 1800 },\n  { date: \"Apr\", value: 2400, secondaryValue: 2100 },\n  { date: \"May\", value: 4100, secondaryValue: 2800 },\n  { date: \"Jun\", value: 5200, secondaryValue: 3600 },\n  { date: \"Jul\", value: 4800, secondaryValue: 4100 },\n];\n\nexport function InteractiveAreaChart({\n  title = \"Token Usage Velocity\",\n  data = DEFAULT_DATA,\n  valuePrefix = \"\",\n  valueSuffix = \" tok\",\n  className,\n  ...props\n}: InteractiveAreaChartProps) {\n  const [hoveredIdx, setHoveredIdx] = React.useState<number | null>(null);\n\n  const maxValue = React.useMemo(() => {\n    return Math.max(...data.map((d) => Math.max(d.value, d.secondaryValue || 0))) * 1.15;\n  }, [data]);\n\n  const width = 600;\n  const height = 220;\n  const padding = 32;\n\n  const points = data.map((d, i) => {\n    const x = padding + (i / (data.length - 1)) * (width - padding * 2);\n    const y = height - padding - (d.value / maxValue) * (height - padding * 2);\n    return { x, y, data: d };\n  });\n\n  const svgPathD = points.reduce((acc, pt, i) => {\n    return i === 0 ? `M ${pt.x},${pt.y}` : `${acc} L ${pt.x},${pt.y}`;\n  }, \"\");\n\n  const areaPathD = `${svgPathD} L ${points[points.length - 1].x},${height - padding} L ${points[0].x},${height - padding} Z`;\n\n  const hoveredPoint = hoveredIdx !== null ? points[hoveredIdx] : null;\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Interactive Area Chart: ${title}`}\n      {...props}\n    >\n      <div className=\"flex items-center justify-between mb-4\">\n        <div>\n          <h3 className=\"text-xs font-semibold uppercase tracking-wider text-muted-foreground\">\n            {title}\n          </h3>\n          <p className=\"text-xl font-bold font-mono text-foreground mt-0.5\">\n            {hoveredPoint\n              ? `${valuePrefix}${hoveredPoint.data.value.toLocaleString()}${valueSuffix}`\n              : `${valuePrefix}${data[data.length - 1].value.toLocaleString()}${valueSuffix}`}\n          </p>\n        </div>\n        <div className=\"flex items-center gap-2 text-xs font-mono text-muted-foreground\">\n          <span className=\"inline-flex items-center gap-1\">\n            <span className=\"h-2 w-2 rounded-full bg-primary\" /> Primary\n          </span>\n        </div>\n      </div>\n\n      {/* SVG Canvas Area Chart */}\n      <div className=\"relative w-full h-56 overflow-hidden\">\n        <svg\n          viewBox={`0 0 ${width} ${height}`}\n          className=\"w-full h-full overflow-visible\"\n          role=\"img\"\n          aria-label={`Data chart for ${title}`}\n        >\n          <defs>\n            <linearGradient id=\"areaGradientPrimary\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n              <stop offset=\"0%\" stopColor=\"var(--color-primary, #3b82f6)\" stopOpacity=\"0.35\" />\n              <stop offset=\"100%\" stopColor=\"var(--color-primary, #3b82f6)\" stopOpacity=\"0.0\" />\n            </linearGradient>\n          </defs>\n\n          {/* Grid lines */}\n          {[0.25, 0.5, 0.75, 1].map((lvl) => {\n            const y = height - padding - lvl * (height - padding * 2);\n            return (\n              <line\n                key={lvl}\n                x1={padding}\n                y1={y}\n                x2={width - padding}\n                y2={y}\n                stroke=\"currentColor\"\n                strokeWidth=\"1\"\n                className=\"text-border\"\n                strokeDasharray=\"4 4\"\n              />\n            );\n          })}\n\n          {/* Fill Area */}\n          <path d={areaPathD} fill=\"url(#areaGradientPrimary)\" />\n\n          {/* Stroke Line */}\n          <path\n            d={svgPathD}\n            fill=\"none\"\n            stroke=\"var(--color-primary, currentColor)\"\n            strokeWidth=\"2.5\"\n            className=\"text-primary transition-all duration-150\"\n          />\n\n          {/* Interactive Cursor Points */}\n          {points.map((pt, i) => (\n            <g\n              key={i}\n              onMouseEnter={() => setHoveredIdx(i)}\n              onMouseLeave={() => setHoveredIdx(null)}\n              className=\"cursor-pointer\"\n            >\n              <circle\n                cx={pt.x}\n                cy={pt.y}\n                r={hoveredIdx === i ? 6 : 3.5}\n                className={cn(\n                  \"fill-background stroke-primary stroke-2 transition-all duration-150\",\n                  hoveredIdx === i && \"fill-primary ring-4 ring-primary/20\"\n                )}\n              />\n              <text\n                x={pt.x}\n                y={height - 10}\n                textAnchor=\"middle\"\n                className=\"fill-muted-foreground text-xs font-mono font-medium\"\n              >\n                {pt.data.date}\n              </text>\n            </g>\n          ))}\n        </svg>\n\n        {/* Floating Tooltip */}\n        {hoveredPoint && (\n          <div\n            style={{\n              left: `${(hoveredPoint.x / width) * 100}%`,\n              top: `${(hoveredPoint.y / height) * 100}%`,\n              transform: \"translate(-50%, -120%)\",\n            }}\n            className=\"absolute pointer-events-none px-2.5 py-1.5 rounded-xl bg-popover text-popover-foreground border border-border shadow-xl text-xs font-mono font-semibold\"\n          >\n            <div>{hoveredPoint.data.date}</div>\n            <div className=\"text-primary font-bold\">\n              {valuePrefix}\n              {hoveredPoint.data.value.toLocaleString()}\n              {valueSuffix}\n            </div>\n          </div>\n        )}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/interactive-area-chart.tsx"
+    }
+  ]
+}

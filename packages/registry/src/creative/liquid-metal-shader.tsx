@@ -9,6 +9,16 @@
 import * as React from "react";
 import { cn } from "../lib/utils";
 
+const VERTEX_POSITIONS = new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]);
+
+function createShader(gl: WebGLRenderingContext, type: number, source: string) {
+  const shader = gl.createShader(type);
+  if (!shader) return null;
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  return shader;
+}
+
 export interface LiquidMetalShaderProps extends React.HTMLAttributes<HTMLDivElement> {
   speed?: number;
   distortion?: number;
@@ -53,19 +63,10 @@ export function LiquidMetalShader({
 
         float d = length(st - vec2(0.5));
         float val = sin(d * 18.0 - u_time * 2.0) * 0.5 + 0.5;
-
         color = vec3(val * 0.2 + 0.05, val * 0.4 + 0.1, val * 0.7 + 0.2);
         gl_FragColor = vec4(color, 0.85);
       }
     `;
-
-    function createShader(gl: WebGLRenderingContext, type: number, source: string) {
-      const shader = gl.createShader(type);
-      if (!shader) return null;
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      return shader;
-    }
 
     const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
     const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
@@ -80,11 +81,7 @@ export function LiquidMetalShader({
 
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
-      gl.STATIC_DRAW
-    );
+    gl.bufferData(gl.ARRAY_BUFFER, VERTEX_POSITIONS, gl.STATIC_DRAW);
 
     const posAttr = gl.getAttribLocation(program, "position");
     gl.enableVertexAttribArray(posAttr);

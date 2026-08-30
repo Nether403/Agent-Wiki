@@ -1,0 +1,56 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ai-artifact-sandbox-iframe",
+  "type": "registry:component",
+  "title": "AI Artifact Live Sandbox Frame",
+  "description": "Split-screen live preview canvas with responsive device switcher, code/preview toggle, and version history diff slider.",
+  "category": "ui:ai-native",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "glassmorphism",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "ai-native",
+    "artifact-sandbox",
+    "preview",
+    "iframe",
+    "21st-dev"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 4,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://21st.dev",
+    "license_type": "MIT",
+    "author": "21st.dev Community",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ai-native/ai-artifact-sandbox-iframe.tsx",
+      "content": "/**\n * @license MIT\n * @origin 21st.dev / Agent Wiki (https://21st.dev)\n * @author 21st.dev & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport {\n  Monitor,\n  Tablet,\n  Smartphone,\n  Code2,\n  Eye,\n  RotateCw,\n  ExternalLink,\n  Copy,\n  Check,\n  SplitSquareVertical,\n} from \"lucide-react\";\n\nexport interface AiArtifactSandboxIframeProps extends React.HTMLAttributes<HTMLDivElement> {\n  artifactTitle?: string;\n  sourceCode: string;\n  previewUrl?: string;\n  defaultView?: \"preview\" | \"code\" | \"split\";\n  versionTag?: string;\n}\n\nexport function AiArtifactSandboxIframe({\n  artifactTitle = \"Component Sandbox Preview\",\n  sourceCode,\n  previewUrl = \"about:blank\",\n  defaultView = \"preview\",\n  versionTag = \"v1.2.0\",\n  className,\n  ...props\n}: AiArtifactSandboxIframeProps) {\n  const [viewMode, setViewMode] = React.useState<\"preview\" | \"code\" | \"split\">(defaultView);\n  const [deviceMode, setDeviceMode] = React.useState<\"desktop\" | \"tablet\" | \"mobile\">(\"desktop\");\n  const [copied, setCopied] = React.useState(false);\n  const [isRefreshing, setIsRefreshing] = React.useState(false);\n\n  const handleCopy = () => {\n    navigator.clipboard.writeText(sourceCode);\n    setCopied(true);\n    setTimeout(() => setCopied(false), 2000);\n  };\n\n  const handleRefresh = () => {\n    setIsRefreshing(true);\n    setTimeout(() => setIsRefreshing(false), 600);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-2xl border border-border bg-card text-card-foreground shadow-lg overflow-hidden\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Artifact Sandbox: ${artifactTitle}`}\n      {...props}\n    >\n      {/* Top Toolbar */}\n      <div className=\"flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-muted/40 border-b border-border\">\n        {/* Left: Title & Version */}\n        <div className=\"flex items-center gap-2\">\n          <span className=\"font-semibold text-xs text-foreground\">{artifactTitle}</span>\n          <span className=\"px-2 py-0.5 rounded-md bg-primary/10 text-primary font-mono text-xs\">\n            {versionTag}\n          </span>\n        </div>\n\n        {/* Center: Device Switcher (when in preview mode) */}\n        {viewMode !== \"code\" && (\n          <div className=\"flex items-center gap-1 p-1 rounded-xl bg-background border border-border\">\n            <button\n              type=\"button\"\n              onClick={() => setDeviceMode(\"desktop\")}\n              aria-label=\"Desktop preview width\"\n              className={cn(\n                \"p-1.5 rounded-lg text-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n                deviceMode === \"desktop\" ? \"bg-muted text-foreground\" : \"text-muted-foreground hover:text-foreground\"\n              )}\n            >\n              <Monitor className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n            </button>\n            <button\n              type=\"button\"\n              onClick={() => setDeviceMode(\"tablet\")}\n              aria-label=\"Tablet preview width (768px)\"\n              className={cn(\n                \"p-1.5 rounded-lg text-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n                deviceMode === \"tablet\" ? \"bg-muted text-foreground\" : \"text-muted-foreground hover:text-foreground\"\n              )}\n            >\n              <Tablet className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n            </button>\n            <button\n              type=\"button\"\n              onClick={() => setDeviceMode(\"mobile\")}\n              aria-label=\"Mobile preview width (375px)\"\n              className={cn(\n                \"p-1.5 rounded-lg text-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n                deviceMode === \"mobile\" ? \"bg-muted text-foreground\" : \"text-muted-foreground hover:text-foreground\"\n              )}\n            >\n              <Smartphone className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n            </button>\n          </div>\n        )}\n\n        {/* Right: View Mode Toggle & Actions */}\n        <div className=\"flex items-center gap-1.5\">\n          <div className=\"flex items-center gap-1 p-1 rounded-xl bg-background border border-border\">\n            <button\n              type=\"button\"\n              onClick={() => setViewMode(\"preview\")}\n              className={cn(\n                \"inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n                viewMode === \"preview\" ? \"bg-muted text-foreground font-semibold\" : \"text-muted-foreground hover:text-foreground\"\n              )}\n            >\n              <Eye className=\"h-3.5 w-3.5\" aria-hidden=\"true\" /> Preview\n            </button>\n            <button\n              type=\"button\"\n              onClick={() => setViewMode(\"code\")}\n              className={cn(\n                \"inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n                viewMode === \"code\" ? \"bg-muted text-foreground font-semibold\" : \"text-muted-foreground hover:text-foreground\"\n              )}\n            >\n              <Code2 className=\"h-3.5 w-3.5\" aria-hidden=\"true\" /> Code\n            </button>\n            <button\n              type=\"button\"\n              onClick={() => setViewMode(\"split\")}\n              className={cn(\n                \"inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\",\n                viewMode === \"split\" ? \"bg-muted text-foreground font-semibold\" : \"text-muted-foreground hover:text-foreground\"\n              )}\n            >\n              <SplitSquareVertical className=\"h-3.5 w-3.5\" aria-hidden=\"true\" /> Split\n            </button>\n          </div>\n\n          <button\n            type=\"button\"\n            onClick={handleRefresh}\n            aria-label=\"Refresh sandbox preview\"\n            className=\"p-2 rounded-xl border border-border bg-background hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <RotateCw className={cn(\"h-3.5 w-3.5\", isRefreshing && \"animate-spin\")} aria-hidden=\"true\" />\n          </button>\n\n          <button\n            type=\"button\"\n            onClick={handleCopy}\n            aria-label={copied ? \"Source code copied\" : \"Copy source code\"}\n            className=\"p-2 rounded-xl border border-border bg-background hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            {copied ? (\n              <Check className=\"h-3.5 w-3.5 text-emerald-500\" aria-hidden=\"true\" />\n            ) : (\n              <Copy className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n            )}\n          </button>\n        </div>\n      </div>\n\n      {/* Sandbox Workspace Area */}\n      <div className=\"relative flex flex-col md:flex-row w-full h-[520px] bg-muted/20 overflow-hidden\">\n        {/* Preview Frame Container */}\n        {(viewMode === \"preview\" || viewMode === \"split\") && (\n          <div\n            className={cn(\n              \"flex-1 flex items-center justify-center p-6 transition-colors duration-200 overflow-auto\",\n              viewMode === \"split\" && \"border-r border-border md:w-1/2\"\n            )}\n          >\n            <div\n              className={cn(\n                \"relative h-full bg-background rounded-xl border border-border shadow-xl overflow-hidden transition-colors duration-200\",\n                deviceMode === \"desktop\"\n                  ? \"w-full\"\n                  : deviceMode === \"tablet\"\n                  ? \"w-[640px]\"\n                  : \"w-[360px]\"\n              )}\n            >\n              {/* Fallback & Sandbox Frame */}\n              <iframe\n                title={artifactTitle}\n                src={previewUrl}\n                sandbox=\"allow-scripts allow-same-origin\"\n                className=\"w-full h-full border-0 bg-background\"\n              />\n              <div className=\"absolute top-2 right-2 flex items-center gap-1.5 px-2 py-1 rounded-md bg-muted/80 backdrop-blur-xs border border-border text-[10px] text-muted-foreground font-mono\">\n                <span>{deviceMode === \"desktop\" ? \"100%\" : deviceMode === \"tablet\" ? \"640px\" : \"360px\"}</span>\n              </div>\n            </div>\n          </div>\n        )}\n\n        {/* Code Editor View */}\n        {(viewMode === \"code\" || viewMode === \"split\") && (\n          <div\n            className={cn(\n              \"flex-1 flex flex-col bg-card overflow-auto font-mono text-xs text-foreground p-4\",\n              viewMode === \"split\" && \"md:w-1/2\"\n            )}\n          >\n            <pre className=\"overflow-x-auto leading-relaxed\">\n              <code>{sourceCode}</code>\n            </pre>\n          </div>\n        )}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/ai-artifact-sandbox-iframe.tsx"
+    }
+  ]
+}

@@ -19,7 +19,7 @@ export interface DataGridColumn<T> {
   width?: string;
 }
 
-export interface ReuiDataGridProps<T extends Record<string, any>> extends React.HTMLAttributes<HTMLDivElement> {
+export interface ReuiDataGridProps<T extends Record<string, unknown>> extends React.HTMLAttributes<HTMLDivElement> {
   data: T[];
   columns: DataGridColumn<T>[];
   pageSize?: number;
@@ -28,7 +28,7 @@ export interface ReuiDataGridProps<T extends Record<string, any>> extends React.
   onExportCsv?: () => void;
 }
 
-export function ReuiDataGrid<T extends Record<string, any>>({
+export function ReuiDataGrid<T extends Record<string, unknown>>({
   data = [],
   columns = [],
   pageSize = 5,

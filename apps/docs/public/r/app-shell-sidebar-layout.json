@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "app-shell-sidebar-layout",
+  "type": "registry:block",
+  "title": "SaaS App Shell Sidebar Layout",
+  "description": "Production-ready SaaS dashboard shell with collapsible multi-tier sidebar, breadcrumbs, search bar, and user profile popover.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "brutalist",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "block",
+    "app-shell",
+    "sidebar",
+    "dashboard",
+    "layout",
+    "reui"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 3,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "navigation",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://reui.io",
+    "license_type": "MIT",
+    "author": "ReUI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/app-shell-sidebar-layout.tsx",
+      "content": "/**\n * @license MIT\n * @origin UI Layouts / ReUI (https://reui.io)\n * @author ReUI Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport {\n  LayoutDashboard,\n  Layers,\n  Terminal,\n  ShieldAlert,\n  Settings,\n  Menu,\n  ChevronRight,\n  Search,\n  Bell,\n  Sparkles,\n  User,\n} from \"lucide-react\";\n\nexport interface NavItem {\n  id: string;\n  label: string;\n  icon: React.ComponentType<{ className?: string; \"aria-hidden\"?: boolean | \"true\" | \"false\" }>;\n  badge?: string;\n}\n\nexport interface AppShellSidebarLayoutProps extends React.HTMLAttributes<HTMLDivElement> {\n  activeTabId?: string;\n  onTabSelect?: (id: string) => void;\n}\n\nconst DEFAULT_NAV: NavItem[] = [\n  { id: \"dashboard\", label: \"Dashboard\", icon: LayoutDashboard },\n  { id: \"registry\", label: \"Component Registry\", icon: Layers, badge: \"175+\" },\n  { id: \"ai-native\", label: \"AI-Native Primitives\", icon: Sparkles, badge: \"New\" },\n  { id: \"terminal\", label: \"MCP Terminal\", icon: Terminal },\n  { id: \"audit\", label: \"Anti-Slop Guardrail\", icon: ShieldAlert },\n  { id: \"settings\", label: \"System Config\", icon: Settings },\n];\n\nexport function AppShellSidebarLayout({\n  activeTabId = \"registry\",\n  onTabSelect,\n  children,\n  className,\n  ...props\n}: AppShellSidebarLayoutProps) {\n  const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);\n  const [currentTab, setCurrentTab] = React.useState(activeTabId);\n\n  const handleSelect = (id: string) => {\n    setCurrentTab(id);\n    onTabSelect?.(id);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"flex h-screen w-full overflow-hidden bg-background text-foreground select-none\",\n        className\n      )}\n      {...props}\n    >\n      {/* Sidebar Navigation */}\n      <aside\n        className={cn(\n          \"flex flex-col border-r border-border bg-card transition-colors duration-200 shrink-0\",\n          isSidebarOpen ? \"w-64\" : \"w-16\"\n        )}\n      >\n        {/* Brand Header */}\n        <div className=\"flex items-center justify-between h-14 px-4 border-b border-border\">\n          {isSidebarOpen ? (\n            <div className=\"flex items-center gap-2\">\n              <div className=\"flex items-center justify-center h-8 w-8 rounded-xl bg-primary text-primary-foreground font-bold text-xs shadow-xs\">\n                W\n              </div>\n              <span className=\"font-bold text-sm tracking-tight text-foreground\">Agent Wiki</span>\n            </div>\n          ) : (\n            <div className=\"mx-auto flex items-center justify-center h-8 w-8 rounded-xl bg-primary text-primary-foreground font-bold text-xs\">\n              W\n            </div>\n          )}\n\n          <button\n            type=\"button\"\n            onClick={() => setIsSidebarOpen((prev) => !prev)}\n            aria-label={isSidebarOpen ? \"Collapse sidebar\" : \"Expand sidebar\"}\n            className=\"p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n          >\n            <Menu className=\"h-4 w-4\" aria-hidden=\"true\" />\n          </button>\n        </div>\n\n        {/* Navigation Items */}\n        <nav className=\"flex-1 p-2 space-y-1 overflow-y-auto\" role=\"navigation\" aria-label=\"Main Navigation\">\n          {DEFAULT_NAV.map((item) => {\n            const Icon = item.icon;\n            const isSelected = currentTab === item.id;\n\n            return (\n              <button\n                key={item.id}\n                type=\"button\"\n                onClick={() => handleSelect(item.id)}\n                aria-label={item.label}\n                className={cn(\n                  \"flex items-center gap-3 w-full px-3 py-2 rounded-xl text-xs font-medium transition-colors text-left\",\n                  \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                  isSelected\n                    ? \"bg-primary text-primary-foreground font-semibold shadow-xs\"\n                    : \"text-muted-foreground hover:text-foreground hover:bg-muted\"\n                )}\n              >\n                <Icon className=\"h-4 w-4 shrink-0\" aria-hidden=\"true\" />\n                {isSidebarOpen && (\n                  <div className=\"flex items-center justify-between flex-1 truncate\">\n                    <span className=\"truncate\">{item.label}</span>\n                    {item.badge && (\n                      <span\n                        className={cn(\n                          \"px-1.5 py-0.5 rounded-md text-[10px] font-mono\",\n                          isSelected\n                            ? \"bg-primary-foreground/20 text-primary-foreground\"\n                            : \"bg-muted text-foreground\"\n                        )}\n                      >\n                        {item.badge}\n                      </span>\n                    )}\n                  </div>\n                )}\n              </button>\n            );\n          })}\n        </nav>\n\n        {/* User Profile Footer */}\n        <div className=\"p-3 border-t border-border\">\n          <div className=\"flex items-center gap-2.5 p-2 rounded-xl bg-muted/40\">\n            <div className=\"flex items-center justify-center h-7 w-7 rounded-full bg-primary/20 text-primary shrink-0\">\n              <User className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n            </div>\n            {isSidebarOpen && (\n              <div className=\"min-w-0 flex-1\">\n                <p className=\"text-xs font-semibold text-foreground truncate\">Design Agent</p>\n                <p className=\"text-[10px] text-muted-foreground truncate\">agent@wiki-host.local</p>\n              </div>\n            )}\n          </div>\n        </div>\n      </aside>\n\n      {/* Main Content Area with Top Header */}\n      <div className=\"flex-1 flex flex-col min-w-0 overflow-hidden\">\n        {/* Top Header Bar */}\n        <header className=\"flex items-center justify-between h-14 px-6 border-b border-border bg-card shrink-0\">\n          {/* Breadcrumbs */}\n          <div className=\"flex items-center gap-2 text-xs text-muted-foreground font-medium\">\n            <span>Agent Wiki</span>\n            <ChevronRight className=\"h-3.5 w-3.5 text-muted-foreground/60\" aria-hidden=\"true\" />\n            <span className=\"text-foreground capitalize font-semibold\">{currentTab}</span>\n          </div>\n\n          {/* Header Controls */}\n          <div className=\"flex items-center gap-3\">\n            <div className=\"relative w-64 hidden sm:block\">\n              <Search className=\"absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground\" aria-hidden=\"true\" />\n              <input\n                type=\"text\"\n                placeholder=\"Search registry...\"\n                className=\"w-full pl-9 pr-3 py-1.5 rounded-xl border border-input bg-background text-xs text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring\"\n                aria-label=\"Search registry items\"\n              />\n            </div>\n\n            <button\n              type=\"button\"\n              aria-label=\"View notifications\"\n              className=\"p-2 rounded-xl border border-border bg-background hover:bg-muted text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <Bell className=\"h-4 w-4\" aria-hidden=\"true\" />\n            </button>\n          </div>\n        </header>\n\n        {/* Dynamic Workspace Slot */}\n        <main className=\"flex-1 overflow-auto p-6 bg-muted/10\">\n          {children || (\n            <div className=\"flex flex-col items-center justify-center h-full rounded-2xl border-2 border-dashed border-border p-12 text-center text-muted-foreground\">\n              <Sparkles className=\"h-8 w-8 text-primary mb-3\" aria-hidden=\"true\" />\n              <h4 className=\"text-sm font-semibold text-foreground\">Workspace Canvas Active</h4>\n              <p className=\"text-xs text-muted-foreground mt-1 max-w-sm\">\n                Connected to @design-wiki/mcp server. Autonomous tools ready for prompt synthesis.\n              </p>\n            </div>\n          )}\n        </main>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/app-shell-sidebar-layout.tsx"
+    }
+  ]
+}

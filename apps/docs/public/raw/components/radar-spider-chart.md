@@ -135,7 +135,7 @@ export function RadarSpiderChart({
               fill="none"
               stroke="currentColor"
               strokeWidth="1"
-              className="text-muted-foreground/20"
+              className="text-border"
             />
           ))}
 
@@ -156,13 +156,13 @@ export function RadarSpiderChart({
                   y2={y}
                   stroke="currentColor"
                   strokeWidth="1"
-                  className="text-muted-foreground/30"
+                  className="text-border"
                 />
                 <text
                   x={labelX}
                   y={labelY}
                   textAnchor="middle"
-                  className="fill-muted-foreground text-[9px] font-medium"
+                  className="fill-muted-foreground text-xs font-medium"
                 >
                   {axis.label}
                 </text>

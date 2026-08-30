@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "google-gemini-glow-hero",
+  "type": "registry:block",
+  "title": "Google Gemini Laser Glow Hero",
+  "description": "Dark-mode hero section with layered animated SVG laser paths and responsive central CTA.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "glassmorphism",
+    "neon-scifi",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "block",
+    "hero",
+    "laser-glow",
+    "dark-mode",
+    "aceternity"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 6,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://ui.aceternity.com",
+    "license_type": "MIT",
+    "author": "Manu Arora",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/google-gemini-glow-hero.tsx",
+      "content": "/**\n * @license MIT\n * @origin Aceternity UI (https://ui.aceternity.com)\n * @author Manu Arora & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Sparkles, ArrowRight, ShieldCheck } from \"lucide-react\";\n\nexport interface GoogleGeminiGlowHeroProps extends React.HTMLAttributes<HTMLDivElement> {\n  badgeText?: string;\n  title?: string;\n  description?: string;\n  primaryCta?: string;\n  secondaryCta?: string;\n  onPrimaryClick?: () => void;\n  onSecondaryClick?: () => void;\n}\n\nexport function GoogleGeminiGlowHero({\n  badgeText = \"Antigravity Multi-Agent Orchestration\",\n  title = \"Design Engineering for the Autonomous Era\",\n  description = \"A unified registry of verified components, deterministic anti-slop AST linters, and headless test harnesses.\",\n  primaryCta = \"Get Started Free\",\n  secondaryCta = \"View MCP Reference\",\n  onPrimaryClick,\n  onSecondaryClick,\n  className,\n  ...props\n}: GoogleGeminiGlowHeroProps) {\n  return (\n    <section\n      className={cn(\n        \"relative flex flex-col items-center justify-center min-h-[580px] w-full overflow-hidden bg-card dark:bg-black text-card-foreground py-24 px-4 select-none\",\n        className\n      )}\n      aria-label=\"Gemini Glow Hero Section\"\n      {...props}\n    >\n      {/* Background Multi-Layer SVG Laser Rays */}\n      <svg\n        className=\"absolute inset-0 h-full w-full pointer-events-none opacity-40\"\n        viewBox=\"0 0 1000 600\"\n        role=\"img\"\n        aria-hidden=\"true\"\n      >\n        <defs>\n          <linearGradient id=\"laserGrad1\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n            <stop offset=\"0%\" stopColor=\"#38bdf8\" stopOpacity=\"0.8\" />\n            <stop offset=\"50%\" stopColor=\"#818cf8\" stopOpacity=\"0.5\" />\n            <stop offset=\"100%\" stopColor=\"#c084fc\" stopOpacity=\"0\" />\n          </linearGradient>\n          <linearGradient id=\"laserGrad2\" x1=\"1\" y1=\"0\" x2=\"0\" y2=\"1\">\n            <stop offset=\"0%\" stopColor=\"#ec4899\" stopOpacity=\"0.8\" />\n            <stop offset=\"50%\" stopColor=\"#8b5cf6\" stopOpacity=\"0.5\" />\n            <stop offset=\"100%\" stopColor=\"#3b82f6\" stopOpacity=\"0\" />\n          </linearGradient>\n        </defs>\n\n        <path\n          d=\"M 100 0 Q 300 400, 500 300 T 900 600\"\n          fill=\"none\"\n          stroke=\"url(#laserGrad1)\"\n          strokeWidth=\"3\"\n          className=\"animate-pulse\"\n        />\n        <path\n          d=\"M 900 0 Q 700 400, 500 300 T 100 600\"\n          fill=\"none\"\n          stroke=\"url(#laserGrad2)\"\n          strokeWidth=\"3\"\n          className=\"animate-pulse\"\n        />\n      </svg>\n\n      {/* Hero Central Content */}\n      <div className=\"relative z-10 max-w-3xl text-center space-y-6\">\n        <div className=\"inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-border bg-card/80 backdrop-blur-md shadow-xs text-xs font-medium text-foreground\">\n          <Sparkles className=\"h-3.5 w-3.5 text-primary\" aria-hidden=\"true\" />\n          <span>{badgeText}</span>\n        </div>\n\n        <h1 className=\"text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-foreground leading-tight\">\n          {title}\n        </h1>\n\n        <p className=\"max-w-xl mx-auto text-sm sm:text-base text-muted-foreground leading-relaxed\">\n          {description}\n        </p>\n\n        <div className=\"flex flex-wrap items-center justify-center gap-3 pt-4\">\n          <button\n            type=\"button\"\n            onClick={onPrimaryClick}\n            className=\"inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary text-primary-foreground font-semibold text-xs shadow-lg hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\"\n          >\n            <span>{primaryCta}</span>\n            <ArrowRight className=\"h-4 w-4\" aria-hidden=\"true\" />\n          </button>\n\n          <button\n            type=\"button\"\n            onClick={onSecondaryClick}\n            className=\"inline-flex items-center gap-2 px-6 py-3 rounded-2xl border border-border bg-background hover:bg-muted text-foreground font-semibold text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <ShieldCheck className=\"h-4 w-4 text-primary\" aria-hidden=\"true\" />\n            <span>{secondaryCta}</span>\n          </button>\n        </div>\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/google-gemini-glow-hero.tsx"
+    }
+  ]
+}

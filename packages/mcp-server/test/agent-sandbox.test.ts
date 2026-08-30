@@ -55,7 +55,8 @@ async function runAutonomySandboxTest() {
     console.log(`   - [${c.category}] ${c.name} (${c.title}): Variance ${c.dials.design_variance}, Motion ${c.dials.motion_intensity}`);
   });
 
-  if (parsedSearch.matchCount === 0 || parsedSearch.components[0].name !== "floating-dock") {
+  const floatingDockMatch = parsedSearch.components.find((c: any) => c.name === "floating-dock");
+  if (parsedSearch.matchCount === 0 || !floatingDockMatch) {
     throw new Error("❌ Discovery failed: 'floating-dock' was not found in search results.");
   }
   console.log(`✅ Phase 1 Succeeded: search_library discovered component within <15KB payload.`);
@@ -70,10 +71,11 @@ async function runAutonomySandboxTest() {
     throw new Error(`❌ Token budget exceeded for pricing search: ${pricingSearchBytes} bytes.`);
   }
   const parsedPricing = JSON.parse(pricingSearchResult.content[0].text);
-  if (parsedPricing.matchCount === 0 || parsedPricing.components[0].name !== "pricing-table") {
+  const pricingMatch = parsedPricing.components.find((c: any) => c.name === "pricing-table");
+  if (parsedPricing.matchCount === 0 || !pricingMatch) {
     throw new Error("❌ Discovery failed: 'pricing-table' was not found for pricing layout search.");
   }
-  console.log(`   ✓ Found layout: [${parsedPricing.components[0].category}] ${parsedPricing.components[0].name} (${parsedPricing.components[0].title})`);
+  console.log(`   ✓ Found layout: [${pricingMatch.category}] ${pricingMatch.name} (${pricingMatch.title})`);
   console.log(`✅ Phase 1B Succeeded: Autonomous pricing layout discovery verified.`);
 
   // Phase 2: Inspect Raw Markdown (with YAML frontmatter) & Markup

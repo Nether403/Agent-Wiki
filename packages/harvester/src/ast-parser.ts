@@ -10,7 +10,9 @@ export type TaxonomyCategory =
   | "ui:editorial"
   | "ui:block"
   | "ui:media"
-  | "ui:utility";
+  | "ui:utility"
+  | "ui:ai-native"
+  | "ui:workflow";
 
 export interface RepositoryConfig {
   id: string;

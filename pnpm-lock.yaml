@@ -112,6 +112,25 @@ importers:
         specifier: ^5.8.2
         version: 5.9.3
 
+  packages/eval-harness:
+    dependencies:
+      '@design-wiki/audit-linter':
+        specifier: workspace:*
+        version: link:../audit-linter
+      '@design-wiki/harvester':
+        specifier: workspace:*
+        version: link:../harvester
+    devDependencies:
+      '@types/node':
+        specifier: ^22.13.9
+        version: 22.20.1
+      tsx:
+        specifier: ^4.19.3
+        version: 4.23.12
+      typescript:
+        specifier: ^5.8.2
+        version: 5.9.3
+
   packages/harvester:
     dependencies:
       typescript:

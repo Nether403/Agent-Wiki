@@ -1,0 +1,54 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "combobox-virtualized",
+  "type": "registry:ui",
+  "title": "Virtualized Search Combobox",
+  "description": "High-performance search combobox handling 10,000+ items via virtualization, with keyboard navigation and async loading states.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "combobox",
+    "virtualized",
+    "large-list",
+    "shark-ui"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "option",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://shark.vini.one",
+    "license_type": "MIT",
+    "author": "Shark UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/combobox-virtualized.tsx",
+      "content": "/**\n * @license MIT\n * @origin Shark UI / HeroUI (https://shark.vini.one)\n * @author Shark UI Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Search, Check, ChevronDown, Loader2, X } from \"lucide-react\";\n\nexport interface ComboboxItem {\n  value: string;\n  label: string;\n  category?: string;\n}\n\nexport interface ComboboxVirtualizedProps\n  extends Omit<React.HTMLAttributes<HTMLDivElement>, \"onChange\"> {\n  items: ComboboxItem[];\n  value?: string;\n  onChange?: (value: string) => void;\n  placeholder?: string;\n  searchPlaceholder?: string;\n  isLoading?: boolean;\n  itemHeight?: number;\n  visibleCount?: number;\n  disabled?: boolean;\n}\n\nexport function ComboboxVirtualized({\n  items = [],\n  value,\n  onChange,\n  placeholder = \"Select an option...\",\n  searchPlaceholder = \"Search 10,000+ options...\",\n  isLoading = false,\n  itemHeight = 36,\n  visibleCount = 8,\n  disabled = false,\n  className,\n  ...props\n}: ComboboxVirtualizedProps) {\n  const [isOpen, setIsOpen] = React.useState(false);\n  const [searchTerm, setSearchTerm] = React.useState(\"\");\n  const [selectedValue, setSelectedValue] = React.useState<string | undefined>(value);\n  const [scrollTop, setScrollTop] = React.useState(0);\n  const [activeIndex, setActiveIndex] = React.useState(0);\n\n  const containerRef = React.useRef<HTMLDivElement>(null);\n  const searchInputRef = React.useRef<HTMLInputElement>(null);\n\n  React.useEffect(() => {\n    if (value !== undefined) setSelectedValue(value);\n  }, [value]);\n\n  const filteredItems = React.useMemo(() => {\n    if (!searchTerm.trim()) return items;\n    const term = searchTerm.toLowerCase();\n    return items.filter(\n      (it) =>\n        it.label.toLowerCase().includes(term) ||\n        it.value.toLowerCase().includes(term) ||\n        (it.category && it.category.toLowerCase().includes(term))\n    );\n  }, [items, searchTerm]);\n\n  const totalHeight = filteredItems.length * itemHeight;\n  const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - 2);\n  const endIndex = Math.min(\n    filteredItems.length,\n    Math.ceil((scrollTop + visibleCount * itemHeight) / itemHeight) + 2\n  );\n  const visibleItems = filteredItems.slice(startIndex, endIndex);\n\n  const handleSelect = (val: string) => {\n    setSelectedValue(val);\n    onChange?.(val);\n    setIsOpen(false);\n    setSearchTerm(\"\");\n  };\n\n  const handleKeyDown = (e: React.KeyboardEvent) => {\n    if (!isOpen) {\n      if (e.key === \"Enter\" || e.key === \"ArrowDown\") {\n        setIsOpen(true);\n      }\n      return;\n    }\n\n    if (e.key === \"Escape\") {\n      setIsOpen(false);\n    } else if (e.key === \"ArrowDown\") {\n      e.preventDefault();\n      setActiveIndex((prev) => Math.min(filteredItems.length - 1, prev + 1));\n    } else if (e.key === \"ArrowUp\") {\n      e.preventDefault();\n      setActiveIndex((prev) => Math.max(0, prev - 1));\n    } else if (e.key === \"Enter\") {\n      e.preventDefault();\n      if (filteredItems[activeIndex]) {\n        handleSelect(filteredItems[activeIndex].value);\n      }\n    }\n  };\n\n  const selectedItem = items.find((it) => it.value === selectedValue);\n\n  return (\n    <div\n      className={cn(\"relative inline-block w-full max-w-sm select-none\", className)}\n      onKeyDown={handleKeyDown}\n      {...props}\n    >\n      {/* Trigger Button */}\n      <button\n        type=\"button\"\n        onClick={() => {\n          if (!disabled) {\n            setIsOpen((prev) => !prev);\n            setTimeout(() => searchInputRef.current?.focus(), 50);\n          }\n        }}\n        disabled={disabled}\n        aria-expanded={isOpen}\n        aria-haspopup=\"listbox\"\n        aria-label=\"Virtualized selection combobox\"\n        className={cn(\n          \"flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl border bg-background text-xs font-medium text-foreground transition-colors shadow-xs\",\n          \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n          disabled && \"opacity-50 cursor-not-allowed bg-muted\",\n          isOpen ? \"border-ring ring-2 ring-ring\" : \"border-input\"\n        )}\n      >\n        <span className={cn(!selectedItem && \"text-muted-foreground\")}>\n          {selectedItem ? selectedItem.label : placeholder}\n        </span>\n        <ChevronDown className=\"h-4 w-4 text-muted-foreground shrink-0\" aria-hidden=\"true\" />\n      </button>\n\n      {/* Popover Menu */}\n      {isOpen && (\n        <div\n          className=\"absolute top-full left-0 mt-2 w-full rounded-2xl border border-border bg-popover text-popover-foreground shadow-2xl z-50 animate-in fade-in-50 overflow-hidden\"\n          role=\"listbox\"\n        >\n          {/* Search Box */}\n          <div className=\"flex items-center gap-2 p-3 border-b border-border bg-muted/20\">\n            <Search className=\"h-4 w-4 text-muted-foreground shrink-0\" aria-hidden=\"true\" />\n            <input\n              ref={searchInputRef}\n              type=\"text\"\n              value={searchTerm}\n              onChange={(e) => {\n                setSearchTerm(e.target.value);\n                setScrollTop(0);\n                setActiveIndex(0);\n              }}\n              placeholder={searchPlaceholder}\n              className=\"w-full bg-transparent text-xs text-foreground placeholder:text-muted-foreground focus-visible:outline-none\"\n              aria-label=\"Filter options\"\n            />\n            {searchTerm && (\n              <button\n                type=\"button\"\n                onClick={() => setSearchTerm(\"\")}\n                aria-label=\"Clear search text\"\n                className=\"p-1 rounded-md text-muted-foreground hover:text-foreground\"\n              >\n                <X className=\"h-3 w-3\" aria-hidden=\"true\" />\n              </button>\n            )}\n          </div>\n\n          {/* Virtualized List Container */}\n          <div\n            ref={containerRef}\n            onScroll={(e) => setScrollTop((e.target as HTMLDivElement).scrollTop)}\n            style={{ height: `${visibleCount * itemHeight}px` }}\n            className=\"relative overflow-y-auto w-full p-1\"\n          >\n            {isLoading ? (\n              <div className=\"flex items-center justify-center h-full gap-2 text-xs text-muted-foreground\">\n                <Loader2 className=\"h-4 w-4 animate-spin text-primary\" aria-hidden=\"true\" />\n                <span>Loading options...</span>\n              </div>\n            ) : filteredItems.length === 0 ? (\n              <div className=\"flex items-center justify-center h-full text-xs text-muted-foreground\">\n                No matching options found.\n              </div>\n            ) : (\n              <div style={{ height: `${totalHeight}px`, position: \"relative\" }}>\n                {visibleItems.map((item, index) => {\n                  const actualIndex = startIndex + index;\n                  const isSelected = item.value === selectedValue;\n                  const isActive = actualIndex === activeIndex;\n\n                  return (\n                    <div\n                      key={item.value}\n                      onClick={() => handleSelect(item.value)}\n                      onMouseEnter={() => setActiveIndex(actualIndex)}\n                      role=\"option\"\n                      aria-selected={isSelected}\n                      style={{\n                        position: \"absolute\",\n                        top: 0,\n                        transform: `translateY(${actualIndex * itemHeight}px)`,\n                        height: `${itemHeight}px`,\n                        width: \"100%\",\n                      }}\n                      className={cn(\n                        \"flex items-center justify-between px-3 rounded-lg text-xs cursor-pointer transition-colors\",\n                        isSelected && \"bg-primary/10 text-primary font-semibold\",\n                        isActive && !isSelected && \"bg-accent text-accent-foreground\",\n                        !isActive && !isSelected && \"text-foreground\"\n                      )}\n                    >\n                      <span className=\"truncate\">{item.label}</span>\n                      {isSelected && (\n                        <Check className=\"h-3.5 w-3.5 text-primary shrink-0\" aria-hidden=\"true\" />\n                      )}\n                    </div>\n                  );\n                })}\n              </div>\n            )}\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/combobox-virtualized.tsx"
+    }
+  ]
+}

@@ -42,10 +42,13 @@ When a user asks you to build, modify, or redesign an interface, you must execut
 ### Phase 1: Discover
 Before writing code, query our machine-readable discovery endpoints:
 1. Query MCP `@design-wiki/mcp`:
+   - `semantic_search_components({ naturalLanguageQuery: "<intent>", targetDialProfile: { variance: 5 } })` (vector/dial-calibrated natural language search)
+   - `compose_layout_tree({ pageType: "ai-chat-workspace" })` (synthesizes structured full-page layout scaffold)
    - `search_library({ query: "dock", category: "ui:motion" })` (or `search_components`) (< 15KB payloads)
    - `fetch_raw_markup({ name: "floating-dock" })` (or `fetch_raw_markdown`) (fetches structured YAML frontmatter & verified TSX)
    - `get_installation_schema({ name: "floating-dock", packageManager: "pnpm" })` (or `get_installation_commands`)
    - `audit_code_slop({ code: "<raw-code>" })` / `audit_and_fix_slop({ code: "<raw-code>" })` (auto-remaps anti-patterns to zero-slop TSX)
+   - `get_dependency_graph({ name: "dock-magnification" })` (topological dependency sequence)
 2. Or load and parse `/public/llms.txt` and `/raw/components/<name>.md`.
 
 ### Phase 2: Install
@@ -71,9 +74,9 @@ When wiring components together on a page, respect our architectural constraints
 *   **Controlled Glassmorphism**: Never use raw `bg-white/10 backdrop-blur` without crisp structural border tokens (`border-border`) and solid card fallbacks.
 
 ### Phase 4: Audit & Taste Review (The Anti-Slop Check)
-Before declaring your work complete, audit your code against the 30 Anti-Slop Rules and calibrated taste dials:
+Before declaring your work complete, audit your code against the 35 Anti-Slop Rules and calibrated taste dials:
 1. Run automated taste audit via `pnpm review:taste <path-to-file>` or call MCP `audit_code_slop({ code: "<code-string>" })` / `audit_and_fix_slop({ code: "<code-string>" })`.
-2. Enforce strict design hygiene across all 30 Anti-Slop rules (SLOP-001 to SLOP-030):
+2. Enforce strict design hygiene across all 35 Anti-Slop rules (SLOP-001 to SLOP-035):
    - **No Chained Type Assertions**: Never bypass TypeScript compiler safety by chaining assertions (`input as object as User`).
    - **No Empty Object Spreads**: Avoid ad-hoc, conditional spreading patterns (`...(cond ? { field } : {})`).
    - **No Ad-Hoc Transitions**: Ban generic `transition-all duration-300` across whole sections. Set transitions explicitly (`transition-colors duration-200`).
@@ -81,6 +84,11 @@ Before declaring your work complete, audit your code against the 30 Anti-Slop Ru
    - **No Raw Unshaded Backgrounds**: Never use flat unshaded backgrounds (`bg-white`, `bg-black`, `bg-[#fff]`); use semantic theme tokens (`bg-card`, `bg-background`) with dark variants (`SLOP-021`).
    - **No AI Writing Clichés**: Reject tropes like *"In today's fast-paced world"*, *"Unleash the power of"*, *"The future is here"* (`SLOP-022`).
    - **Zero Uncancelled Timers/Listeners**: Clean up all `setInterval`, `requestAnimationFrame`, and `addEventListener` in `useEffect` (`SLOP-025`).
+   - **Canvas Error Boundaries**: Provide static fallback UI or ErrorBoundary for complex WebGL/Canvas elements (`SLOP-031`).
+   - **No Render Loop Memory Allocations**: Pre-allocate typed arrays and buffers outside `requestAnimationFrame` (`SLOP-032`).
+   - **Escape Key Overlay Dismissal**: Custom dialogs/drawers must handle Escape key dismiss (`SLOP-033`).
+   - **No Redundant Nested Context Providers**: Consolidate duplicate context providers (`SLOP-034`).
+   - **Memoized Heavy Array Transforms**: Wrap complex array sorting/filtering in `useMemo` (`SLOP-035`).
    - **Zero High Flags**: Verify health score is 85+ with zero High-severity flags.
 
 ---

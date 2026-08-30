@@ -132,12 +132,12 @@ export function SplitVideoComparator({
       <div
         onMouseDown={handleMouseDown}
         style={{ left: `${sliderPos}%` }}
-        className="absolute top-0 bottom-0 w-1 bg-white shadow-md -translate-x-1/2 cursor-ew-resize flex items-center justify-center z-20"
+        className="absolute top-0 bottom-0 w-1 bg-border shadow-md -translate-x-1/2 cursor-ew-resize flex items-center justify-center z-20"
         role="separator"
         aria-valuenow={Math.round(sliderPos)}
         aria-label="Resize comparator divider"
       >
-        <div className="flex items-center justify-center h-8 w-5 rounded bg-white shadow-md text-neutral-800">
+        <div className="flex items-center justify-center h-8 w-5 rounded bg-card border border-border shadow-md text-foreground">
           <GripVertical className="h-4 w-4" />
         </div>
       </div>
