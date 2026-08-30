@@ -3,7 +3,7 @@
 > **A deterministic, pre-tested, zero-slop UI component registry and Model Context Protocol (MCP) ecosystem engineered specifically for AI developer agents.**
 
 [![CI / Quality Gate](https://img.shields.io/badge/Slop%20Audit-100%2F100%20(S--Grade)-emerald?style=flat-square)](./scripts/test-a11y-linter.ts)
-[![A11y CI](https://img.shields.io/badge/A11y%20WCAG%202.1%20AA-192%2F192%20PASS-green?style=flat-square)](./scripts/test-a11y-linter.ts)
+[![A11y CI](https://img.shields.io/badge/A11y%20WCAG%202.1%20AA-214%2F214%20PASS-green?style=flat-square)](./scripts/test-a11y-linter.ts)
 [![Anti-Slop Rules](https://img.shields.io/badge/Anti--Slop%20Rulepack-50%2F50%20Active-blue?style=flat-square)](./packages/audit-linter)
 [![Taste Dials](https://img.shields.io/badge/Taste%20Dials-100%2F100%20Consistent-blue?style=flat-square)](./packages/audit-linter)
 [![MCP Protocol](https://img.shields.io/badge/MCP%20Server-Cloudflare%20Worker%20%2B%20Stdio-blueviolet?style=flat-square)](./packages/mcp-server)
@@ -134,7 +134,7 @@ Agent Wiki/
 
 ## 🏷️ Standardized Taxonomy Framework
 
-All **192 curated components** are classified across 10 canonical taxonomy domains:
+All **214 curated components** are classified across 10 canonical taxonomy domains:
 
 | Category | Description | Representative Upstream Libraries |
 | :--- | :--- | :--- |
@@ -196,6 +196,11 @@ claude mcp add design-wiki npx @design-wiki/mcp
 | `validate_theme_contrast_matrix` | `tokens` | Validates complete color token sets (foreground, background, card, primary, muted) against AA criteria. |
 | `recommend_responsive_blueprint` | `pageType`, `targetDials` | Generates mobile-first responsive breakpoint structures and semantic HTML landmarks. |
 | `diff_against_zero_slop` | `code`, `targetComponentSlug` | Compares arbitrary user code to the nearest registry component and outputs migration diffs. |
+| `unslop_screenshot_draft` | `rawCode` | Transforms raw vision-model or screenshot-to-code generated HTML/TSX into clean, zero-slop TSX. |
+| `audit_accessibility_tree` | `code` | Evaluates component JSX/TSX markup against WCAG 2.1 AA and WAI-ARIA standards. |
+| `deconstruct_visual_reference` | `visualDescription`, `targetArchetype` | Deconstructs visual interface descriptions into verified zero-slop layout blocks and tokens. |
+| `export_dtcg_tokens` | `themeName` | Exports design tokens in W3C Design Tokens Community Group (DTCG) standard JSON format. |
+| `benchmark_taste_profile` | `code` | Benchmarks component code against the 3 canonical Taste Dials (Variance, Motion, Density). |
 
 ---
 

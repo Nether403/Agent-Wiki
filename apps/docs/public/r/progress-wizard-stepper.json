@@ -1,0 +1,56 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "progress-wizard-stepper",
+  "type": "registry:ui",
+  "title": "Progress Wizard Stepper",
+  "description": "Accessible multi-step workflow stepper with status icons (completed, active, upcoming, error), step descriptions, and form navigation.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "stepper",
+    "wizard",
+    "progress",
+    "navigation",
+    "primer",
+    "cloudscape",
+    "heroui"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 3,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "navigation",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/primer/react",
+    "license_type": "MIT",
+    "author": "GitHub Primer Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/progress-wizard-stepper.tsx",
+      "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by primer/react & cloudscape & heroui)\n * Category: ui:primitive\n * Description: Accessible multi-step workflow stepper with status icons (completed, active, upcoming, error), step descriptions, and form navigation.\n */\n\nimport * as React from \"react\";\nimport { Check, Circle, AlertCircle, ArrowRight, ArrowLeft } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\nexport interface StepItem {\n  id: string;\n  title: string;\n  description?: string;\n  status: \"completed\" | \"current\" | \"upcoming\" | \"error\";\n}\n\ninterface ProgressWizardStepperProps {\n  steps: StepItem[];\n  currentStepIndex: number;\n  onStepClick?: (index: number) => void;\n  orientation?: \"horizontal\" | \"vertical\";\n  className?: string;\n}\n\nexport function ProgressWizardStepper({\n  steps,\n  currentStepIndex,\n  onStepClick,\n  orientation = \"horizontal\",\n  className,\n}: ProgressWizardStepperProps) {\n  return (\n    <nav\n      aria-label=\"Progress Stepper\"\n      className={cn(\n        \"w-full\",\n        orientation === \"horizontal\" ? \"flex items-center justify-between\" : \"flex flex-col space-y-4\",\n        className\n      )}\n    >\n      <ol\n        className={cn(\n          \"w-full\",\n          orientation === \"horizontal\"\n            ? \"flex items-center justify-between\"\n            : \"flex flex-col space-y-6\"\n        )}\n      >\n        {steps.map((step, idx) => {\n          const isCompleted = step.status === \"completed\" || idx < currentStepIndex;\n          const isCurrent = step.status === \"current\" || idx === currentStepIndex;\n          const isError = step.status === \"error\";\n\n          return (\n            <li\n              key={step.id}\n              className={cn(\n                \"relative flex items-center\",\n                orientation === \"horizontal\" ? \"flex-1 last:flex-none\" : \"w-full\"\n              )}\n            >\n              <button\n                type=\"button\"\n                onClick={() => onStepClick?.(idx)}\n                disabled={!onStepClick}\n                aria-current={isCurrent ? \"step\" : undefined}\n                className={cn(\n                  \"group flex items-center gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg p-1 transition-colors\",\n                  !onStepClick && \"cursor-default\"\n                )}\n              >\n                {/* Step Marker Indicator */}\n                <div\n                  className={cn(\n                    \"flex items-center justify-center w-8 h-8 rounded-full text-xs font-mono font-bold border transition-colors shrink-0\",\n                    isCompleted && \"bg-primary border-primary text-primary-foreground\",\n                    isCurrent && \"border-primary bg-primary/10 text-primary ring-4 ring-primary/20\",\n                    isError && \"bg-rose-500/10 border-rose-500 text-rose-500\",\n                    !isCompleted && !isCurrent && !isError && \"border-border bg-muted text-muted-foreground\"\n                  )}\n                >\n                  {isCompleted ? (\n                    <Check className=\"w-4 h-4\" aria-hidden=\"true\" />\n                  ) : isError ? (\n                    <AlertCircle className=\"w-4 h-4\" aria-hidden=\"true\" />\n                  ) : (\n                    <span>{idx + 1}</span>\n                  )}\n                </div>\n\n                {/* Step Text Info */}\n                <div className=\"flex flex-col\">\n                  <span\n                    className={cn(\n                      \"text-xs font-semibold tracking-tight transition-colors\",\n                      isCurrent ? \"text-foreground font-bold\" : \"text-muted-foreground group-hover:text-foreground\"\n                    )}\n                  >\n                    {step.title}\n                  </span>\n                  {step.description && (\n                    <span className=\"text-[11px] text-muted-foreground\">{step.description}</span>\n                  )}\n                </div>\n              </button>\n\n              {/* Connecting Line (Horizontal) */}\n              {orientation === \"horizontal\" && idx < steps.length - 1 && (\n                <div\n                  className={cn(\n                    \"flex-1 h-0.5 mx-4 transition-colors\",\n                    isCompleted ? \"bg-primary\" : \"bg-border\"\n                  )}\n                  aria-hidden=\"true\"\n                />\n              )}\n            </li>\n          );\n        })}\n      </ol>\n    </nav>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/progress-wizard-stepper.tsx"
+    }
+  ]
+}

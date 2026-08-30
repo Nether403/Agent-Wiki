@@ -1,0 +1,36 @@
+---
+title: "Agent Skill Playbooks"
+description: "Directory of portable agent skills powering AI coding agents across Claude Code, Cursor, Codex, OpenClaw, and Antigravity."
+---
+
+# Agent Skill Playbooks
+
+The Machine-First Design Agent Wiki provides **14 self-contained agent skill playbooks** located in `/skills`. Each skill equips autonomous AI developer agents with deep domain heuristics, execution contracts, and anti-slop guidelines.
+
+---
+
+## 🎯 Skill Directory & Specialization Matrix
+
+| Skill Folder | Target Agent Role | Upstream Inspiration | Key Directives |
+| :--- | :--- | :--- | :--- |
+| **`frontend-design`** | Frontend Aesthetic Direction | Anthropic Official Plugin | Distinctive visual identities, typography hierarchy, responsive breakpoints. |
+| **`ui-ux-pro-max`** | Comprehensive UI/UX Review | Next Level Builder | Design intelligence, screenshot audit workflows, and CI design gates. |
+| **`vercel-composition`** | React Architecture | Vercel Labs | React composition patterns, View Transitions API, and zero-layout shift. |
+| **`visual-reference-deconstruction`** | Reverse Engineering | MengTo/Skills & Screenshot-to-Code | 4-step reverse engineering loop from video/mockup to tokenized TSX. |
+| **`interface-craft-micro-typography`** | Precision Typography | Jakub Krehel & Julian Oczkowski | Tabular figures, optical kerning, proportional leading, and WCAG AA contrast. |
+| **`anti-slop-manifesto`** | Code Cleanliness & Security | aahil62, petergyang, dmmulroy | Universal 50 anti-slop rules, token remapping tables, and tripwire defense. |
+| **`enterprise-design-systems`** | High-Density B2B Systems | Shopify Polaris, Cloudscape, IBM Carbon | Multi-pane master-detail views, bulk inventory tables, and faceted filters. |
+| **`spatial-canvas-ui`** | Node Graphs & Whiteboards | XY Flow, tldraw, Excalidraw | Infinite canvas navigation, bezier cable routing, and WebGL HUD overlays. |
+| **`tokens-studio-dtcg`** | Token Governance | Style Dictionary & Tokens Studio | W3C DTCG cross-platform design token JSON transformations. |
+| **`content-first-architecture`** | Academic & Editorial UI | HugoBlox & Cathryn Lavery | DOI citation bars, BibTeX drawers, and audited conceptual diagrams. |
+| **`storybook-workshop`** | Component QA | Storybookjs | Isolated component state testing and visual diff documentation. |
+| **`visual-qa-playwright`** | Browser End-to-End Testing | Microsoft Playwright & axe-core | Automated multi-viewport screenshot testing and accessibility sweeps. |
+
+---
+
+## 🚀 How Agents Consume Skills
+
+AI developer agents automatically load skills via:
+1. **Local Skill Directory**: Placed directly in `skills/[name]/SKILL.md`.
+2. **Auto-Synchronized Instruction Files**: Compiled into `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, `.cursor/rules/design-wiki.mdc`, `.windsurfrules`, `.codex-plugin/rules.json`, `.openclaw/instructions.md`, and `.hermes/instructions.md`.
+3. **CLI Discovery**: Run `npx design-wiki skills` to view available playbooks.

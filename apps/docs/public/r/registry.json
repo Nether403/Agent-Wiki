@@ -741,6 +741,63 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "bento-spotlight-card",
+    "type": "registry:block",
+    "title": "Bento Spotlight Card",
+    "description": "Bento card featuring radial spotlight glow following pointer coordinates, border beam accent, and subtle hover scale.",
+    "category": "ui:block",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "neon-scifi",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "bento",
+      "spotlight",
+      "glow",
+      "card",
+      "landing",
+      "aceternity",
+      "magicui"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 5,
+      "visual_density": 6
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/aceternity/ui",
+      "license_type": "MIT",
+      "author": "Manu Arora & Community",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/blocks/bento-spotlight-card.tsx",
+        "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by aceternity & tailark & magicui)\n * Category: ui:block\n * Description: Bento card featuring radial spotlight glow following pointer coordinates, border beam accent, and subtle hover scale.\n */\n\nimport * as React from \"react\";\nimport { ArrowUpRight } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\ninterface BentoSpotlightCardProps {\n  title: string;\n  description: string;\n  badge?: string;\n  icon?: React.ReactNode;\n  spotlightColor?: string;\n  href?: string;\n  className?: string;\n  children?: React.ReactNode;\n}\n\nexport function BentoSpotlightCard({\n  title,\n  description,\n  badge,\n  icon,\n  spotlightColor = \"rgba(16, 185, 129, 0.15)\",\n  href,\n  className,\n  children,\n}: BentoSpotlightCardProps) {\n  const cardRef = React.useRef<HTMLDivElement>(null);\n  const [coords, setCoords] = React.useState<{ x: number; y: number }>({ x: -1000, y: -1000 });\n  const [isFocused, setIsFocused] = React.useState(false);\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {\n    if (!cardRef.current) return;\n    const rect = cardRef.current.getBoundingClientRect();\n    setCoords({\n      x: e.clientX - rect.left,\n      y: e.clientY - rect.top,\n    });\n  };\n\n  const handleMouseLeave = () => {\n    setCoords({ x: -1000, y: -1000 });\n  };\n\n  const CardContent = (\n    <div\n      ref={cardRef}\n      onMouseMove={handleMouseMove}\n      onMouseLeave={handleMouseLeave}\n      onFocus={() => setIsFocused(true)}\n      onBlur={() => setIsFocused(false)}\n      className={cn(\n        \"group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm transition-all duration-200 hover:border-primary/40\",\n        className\n      )}\n    >\n      {/* Dynamic Pointer Spotlight Glow */}\n      <div\n        className=\"pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 group-hover:opacity-100\"\n        style={{\n          background: `radial-gradient(400px circle at ${coords.x}px ${coords.y}px, ${spotlightColor}, transparent 70%)`,\n        }}\n        aria-hidden=\"true\"\n      />\n\n      {/* Top Header Row */}\n      <div className=\"relative z-10 flex items-start justify-between gap-4\">\n        {icon && (\n          <div className=\"flex items-center justify-center w-10 h-10 rounded-xl bg-muted border border-border text-foreground group-hover:text-primary transition-colors\">\n            {icon}\n          </div>\n        )}\n        {badge && (\n          <span className=\"px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-primary/10 text-primary border border-primary/20\">\n            {badge}\n          </span>\n        )}\n      </div>\n\n      {/* Optional Custom Graphic Payload */}\n      {children && <div className=\"relative z-10 my-4\">{children}</div>}\n\n      {/* Bottom Text Details */}\n      <div className=\"relative z-10 mt-auto pt-4 space-y-1.5\">\n        <div className=\"flex items-center justify-between gap-2\">\n          <h3 className=\"text-base font-bold tracking-tight text-foreground group-hover:text-primary transition-colors\">\n            {title}\n          </h3>\n          {href && (\n            <ArrowUpRight\n              className=\"w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0\"\n              aria-hidden=\"true\"\n            />\n          )}\n        </div>\n        <p className=\"text-xs text-muted-foreground leading-relaxed line-clamp-3\">\n          {description}\n        </p>\n      </div>\n    </div>\n  );\n\n  if (href) {\n    return (\n      <a\n        href={href}\n        className=\"block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-2xl\"\n      >\n        {CardContent}\n      </a>\n    );\n  }\n\n  return CardContent;\n}\n",
+        "type": "registry:block",
+        "target": "components/ui/bento-spotlight-card.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "competitor-comparison-matrix",
     "type": "registry:component",
     "title": "Competitor Comparison Matrix",
@@ -1565,6 +1622,65 @@
         "content": "/**\n * @license MIT\n * @origin Tailark / Shadcn UI (https://tailark.com)\n * @author Tailark Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { Check } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface PricingPlan {\n  name: string;\n  priceMonthly: number;\n  priceAnnual: number;\n  description: string;\n  features: string[];\n  popular?: boolean;\n  ctaText: string;\n}\n\nexport interface PricingTableProps {\n  plans?: PricingPlan[];\n  className?: string;\n}\n\nconst DEFAULT_PLANS: PricingPlan[] = [\n  {\n    name: \"Developer\",\n    priceMonthly: 0,\n    priceAnnual: 0,\n    description: \"For individual builders and local agent experimentation.\",\n    features: [\n      \"Access to 25+ seed components\",\n      \"Local MCP server stdio integration\",\n      \"Full static /llms.txt discovery\",\n      \"Standard MIT open-source license\",\n    ],\n    ctaText: \"Get Started Free\",\n  },\n  {\n    name: \"Autonomous Team\",\n    priceMonthly: 49,\n    priceAnnual: 39,\n    description: \"For engineering teams running multi-agent continuous pipelines.\",\n    features: [\n      \"Everything in Developer\",\n      \"Streamable HTTP MCP endpoints\",\n      \"Automated CI/CD anti-slop gatekeeper\",\n      \"Zero-Draft Fidelity sandbox reports\",\n      \"Priority AST ingestion requests\",\n    ],\n    popular: true,\n    ctaText: \"Upgrade to Team\",\n  },\n  {\n    name: \"Enterprise\",\n    priceMonthly: 199,\n    priceAnnual: 159,\n    description: \"For organizations scaling private registries and custom design tokens.\",\n    features: [\n      \"Custom private registry namespaces\",\n      \"Tailwind v4 token synchronizer\",\n      \"Dedicated headless test harness\",\n      \"100% WCAG 2.1 AAA accessibility pass\",\n      \"Custom legal IP indemnity warranty\",\n    ],\n    ctaText: \"Contact Enterprise\",\n  },\n];\n\nexport function PricingTable({ plans = DEFAULT_PLANS, className }: PricingTableProps) {\n  const [isAnnual, setIsAnnual] = React.useState(true);\n\n  return (\n    <section className={cn(\"py-12\", className)}>\n      {/* Billing toggle */}\n      <div className=\"flex items-center justify-center gap-3 pb-10\">\n        <span className={cn(\"text-sm font-medium\", !isAnnual ? \"text-foreground\" : \"text-muted-foreground\")}>\n          Monthly billing\n        </span>\n        <button\n          type=\"button\"\n          role=\"switch\"\n          aria-checked={isAnnual}\n          onClick={() => setIsAnnual(!isAnnual)}\n          className={cn(\n            \"relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n            isAnnual ? \"bg-primary\" : \"bg-input\"\n          )}\n        >\n          <span\n            className={cn(\n              \"pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg transition-transform\",\n              isAnnual ? \"translate-x-5\" : \"translate-x-0\"\n            )}\n          />\n        </button>\n        <span className={cn(\"text-sm font-medium\", isAnnual ? \"text-foreground\" : \"text-muted-foreground\")}>\n          Annual billing <span className=\"text-xs font-semibold text-primary\">(Save 20%)</span>\n        </span>\n      </div>\n\n      {/* Plan Cards */}\n      <div className=\"grid gap-6 lg:grid-cols-3\">\n        {plans.map((plan) => {\n          const price = isAnnual ? plan.priceAnnual : plan.priceMonthly;\n          return (\n            <div\n              key={plan.name}\n              className={cn(\n                \"relative flex flex-col justify-between rounded-2xl border p-8 shadow-xs transition-all\",\n                plan.popular\n                  ? \"border-primary bg-card ring-2 ring-primary/20 shadow-md\"\n                  : \"border-border bg-card text-card-foreground hover:border-border/80\"\n              )}\n            >\n              {plan.popular && (\n                <div className=\"absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-0.5 text-xs font-semibold text-primary-foreground\">\n                  Recommended\n                </div>\n              )}\n              <div>\n                <h3 className=\"text-xl font-bold text-foreground\">{plan.name}</h3>\n                <p className=\"mt-2 text-sm text-muted-foreground\">{plan.description}</p>\n                <div className=\"mt-6 flex items-baseline gap-1\">\n                  <span className=\"text-4xl font-extrabold tracking-tight text-foreground\">\n                    ${price}\n                  </span>\n                  <span className=\"text-sm font-medium text-muted-foreground\">/month</span>\n                </div>\n                <ul className=\"mt-8 space-y-3 text-sm text-muted-foreground\">\n                  {plan.features.map((feature, i) => (\n                    <li key={i} className=\"flex items-center gap-2.5\">\n                      <Check className=\"h-4 w-4 shrink-0 text-primary\" aria-hidden=\"true\" />\n                      <span>{feature}</span>\n                    </li>\n                  ))}\n                </ul>\n              </div>\n              <div className=\"mt-8\">\n                <button\n                  type=\"button\"\n                  className={cn(\n                    \"w-full rounded-xl py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                    plan.popular\n                      ? \"bg-primary text-primary-foreground hover:bg-primary/90\"\n                      : \"border border-border bg-background text-foreground hover:bg-muted\"\n                  )}\n                >\n                  {plan.ctaText}\n                </button>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n    </section>\n  );\n}\n",
         "type": "registry:block",
         "target": "components/ui/pricing-table.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "pricing-tier-feature-matrix",
+    "type": "registry:block",
+    "title": "Pricing Tier Feature Matrix",
+    "description": "Multi-tier plan comparator with monthly/annual billing cycle toggle, feature breakdown list with tooltips, and highlighted tier callout.",
+    "category": "ui:block",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "tailwind-v4",
+      "brutalist",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "pricing",
+      "billing",
+      "matrix",
+      "saas",
+      "landing",
+      "launch-ui",
+      "page-ui"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 3,
+      "visual_density": 6
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "switch",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/launch-ui/launch-ui",
+      "license_type": "MIT",
+      "author": "Launch UI Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/blocks/pricing-tier-feature-matrix.tsx",
+        "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by launch-ui & page-ui & shadcnblocks.com)\n * Category: ui:block\n * Description: Multi-tier plan comparator with monthly/annual billing cycle toggle, feature breakdown list with tooltips, and highlighted tier callout.\n */\n\nimport * as React from \"react\";\nimport { Check, HelpCircle, ArrowRight } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\nexport interface PricingPlan {\n  id: string;\n  name: string;\n  description: string;\n  monthlyPrice: number;\n  annualPrice: number;\n  popular?: boolean;\n  features: string[];\n  ctaLabel: string;\n  ctaHref: string;\n}\n\ninterface PricingTierFeatureMatrixProps {\n  plans: PricingPlan[];\n  title?: string;\n  subtitle?: string;\n  className?: string;\n}\n\nexport function PricingTierFeatureMatrix({\n  plans,\n  title = \"Predictable, transparent pricing\",\n  subtitle = \"Choose the plan that fits your engineering team's scale.\",\n  className,\n}: PricingTierFeatureMatrixProps) {\n  const [billingCycle, setBillingCycle] = React.useState<\"monthly\" | \"annual\">(\"annual\");\n\n  return (\n    <section\n      aria-labelledby=\"pricing-heading\"\n      className={cn(\"w-full py-12 px-4 max-w-7xl mx-auto flex flex-col items-center\", className)}\n    >\n      {/* Header */}\n      <div className=\"text-center max-w-2xl mx-auto space-y-3\">\n        <h2 id=\"pricing-heading\" className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">\n          {title}\n        </h2>\n        <p className=\"text-muted-foreground text-sm sm:text-base leading-relaxed\">{subtitle}</p>\n\n        {/* Billing Cycle Toggle */}\n        <div className=\"pt-4 flex items-center justify-center gap-3\">\n          <span className={cn(\"text-xs font-medium\", billingCycle === \"monthly\" ? \"text-foreground font-semibold\" : \"text-muted-foreground\")}>\n            Monthly\n          </span>\n          <button\n            type=\"button\"\n            role=\"switch\"\n            aria-checked={billingCycle === \"annual\"}\n            onClick={() => setBillingCycle(billingCycle === \"annual\" ? \"monthly\" : \"annual\")}\n            aria-label=\"Toggle annual billing discount\"\n            className={cn(\n              \"relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2\",\n              billingCycle === \"annual\" ? \"bg-primary\" : \"bg-muted\"\n            )}\n          >\n            <span\n              aria-hidden=\"true\"\n              className={cn(\n                \"pointer-events-none inline-block h-5 w-5 transform rounded-full bg-background shadow-lg ring-0 transition duration-200 ease-in-out\",\n                billingCycle === \"annual\" ? \"translate-x-5\" : \"translate-x-0\"\n              )}\n            />\n          </button>\n          <span className={cn(\"text-xs font-medium flex items-center gap-1.5\", billingCycle === \"annual\" ? \"text-foreground font-semibold\" : \"text-muted-foreground\")}>\n            <span>Annual</span>\n            <span className=\"text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20\">\n              Save 20%\n            </span>\n          </span>\n        </div>\n      </div>\n\n      {/* Grid of Plans */}\n      <div className=\"mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 w-full items-stretch\">\n        {plans.map((plan) => {\n          const price = billingCycle === \"annual\" ? plan.annualPrice : plan.monthlyPrice;\n          return (\n            <div\n              key={plan.id}\n              className={cn(\n                \"relative flex flex-col justify-between rounded-2xl border p-8 bg-card text-card-foreground shadow-sm transition-all\",\n                plan.popular\n                  ? \"border-primary ring-1 ring-primary shadow-md scale-105 z-10\"\n                  : \"border-border hover:border-muted-foreground/30\"\n              )}\n            >\n              {plan.popular && (\n                <div className=\"absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest\">\n                  Most Popular\n                </div>\n              )}\n\n              <div>\n                <h3 className=\"text-lg font-bold text-foreground\">{plan.name}</h3>\n                <p className=\"mt-1 text-xs text-muted-foreground min-h-[32px]\">{plan.description}</p>\n\n                <div className=\"mt-6 flex items-baseline gap-1\">\n                  <span className=\"text-4xl font-extrabold font-mono tracking-tight text-foreground\">\n                    ${price}\n                  </span>\n                  <span className=\"text-xs text-muted-foreground\">/ month</span>\n                </div>\n\n                <ul className=\"mt-8 space-y-3 border-t border-border pt-6\">\n                  {plan.features.map((feature, idx) => (\n                    <li key={idx} className=\"flex items-start gap-2.5 text-xs text-foreground\">\n                      <Check className=\"w-4 h-4 text-primary shrink-0 mt-0.5\" aria-hidden=\"true\" />\n                      <span>{feature}</span>\n                    </li>\n                  ))}\n                </ul>\n              </div>\n\n              <div className=\"mt-8 pt-4\">\n                <a\n                  href={plan.ctaHref}\n                  className={cn(\n                    \"flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl text-xs font-semibold tracking-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2\",\n                    plan.popular\n                      ? \"bg-primary text-primary-foreground hover:bg-primary/90\"\n                      : \"bg-muted hover:bg-muted/80 text-foreground border border-border\"\n                  )}\n                >\n                  <span>{plan.ctaLabel}</span>\n                  <ArrowRight className=\"w-3.5 h-3.5\" aria-hidden=\"true\" />\n                </a>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n    </section>\n  );\n}\n",
+        "type": "registry:block",
+        "target": "components/ui/pricing-tier-feature-matrix.tsx"
       }
     ]
   },
@@ -2555,6 +2671,65 @@
         "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @author Community Contributor\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface HackerDecryptProps extends React.HTMLAttributes<HTMLSpanElement> {\n  targetText: string;\n  speed?: number;\n}\n\nconst HEX_CHARS = \"0123456789ABCDEF!@#$%^&*\";\n\nexport function HackerDecrypt({\n  targetText,\n  speed = 40,\n  className,\n  ...props\n}: HackerDecryptProps) {\n  const [displayText, setDisplayText] = React.useState(targetText);\n\n  React.useEffect(() => {\n    let iteration = 0;\n    const interval = setInterval(() => {\n      setDisplayText(\n        targetText\n          .split(\"\")\n          .map((char, index) => {\n            if (index < iteration) return targetText[index];\n            return HEX_CHARS[Math.floor(Math.random() * HEX_CHARS.length)];\n          })\n          .join(\"\")\n      );\n\n      if (iteration >= targetText.length) {\n        clearInterval(interval);\n      }\n      iteration += 1 / 2;\n    }, speed);\n\n    return () => clearInterval(interval);\n  }, [targetText, speed]);\n\n  return (\n    <span\n      className={cn(\"font-mono font-bold text-primary tracking-wider select-none\", className)}\n      role=\"status\"\n      aria-label={targetText}\n      {...props}\n    >\n      {displayText}\n    </span>\n  );\n}\n",
         "type": "registry:ui",
         "target": "components/ui/hacker-decrypt.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "halftone-matrix-card",
+    "type": "registry:component",
+    "title": "Halftone Matrix Card",
+    "description": "Interactive canvas halftone dither card reacting to mouse position with customizable dot pitch and reduced-motion fallback.",
+    "category": "ui:creative",
+    "tags": [
+      "webgl",
+      "threejs",
+      "canvas",
+      "tailwind-v4",
+      "wai-aria-compliant",
+      "dither",
+      "halftone",
+      "shaders",
+      "matrix",
+      "paper-shaders",
+      "react-bits"
+    ],
+    "dials": {
+      "design_variance": 8,
+      "motion_intensity": 7,
+      "visual_density": 5
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "region",
+      "fallback_provided": true,
+      "reduced_motion_supported": true
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/paper-design/shaders",
+      "license_type": "Apache-2.0",
+      "author": "Paper Design Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "clsx",
+      "tailwind-merge",
+      "three",
+      "motion"
+    ],
+    "devDependencies": [
+      "@types/three"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/creative/halftone-matrix-card.tsx",
+        "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by paper-design/shaders & zzzzshawn/matrix & DavidHDev/react-bits)\n * Category: ui:creative\n * Description: Interactive canvas halftone dither card reacting to mouse position with customizable dot pitch and reduced-motion fallback.\n */\n\nimport * as React from \"react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\ninterface HalftoneMatrixCardProps {\n  title: string;\n  subtitle?: string;\n  dotColor?: string;\n  dotSize?: number;\n  gap?: number;\n  className?: string;\n}\n\nexport function HalftoneMatrixCard({\n  title,\n  subtitle,\n  dotColor = \"#10b981\",\n  dotSize = 3,\n  gap = 14,\n  className,\n}: HalftoneMatrixCardProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n  const containerRef = React.useRef<HTMLDivElement>(null);\n  const mousePos = React.useRef<{ x: number; y: number }>({ x: -1000, y: -1000 });\n\n  React.useEffect(() => {\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    let animationFrameId: number;\n    const prefersReducedMotion = window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches;\n\n    const resizeCanvas = () => {\n      const parent = canvas.parentElement;\n      if (!parent) return;\n      canvas.width = parent.clientWidth;\n      canvas.height = parent.clientHeight;\n    };\n\n    resizeCanvas();\n    window.addEventListener(\"resize\", resizeCanvas);\n\n    const render = () => {\n      if (!canvas || !ctx) return;\n      ctx.clearRect(0, 0, canvas.width, canvas.height);\n\n      const cols = Math.floor(canvas.width / gap);\n      const rows = Math.floor(canvas.height / gap);\n\n      ctx.fillStyle = dotColor;\n\n      for (let i = 0; i < cols; i++) {\n        for (let j = 0; j < rows; j++) {\n          const x = i * gap + gap / 2;\n          const y = j * gap + gap / 2;\n\n          const dx = mousePos.current.x - x;\n          const dy = mousePos.current.y - y;\n          const dist = Math.sqrt(dx * dx + dy * dy);\n\n          const maxDist = 140;\n          let scale = 1;\n          if (dist < maxDist) {\n            scale = 1 + (1 - dist / maxDist) * 2.5;\n          }\n\n          const radius = Math.min((dotSize / 2) * scale, gap / 2 - 1);\n\n          ctx.beginPath();\n          ctx.arc(x, y, Math.max(0.5, radius), 0, Math.PI * 2);\n          ctx.fill();\n        }\n      }\n\n      if (!prefersReducedMotion) {\n        animationFrameId = requestAnimationFrame(render);\n      }\n    };\n\n    render();\n\n    const handleMouseMove = (e: MouseEvent) => {\n      if (!containerRef.current) return;\n      const rect = containerRef.current.getBoundingClientRect();\n      mousePos.current = {\n        x: e.clientX - rect.left,\n        y: e.clientY - rect.top,\n      };\n      if (prefersReducedMotion) render();\n    };\n\n    const handleMouseLeave = () => {\n      mousePos.current = { x: -1000, y: -1000 };\n      if (prefersReducedMotion) render();\n    };\n\n    const container = containerRef.current;\n    if (container) {\n      container.addEventListener(\"mousemove\", handleMouseMove);\n      container.addEventListener(\"mouseleave\", handleMouseLeave);\n    }\n\n    return () => {\n      window.removeEventListener(\"resize\", resizeCanvas);\n      if (container) {\n        container.removeEventListener(\"mousemove\", handleMouseMove);\n        container.removeEventListener(\"mouseleave\", handleMouseLeave);\n      }\n      if (animationFrameId) cancelAnimationFrame(animationFrameId);\n    };\n  }, [dotColor, dotSize, gap]);\n\n  return (\n    <div\n      ref={containerRef}\n      role=\"region\"\n      aria-label={`${title} card`}\n      className={cn(\n        \"relative flex flex-col justify-end p-6 w-full h-72 rounded-2xl border border-border bg-card overflow-hidden shadow-sm select-none\",\n        className\n      )}\n    >\n      <canvas\n        ref={canvasRef}\n        className=\"absolute inset-0 w-full h-full opacity-40 pointer-events-none\"\n        aria-hidden=\"true\"\n      />\n      <div className=\"relative z-10 space-y-1 pointer-events-none\">\n        <h3 className=\"text-xl font-bold tracking-tight text-foreground\">{title}</h3>\n        {subtitle && (\n          <p className=\"text-xs text-muted-foreground leading-relaxed max-w-sm\">{subtitle}</p>\n        )}\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/halftone-matrix-card.tsx"
       }
     ]
   },
@@ -4483,6 +4658,63 @@
         "content": "/**\n * @license MIT\n * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)\n * @author Cathryn Lavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface RadarAxis {\n  label: string;\n  value: number; // 0-100\n}\n\nexport interface RadarSpiderChartProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  axes?: RadarAxis[];\n}\n\nconst DEFAULT_AXES: RadarAxis[] = [\n  { label: \"Accessibility AA\", value: 100 },\n  { label: \"Token Hygiene\", value: 95 },\n  { label: \"Performance & Leaks\", value: 98 },\n  { label: \"Design Variance\", value: 85 },\n  { label: \"Motion Fidelity\", value: 90 },\n  { label: \"TypeScript Safety\", value: 100 },\n];\n\nexport function RadarSpiderChart({\n  title = \"Component Quality & Craft Radar\",\n  axes = DEFAULT_AXES,\n  className,\n  ...props\n}: RadarSpiderChartProps) {\n  const size = 260;\n  const center = size / 2;\n  const radius = 90;\n  const numAxes = axes.length;\n\n  // Calculate polygon points\n  const points = axes\n    .map((axis, i) => {\n      const angle = (Math.PI * 2 / numAxes) * i - Math.PI / 2;\n      const r = (axis.value / 100) * radius;\n      const x = center + r * Math.cos(angle);\n      const y = center + r * Math.sin(angle);\n      return `${x.toFixed(1)},${y.toFixed(1)}`;\n    })\n    .join(\" \");\n\n  return (\n    <figure\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Radar Spider Chart: ${title}`}\n      {...props}\n    >\n      <header className=\"border-b border-border pb-3 mb-4\">\n        <h3 className=\"text-sm font-bold text-foreground\">{title}</h3>\n        <p className=\"text-xs text-muted-foreground mt-0.5\">\n          Multi-axis capability spider polygon evaluating 6 craft and compliance dimensions.\n        </p>\n      </header>\n\n      <div className=\"flex items-center justify-center py-2\">\n        <svg\n          viewBox={`0 0 ${size} ${size}`}\n          className=\"w-full max-w-[280px] h-auto overflow-visible\"\n          role=\"img\"\n          aria-label=\"Radar chart polygon\"\n        >\n          {/* Background concentric rings */}\n          {[0.25, 0.5, 0.75, 1].map((scale) => (\n            <polygon\n              key={scale}\n              points={Array.from({ length: numAxes })\n                .map((_, i) => {\n                  const angle = (Math.PI * 2 / numAxes) * i - Math.PI / 2;\n                  const r = radius * scale;\n                  const x = center + r * Math.cos(angle);\n                  const y = center + r * Math.sin(angle);\n                  return `${x.toFixed(1)},${y.toFixed(1)}`;\n                })\n                .join(\" \")}\n              fill=\"none\"\n              stroke=\"currentColor\"\n              strokeWidth=\"1\"\n              className=\"text-border\"\n            />\n          ))}\n\n          {/* Radial axis lines & labels */}\n          {axes.map((axis, i) => {\n            const angle = (Math.PI * 2 / numAxes) * i - Math.PI / 2;\n            const x = center + radius * Math.cos(angle);\n            const y = center + radius * Math.sin(angle);\n            const labelX = center + (radius + 24) * Math.cos(angle);\n            const labelY = center + (radius + 24) * Math.sin(angle) + 3;\n\n            return (\n              <g key={axis.label}>\n                <line\n                  x1={center}\n                  y1={center}\n                  x2={x}\n                  y2={y}\n                  stroke=\"currentColor\"\n                  strokeWidth=\"1\"\n                  className=\"text-border\"\n                />\n                <text\n                  x={labelX}\n                  y={labelY}\n                  textAnchor=\"middle\"\n                  className=\"fill-muted-foreground text-xs font-medium\"\n                >\n                  {axis.label}\n                </text>\n              </g>\n            );\n          })}\n\n          {/* Value Polygon */}\n          <polygon\n            points={points}\n            fill=\"currentColor\"\n            stroke=\"currentColor\"\n            strokeWidth=\"2\"\n            className=\"text-primary/25 stroke-primary\"\n          />\n        </svg>\n      </div>\n    </figure>\n  );\n}\n",
         "type": "registry:block",
         "target": "components/ui/radar-spider-chart.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "resource-inventory-list",
+    "type": "registry:component",
+    "title": "Resource Inventory List",
+    "description": "High-density e-commerce / admin resource table with bulk checkbox selection, status badges, contextual filter chips, and pagination.",
+    "category": "ui:editorial",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "table",
+      "inventory",
+      "ecommerce",
+      "admin",
+      "polaris",
+      "antd",
+      "b2b"
+    ],
+    "dials": {
+      "design_variance": 3,
+      "motion_intensity": 2,
+      "visual_density": 9
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "table",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/Shopify/polaris",
+      "license_type": "MIT",
+      "author": "Shopify Polaris Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/editorial/resource-inventory-list.tsx",
+        "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by shopify/polaris & ant-design/ant-design)\n * Category: ui:editorial\n * Description: High-density e-commerce / admin resource table with bulk checkbox selection, status badges, contextual filter chips, and pagination.\n */\n\nimport * as React from \"react\";\nimport { ChevronDown, Search, Filter, MoreHorizontal, ArrowUpDown } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\nexport interface ResourceItem {\n  id: string;\n  sku: string;\n  name: string;\n  category: string;\n  stock: number;\n  price: number;\n  status: \"in_stock\" | \"low_stock\" | \"out_of_stock\" | \"archived\";\n}\n\ninterface ResourceInventoryListProps {\n  items: ResourceItem[];\n  onSelectItem?: (ids: string[]) => void;\n  className?: string;\n}\n\nconst statusBadges = {\n  in_stock: \"bg-emerald-500/10 text-emerald-500 border-emerald-500/20\",\n  low_stock: \"bg-amber-500/10 text-amber-500 border-amber-500/20\",\n  out_of_stock: \"bg-rose-500/10 text-rose-500 border-rose-500/20\",\n  archived: \"bg-muted text-muted-foreground border-border\",\n};\n\nexport function ResourceInventoryList({\n  items,\n  onSelectItem,\n  className,\n}: ResourceInventoryListProps) {\n  const [selectedIds, setSelectedIds] = React.useState<Set<string>>(new Set());\n  const [searchQuery, setSearchQuery] = React.useState(\"\");\n  const [filterCategory, setFilterCategory] = React.useState(\"all\");\n\n  const filteredItems = items.filter((item) => {\n    const matchesSearch =\n      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||\n      item.sku.toLowerCase().includes(searchQuery.toLowerCase());\n    const matchesCat = filterCategory === \"all\" || item.category === filterCategory;\n    return matchesSearch && matchesCat;\n  });\n\n  const isAllSelected = filteredItems.length > 0 && selectedIds.size === filteredItems.length;\n\n  const toggleSelectAll = () => {\n    if (isAllSelected) {\n      setSelectedIds(new Set());\n      onSelectItem?.([]);\n    } else {\n      const next = new Set(filteredItems.map((i) => i.id));\n      setSelectedIds(next);\n      onSelectItem?.(Array.from(next));\n    }\n  };\n\n  const toggleSelectItem = (id: string) => {\n    const next = new Set(selectedIds);\n    if (next.has(id)) next.delete(id);\n    else next.add(id);\n    setSelectedIds(next);\n    onSelectItem?.(Array.from(next));\n  };\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card text-card-foreground shadow-sm overflow-hidden\",\n        className\n      )}\n    >\n      {/* Table Action Bar */}\n      <div className=\"flex flex-wrap items-center justify-between gap-3 p-4 border-b border-border bg-muted/30\">\n        <div className=\"flex items-center gap-2 flex-1 max-w-sm\">\n          <div className=\"relative w-full\">\n            <Search className=\"absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground\" aria-hidden=\"true\" />\n            <input\n              type=\"text\"\n              value={searchQuery}\n              onChange={(e) => setSearchQuery(e.target.value)}\n              placeholder=\"Filter by SKU or name...\"\n              className=\"w-full pl-9 pr-3 py-1.5 text-xs rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n            />\n          </div>\n        </div>\n\n        <div className=\"flex items-center gap-2\">\n          {selectedIds.size > 0 && (\n            <span className=\"text-xs font-mono font-medium text-primary px-2.5 py-1 rounded-md bg-primary/10 border border-primary/20\">\n              {selectedIds.size} selected\n            </span>\n          )}\n          <button\n            type=\"button\"\n            className=\"flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-border bg-background hover:bg-muted text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n          >\n            <Filter className=\"w-3.5 h-3.5\" aria-hidden=\"true\" />\n            <span>Category</span>\n            <ChevronDown className=\"w-3.5 h-3.5 text-muted-foreground\" aria-hidden=\"true\" />\n          </button>\n        </div>\n      </div>\n\n      {/* High-density Table */}\n      <div className=\"overflow-x-auto\">\n        <table className=\"w-full text-left text-xs border-collapse\">\n          <thead className=\"border-b border-border bg-muted/40 text-muted-foreground font-semibold uppercase tracking-wider\">\n            <tr>\n              <th className=\"w-10 px-4 py-3\">\n                <input\n                  type=\"checkbox\"\n                  checked={isAllSelected}\n                  onChange={toggleSelectAll}\n                  aria-label=\"Select all inventory items\"\n                  className=\"rounded border-border text-primary focus-visible:ring-2 focus-visible:ring-primary\"\n                />\n              </th>\n              <th className=\"px-4 py-3\">SKU</th>\n              <th className=\"px-4 py-3\">Product Name</th>\n              <th className=\"px-4 py-3\">Category</th>\n              <th className=\"px-4 py-3 text-right\">Stock</th>\n              <th className=\"px-4 py-3 text-right\">Price</th>\n              <th className=\"px-4 py-3\">Status</th>\n              <th className=\"w-10 px-4 py-3 text-right\">Action</th>\n            </tr>\n          </thead>\n          <tbody className=\"divide-y divide-border\">\n            {filteredItems.map((item) => {\n              const isSelected = selectedIds.has(item.id);\n              return (\n                <tr\n                  key={item.id}\n                  className={cn(\n                    \"hover:bg-muted/20 transition-colors\",\n                    isSelected && \"bg-primary/5\"\n                  )}\n                >\n                  <td className=\"px-4 py-3\">\n                    <input\n                      type=\"checkbox\"\n                      checked={isSelected}\n                      onChange={() => toggleSelectItem(item.id)}\n                      aria-label={`Select ${item.name}`}\n                      className=\"rounded border-border text-primary focus-visible:ring-2 focus-visible:ring-primary\"\n                    />\n                  </td>\n                  <td className=\"px-4 py-3 font-mono font-medium text-foreground\">{item.sku}</td>\n                  <td className=\"px-4 py-3 font-medium text-foreground\">{item.name}</td>\n                  <td className=\"px-4 py-3 text-muted-foreground\">{item.category}</td>\n                  <td className=\"px-4 py-3 text-right font-mono text-foreground\">{item.stock}</td>\n                  <td className=\"px-4 py-3 text-right font-mono font-semibold text-foreground\">\n                    ${item.price.toFixed(2)}\n                  </td>\n                  <td className=\"px-4 py-3\">\n                    <span\n                      className={cn(\n                        \"inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide border\",\n                        statusBadges[item.status]\n                      )}\n                    >\n                      {item.status.replace(\"_\", \" \")}\n                    </span>\n                  </td>\n                  <td className=\"px-4 py-3 text-right\">\n                    <button\n                      type=\"button\"\n                      aria-label={`Manage ${item.name}`}\n                      className=\"p-1 text-muted-foreground hover:text-foreground rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n                    >\n                      <MoreHorizontal className=\"w-4 h-4\" aria-hidden=\"true\" />\n                    </button>\n                  </td>\n                </tr>\n              );\n            })}\n          </tbody>\n        </table>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/resource-inventory-list.tsx"
       }
     ]
   },
@@ -7945,6 +8177,61 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "circular-value-slider",
+    "type": "registry:ui",
+    "title": "Circular Value Slider",
+    "description": "Accessible SVG circular dial with drag interaction, keyboard step increment, precision readout, and dynamic arc calculation.",
+    "category": "ui:primitive",
+    "tags": [
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "circular-slider",
+      "dial",
+      "radial",
+      "gauge",
+      "touch",
+      "gui-challenges",
+      "cloudscape"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 3,
+      "visual_density": 6
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "slider",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/argyleink/gui-challenges",
+      "license_type": "Apache-2.0",
+      "author": "Adam Argyle & Chrome Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/primitives/circular-value-slider.tsx",
+        "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by argyleink/gui-challenges & cloudscape-design/components)\n * Category: ui:primitive\n * Description: Accessible SVG circular dial with drag interaction, keyboard step increment, precision readout, and dynamic arc calculation.\n */\n\nimport * as React from \"react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\ninterface CircularValueSliderProps {\n  value: number;\n  min?: number;\n  max?: number;\n  step?: number;\n  onChange: (val: number) => void;\n  size?: number;\n  strokeWidth?: number;\n  label?: string;\n  unit?: string;\n  className?: string;\n}\n\nexport function CircularValueSlider({\n  value,\n  min = 0,\n  max = 100,\n  step = 1,\n  onChange,\n  size = 180,\n  strokeWidth = 14,\n  label = \"Volume Level\",\n  unit = \"%\",\n  className,\n}: CircularValueSliderProps) {\n  const svgRef = React.useRef<SVGSVGElement>(null);\n  const [isDragging, setIsDragging] = React.useState(false);\n\n  const radius = (size - strokeWidth * 2) / 2;\n  const circumference = 2 * Math.PI * radius;\n  const clampedValue = Math.min(Math.max(value, min), max);\n  const percentage = (clampedValue - min) / (max - min);\n  const strokeDashoffset = circumference - percentage * circumference;\n\n  const updateAngleFromEvent = (clientX: number, clientY: number) => {\n    if (!svgRef.current) return;\n    const rect = svgRef.current.getBoundingClientRect();\n    const centerX = rect.left + rect.width / 2;\n    const centerY = rect.top + rect.height / 2;\n\n    const deltaX = clientX - centerX;\n    const deltaY = clientY - centerY;\n\n    let angle = Math.atan2(deltaY, deltaX) + Math.PI / 2;\n    if (angle < 0) angle += 2 * Math.PI;\n\n    const rawPct = angle / (2 * Math.PI);\n    const rawVal = min + rawPct * (max - min);\n    const steppedVal = Math.round(rawVal / step) * step;\n    onChange(Math.min(Math.max(steppedVal, min), max));\n  };\n\n  const handlePointerDown = (e: React.PointerEvent<SVGSVGElement>) => {\n    e.preventDefault();\n    setIsDragging(true);\n    updateAngleFromEvent(e.clientX, e.clientY);\n  };\n\n  React.useEffect(() => {\n    const handlePointerMove = (e: PointerEvent) => {\n      if (!isDragging) return;\n      updateAngleFromEvent(e.clientX, e.clientY);\n    };\n\n    const handlePointerUp = () => {\n      setIsDragging(false);\n    };\n\n    if (isDragging) {\n      window.addEventListener(\"pointermove\", handlePointerMove);\n      window.addEventListener(\"pointerup\", handlePointerUp);\n    }\n\n    return () => {\n      window.removeEventListener(\"pointermove\", handlePointerMove);\n      window.removeEventListener(\"pointerup\", handlePointerUp);\n    };\n  }, [isDragging, min, max, step]);\n\n  const handleKeyDown = (e: React.KeyboardEvent) => {\n    if (e.key === \"ArrowUp\" || e.key === \"ArrowRight\") {\n      e.preventDefault();\n      onChange(Math.min(max, clampedValue + step));\n    } else if (e.key === \"ArrowDown\" || e.key === \"ArrowLeft\") {\n      e.preventDefault();\n      onChange(Math.max(min, clampedValue - step));\n    }\n  };\n\n  return (\n    <div\n      role=\"slider\"\n      aria-label={label}\n      aria-valuemin={min}\n      aria-valuemax={max}\n      aria-valuenow={clampedValue}\n      aria-valuetext={`${clampedValue}${unit}`}\n      tabIndex={0}\n      onKeyDown={handleKeyDown}\n      className={cn(\n        \"relative flex flex-col items-center justify-center select-none rounded-2xl p-4 bg-card border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2\",\n        className\n      )}\n      style={{ width: size + 32, height: size + 32 }}\n    >\n      <svg\n        ref={svgRef}\n        width={size}\n        height={size}\n        onPointerDown={handlePointerDown}\n        className=\"cursor-pointer touch-none\"\n        role=\"img\"\n        aria-label={`${label} dial control`}\n      >\n        {/* Track Background */}\n        <circle\n          cx={size / 2}\n          cy={size / 2}\n          r={radius}\n          fill=\"none\"\n          stroke=\"var(--color-muted, #27272a)\"\n          strokeWidth={strokeWidth}\n        />\n        {/* Active Arc */}\n        <circle\n          cx={size / 2}\n          cy={size / 2}\n          r={radius}\n          fill=\"none\"\n          stroke=\"var(--color-primary, #10b981)\"\n          strokeWidth={strokeWidth}\n          strokeDasharray={circumference}\n          strokeDashoffset={strokeDashoffset}\n          strokeLinecap=\"round\"\n          transform={`rotate(-90 ${size / 2} ${size / 2})`}\n          className=\"transition-[stroke-dashoffset] duration-75\"\n        />\n      </svg>\n\n      {/* Center Readout Display */}\n      <div className=\"absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center\">\n        <span className=\"text-2xl font-bold font-mono tracking-tight text-foreground\">\n          {clampedValue}\n          <span className=\"text-xs text-muted-foreground ml-0.5\">{unit}</span>\n        </span>\n        <span className=\"text-xs text-muted-foreground uppercase tracking-wider font-semibold mt-1\">\n          {label}\n        </span>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:ui",
+        "target": "components/ui/circular-value-slider.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "color-picker-popover",
     "type": "registry:ui",
     "title": "Color Picker Popover",
@@ -8477,6 +8764,63 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "faceted-filter-bar",
+    "type": "registry:ui",
+    "title": "Faceted Filter Bar",
+    "description": "Multi-select filter chips with active tag count, clear all action, popover dropdowns, and keyboard navigation.",
+    "category": "ui:primitive",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "filter",
+      "facets",
+      "toolbar",
+      "chips",
+      "reui",
+      "shark-ui",
+      "cloudscape"
+    ],
+    "dials": {
+      "design_variance": 4,
+      "motion_intensity": 3,
+      "visual_density": 7
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "toolbar",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/keenthemes/reui",
+      "license_type": "MIT",
+      "author": "ReUI Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/primitives/faceted-filter-bar.tsx",
+        "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by reui.io & shark-ui & cloudscape)\n * Category: ui:primitive\n * Description: Multi-select filter chips with active tag count, clear all action, popover dropdowns, and keyboard navigation.\n */\n\nimport * as React from \"react\";\nimport { PlusCircle, Check, X, SlidersHorizontal } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\nexport interface FacetOption {\n  label: string;\n  value: string;\n  icon?: React.ReactNode;\n  count?: number;\n}\n\nexport interface FacetGroup {\n  id: string;\n  title: string;\n  options: FacetOption[];\n}\n\ninterface FacetedFilterBarProps {\n  facets: FacetGroup[];\n  selectedFacets: Record<string, string[]>;\n  onSelectFacet: (groupId: string, values: string[]) => void;\n  onClearAll?: () => void;\n  className?: string;\n}\n\nexport function FacetedFilterBar({\n  facets,\n  selectedFacets,\n  onSelectFacet,\n  onClearAll,\n  className,\n}: FacetedFilterBarProps) {\n  const [openGroupId, setOpenGroupId] = React.useState<string | null>(null);\n\n  const totalSelectedCount = Object.values(selectedFacets).reduce(\n    (acc, vals) => acc + vals.length,\n    0\n  );\n\n  const toggleOption = (groupId: string, val: string) => {\n    const current = selectedFacets[groupId] || [];\n    const next = current.includes(val)\n      ? current.filter((v) => v !== val)\n      : [...current, val];\n    onSelectFacet(groupId, next);\n  };\n\n  return (\n    <div\n      role=\"toolbar\"\n      aria-label=\"Faceted Filters Toolbar\"\n      className={cn(\"flex flex-wrap items-center gap-2\", className)}\n    >\n      {facets.map((group) => {\n        const selectedValues = selectedFacets[group.id] || [];\n        const isOpen = openGroupId === group.id;\n\n        return (\n          <div key={group.id} className=\"relative\">\n            <button\n              type=\"button\"\n              aria-haspopup=\"true\"\n              aria-expanded={isOpen}\n              onClick={() => setOpenGroupId(isOpen ? null : group.id)}\n              className={cn(\n                \"flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors\",\n                \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2\",\n                selectedValues.length > 0\n                  ? \"bg-primary/10 border-primary/30 text-primary\"\n                  : \"bg-card border-border hover:bg-muted text-card-foreground\"\n              )}\n            >\n              <PlusCircle className=\"w-3.5 h-3.5\" aria-hidden=\"true\" />\n              <span>{group.title}</span>\n              {selectedValues.length > 0 && (\n                <span className=\"ml-1 px-1.5 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-mono font-bold\">\n                  {selectedValues.length}\n                </span>\n              )}\n            </button>\n\n            {/* Dropdown Popover */}\n            {isOpen && (\n              <div\n                role=\"menu\"\n                aria-label={`${group.title} filter options`}\n                className=\"absolute left-0 top-full mt-2 w-52 rounded-xl border border-border bg-card p-2 text-card-foreground shadow-xl z-30 animate-in fade-in zoom-in-95 duration-100\"\n              >\n                <div className=\"text-[11px] font-semibold text-muted-foreground uppercase px-2 py-1\">\n                  {group.title}\n                </div>\n                <div className=\"mt-1 space-y-0.5\">\n                  {group.options.map((opt) => {\n                    const isChecked = selectedValues.includes(opt.value);\n                    return (\n                      <button\n                        key={opt.value}\n                        type=\"button\"\n                        role=\"menuitemcheckbox\"\n                        aria-checked={isChecked}\n                        onClick={() => toggleOption(group.id, opt.value)}\n                        className={cn(\n                          \"w-full flex items-center justify-between px-2 py-1.5 rounded-lg text-xs transition-colors\",\n                          \"focus-visible:outline-none focus-visible:bg-muted\",\n                          isChecked ? \"bg-muted font-medium text-foreground\" : \"hover:bg-muted/50 text-muted-foreground\"\n                        )}\n                      >\n                        <div className=\"flex items-center gap-2\">\n                          <div\n                            className={cn(\n                              \"w-4 h-4 rounded border flex items-center justify-center transition-colors\",\n                              isChecked\n                                ? \"bg-primary border-primary text-primary-foreground\"\n                                : \"border-border bg-background\"\n                            )}\n                          >\n                            {isChecked && <Check className=\"w-3 h-3\" aria-hidden=\"true\" />}\n                          </div>\n                          <span>{opt.label}</span>\n                        </div>\n                        {opt.count !== undefined && (\n                          <span className=\"text-[10px] font-mono text-muted-foreground\">\n                            {opt.count}\n                          </span>\n                        )}\n                      </button>\n                    );\n                  })}\n                </div>\n              </div>\n            )}\n          </div>\n        );\n      })}\n\n      {totalSelectedCount > 0 && onClearAll && (\n        <button\n          type=\"button\"\n          onClick={onClearAll}\n          className=\"flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n        >\n          <X className=\"w-3.5 h-3.5\" aria-hidden=\"true\" />\n          <span>Reset Filters ({totalSelectedCount})</span>\n        </button>\n      )}\n    </div>\n  );\n}\n",
+        "type": "registry:ui",
+        "target": "components/ui/faceted-filter-bar.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "file-upload-dropzone",
     "type": "registry:ui",
     "title": "File Upload Dropzone",
@@ -8791,6 +9135,62 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "progress-wizard-stepper",
+    "type": "registry:ui",
+    "title": "Progress Wizard Stepper",
+    "description": "Accessible multi-step workflow stepper with status icons (completed, active, upcoming, error), step descriptions, and form navigation.",
+    "category": "ui:primitive",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "stepper",
+      "wizard",
+      "progress",
+      "navigation",
+      "primer",
+      "cloudscape",
+      "heroui"
+    ],
+    "dials": {
+      "design_variance": 4,
+      "motion_intensity": 3,
+      "visual_density": 6
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "navigation",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/primer/react",
+      "license_type": "MIT",
+      "author": "GitHub Primer Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/primitives/progress-wizard-stepper.tsx",
+        "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by primer/react & cloudscape & heroui)\n * Category: ui:primitive\n * Description: Accessible multi-step workflow stepper with status icons (completed, active, upcoming, error), step descriptions, and form navigation.\n */\n\nimport * as React from \"react\";\nimport { Check, Circle, AlertCircle, ArrowRight, ArrowLeft } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\nexport interface StepItem {\n  id: string;\n  title: string;\n  description?: string;\n  status: \"completed\" | \"current\" | \"upcoming\" | \"error\";\n}\n\ninterface ProgressWizardStepperProps {\n  steps: StepItem[];\n  currentStepIndex: number;\n  onStepClick?: (index: number) => void;\n  orientation?: \"horizontal\" | \"vertical\";\n  className?: string;\n}\n\nexport function ProgressWizardStepper({\n  steps,\n  currentStepIndex,\n  onStepClick,\n  orientation = \"horizontal\",\n  className,\n}: ProgressWizardStepperProps) {\n  return (\n    <nav\n      aria-label=\"Progress Stepper\"\n      className={cn(\n        \"w-full\",\n        orientation === \"horizontal\" ? \"flex items-center justify-between\" : \"flex flex-col space-y-4\",\n        className\n      )}\n    >\n      <ol\n        className={cn(\n          \"w-full\",\n          orientation === \"horizontal\"\n            ? \"flex items-center justify-between\"\n            : \"flex flex-col space-y-6\"\n        )}\n      >\n        {steps.map((step, idx) => {\n          const isCompleted = step.status === \"completed\" || idx < currentStepIndex;\n          const isCurrent = step.status === \"current\" || idx === currentStepIndex;\n          const isError = step.status === \"error\";\n\n          return (\n            <li\n              key={step.id}\n              className={cn(\n                \"relative flex items-center\",\n                orientation === \"horizontal\" ? \"flex-1 last:flex-none\" : \"w-full\"\n              )}\n            >\n              <button\n                type=\"button\"\n                onClick={() => onStepClick?.(idx)}\n                disabled={!onStepClick}\n                aria-current={isCurrent ? \"step\" : undefined}\n                className={cn(\n                  \"group flex items-center gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg p-1 transition-colors\",\n                  !onStepClick && \"cursor-default\"\n                )}\n              >\n                {/* Step Marker Indicator */}\n                <div\n                  className={cn(\n                    \"flex items-center justify-center w-8 h-8 rounded-full text-xs font-mono font-bold border transition-colors shrink-0\",\n                    isCompleted && \"bg-primary border-primary text-primary-foreground\",\n                    isCurrent && \"border-primary bg-primary/10 text-primary ring-4 ring-primary/20\",\n                    isError && \"bg-rose-500/10 border-rose-500 text-rose-500\",\n                    !isCompleted && !isCurrent && !isError && \"border-border bg-muted text-muted-foreground\"\n                  )}\n                >\n                  {isCompleted ? (\n                    <Check className=\"w-4 h-4\" aria-hidden=\"true\" />\n                  ) : isError ? (\n                    <AlertCircle className=\"w-4 h-4\" aria-hidden=\"true\" />\n                  ) : (\n                    <span>{idx + 1}</span>\n                  )}\n                </div>\n\n                {/* Step Text Info */}\n                <div className=\"flex flex-col\">\n                  <span\n                    className={cn(\n                      \"text-xs font-semibold tracking-tight transition-colors\",\n                      isCurrent ? \"text-foreground font-bold\" : \"text-muted-foreground group-hover:text-foreground\"\n                    )}\n                  >\n                    {step.title}\n                  </span>\n                  {step.description && (\n                    <span className=\"text-[11px] text-muted-foreground\">{step.description}</span>\n                  )}\n                </div>\n              </button>\n\n              {/* Connecting Line (Horizontal) */}\n              {orientation === \"horizontal\" && idx < steps.length - 1 && (\n                <div\n                  className={cn(\n                    \"flex-1 h-0.5 mx-4 transition-colors\",\n                    isCompleted ? \"bg-primary\" : \"bg-border\"\n                  )}\n                  aria-hidden=\"true\"\n                />\n              )}\n            </li>\n          );\n        })}\n      </ol>\n    </nav>\n  );\n}\n",
+        "type": "registry:ui",
+        "target": "components/ui/progress-wizard-stepper.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "reui-data-grid",
     "type": "registry:block",
     "title": "Reui Data Grid",
@@ -8933,6 +9333,59 @@
         "content": "/**\n * @license MIT\n * @origin Ariakit & Radix UI (https://ariakit.org / https://radix-ui.com)\n * @author Ariakit Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface RovingTabItem {\n  id: string;\n  label: string;\n  badge?: string | number;\n  disabled?: boolean;\n}\n\nexport interface RovingTabListProps extends React.HTMLAttributes<HTMLDivElement> {\n  items: RovingTabItem[];\n  selectedId: string;\n  onSelect: (id: string) => void;\n  orientation?: \"horizontal\" | \"vertical\";\n}\n\nexport function RovingTabList({\n  items,\n  selectedId,\n  onSelect,\n  orientation = \"horizontal\",\n  className,\n  ...props\n}: RovingTabListProps) {\n  const tabRefs = React.useRef<(HTMLButtonElement | null)[]>([]);\n\n  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {\n    let nextIndex = index;\n    const count = items.length;\n\n    if (orientation === \"horizontal\") {\n      if (e.key === \"ArrowRight\") {\n        nextIndex = (index + 1) % count;\n      } else if (e.key === \"ArrowLeft\") {\n        nextIndex = (index - 1 + count) % count;\n      } else if (e.key === \"Home\") {\n        nextIndex = 0;\n      } else if (e.key === \"End\") {\n        nextIndex = count - 1;\n      } else {\n        return;\n      }\n    } else {\n      if (e.key === \"ArrowDown\") {\n        nextIndex = (index + 1) % count;\n      } else if (e.key === \"ArrowUp\") {\n        nextIndex = (index - 1 + count) % count;\n      } else {\n        return;\n      }\n    }\n\n    e.preventDefault();\n    tabRefs.current[nextIndex]?.focus();\n    onSelect(items[nextIndex].id);\n  };\n\n  return (\n    <div\n      role=\"tablist\"\n      aria-orientation={orientation}\n      className={cn(\n        \"flex rounded-lg border border-border bg-muted/30 p-1 text-muted-foreground\",\n        orientation === \"vertical\" ? \"flex-col gap-1\" : \"flex-row gap-1 items-center\",\n        className\n      )}\n      {...props}\n    >\n      {items.map((item, idx) => {\n        const isSelected = item.id === selectedId;\n        return (\n          <button\n            key={item.id}\n            ref={(el) => {\n              tabRefs.current[idx] = el;\n            }}\n            role=\"tab\"\n            type=\"button\"\n            aria-selected={isSelected}\n            tabIndex={isSelected ? 0 : -1}\n            disabled={item.disabled}\n            onClick={() => onSelect(item.id)}\n            onKeyDown={(e) => handleKeyDown(e, idx)}\n            className={cn(\n              \"flex items-center gap-2 rounded-md px-3 py-1.5 text-xs font-semibold transition-colors duration-150 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-40 disabled:pointer-events-none\",\n              isSelected\n                ? \"bg-card text-foreground shadow-xs border border-border/60\"\n                : \"hover:text-foreground hover:bg-muted/50\"\n            )}\n          >\n            <span>{item.label}</span>\n            {item.badge !== undefined && (\n              <span\n                className={cn(\n                  \"rounded-full px-1.5 py-0.2 font-mono text-[10px]\",\n                  isSelected ? \"bg-primary/10 text-primary\" : \"bg-muted text-muted-foreground\"\n                )}\n              >\n                {item.badge}\n              </span>\n            )}\n          </button>\n        );\n      })}\n    </div>\n  );\n}\n",
         "type": "registry:ui",
         "target": "components/ui/roving-tab-list.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "segmented-control-slider",
+    "type": "registry:ui",
+    "title": "Segmented Control Slider",
+    "description": "Accessible segmented control switch with sliding spring indicator, arrow-key roving focus, and ARIA radiogroup roles.",
+    "category": "ui:primitive",
+    "tags": [
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "segmented-control",
+      "switch",
+      "radiogroup",
+      "roving-focus",
+      "gui-challenges",
+      "primer"
+    ],
+    "dials": {
+      "design_variance": 4,
+      "motion_intensity": 4,
+      "visual_density": 7
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "radiogroup",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/argyleink/gui-challenges",
+      "license_type": "Apache-2.0",
+      "author": "Adam Argyle & Chrome Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/primitives/segmented-control-slider.tsx",
+        "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by argyleink/gui-challenges & primer/react)\n * Category: ui:primitive\n * Description: Accessible segmented control switch with sliding spring indicator, arrow-key roving focus, and ARIA radiogroup roles.\n */\n\nimport * as React from \"react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\nexport interface SegmentOption<T extends string = string> {\n  value: T;\n  label: string;\n  icon?: React.ReactNode;\n  disabled?: boolean;\n}\n\ninterface SegmentedControlSliderProps<T extends string = string> {\n  options: SegmentOption<T>[];\n  value: T;\n  onChange: (value: T) => void;\n  ariaLabel?: string;\n  size?: \"sm\" | \"md\" | \"lg\";\n  className?: string;\n}\n\nexport function SegmentedControlSlider<T extends string = string>({\n  options,\n  value,\n  onChange,\n  ariaLabel = \"Segmented Options\",\n  size = \"md\",\n  className,\n}: SegmentedControlSliderProps<T>) {\n  const containerRef = React.useRef<HTMLDivElement>(null);\n  const [indicatorStyle, setIndicatorStyle] = React.useState<React.CSSProperties>({});\n\n  const sizeClasses = {\n    sm: \"p-0.5 text-xs\",\n    md: \"p-1 text-sm\",\n    lg: \"p-1.5 text-base\",\n  };\n\n  const itemPadding = {\n    sm: \"px-2.5 py-1\",\n    md: \"px-3.5 py-1.5\",\n    lg: \"px-5 py-2\",\n  };\n\n  // Update active indicator pill bounding box\n  React.useEffect(() => {\n    if (!containerRef.current) return;\n    const activeEl = containerRef.current.querySelector<HTMLButtonElement>(`[data-state=\"active\"]`);\n    if (activeEl) {\n      setIndicatorStyle({\n        width: `${activeEl.offsetWidth}px`,\n        transform: `translateX(${activeEl.offsetLeft}px)`,\n        height: `${activeEl.offsetHeight}px`,\n      });\n    }\n  }, [value, options]);\n\n  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {\n    const enabledOptions = options.filter((o) => !o.disabled);\n    const currentIndex = enabledOptions.findIndex((o) => o.value === value);\n\n    if (e.key === \"ArrowRight\" || e.key === \"ArrowDown\") {\n      e.preventDefault();\n      const nextIndex = (currentIndex + 1) % enabledOptions.length;\n      onChange(enabledOptions[nextIndex].value);\n    } else if (e.key === \"ArrowLeft\" || e.key === \"ArrowUp\") {\n      e.preventDefault();\n      const prevIndex = (currentIndex - 1 + enabledOptions.length) % enabledOptions.length;\n      onChange(enabledOptions[prevIndex].value);\n    }\n  };\n\n  return (\n    <div\n      ref={containerRef}\n      role=\"radiogroup\"\n      aria-label={ariaLabel}\n      tabIndex={0}\n      onKeyDown={handleKeyDown}\n      className={cn(\n        \"relative inline-flex items-center rounded-xl bg-muted border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2\",\n        sizeClasses[size],\n        className\n      )}\n    >\n      {/* Sliding active highlight background */}\n      <div\n        className=\"absolute top-1 left-0 rounded-lg bg-card shadow-sm border border-border transition-all duration-200 ease-out pointer-events-none\"\n        style={indicatorStyle}\n        aria-hidden=\"true\"\n      />\n\n      {options.map((option) => {\n        const isActive = option.value === value;\n        return (\n          <button\n            key={option.value}\n            type=\"button\"\n            role=\"radio\"\n            aria-checked={isActive}\n            disabled={option.disabled}\n            data-state={isActive ? \"active\" : \"inactive\"}\n            onClick={() => !option.disabled && onChange(option.value)}\n            className={cn(\n              \"relative z-10 flex items-center justify-center gap-2 font-medium transition-colors duration-150 rounded-lg\",\n              itemPadding[size],\n              isActive\n                ? \"text-card-foreground font-semibold\"\n                : \"text-muted-foreground hover:text-foreground\",\n              option.disabled && \"opacity-40 cursor-not-allowed\"\n            )}\n          >\n            {option.icon && <span className=\"shrink-0\">{option.icon}</span>}\n            <span>{option.label}</span>\n          </button>\n        );\n      })}\n    </div>\n  );\n}\n",
+        "type": "registry:ui",
+        "target": "components/ui/segmented-control-slider.tsx"
       }
     ]
   },
@@ -9272,6 +9725,63 @@
         "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as TabsPrimitive from \"@radix-ui/react-tabs\";\nimport { cn } from \"../lib/utils\";\n\nexport const Tabs = TabsPrimitive.Root;\n\nexport const TabsList = React.forwardRef<\n  React.ElementRef<typeof TabsPrimitive.List>,\n  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>\n>(({ className, ...props }, ref) => (\n  <TabsPrimitive.List\n    ref={ref}\n    className={cn(\n      \"inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground\",\n      className\n    )}\n    {...props}\n  />\n));\nTabsList.displayName = TabsPrimitive.List.displayName;\n\nexport const TabsTrigger = React.forwardRef<\n  React.ElementRef<typeof TabsPrimitive.Trigger>,\n  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>\n>(({ className, ...props }, ref) => (\n  <TabsPrimitive.Trigger\n    ref={ref}\n    className={cn(\n      \"inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs\",\n      className\n    )}\n    {...props}\n  />\n));\nTabsTrigger.displayName = TabsPrimitive.Trigger.displayName;\n\nexport const TabsContent = React.forwardRef<\n  React.ElementRef<typeof TabsPrimitive.Content>,\n  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>\n>(({ className, ...props }, ref) => (\n  <TabsPrimitive.Content\n    ref={ref}\n    className={cn(\n      \"mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\",\n      className\n    )}\n    {...props}\n  />\n));\nTabsContent.displayName = TabsPrimitive.Content.displayName;\n",
         "type": "registry:ui",
         "target": "components/ui/tabs.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "toast-notification-center",
+    "type": "registry:ui",
+    "title": "Toast Notification Center",
+    "description": "Accessible WAI-ARIA live region toast stacker with swipe-to-dismiss, action buttons, progress timer, and zero layout shift.",
+    "category": "ui:primitive",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "toast",
+      "notification",
+      "alert",
+      "live-region",
+      "a11y",
+      "react-hot-toast",
+      "gui-challenges"
+    ],
+    "dials": {
+      "design_variance": 3,
+      "motion_intensity": 4,
+      "visual_density": 7
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "status",
+      "fallback_provided": true,
+      "reduced_motion_supported": true
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/timolins/react-hot-toast",
+      "license_type": "MIT",
+      "author": "Timo Lins & Community",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/primitives/toast-notification-center.tsx",
+        "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by timolins/react-hot-toast & argyleink/gui-challenges)\n * Category: ui:primitive\n * Description: Accessible WAI-ARIA live region toast stacker with swipe-to-dismiss, action buttons, progress timer, and zero layout shift.\n */\n\nimport * as React from \"react\";\nimport { CheckCircle2, AlertTriangle, AlertCircle, Info, X } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\nexport type ToastType = \"success\" | \"error\" | \"warning\" | \"info\";\n\nexport interface ToastItem {\n  id: string;\n  title: string;\n  description?: string;\n  type?: ToastType;\n  duration?: number;\n  action?: {\n    label: string;\n    onClick: () => void;\n  };\n}\n\ninterface ToastNotificationCenterProps {\n  toasts: ToastItem[];\n  onDismiss: (id: string) => void;\n  position?: \"top-right\" | \"top-left\" | \"bottom-right\" | \"bottom-left\";\n  className?: string;\n}\n\nconst typeIcons: Record<ToastType, React.ReactNode> = {\n  success: <CheckCircle2 className=\"w-5 h-5 text-emerald-500 shrink-0\" aria-hidden=\"true\" />,\n  error: <AlertCircle className=\"w-5 h-5 text-rose-500 shrink-0\" aria-hidden=\"true\" />,\n  warning: <AlertTriangle className=\"w-5 h-5 text-amber-500 shrink-0\" aria-hidden=\"true\" />,\n  info: <Info className=\"w-5 h-5 text-sky-500 shrink-0\" aria-hidden=\"true\" />,\n};\n\nexport function ToastNotificationCenter({\n  toasts,\n  onDismiss,\n  position = \"bottom-right\",\n  className,\n}: ToastNotificationCenterProps) {\n  const positionClasses = {\n    \"top-right\": \"top-4 right-4 items-end\",\n    \"top-left\": \"top-4 left-4 items-start\",\n    \"bottom-right\": \"bottom-4 right-4 items-end\",\n    \"bottom-left\": \"bottom-4 left-4 items-start\",\n  };\n\n  return (\n    <aside\n      aria-label=\"Notification Stack\"\n      aria-live=\"polite\"\n      aria-atomic=\"false\"\n      className={cn(\n        \"fixed z-50 flex flex-col gap-3 pointer-events-none max-w-sm w-full p-4\",\n        positionClasses[position],\n        className\n      )}\n    >\n      {toasts.map((toast) => (\n        <ToastCard key={toast.id} toast={toast} onDismiss={onDismiss} />\n      ))}\n    </aside>\n  );\n}\n\ninterface ToastCardProps {\n  toast: ToastItem;\n  onDismiss: (id: string) => void;\n}\n\nfunction ToastCard({ toast, onDismiss }: ToastCardProps) {\n  const { id, title, description, type = \"info\", duration = 5000, action } = toast;\n  const [progress, setProgress] = React.useState(100);\n\n  React.useEffect(() => {\n    if (duration <= 0) return;\n    const interval = 50;\n    const step = (interval / duration) * 100;\n    const timer = setInterval(() => {\n      setProgress((prev) => {\n        if (prev <= step) {\n          clearInterval(timer);\n          onDismiss(id);\n          return 0;\n        }\n        return prev - step;\n      });\n    }, interval);\n\n    return () => clearInterval(timer);\n  }, [id, duration, onDismiss]);\n\n  return (\n    <div\n      role={type === \"error\" ? \"alert\" : \"status\"}\n      className={cn(\n        \"pointer-events-auto relative w-full overflow-hidden rounded-xl border border-border bg-card p-4 text-card-foreground shadow-lg transition-colors\",\n        \"focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2\"\n      )}\n    >\n      <div className=\"flex items-start gap-3\">\n        {typeIcons[type]}\n        <div className=\"flex-1 min-w-0\">\n          <h4 className=\"text-sm font-semibold tracking-tight text-foreground\">{title}</h4>\n          {description && (\n            <p className=\"mt-1 text-xs text-muted-foreground leading-relaxed\">{description}</p>\n          )}\n          {action && (\n            <button\n              type=\"button\"\n              onClick={action.onClick}\n              className=\"mt-2 text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 rounded\"\n            >\n              {action.label}\n            </button>\n          )}\n        </div>\n        <button\n          type=\"button\"\n          onClick={() => onDismiss(id)}\n          aria-label={`Dismiss ${title} notification`}\n          className=\"text-muted-foreground hover:text-foreground rounded p-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n        >\n          <X className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n      </div>\n\n      {duration > 0 && (\n        <div className=\"absolute bottom-0 left-0 right-0 h-1 bg-muted\">\n          <div\n            className=\"h-full bg-primary transition-[width] duration-75\"\n            style={{ width: `${progress}%` }}\n          />\n        </div>\n      )}\n    </div>\n  );\n}\n",
+        "type": "registry:ui",
+        "target": "components/ui/toast-notification-center.tsx"
       }
     ]
   },
@@ -10256,6 +10766,69 @@
         "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState, useRef, useEffect } from \"react\";\nimport { \n  Square, \n  Circle, \n  ArrowUpRight, \n  Type, \n  ZoomIn, \n  ZoomOut, \n  Maximize2, \n  Download,\n  MousePointer,\n  Trash2\n} from \"lucide-react\";\n\nexport type CanvasTool = \"select\" | \"rectangle\" | \"circle\" | \"arrow\" | \"text\";\n\nexport interface CanvasElement {\n  id: string;\n  type: CanvasTool;\n  x: number;\n  y: number;\n  width: number;\n  height: number;\n  label?: string;\n  color?: string;\n}\n\nexport interface InfiniteCanvasWhiteboardProps {\n  initialElements?: CanvasElement[];\n  className?: string;\n}\n\nexport function InfiniteCanvasWhiteboard({\n  initialElements = [\n    { id: \"1\", type: \"rectangle\", x: 120, y: 100, width: 160, height: 90, label: \"Frontend Agent\", color: \"var(--primary)\" },\n    { id: \"2\", type: \"circle\", x: 380, y: 100, width: 100, height: 100, label: \"MCP Server\", color: \"var(--muted-foreground)\" },\n    { id: \"3\", type: \"arrow\", x: 280, y: 145, width: 100, height: 0, label: \"JSON-RPC\" },\n  ],\n  className = \"\",\n}: InfiniteCanvasWhiteboardProps) {\n  const [elements, setElements] = useState<CanvasElement[]>(initialElements);\n  const [selectedTool, setSelectedTool] = useState<CanvasTool>(\"select\");\n  const [selectedId, setSelectedId] = useState<string | null>(null);\n  const [zoom, setZoom] = useState<number>(1);\n  const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });\n  const [isPanning, setIsPanning] = useState<boolean>(false);\n  const startPanRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });\n\n  const handleZoomIn = () => setZoom((prev) => Math.min(2, Math.round((prev + 0.1) * 10) / 10));\n  const handleZoomOut = () => setZoom((prev) => Math.max(0.5, Math.round((prev - 0.1) * 10) / 10));\n  const handleResetView = () => {\n    setZoom(1);\n    setPan({ x: 0, y: 0 });\n  };\n\n  const handleDeleteSelected = () => {\n    if (!selectedId) return;\n    setElements((prev) => prev.filter((el) => el.id !== selectedId));\n    setSelectedId(null);\n  };\n\n  const handleAddElement = (tool: CanvasTool) => {\n    const newEl: CanvasElement = {\n      id: \"el-\" + Date.now(),\n      type: tool,\n      x: 200 - pan.x,\n      y: 180 - pan.y,\n      width: tool === \"circle\" ? 100 : tool === \"rectangle\" ? 140 : 120,\n      height: tool === \"circle\" ? 100 : tool === \"rectangle\" ? 80 : 40,\n      label: tool.toUpperCase(),\n      color: \"var(--foreground)\",\n    };\n    setElements((prev) => [...prev, newEl]);\n    setSelectedId(newEl.id);\n  };\n\n  return (\n    <div \n      className={\"relative w-full h-[520px] rounded-xl border border-border bg-background overflow-hidden select-none flex flex-col \" + className}\n      role=\"region\"\n      aria-label=\"Infinite Canvas Whiteboard\"\n    >\n      {/* Top Toolbar */}\n      <div className=\"absolute top-4 left-4 z-10 flex items-center gap-1 bg-card/90 backdrop-blur-sm border border-border p-1.5 rounded-lg shadow-sm\">\n        <button\n          type=\"button\"\n          onClick={() => setSelectedTool(\"select\")}\n          className={\"p-2 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none \" + (selectedTool === \"select\" ? \"bg-muted text-foreground\" : \"text-muted-foreground hover:text-foreground\")}\n          aria-label=\"Select tool\"\n        >\n          <MousePointer className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          onClick={() => handleAddElement(\"rectangle\")}\n          className=\"p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          aria-label=\"Add Rectangle\"\n        >\n          <Square className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          onClick={() => handleAddElement(\"circle\")}\n          className=\"p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          aria-label=\"Add Circle\"\n        >\n          <Circle className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          onClick={() => handleAddElement(\"text\")}\n          className=\"p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          aria-label=\"Add Text Node\"\n        >\n          <Type className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n        {selectedId && (\n          <button\n            type=\"button\"\n            onClick={handleDeleteSelected}\n            className=\"p-2 rounded-md text-destructive hover:bg-destructive/10 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ml-1 border-l border-border pl-2\"\n            aria-label=\"Delete Selected Node\"\n          >\n            <Trash2 className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n          </button>\n        )}\n      </div>\n\n      {/* Viewport Controls */}\n      <div className=\"absolute bottom-4 right-4 z-10 flex items-center gap-1 bg-card/90 backdrop-blur-sm border border-border p-1.5 rounded-lg shadow-sm\">\n        <button\n          type=\"button\"\n          onClick={handleZoomOut}\n          className=\"p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          aria-label=\"Zoom Out\"\n        >\n          <ZoomOut className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n        <span className=\"text-xs font-mono px-2 text-muted-foreground min-w-[48px] text-center\" aria-live=\"polite\">\n          {Math.round(zoom * 100)}%\n        </span>\n        <button\n          type=\"button\"\n          onClick={handleZoomIn}\n          className=\"p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          aria-label=\"Zoom In\"\n        >\n          <ZoomIn className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          onClick={handleResetView}\n          className=\"p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ml-1 border-l border-border pl-2\"\n          aria-label=\"Reset View\"\n        >\n          <Maximize2 className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n      </div>\n\n      {/* SVG Canvas Area */}\n      <svg\n        role=\"img\"\n        aria-label=\"Interactive visual canvas surface\"\n        className=\"w-full h-full cursor-grab active:cursor-grabbing bg-dot-grid motion-reduce:transition-none\"\n        style={{\n          backgroundImage: \"radial-gradient(var(--border) 1px, transparent 1px)\",\n          backgroundSize: `${20 * zoom}px ${20 * zoom}px`,\n          backgroundPosition: `${pan.x}px ${pan.y}px`,\n        }}\n        onMouseDown={(e) => {\n          if (e.target === e.currentTarget) {\n            setSelectedId(null);\n            setIsPanning(true);\n            startPanRef.current = { x: e.clientX - pan.x, y: e.clientY - pan.y };\n          }\n        }}\n        onMouseMove={(e) => {\n          if (isPanning) {\n            setPan({\n              x: e.clientX - startPanRef.current.x,\n              y: e.clientY - startPanRef.current.y,\n            });\n          }\n        }}\n        onMouseUp={() => setIsPanning(false)}\n        onMouseLeave={() => setIsPanning(false)}\n      >\n        <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`}>\n          {elements.map((el) => {\n            const isSelected = el.id === selectedId;\n            return (\n              <g\n                key={el.id}\n                transform={`translate(${el.x}, ${el.y})`}\n                onClick={(e) => {\n                  e.stopPropagation();\n                  setSelectedId(el.id);\n                }}\n                className=\"cursor-pointer\"\n              >\n                {el.type === \"rectangle\" && (\n                  <rect\n                    width={el.width}\n                    height={el.height}\n                    rx={8}\n                    className={\"fill-card stroke-2 \" + (isSelected ? \"stroke-primary\" : \"stroke-border\")}\n                  />\n                )}\n                {el.type === \"circle\" && (\n                  <circle\n                    cx={el.width / 2}\n                    cy={el.height / 2}\n                    r={el.width / 2}\n                    className={\"fill-card stroke-2 \" + (isSelected ? \"stroke-primary\" : \"stroke-border\")}\n                  />\n                )}\n                {el.type === \"text\" && (\n                  <rect\n                    width={el.width}\n                    height={el.height}\n                    rx={4}\n                    className={\"fill-muted/30 stroke-1 \" + (isSelected ? \"stroke-primary\" : \"stroke-border/40\")}\n                  />\n                )}\n                {el.label && (\n                  <text\n                    x={el.width / 2}\n                    y={el.height / 2}\n                    textAnchor=\"middle\"\n                    dominantBaseline=\"middle\"\n                    className=\"text-xs font-mono fill-foreground select-none pointer-events-none\"\n                  >\n                    {el.label}\n                  </text>\n                )}\n              </g>\n            );\n          })}\n        </g>\n      </svg>\n    </div>\n  );\n}\n",
         "type": "registry:component",
         "target": "components/ui/infinite-canvas-whiteboard.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "spatial-canvas-hud",
+    "type": "registry:component",
+    "title": "Spatial Canvas HUD",
+    "description": "Floating viewport HUD overlay with zoom level slider, pan reset, snapping grid toggle, and layer management.",
+    "category": "ui:workflow",
+    "tags": [
+      "lucide-react",
+      "webgl",
+      "threejs",
+      "tailwind-v4",
+      "glassmorphism",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "canvas",
+      "hud",
+      "viewport",
+      "zoom",
+      "tldraw",
+      "xyflow",
+      "spatial"
+    ],
+    "dials": {
+      "design_variance": 7,
+      "motion_intensity": 4,
+      "visual_density": 7
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "region",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/tldraw/tldraw",
+      "license_type": "Apache-2.0",
+      "author": "tldraw team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge",
+      "three"
+    ],
+    "devDependencies": [
+      "@types/three"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/workflow/spatial-canvas-hud.tsx",
+        "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by tldraw/tldraw & xyflow/xyflow)\n * Category: ui:workflow\n * Description: Floating viewport HUD overlay with zoom level slider, pan reset, snapping grid toggle, and layer management.\n */\n\nimport * as React from \"react\";\nimport { ZoomIn, ZoomOut, Maximize2, Grid, Layers, MousePointer2, Move, Undo2, Redo2 } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\ninterface SpatialCanvasHUDProps {\n  zoomLevel: number;\n  onZoomChange: (level: number) => void;\n  onResetView?: () => void;\n  gridEnabled?: boolean;\n  onToggleGrid?: () => void;\n  activeTool?: \"select\" | \"hand\" | \"node\";\n  onSelectTool?: (tool: \"select\" | \"hand\" | \"node\") => void;\n  onUndo?: () => void;\n  onRedo?: () => void;\n  canUndo?: boolean;\n  canRedo?: boolean;\n  className?: string;\n}\n\nexport function SpatialCanvasHUD({\n  zoomLevel,\n  onZoomChange,\n  onResetView,\n  gridEnabled = true,\n  onToggleGrid,\n  activeTool = \"select\",\n  onSelectTool,\n  onUndo,\n  onRedo,\n  canUndo = true,\n  canRedo = false,\n  className,\n}: SpatialCanvasHUDProps) {\n  const handleZoomIn = () => onZoomChange(Math.min(300, Math.round(zoomLevel + 10)));\n  const handleZoomOut = () => onZoomChange(Math.max(25, Math.round(zoomLevel - 10)));\n\n  return (\n    <div\n      role=\"region\"\n      aria-label=\"Canvas Navigation HUD\"\n      className={cn(\n        \"absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-1.5 p-1.5 rounded-2xl border border-border bg-card/90 backdrop-blur-md text-card-foreground shadow-xl pointer-events-auto\",\n        className\n      )}\n    >\n      {/* Tool Selector Group */}\n      <div className=\"flex items-center gap-1 pr-1.5 border-r border-border\">\n        <button\n          type=\"button\"\n          aria-label=\"Selection Tool\"\n          aria-pressed={activeTool === \"select\"}\n          onClick={() => onSelectTool?.(\"select\")}\n          className={cn(\n            \"p-2 rounded-xl text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\",\n            activeTool === \"select\" ? \"bg-primary text-primary-foreground\" : \"hover:bg-muted text-muted-foreground\"\n          )}\n        >\n          <MousePointer2 className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          aria-label=\"Pan Canvas Tool\"\n          aria-pressed={activeTool === \"hand\"}\n          onClick={() => onSelectTool?.(\"hand\")}\n          className={cn(\n            \"p-2 rounded-xl text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\",\n            activeTool === \"hand\" ? \"bg-primary text-primary-foreground\" : \"hover:bg-muted text-muted-foreground\"\n          )}\n        >\n          <Move className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n      </div>\n\n      {/* History Controls */}\n      <div className=\"flex items-center gap-1 pr-1.5 border-r border-border\">\n        <button\n          type=\"button\"\n          aria-label=\"Undo canvas change\"\n          disabled={!canUndo}\n          onClick={onUndo}\n          className=\"p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted disabled:opacity-40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n        >\n          <Undo2 className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          aria-label=\"Redo canvas change\"\n          disabled={!canRedo}\n          onClick={onRedo}\n          className=\"p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted disabled:opacity-40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n        >\n          <Redo2 className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n      </div>\n\n      {/* Zoom HUD */}\n      <div className=\"flex items-center gap-1 px-1\">\n        <button\n          type=\"button\"\n          aria-label=\"Zoom out canvas\"\n          onClick={handleZoomOut}\n          className=\"p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n        >\n          <ZoomOut className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n        <span className=\"w-12 text-center text-xs font-mono font-semibold text-foreground select-none\">\n          {Math.round(zoomLevel)}%\n        </span>\n        <button\n          type=\"button\"\n          aria-label=\"Zoom in canvas\"\n          onClick={handleZoomIn}\n          className=\"p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n        >\n          <ZoomIn className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n        {onResetView && (\n          <button\n            type=\"button\"\n            aria-label=\"Fit View to Screen\"\n            onClick={onResetView}\n            className=\"p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n          >\n            <Maximize2 className=\"w-4 h-4\" aria-hidden=\"true\" />\n          </button>\n        )}\n      </div>\n\n      {/* Grid Toggle */}\n      {onToggleGrid && (\n        <div className=\"pl-1.5 border-l border-border\">\n          <button\n            type=\"button\"\n            aria-label=\"Toggle grid background snapping\"\n            aria-pressed={gridEnabled}\n            onClick={onToggleGrid}\n            className={cn(\n              \"p-2 rounded-xl text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\",\n              gridEnabled ? \"bg-muted text-foreground\" : \"text-muted-foreground hover:bg-muted\"\n            )}\n          >\n            <Grid className=\"w-4 h-4\" aria-hidden=\"true\" />\n          </button>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/spatial-canvas-hud.tsx"
       }
     ]
   },

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "toast-notification-center",
+  "type": "registry:ui",
+  "title": "Toast Notification Center",
+  "description": "Accessible WAI-ARIA live region toast stacker with swipe-to-dismiss, action buttons, progress timer, and zero layout shift.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "toast",
+    "notification",
+    "alert",
+    "live-region",
+    "a11y",
+    "react-hot-toast",
+    "gui-challenges"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 4,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "status",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/timolins/react-hot-toast",
+    "license_type": "MIT",
+    "author": "Timo Lins & Community",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/toast-notification-center.tsx",
+      "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by timolins/react-hot-toast & argyleink/gui-challenges)\n * Category: ui:primitive\n * Description: Accessible WAI-ARIA live region toast stacker with swipe-to-dismiss, action buttons, progress timer, and zero layout shift.\n */\n\nimport * as React from \"react\";\nimport { CheckCircle2, AlertTriangle, AlertCircle, Info, X } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\nexport type ToastType = \"success\" | \"error\" | \"warning\" | \"info\";\n\nexport interface ToastItem {\n  id: string;\n  title: string;\n  description?: string;\n  type?: ToastType;\n  duration?: number;\n  action?: {\n    label: string;\n    onClick: () => void;\n  };\n}\n\ninterface ToastNotificationCenterProps {\n  toasts: ToastItem[];\n  onDismiss: (id: string) => void;\n  position?: \"top-right\" | \"top-left\" | \"bottom-right\" | \"bottom-left\";\n  className?: string;\n}\n\nconst typeIcons: Record<ToastType, React.ReactNode> = {\n  success: <CheckCircle2 className=\"w-5 h-5 text-emerald-500 shrink-0\" aria-hidden=\"true\" />,\n  error: <AlertCircle className=\"w-5 h-5 text-rose-500 shrink-0\" aria-hidden=\"true\" />,\n  warning: <AlertTriangle className=\"w-5 h-5 text-amber-500 shrink-0\" aria-hidden=\"true\" />,\n  info: <Info className=\"w-5 h-5 text-sky-500 shrink-0\" aria-hidden=\"true\" />,\n};\n\nexport function ToastNotificationCenter({\n  toasts,\n  onDismiss,\n  position = \"bottom-right\",\n  className,\n}: ToastNotificationCenterProps) {\n  const positionClasses = {\n    \"top-right\": \"top-4 right-4 items-end\",\n    \"top-left\": \"top-4 left-4 items-start\",\n    \"bottom-right\": \"bottom-4 right-4 items-end\",\n    \"bottom-left\": \"bottom-4 left-4 items-start\",\n  };\n\n  return (\n    <aside\n      aria-label=\"Notification Stack\"\n      aria-live=\"polite\"\n      aria-atomic=\"false\"\n      className={cn(\n        \"fixed z-50 flex flex-col gap-3 pointer-events-none max-w-sm w-full p-4\",\n        positionClasses[position],\n        className\n      )}\n    >\n      {toasts.map((toast) => (\n        <ToastCard key={toast.id} toast={toast} onDismiss={onDismiss} />\n      ))}\n    </aside>\n  );\n}\n\ninterface ToastCardProps {\n  toast: ToastItem;\n  onDismiss: (id: string) => void;\n}\n\nfunction ToastCard({ toast, onDismiss }: ToastCardProps) {\n  const { id, title, description, type = \"info\", duration = 5000, action } = toast;\n  const [progress, setProgress] = React.useState(100);\n\n  React.useEffect(() => {\n    if (duration <= 0) return;\n    const interval = 50;\n    const step = (interval / duration) * 100;\n    const timer = setInterval(() => {\n      setProgress((prev) => {\n        if (prev <= step) {\n          clearInterval(timer);\n          onDismiss(id);\n          return 0;\n        }\n        return prev - step;\n      });\n    }, interval);\n\n    return () => clearInterval(timer);\n  }, [id, duration, onDismiss]);\n\n  return (\n    <div\n      role={type === \"error\" ? \"alert\" : \"status\"}\n      className={cn(\n        \"pointer-events-auto relative w-full overflow-hidden rounded-xl border border-border bg-card p-4 text-card-foreground shadow-lg transition-colors\",\n        \"focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2\"\n      )}\n    >\n      <div className=\"flex items-start gap-3\">\n        {typeIcons[type]}\n        <div className=\"flex-1 min-w-0\">\n          <h4 className=\"text-sm font-semibold tracking-tight text-foreground\">{title}</h4>\n          {description && (\n            <p className=\"mt-1 text-xs text-muted-foreground leading-relaxed\">{description}</p>\n          )}\n          {action && (\n            <button\n              type=\"button\"\n              onClick={action.onClick}\n              className=\"mt-2 text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 rounded\"\n            >\n              {action.label}\n            </button>\n          )}\n        </div>\n        <button\n          type=\"button\"\n          onClick={() => onDismiss(id)}\n          aria-label={`Dismiss ${title} notification`}\n          className=\"text-muted-foreground hover:text-foreground rounded p-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n        >\n          <X className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n      </div>\n\n      {duration > 0 && (\n        <div className=\"absolute bottom-0 left-0 right-0 h-1 bg-muted\">\n          <div\n            className=\"h-full bg-primary transition-[width] duration-75\"\n            style={{ width: `${progress}%` }}\n          />\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/toast-notification-center.tsx"
+    }
+  ]
+}

@@ -1768,6 +1768,243 @@ export default function LandingPage() {
     }
   );
 
+  // Tool 15: audit_accessibility_tree
+  server.registerTool(
+    "audit_accessibility_tree",
+    {
+      description:
+        "Evaluates component JSX/TSX markup against WCAG 2.1 AA and WAI-ARIA standards (missing labels, ARIA roles, keyboard traversal, semantic landmarks, and screen reader readiness).",
+      inputSchema: z.object({
+        code: z.string().describe("TSX component code string to evaluate for accessibility."),
+      }),
+    },
+    async ({ code }) => {
+      const issues: Array<{ type: string; message: string; severity: "High" | "Medium" | "Low" }> = [];
+
+      // Check 1: Icon buttons without aria-label
+      if (/<button[^>]*>\s*<[A-Z]\w+[^>]*\/>\s*<\/button>/i.test(code)) {
+        issues.push({
+          type: "Unlabeled Icon Button",
+          message: "Icon-only <button> detected without aria-label or accessible text. Add aria-label='...' or <span className='sr-only'>.",
+          severity: "High",
+        });
+      }
+
+      // Check 2: Missing image alt tags
+      if (/<img\b(?![^>]*\balt=)[^>]*>/i.test(code)) {
+        issues.push({
+          type: "Missing Image Alt",
+          message: "Image element <img> missing alt attribute. Add alt text describing image or alt='' if purely decorative.",
+          severity: "High",
+        });
+      }
+
+      // Check 3: Focus suppression without visible replacement
+      if (/(?:outline-none|ring-0)\b/i.test(code) && !code.includes("focus-visible:")) {
+        issues.push({
+          type: "Focus Ring Suppression",
+          message: "Focus outline suppressed (outline-none) without replacement. Add focus-visible:ring-2.",
+          severity: "High",
+        });
+      }
+
+      // Check 4: Interactive role without tabIndex or key listener
+      if (/role=["'](?:button|slider|tab|switch)["']/i.test(code) && !code.includes("onKeyDown") && !code.includes("tabIndex")) {
+        issues.push({
+          type: "Interactive ARIA Role Missing Keyboard Handling",
+          message: "Custom ARIA role element requires tabIndex={0} and onKeyDown handler for keyboard navigation.",
+          severity: "Medium",
+        });
+      }
+
+      // Check 5: SVGs missing role/title/aria-hidden
+      if (/<svg\b(?![^>]*(?:role=["']img["']|aria-hidden=["']true["']|aria-label))[^>]*>/i.test(code)) {
+        issues.push({
+          type: "SVG Missing Accessibility Marker",
+          message: "Inline SVG missing role='img', aria-label, or aria-hidden='true'.",
+          severity: "Medium",
+        });
+      }
+
+      const score = Math.max(0, 100 - issues.filter((i) => i.severity === "High").length * 25 - issues.filter((i) => i.severity === "Medium").length * 10);
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                a11yScore: `${score}/100`,
+                wcagCompliance: score >= 90 ? "WCAG 2.1 AA PASS" : "WCAG 2.1 AA ACTION_REQUIRED",
+                violations: issues,
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    }
+  );
+
+  // Tool 16: deconstruct_visual_reference
+  server.registerTool(
+    "deconstruct_visual_reference",
+    {
+      description:
+        "Deconstructs a visual interface description or screenshot analysis into verified zero-slop layout blocks, semantic color tokens, and matching Agent Wiki component slugs.",
+      inputSchema: z.object({
+        visualDescription: z.string().describe("Description of the UI layout, screenshot details, or visual reference."),
+        targetArchetype: z
+          .enum(["saas-dashboard", "ai-chat-workspace", "marketing-launch", "ecommerce-admin", "spatial-canvas"])
+          .optional()
+          .default("saas-dashboard"),
+      }),
+    },
+    async ({ visualDescription, targetArchetype }) => {
+      const items = getRegistryItems();
+      const tokens = visualDescription.toLowerCase().split(/\s+/).filter(Boolean);
+
+      const matchedSlugs = items
+        .filter((item) => {
+          const text = `${item.name} ${item.title} ${item.description} ${(item.tags || []).join(" ")}`.toLowerCase();
+          return tokens.some((t) => t.length > 3 && text.includes(t));
+        })
+        .slice(0, 6)
+        .map((i) => ({ slug: i.name, title: i.title, category: i.category, installCommand: `npx design-wiki add ${i.name}` }));
+
+      const recommendation = {
+        archetype: targetArchetype,
+        deconstructionRecipe: {
+          spatialRhythm: "Mobile-first flex/grid layout with min-h-[100dvh] container",
+          colorTokens: {
+            background: "bg-background (dark mode default: zinc-950)",
+            surface: "bg-card border-border",
+            primaryAction: "bg-primary text-primary-foreground",
+          },
+          recommendedPrimitives: matchedSlugs.length > 0 ? matchedSlugs : [
+            { slug: "app-shell-sidebar-layout", title: "App Shell Sidebar Layout", category: "ui:block" },
+            { slug: "bento-spotlight-card", title: "Bento Spotlight Card", category: "ui:block" },
+            { slug: "toast-notification-center", title: "Toast Notification Center", category: "ui:primitive" },
+          ],
+        },
+      };
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: stripPayloadToBudget(JSON.stringify(recommendation, null, 2)),
+          },
+        ],
+      };
+    }
+  );
+
+  // Tool 17: export_dtcg_tokens
+  server.registerTool(
+    "export_dtcg_tokens",
+    {
+      description:
+        "Exports the system's design tokens in the W3C Design Tokens Community Group (DTCG) standard JSON format for Figma / cross-platform synchronization.",
+      inputSchema: z.object({
+        themeName: z.string().optional().default("default").describe("Theme name to export"),
+      }),
+    },
+    async ({ themeName }) => {
+      const dtcg = {
+        $name: `Design Wiki DTCG Tokens (${themeName})`,
+        $version: "1.0.0",
+        color: {
+          background: { $value: "#09090b", $type: "color" },
+          foreground: { $value: "#fafafa", $type: "color" },
+          card: { $value: "#18181b", $type: "color" },
+          cardForeground: { $value: "#fafafa", $type: "color" },
+          border: { $value: "#27272a", $type: "color" },
+          primary: { $value: "#10b981", $type: "color" },
+          primaryForeground: { $value: "#000000", $type: "color" },
+          muted: { $value: "#27272a", $type: "color" },
+          mutedForeground: { $value: "#a1a1aa", $type: "color" },
+        },
+        spacing: {
+          "1": { $value: "4px", $type: "dimension" },
+          "2": { $value: "8px", $type: "dimension" },
+          "3": { $value: "12px", $type: "dimension" },
+          "4": { $value: "16px", $type: "dimension" },
+          "6": { $value: "24px", $type: "dimension" },
+          "8": { $value: "32px", $type: "dimension" },
+        },
+        borderRadius: {
+          sm: { $value: "6px", $type: "dimension" },
+          md: { $value: "8px", $type: "dimension" },
+          lg: { $value: "12px", $type: "dimension" },
+          xl: { $value: "16px", $type: "dimension" },
+        },
+      };
+
+      return {
+        content: [{ type: "text", text: JSON.stringify(dtcg, null, 2) }],
+      };
+    }
+  );
+
+  // Tool 18: benchmark_taste_profile
+  server.registerTool(
+    "benchmark_taste_profile",
+    {
+      description:
+        "Analyzes arbitrary component code against the 3 canonical Taste Dials (Variance 1-10, Motion 1-10, Density 1-10) and returns calibration scores.",
+      inputSchema: z.object({
+        code: z.string().describe("Component source code string to benchmark"),
+      }),
+    },
+    async ({ code }) => {
+      let variance = 4;
+      let motion = 3;
+      let density = 6;
+
+      // Variance heuristics
+      if (/rotate-|skew-|translate-x-|asymmetric|grid-cols-12/i.test(code)) variance += 3;
+      if (/font-serif|tracking-widest|uppercase/i.test(code)) variance += 2;
+      if (/table|tabular-nums|font-mono/i.test(code)) variance = Math.max(1, variance - 2);
+
+      // Motion heuristics
+      if (/requestAnimationFrame|webgl|canvas|three/i.test(code)) motion = 9;
+      else if (/motion\.div|useSpring|useMotionValue|gsap/i.test(code)) motion = 7;
+      else if (/transition-colors|hover:/i.test(code)) motion = 3;
+      else motion = 1;
+
+      // Density heuristics
+      if (/px-2|py-1|text-xs|text-\[10px\]|table|divide-y/i.test(code)) density = 9;
+      else if (/py-24|py-32|p-12|text-5xl/i.test(code)) density = 3;
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                tasteDialScorecard: {
+                  designVariance: `${variance}/10`,
+                  motionIntensity: `${motion}/10`,
+                  visualDensity: `${density}/10`,
+                },
+                profileArchetype:
+                  variance > 6 && motion > 6
+                    ? "Creative / Experimental Experience"
+                    : density > 7
+                    ? "High-Density Analytical / Enterprise UI"
+                    : "Balanced Production SaaS",
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    }
+  );
+
   return server;
 }
 

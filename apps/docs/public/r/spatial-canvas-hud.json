@@ -1,0 +1,63 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "spatial-canvas-hud",
+  "type": "registry:component",
+  "title": "Spatial Canvas HUD",
+  "description": "Floating viewport HUD overlay with zoom level slider, pan reset, snapping grid toggle, and layer management.",
+  "category": "ui:workflow",
+  "tags": [
+    "lucide-react",
+    "webgl",
+    "threejs",
+    "tailwind-v4",
+    "glassmorphism",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "canvas",
+    "hud",
+    "viewport",
+    "zoom",
+    "tldraw",
+    "xyflow",
+    "spatial"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 4,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/tldraw/tldraw",
+    "license_type": "Apache-2.0",
+    "author": "tldraw team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge",
+    "three"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/workflow/spatial-canvas-hud.tsx",
+      "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by tldraw/tldraw & xyflow/xyflow)\n * Category: ui:workflow\n * Description: Floating viewport HUD overlay with zoom level slider, pan reset, snapping grid toggle, and layer management.\n */\n\nimport * as React from \"react\";\nimport { ZoomIn, ZoomOut, Maximize2, Grid, Layers, MousePointer2, Move, Undo2, Redo2 } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\ninterface SpatialCanvasHUDProps {\n  zoomLevel: number;\n  onZoomChange: (level: number) => void;\n  onResetView?: () => void;\n  gridEnabled?: boolean;\n  onToggleGrid?: () => void;\n  activeTool?: \"select\" | \"hand\" | \"node\";\n  onSelectTool?: (tool: \"select\" | \"hand\" | \"node\") => void;\n  onUndo?: () => void;\n  onRedo?: () => void;\n  canUndo?: boolean;\n  canRedo?: boolean;\n  className?: string;\n}\n\nexport function SpatialCanvasHUD({\n  zoomLevel,\n  onZoomChange,\n  onResetView,\n  gridEnabled = true,\n  onToggleGrid,\n  activeTool = \"select\",\n  onSelectTool,\n  onUndo,\n  onRedo,\n  canUndo = true,\n  canRedo = false,\n  className,\n}: SpatialCanvasHUDProps) {\n  const handleZoomIn = () => onZoomChange(Math.min(300, Math.round(zoomLevel + 10)));\n  const handleZoomOut = () => onZoomChange(Math.max(25, Math.round(zoomLevel - 10)));\n\n  return (\n    <div\n      role=\"region\"\n      aria-label=\"Canvas Navigation HUD\"\n      className={cn(\n        \"absolute bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-1.5 p-1.5 rounded-2xl border border-border bg-card/90 backdrop-blur-md text-card-foreground shadow-xl pointer-events-auto\",\n        className\n      )}\n    >\n      {/* Tool Selector Group */}\n      <div className=\"flex items-center gap-1 pr-1.5 border-r border-border\">\n        <button\n          type=\"button\"\n          aria-label=\"Selection Tool\"\n          aria-pressed={activeTool === \"select\"}\n          onClick={() => onSelectTool?.(\"select\")}\n          className={cn(\n            \"p-2 rounded-xl text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\",\n            activeTool === \"select\" ? \"bg-primary text-primary-foreground\" : \"hover:bg-muted text-muted-foreground\"\n          )}\n        >\n          <MousePointer2 className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          aria-label=\"Pan Canvas Tool\"\n          aria-pressed={activeTool === \"hand\"}\n          onClick={() => onSelectTool?.(\"hand\")}\n          className={cn(\n            \"p-2 rounded-xl text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\",\n            activeTool === \"hand\" ? \"bg-primary text-primary-foreground\" : \"hover:bg-muted text-muted-foreground\"\n          )}\n        >\n          <Move className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n      </div>\n\n      {/* History Controls */}\n      <div className=\"flex items-center gap-1 pr-1.5 border-r border-border\">\n        <button\n          type=\"button\"\n          aria-label=\"Undo canvas change\"\n          disabled={!canUndo}\n          onClick={onUndo}\n          className=\"p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted disabled:opacity-40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n        >\n          <Undo2 className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n        <button\n          type=\"button\"\n          aria-label=\"Redo canvas change\"\n          disabled={!canRedo}\n          onClick={onRedo}\n          className=\"p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted disabled:opacity-40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n        >\n          <Redo2 className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n      </div>\n\n      {/* Zoom HUD */}\n      <div className=\"flex items-center gap-1 px-1\">\n        <button\n          type=\"button\"\n          aria-label=\"Zoom out canvas\"\n          onClick={handleZoomOut}\n          className=\"p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n        >\n          <ZoomOut className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n        <span className=\"w-12 text-center text-xs font-mono font-semibold text-foreground select-none\">\n          {Math.round(zoomLevel)}%\n        </span>\n        <button\n          type=\"button\"\n          aria-label=\"Zoom in canvas\"\n          onClick={handleZoomIn}\n          className=\"p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n        >\n          <ZoomIn className=\"w-4 h-4\" aria-hidden=\"true\" />\n        </button>\n        {onResetView && (\n          <button\n            type=\"button\"\n            aria-label=\"Fit View to Screen\"\n            onClick={onResetView}\n            className=\"p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n          >\n            <Maximize2 className=\"w-4 h-4\" aria-hidden=\"true\" />\n          </button>\n        )}\n      </div>\n\n      {/* Grid Toggle */}\n      {onToggleGrid && (\n        <div className=\"pl-1.5 border-l border-border\">\n          <button\n            type=\"button\"\n            aria-label=\"Toggle grid background snapping\"\n            aria-pressed={gridEnabled}\n            onClick={onToggleGrid}\n            className={cn(\n              \"p-2 rounded-xl text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\",\n              gridEnabled ? \"bg-muted text-foreground\" : \"text-muted-foreground hover:bg-muted\"\n            )}\n          >\n            <Grid className=\"w-4 h-4\" aria-hidden=\"true\" />\n          </button>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/spatial-canvas-hud.tsx"
+    }
+  ]
+}

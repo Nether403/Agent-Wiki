@@ -1,0 +1,59 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "pricing-tier-feature-matrix",
+  "type": "registry:block",
+  "title": "Pricing Tier Feature Matrix",
+  "description": "Multi-tier plan comparator with monthly/annual billing cycle toggle, feature breakdown list with tooltips, and highlighted tier callout.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "brutalist",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "pricing",
+    "billing",
+    "matrix",
+    "saas",
+    "landing",
+    "launch-ui",
+    "page-ui"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 3,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "switch",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/launch-ui/launch-ui",
+    "license_type": "MIT",
+    "author": "Launch UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/pricing-tier-feature-matrix.tsx",
+      "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by launch-ui & page-ui & shadcnblocks.com)\n * Category: ui:block\n * Description: Multi-tier plan comparator with monthly/annual billing cycle toggle, feature breakdown list with tooltips, and highlighted tier callout.\n */\n\nimport * as React from \"react\";\nimport { Check, HelpCircle, ArrowRight } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\nexport interface PricingPlan {\n  id: string;\n  name: string;\n  description: string;\n  monthlyPrice: number;\n  annualPrice: number;\n  popular?: boolean;\n  features: string[];\n  ctaLabel: string;\n  ctaHref: string;\n}\n\ninterface PricingTierFeatureMatrixProps {\n  plans: PricingPlan[];\n  title?: string;\n  subtitle?: string;\n  className?: string;\n}\n\nexport function PricingTierFeatureMatrix({\n  plans,\n  title = \"Predictable, transparent pricing\",\n  subtitle = \"Choose the plan that fits your engineering team's scale.\",\n  className,\n}: PricingTierFeatureMatrixProps) {\n  const [billingCycle, setBillingCycle] = React.useState<\"monthly\" | \"annual\">(\"annual\");\n\n  return (\n    <section\n      aria-labelledby=\"pricing-heading\"\n      className={cn(\"w-full py-12 px-4 max-w-7xl mx-auto flex flex-col items-center\", className)}\n    >\n      {/* Header */}\n      <div className=\"text-center max-w-2xl mx-auto space-y-3\">\n        <h2 id=\"pricing-heading\" className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">\n          {title}\n        </h2>\n        <p className=\"text-muted-foreground text-sm sm:text-base leading-relaxed\">{subtitle}</p>\n\n        {/* Billing Cycle Toggle */}\n        <div className=\"pt-4 flex items-center justify-center gap-3\">\n          <span className={cn(\"text-xs font-medium\", billingCycle === \"monthly\" ? \"text-foreground font-semibold\" : \"text-muted-foreground\")}>\n            Monthly\n          </span>\n          <button\n            type=\"button\"\n            role=\"switch\"\n            aria-checked={billingCycle === \"annual\"}\n            onClick={() => setBillingCycle(billingCycle === \"annual\" ? \"monthly\" : \"annual\")}\n            aria-label=\"Toggle annual billing discount\"\n            className={cn(\n              \"relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2\",\n              billingCycle === \"annual\" ? \"bg-primary\" : \"bg-muted\"\n            )}\n          >\n            <span\n              aria-hidden=\"true\"\n              className={cn(\n                \"pointer-events-none inline-block h-5 w-5 transform rounded-full bg-background shadow-lg ring-0 transition duration-200 ease-in-out\",\n                billingCycle === \"annual\" ? \"translate-x-5\" : \"translate-x-0\"\n              )}\n            />\n          </button>\n          <span className={cn(\"text-xs font-medium flex items-center gap-1.5\", billingCycle === \"annual\" ? \"text-foreground font-semibold\" : \"text-muted-foreground\")}>\n            <span>Annual</span>\n            <span className=\"text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20\">\n              Save 20%\n            </span>\n          </span>\n        </div>\n      </div>\n\n      {/* Grid of Plans */}\n      <div className=\"mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 w-full items-stretch\">\n        {plans.map((plan) => {\n          const price = billingCycle === \"annual\" ? plan.annualPrice : plan.monthlyPrice;\n          return (\n            <div\n              key={plan.id}\n              className={cn(\n                \"relative flex flex-col justify-between rounded-2xl border p-8 bg-card text-card-foreground shadow-sm transition-all\",\n                plan.popular\n                  ? \"border-primary ring-1 ring-primary shadow-md scale-105 z-10\"\n                  : \"border-border hover:border-muted-foreground/30\"\n              )}\n            >\n              {plan.popular && (\n                <div className=\"absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest\">\n                  Most Popular\n                </div>\n              )}\n\n              <div>\n                <h3 className=\"text-lg font-bold text-foreground\">{plan.name}</h3>\n                <p className=\"mt-1 text-xs text-muted-foreground min-h-[32px]\">{plan.description}</p>\n\n                <div className=\"mt-6 flex items-baseline gap-1\">\n                  <span className=\"text-4xl font-extrabold font-mono tracking-tight text-foreground\">\n                    ${price}\n                  </span>\n                  <span className=\"text-xs text-muted-foreground\">/ month</span>\n                </div>\n\n                <ul className=\"mt-8 space-y-3 border-t border-border pt-6\">\n                  {plan.features.map((feature, idx) => (\n                    <li key={idx} className=\"flex items-start gap-2.5 text-xs text-foreground\">\n                      <Check className=\"w-4 h-4 text-primary shrink-0 mt-0.5\" aria-hidden=\"true\" />\n                      <span>{feature}</span>\n                    </li>\n                  ))}\n                </ul>\n              </div>\n\n              <div className=\"mt-8 pt-4\">\n                <a\n                  href={plan.ctaHref}\n                  className={cn(\n                    \"flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl text-xs font-semibold tracking-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2\",\n                    plan.popular\n                      ? \"bg-primary text-primary-foreground hover:bg-primary/90\"\n                      : \"bg-muted hover:bg-muted/80 text-foreground border border-border\"\n                  )}\n                >\n                  <span>{plan.ctaLabel}</span>\n                  <ArrowRight className=\"w-3.5 h-3.5\" aria-hidden=\"true\" />\n                </a>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/pricing-tier-feature-matrix.tsx"
+    }
+  ]
+}

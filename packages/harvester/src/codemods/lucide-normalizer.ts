@@ -18,3 +18,6 @@ export function normalizeLucideSvg(sourceCode: string): string {
 
   return transformed;
 }
+
+export const normalizeLucideIcons = normalizeLucideSvg;
+

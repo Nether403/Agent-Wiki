@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "resource-inventory-list",
+  "type": "registry:component",
+  "title": "Resource Inventory List",
+  "description": "High-density e-commerce / admin resource table with bulk checkbox selection, status badges, contextual filter chips, and pagination.",
+  "category": "ui:editorial",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "table",
+    "inventory",
+    "ecommerce",
+    "admin",
+    "polaris",
+    "antd",
+    "b2b"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 9
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "table",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/Shopify/polaris",
+    "license_type": "MIT",
+    "author": "Shopify Polaris Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/resource-inventory-list.tsx",
+      "content": "/**\n * SPDX-License-Identifier: MIT\n * Source: Machine-First Design Agent Wiki (Inspired by shopify/polaris & ant-design/ant-design)\n * Category: ui:editorial\n * Description: High-density e-commerce / admin resource table with bulk checkbox selection, status badges, contextual filter chips, and pagination.\n */\n\nimport * as React from \"react\";\nimport { ChevronDown, Search, Filter, MoreHorizontal, ArrowUpDown } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: any[]) {\n  return twMerge(clsx(inputs));\n}\n\nexport interface ResourceItem {\n  id: string;\n  sku: string;\n  name: string;\n  category: string;\n  stock: number;\n  price: number;\n  status: \"in_stock\" | \"low_stock\" | \"out_of_stock\" | \"archived\";\n}\n\ninterface ResourceInventoryListProps {\n  items: ResourceItem[];\n  onSelectItem?: (ids: string[]) => void;\n  className?: string;\n}\n\nconst statusBadges = {\n  in_stock: \"bg-emerald-500/10 text-emerald-500 border-emerald-500/20\",\n  low_stock: \"bg-amber-500/10 text-amber-500 border-amber-500/20\",\n  out_of_stock: \"bg-rose-500/10 text-rose-500 border-rose-500/20\",\n  archived: \"bg-muted text-muted-foreground border-border\",\n};\n\nexport function ResourceInventoryList({\n  items,\n  onSelectItem,\n  className,\n}: ResourceInventoryListProps) {\n  const [selectedIds, setSelectedIds] = React.useState<Set<string>>(new Set());\n  const [searchQuery, setSearchQuery] = React.useState(\"\");\n  const [filterCategory, setFilterCategory] = React.useState(\"all\");\n\n  const filteredItems = items.filter((item) => {\n    const matchesSearch =\n      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||\n      item.sku.toLowerCase().includes(searchQuery.toLowerCase());\n    const matchesCat = filterCategory === \"all\" || item.category === filterCategory;\n    return matchesSearch && matchesCat;\n  });\n\n  const isAllSelected = filteredItems.length > 0 && selectedIds.size === filteredItems.length;\n\n  const toggleSelectAll = () => {\n    if (isAllSelected) {\n      setSelectedIds(new Set());\n      onSelectItem?.([]);\n    } else {\n      const next = new Set(filteredItems.map((i) => i.id));\n      setSelectedIds(next);\n      onSelectItem?.(Array.from(next));\n    }\n  };\n\n  const toggleSelectItem = (id: string) => {\n    const next = new Set(selectedIds);\n    if (next.has(id)) next.delete(id);\n    else next.add(id);\n    setSelectedIds(next);\n    onSelectItem?.(Array.from(next));\n  };\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card text-card-foreground shadow-sm overflow-hidden\",\n        className\n      )}\n    >\n      {/* Table Action Bar */}\n      <div className=\"flex flex-wrap items-center justify-between gap-3 p-4 border-b border-border bg-muted/30\">\n        <div className=\"flex items-center gap-2 flex-1 max-w-sm\">\n          <div className=\"relative w-full\">\n            <Search className=\"absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground\" aria-hidden=\"true\" />\n            <input\n              type=\"text\"\n              value={searchQuery}\n              onChange={(e) => setSearchQuery(e.target.value)}\n              placeholder=\"Filter by SKU or name...\"\n              className=\"w-full pl-9 pr-3 py-1.5 text-xs rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n            />\n          </div>\n        </div>\n\n        <div className=\"flex items-center gap-2\">\n          {selectedIds.size > 0 && (\n            <span className=\"text-xs font-mono font-medium text-primary px-2.5 py-1 rounded-md bg-primary/10 border border-primary/20\">\n              {selectedIds.size} selected\n            </span>\n          )}\n          <button\n            type=\"button\"\n            className=\"flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-border bg-background hover:bg-muted text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n          >\n            <Filter className=\"w-3.5 h-3.5\" aria-hidden=\"true\" />\n            <span>Category</span>\n            <ChevronDown className=\"w-3.5 h-3.5 text-muted-foreground\" aria-hidden=\"true\" />\n          </button>\n        </div>\n      </div>\n\n      {/* High-density Table */}\n      <div className=\"overflow-x-auto\">\n        <table className=\"w-full text-left text-xs border-collapse\">\n          <thead className=\"border-b border-border bg-muted/40 text-muted-foreground font-semibold uppercase tracking-wider\">\n            <tr>\n              <th className=\"w-10 px-4 py-3\">\n                <input\n                  type=\"checkbox\"\n                  checked={isAllSelected}\n                  onChange={toggleSelectAll}\n                  aria-label=\"Select all inventory items\"\n                  className=\"rounded border-border text-primary focus-visible:ring-2 focus-visible:ring-primary\"\n                />\n              </th>\n              <th className=\"px-4 py-3\">SKU</th>\n              <th className=\"px-4 py-3\">Product Name</th>\n              <th className=\"px-4 py-3\">Category</th>\n              <th className=\"px-4 py-3 text-right\">Stock</th>\n              <th className=\"px-4 py-3 text-right\">Price</th>\n              <th className=\"px-4 py-3\">Status</th>\n              <th className=\"w-10 px-4 py-3 text-right\">Action</th>\n            </tr>\n          </thead>\n          <tbody className=\"divide-y divide-border\">\n            {filteredItems.map((item) => {\n              const isSelected = selectedIds.has(item.id);\n              return (\n                <tr\n                  key={item.id}\n                  className={cn(\n                    \"hover:bg-muted/20 transition-colors\",\n                    isSelected && \"bg-primary/5\"\n                  )}\n                >\n                  <td className=\"px-4 py-3\">\n                    <input\n                      type=\"checkbox\"\n                      checked={isSelected}\n                      onChange={() => toggleSelectItem(item.id)}\n                      aria-label={`Select ${item.name}`}\n                      className=\"rounded border-border text-primary focus-visible:ring-2 focus-visible:ring-primary\"\n                    />\n                  </td>\n                  <td className=\"px-4 py-3 font-mono font-medium text-foreground\">{item.sku}</td>\n                  <td className=\"px-4 py-3 font-medium text-foreground\">{item.name}</td>\n                  <td className=\"px-4 py-3 text-muted-foreground\">{item.category}</td>\n                  <td className=\"px-4 py-3 text-right font-mono text-foreground\">{item.stock}</td>\n                  <td className=\"px-4 py-3 text-right font-mono font-semibold text-foreground\">\n                    ${item.price.toFixed(2)}\n                  </td>\n                  <td className=\"px-4 py-3\">\n                    <span\n                      className={cn(\n                        \"inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide border\",\n                        statusBadges[item.status]\n                      )}\n                    >\n                      {item.status.replace(\"_\", \" \")}\n                    </span>\n                  </td>\n                  <td className=\"px-4 py-3 text-right\">\n                    <button\n                      type=\"button\"\n                      aria-label={`Manage ${item.name}`}\n                      className=\"p-1 text-muted-foreground hover:text-foreground rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary\"\n                    >\n                      <MoreHorizontal className=\"w-4 h-4\" aria-hidden=\"true\" />\n                    </button>\n                  </td>\n                </tr>\n              );\n            })}\n          </tbody>\n        </table>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/resource-inventory-list.tsx"
+    }
+  ]
+}
