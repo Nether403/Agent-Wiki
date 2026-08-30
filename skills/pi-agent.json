@@ -1,0 +1,25 @@
+{
+  "name": "design-agent-wiki-pi",
+  "version": "1.0.0",
+  "author": "Design Agent Wiki Team",
+  "description": "Inflection Pi Agent integration for zero-slop UI component generation and MCP discovery.",
+  "runtime": "pi-agent-plugin-v1",
+  "mcpEndpoint": "http://localhost:3001/mcp",
+  "sseEndpoint": "http://localhost:3001/sse",
+  "capabilities": [
+    "ui-component-search",
+    "zero-slop-linter",
+    "token-spacing-validator",
+    "accessibility-wcag-check"
+  ],
+  "dials": {
+    "variance": 5,
+    "motion": 4,
+    "density": 6
+  },
+  "guardrails": {
+    "blockArbitrarySpacing": true,
+    "enforceWcagAA": true,
+    "strictTypeSafety": true
+  }
+}

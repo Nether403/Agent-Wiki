@@ -1,0 +1,32 @@
+{
+  "skill": "design-agent-wiki",
+  "version": "1.0.0",
+  "framework": "OpenClaw / gbrain",
+  "description": "Autonomous UI synthesis and code validation engine grounded in verified machine-readable component registries.",
+  "actions": [
+    {
+      "name": "search_library",
+      "description": "Vector and tag query across 7 UI categories",
+      "schema": {
+        "query": "string",
+        "category": "string",
+        "tag": "string"
+      }
+    },
+    {
+      "name": "fetch_raw_markup",
+      "description": "Fetch flat <15KB TSX component source and recipe",
+      "schema": {
+        "name": "string"
+      }
+    },
+    {
+      "name": "audit_code_slop",
+      "description": "Scan code against 21 Anti-Slop Rules",
+      "schema": {
+        "code": "string"
+      }
+    }
+  ],
+  "systemPromptAddition": "Before generating UI, invoke the design-agent-wiki skill to retrieve verified components and enforce strict anti-slop rules."
+}

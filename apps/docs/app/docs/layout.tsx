@@ -13,6 +13,7 @@ export default function DocsLayout({
     { label: "Anti-Slop Rules", href: "/docs/anti-slop-rules", icon: ShieldAlert },
     { label: "Taste-Dial Matrix", href: "/docs/taste-dials", icon: Sliders },
     { label: "MCP Setup", href: "/docs/mcp-setup", icon: Server },
+    { label: "Agent Ecosystem", href: "/docs/agent-ecosystem", icon: BookOpen },
   ];
 
   return (

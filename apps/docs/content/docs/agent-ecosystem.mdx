@@ -1,0 +1,107 @@
+---
+title: "Universal Agent Ecosystem Integration"
+description: "How to configure Claude Code, Cursor, OpenAI Codex, Inflection Pi, OpenClaw/gbrain, and Hermes Agent with the Machine-First Design Wiki."
+---
+
+# Universal Agent Ecosystem Integration
+
+The Machine-First Design Agent Wiki is designed for universal interoperability across leading autonomous AI coding agents.
+
+---
+
+## 1. Claude Code (Anthropic CLI)
+
+Configure Claude Code using `claude-code-config.json` or by registering the local stdio / remote HTTP MCP server:
+
+```bash
+# Add local stdio MCP server
+claude mcp add design-wiki -- npx @design-wiki/mcp
+
+# Or connect to Cloudflare Worker remote HTTP MCP endpoint
+claude mcp add design-wiki --transport http https://wiki.yourdomain.dev/mcp
+```
+
+### Agent Instruction
+Add to your project root `CLAUDE.md`:
+```markdown
+# Design System Directives
+- Before authoring any UI, query MCP tool `search_library` or read `/llms.txt`.
+- Install components with `npx design-wiki add <slug>`.
+- Audit all code against the 21 Anti-Slop Rules using `audit_code_slop`.
+```
+
+---
+
+## 2. Cursor IDE
+
+Cursor agents automatically detect rules placed in `.cursorrules` or `.cursor/rules/design-wiki.mdc`.
+
+### Configuration
+Add `@design-wiki/mcp` to your `.cursor/mcp.json`:
+```json
+{
+  "mcpServers": {
+    "design-wiki": {
+      "command": "npx",
+      "args": ["@design-wiki/mcp"]
+    }
+  }
+}
+```
+
+---
+
+## 3. OpenAI Codex & ChatGPT
+
+Codex loads directives from `.codex-plugin/rules.json` and `skills/codex-instructions.md`.
+```json
+{
+  "name": "design-agent-wiki-rulepack",
+  "version": "1.0.0",
+  "mcpTools": [
+    "search_library",
+    "fetch_raw_markup",
+    "get_installation_schema",
+    "audit_code_slop"
+  ]
+}
+```
+
+---
+
+## 4. Inflection Pi Agent
+
+Pi Agent loads plugin definitions from `skills/pi-agent.json` to stream structured components over SSE:
+```json
+{
+  "name": "design-agent-wiki-pi",
+  "runtime": "pi-agent-plugin-v1",
+  "mcpEndpoint": "http://localhost:3001/mcp",
+  "sseEndpoint": "http://localhost:3001/sse"
+}
+```
+
+---
+
+## 5. OpenClaw / gbrain
+
+OpenClaw discovers available skills via `skills/openclaw-skill.json`. It coordinates multi-agent workers to query the registry, resolve recursive dependencies, and verify WCAG AA contrast.
+
+---
+
+## 6. Hermes Autonomous Agent
+
+Hermes loads the 4-phase execution loop defined in `skills/hermes-agent.json`:
+1. **Discover**: Query `search_library`.
+2. **Fetch**: Retrieve verified TSX source with `fetch_raw_markup` (<15KB token budget).
+3. **Install**: Run `npx design-wiki add <slug>`.
+4. **Audit**: Verify zero slop using `audit_code_slop`.
+
+---
+
+## Synchronizing All Rulepacks
+
+To synchronize changes to rules across all IDE and agent formats simultaneously, run:
+```bash
+pnpm sync:rules
+```

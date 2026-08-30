@@ -166,5 +166,7 @@ export function harvestRepository(
 export * from "./ast-parser";
 export * from "./dial-classifier";
 export * from "./attribution";
+export * from "./llm-enricher";
 export * from "./codemods/tailwind-v4-transform";
 export * from "./codemods/motion-react-transform";
+

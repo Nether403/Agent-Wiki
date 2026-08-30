@@ -1,0 +1,27 @@
+{
+  "agent": "Hermes-Design-System",
+  "version": "1.0.0",
+  "protocol": "Hermes-Agent-Spec-v2",
+  "description": "Hermes Autonomous Agent design engineer configuration for Machine-First Design Wiki.",
+  "executionLoop": {
+    "step1_discover": "Query MCP search_library to map user intent into candidate component slugs",
+    "step2_fetch": "Retrieve verified source via fetch_raw_markup (<15KB context ceiling)",
+    "step3_install": "Execute 'npx design-wiki add <slug>' to scaffold components and auto-install peer dependencies",
+    "step4_audit": "Execute audit_code_slop on output to guarantee 100/100 Health Score"
+  },
+  "constraints": {
+    "disallowedPatterns": [
+      "bg-indigo-600",
+      "from-purple-500 to-blue-500",
+      "p-[17px]",
+      "as any as",
+      "transition-all duration-300"
+    ],
+    "requiredPatterns": [
+      "focus-visible:ring-2",
+      "prefers-reduced-motion",
+      "bg-card",
+      "border-border"
+    ]
+  }
+}

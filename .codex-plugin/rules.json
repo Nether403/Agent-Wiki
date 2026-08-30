@@ -10,6 +10,9 @@
     "Taste Dials: adhere to DESIGN_VARIANCE (5), MOTION_INTENSITY (4), and VISUAL_DENSITY (6)."
   ],
   "mcpTools": [
+    "search_library",
+    "fetch_raw_markup",
+    "get_installation_schema",
     "search_components",
     "fetch_raw_markdown",
     "get_installation_commands",

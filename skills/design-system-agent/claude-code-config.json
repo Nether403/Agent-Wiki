@@ -1,11 +1,26 @@
 {
   "name": "design-system-agent",
   "version": "1.0.0",
+  "description": "Design Agent Wiki integration for Claude Code: queries zero-slop UI components and enforces anti-slop rules.",
   "mcpServers": {
     "design-wiki": {
       "command": "npx",
       "args": ["@design-wiki/mcp"]
     }
   },
-  "instructions": "When creating or modifying UI components, query the design-wiki MCP tools (search_components, get_component_markup, audit_code_slop) to maintain deterministic, zero-slop UI outputs."
+  "tools": [
+    "search_library",
+    "fetch_raw_markup",
+    "get_installation_schema",
+    "search_components",
+    "fetch_raw_markdown",
+    "get_installation_commands",
+    "audit_code_slop"
+  ],
+  "dials": {
+    "DESIGN_VARIANCE": 5,
+    "MOTION_INTENSITY": 4,
+    "VISUAL_DENSITY": 6
+  },
+  "instructions": "Always consult the Design Agent Wiki MCP server before authoring or modifying React/Tailwind UI components. Use search_library to discover pre-built zero-slop components, fetch_raw_markup to get verified code, and audit_code_slop to ensure 100/100 Health Score without arbitrary pixel hacks or WCAG contrast failures."
 }

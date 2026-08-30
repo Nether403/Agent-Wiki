@@ -1,67 +1,46 @@
-name: "Anti-Slop & Design Guardrail Audit"
+name: 🛡️ Anti-Slop & Design Audit Gate
 
 on:
   push:
-    branches:
-      - main
-      - master
-    paths:
-      - "packages/registry/**"
-      - "components/**"
-      - "apps/docs/public/r/**"
+    branches: [main]
   pull_request:
-    branches:
-      - main
-      - master
-    paths:
-      - "packages/registry/**"
-      - "components/**"
-      - "apps/docs/public/r/**"
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+    branches: [main]
 
 jobs:
   audit-guardrails:
-    name: "Enforce Anti-Slop & WCAG Guardrails"
+    name: Anti-Slop AST Linter & Taste Dials
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
+      - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: ⚙️ Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Set up pnpm
+      - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-
-      - name: Install Monorepo Dependencies
+      - name: 📦 Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run Python Anti-Slop & WCAG Guardrail Scanner
-        run: |
-          python3 verify-audit.py packages/registry/src
+      - name: 🏗️ Build Registry & Packages
+        run: pnpm build
 
-      - name: Run Audit Linter Quality Gate
-        run: |
-          pnpm lint:slop
+      - name: 🛡️ Run Anti-Slop 21-Rule AST Audit Gate
+        run: python3 verify-audit.py --strict
 
-      - name: Verify Harvester Registry Compilation
-        run: |
-          pnpm build:registry
+      - name: ♿ Run Automated Accessibility (WCAG AA) Checks
+        run: pnpm test:a11y
 
-      - name: Run Agent MCP Sandbox Integration Tests
-        run: |
-          pnpm --filter @design-wiki/mcp test:sandbox
-          pnpm tsx scripts/run-agent-sandbox.ts
+      - name: 🤖 Execute Zero-Draft Sandbox Trial
+        run: pnpm test:sandbox

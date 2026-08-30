@@ -1,12 +1,7 @@
 ---
-name: "design-system-agent-skill"
-description: "Instructs AI agents how to discover, configure, install, and audit components from our Design Wiki registry."
-version: "1.0.0"
-freshness: "2026-08-30"
-dials:
-  DESIGN_VARIANCE: 5     # 1: Conservative/centered · 10: Asymmetric/Avant-garde editorial
-  MOTION_INTENSITY: 4    # 1: Basic hover changes  · 10: Orchestrated canvas/WebGL/spring states
-  VISUAL_DENSITY: 6      # 1: Generous whitespace  · 10: Dense analytical/SaaS grid layouts
+description: Machine-First Design Agent Wiki rules and MCP tool integration for zero-slop UI generation
+globs: **/*.{tsx,ts,jsx,js,css}
+alwaysApply: true
 ---
 
 # Design System Agent Skill
