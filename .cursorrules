@@ -23,23 +23,27 @@ When discovering and installing UI components, invoke the official MCP tools:
    ```json
    search_components({ "query": "dock", "category": "ui:motion" })
    ```
-2. **Inspection & Markup**:
+2. **Inspection & Markdown**:
    ```json
-   fetch_raw_markup({ "name": "floating-dock" })
+   fetch_raw_markdown({ "name": "floating-dock" })
    ```
-3. **Installation & Schemas**:
+   *(Returns full structured YAML frontmatter contract, taste dials, complexity, and verified TSX source)*
+3. **Installation Commands**:
    ```json
-   get_installation_schema({ "name": "floating-dock" })
+   get_installation_commands({ "name": "floating-dock", "packageManager": "pnpm" })
    ```
-   Execute the resulting command:
+   Execute the native CLI installer (resolves path maps & peer packages):
    ```bash
+   npx design-wiki add floating-dock
+   # or via shadcn v3:
    npx shadcn@latest add http://localhost:3000/r/floating-dock.json
    ```
-4. **Quality Assurance Audit**:
+4. **Quality Assurance Audit & Taste Review**:
    Before completing any task, verify your generated code:
    ```json
    audit_code_slop({ "code": "<your-tsx-code>" })
    ```
+   Or run the CLI taste review: `pnpm review:taste <path-to-file>`
    Ensure a health score of 85+ and 0 High-severity flags.
 
 ## 5. Integration Receipt

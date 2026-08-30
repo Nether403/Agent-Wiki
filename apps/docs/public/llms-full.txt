@@ -24,9 +24,9 @@
   - Install: npx shadcn@latest add http://localhost:3000/r/pricing-table.json
 
 ### Category: ui:creative
-- [canvas-fluid-wave](/r/canvas-fluid-wave.json): Interactive HTML5 Canvas fluid simulation with mouse interaction and CSS gradient fallback. (Variance: 8, Motion: 9, Density: 3)
-  - Tags: canvas, tailwind-v4, webgl, shader-simulation, interactive, a11y-fallback
-  - Dependencies: clsx, tailwind-merge, motion
+- [canvas-fluid-wave](/r/canvas-fluid-wave.json): Interactive HTML5 Canvas fluid simulation with mouse interaction, WebGL / Three.js bridge compatibility, and CSS gradient fallback. (Variance: 8, Motion: 9, Density: 3)
+  - Tags: webgl, threejs, canvas, tailwind-v4, shader-simulation, interactive, a11y-fallback
+  - Dependencies: three, clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/canvas-fluid-wave.json
 - [dot-matrix-loader](/r/dot-matrix-loader.json): Animated dot matrix with wave oscillation, customizable matrix rows, and accessible status role. (Variance: 6, Motion: 5, Density: 7)
   - Tags: utility, dot-matrix, canvas-pattern, loader, status
@@ -37,8 +37,8 @@
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/noise-texture-card.json
 - [particle-field](/r/particle-field.json): GPU-friendly interactive particle web with prefers-reduced-motion fallback. (Variance: 8, Motion: 8, Density: 4)
-  - Tags: canvas, tailwind-v4, webgl, particles, physics, reduced-motion
-  - Dependencies: clsx, tailwind-merge, motion, three
+  - Tags: webgl, threejs, canvas, tailwind-v4, particles, physics, reduced-motion
+  - Dependencies: three, clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/particle-field.json
 
 ### Category: ui:editorial
@@ -57,23 +57,23 @@
 
 ### Category: ui:motion
 - [animated-tabs](/r/animated-tabs.json): Smooth spring-bound tab slider with layout ID preservation and zero layout shift. (Variance: 4, Motion: 6, Density: 5)
-  - Tags: motion/react, tailwind-v4, accessible, spring-physics, tabs, layoutId
+  - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, spring-physics, tabs, layoutId
   - Dependencies: motion, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/animated-tabs.json
 - [floating-dock](/r/floating-dock.json): macOS-style interactive dock with mouse proximity magnification and spring physics. (Variance: 6, Motion: 7, Density: 4)
-  - Tags: motion/react, tailwind-v4, accessible, spring-physics, dock, macos-style
+  - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, spring-physics, dock, macos-style
   - Dependencies: motion, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/floating-dock.json
 - [fluid-cursor](/r/fluid-cursor.json): Smooth trailing cursor follower with graceful coarse-pointer (mobile) disablement. (Variance: 8, Motion: 8, Density: 3)
-  - Tags: motion/react, spring-physics, cursor-follower, smooth-spring
+  - Tags: framer-motion, motion/react, animation, spring-physics, cursor-follower, smooth-spring
   - Dependencies: motion, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/fluid-cursor.json
 - [magnetic-button](/r/magnetic-button.json): Physics-based cursor magnetic attraction button for high-taste calls to action. (Variance: 7, Motion: 7, Density: 5)
-  - Tags: motion/react, accessible, spring-physics, magnetic-physics, button, interactive
+  - Tags: framer-motion, motion/react, animation, accessible, spring-physics, magnetic-physics, button, interactive
   - Dependencies: motion, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/magnetic-button.json
 - [spring-dialog](/r/spring-dialog.json): Scale-and-fade physics modal with AnimatePresence and keyboard escape handling. (Variance: 5, Motion: 6, Density: 5)
-  - Tags: motion/react, lucide-react, tailwind-v4, accessible, spring-physics, animate-presence, modal
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, spring-physics, animate-presence, modal
   - Dependencies: motion, lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/spring-dialog.json
 
@@ -488,7 +488,7 @@ export function PricingTable({ plans = DEFAULT_PLANS, className }: PricingTableP
 
 ### Canvas Fluid Wave (`canvas-fluid-wave`)
 - **Category**: `ui:creative`
-- **Dependencies**: clsx, tailwind-merge, motion
+- **Dependencies**: three, clsx, tailwind-merge, motion
 - **Registry Dependencies**: None
 - **Taste Dials**: Variance 8/10, Motion 9/10, Density 3/10
 - **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
@@ -777,7 +777,7 @@ export function NoiseTextureCard({
 
 ### Particle Field (`particle-field`)
 - **Category**: `ui:creative`
-- **Dependencies**: clsx, tailwind-merge, motion, three
+- **Dependencies**: three, clsx, tailwind-merge, motion
 - **Registry Dependencies**: None
 - **Taste Dials**: Variance 8/10, Motion 8/10, Density 4/10
 - **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true

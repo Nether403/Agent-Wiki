@@ -52,14 +52,28 @@ Every generated JSON item complies with `registry-item-schema.json` (extending t
 
 | Destination | Format | Description |
 | :--- | :--- | :--- |
-| `apps/docs/public/r/[name].json` | JSON | Component installation schema consumed by `npx shadcn add` |
-| `apps/docs/public/r/registry.json` | JSON | Master index of all registered components |
-| `apps/docs/public/llms.txt` | Plain Text | Flat machine discovery index summarizing components and dials |
+| `apps/docs/public/r/[name].json` | JSON | Component installation schema consumed by `npx design-wiki add` and `npx shadcn add` |
+| `apps/docs/public/r/registry.json` | JSON | Master index of all registered components with taxonomy and taste dials |
+| `apps/docs/public/raw/components/[name].md` | Markdown | Machine-first component documentation with structured YAML frontmatter and verified TSX source |
+| `apps/docs/public/llms.txt` | Plain Text | Flat machine discovery index summarizing components, taxonomy, and dials |
 | `apps/docs/public/llms-full.txt` | Markdown | Complete flat context payload with embedded component code |
 
 ## Running the Compiler
 
 ```bash
-# Compile all registry artifacts
+# Compile all registry artifacts, JSON schemas, raw markdown, and llms.txt
 pnpm build:registry
 ```
+
+## Installing Components via CLI
+
+Consumers can install any compiled registry item directly:
+
+```bash
+# Native Design Wiki installer (automatically detects path aliases & peer packages)
+npx design-wiki add <component-name>
+
+# Traditional shadcn v3 installer
+npx shadcn@latest add http://localhost:3000/r/<component-name>.json
+```
+

@@ -6,9 +6,10 @@
   "description": "GPU-friendly interactive particle web with prefers-reduced-motion fallback.",
   "category": "ui:creative",
   "tags": [
+    "webgl",
+    "threejs",
     "canvas",
     "tailwind-v4",
-    "webgl",
     "particles",
     "physics",
     "reduced-motion"
@@ -18,6 +19,7 @@
     "motion_intensity": 8,
     "visual_density": 4
   },
+  "complexity": "high",
   "a11y": {
     "keyboard_navigable": false,
     "wai_aria_compliant": true,
@@ -32,10 +34,13 @@
     "redistribution_mode": "full_source"
   },
   "dependencies": [
+    "three",
     "clsx",
     "tailwind-merge",
-    "motion",
-    "three"
+    "motion"
+  ],
+  "devDependencies": [
+    "@types/three"
   ],
   "registryDependencies": [],
   "files": [

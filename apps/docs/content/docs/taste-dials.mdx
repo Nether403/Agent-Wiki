@@ -30,3 +30,26 @@ dials:
   MOTION_INTENSITY: 4    # 1: Basic hover   · 10: Canvas/WebGL springs
   VISUAL_DENSITY: 6      # 1: Generous space · 10: Dense analytical UI
 ```
+
+---
+
+## Automated Taste Auditing & Dial Review
+
+The `@design-wiki/audit-linter` includes an automated LLM Review engine (`pnpm review:taste <file>`) that parses component AST signals and CSS class strings to assign calibrated 1–10 dial ratings while enforcing layout stability guardrails:
+
+```bash
+pnpm review:taste ./packages/registry/src/creative/canvas-fluid-wave.tsx
+```
+
+### Aesthetic Curation Guardrails
+
+1. **Dark-Mode Procedural Shaders (`ui:creative`)**:
+   - Permitted high variance (8–9) and high motion (8–10) **only** when verified with `prefers-reduced-motion` media queries and static visual fallbacks.
+   - If canvas loops run without media listener fallbacks, motion score is capped and layout/accessibility warnings are triggered.
+2. **Controlled Glassmorphism**:
+   - Blanket blur hacks (`bg-white/10 backdrop-blur`) are penalized under `SLOP-003`.
+   - High-craft glassmorphism is curated safely when anchored with crisp structural border tokens (`border-border`) and solid card fallbacks.
+3. **Spacing & Token Rhythm**:
+   - Arbitrary pixel values (`p-[17px]`, `m-[13px]`, `gap-[15px]`) violate system scales and trigger layout breakage across viewports.
+   - Automatically detected with recommended standard Tailwind tokens (`p-4` or `p-5`).
+

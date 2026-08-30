@@ -6,7 +6,9 @@
   "description": "Scale-and-fade physics modal with AnimatePresence and keyboard escape handling.",
   "category": "ui:motion",
   "tags": [
+    "framer-motion",
     "motion/react",
+    "animation",
     "lucide-react",
     "tailwind-v4",
     "accessible",
@@ -19,6 +21,7 @@
     "motion_intensity": 6,
     "visual_density": 5
   },
+  "complexity": "high",
   "a11y": {
     "keyboard_navigable": true,
     "wai_aria_compliant": true,

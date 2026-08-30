@@ -10,7 +10,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "check-slop": "tsx src/cli.ts ../../"
+    "check-slop": "tsx src/cli.ts",
+    "review": "tsx src/cli.ts review"
   },
   "dependencies": {},
   "devDependencies": {

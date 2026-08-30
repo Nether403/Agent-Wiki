@@ -6,7 +6,9 @@
   "description": "Smooth spring-bound tab slider with layout ID preservation and zero layout shift.",
   "category": "ui:motion",
   "tags": [
+    "framer-motion",
     "motion/react",
+    "animation",
     "tailwind-v4",
     "accessible",
     "spring-physics",
@@ -18,6 +20,7 @@
     "motion_intensity": 6,
     "visual_density": 5
   },
+  "complexity": "medium",
   "a11y": {
     "keyboard_navigable": true,
     "wai_aria_compliant": true,

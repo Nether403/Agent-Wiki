@@ -3,12 +3,13 @@
   "name": "canvas-fluid-wave",
   "type": "registry:component",
   "title": "Canvas Fluid Wave",
-  "description": "Interactive HTML5 Canvas fluid simulation with mouse interaction and CSS gradient fallback.",
+  "description": "Interactive HTML5 Canvas fluid simulation with mouse interaction, WebGL / Three.js bridge compatibility, and CSS gradient fallback.",
   "category": "ui:creative",
   "tags": [
+    "webgl",
+    "threejs",
     "canvas",
     "tailwind-v4",
-    "webgl",
     "shader-simulation",
     "interactive",
     "a11y-fallback"
@@ -18,6 +19,7 @@
     "motion_intensity": 9,
     "visual_density": 3
   },
+  "complexity": "high",
   "a11y": {
     "keyboard_navigable": false,
     "wai_aria_compliant": true,
@@ -32,9 +34,13 @@
     "redistribution_mode": "full_source"
   },
   "dependencies": [
+    "three",
     "clsx",
     "tailwind-merge",
     "motion"
+  ],
+  "devDependencies": [
+    "@types/three"
   ],
   "registryDependencies": [],
   "files": [

@@ -6,7 +6,9 @@
   "description": "Smooth trailing cursor follower with graceful coarse-pointer (mobile) disablement.",
   "category": "ui:motion",
   "tags": [
+    "framer-motion",
     "motion/react",
+    "animation",
     "spring-physics",
     "cursor-follower",
     "smooth-spring"
@@ -16,6 +18,7 @@
     "motion_intensity": 8,
     "visual_density": 3
   },
+  "complexity": "medium",
   "a11y": {
     "keyboard_navigable": false,
     "wai_aria_compliant": true,

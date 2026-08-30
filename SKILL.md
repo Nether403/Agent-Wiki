@@ -46,35 +46,41 @@ When a user asks you to build, modify, or redesign an interface, you must execut
 
 ### Phase 1: Discover
 Before writing code, query our machine-readable discovery endpoints:
-1. Load and parse `/public/llms.txt` to map the workspace scope and look up existing files.
-2. Parse `public/r/registry.json` to inspect the available components, their categorizations, tags, and dependencies.
-3. Determine if the requested UI pattern exists as an indexed registry item.
-   * *Example: If the user asks for a floating dock, find if `@your-registry/dock` is available.*
+1. Query MCP `@design-wiki/mcp`:
+   - `search_components({ query: "dock", category: "ui:motion" })`
+   - `fetch_raw_markdown({ name: "floating-dock" })` (fetches structured YAML frontmatter & verified TSX)
+   - `get_installation_commands({ name: "floating-dock", packageManager: "pnpm" })`
+2. Or load and parse `/public/llms.txt` and `/raw/components/<name>.md`.
 
 ### Phase 2: Install
 If the component is registered but missing from the local workspace:
-1. run the programmatic installer CLI:
+1. Run the native Design Wiki installer CLI (automatically resolves path maps and missing peer packages):
    ```bash
-   npx shadcn@latest add <registry-namespace>/<component-name>
+   npx design-wiki add <component-name>
+   # or via shadcn v3:
+   npx shadcn@latest add http://localhost:3000/r/<component-name>.json
    ```
-2. Automatically verify that peer npm dependencies (e.g., `motion`, `lucide-react`) are merged into `package.json` and successfully installed.
-3. Resolve any typescript import path aliases (e.g., `@/components/ui/` vs `@/components/smoothui/`).
+2. Automatically verify that peer npm dependencies (e.g., `motion`, `three`, `lucide-react`) are merged into `package.json` and successfully installed.
+3. Resolve any typescript import path aliases (`@/components/ui/<component-name>`).
 
 ### Phase 3: Implement & Constrain
 When wiring components together on a page, respect our architectural constraints:
 *   **ContrastAA Pass**: Ensure all text elements meet WCAG AA contrast rules (minimum 4.5:1 for normal text).
 *   **A11y Checks**:
     *   All SVGs must have an accessible title and role: `<svg role="img" aria-labelledby="title-id">`.
-    *   Ensure all buttons and links are focus-navigable and have distinct `:focus-visible` styles.
-*   **Motion Fallbacks**: If you use canvas or high-end WebGL shaders, you must build robust fallbacks. Ensure HTML text degrades gracefully onto static, readable cards if WebGL is unsupported or if reduced-motion is preferred.
+    *   Ensure all buttons and links are focus-navigable and have distinct `:focus-visible:ring-2` styles.
+*   **Motion Fallbacks**: If you use canvas or high-end WebGL shaders, you must build robust fallbacks (`prefers-reduced-motion` and a static CSS fallback).
+*   **Controlled Glassmorphism**: Never use raw `bg-white/10 backdrop-blur` without crisp structural border tokens (`border-border`) and solid card fallbacks.
 
-### Phase 4: Audit (The Anti-Slop Check)
-Before declaring your work complete, audit your code against this strict checklist. You must rewrite any lines that violate these rules:
-
-1. **No Chained Type Assertions**: Never bypass TypeScript compiler safety by chaining assertions (e.g., `const user = input as object as User`).
-2. **No Empty Object Spreads**: Avoid ad-hoc, conditional spreading patterns like `...(condition ? { field } : {})`. Provide explicit, typed fallback keys instead.
-3. **No Ad-Hoc Transitions**: Ban generic `transition-all duration-300` across whole sections. Set transitions explicitly on the specific style properties changing (e.g., `transition-colors duration-200`).
-4. **No Arbitrary Sizing Hacks**: Reject arbitrary padding/margin overrides (e.g., `p-[17px]`). Stick to Tailwind's default spacing steps or defined system tokens.
+### Phase 4: Audit & Taste Review (The Anti-Slop Check)
+Before declaring your work complete, audit your code against the 20 Anti-Slop Rules and calibrated taste dials:
+1. Run automated taste audit via `pnpm review:taste <path-to-file>` or call MCP `audit_code_slop({ code: "<code-string>" })`.
+2. Enforce strict design hygiene:
+   - **No Chained Type Assertions**: Never bypass TypeScript compiler safety by chaining assertions (`input as object as User`).
+   - **No Empty Object Spreads**: Avoid ad-hoc, conditional spreading patterns (`...(cond ? { field } : {})`).
+   - **No Ad-Hoc Transitions**: Ban generic `transition-all duration-300` across whole sections. Set transitions explicitly (`transition-colors duration-200`).
+   - **No Arbitrary Sizing Hacks**: Reject arbitrary padding/margin overrides (`p-[17px]`, `m-[13px]`, `gap-[15px]`). Use standard Tailwind tokens (`p-4`).
+   - **Zero High Flags**: Verify health score is 85+ with zero High-severity flags.
 
 ---
 

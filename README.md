@@ -80,12 +80,18 @@ Agent Wiki/
 │   │   ├── compiler/build-registry.ts # Dynamic component sweeper and /r/ JSON compiler
 │   │   └── schema.json              # Component JSON Schema extending shadcn registry-item
 │   ├── mcp-server/                  # Model Context Protocol (MCP) service for developer agents
-│   │   ├── src/server.ts            # search_components, fetch_raw_markup, get_installation_schema
+│   │   ├── src/server.ts            # search_components, fetch_raw_markdown, get_installation_commands
 │   │   ├── src/index.ts             # Stdio transport entrypoint
 │   │   └── test/agent-sandbox.test.ts # Autonomous end-to-end sandbox verification test
-│   └── audit-linter/                # 20-rule AST + regex anti-slop verification engine
-│       ├── src/rules.ts             # Rule definitions (SLOP-001 through SLOP-020)
-│       └── src/cli.ts               # verify-audit CLI and markdown scorecard generator
+│   ├── cli/                         # Native installer CLI (npx design-wiki add <slug>)
+│   │   ├── src/commands/add.ts      # Path map resolver, recursive downloader & peer installer
+│   │   ├── src/commands/list.ts     # Component catalog browser with taste dials
+│   │   ├── src/commands/audit.ts    # Standalone anti-slop audit scanner
+│   │   └── src/index.ts             # Executable CLI router
+│   └── audit-linter/                # 20-rule AST + regex anti-slop verification & taste auditing
+│       ├── src/rules.ts             # Rule definitions (SLOP-001 through SLOP-020) & scanCssAntiPatterns
+│       ├── src/llm-review.ts        # Automated LLM taste audit & 1-10 dial calibration engine
+│       └── src/cli.ts               # verify-audit & taste review CLI (pnpm review:taste)
 ├── skills/
 │   └── design-system-agent/         # Portable agent skillpacks for Claude Code, Cursor, and Codex
 │       ├── SKILL.md                 # Agent execution contract and 4-phase loop
@@ -160,10 +166,10 @@ claude mcp add design-wiki npx @design-wiki/mcp
 
 | Tool Name | Parameters | Description |
 | :--- | :--- | :--- |
-| `search_components` | `query`, `category`, `tag`, `minMotionIntensity`, `maxVisualDensity`, `minDesignVariance` | Searches the catalog with multi-dimensional filtering. |
-| `fetch_raw_markup` | `name` (slug) | Returns un-truncated production TSX source code, peer dependencies, and styling recipes. *(Alias: `get_component_markup`)* |
-| `get_installation_schema` | `name` (slug), `baseUrl` | Returns full shadcn v3 JSON schema, files array, dependencies, and CLI install command. *(Alias: `get_install_recipe`)* |
-| `audit_code_slop` | `code` (string) | Scans arbitrary React/Tailwind code against 20 anti-slop rules and returns a health score (0–100). |
+| `search_components` | `query`, `category`, `tag`, `minMotionIntensity`, `maxVisualDensity`, `minDesignVariance` | Searches the catalog with multi-dimensional filtering across 27+ zero-slop components. |
+| `fetch_raw_markdown` | `name` (slug) | Returns complete raw Markdown with structured YAML frontmatter contract, taxonomy, complexity, taste dials, accessibility, and verified TSX source. *(Aliases: `fetch_raw_markup`, `get_component_markup`)* |
+| `get_installation_commands` | `name` (slug), `packageManager` (`pnpm`, `npm`, `bun`, `yarn`), `baseUrl` | Returns exact CLI commands (`npx design-wiki add <slug>`, `npx shadcn@latest add ...`), peer npm install strings, import snippets, and instructions. *(Aliases: `get_installation_schema`, `get_install_recipe`)* |
+| `audit_code_slop` | `code` (string) | Scans arbitrary React/Tailwind code against 20 anti-slop rules, checking arbitrary pixel escapes (`p-[17px]`), and returns a health score (0–100). |
 
 ---
 
@@ -214,19 +220,39 @@ Sweeps component sources, maps peer dependencies from AST, escapes source string
 pnpm build:registry
 ```
 
-### 3. Run Anti-Slop Audit
+### 3. Run Anti-Slop Audit & Taste Review
 Scans all workspace components against the 20-rule linter and generates `COMPLETED-DESIGN-AUDIT.md`:
 ```bash
+# Workspace wide 20-rule anti-slop audit
 pnpm lint:slop
+
+# Automated taste audit & 1-10 dial calibration on a specific component
+pnpm review:taste packages/registry/src/creative/canvas-fluid-wave.tsx
 ```
 
-### 4. Run Autonomous Agent Sandbox Test
+### 4. Use the Native Installer CLI (`design-wiki`)
+Install zero-slop components directly into your local Next.js / Vite UI directories:
+```bash
+# Add a component (resolves components.json, tsconfig path maps, and missing peer dependencies)
+npx design-wiki add canvas-fluid-wave
+
+# List all 27 verified zero-slop components with dials & tags
+npx design-wiki list
+
+# Search components by keyword or category
+npx design-wiki search dock
+
+# Audit a local folder for AI slop anti-patterns (p-[17px], emojis, etc.)
+npx design-wiki audit ./components/ui
+```
+
+### 5. Run Autonomous Agent Sandbox Test
 Simulates an AI agent executing the 4-phase loop (**Discover &rarr; Inspect &rarr; Install &rarr; Audit**) with zero human intervention:
 ```bash
 pnpm test:sandbox
 ```
 
-### 5. Harvest Upstream Repositories
+### 6. Harvest Upstream Repositories
 Run the ingestion engine to shallow-clone, parse AST, and evaluate upstream libraries:
 ```bash
 # Harvest a specific repository
@@ -236,17 +262,18 @@ pnpm harvest repo smoothui
 pnpm harvest dir ./packages/registry/src/motion
 
 # Audit a single file
-pnpm harvest file ./packages/registry/src/motion/floating-dock.tsx
+pnpm harvest file ./packages/registry/src/creative/canvas-fluid-wave.tsx
 
 # List available upstream catalog targets
 pnpm harvest list
 ```
 
-### 6. Start the Documentation Web Showcase
+### 7. Start the Documentation Web Showcase
 ```bash
 pnpm dev
 ```
 Open [http://localhost:3000](http://localhost:3000) to view the human interface, live component previews, and documentation.
+
 
 ---
 

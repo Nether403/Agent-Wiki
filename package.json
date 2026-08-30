@@ -5,9 +5,12 @@
   "description": "Machine-First Design Agent Wiki: Curating high-performance UI registries and preventing AI slop.",
   "scripts": {
     "dev": "pnpm --filter @design-wiki/docs dev",
-    "build": "pnpm --filter @design-wiki/registry build && pnpm --filter @design-wiki/audit-linter build && pnpm --filter @design-wiki/harvester build && pnpm --filter @design-wiki/mcp build && pnpm --filter @design-wiki/docs build",
+    "build": "pnpm --filter @design-wiki/registry build && pnpm --filter @design-wiki/audit-linter build && pnpm --filter @design-wiki/harvester build && pnpm --filter @design-wiki/mcp build && pnpm --filter design-wiki build && pnpm --filter @design-wiki/docs build",
     "build:registry": "pnpm --filter @design-wiki/registry build",
+    "build:cli": "pnpm --filter design-wiki build",
+    "design-wiki": "node packages/cli/dist/index.js",
     "lint:slop": "pnpm --filter @design-wiki/audit-linter run check-slop",
+    "review:taste": "pnpm --filter @design-wiki/audit-linter review",
     "harvest": "pnpm --filter @design-wiki/harvester harvest",
     "test:sandbox": "pnpm --filter @design-wiki/mcp test:sandbox",
     "mcp": "pnpm --filter @design-wiki/mcp start",

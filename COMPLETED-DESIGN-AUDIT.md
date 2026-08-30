@@ -12,7 +12,7 @@
 | High Severity Flags | 0 | Instant failure potential (TypeScript/logic) |
 | Medium Severity Flags | 0 | Design alignment tells (vibe gradients, colors) |
 | Low Severity Flags | 0 | Micro-detailing flags (spacing, transitions) |
-| Total Scanned Files | 38 | Source base breadth checked |
+| Total Scanned Files | 31 | Source base breadth checked |
 
 ---
 

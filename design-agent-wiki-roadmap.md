@@ -166,6 +166,9 @@ Build high-speed programmatic bridges allowing AI developer agents (Claude Code,
 > **Phase 3 Checkpoint Gate**:
 > - [x] Claude Code and Cursor agents can configure the MCP server in their settings.
 > - [x] An agent given a natural language prompt ("add an accessible modal dialog") successfully queries MCP, installs the component, and wires it into the app.
+> - [x] Native installer CLI `npx design-wiki add <slug>` operational with automatic path map resolution and recursive dependency scaffolding.
+> - [x] Automated taste audit engine and calibrated 1–10 dial review pipeline active with layout stability guardrails.
+
 
 ---
 

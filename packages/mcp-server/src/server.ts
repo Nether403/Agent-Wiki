@@ -297,6 +297,98 @@ export function createDesignWikiMcpServer(): McpServer {
   );
 
   // Helper handler for markup retrieval
+  // Handler for raw markdown retrieval (with complete YAML frontmatter and verified TSX source)
+  const handleFetchRawMarkdown = async (name: string) => {
+    const item = getComponentItem(name);
+
+    if (!item) {
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: `Error: Component "${name}" was not found in the Design Agent Wiki registry. Use search_components to view available slugs.`,
+          },
+        ],
+      };
+    }
+
+    const fileEntry = item.files?.[0];
+    const sourceCode = fileEntry?.content || "// Error: Source code not bundled in registry artifact.";
+
+    const depsYaml =
+      item.dependencies && item.dependencies.length > 0
+        ? item.dependencies.map((d: string) => `  - "${d}"`).join("\n")
+        : "  # No external runtime dependencies";
+
+    const tagsYaml =
+      item.tags && item.tags.length > 0
+        ? item.tags.map((t: string) => `  - "${t}"`).join("\n")
+        : '  - "ui"';
+
+    const complexity =
+      item.complexity ||
+      (sourceCode.length > 3500 || sourceCode.includes("requestAnimationFrame")
+        ? "high"
+        : sourceCode.length < 1500
+        ? "low"
+        : "medium");
+
+    const markdownDoc = `---
+id: "${item.name}"
+name: "${item.title}"
+category: "${item.category}"
+library_origin: "${item.license_origin?.source_repository || "Design Agent Wiki"}"
+dependencies:
+${depsYaml}
+tags:
+${tagsYaml}
+dials:
+  design_variance: ${item.dials?.design_variance ?? 5}      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: ${item.dials?.motion_intensity ?? 5}     # 1: Basic hover · 10: Canvas/WebGL springs
+  visual_density: ${item.dials?.visual_density ?? 5}       # 1: Generous whitespace · 10: Dense analytical UI
+complexity: "${complexity}"
+a11y:
+  keyboard_navigable: ${item.a11y?.keyboard_navigable ?? false}
+  wai_aria_compliant: ${item.a11y?.wai_aria_compliant ?? true}
+  fallback_provided: ${item.a11y?.fallback_provided ?? true}
+---
+
+# ${item.title} (\`${item.name}\`)
+> ${item.description}
+
+- **Category**: \`${item.category}\`
+- **Structural Complexity**: \`${complexity.toUpperCase()}\`
+- **Technical Tags**: ${(item.tags || []).join(", ") || "None"}
+- **Taste Dials**: Variance ${item.dials?.design_variance ?? 5}/10 · Motion ${item.dials?.motion_intensity ?? 5}/10 · Density ${item.dials?.visual_density ?? 5}/10
+- **Accessibility AA**: Keyboard Nav: ${item.a11y?.keyboard_navigable ?? false}, ARIA: ${item.a11y?.wai_aria_compliant ?? true}, Fallback: ${item.a11y?.fallback_provided ?? true}
+
+## Installation Recipe
+\`\`\`bash
+npx design-wiki add ${item.name}
+# or via shadcn
+npx shadcn@latest add http://localhost:3000/r/${item.name}.json
+\`\`\`
+
+## Peer Dependencies
+${item.dependencies && item.dependencies.length > 0 ? item.dependencies.map((d: string) => `- \`${d}\``).join("\n") : "- None"}
+
+## Verified TypeScript Source
+\`\`\`tsx
+${sourceCode}
+\`\`\`
+`;
+
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: markdownDoc,
+        },
+      ],
+    };
+  };
+
+  // Helper handler for markup JSON retrieval (backward compatibility)
   const handleFetchMarkup = async (name: string) => {
     const item = getComponentItem(name);
 
@@ -336,7 +428,20 @@ export function createDesignWikiMcpServer(): McpServer {
     };
   };
 
-  // Tool 2: fetch_raw_markup (primary)
+  // Tool 2 (Primary): fetch_raw_markdown
+  server.registerTool(
+    "fetch_raw_markdown",
+    {
+      description:
+        "Fetch the complete raw Markdown documentation (including structured YAML frontmatter, taxonomy, taste dials, accessibility contracts, and verified TSX source code) for a component.",
+      inputSchema: z.object({
+        name: z.string().describe("Component slug identifier (e.g., 'canvas-fluid-wave', 'floating-dock', 'button')"),
+      }),
+    },
+    async ({ name }) => handleFetchRawMarkdown(name)
+  );
+
+  // Tool 2 Alias: fetch_raw_markup (backward compatibility)
   server.registerTool(
     "fetch_raw_markup",
     {
@@ -362,7 +467,78 @@ export function createDesignWikiMcpServer(): McpServer {
     async ({ name }) => handleFetchMarkup(name)
   );
 
-  // Helper handler for installation schema retrieval
+  // Handler for installation commands (CLI and package managers)
+  const handleGetInstallationCommands = async (
+    name: string,
+    packageManager: "pnpm" | "npm" | "bun" | "yarn" = "pnpm",
+    baseUrl: string = "http://localhost:3000"
+  ) => {
+    const activeBaseUrl = baseUrl || "http://localhost:3000";
+    const item = getComponentItem(name);
+
+    if (!item) {
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: `Error: Component "${name}" was not found. Use search_components to find valid component slugs.`,
+          },
+        ],
+      };
+    }
+
+    const pm = packageManager || "pnpm";
+    const peerAddCmd =
+      item.dependencies && item.dependencies.length > 0
+        ? pm === "npm"
+          ? `npm install ${item.dependencies.join(" ")}`
+          : pm === "bun"
+          ? `bun add ${item.dependencies.join(" ")}`
+          : pm === "yarn"
+          ? `yarn add ${item.dependencies.join(" ")}`
+          : `pnpm add ${item.dependencies.join(" ")}`
+        : "None required";
+
+    const commands = {
+      cli: `npx design-wiki add ${item.name}`,
+      shadcn: `npx shadcn@latest add ${activeBaseUrl}/r/${item.name}.json`,
+      bun: `bunx --bun shadcn add ${activeBaseUrl}/r/${item.name}.json`,
+      pnpm: `pnpm dlx shadcn add ${activeBaseUrl}/r/${item.name}.json`,
+      npm: `npx shadcn@latest add ${activeBaseUrl}/r/${item.name}.json`,
+    };
+
+    const response = {
+      component: item.name,
+      title: item.title,
+      category: item.category,
+      commands,
+      preferredCliCommand: commands.cli,
+      peerInstallCommand: peerAddCmd,
+      peerDependencies: item.dependencies || [],
+      devDependencies: item.devDependencies || [],
+      registryDependencies: item.registryDependencies || [],
+      importStatement: `import { ${item.title.replace(/\s+/g, "")} } from "@/components/ui/${item.name}";`,
+      instructions: [
+        `Run '${commands.cli}' to install the component and resolve path aliases.`,
+        `Or run '${commands.shadcn}' in your workspace root.`,
+        item.dependencies?.length > 0
+          ? `Ensure peer packages are installed: ${peerAddCmd}`
+          : `No external runtime dependencies required.`,
+        `Import in your page or layout: import { ${item.title.replace(/\s+/g, "")} } from "@/components/ui/${item.name}";`,
+      ],
+    };
+
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(response, null, 2),
+        },
+      ],
+    };
+  };
+
+  // Helper handler for installation schema retrieval (backward compatibility)
   const handleGetInstallSchema = async (name: string, baseUrl: string = "http://localhost:3000") => {
     const activeBaseUrl = baseUrl || "http://localhost:3000";
     const item = getComponentItem(name);
@@ -393,11 +569,12 @@ export function createDesignWikiMcpServer(): McpServer {
       registryDependencies: item.registryDependencies,
       files: item.files,
       installCommands: {
+        cli: `npx design-wiki add ${item.name}`,
         shadcn: `npx shadcn@latest add ${activeBaseUrl}/r/${item.name}.json`,
         bun: `bunx --bun shadcn add ${activeBaseUrl}/r/${item.name}.json`,
       },
       instructions: [
-        `Execute 'npx shadcn@latest add ${activeBaseUrl}/r/${item.name}.json' in your workspace root.`,
+        `Execute 'npx design-wiki add ${item.name}' or 'npx shadcn@latest add ${activeBaseUrl}/r/${item.name}.json'.`,
         `Verify required peer packages are installed: ${item.dependencies.join(", ") || "None"}.`,
         `Import in your layout using '@/components/ui/${item.name}'.`,
       ],
@@ -413,7 +590,23 @@ export function createDesignWikiMcpServer(): McpServer {
     };
   };
 
-  // Tool 3: get_installation_schema (primary)
+  // Tool 3 (Primary): get_installation_commands
+  server.registerTool(
+    "get_installation_commands",
+    {
+      description:
+        "Get the exact CLI installation commands (e.g. npx design-wiki add <slug> or npx shadcn add ...), package manager commands, and peer dependencies for a component.",
+      inputSchema: z.object({
+        name: z.string().describe("Component slug identifier (e.g., 'floating-dock', 'canvas-fluid-wave', 'bento-grid')"),
+        packageManager: z.enum(["pnpm", "npm", "bun", "yarn"]).optional().default("pnpm").describe("Target package manager (pnpm, npm, bun, yarn)"),
+        baseUrl: z.string().optional().default("http://localhost:3000").describe("Base URL hosting the /r/ registry endpoints"),
+      }),
+    },
+    async ({ name, packageManager = "pnpm", baseUrl = "http://localhost:3000" }) =>
+      handleGetInstallationCommands(name, packageManager, baseUrl)
+  );
+
+  // Tool 3 Alias: get_installation_schema (backward compatibility)
   server.registerTool(
     "get_installation_schema",
     {

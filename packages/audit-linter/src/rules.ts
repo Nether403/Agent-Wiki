@@ -70,12 +70,12 @@ export const SLOP_RULES: SlopRule[] = [
   },
   {
     id: "SLOP-007",
-    name: "Non-Token Arbitrary Pixel Spacing",
+    name: "Non-Token Arbitrary Pixel Spacing / Sizing",
     category: "Layout & Spacing",
     severity: "Low",
-    description: "Use of arbitrary pixel escapes (e.g. p-[17px], m-[13px]) instead of Tailwind system spacing steps.",
+    description: "Use of arbitrary pixel escapes (e.g. p-[17px], m-[13px], gap-[15px]) instead of standard Tailwind system spacing tokens.",
     check: (line) =>
-      /(?:p|m|gap|w|h|top|left|right|bottom)-\[(?:\d+px|\d+rem)\]/i.test(line) &&
+      /(?:p[xytrbl]?|m[xytrbl]?|gap|w|h|top|left|right|bottom|inset|space-[xy]|max-w|min-w)-\[(?:\d+px|\d+rem)\]/i.test(line) &&
       !line.includes("left-[50%]") &&
       !line.includes("top-[50%]"),
   },
@@ -216,3 +216,74 @@ export const SLOP_RULES: SlopRule[] = [
       !content.includes("SPDX-License-Identifier"),
   },
 ];
+
+export interface CssAntiPatternMatch {
+  lineNum: number;
+  arbitraryValue: string;
+  property: string;
+  recommendedToken: string;
+  lineSnippet: string;
+}
+
+/**
+ * Specifically scans CSS/Tailwind class strings for non-token arbitrary escapes
+ * such as p-[17px], m-[13px], gap-[15px], text-[#...], etc.
+ */
+export function scanCssAntiPatterns(code: string): CssAntiPatternMatch[] {
+  const lines = code.split("\n");
+  const matches: CssAntiPatternMatch[] = [];
+
+  const mapPxToToken = (propPrefix: string, pxVal: number): string => {
+    const step = Math.round(pxVal / 4);
+    return `${propPrefix}-${step}`;
+  };
+
+  const arbitrarySpacingRegex = /\b(p[xytrbl]?|m[xytrbl]?|gap|w|h|top|bottom|left|right|space-[xy])-\[(\d+)px\]/g;
+  const arbitraryColorRegex = /\b(bg|text|border)-\[#([0-9a-fA-F]{3,8})\]/g;
+  const arbitraryRadiusRegex = /\brounded-\[(\d+)px\]/g;
+
+  lines.forEach((line, index) => {
+    let match: RegExpExecArray | null;
+
+    // 1. Arbitrary spacing: p-[17px], m-[13px], etc.
+    while ((match = arbitrarySpacingRegex.exec(line)) !== null) {
+      const prop = match[1];
+      const px = parseInt(match[2], 10);
+      matches.push({
+        lineNum: index + 1,
+        arbitraryValue: match[0],
+        property: prop,
+        recommendedToken: mapPxToToken(prop, px),
+        lineSnippet: line.trim(),
+      });
+    }
+
+    // 2. Arbitrary colors: bg-[#4f46e5], text-[#6366f1]
+    while ((match = arbitraryColorRegex.exec(line)) !== null) {
+      const prop = match[1];
+      matches.push({
+        lineNum: index + 1,
+        arbitraryValue: match[0],
+        property: prop,
+        recommendedToken: `${prop}-primary (or semantic token)`,
+        lineSnippet: line.trim(),
+      });
+    }
+
+    // 3. Arbitrary radius: rounded-[13px]
+    while ((match = arbitraryRadiusRegex.exec(line)) !== null) {
+      const px = parseInt(match[1], 10);
+      const rec = px <= 4 ? "rounded-sm" : px <= 8 ? "rounded-md" : px <= 12 ? "rounded-lg" : "rounded-xl";
+      matches.push({
+        lineNum: index + 1,
+        arbitraryValue: match[0],
+        property: "rounded",
+        recommendedToken: rec,
+        lineSnippet: line.trim(),
+      });
+    }
+  });
+
+  return matches;
+}
+

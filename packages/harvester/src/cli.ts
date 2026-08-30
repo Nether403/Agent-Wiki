@@ -7,6 +7,7 @@ import {
   harvestDirectory,
   harvestRepository,
   harvestFile,
+  generateYamlFrontmatter,
 } from "./index";
 
 function printUsage() {
@@ -76,7 +77,14 @@ function main() {
   }
 
   if (command === "dir") {
-    const scanDir = target ? path.resolve(target) : process.cwd();
+    const baseDir = process.env.INIT_CWD || process.cwd();
+    const scanDir = target
+      ? path.isAbsolute(target)
+        ? target
+        : fs.existsSync(path.resolve(baseDir, target))
+        ? path.resolve(baseDir, target)
+        : path.resolve(process.cwd(), target)
+      : process.cwd();
     console.log(`\n🔍 Scanning local directory: ${scanDir}`);
     const results = harvestDirectory(scanDir);
 
@@ -89,7 +97,7 @@ function main() {
 
     results.forEach((r) => {
       console.log(
-        `  └─ [${r.category}] "${r.name}" -> Dials: Var ${r.dials.design_variance}, Mot ${r.dials.motion_intensity}, Den ${r.dials.visual_density} | Health: ${r.slopReport.healthScore}/100 (${r.slopReport.rating})`
+        `  └─ [${r.category}] "${r.name}" -> Dials: Var ${r.dials.design_variance}, Mot ${r.dials.motion_intensity}, Den ${r.dials.visual_density} | Complexity: ${r.metadata.complexity} | Health: ${r.slopReport.healthScore}/100`
       );
     });
     process.exit(0);
@@ -100,15 +108,23 @@ function main() {
       console.error("❌ Error: Missing file path.");
       process.exit(1);
     }
-    const filePath = path.resolve(target);
+    const baseDir = process.env.INIT_CWD || process.cwd();
+    const filePath = path.isAbsolute(target)
+      ? target
+      : fs.existsSync(path.resolve(baseDir, target))
+      ? path.resolve(baseDir, target)
+      : path.resolve(process.cwd(), target);
+
     console.log(`\n🔬 Auditing single component file: ${filePath}`);
     const result = harvestFile(filePath);
 
     console.log(`\n📋 Analysis Result:`);
     console.log(`   - Component:    ${result.name}`);
     console.log(`   - Category:     ${result.category}`);
+    console.log(`   - Complexity:   ${result.metadata.complexity.toUpperCase()} (Score: ${result.metadata.complexityScore})`);
     console.log(`   - Tags:         ${result.tags.join(", ")}`);
     console.log(`   - Dependencies: ${result.dependencies.join(", ") || "none"}`);
+    console.log(`   - DevDeps:      ${result.devDependencies.join(", ") || "none"}`);
     console.log(`   - Dials:        Variance: ${result.dials.design_variance}, Motion: ${result.dials.motion_intensity}, Density: ${result.dials.visual_density}`);
     console.log(`   - Health Score: ${result.slopReport.healthScore}/100 (${result.slopReport.rating})`);
     console.log(`   - Slop Status:  ${result.slopReport.blocked ? "❌ BLOCKED" : "✅ PASSED"}`);
@@ -119,6 +135,7 @@ function main() {
       });
     }
     console.log(`\n💡 LLM Craft Critique:\n   ${result.llmReview.critique}`);
+    console.log(`\n📄 Generated YAML Frontmatter Contract:\n${generateYamlFrontmatter(result.metadata, result.dials)}`);
     process.exit(0);
   }
 

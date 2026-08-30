@@ -30,14 +30,16 @@ Supported upstream repositories:
 - **ReUI** (`ui:primitive`): Radix primitives and animated icons
 - **beUI** (`ui:primitive`): Tailwind v4 & View Transition API controls
 
-### 2. AST Static Analysis
+### 2. AST Static Analysis & Auto-Cross-Referencing
 
 Using the TypeScript Compiler API (`ts.createSourceFile`), the parser statically extracts:
-- **Exported Signatures**: Components, functions, and TypeScript prop interfaces
-- **Dependencies**: Third-party packages (`motion/react`, `three`, `@radix-ui/*`, `@ark-ui/*`, `lucide-react`)
-- **Registry Dependencies**: Local shadcn primitives (`@/components/ui/button`)
-- **Graphics & Motion Signals**: `WebGLRenderer`, `<canvas>`, `AnimatePresence`, `useSpring`
-- **Accessibility Markers**: WAI-ARIA roles, attributes, keyboard handlers, and `prefers-reduced-motion`
+- **Exported Signatures**: Components, functions, and TypeScript prop interfaces.
+- **Dependency & Graphic Tells**: Automatically identifies core imports (`framer-motion`, `motion/react`, `three`, `@react-three/fiber`, Radix UI, Ark UI).
+- **Three.js & WebGL Cross-Referencing**: When analyzing creative canvas and WebGL components (such as `canvas-fluid-wave.tsx`), the parser automatically cross-references `threejs`, `webgl`, and `canvas` tags, automatically injecting `three` into `dependencies` and `@types/three` into `devDependencies` to ensure seamless downstream consumption.
+- **Structural Complexity Scoring**: Evaluates mathematical loops (`requestAnimationFrame` with sinusoidal oscillations), shader code, and lines of code to score complexity as `low`, `medium`, or `high`.
+- **Dynamic YAML Frontmatter Injection**: Formats component metadata, dial calibrations, and accessibility contracts directly into standard YAML frontmatter blocks.
+- **Accessibility Markers**: WAI-ARIA roles, attributes, keyboard handlers, and `prefers-reduced-motion` fallbacks.
+
 
 ### 3. Normalization Codemods
 

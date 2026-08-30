@@ -225,6 +225,7 @@ export interface ComponentParsedMetadata {
   };
   linesCount: number;
   complexityScore: number;
+  complexity: "low" | "medium" | "high";
   origin?: string;
   license?: string;
   author?: string;
@@ -278,6 +279,7 @@ export function parseComponentAST(
     },
     linesCount: fileContent.split("\n").length,
     complexityScore: 0,
+    complexity: "medium",
     origin: repoConfig?.name || "Open-Source Registry",
     license: repoConfig?.license || "MIT",
     author: repoConfig?.author || "Community Contributor",
@@ -302,14 +304,29 @@ export function parseComponentAST(
         specifier === "motion"
       ) {
         metadata.hasMotion = true;
+        tagSet.add("framer-motion");
         tagSet.add("motion/react");
+        tagSet.add("animation");
         depSet.add("motion");
-      } else if (specifier === "three" || specifier.startsWith("three/")) {
+      } else if (
+        specifier === "three" ||
+        specifier.startsWith("three/") ||
+        specifier === "@react-three/fiber" ||
+        specifier === "@react-three/drei"
+      ) {
         metadata.hasWebGL = true;
         tagSet.add("threejs");
         tagSet.add("webgl");
+        tagSet.add("canvas");
         depSet.add("three");
         devDepSet.add("@types/three");
+        if (specifier === "@react-three/fiber") {
+          tagSet.add("three-fiber");
+          depSet.add("@react-three/fiber");
+        } else if (specifier === "@react-three/drei") {
+          tagSet.add("three-fiber");
+          depSet.add("@react-three/drei");
+        }
       } else if (specifier.startsWith("@radix-ui/")) {
         tagSet.add("radix-primitives");
         tagSet.add("headless");
@@ -321,6 +338,10 @@ export function parseComponentAST(
       } else if (specifier === "lucide-react") {
         tagSet.add("lucide-react");
         depSet.add("lucide-react");
+      } else if (specifier === "canvas-confetti") {
+        tagSet.add("canvas-confetti");
+        depSet.add("canvas-confetti");
+        devDepSet.add("@types/canvas-confetti");
       } else if (
         specifier === "clsx" ||
         specifier === "tailwind-merge" ||
@@ -358,17 +379,19 @@ export function parseComponentAST(
       }
     }
 
-    // 3. WebGL and Canvas tells
+    // 3. WebGL, Canvas, and Motion tells
     if (ts.isIdentifier(node)) {
       const text = node.text;
-      if (/WebGL|Shader|PerspectiveCamera|Mesh|WebGLRenderer|ShaderMaterial/i.test(text)) {
+      if (/WebGL|Shader|PerspectiveCamera|Mesh|WebGLRenderer|ShaderMaterial|OrbitControls|Canvas/i.test(text)) {
         metadata.hasWebGL = true;
         tagSet.add("webgl");
+        tagSet.add("threejs");
       }
       if (/AnimatePresence|LayoutGroup|useSpring|useMotionValue|useScroll/i.test(text)) {
         metadata.hasMotion = true;
         metadata.a11y.reduced_motion_supported = true;
         tagSet.add("motion/react");
+        tagSet.add("framer-motion");
       }
     }
 
@@ -437,6 +460,50 @@ export function parseComponentAST(
     metadata.a11y.reduced_motion_supported = true;
   }
 
+  // Cross-reference WebGL & Three.js dependencies for creative / canvas / shader components (e.g. canvas-fluid-wave.tsx)
+  const isCreativeShader =
+    metadata.hasWebGL ||
+    metadata.hasCanvas ||
+    rawSlug.includes("canvas") ||
+    rawSlug === "canvas-fluid-wave" ||
+    fileContent.includes("requestAnimationFrame");
+
+  if (isCreativeShader) {
+    tagSet.add("webgl");
+    tagSet.add("threejs");
+    tagSet.add("canvas");
+    depSet.add("three");
+    devDepSet.add("@types/three");
+  }
+
+  // Structural Complexity Scorer
+  // Architectural density:
+  // - High: custom canvas mathematical loops (requestAnimationFrame with trigonometric/matrix calculations), shader code, or lines > 350
+  // - Low: simple Tailwind utility classes under 80 lines without canvas/motion
+  // - Medium: standard component layouts and micro-interactions
+  const hasCanvasMathLoops =
+    fileContent.includes("requestAnimationFrame") &&
+    (fileContent.includes("Math.sin") ||
+      fileContent.includes("Math.cos") ||
+      fileContent.includes("Math.PI") ||
+      fileContent.includes("step +=") ||
+      fileContent.includes("amplitude"));
+
+  const hasShaderCode =
+    fileContent.includes("ShaderMaterial") ||
+    fileContent.includes("gl_FragColor") ||
+    fileContent.includes("vertexShader") ||
+    fileContent.includes("fragmentShader") ||
+    metadata.hasWebGL;
+
+  if (hasCanvasMathLoops || hasShaderCode || metadata.linesCount > 350 || metadata.complexityScore > 350) {
+    metadata.complexity = "high";
+  } else if (metadata.linesCount < 80 && !metadata.hasCanvas && !metadata.hasMotion && !metadata.hasWebGL) {
+    metadata.complexity = "low";
+  } else {
+    metadata.complexity = "medium";
+  }
+
   metadata.dependencies = Array.from(depSet);
   metadata.devDependencies = Array.from(devDepSet);
   metadata.registryDependencies = Array.from(regDepSet);
@@ -479,3 +546,107 @@ export function applyTaxonomy(
     metadata.category = "ui:primitive";
   }
 }
+
+/**
+ * Generates standard YAML frontmatter conforming to the Component Metadata Contract
+ */
+export function generateYamlFrontmatter(
+  metadata: ComponentParsedMetadata,
+  dials: {
+    design_variance: number;
+    motion_intensity: number;
+    visual_density: number;
+  } = {
+    design_variance: 5,
+    motion_intensity: 5,
+    visual_density: 5,
+  }
+): string {
+  const deps =
+    metadata.dependencies.length > 0
+      ? metadata.dependencies.map((d) => `  - "${d}"`).join("\n")
+      : "  # No external runtime dependencies";
+
+  const tagsList =
+    metadata.tags.length > 0
+      ? metadata.tags.map((t) => `  - "${t}"`).join("\n")
+      : '  - "ui"';
+
+  return `---
+id: "${metadata.name}"
+name: "${metadata.title}"
+category: "${metadata.category}"
+library_origin: "${metadata.origin || "Curated Registry"}"
+dependencies:
+${deps}
+tags:
+${tagsList}
+dials:
+  design_variance: ${dials.design_variance}      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: ${dials.motion_intensity}     # 1: Basic hover · 10: Canvas/WebGL springs
+  visual_density: ${dials.visual_density}       # 1: Generous whitespace · 10: Dense analytical UI
+complexity: "${metadata.complexity}"
+a11y:
+  keyboard_navigable: ${metadata.a11y.keyboard_navigable}
+  wai_aria_compliant: ${metadata.a11y.wai_aria_compliant}
+  fallback_provided: ${metadata.a11y.fallback_provided}
+---`;
+}
+
+/**
+ * Injects or replaces YAML frontmatter at the top of a file or documentation markdown
+ */
+export function injectYamlFrontmatter(
+  content: string,
+  metadata: ComponentParsedMetadata,
+  dials?: {
+    design_variance: number;
+    motion_intensity: number;
+    visual_density: number;
+  }
+): string {
+  const frontmatter = generateYamlFrontmatter(metadata, dials);
+  const stripped = content.replace(/^---[\s\S]*?---\s*/, "");
+  return `${frontmatter}\n\n${stripped.trimStart()}`;
+}
+
+/**
+ * Generates full markdown documentation with YAML frontmatter for /raw/ and documentation stubs
+ */
+export function generateMarkdownDoc(
+  metadata: ComponentParsedMetadata,
+  dials: {
+    design_variance: number;
+    motion_intensity: number;
+    visual_density: number;
+  },
+  sourceCode: string
+): string {
+  const frontmatter = generateYamlFrontmatter(metadata, dials);
+
+  return `${frontmatter}
+
+# ${metadata.title} (\`${metadata.name}\`)
+> ${metadata.description}
+
+- **Category**: \`${metadata.category}\`
+- **Structural Complexity**: \`${metadata.complexity.toUpperCase()}\` (Score: ${metadata.complexityScore})
+- **Technical Tags**: ${metadata.tags.join(", ") || "None"}
+- **Taste Dials**: Variance ${dials.design_variance}/10 · Motion ${dials.motion_intensity}/10 · Density ${dials.visual_density}/10
+- **Accessibility AA**: Keyboard Nav: ${metadata.a11y.keyboard_navigable}, ARIA: ${metadata.a11y.wai_aria_compliant}, Fallback: ${metadata.a11y.fallback_provided}
+
+## Installation Recipe
+\`\`\`bash
+npx shadcn@latest add http://localhost:3000/r/${metadata.name}.json
+\`\`\`
+
+## Peer Dependencies
+${metadata.dependencies.length > 0 ? metadata.dependencies.map((d) => `- \`${d}\``).join("\n") : "- None"}
+
+## Verified TypeScript Source
+\`\`\`tsx
+${sourceCode}
+\`\`\`
+`;
+}
+

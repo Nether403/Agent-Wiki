@@ -49,36 +49,45 @@ Read the repository's configuration (or infer from the user's brief) to adjust t
 Before writing code, query our machine-readable discovery endpoints:
 1. Parse `/public/llms.txt` or call MCP `search_components` to look up available components, categories, and tags.
 2. If using MCP, query `@design-wiki/mcp`:
-   - `search_components({ query: "modal" })`
-   - `fetch_raw_markup({ name: "spring-dialog" })`
-   - `get_installation_schema({ name: "spring-dialog" })`
+   - `search_components({ query: "modal", category: "ui:motion" })`
+   - `fetch_raw_markdown({ name: "spring-dialog" })` (returns full YAML frontmatter contract & TSX block)
+   - `get_installation_commands({ name: "spring-dialog", packageManager: "pnpm" })`
 
 ### Phase 2: Install
 If the component is registered but missing from the local workspace:
-1. Fetch the schema via MCP `get_installation_schema({ name: "<component-name>" })` or execute the programmatic CLI:
+1. Run the native Design Wiki installer CLI (automatically resolves `components.json`, `tsconfig.json` path aliases, and scaffolds missing `lib/utils.ts`):
    ```bash
+   npx design-wiki add <component-name>
+   # or via shadcn v3:
    npx shadcn@latest add http://localhost:3000/r/<component-name>.json
    ```
-2. Automatically verify that peer npm dependencies (e.g. `motion`, `lucide-react`, `@radix-ui/*`) are installed.
-3. Resolve any typescript import path aliases (`@/components/ui/`).
+2. Automatically verify that peer npm dependencies (e.g. `motion`, `three`, `lucide-react`, `@radix-ui/*`) are installed.
+3. Resolve typescript import path aliases (`@/components/ui/<component-name>`).
 
 ### Phase 3: Implement & Constrain
 *   **ContrastAA Pass**: Ensure all text elements meet WCAG AA contrast rules (minimum 4.5:1 for normal text).
 *   **A11y Checks**:
     *   All SVGs must have an accessible title and role: `<svg role="img" aria-label="description">`.
-    *   Ensure all buttons and links are focus-navigable and have distinct `:focus-visible` styles.
-*   **Motion Fallbacks**: If you use canvas or high-end WebGL shaders, you must build robust fallbacks (`prefers-reduced-motion`).
+    *   Ensure all buttons and links are focus-navigable and have distinct `:focus-visible:ring-2` styles.
+*   **Motion Fallbacks**: If you use canvas or high-end WebGL shaders, you must build robust fallbacks (`prefers-reduced-motion` and a static CSS fallback).
+*   **Controlled Glassmorphism**: Never use raw `bg-white/10 backdrop-blur` without crisp structural border tokens (`border-border`) and solid card fallbacks.
 
-### Phase 4: Audit (The Anti-Slop Check)
-Audit your code against the 20 Anti-Slop Rules before declaring your task complete:
-1. No hardcoded indigo (`#4f46e5`, `bg-indigo-600`).
-2. No purple-to-blue linear gradients (`from-purple-500 to-blue-500`).
-3. No blanket glassmorphism (`bg-white/10 backdrop-blur-md`).
-4. No chained type assertions (`as any as`).
-5. No conditional empty object spreads (`...(cond ? { a } : {})`).
-6. No blanket `transition-all duration-300`.
-7. No arbitrary sizing hacks (`p-[17px]`).
-8. No decorative emojis inside buttons or cards.
+### Phase 4: Audit & Taste Review (The Anti-Slop Gate)
+Audit your code against the 20 Anti-Slop Rules and calibrated taste dials before declaring your task complete:
+1. Call MCP `audit_code_slop({ code: "<your-tsx-code>" })` or run:
+   ```bash
+   pnpm review:taste <path-to-file>
+   ```
+2. Enforce strict design hygiene:
+   - No hardcoded indigo (`#4f46e5`, `bg-indigo-600`) &rarr; use semantic tokens (`bg-primary`).
+   - No purple-to-blue linear gradients (`from-purple-500 to-blue-500`) &rarr; use solid card surfaces.
+   - No blanket glassmorphism (`bg-white/10 backdrop-blur-md`) without `border-border`.
+   - No chained type assertions (`as any as`, `as unknown as`).
+   - No conditional empty object spreads (`...(cond ? { a } : {})`).
+   - No blanket `transition-all duration-300` &rarr; target specific mutable styles (`transition-colors`).
+   - No arbitrary sizing hacks (`p-[17px]`, `m-[13px]`, `gap-[15px]`) &rarr; map to system tokens (`p-4`).
+   - No decorative emojis inside buttons or cards &rarr; use Lucide SVG icons.
+3. Verify that the health score is 85+ with 0 High-severity flags.
 
 ---
 

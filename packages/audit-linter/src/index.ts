@@ -33,19 +33,28 @@ const EXCLUDED_DIRS = new Set([
   "audit-linter",
   "harvester",
   "mcp-server",
+  "cli",
+  "docs",
   "compiler",
   "scripts",
+  "artifacts",
+  "scratch",
 ]);
 
 const VALID_EXTENSIONS = new Set([".tsx", ".ts", ".jsx", ".js"]);
 
 export function scanFiles(dir: string, fileList: string[] = []): string[] {
   if (!fs.existsSync(dir)) return fileList;
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  let entries;
+  try {
+    entries = fs.readdirSync(dir, { withFileTypes: true });
+  } catch {
+    return fileList;
+  }
 
   for (const entry of entries) {
     if (entry.isDirectory()) {
-      if (!EXCLUDED_DIRS.has(entry.name)) {
+      if (!EXCLUDED_DIRS.has(entry.name) && !entry.name.startsWith(".")) {
         scanFiles(path.join(dir, entry.name), fileList);
       }
     } else if (entry.isFile()) {
@@ -127,3 +136,7 @@ export function runAudit(targetDir: string): AuditReport {
     timestamp: new Date().toISOString().split("T")[0],
   };
 }
+
+export * from "./rules";
+export * from "./llm-review";
+

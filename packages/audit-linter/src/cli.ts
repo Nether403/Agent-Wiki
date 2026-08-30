@@ -2,10 +2,71 @@
 
 import fs from "fs";
 import path from "path";
-import { runAudit } from "./index";
+import { runAudit, runLlmTasteReview } from "./index";
 
 function main() {
-  const targetDir = process.argv[2] ? path.resolve(process.argv[2]) : process.cwd();
+  const args = process.argv.slice(2);
+  const baseDir = process.env.INIT_CWD || process.cwd();
+
+  if (args[0] === "review") {
+    const targetFile = args[1]
+      ? path.isAbsolute(args[1])
+        ? args[1]
+        : path.resolve(baseDir, args[1])
+      : null;
+
+    if (!targetFile || !fs.existsSync(targetFile)) {
+      console.error(`❌ Error: Must specify a valid component file to review. Example: pnpm --filter @design-wiki/audit-linter review ./components/ui/button.tsx`);
+      process.exit(1);
+    }
+
+    const code = fs.readFileSync(targetFile, "utf-8");
+    const compName = path.basename(targetFile, path.extname(targetFile));
+    console.log(`\n🎨 Running Automated Taste Audit & LLM Review for: ${compName}`);
+    console.log(`📂 File: ${targetFile}\n`);
+
+    const result = runLlmTasteReview(code, { componentName: compName, filePath: targetFile });
+
+    console.log(`📊 Taste Review Scorecard:`);
+    console.log(`   - Status:       ${result.pass ? "✅ PASS" : "❌ REJECTED / NEEDS REMEDIATION"}`);
+    console.log(`   - Health Score: ${result.craftScore}/100 (${result.rating})`);
+    console.log(`   - Calibrated Taste Dials (1-10):`);
+    console.log(`       * Design Variance:  ${result.dials.design_variance}/10 (1: rigid standard · 10: avant-garde/brutalist)`);
+    console.log(`       * Motion Intensity: ${result.dials.motion_intensity}/10 (1: static/CSS hover · 10: GPU WebGL/springs)`);
+    console.log(`       * Visual Density:   ${result.dials.visual_density}/10 (1: generous space · 10: compact analytical)`);
+    console.log(`   - Guardrail Check:`);
+    console.log(`       * Shaders & Canvas Safe:    ${result.guardrails.shadersSafe ? "✅ Pass" : "⚠️ Missing fallback"}`);
+    console.log(`       * Glassmorphism Curated:    ${result.guardrails.glassmorphismSafe ? "✅ Pass" : "⚠️ Blanket blur without border tokens"}`);
+    console.log(`       * Spacing / Token Rhythm:   ${result.guardrails.tokenRhythmSafe ? "✅ Pass" : "⚠️ Arbitrary pixel escapes detected"}`);
+
+    if (result.cssArbitraryViolations.length > 0) {
+      console.log(`\n🚫 Arbitrary CSS Anti-Patterns Detected (${result.cssArbitraryViolations.length}):`);
+      result.cssArbitraryViolations.forEach((v) => {
+        console.log(`   - [Line ${v.lineNum}] Found '${v.arbitraryValue}' -> Suggested replacement: '${v.recommendedToken}'`);
+      });
+    }
+
+    if (result.violations.length > 0) {
+      console.log(`\n⚠️ Rule Violations (${result.violations.length}):`);
+      result.violations.forEach((v) => {
+        console.log(`   - [Line ${v.lineNum}] [${v.severity}] ${v.ruleName} (${v.ruleId}): ${v.recommendation}`);
+      });
+    }
+
+    console.log(`\n💡 LLM Design Critique:\n   ${result.critique}\n`);
+    if (!result.pass) {
+      process.exit(1);
+    }
+    process.exit(0);
+  }
+
+  const rawTarget = args[0] || baseDir;
+  const targetDir = path.isAbsolute(rawTarget)
+    ? rawTarget
+    : fs.existsSync(path.resolve(baseDir, rawTarget))
+    ? path.resolve(baseDir, rawTarget)
+    : path.resolve(process.cwd(), rawTarget);
+
   console.log(`\n🛡️ Starting Machine-First Anti-Slop Audit (20 AST & Pattern Rules)...`);
   console.log(`📂 Scanning target: ${targetDir}`);
 
@@ -66,3 +127,4 @@ function main() {
 }
 
 main();
+

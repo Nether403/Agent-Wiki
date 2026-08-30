@@ -6,7 +6,9 @@
   "description": "macOS-style interactive dock with mouse proximity magnification and spring physics.",
   "category": "ui:motion",
   "tags": [
+    "framer-motion",
     "motion/react",
+    "animation",
     "tailwind-v4",
     "accessible",
     "spring-physics",
@@ -18,6 +20,7 @@
     "motion_intensity": 7,
     "visual_density": 4
   },
+  "complexity": "high",
   "a11y": {
     "keyboard_navigable": true,
     "wai_aria_compliant": true,

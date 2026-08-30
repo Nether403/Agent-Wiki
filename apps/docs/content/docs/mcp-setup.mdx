@@ -38,20 +38,21 @@ Add into `.cursor/mcp.json`:
    { "query": "dock", "category": "ui:motion", "minMotionIntensity": 6 }
    ```
 
-2. **`fetch_raw_markup`** *(alias: `get_component_markup`)*:
-   Fetch complete, un-truncated production TSX/JSX source code, peer dependencies, and styling recipes.
+2. **`fetch_raw_markdown`**:
+   Fetch complete raw Markdown documentation including structured YAML frontmatter contract, technical tags, structural complexity, accessibility specifications, and verified TSX source code. *(Aliases: `fetch_raw_markup`, `get_component_markup`)*
    ```json
    { "name": "floating-dock" }
    ```
 
-3. **`get_installation_schema`** *(alias: `get_install_recipe`)*:
-   Retrieve the complete shadcn v3 registry JSON installation schema, file definitions, and exact CLI install commands (`npx shadcn@latest add ...`).
+3. **`get_installation_commands`**:
+   Retrieve the exact programmatic CLI commands (`npx design-wiki add <slug>`, `npx shadcn@latest add ...`), peer npm install strings, import snippets, and step-by-step instructions. *(Aliases: `get_installation_schema`, `get_install_recipe`)*
    ```json
-   { "name": "floating-dock", "baseUrl": "http://localhost:3000" }
+   { "name": "floating-dock", "packageManager": "pnpm", "baseUrl": "http://localhost:3000" }
    ```
 
 4. **`audit_code_slop`**:
-   Scan arbitrary user code against the 20 anti-slop rules and receive a health scorecard with line-by-line remediation recommendations.
+   Scan arbitrary user code against the 20 anti-slop rules, checking arbitrary pixel escapes (`p-[17px]`), blanket transitions, and accessibility compliance, receiving a health scorecard (0–100) with line-by-line remediation recommendations.
    ```json
    { "code": "<your-tsx-code>" }
    ```
+

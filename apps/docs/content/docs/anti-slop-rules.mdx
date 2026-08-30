@@ -29,3 +29,36 @@ Our automated linter checks code across 20 distinct rules before allowing compon
 | **SLOP-018** | Styling / Layout | Medium | Regex | Repetitive centered card layouts |
 | **SLOP-019** | Architecture | **High** | AST | Deep relative imports bypassing standard aliases |
 | **SLOP-020** | Legal / IP | **High** | Regex | Missing mandatory upstream license attribution headers |
+
+---
+
+## Dedicated CSS Anti-Pattern Scanner (`scanCssAntiPatterns`)
+
+In addition to whole-line regular expression and AST checks, the linter incorporates `scanCssAntiPatterns` to specifically detect un-tokenized CSS escapes and provide automatic remediation mappings:
+
+*   **Arbitrary Spacing & Sizing**:
+    - `p-[17px]` &rarr; `p-4` (16px) or `p-5` (20px)
+    - `m-[13px]` &rarr; `m-3` (12px)
+    - `gap-[15px]` &rarr; `gap-4` (16px)
+*   **Arbitrary Hex Colors**:
+    - `bg-[#4f46e5]` &rarr; `bg-primary`
+    - `text-[#6366f1]` &rarr; `text-primary`
+*   **Arbitrary Border Radius**:
+    - `rounded-[13px]` &rarr; `rounded-xl`
+
+---
+
+## Running the Automated Taste Audit
+
+Execute the automated taste audit CLI across your repository or on specific component files:
+
+```bash
+# Run full 20-rule scan on target directory
+pnpm lint:slop
+
+# Run calibrated taste audit on a single component
+pnpm review:taste packages/registry/src/creative/canvas-fluid-wave.tsx
+```
+
+The review output delivers a structured scorecard with status (`PASS` or `REJECTED`), a health score (0–100), calibrated 1–10 taste dials, layout break guardrail statuses, and actionable remediation steps.
+

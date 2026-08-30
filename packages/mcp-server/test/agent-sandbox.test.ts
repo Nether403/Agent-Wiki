@@ -19,7 +19,14 @@ async function runAutonomySandboxTest() {
   console.log(`📋 Available Tools: ${Object.keys(tools).join(", ")}`);
 
   // Verify core tools presence
-  const requiredTools = ["search_components", "fetch_raw_markup", "get_installation_schema", "audit_code_slop"];
+  const requiredTools = [
+    "search_components",
+    "fetch_raw_markdown",
+    "get_installation_commands",
+    "fetch_raw_markup",
+    "get_installation_schema",
+    "audit_code_slop",
+  ];
   for (const toolName of requiredTools) {
     if (!tools[toolName]) {
       throw new Error(`❌ Missing required MCP tool: ${toolName}`);
@@ -44,9 +51,24 @@ async function runAutonomySandboxTest() {
   }
   console.log(`✅ Phase 1 Succeeded: Component autonomously discovered.`);
 
-  // Phase 2: Inspect Markup
-  console.log(`\n🔬 --- PHASE 2: INSPECT RAW MARKUP ---`);
-  console.log(`Agent calls fetch_raw_markup({ name: "floating-dock" })...`);
+  // Phase 2: Inspect Raw Markdown (with YAML frontmatter) & Markup
+  console.log(`\n🔬 --- PHASE 2: INSPECT RAW MARKDOWN (YAML FRONTMATTER) ---`);
+  console.log(`Agent calls fetch_raw_markdown({ name: "floating-dock" })...`);
+  const fetchMarkdownTool = tools["fetch_raw_markdown"];
+  const markdownResult: McpToolResponse = await fetchMarkdownTool.handler({ name: "floating-dock" });
+  const rawMarkdown = markdownResult.content[0].text;
+
+  console.log(`   - Raw Markdown length: ${rawMarkdown.length} characters`);
+  console.log(`   - Contains YAML frontmatter: ${rawMarkdown.startsWith("---")}`);
+  console.log(`   - Contains ID: ${rawMarkdown.includes('id: "floating-dock"')}`);
+  console.log(`   - Contains verified source block: ${rawMarkdown.includes("```tsx")}`);
+
+  if (!rawMarkdown.startsWith("---") || !rawMarkdown.includes('id: "floating-dock"') || !rawMarkdown.includes("export function FloatingDock")) {
+    throw new Error("❌ Markdown fetch failed: Invalid or missing YAML frontmatter / TSX source.");
+  }
+  console.log(`✅ Phase 2A Succeeded: fetch_raw_markdown returned full YAML frontmatter contract.`);
+
+  console.log(`\nAgent calls fetch_raw_markup({ name: "floating-dock" })...`);
   const fetchMarkupTool = tools["fetch_raw_markup"];
   const markupResult: McpToolResponse = await fetchMarkupTool.handler({ name: "floating-dock" });
   const parsedMarkup = JSON.parse(markupResult.content[0].text);
@@ -59,10 +81,25 @@ async function runAutonomySandboxTest() {
   if (!parsedMarkup.sourceCode || !parsedMarkup.sourceCode.includes("export function FloatingDock")) {
     throw new Error("❌ Markup fetch failed: Invalid or truncated TSX source.");
   }
-  console.log(`✅ Phase 2 Succeeded: Production TSX markup fetched without truncation.`);
+  console.log(`✅ Phase 2B Succeeded: Production TSX markup fetched without truncation.`);
 
-  // Phase 3: Install via Installation Schema
-  console.log(`\n📦 --- PHASE 3: GET INSTALLATION SCHEMA & SIMULATE INSTALL ---`);
+  // Phase 3: Get Installation Commands & Schema
+  console.log(`\n📦 --- PHASE 3: GET INSTALLATION COMMANDS & SIMULATE INSTALL ---`);
+  console.log(`Agent calls get_installation_commands({ name: "floating-dock", packageManager: "pnpm" })...`);
+  const getCommandsTool = tools["get_installation_commands"];
+  const commandsResult: McpToolResponse = await getCommandsTool.handler({ name: "floating-dock", packageManager: "pnpm" });
+  const parsedCommands = JSON.parse(commandsResult.content[0].text);
+
+  console.log(`   - Preferred CLI: ${parsedCommands.preferredCliCommand}`);
+  console.log(`   - Shadcn CLI:    ${parsedCommands.commands.shadcn}`);
+  console.log(`   - Peer Install:  ${parsedCommands.peerInstallCommand}`);
+  console.log(`   - Import Syntax: ${parsedCommands.importStatement}`);
+
+  if (!parsedCommands.preferredCliCommand.includes("npx design-wiki add floating-dock")) {
+    throw new Error("❌ Installation commands failed: Expected design-wiki add command.");
+  }
+  console.log(`✅ Phase 3A Succeeded: Exact CLI installation commands retrieved.`);
+
   console.log(`Agent calls get_installation_schema({ name: "floating-dock" })...`);
   const getInstallTool = tools["get_installation_schema"];
   const installResult: McpToolResponse = await getInstallTool.handler({ name: "floating-dock" });
@@ -82,7 +119,7 @@ async function runAutonomySandboxTest() {
     throw new Error("❌ Simulated installation failed: file not written.");
   }
   console.log(`   ✓ Autonomous file write verified: ${targetFilePath} (${fs.statSync(targetFilePath).size} bytes)`);
-  console.log(`✅ Phase 3 Succeeded: Schema delivered and component installed autonomously.`);
+  console.log(`✅ Phase 3B Succeeded: Schema delivered and component installed autonomously.`);
 
   // Phase 4: Anti-Slop Audit
   console.log(`\n🛡️ --- PHASE 4: ANTI-SLOP AUDIT & QUALITY GATE ---`);

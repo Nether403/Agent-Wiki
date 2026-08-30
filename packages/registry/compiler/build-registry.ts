@@ -38,6 +38,7 @@ interface RegistryItem {
   category: TaxonomyCategory;
   tags: string[];
   dials: RegistryDial;
+  complexity?: "low" | "medium" | "high";
   a11y: RegistryA11y;
   license_origin: RegistryLicenseOrigin;
   dependencies: string[];
@@ -233,13 +234,13 @@ const COMPONENT_METADATA_OVERRIDES: Record<
   },
   "canvas-fluid-wave": {
     title: "Canvas Fluid Wave",
-    description: "Interactive HTML5 Canvas fluid simulation with mouse interaction and CSS gradient fallback.",
+    description: "Interactive HTML5 Canvas fluid simulation with mouse interaction, WebGL / Three.js bridge compatibility, and CSS gradient fallback.",
     category: "ui:creative",
-    tags: ["canvas", "shader-simulation", "interactive", "a11y-fallback"],
+    tags: ["canvas", "webgl", "threejs", "shader-simulation", "interactive", "a11y-fallback", "tailwind-v4"],
     dials: { design_variance: 8, motion_intensity: 9, visual_density: 3 },
     a11y: { keyboard_navigable: false, wai_aria_compliant: true, fallback_provided: true, reduced_motion_supported: true },
     license: { source_repository: "https://canvas-ui.dev", license_type: "MIT", author: "Canvas UI Team", attribution_required: true, redistribution_mode: "full_source" },
-    dependencies: ["clsx", "tailwind-merge"],
+    dependencies: ["three", "clsx", "tailwind-merge"],
     registryDependencies: [],
   },
   "dot-matrix-loader": {
@@ -426,6 +427,7 @@ function main() {
   const distRDir = path.join(rootDir, "dist", "r");
   const docsPublicDir = path.resolve(monorepoRoot, "apps/docs/public");
   const docsRDir = path.resolve(docsPublicDir, "r");
+  const docsRawComponentsDir = path.resolve(docsPublicDir, "raw", "components");
 
   // Additional component candidate paths
   const candidateDirs = [
@@ -434,7 +436,7 @@ function main() {
     path.join(monorepoRoot, "apps/docs/components"),
   ];
 
-  [distRDir, docsRDir, docsPublicDir].forEach((dir) => {
+  [distRDir, docsRDir, docsPublicDir, docsRawComponentsDir].forEach((dir) => {
     fs.mkdirSync(dir, { recursive: true });
   });
 
@@ -500,7 +502,7 @@ function main() {
 
     // Combine tags
     const combinedTags = Array.from(
-      new Set([...dialClassification.tags, ...(override?.tags || [])])
+      new Set([...dialClassification.tags, ...(override?.tags || []), ...(astMeta.tags || [])])
     );
 
     const dials: RegistryDial = {
@@ -525,6 +527,8 @@ function main() {
       redistribution_mode: override?.license?.redistribution_mode || "full_source",
     };
 
+    const complexity = astMeta.complexity || (fileContent.length > 3500 ? "high" : fileContent.length < 1500 ? "low" : "medium");
+
     const registryItem: RegistryItem = {
       $schema: "https://design-wiki.dev/schemas/registry-item.json",
       name: slug,
@@ -534,6 +538,7 @@ function main() {
       category,
       tags: combinedTags,
       dials,
+      complexity,
       a11y,
       license_origin: license,
       dependencies: Array.from(dependenciesSet),
@@ -561,7 +566,66 @@ function main() {
     fs.writeFileSync(path.join(distRDir, `${slug}.json`), itemJson);
     fs.writeFileSync(path.join(docsRDir, `${slug}.json`), itemJson);
 
-    console.log(`  ✓ Compiled [${registryItem.category}]: ${slug}.json (Deps: ${registryItem.dependencies.length}, RegDeps: ${registryItem.registryDependencies.length})`);
+    // Generate and write markdown representation with standard YAML frontmatter contract
+    const depsYaml =
+      registryItem.dependencies.length > 0
+        ? registryItem.dependencies.map((d) => `  - "${d}"`).join("\n")
+        : "  # No external runtime dependencies";
+    const tagsYaml =
+      registryItem.tags.length > 0
+        ? registryItem.tags.map((t) => `  - "${t}"`).join("\n")
+        : '  - "ui"';
+
+    const markdownDoc = `---
+id: "${registryItem.name}"
+name: "${registryItem.title}"
+category: "${registryItem.category}"
+library_origin: "${registryItem.license_origin.source_repository}"
+dependencies:
+${depsYaml}
+tags:
+${tagsYaml}
+dials:
+  design_variance: ${registryItem.dials.design_variance}      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: ${registryItem.dials.motion_intensity}     # 1: Basic hover · 10: Canvas/WebGL springs
+  visual_density: ${registryItem.dials.visual_density}       # 1: Generous whitespace · 10: Dense analytical UI
+complexity: "${registryItem.complexity}"
+a11y:
+  keyboard_navigable: ${registryItem.a11y.keyboard_navigable}
+  wai_aria_compliant: ${registryItem.a11y.wai_aria_compliant}
+  fallback_provided: ${registryItem.a11y.fallback_provided}
+---
+
+# ${registryItem.title} (\`${registryItem.name}\`)
+> ${registryItem.description}
+
+- **Taxonomy Category**: \`${registryItem.category}\`
+- **Structural Complexity**: \`${registryItem.complexity?.toUpperCase()}\`
+- **Technical Tags**: ${registryItem.tags.join(", ")}
+- **Design Dials**: Variance ${registryItem.dials.design_variance}/10 · Motion ${registryItem.dials.motion_intensity}/10 · Density ${registryItem.dials.visual_density}/10
+- **Accessibility AA**: Keyboard Nav: ${registryItem.a11y.keyboard_navigable}, ARIA: ${registryItem.a11y.wai_aria_compliant}, Fallback: ${registryItem.a11y.fallback_provided}
+
+## Installation Recipe
+\`\`\`bash
+# Native Design Wiki CLI
+npx design-wiki add ${registryItem.name}
+
+# Or via shadcn v3
+npx shadcn@latest add http://localhost:3000/r/${registryItem.name}.json
+\`\`\`
+
+## Peer Dependencies
+${registryItem.dependencies.length > 0 ? registryItem.dependencies.map((d) => `- \`${d}\``).join("\n") : "- None"}
+
+## Verified TypeScript Source
+\`\`\`tsx
+${fileContent}
+\`\`\`
+`;
+
+    fs.writeFileSync(path.join(docsRawComponentsDir, `${slug}.md`), markdownDoc);
+
+    console.log(`  ✓ Compiled [${registryItem.category}]: ${slug}.json + ${slug}.md (Complexity: ${registryItem.complexity}, Deps: ${registryItem.dependencies.length})`);
   }
 
   // Write master registry.json

@@ -20,6 +20,7 @@
     "motion_intensity": 1,
     "visual_density": 9
   },
+  "complexity": "medium",
   "a11y": {
     "keyboard_navigable": false,
     "wai_aria_compliant": true,

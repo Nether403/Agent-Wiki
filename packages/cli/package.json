@@ -1,0 +1,21 @@
+{
+  "name": "design-wiki",
+  "version": "1.0.0",
+  "description": "Installer CLI for Machine-First Design Agent Wiki: Curating zero-slop UI components into local environments.",
+  "bin": {
+    "design-wiki": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}
