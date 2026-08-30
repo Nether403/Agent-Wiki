@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ai-confidence-score-meter",
+  "type": "registry:component",
+  "title": "Ai Confidence Score Meter",
+  "description": "Curated production-grade component.",
+  "category": "ui:ai-native",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "ai-native",
+    "agent-ui"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 4,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ai-native/ai-confidence-score-meter.tsx",
+      "content": "/**\n * @license MIT\n * @origin 21st.dev & Machine-First Design Agent Wiki\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { ShieldCheck, Info, ExternalLink } from \"lucide-react\";\n\nexport interface CitationSource {\n  title: string;\n  url?: string;\n  relevancePercent: number;\n}\n\nexport interface ConfidenceScoreProps extends React.HTMLAttributes<HTMLDivElement> {\n  score: number; // 0 to 100\n  reasoningSummary?: string;\n  sources?: CitationSource[];\n}\n\nexport function AiConfidenceScoreMeter({\n  score = 96,\n  reasoningSummary = \"Verified against AST dependency graphs and official W3C / WCAG 2.1 AA specifications.\",\n  sources = [\n    { title: \"Radix UI Primitives API Contract\", relevancePercent: 98 },\n    { title: \"Tailwind CSS v4 Standard Tokens\", relevancePercent: 94 },\n  ],\n  className,\n  ...props\n}: ConfidenceScoreProps) {\n  const getBadgeColor = (s: number) => {\n    if (s >= 90) return \"bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30\";\n    if (s >= 75) return \"bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30\";\n    return \"bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30\";\n  };\n\n  return (\n    <div\n      className={cn(\"w-full max-w-lg rounded-2xl border border-border bg-card p-5 shadow-xs space-y-4\", className)}\n      role=\"region\"\n      aria-label=\"AI Verification and Confidence Gauge\"\n      {...props}\n    >\n      <div className=\"flex items-center justify-between\">\n        <div className=\"flex items-center gap-2\">\n          <ShieldCheck className=\"h-5 w-5 text-primary\" aria-hidden=\"true\" />\n          <h3 className=\"text-sm font-semibold tracking-tight text-foreground\">\n            Grounded Confidence Score\n          </h3>\n        </div>\n        <span\n          className={cn(\n            \"inline-flex items-center rounded-full border px-2.5 py-0.5 font-mono text-xs font-bold\",\n            getBadgeColor(score)\n          )}\n        >\n          {score}% GROUNDED\n        </span>\n      </div>\n\n      {/* Visual Score Bar */}\n      <div className=\"relative h-2 w-full overflow-hidden rounded-full bg-muted\">\n        <div\n          className=\"h-full bg-primary\"\n          style={{ width: `${score}%`, transition: \"width 500ms ease-out\" }}\n        />\n      </div>\n\n      {reasoningSummary && (\n        <p className=\"text-xs text-muted-foreground leading-relaxed flex items-start gap-1.5\">\n          <Info className=\"h-3.5 w-3.5 shrink-0 mt-0.5 text-muted-foreground\" aria-hidden=\"true\" />\n          <span>{reasoningSummary}</span>\n        </p>\n      )}\n\n      {sources.length > 0 && (\n        <div className=\"space-y-1.5 border-t border-border pt-3\">\n          <span className=\"text-[11px] font-mono font-semibold uppercase tracking-wider text-muted-foreground\">\n            Citation References:\n          </span>\n          <div className=\"space-y-1\">\n            {sources.map((src, idx) => (\n              <div\n                key={idx}\n                className=\"flex items-center justify-between text-xs text-foreground bg-muted/30 px-2.5 py-1.5 rounded-lg\"\n              >\n                <span className=\"truncate\">{src.title}</span>\n                <span className=\"font-mono text-[11px] text-muted-foreground\">{src.relevancePercent}% Match</span>\n              </div>\n            ))}\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/ai-confidence-score-meter.tsx"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "faq-search-accordion",
+  "type": "registry:ui",
+  "title": "F A Q Search Accordion",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/faq-search-accordion.tsx",
+      "content": "/**\n * @license MIT\n * @origin Page UI & Tailark (https://tailark.com)\n * @author Page UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Search, ChevronDown } from \"lucide-react\";\n\nexport interface FAQItem {\n  id: string;\n  question: string;\n  answer: string;\n  category?: string;\n}\n\nexport interface FAQSearchAccordionProps extends React.HTMLAttributes<HTMLDivElement> {\n  faqs: FAQItem[];\n  title?: string;\n  subtitle?: string;\n}\n\nexport function FAQSearchAccordion({\n  faqs,\n  title = \"Frequently Asked Architectural Questions\",\n  subtitle = \"Everything you need to know about machine-first registries, taste dials, and deterministic AI agents.\",\n  className,\n  ...props\n}: FAQSearchAccordionProps) {\n  const [searchQuery, setSearchQuery] = React.useState(\"\");\n  const [openIds, setOpenIds] = React.useState<string[]>([faqs[0]?.id || \"\"]);\n\n  const filteredFaqs = React.useMemo(() => {\n    if (!searchQuery.trim()) return faqs;\n    const q = searchQuery.toLowerCase();\n    return faqs.filter(\n      (f) =>\n        f.question.toLowerCase().includes(q) ||\n        f.answer.toLowerCase().includes(q) ||\n        (f.category && f.category.toLowerCase().includes(q))\n    );\n  }, [faqs, searchQuery]);\n\n  const toggleItem = (id: string) => {\n    setOpenIds((prev) =>\n      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]\n    );\n  };\n\n  return (\n    <section className={cn(\"mx-auto w-full max-w-4xl px-4 py-12\", className)} {...props}>\n      <div className=\"text-center space-y-3\">\n        <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">\n          {title}\n        </h2>\n        <p className=\"text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto\">\n          {subtitle}\n        </p>\n\n        {/* Search Bar Input */}\n        <div className=\"relative mx-auto mt-6 max-w-md\">\n          <Search className=\"absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground\" aria-hidden=\"true\" />\n          <input\n            type=\"search\"\n            placeholder=\"Search questions by keyword or topic...\"\n            value={searchQuery}\n            onChange={(e) => setSearchQuery(e.target.value)}\n            className=\"w-full rounded-xl border border-input bg-card pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            aria-label=\"Filter frequently asked questions\"\n          />\n        </div>\n      </div>\n\n      {/* Accordion List */}\n      <div className=\"mt-8 space-y-3\" role=\"region\" aria-label=\"FAQ Accordion items\">\n        {filteredFaqs.length === 0 ? (\n          <div className=\"rounded-xl border border-border bg-card p-8 text-center text-sm text-muted-foreground\">\n            No matching questions found for &ldquo;{searchQuery}&rdquo;.\n          </div>\n        ) : (\n          filteredFaqs.map((faq) => {\n            const isOpen = openIds.includes(faq.id);\n            return (\n              <div\n                key={faq.id}\n                className=\"overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-accent-foreground/20\"\n              >\n                <button\n                  onClick={() => toggleItem(faq.id)}\n                  aria-expanded={isOpen}\n                  aria-controls={`faq-answer-${faq.id}`}\n                  className=\"flex w-full items-center justify-between p-4 sm:p-5 text-left font-semibold text-foreground text-sm sm:text-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n                >\n                  <span>{faq.question}</span>\n                  <ChevronDown\n                    className={cn(\n                      \"h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200\",\n                      isOpen && \"rotate-180 text-foreground\"\n                    )}\n                    aria-hidden=\"true\"\n                  />\n                </button>\n                {isOpen && (\n                  <div\n                    id={`faq-answer-${faq.id}`}\n                    className=\"border-t border-border px-4 py-4 sm:px-5 text-sm text-muted-foreground leading-relaxed\"\n                  >\n                    {faq.answer}\n                  </div>\n                )}\n              </div>\n            );\n          })\n        )}\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/faq-search-accordion.tsx"
+    }
+  ]
+}

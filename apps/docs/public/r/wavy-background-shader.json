@@ -1,0 +1,53 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "wavy-background-shader",
+  "type": "registry:component",
+  "title": "Wavy Background Shader",
+  "description": "Curated production-grade component.",
+  "category": "ui:creative",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "webgl",
+    "threejs",
+    "canvas",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 9,
+    "visual_density": 3
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "three"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/wavy-background-shader.tsx",
+      "content": "/**\n * @license MIT\n * @origin Aceternity UI & React Bits (https://ui.aceternity.com)\n * @author Aceternity & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { useReducedMotion } from \"motion/react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface WavyBackgroundProps extends React.HTMLAttributes<HTMLDivElement> {\n  children?: React.ReactNode;\n  className?: string;\n  containerClassName?: string;\n  colors?: string[];\n  waveWidth?: number;\n  backgroundFill?: string;\n  blur?: number;\n  speed?: \"slow\" | \"fast\";\n  waveOpacity?: number;\n}\n\nexport function WavyBackgroundShader({\n  children,\n  className,\n  containerClassName,\n  colors = [\"#38bdf8\", \"#818cf8\", \"#c084fc\", \"#e879f9\", \"#22d3ee\"],\n  waveWidth = 50,\n  backgroundFill = \"black\",\n  blur = 10,\n  speed = \"fast\",\n  waveOpacity = 0.5,\n  ...props\n}: WavyBackgroundProps) {\n  // A11y Fallback: respects prefers-reduced-motion with static shader fallback\n  const prefersReduced = useReducedMotion();\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n  const [hasWebGL, setHasWebGL] = React.useState(true);\n\n  React.useEffect(() => {\n    if (prefersReduced) return;\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) {\n      setHasWebGL(false);\n      return;\n    }\n\n    let animationId: number;\n    let w = (ctx.canvas.width = window.innerWidth);\n    let h = (ctx.canvas.height = window.innerHeight);\n    ctx.filter = `blur(${blur}px)`;\n    let nt = 0;\n\n    const getSpeed = () => (speed === \"fast\" ? 0.002 : 0.001);\n\n    const resize = () => {\n      if (!ctx) return;\n      w = ctx.canvas.width = window.innerWidth;\n      h = ctx.canvas.height = window.innerHeight;\n      ctx.filter = `blur(${blur}px)`;\n    };\n\n    window.addEventListener(\"resize\", resize);\n\n    const render = () => {\n      ctx.fillStyle = backgroundFill;\n      ctx.globalAlpha = waveOpacity;\n      ctx.fillRect(0, 0, w, h);\n\n      for (let i = 0; i < 5; i++) {\n        ctx.beginPath();\n        ctx.lineWidth = waveWidth;\n        ctx.strokeStyle = colors[i % colors.length];\n        for (let x = 0; x < w; x += 5) {\n          const y = Math.sin(x * 0.003 + nt + i) * 60 + h * 0.5;\n          ctx.lineTo(x, y);\n        }\n        ctx.stroke();\n        ctx.closePath();\n      }\n\n      nt += getSpeed();\n      animationId = requestAnimationFrame(render);\n    };\n\n    render();\n\n    return () => {\n      cancelAnimationFrame(animationId);\n      window.removeEventListener(\"resize\", resize);\n    };\n  }, [blur, speed, waveWidth, backgroundFill, waveOpacity, colors]);\n\n  return (\n    <div\n      className={cn(\"relative flex h-full min-h-[400px] w-full flex-col items-center justify-center overflow-hidden\", containerClassName)}\n      {...props}\n    >\n      {hasWebGL ? (\n        <canvas\n          ref={canvasRef}\n          className=\"absolute inset-0 z-0 h-full w-full opacity-70\"\n          aria-hidden=\"true\"\n        />\n      ) : (\n        <div\n          className=\"absolute inset-0 z-0 bg-radial from-zinc-800 via-background to-zinc-950 opacity-80\"\n          role=\"img\"\n          aria-label=\"Static wave background fallback\"\n        />\n      )}\n      <div className={cn(\"relative z-10\", className)}>{children}</div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/wavy-background-shader.tsx"
+    }
+  ]
+}

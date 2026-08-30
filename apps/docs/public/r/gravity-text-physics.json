@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "gravity-text-physics",
+  "type": "registry:component",
+  "title": "Gravity Text Physics",
+  "description": "Curated production-grade component.",
+  "category": "ui:creative",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "webgl",
+    "threejs",
+    "canvas",
+    "tailwind-v4",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 9,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "button",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "three"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/gravity-text-physics.tsx",
+      "content": "/**\n * @license MIT\n * @origin Fancy Components (https://fancycomponents.dev)\n * @author Fancy Components & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { useReducedMotion } from \"motion/react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface GravityTextProps extends React.HTMLAttributes<HTMLDivElement> {\n  text?: string;\n  gravity?: number;\n  restitution?: number;\n}\n\nexport function GravityTextPhysics({\n  text = \"Deterministic Zero-Slop Architecture for AI Coding Agents\",\n  gravity = 0.4,\n  restitution = 0.7,\n  className,\n  ...props\n}: GravityTextProps) {\n  // A11y Fallback: respects prefers-reduced-motion with static text fallback\n  const prefersReduced = useReducedMotion();\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n  const containerRef = React.useRef<HTMLDivElement>(null);\n  const [isActive, setIsActive] = React.useState(false);\n\n  const startSimulation = () => {\n    if (prefersReduced || isActive) return;\n    setIsActive(true);\n\n    const canvas = canvasRef.current;\n    const container = containerRef.current;\n    if (!canvas || !container) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    const rect = container.getBoundingClientRect();\n    canvas.width = rect.width;\n    canvas.height = rect.height;\n\n    const words = text.split(\" \");\n    ctx.font = \"bold 18px sans-serif\";\n\n    const bodies: Array<{\n      word: string;\n      x: number;\n      y: number;\n      vx: number;\n      vy: number;\n      w: number;\n      h: number;\n      angle: number;\n      va: number;\n    }> = [];\n\n    let currentX = 20;\n    let currentY = 40;\n\n    words.forEach((w) => {\n      const metrics = ctx.measureText(w);\n      const width = metrics.width + 16;\n      if (currentX + width > rect.width - 20) {\n        currentX = 20;\n        currentY += 45;\n      }\n      bodies.push({\n        word: w,\n        x: currentX,\n        y: currentY,\n        vx: (Math.random() - 0.5) * 4,\n        vy: Math.random() * -2,\n        w: width,\n        h: 32,\n        angle: (Math.random() - 0.5) * 0.2,\n        va: (Math.random() - 0.5) * 0.05,\n      });\n      currentX += width + 10;\n    });\n\n    let animId: number;\n    const render = () => {\n      ctx.clearRect(0, 0, canvas.width, canvas.height);\n\n      bodies.forEach((b) => {\n        b.vy += gravity;\n        b.x += b.vx;\n        b.y += b.vy;\n        b.angle += b.va;\n\n        // Ground collision\n        if (b.y + b.h > canvas.height) {\n          b.y = canvas.height - b.h;\n          b.vy = -b.vy * restitution;\n          b.vx *= 0.95;\n          b.va *= 0.95;\n        }\n\n        // Wall collisions\n        if (b.x < 0) {\n          b.x = 0;\n          b.vx = -b.vx * restitution;\n        } else if (b.x + b.w > canvas.width) {\n          b.x = canvas.width - b.w;\n          b.vx = -b.vx * restitution;\n        }\n\n        ctx.save();\n        ctx.translate(b.x + b.w / 2, b.y + b.h / 2);\n        ctx.rotate(b.angle);\n\n        // Draw pill box\n        ctx.fillStyle = \"rgba(39, 39, 42, 0.9)\";\n        ctx.strokeStyle = \"rgba(113, 113, 122, 0.4)\";\n        ctx.lineWidth = 1;\n        ctx.beginPath();\n        ctx.roundRect(-b.w / 2, -b.h / 2, b.w, b.h, 8);\n        ctx.fill();\n        ctx.stroke();\n\n        // Draw text\n        ctx.fillStyle = \"#ffffff\";\n        ctx.font = \"600 14px sans-serif\";\n        ctx.textAlign = \"center\";\n        ctx.textBaseline = \"middle\";\n        ctx.fillText(b.word, 0, 1);\n\n        ctx.restore();\n      });\n\n      animId = requestAnimationFrame(render);\n    };\n\n    render();\n  };\n\n  return (\n    <div\n      ref={containerRef}\n      className={cn(\"relative h-64 w-full overflow-hidden rounded-2xl border border-border bg-card p-6 flex flex-col justify-between cursor-pointer\", className)}\n      onClick={startSimulation}\n      role=\"button\"\n      tabIndex={0}\n      onKeyDown={(e) => {\n        if (e.key === \"Enter\" || e.key === \" \") {\n          e.preventDefault();\n          startSimulation();\n        }\n      }}\n      aria-label=\"Click to drop words into dynamic physics gravity simulation\"\n      {...props}\n    >\n      {!isActive ? (\n        <div className=\"flex flex-wrap gap-2.5\">\n          {text.split(\" \").map((w, idx) => (\n            <span\n              key={idx}\n              className=\"inline-flex items-center rounded-lg border border-border bg-muted/60 px-3 py-1.5 text-sm font-semibold text-foreground\"\n            >\n              {w}\n            </span>\n          ))}\n        </div>\n      ) : (\n        <canvas ref={canvasRef} className=\"absolute inset-0 h-full w-full\" aria-hidden=\"true\" />\n      )}\n      <div className=\"relative z-10 flex items-center justify-between text-xs text-muted-foreground font-mono\">\n        <span>[PHYSICS ENGINE: 2D GRAVITY CANVAS]</span>\n        <span>{!isActive ? \"CLICK TO RELEASE GRAVITY\" : \"PHYSICS ACTIVE\"}</span>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/gravity-text-physics.tsx"
+    }
+  ]
+}

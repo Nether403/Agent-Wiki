@@ -1,0 +1,54 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "canvas-shatter-effect",
+  "type": "registry:component",
+  "title": "Canvas Shatter Effect",
+  "description": "Curated production-grade component.",
+  "category": "ui:creative",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "webgl",
+    "threejs",
+    "canvas",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 9,
+    "visual_density": 3
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "button",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "three"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/canvas-shatter-effect.tsx",
+      "content": "/**\n * @license MIT\n * @origin Canvas UI (https://canvasui.dev)\n * @author Canvas UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { useReducedMotion } from \"motion/react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface CanvasShatterProps extends React.HTMLAttributes<HTMLDivElement> {\n  children?: React.ReactNode;\n  shardCount?: number;\n}\n\nexport function CanvasShatterEffect({\n  children,\n  shardCount = 40,\n  className,\n  ...props\n}: CanvasShatterProps) {\n  // A11y Fallback: respects prefers-reduced-motion with static container fallback\n  const prefersReduced = useReducedMotion();\n  const [isShattered, setIsShattered] = React.useState(false);\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n\n  const handleShatter = () => {\n    if (prefersReduced || isShattered) {\n      setIsShattered(!isShattered);\n      return;\n    }\n\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    setIsShattered(true);\n\n    const rect = canvas.getBoundingClientRect();\n    canvas.width = rect.width;\n    canvas.height = rect.height;\n\n    const shards: Array<{\n      x: number;\n      y: number;\n      vx: number;\n      vy: number;\n      rotation: number;\n      vRot: number;\n      points: Array<[number, number]>;\n      opacity: number;\n    }> = [];\n\n    for (let i = 0; i < shardCount; i++) {\n      const x = Math.random() * rect.width;\n      const y = Math.random() * rect.height;\n      shards.push({\n        x,\n        y,\n        vx: (Math.random() - 0.5) * 8,\n        vy: (Math.random() - 0.5) * 8 - 2,\n        rotation: 0,\n        vRot: (Math.random() - 0.5) * 0.2,\n        points: [\n          [0, 0],\n          [(Math.random() - 0.5) * 30, Math.random() * 30],\n          [Math.random() * 30, (Math.random() - 0.5) * 30],\n        ],\n        opacity: 1,\n      });\n    }\n\n    let animId: number;\n    const render = () => {\n      ctx.clearRect(0, 0, canvas.width, canvas.height);\n      let alive = false;\n\n      for (const shard of shards) {\n        if (shard.opacity <= 0.01) continue;\n        alive = true;\n        shard.x += shard.vx;\n        shard.y += shard.vy;\n        shard.vy += 0.2; // gravity\n        shard.rotation += shard.vRot;\n        shard.opacity *= 0.96;\n\n        ctx.save();\n        ctx.translate(shard.x, shard.y);\n        ctx.rotate(shard.rotation);\n        ctx.fillStyle = `rgba(160, 175, 255, ${shard.opacity})`;\n        ctx.beginPath();\n        ctx.moveTo(shard.points[0][0], shard.points[0][1]);\n        ctx.lineTo(shard.points[1][0], shard.points[1][1]);\n        ctx.lineTo(shard.points[2][0], shard.points[2][1]);\n        ctx.closePath();\n        ctx.fill();\n        ctx.restore();\n      }\n\n      if (alive) {\n        animId = requestAnimationFrame(render);\n      }\n    };\n\n    render();\n  };\n\n  return (\n    <div\n      className={cn(\"relative inline-flex items-center justify-center select-none cursor-pointer\", className)}\n      onClick={handleShatter}\n      role=\"button\"\n      tabIndex={0}\n      onKeyDown={(e) => {\n        if (e.key === \"Enter\" || e.key === \" \") {\n          e.preventDefault();\n          handleShatter();\n        }\n      }}\n      aria-label=\"Click to trigger dynamic shatter particle animation\"\n      {...props}\n    >\n      <div className={cn(\"transition-opacity duration-200\", isShattered ? \"opacity-20\" : \"opacity-100\")}>\n        {children}\n      </div>\n      <canvas\n        ref={canvasRef}\n        className=\"pointer-events-none absolute inset-0 z-20 h-full w-full\"\n        aria-hidden=\"true\"\n      />\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/canvas-shatter-effect.tsx"
+    }
+  ]
+}

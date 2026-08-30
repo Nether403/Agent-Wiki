@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "tracing-beam-scroll",
+  "type": "registry:component",
+  "title": "Tracing Beam Scroll",
+  "description": "Curated production-grade component.",
+  "category": "ui:motion",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "spring-physics"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 8,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/tracing-beam-scroll.tsx",
+      "content": "/**\n * @license MIT\n * @origin Aceternity UI (https://ui.aceternity.com)\n * @author Aceternity & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { motion, useScroll, useSpring, useTransform, useReducedMotion } from \"motion/react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface TracingBeamProps extends React.HTMLAttributes<HTMLDivElement> {\n  children: React.ReactNode;\n}\n\nexport function TracingBeamScroll({ children, className, ...props }: TracingBeamProps) {\n  const ref = React.useRef<HTMLDivElement>(null);\n  const { scrollYProgress } = useScroll({\n    target: ref,\n    offset: [\"start start\", \"end end\"],\n  });\n\n  const prefersReduced = useReducedMotion();\n\n  const contentRef = React.useRef<HTMLDivElement>(null);\n  const [svgHeight, setSvgHeight] = React.useState(0);\n\n  React.useEffect(() => {\n    if (contentRef.current) {\n      setSvgHeight(contentRef.current.offsetHeight);\n    }\n  }, []);\n\n  const y1 = useSpring(useTransform(scrollYProgress, [0, 0.8], [50, svgHeight]), { stiffness: 450, damping: 90 });\n  const y2 = useSpring(useTransform(scrollYProgress, [0, 1], [50, svgHeight - 200]), { stiffness: 450, damping: 90 });\n\n  return (\n    <motion.div ref={ref} className={cn(\"relative mx-auto w-full max-w-4xl\", className)} {...props}>\n      <div className=\"absolute -left-4 top-3 md:-left-12\" aria-hidden=\"true\">\n        <motion.div\n          transition={{ duration: 0.2, delay: 0.5 }}\n          className=\"ml-7 flex h-4 w-4 items-center justify-center rounded-full border border-border shadow-xs\"\n        >\n          <motion.div\n            transition={{ duration: 0.2, delay: 0.5 }}\n            className=\"h-2 w-2 rounded-full border border-primary bg-primary\"\n          />\n        </motion.div>\n        {!prefersReduced && (\n          <svg\n            viewBox={`0 0 20 ${svgHeight}`}\n            width=\"20\"\n            height={svgHeight}\n            className=\"ml-4 block\"\n            aria-hidden=\"true\"\n          >\n            <motion.path\n              d={`M 1 0V -36 l 18 24 V ${svgHeight * 0.8} l -18 24V ${svgHeight}`}\n              fill=\"none\"\n              stroke=\"#9091A0\"\n              strokeOpacity=\"0.16\"\n              transition={{ duration: 10 }}\n            />\n            <motion.path\n              d={`M 1 0V -36 l 18 24 V ${svgHeight * 0.8} l -18 24V ${svgHeight}`}\n              fill=\"none\"\n              stroke=\"url(#gradient-beam)\"\n              strokeWidth=\"2\"\n              className=\"motion-reduce:hidden\"\n              transition={{ duration: 10 }}\n            />\n            <defs>\n              <motion.linearGradient\n                id=\"gradient-beam\"\n                gradientUnits=\"userSpaceOnUse\"\n                x1=\"0\"\n                x2=\"0\"\n                y1={y1}\n                y2={y2}\n              >\n                <stop stopColor=\"#38bdf8\" stopOpacity=\"0\" />\n                <stop stopColor=\"#818cf8\" />\n                <stop offset=\"0.325\" stopColor=\"#c084fc\" />\n                <stop offset=\"1\" stopColor=\"#38bdf8\" stopOpacity=\"0\" />\n              </motion.linearGradient>\n            </defs>\n          </svg>\n        )}\n      </div>\n      <div ref={contentRef} className=\"pl-6 md:pl-0\">\n        {children}\n      </div>\n    </motion.div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/tracing-beam-scroll.tsx"
+    }
+  ]
+}

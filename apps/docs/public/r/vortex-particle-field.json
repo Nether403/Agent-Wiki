@@ -1,0 +1,53 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "vortex-particle-field",
+  "type": "registry:component",
+  "title": "Vortex Particle Field",
+  "description": "Curated production-grade component.",
+  "category": "ui:creative",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "webgl",
+    "threejs",
+    "canvas",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 9,
+    "visual_density": 3
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "three"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/vortex-particle-field.tsx",
+      "content": "/**\n * @license MIT\n * @origin Aceternity UI (https://ui.aceternity.com)\n * @author Aceternity & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { useReducedMotion } from \"motion/react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface VortexProps extends React.HTMLAttributes<HTMLDivElement> {\n  children?: React.ReactNode;\n  className?: string;\n  containerClassName?: string;\n  particleCount?: number;\n  rangeY?: number;\n  baseHue?: number;\n  baseSpeed?: number;\n  rangeSpeed?: number;\n  baseRadius?: number;\n  rangeRadius?: number;\n  backgroundColor?: string;\n}\n\nexport function VortexParticleField({\n  children,\n  className,\n  containerClassName,\n  particleCount = 500,\n  rangeY = 100,\n  baseHue = 220,\n  baseSpeed = 0.1,\n  rangeSpeed = 1,\n  baseRadius = 1,\n  rangeRadius = 2,\n  backgroundColor = \"transparent\",\n  ...props\n}: VortexProps) {\n  // A11y Fallback: respects prefers-reduced-motion with static canvas fallback\n  const prefersReduced = useReducedMotion();\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n  const containerRef = React.useRef<HTMLDivElement>(null);\n  const [hasWebGL, setHasWebGL] = React.useState(true);\n\n  React.useEffect(() => {\n    if (prefersReduced) return;\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) {\n      setHasWebGL(false);\n      return;\n    }\n\n    let animationFrameId: number;\n    let width = (canvas.width = window.innerWidth);\n    let height = (canvas.height = window.innerHeight);\n\n    const particles: Array<{\n      x: number;\n      y: number;\n      radius: number;\n      angle: number;\n      speed: number;\n      distance: number;\n      hue: number;\n    }> = [];\n\n    for (let i = 0; i < particleCount; i++) {\n      const distance = Math.random() * (Math.min(width, height) / 2);\n      particles.push({\n        x: width / 2,\n        y: height / 2,\n        radius: baseRadius + Math.random() * rangeRadius,\n        angle: Math.random() * Math.PI * 2,\n        speed: (baseSpeed + Math.random() * rangeSpeed) * 0.02,\n        distance,\n        hue: baseHue + Math.random() * 50,\n      });\n    }\n\n    const resize = () => {\n      width = canvas.width = window.innerWidth;\n      height = canvas.height = window.innerHeight;\n    };\n    window.addEventListener(\"resize\", resize);\n\n    const render = () => {\n      ctx.fillStyle = backgroundColor === \"transparent\" ? \"rgba(0, 0, 0, 0.15)\" : backgroundColor;\n      ctx.fillRect(0, 0, width, height);\n\n      const cx = width / 2;\n      const cy = height / 2;\n\n      for (let i = 0; i < particles.length; i++) {\n        const p = particles[i];\n        p.angle += p.speed;\n        p.x = cx + Math.cos(p.angle) * p.distance;\n        p.y = cy + Math.sin(p.angle) * p.distance;\n\n        ctx.beginPath();\n        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);\n        ctx.fillStyle = `hsla(${p.hue}, 80%, 65%, 0.8)`;\n        ctx.shadowBlur = 8;\n        ctx.shadowColor = `hsl(${p.hue}, 80%, 60%)`;\n        ctx.fill();\n        ctx.closePath();\n      }\n\n      animationFrameId = requestAnimationFrame(render);\n    };\n\n    render();\n\n    return () => {\n      cancelAnimationFrame(animationFrameId);\n      window.removeEventListener(\"resize\", resize);\n    };\n  }, [particleCount, baseHue, baseRadius, rangeRadius, baseSpeed, rangeSpeed, backgroundColor]);\n\n  return (\n    <div\n      ref={containerRef}\n      className={cn(\"relative flex h-full min-h-[450px] w-full items-center justify-center overflow-hidden rounded-2xl bg-zinc-950\", containerClassName)}\n      {...props}\n    >\n      {hasWebGL ? (\n        <canvas ref={canvasRef} className=\"absolute inset-0 z-0 h-full w-full\" aria-hidden=\"true\" />\n      ) : (\n        <div className=\"absolute inset-0 z-0 bg-radial from-indigo-900/40 via-background to-zinc-950\" role=\"img\" aria-label=\"Static vortex fallback\" />\n      )}\n      <div className={cn(\"relative z-10\", className)}>{children}</div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/vortex-particle-field.tsx"
+    }
+  ]
+}

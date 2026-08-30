@@ -85,7 +85,7 @@ export function FishboneRootCauseDiagram({
       <div className="relative w-full overflow-x-auto py-2">
         <svg
           viewBox="0 0 720 280"
-          className="w-full min-w-[660px] h-auto overflow-visible"
+          className="w-full sm:min-w-[660px] min-w-full h-auto overflow-visible"
           role="img"
           aria-label="Fishbone cause-and-effect diagram"
         >

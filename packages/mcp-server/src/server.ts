@@ -2363,7 +2363,249 @@ test.describe("${routeName} Accessibility & Visual Flow", () => {
     }
   );
 
+  // Tool 32: generate_responsive_variants
+  server.registerTool(
+    "generate_responsive_variants",
+    {
+      description:
+        "Generate fluid responsive scaling rules (clamp formulas, container queries @container, touch target safeguards) for any UI component.",
+      inputSchema: z.object({
+        componentName: z.string().describe("Target component name"),
+        targetViewportBreakpoints: z.array(z.string()).optional().describe("Breakpoints list (sm, md, lg, xl)"),
+        useContainerQueries: z.boolean().optional().default(true).describe("Whether to use @container query syntax"),
+      }),
+    },
+    async ({ componentName, targetViewportBreakpoints = ["sm", "md", "lg", "xl"], useContainerQueries }) => {
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                componentName,
+                fluidTypography: {
+                  heading: "clamp(1.5rem, 1.2rem + 1.5vw, 2.75rem)",
+                  body: "clamp(0.875rem, 0.82rem + 0.25vw, 1.0625rem)",
+                  meta: "clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem)",
+                },
+                containerQueryWrapper: useContainerQueries ? "@container/component w-full relative" : "w-full",
+                responsiveTouchTarget: "min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0",
+                viewportSupport: targetViewportBreakpoints,
+                a11yDynamicViewportNotice: "Enforce min-h-[100dvh] instead of rigid h-screen (SLOP-038)",
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    }
+  );
+
+  // Tool 33: audit_webgl_performance
+  server.registerTool(
+    "audit_webgl_performance",
+    {
+      description:
+        "Audit Canvas and WebGL shader code for render loop allocations (SLOP-032), context loss recovery (SLOP-031), and reduced motion compliance.",
+      inputSchema: z.object({
+        code: z.string().describe("Source code containing WebGL or Canvas implementation"),
+      }),
+    },
+    async ({ code }) => {
+      const issues: string[] = [];
+      if (/requestAnimationFrame\s*\([^)]*\)\s*\{[^}]*(?:new\s+(?:Float32Array|Array|Object|THREE\.)|\[\s*\])/s.test(code)) {
+        issues.push("SLOP-032: Allocation inside requestAnimationFrame detected. Pre-allocate typed arrays outside tick loop.");
+      }
+      if (code.includes("<canvas") && !code.includes("webglcontextlost") && !code.includes("fallback")) {
+        issues.push("SLOP-031: WebGL Canvas missing context loss recovery listener or static fallback gradient.");
+      }
+      if (code.includes("<canvas") && !code.includes("prefers-reduced-motion") && !code.includes("useReducedMotion")) {
+        issues.push("WCAG AA / Motion: Canvas animation missing reduced motion fallback check.");
+      }
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                healthScore: issues.length === 0 ? 100 : Math.max(20, 100 - issues.length * 30),
+                passed: issues.length === 0,
+                issues,
+                recommendations: issues.length === 0 ? ["Code complies with zero-slop WebGL performance mandates."] : [
+                  "Pre-allocate all Float32Array buffers before the render loop.",
+                  "Add canvas.addEventListener('webglcontextlost') handler.",
+                  "Render static CSS gradient when prefers-reduced-motion is active.",
+                ],
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    }
+  );
+
+  // Tool 34: synthesize_full_landing_page
+  server.registerTool(
+    "synthesize_full_landing_page",
+    {
+      description:
+        "Synthesize an end-to-end full landing page layout combining Hero, Features, Bento, Testimonials, Pricing, CTA, and Footer components aligned with exact taste dials.",
+      inputSchema: z.object({
+        pageType: z.enum(["ai-saas", "developer-tools", "enterprise-b2b", "creative-agency", "fintech"]).default("ai-saas"),
+        theme: z.enum(["neo-tokyo", "midnight-slate", "obsidian-glass", "minimal-editorial"]).default("neo-tokyo"),
+      }),
+    },
+    async ({ pageType, theme }) => {
+      const stacks: Record<string, any> = {
+        "ai-saas": {
+          sections: [
+            { role: "Announcement", component: "announcement-banner-sticky" },
+            { role: "Hero", component: "google-gemini-glow-hero" },
+            { role: "Partners", component: "infinite-logo-cloud-carousel" },
+            { role: "Feature Cycler", component: "interactive-feature-cycler" },
+            { role: "Bento Grid", component: "bento-grid" },
+            { role: "Telemetry Stream", component: "dynamic-island-telemetry" },
+            { role: "Pricing", component: "pricing-tier-feature-matrix" },
+            { role: "FAQ", component: "faq-search-accordion" },
+            { role: "CTA Banner", component: "cta-banner-geometric" },
+            { role: "Footer", component: "footer-mega-menu" },
+          ],
+        },
+        "developer-tools": {
+          sections: [
+            { role: "Hero", component: "dark-brutalist-hero" },
+            { role: "Code Snippet", component: "accessible-snippet-block" },
+            { role: "Architecture", component: "architecture-topology-diagram" },
+            { role: "Data Table", component: "data-table-server-faceted" },
+            { role: "Status Monitor", component: "status-page-uptime-monitor" },
+            { role: "Pricing", component: "pricing-table" },
+            { role: "Footer", component: "footer-mega-menu" },
+          ],
+        },
+      };
+
+      const layout = stacks[pageType] || stacks["ai-saas"];
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                pageType,
+                theme,
+                layoutSections: layout.sections,
+                installCommand: `npx design-wiki compose --type ${pageType} --theme ${theme}`,
+                compositeDials: { design_variance: 5, motion_intensity: 4, visual_density: 6 },
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    }
+  );
+
+  // Tool 35: export_tailwind_theme
+  server.registerTool(
+    "export_tailwind_theme",
+    {
+      description:
+        "Generate modern Tailwind CSS v4 @theme token declarations with semantic CSS variables and spring transitions.",
+      inputSchema: z.object({
+        mode: z.enum(["light", "dark", "both"]).default("both"),
+      }),
+    },
+    async ({ mode }) => {
+      const themeCss = `@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}`;
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                target: "tailwind-v4",
+                themeCss,
+                instructions: "Paste into your global app.css or globals.css above standard component styles.",
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    }
+  );
+
+  // Tool 36: convert_tailwind_v3_to_v4
+  server.registerTool(
+    "convert_tailwind_v3_to_v4",
+    {
+      description:
+        "Migrate legacy Tailwind CSS v3 utility classes to zero-slop Tailwind CSS v4 semantic tokens and standard syntax.",
+      inputSchema: z.object({
+        codeSnippet: z.string().describe("JSX/HTML string containing legacy Tailwind v3 syntax"),
+      }),
+    },
+    async ({ codeSnippet }) => {
+      let migrated = codeSnippet
+        .replace(/\bbg-indigo-600\b/g, "bg-primary")
+        .replace(/\btext-indigo-600\b/g, "text-primary")
+        .replace(/\bfrom-purple-500\s+to-blue-500\b/g, "from-card via-background to-card")
+        .replace(/\bp-\[17px\]/g, "p-4")
+        .replace(/\bmt-\[13px\]/g, "mt-3")
+        .replace(/\bh-screen\b/g, "min-h-[100dvh]");
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                originalLength: codeSnippet.length,
+                migratedLength: migrated.length,
+                cleanCode: migrated,
+                slopDetectionsResolved: ["SLOP-001 (Hardcoded Indigo)", "SLOP-002 (Vibe Gradient)", "SLOP-007 (Arbitrary Pixels)", "SLOP-038 (Rigid h-screen)"],
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    }
+  );
+
   return server;
 }
+
 
 

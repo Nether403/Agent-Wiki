@@ -48,7 +48,7 @@ export function DynamicIslandTelemetry({
       {/* Dynamic Island Capsule Container */}
       <div
         className={cn(
-          "rounded-3xl bg-zinc-950 text-white border border-zinc-800/80 shadow-2xl transition-[width,padding,colors] duration-200 overflow-hidden flex flex-col cursor-pointer",
+          "rounded-3xl bg-zinc-950 text-white border border-zinc-800/80 shadow-2xl transition-[width,padding,colors] motion-reduce:transition-none duration-200 overflow-hidden flex flex-col cursor-pointer",
           isExpanded ? "w-[340px] sm:w-[400px] p-4.5 rounded-2xl" : "w-auto px-4 py-2 hover:border-zinc-700",
           className
         )}

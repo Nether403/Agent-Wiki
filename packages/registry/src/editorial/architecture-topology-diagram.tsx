@@ -56,7 +56,7 @@ export function ArchitectureTopologyDiagram({
       <div className="relative w-full overflow-x-auto py-2">
         <svg
           viewBox="0 0 740 220"
-          className="w-full min-w-[680px] h-auto overflow-visible"
+          className="w-full sm:min-w-[680px] min-w-full h-auto overflow-visible"
           role="img"
           aria-label="Multi-tier microservices architecture topology"
         >

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "interactive-pagination-bar",
+  "type": "registry:ui",
+  "title": "Interactive Pagination Bar",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "navigation",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/interactive-pagination-bar.tsx",
+      "content": "/**\n * @license MIT\n * @origin HeroUI & Primer React (https://heroui.com)\n * @author HeroUI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { ChevronLeft, ChevronRight, MoreHorizontal } from \"lucide-react\";\n\nexport interface PaginationProps extends React.HTMLAttributes<HTMLElement> {\n  currentPage: number;\n  totalPages: number;\n  onPageChange: (page: number) => void;\n  siblingCount?: number;\n}\n\nexport function InteractivePaginationBar({\n  currentPage = 1,\n  totalPages = 10,\n  onPageChange,\n  siblingCount = 1,\n  className,\n  ...props\n}: PaginationProps) {\n  const range = (start: number, end: number) => {\n    const length = end - start + 1;\n    return Array.from({ length }, (_, idx) => idx + start);\n  };\n\n  const paginationRange = React.useMemo(() => {\n    const totalPageNumbers = siblingCount + 5;\n\n    if (totalPageNumbers >= totalPages) {\n      return range(1, totalPages);\n    }\n\n    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);\n    const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPages);\n\n    const shouldShowLeftDots = leftSiblingIndex > 2;\n    const shouldShowRightDots = rightSiblingIndex < totalPages - 2;\n\n    const firstPageIndex = 1;\n    const lastPageIndex = totalPages;\n\n    if (!shouldShowLeftDots && shouldShowRightDots) {\n      const leftItemCount = 3 + 2 * siblingCount;\n      const leftRange = range(1, leftItemCount);\n      return [...leftRange, \"DOTS\", totalPages];\n    }\n\n    if (shouldShowLeftDots && !shouldShowRightDots) {\n      const rightItemCount = 3 + 2 * siblingCount;\n      const rightRange = range(totalPages - rightItemCount + 1, totalPages);\n      return [firstPageIndex, \"DOTS\", ...rightRange];\n    }\n\n    if (shouldShowLeftDots && shouldShowRightDots) {\n      const middleRange = range(leftSiblingIndex, rightSiblingIndex);\n      return [firstPageIndex, \"DOTS\", ...middleRange, \"DOTS\", lastPageIndex];\n    }\n\n    return [];\n  }, [totalPages, siblingCount, currentPage]);\n\n  return (\n    <nav\n      role=\"navigation\"\n      aria-label=\"Pagination Navigation\"\n      className={cn(\"flex items-center justify-center gap-1.5 py-4 select-none\", className)}\n      {...props}\n    >\n      <button\n        onClick={() => onPageChange(Math.max(1, currentPage - 1))}\n        disabled={currentPage === 1}\n        className=\"flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-card-foreground shadow-xs transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        aria-label=\"Go to previous page\"\n      >\n        <ChevronLeft className=\"h-4 w-4\" />\n      </button>\n\n      {paginationRange.map((pageNumber, index) => {\n        if (pageNumber === \"DOTS\") {\n          return (\n            <span\n              key={`dots-${index}`}\n              className=\"flex h-9 w-9 items-center justify-center text-muted-foreground\"\n              aria-hidden=\"true\"\n            >\n              <MoreHorizontal className=\"h-4 w-4\" />\n            </span>\n          );\n        }\n\n        const isCurrent = pageNumber === currentPage;\n        return (\n          <button\n            key={pageNumber}\n            onClick={() => onPageChange(Number(pageNumber))}\n            aria-current={isCurrent ? \"page\" : undefined}\n            className={cn(\n              \"flex h-9 min-w-9 px-3 items-center justify-center rounded-lg text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n              isCurrent\n                ? \"bg-primary text-primary-foreground shadow-xs\"\n                : \"border border-border bg-card text-card-foreground hover:bg-muted\"\n            )}\n          >\n            {pageNumber}\n          </button>\n        );\n      })}\n\n      <button\n        onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}\n        disabled={currentPage === totalPages}\n        className=\"flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-card-foreground shadow-xs transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        aria-label=\"Go to next page\"\n      >\n        <ChevronRight className=\"h-4 w-4\" />\n      </button>\n    </nav>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/interactive-pagination-bar.tsx"
+    }
+  ]
+}

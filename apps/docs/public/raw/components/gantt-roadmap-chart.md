@@ -123,7 +123,7 @@ export function GanttRoadmapChart({
       </div>
 
       {/* Gantt Matrix Grid */}
-      <div className="min-w-[620px] space-y-3">
+      <div className="w-full sm:min-w-[620px] min-w-full space-y-3">
         {/* Timeline Months Header */}
         <div className="grid grid-cols-12 gap-2 text-xs font-mono font-semibold text-muted-foreground border-b border-border pb-2">
           <div className="col-span-4">Milestone / Initiative</div>

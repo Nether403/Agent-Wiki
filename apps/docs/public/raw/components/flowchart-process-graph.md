@@ -83,7 +83,7 @@ export function FlowchartProcessGraph({
       <div className="relative w-full overflow-x-auto py-2">
         <svg
           viewBox="0 0 680 140"
-          className="w-full min-w-[620px] h-auto overflow-visible"
+          className="w-full sm:min-w-[620px] min-w-full h-auto overflow-visible"
           role="img"
           aria-label="Process flowchart diagram"
         >

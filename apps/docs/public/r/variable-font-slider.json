@@ -1,0 +1,42 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "variable-font-slider",
+  "type": "registry:ui",
+  "title": "Variable Font Slider",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/variable-font-slider.tsx",
+      "content": "/**\n * @license MIT\n * @origin Fancy Components (https://fancycomponents.dev)\n * @author Fancy Components & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface VariableFontSliderProps extends React.HTMLAttributes<HTMLDivElement> {\n  text?: string;\n  minWeight?: number;\n  maxWeight?: number;\n  minSlant?: number;\n  maxSlant?: number;\n}\n\nexport function VariableFontSlider({\n  text = \"MACHINE FIRST CRAFT\",\n  minWeight = 200,\n  maxWeight = 900,\n  minSlant = 0,\n  maxSlant = -10,\n  className,\n  ...props\n}: VariableFontSliderProps) {\n  const [weight, setWeight] = React.useState(500);\n  const [slant, setSlant] = React.useState(0);\n  const containerRef = React.useRef<HTMLDivElement>(null);\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {\n    if (!containerRef.current) return;\n    const rect = containerRef.current.getBoundingClientRect();\n    const ratioX = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));\n    const ratioY = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));\n\n    setWeight(Math.round(minWeight + ratioX * (maxWeight - minWeight)));\n    setSlant(Math.round(minSlant + ratioY * (maxSlant - minSlant)));\n  };\n\n  const handleMouseLeave = () => {\n    setWeight(500);\n    setSlant(0);\n  };\n\n  return (\n    <div\n      ref={containerRef}\n      onMouseMove={handleMouseMove}\n      onMouseLeave={handleMouseLeave}\n      className={cn(\"relative flex h-48 w-full select-none flex-col items-center justify-center overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-xs cursor-crosshair\", className)}\n      role=\"region\"\n      aria-label=\"Variable font interactive interpolation surface\"\n      {...props}\n    >\n      <h2\n        className=\"text-3xl sm:text-5xl font-black tracking-tight text-foreground transition-[font-variation-settings,font-weight] duration-75 text-center leading-none\"\n        style={{\n          fontWeight: weight,\n          fontVariationSettings: `'wght' ${weight}, 'slnt' ${slant}`,\n        }}\n      >\n        {text}\n      </h2>\n      <div className=\"mt-4 flex items-center gap-4 text-xs font-mono text-muted-foreground\">\n        <span>WEIGHT: {weight}</span>\n        <span>SLANT: {slant}°</span>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/variable-font-slider.tsx"
+    }
+  ]
+}

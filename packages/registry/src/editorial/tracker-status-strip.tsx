@@ -30,7 +30,7 @@ const colorMap = {
 export function TrackerStatusStrip({
   data,
   label = "Agent Execution Uptime",
-  uptimePercentage = "99.9%",
+  uptimePercentage = "99.95%",
   className,
   ...props
 }: TrackerStatusStripProps) {

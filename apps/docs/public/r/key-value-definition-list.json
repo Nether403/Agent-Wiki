@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "key-value-definition-list",
+  "type": "registry:ui",
+  "title": "Key Value Definition List",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/key-value-definition-list.tsx",
+      "content": "/**\n * @license MIT\n * @origin Cloudscape Design & Primer (https://cloudscape.design)\n * @author Cloudscape & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Copy, Check } from \"lucide-react\";\n\nexport interface KeyValueItem {\n  key: string;\n  value: string | React.ReactNode;\n  copyable?: boolean;\n  copyText?: string;\n}\n\nexport interface KeyValueListProps extends React.HTMLAttributes<HTMLDListElement> {\n  items: KeyValueItem[];\n  columns?: 1 | 2 | 3;\n}\n\nexport function KeyValueDefinitionList({\n  items,\n  columns = 2,\n  className,\n  ...props\n}: KeyValueListProps) {\n  const [copiedKey, setCopiedKey] = React.useState<string | null>(null);\n\n  const handleCopy = async (key: string, text: string) => {\n    try {\n      await navigator.clipboard.writeText(text);\n      setCopiedKey(key);\n      setTimeout(() => setCopiedKey(null), 1500);\n    } catch {\n      // Graceful fallback\n    }\n  };\n\n  const colStyles = {\n    1: \"grid-cols-1\",\n    2: \"grid-cols-1 sm:grid-cols-2\",\n    3: \"grid-cols-1 sm:grid-cols-2 lg:grid-cols-3\",\n  };\n\n  return (\n    <dl\n      className={cn(\"grid gap-4 rounded-xl border border-border bg-card p-6 shadow-xs\", colStyles[columns], className)}\n      {...props}\n    >\n      {items.map((item) => (\n        <div key={item.key} className=\"flex flex-col space-y-1\">\n          <dt className=\"text-xs font-semibold uppercase tracking-wider text-muted-foreground\">\n            {item.key}\n          </dt>\n          <dd className=\"flex items-center gap-2 text-sm font-medium text-foreground\">\n            <span className=\"truncate\">{item.value}</span>\n            {item.copyable && (\n              <button\n                onClick={() => handleCopy(item.key, item.copyText || String(item.value))}\n                className=\"inline-flex h-5 w-5 items-center justify-center rounded-sm text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n                aria-label={`Copy value for ${item.key}`}\n              >\n                {copiedKey === item.key ? (\n                  <Check className=\"h-3 w-3 text-emerald-500\" />\n                ) : (\n                  <Copy className=\"h-3 w-3\" />\n                )}\n              </button>\n            )}\n          </dd>\n        </div>\n      ))}\n    </dl>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/key-value-definition-list.tsx"
+    }
+  ]
+}

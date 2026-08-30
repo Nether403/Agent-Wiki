@@ -1,0 +1,49 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ai-generative-ui-sandbox",
+  "type": "registry:component",
+  "title": "Ai Generative Ui Sandbox",
+  "description": "Curated production-grade component.",
+  "category": "ui:ai-native",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "ai-native",
+    "agent-ui"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 4,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "tab",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ai-native/ai-generative-ui-sandbox.tsx",
+      "content": "/**\n * @license MIT\n * @origin 21st.dev & Machine-First Design Agent Wiki\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Play, RotateCcw, Shield, Terminal, Maximize2, Minimize2 } from \"lucide-react\";\n\nexport interface GenerativeUISandboxProps extends React.HTMLAttributes<HTMLDivElement> {\n  rawComponentCode?: string;\n  sandboxTitle?: string;\n  isExecuting?: boolean;\n  children?: React.ReactNode;\n}\n\nexport function AiGenerativeUiSandbox({\n  rawComponentCode = \"export default function GeneratedWidget() {\\n  return <div className=\\\"p-4 rounded-xl bg-primary text-primary-foreground\\\">Autonomous UI Artifact</div>;\\n}\",\n  sandboxTitle = \"AI Generative UI Execution Sandbox\",\n  isExecuting = false,\n  children,\n  className,\n  ...props\n}: GenerativeUISandboxProps) {\n  const [activeTab, setActiveTab] = React.useState<\"preview\" | \"code\">(\"preview\");\n  const [isExpanded, setIsExpanded] = React.useState(false);\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-lg transition-all duration-200\",\n        isExpanded ? \"fixed inset-4 z-50 max-w-none\" : \"w-full max-w-3xl\",\n        className\n      )}\n      role=\"region\"\n      aria-label={sandboxTitle}\n      {...props}\n    >\n      {/* Sandbox Navigation Header */}\n      <div className=\"flex items-center justify-between border-b border-border bg-muted/40 px-4 py-2.5\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"flex items-center gap-1.5\" aria-hidden=\"true\">\n            <span className=\"h-3 w-3 rounded-full bg-rose-500/80 inline-block\" />\n            <span className=\"h-3 w-3 rounded-full bg-amber-500/80 inline-block\" />\n            <span className=\"h-3 w-3 rounded-full bg-emerald-500/80 inline-block\" />\n          </div>\n          <span className=\"ml-2 font-mono text-xs font-semibold text-foreground truncate\">\n            {sandboxTitle}\n          </span>\n        </div>\n\n        <div className=\"flex items-center gap-1.5\">\n          <div className=\"flex rounded-lg bg-muted p-0.5\" role=\"tablist\">\n            <button\n              role=\"tab\"\n              aria-selected={activeTab === \"preview\"}\n              onClick={() => setActiveTab(\"preview\")}\n              className={cn(\n                \"rounded-md px-2.5 py-1 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                activeTab === \"preview\" ? \"bg-card text-foreground shadow-xs\" : \"text-muted-foreground hover:text-foreground\"\n              )}\n            >\n              Preview\n            </button>\n            <button\n              role=\"tab\"\n              aria-selected={activeTab === \"code\"}\n              onClick={() => setActiveTab(\"code\")}\n              className={cn(\n                \"rounded-md px-2.5 py-1 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                activeTab === \"code\" ? \"bg-card text-foreground shadow-xs\" : \"text-muted-foreground hover:text-foreground\"\n              )}\n            >\n              Source\n            </button>\n          </div>\n\n          <button\n            onClick={() => setIsExpanded(!isExpanded)}\n            className=\"flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            aria-label={isExpanded ? \"Collapse sandbox frame\" : \"Maximize sandbox frame\"}\n          >\n            {isExpanded ? <Minimize2 className=\"h-3.5 w-3.5\" /> : <Maximize2 className=\"h-3.5 w-3.5\" />}\n          </button>\n        </div>\n      </div>\n\n      {/* Main Sandbox Body */}\n      <div className=\"relative flex-1 min-h-[260px] p-6 flex items-center justify-center bg-background\">\n        {activeTab === \"preview\" ? (\n          <div className=\"w-full h-full flex items-center justify-center\">\n            {children || (\n              <div className=\"flex flex-col items-center gap-2 p-6 rounded-xl border border-dashed border-border bg-card/60 text-center\">\n                <Shield className=\"h-8 w-8 text-primary animate-pulse\" />\n                <span className=\"text-sm font-semibold text-foreground\">Sandboxed Component Active</span>\n                <span className=\"text-xs text-muted-foreground font-mono\">Zero-Slop Execution Context</span>\n              </div>\n            )}\n          </div>\n        ) : (\n          <pre className=\"w-full h-full p-4 overflow-x-auto rounded-xl bg-zinc-950 font-mono text-xs text-zinc-200 leading-relaxed select-all\">\n            <code>{rawComponentCode}</code>\n          </pre>\n        )}\n      </div>\n\n      {/* Sandbox Footer Status Bar */}\n      <div className=\"flex items-center justify-between border-t border-border bg-card px-4 py-2 text-[11px] font-mono text-muted-foreground\">\n        <span className=\"flex items-center gap-1.5\">\n          <span className=\"h-2 w-2 rounded-full bg-emerald-500\" aria-hidden=\"true\" />\n          CSP Sandboxed (No Unsafe Eval)\n        </span>\n        <span>REACT 19 / TAILWIND V4</span>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/ai-generative-ui-sandbox.tsx"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "circular-progress-meter",
+  "type": "registry:ui",
+  "title": "Circular Progress Meter",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/circular-progress-meter.tsx",
+      "content": "/**\n * @license MIT\n * @origin HeroUI (https://heroui.com)\n * @author HeroUI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface CircularProgressProps extends React.HTMLAttributes<HTMLDivElement> {\n  value: number; // 0 to 100\n  size?: number;\n  strokeWidth?: number;\n  showValueLabel?: boolean;\n  label?: string;\n}\n\nexport function CircularProgressMeter({\n  value = 75,\n  size = 120,\n  strokeWidth = 10,\n  showValueLabel = true,\n  label = \"Quality Health Index\",\n  className,\n  ...props\n}: CircularProgressProps) {\n  const normalizedValue = Math.min(100, Math.max(0, value));\n  const radius = (size - strokeWidth) / 2;\n  const circumference = 2 * Math.PI * radius;\n  const strokeDashoffset = circumference - (normalizedValue / 100) * circumference;\n\n  return (\n    <div\n      className={cn(\"flex flex-col items-center justify-center gap-2 p-4\", className)}\n      role=\"progressbar\"\n      aria-valuenow={normalizedValue}\n      aria-valuemin={0}\n      aria-valuemax={100}\n      aria-label={label}\n      {...props}\n    >\n      <div className=\"relative flex items-center justify-center\" style={{ width: size, height: size }}>\n        <svg className=\"h-full w-full -rotate-90 transform\" viewBox={`0 0 ${size} ${size}`} role=\"img\" aria-label=\"Progress ring\">\n          <title>Progress ring</title>\n          {/* Background Track Circle */}\n          <circle\n            cx={size / 2}\n            cy={size / 2}\n            r={radius}\n            strokeWidth={strokeWidth}\n            className=\"stroke-muted/40\"\n            fill=\"none\"\n          />\n          {/* Progress Stroke */}\n          <circle\n            cx={size / 2}\n            cy={size / 2}\n            r={radius}\n            strokeWidth={strokeWidth}\n            strokeDasharray={circumference}\n            strokeDashoffset={strokeDashoffset}\n            strokeLinecap=\"round\"\n            className=\"stroke-primary transition-[stroke-dashoffset] duration-500 ease-out\"\n            fill=\"none\"\n          />\n        </svg>\n\n        {showValueLabel && (\n          <div className=\"absolute flex flex-col items-center justify-center text-center\">\n            <span className=\"text-xl font-bold tracking-tight text-foreground font-mono\">\n              {normalizedValue}%\n            </span>\n          </div>\n        )}\n      </div>\n\n      {label && <span className=\"text-xs font-medium text-muted-foreground\">{label}</span>}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/circular-progress-meter.tsx"
+    }
+  ]
+}

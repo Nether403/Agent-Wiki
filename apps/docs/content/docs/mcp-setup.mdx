@@ -138,7 +138,23 @@ All tools are optimized to deliver structured responses well under **15KB**, ens
    ```
 
 5. **`audit_code_slop`**:
-   Scan arbitrary user code against the 21 anti-slop rules, checking arbitrary pixel escapes (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), blanket transitions, and accessibility compliance, receiving a health scorecard (0–100) with line-by-line remediation recommendations.
+   Scan arbitrary user code against the 50 anti-slop rules, checking arbitrary pixel escapes (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), blanket transitions, and accessibility compliance, receiving a health scorecard (0–100) with line-by-line remediation recommendations.
    ```json
    { "code": "<your-tsx-code>" }
    ```
+
+6. **`generate_responsive_variants`**:
+   Generate fluid responsive scaling rules (clamp formulas, container queries `@container`, touch target safeguards) for any UI component.
+
+7. **`audit_webgl_performance`**:
+   Audit Canvas and WebGL shader code for render loop allocations (SLOP-032), context loss recovery (SLOP-031), and reduced motion compliance.
+
+8. **`synthesize_full_landing_page`**:
+   Synthesize an end-to-end full landing page layout combining Hero, Features, Bento, Testimonials, Pricing, CTA, and Footer components aligned with exact taste dials.
+
+9. **`export_tailwind_theme`**:
+   Generate modern Tailwind CSS v4 `@theme` token declarations with semantic CSS variables and spring transitions.
+
+10. **`convert_tailwind_v3_to_v4`**:
+    Migrate legacy Tailwind CSS v3 utility classes to zero-slop Tailwind CSS v4 semantic tokens and standard syntax.
+

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "status-page-uptime-monitor",
+  "type": "registry:component",
+  "title": "Status Page Uptime Monitor",
+  "description": "Curated production-grade component.",
+  "category": "ui:editorial",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "editorial"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 1,
+    "visual_density": 10
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/status-page-uptime-monitor.tsx",
+      "content": "/**\n * @license MIT\n * @origin Tremor & Tailark (https://tailark.com)\n * @author Tremor & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { CheckCircle2, AlertTriangle, ShieldCheck } from \"lucide-react\";\n\nexport interface ServiceStatus {\n  name: string;\n  uptimeRate: number; // e.g. 99.98\n  status: \"operational\" | \"degraded\" | \"outage\";\n  history: Array<\"up\" | \"degraded\" | \"down\">; // 30 or 60 days\n}\n\nexport interface StatusPageProps extends React.HTMLAttributes<HTMLDivElement> {\n  services: ServiceStatus[];\n  overallStatus?: \"All Systems Operational\" | \"Active Incident\" | \"Maintenance\";\n}\n\nexport function StatusPageUptimeMonitor({\n  services,\n  overallStatus = \"All Systems Operational\",\n  className,\n  ...props\n}: StatusPageProps) {\n  const statusColors = {\n    up: \"bg-emerald-500 hover:bg-emerald-400\",\n    degraded: \"bg-amber-500 hover:bg-amber-400\",\n    down: \"bg-rose-500 hover:bg-rose-400\",\n  };\n\n  return (\n    <section className={cn(\"mx-auto w-full max-w-4xl space-y-6 p-4 sm:p-6\", className)} {...props}>\n      {/* Global System Banner */}\n      <div className=\"flex items-center justify-between rounded-2xl border border-border bg-card p-5 shadow-xs\">\n        <div className=\"flex items-center gap-3\">\n          <div className=\"flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-500\">\n            <CheckCircle2 className=\"h-6 w-6\" />\n          </div>\n          <div>\n            <h2 className=\"text-base sm:text-lg font-bold tracking-tight text-foreground\">{overallStatus}</h2>\n            <p className=\"text-xs text-muted-foreground\">Updated in real-time via telemetry heartbeat</p>\n          </div>\n        </div>\n        <span className=\"hidden sm:inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 font-mono text-xs font-semibold text-muted-foreground\">\n          <ShieldCheck className=\"h-3.5 w-3.5\" />\n          SLA Verified\n        </span>\n      </div>\n\n      {/* Services List */}\n      <div className=\"space-y-4\" role=\"region\" aria-label=\"Individual service uptime monitors\">\n        {services.map((svc) => (\n          <div\n            key={svc.name}\n            className=\"rounded-2xl border border-border bg-card p-5 shadow-xs space-y-3\"\n          >\n            <div className=\"flex items-center justify-between\">\n              <div className=\"space-y-0.5\">\n                <span className=\"font-semibold text-foreground text-sm sm:text-base\">{svc.name}</span>\n                <div className=\"text-xs text-muted-foreground font-mono\">\n                  {svc.uptimeRate}% uptime in the past 60 days\n                </div>\n              </div>\n              <span className=\"inline-flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400\">\n                <span className=\"h-2 w-2 rounded-full bg-emerald-500\" aria-hidden=\"true\" />\n                Operational\n              </span>\n            </div>\n\n            {/* Day by day mini status bars */}\n            <div className=\"flex items-center gap-1 overflow-hidden\" aria-hidden=\"true\">\n              {svc.history.map((dayStatus, idx) => (\n                <div\n                  key={idx}\n                  className={cn(\"h-7 flex-1 rounded-xs transition-colors\", statusColors[dayStatus])}\n                  title={`Day ${idx + 1}: ${dayStatus}`}\n                />\n              ))}\n            </div>\n            <div className=\"flex items-center justify-between text-[11px] font-mono text-muted-foreground\">\n              <span>60 days ago</span>\n              <span>Today</span>\n            </div>\n          </div>\n        ))}\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/status-page-uptime-monitor.tsx"
+    }
+  ]
+}

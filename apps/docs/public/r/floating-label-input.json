@@ -1,0 +1,43 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "floating-label-input",
+  "type": "registry:ui",
+  "title": "Floating Label Input",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "alert",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/floating-label-input.tsx",
+      "content": "/**\n * @license MIT\n * @origin KokonutUI (https://kokonutui.com)\n * @author KokonutUI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface FloatingLabelInputProps extends React.InputHTMLAttributes<HTMLInputElement> {\n  label: string;\n  error?: string;\n}\n\nexport const FloatingLabelInput = React.forwardRef<HTMLInputElement, FloatingLabelInputProps>(\n  ({ label, error, className, id, ...props }, ref) => {\n    const generatedId = React.useId();\n    const inputId = id || generatedId;\n\n    return (\n      <div className=\"relative w-full\">\n        <div className=\"relative\">\n          <input\n            id={inputId}\n            ref={ref}\n            placeholder=\" \"\n            className={cn(\n              \"peer w-full rounded-xl border border-input bg-background px-4 pt-5 pb-2 text-base text-foreground transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-transparent disabled:cursor-not-allowed disabled:opacity-50\",\n              error ? \"border-destructive focus-visible:ring-destructive\" : \"hover:border-accent-foreground/30\",\n              className\n            )}\n            aria-invalid={!!error}\n            aria-describedby={error ? `${inputId}-error` : undefined}\n            {...props}\n          />\n          <label\n            htmlFor={inputId}\n            className={cn(\n              \"pointer-events-none absolute left-4 top-4 z-10 origin-[0] -translate-y-2.5 scale-75 transform text-xs text-muted-foreground duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-2.5 peer-focus:scale-75 peer-focus:text-primary\",\n              error && \"text-destructive peer-focus:text-destructive\"\n            )}\n          >\n            {label}\n          </label>\n        </div>\n        {error && (\n          <p id={`${inputId}-error`} className=\"mt-1.5 text-xs text-destructive font-medium\" role=\"alert\">\n            {error}\n          </p>\n        )}\n      </div>\n    );\n  }\n);\nFloatingLabelInput.displayName = \"FloatingLabelInput\";\n",
+      "type": "registry:ui",
+      "target": "components/ui/floating-label-input.tsx"
+    }
+  ]
+}

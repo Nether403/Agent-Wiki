@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "motion-lower-third-overlay",
+  "type": "registry:component",
+  "title": "Motion Lower Third Overlay",
+  "description": "Curated production-grade component.",
+  "category": "ui:motion",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "wai-aria-compliant",
+    "spring-physics"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 10,
+    "visual_density": 7
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/media/motion-lower-third-overlay.tsx",
+      "content": "/**\n * @license MIT\n * @origin Remocn (https://remocn.dev)\n * @author Remocn & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { motion, AnimatePresence, useReducedMotion } from \"motion/react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface LowerThirdProps extends React.HTMLAttributes<HTMLDivElement> {\n  name?: string;\n  roleTitle?: string;\n  affiliation?: string;\n  show?: boolean;\n}\n\nexport function MotionLowerThirdOverlay({\n  name = \"Dr. Elena Vance\",\n  roleTitle = \"Principal AI Research Scientist\",\n  affiliation = \"Machine-First Design Institute\",\n  show = true,\n  className,\n  ...props\n}: LowerThirdProps) {\n  const prefersReduced = useReducedMotion();\n\n  return (\n    <div\n      className={cn(\"relative h-48 w-full max-w-xl overflow-hidden rounded-2xl bg-zinc-950 p-6 flex flex-col justify-end\", className)}\n      role=\"region\"\n      aria-label=\"Broadcast lower-third title card overlay\"\n      {...props}\n    >\n      <AnimatePresence>\n        {show && (\n          <motion.div\n            initial={prefersReduced ? { opacity: 0 } : { x: -40, opacity: 0 }}\n            animate={prefersReduced ? { opacity: 1 } : { x: 0, opacity: 1 }}\n            exit={prefersReduced ? { opacity: 0 } : { x: -40, opacity: 0 }}\n            transition={{ type: \"spring\", stiffness: 300, damping: 26 }}\n            className=\"flex items-stretch gap-3\"\n          >\n            {/* Structural Accent Bar */}\n            <div className=\"w-1.5 rounded-full bg-primary\" aria-hidden=\"true\" />\n\n            <div className=\"space-y-0.5\">\n              <h3 className=\"text-xl font-bold tracking-tight text-white\">{name}</h3>\n              <p className=\"text-xs font-semibold text-primary\">{roleTitle}</p>\n              <p className=\"text-[11px] font-mono text-zinc-400\">{affiliation}</p>\n            </div>\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/motion-lower-third-overlay.tsx"
+    }
+  ]
+}

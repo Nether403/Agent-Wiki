@@ -50,7 +50,7 @@ export function VennComparisonMatrix({
       <div className="relative w-full overflow-x-auto py-2">
         <svg
           viewBox="0 0 700 320"
-          className="w-full min-w-[640px] h-auto overflow-visible"
+          className="w-full sm:min-w-[640px] min-w-full h-auto overflow-visible"
           role="img"
           aria-label="2-circle overlapping Venn diagram"
         >

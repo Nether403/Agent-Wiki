@@ -1,0 +1,48 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "announcement-banner-sticky",
+  "type": "registry:ui",
+  "title": "Announcement Banner Sticky",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "glassmorphism",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "complementary",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/announcement-banner-sticky.tsx",
+      "content": "/**\n * @license MIT\n * @origin Launch UI & Tailark (https://tailark.com)\n * @author Launch UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { ArrowRight, X, Sparkles } from \"lucide-react\";\n\nexport interface AnnouncementBannerProps extends React.HTMLAttributes<HTMLDivElement> {\n  badgeText?: string;\n  message?: string;\n  actionText?: string;\n  actionHref?: string;\n  onDismiss?: () => void;\n}\n\nexport function AnnouncementBannerSticky({\n  badgeText = \"NEW RELEASE v2.0\",\n  message = \"Machine-First Design Agent Wiki with zero-slop Model Context Protocol server.\",\n  actionText = \"Explore Registry\",\n  actionHref = \"#\",\n  onDismiss,\n  className,\n  ...props\n}: AnnouncementBannerProps) {\n  const [isVisible, setIsVisible] = React.useState(true);\n\n  if (!isVisible) return null;\n\n  const handleDismiss = () => {\n    setIsVisible(false);\n    if (onDismiss) onDismiss();\n  };\n\n  return (\n    <aside\n      className={cn(\n        \"relative w-full border-b border-border bg-card/90 px-4 py-2.5 backdrop-blur-md transition-colors\",\n        className\n      )}\n      role=\"complementary\"\n      aria-label=\"Product announcement banner\"\n      {...props}\n    >\n      <div className=\"mx-auto flex max-w-7xl items-center justify-between gap-4 text-xs sm:text-sm\">\n        <div className=\"flex flex-1 flex-wrap items-center justify-center gap-2 sm:gap-3 text-center sm:text-left\">\n          <span className=\"inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 font-semibold text-primary\">\n            <Sparkles className=\"h-3 w-3\" />\n            {badgeText}\n          </span>\n          <span className=\"text-muted-foreground font-medium\">{message}</span>\n          <a\n            href={actionHref}\n            className=\"inline-flex items-center gap-1 font-semibold text-foreground underline decoration-muted-foreground underline-offset-4 hover:decoration-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            {actionText}\n            <ArrowRight className=\"h-3.5 w-3.5\" />\n          </a>\n        </div>\n\n        <button\n          onClick={handleDismiss}\n          className=\"flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          aria-label=\"Dismiss announcement banner\"\n        >\n          <X className=\"h-4 w-4\" />\n        </button>\n      </div>\n    </aside>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/announcement-banner-sticky.tsx"
+    }
+  ]
+}

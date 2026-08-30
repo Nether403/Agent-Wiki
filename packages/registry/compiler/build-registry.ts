@@ -1672,6 +1672,14 @@ function validateRegistryItem(item: RegistryItem): boolean {
   return true;
 }
 
+function safeWriteFileSync(filePath: string, data: string) {
+  const dir = path.dirname(filePath);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  fs.writeFileSync(filePath, data, "utf-8");
+}
+
 function main() {
   console.log("🚀 Starting Design Agent Wiki Registry Compilation & Dynamic Sweeper...");
 

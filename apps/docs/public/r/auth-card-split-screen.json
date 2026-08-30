@@ -1,0 +1,49 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "auth-card-split-screen",
+  "type": "registry:ui",
+  "title": "Auth Card Split Screen",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "glassmorphism",
+    "neon-scifi",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/auth-card-split-screen.tsx",
+      "content": "/**\n * @license MIT\n * @origin Kairo UI & Tailark (https://kairoui.online)\n * @author Kairo UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { ArrowRight, Lock, Mail, ShieldCheck } from \"lucide-react\";\n\nexport interface AuthCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  onSubmit?: (email: string) => void;\n  brandName?: string;\n  tagline?: string;\n}\n\nexport function AuthCardSplitScreen({\n  onSubmit,\n  brandName = \"Agent Wiki Studio\",\n  tagline = \"Deterministic, zero-slop component orchestration for autonomous coding agents.\",\n  className,\n  ...props\n}: AuthCardProps) {\n  const [email, setEmail] = React.useState(\"\");\n  const [isSubmitting, setIsSubmitting] = React.useState(false);\n\n  const handleSubmit = (e: React.FormEvent) => {\n    e.preventDefault();\n    if (!email) return;\n    setIsSubmitting(true);\n    if (onSubmit) onSubmit(email);\n    setTimeout(() => setIsSubmitting(false), 1500);\n  };\n\n  return (\n    <div\n      className={cn(\n        \"grid min-h-[500px] w-full max-w-4xl overflow-hidden rounded-3xl border border-border bg-card shadow-2xl lg:grid-cols-2\",\n        className\n      )}\n      {...props}\n    >\n      {/* Visual / Brand Side Panel */}\n      <div className=\"relative flex flex-col justify-between bg-zinc-950 p-8 sm:p-10 text-white overflow-hidden\">\n        <div className=\"relative z-10 space-y-2\">\n          <div className=\"inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/80 px-3 py-1 text-xs font-mono font-medium text-emerald-400\">\n            <ShieldCheck className=\"h-3.5 w-3.5\" />\n            Zero-Slop Verified\n          </div>\n          <h2 className=\"text-2xl sm:text-3xl font-bold tracking-tight\">{brandName}</h2>\n          <p className=\"text-xs sm:text-sm text-zinc-400 leading-relaxed\">{tagline}</p>\n        </div>\n\n        <div className=\"relative z-10 mt-8 space-y-4\">\n          <div className=\"rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-4 backdrop-blur-xs\">\n            <p className=\"font-mono text-xs text-zinc-300\">\n              &ldquo;The fastest way to ground LLMs in verified design tokens and WCAG AA accessible components.&rdquo;\n            </p>\n          </div>\n        </div>\n\n        {/* Ambient Subtle Glow */}\n        <div className=\"pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-primary/20 blur-3xl\" aria-hidden=\"true\" />\n      </div>\n\n      {/* Authentication Form Side */}\n      <div className=\"flex flex-col justify-center p-8 sm:p-10\">\n        <div className=\"space-y-2 text-left\">\n          <h3 className=\"text-xl font-bold tracking-tight text-foreground\">Welcome back</h3>\n          <p className=\"text-xs sm:text-sm text-muted-foreground\">\n            Sign in or connect your developer workspace token.\n          </p>\n        </div>\n\n        <form onSubmit={handleSubmit} className=\"mt-6 space-y-4\">\n          <div className=\"space-y-1.5 text-left\">\n            <label htmlFor=\"auth-email\" className=\"text-xs font-semibold text-foreground\">\n              Work Email Address\n            </label>\n            <div className=\"relative\">\n              <Mail className=\"absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground\" aria-hidden=\"true\" />\n              <input\n                id=\"auth-email\"\n                type=\"email\"\n                required\n                value={email}\n                onChange={(e) => setEmail(e.target.value)}\n                placeholder=\"developer@company.com\"\n                className=\"w-full rounded-xl border border-input bg-background pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n              />\n            </div>\n          </div>\n\n          <button\n            type=\"submit\"\n            disabled={isSubmitting}\n            className=\"inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            {isSubmitting ? \"Connecting...\" : \"Continue with Email\"}\n            <ArrowRight className=\"h-4 w-4\" />\n          </button>\n        </form>\n\n        <div className=\"mt-6 text-center text-xs text-muted-foreground\">\n          By continuing, you accept the machine-first architectural license and terms of service.\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/auth-card-split-screen.tsx"
+    }
+  ]
+}

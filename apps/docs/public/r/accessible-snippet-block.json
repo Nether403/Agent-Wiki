@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "accessible-snippet-block",
+  "type": "registry:ui",
+  "title": "Accessible Snippet Block",
+  "description": "Curated production-grade component.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "tab",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/design-agent-wiki",
+    "license_type": "MIT",
+    "author": "Community Contributor",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/accessible-snippet-block.tsx",
+      "content": "/**\n * @license MIT\n * @origin HeroUI (https://heroui.com)\n * @author HeroUI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Check, Copy, Terminal } from \"lucide-react\";\n\nexport interface SnippetCommands {\n  npm?: string;\n  pnpm?: string;\n  yarn?: string;\n  bun?: string;\n}\n\nexport interface AccessibleSnippetBlockProps extends React.HTMLAttributes<HTMLDivElement> {\n  packageSlug: string;\n  customCommands?: SnippetCommands;\n}\n\nexport function AccessibleSnippetBlock({\n  packageSlug = \"design-wiki add button\",\n  customCommands,\n  className,\n  ...props\n}: AccessibleSnippetBlockProps) {\n  const [selectedPm, setSelectedPm] = React.useState<\"pnpm\" | \"npm\" | \"yarn\" | \"bun\">(\"pnpm\");\n  const [hasCopied, setHasCopied] = React.useState(false);\n\n  const commands: Record<string, string> = {\n    pnpm: customCommands?.pnpm || `pnpm dlx ${packageSlug}`,\n    npm: customCommands?.npm || `npx ${packageSlug}`,\n    yarn: customCommands?.yarn || `yarn dlx ${packageSlug}`,\n    bun: customCommands?.bun || `bunx --bun ${packageSlug}`,\n  };\n\n  const activeCommand = commands[selectedPm];\n\n  const handleCopy = async () => {\n    try {\n      await navigator.clipboard.writeText(activeCommand);\n      setHasCopied(true);\n      setTimeout(() => setHasCopied(false), 2000);\n    } catch {\n      // Graceful fallback\n    }\n  };\n\n  return (\n    <div\n      className={cn(\"w-full overflow-hidden rounded-xl border border-border bg-card shadow-xs\", className)}\n      role=\"region\"\n      aria-label=\"Code installation snippet\"\n      {...props}\n    >\n      <div className=\"flex items-center justify-between border-b border-border bg-muted/40 px-4 py-2\">\n        <div className=\"flex items-center gap-1.5\" role=\"tablist\" aria-label=\"Package managers\">\n          {([\"pnpm\", \"npm\", \"yarn\", \"bun\"] as const).map((pm) => (\n            <button\n              key={pm}\n              role=\"tab\"\n              aria-selected={selectedPm === pm}\n              onClick={() => setSelectedPm(pm)}\n              className={cn(\n                \"rounded-md px-2.5 py-1 text-xs font-mono font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                selectedPm === pm\n                  ? \"bg-card text-foreground shadow-xs font-bold\"\n                  : \"text-muted-foreground hover:text-foreground\"\n              )}\n            >\n              {pm}\n            </button>\n          ))}\n        </div>\n        <button\n          onClick={handleCopy}\n          className=\"inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          aria-label={hasCopied ? \"Command copied\" : \"Copy installation command to clipboard\"}\n        >\n          {hasCopied ? <Check className=\"h-3.5 w-3.5 text-emerald-500\" /> : <Copy className=\"h-3.5 w-3.5\" />}\n          <span>{hasCopied ? \"Copied\" : \"Copy\"}</span>\n        </button>\n      </div>\n      <div className=\"flex items-center gap-3 p-4 font-mono text-xs sm:text-sm text-foreground overflow-x-auto\">\n        <Terminal className=\"h-4 w-4 shrink-0 text-muted-foreground\" aria-hidden=\"true\" />\n        <code className=\"select-all\">{activeCommand}</code>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/accessible-snippet-block.tsx"
+    }
+  ]
+}

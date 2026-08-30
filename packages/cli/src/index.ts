@@ -5,6 +5,8 @@ import { listComponents } from "./commands/list";
 import { auditLocalPath } from "./commands/audit";
 import { unslopTarget } from "./commands/unslop";
 import { composePage } from "./commands/compose";
+import { previewComponent } from "./commands/preview";
+import { runDoctor } from "./commands/doctor";
 
 function printHelp() {
   console.log(`
@@ -18,6 +20,8 @@ Commands:
                       (e.g., npx design-wiki add canvas-fluid-wave)
   compose <template>  Synthesize an entire zero-slop layout page with all dependencies
                       (e.g., npx design-wiki compose ai-chat-workspace)
+  preview <slug>      Inspect local component contract and verify zero-slop syntax
+  doctor              Run full system diagnosis across Tailwind v4, React 19, and agent rules
   list                List all curated zero-slop components and taste dials
   search <query>      Search components by name, category, or tag
   audit [path]        Scan local files for AI slop anti-patterns (arbitrary tokens, etc.)
@@ -114,6 +118,21 @@ async function main() {
       overwrite,
     });
 
+    process.exit(success ? 0 : 1);
+  }
+
+  if (command === "preview") {
+    const slug = args[1];
+    if (!slug) {
+      console.error("❌ Error: Missing component slug for preview.");
+      process.exit(1);
+    }
+    const success = await previewComponent(slug, { cwd: cwdOverride });
+    process.exit(success ? 0 : 1);
+  }
+
+  if (command === "doctor") {
+    const success = await runDoctor({ cwd: cwdOverride });
     process.exit(success ? 0 : 1);
   }
 
