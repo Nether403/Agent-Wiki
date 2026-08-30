@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "multi-step-agent-loader",
+  "type": "registry:component",
+  "title": "Multi-Step Agent Loader",
+  "description": "Stepped progression card for long-running AI workflows with live step verification states and latency timers.",
+  "category": "ui:ai-native",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "ai",
+    "loader",
+    "stepper",
+    "agent",
+    "kokonutui",
+    "aceternity",
+    "progress"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 4,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "status",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://kokonutui.com",
+    "license_type": "MIT",
+    "author": "KokonutUI & Aceternity",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ai-native/multi-step-agent-loader.tsx",
+      "content": "/**\n * @license MIT\n * @origin Aceternity UI & KokonutUI (https://ui.aceternity.com, https://kokonutui.com)\n * @author Aceternity / Kokonut & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { CheckCircle2, Circle, Loader2, AlertCircle, Clock } from \"lucide-react\";\n\nexport type AgentStepStatus = \"pending\" | \"running\" | \"completed\" | \"error\";\n\nexport interface AgentWorkflowStep {\n  id: string;\n  title: string;\n  description?: string;\n  status: AgentStepStatus;\n  durationMs?: number;\n}\n\nexport interface MultiStepAgentLoaderProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  steps?: AgentWorkflowStep[];\n  onCancel?: () => void;\n}\n\nexport function MultiStepAgentLoader({\n  title = \"Agent Workflow In Progress\",\n  steps = [\n    { id: \"1\", title: \"Ingesting Repository AST\", description: \"Parsing TSX files and AST dependency trees\", status: \"completed\", durationMs: 340 },\n    { id: \"2\", title: \"Running Anti-Slop Audit\", description: \"Evaluating against 50 zero-slop AST rules\", status: \"completed\", durationMs: 180 },\n    { id: \"3\", title: \"Compiling Tailwind v4 Tokens\", description: \"Resolving semantic design tokens and @theme block\", status: \"running\", durationMs: 620 },\n    { id: \"4\", title: \"Axe-Core A11y Verification\", description: \"Ensuring 100% WCAG 2.1 AA compliance\", status: \"pending\" },\n    { id: \"5\", title: \"Emitting Registry JSON Artifact\", description: \"Validating shadcn v3 registry schema\", status: \"pending\" },\n  ],\n  onCancel,\n  className,\n  ...props\n}: MultiStepAgentLoaderProps) {\n  const completedCount = steps.filter((s) => s.status === \"completed\").length;\n  const progressPercent = Math.round((completedCount / steps.length) * 100);\n\n  return (\n    <div\n      className={cn(\n        \"w-full max-w-md mx-auto rounded-2xl border border-border bg-card p-6 shadow-xl text-card-foreground flex flex-col gap-5\",\n        className\n      )}\n      role=\"status\"\n      aria-live=\"polite\"\n      {...props}\n    >\n      {/* Header with Title & Percentage */}\n      <div className=\"flex items-center justify-between border-b border-border pb-3\">\n        <div className=\"flex items-center gap-2.5\">\n          <div className=\"h-7 w-7 rounded-lg bg-primary/10 border border-primary/20 text-primary flex items-center justify-center font-bold text-xs shadow-xs\">\n            AI\n          </div>\n          <div>\n            <h4 className=\"text-sm font-bold text-foreground leading-tight\">{title}</h4>\n            <p className=\"text-[11px] text-muted-foreground\">\n              {completedCount} of {steps.length} operations completed\n            </p>\n          </div>\n        </div>\n        <span className=\"text-xs font-mono font-bold text-primary px-2 py-0.5 rounded-md bg-primary/10 border border-primary/20\">\n          {progressPercent}%\n        </span>\n      </div>\n\n      {/* Progress Bar Line */}\n      <div className=\"w-full h-1.5 rounded-full bg-muted overflow-hidden\">\n        <div\n          className=\"h-full w-full bg-primary origin-left transition-transform duration-300 rounded-full\"\n          style={{ transform: `scaleX(${progressPercent / 100})` }}\n        />\n      </div>\n\n      {/* Step Sequence List */}\n      <div className=\"flex flex-col gap-3\">\n        {steps.map((step, idx) => {\n          const isRunning = step.status === \"running\";\n          const isCompleted = step.status === \"completed\";\n          const isError = step.status === \"error\";\n\n          return (\n            <div\n              key={step.id}\n              className={cn(\n                \"flex items-start gap-3 p-2.5 rounded-xl border transition-all\",\n                isRunning\n                  ? \"border-primary/40 bg-primary/5 shadow-xs\"\n                  : isCompleted\n                  ? \"border-border/60 bg-muted/20\"\n                  : isError\n                  ? \"border-destructive/40 bg-destructive/5\"\n                  : \"border-transparent opacity-60\"\n              )}\n            >\n              {/* Step Icon Indicator */}\n              <div className=\"mt-0.5 shrink-0\">\n                {isCompleted && <CheckCircle2 className=\"h-4 w-4 text-emerald-500\" aria-hidden=\"true\" />}\n                {isRunning && <Loader2 className=\"h-4 w-4 text-primary animate-spin\" aria-hidden=\"true\" />}\n                {isError && <AlertCircle className=\"h-4 w-4 text-destructive\" aria-hidden=\"true\" />}\n                {step.status === \"pending\" && <Circle className=\"h-4 w-4 text-muted-foreground\" aria-hidden=\"true\" />}\n              </div>\n\n              {/* Step Title & Details */}\n              <div className=\"flex-1 min-w-0\">\n                <div className=\"flex items-center justify-between gap-2\">\n                  <span\n                    className={cn(\n                      \"text-xs font-semibold truncate\",\n                      isRunning ? \"text-primary\" : \"text-foreground\"\n                    )}\n                  >\n                    {idx + 1}. {step.title}\n                  </span>\n                  {step.durationMs !== undefined && (\n                    <span className=\"text-[10px] font-mono text-muted-foreground flex items-center gap-1 shrink-0\">\n                      <Clock className=\"h-2.5 w-2.5\" aria-hidden=\"true\" />\n                      {step.durationMs}ms\n                    </span>\n                  )}\n                </div>\n                {step.description && (\n                  <p className=\"text-[11px] text-muted-foreground truncate mt-0.5\">\n                    {step.description}\n                  </p>\n                )}\n              </div>\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Footer / Cancel Button */}\n      {onCancel && (\n        <div className=\"flex justify-end pt-2 border-t border-border\">\n          <button\n            type=\"button\"\n            onClick={onCancel}\n            className=\"px-3 py-1.5 rounded-lg border border-border bg-card hover:bg-muted text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            Cancel Pipeline\n          </button>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/multi-step-agent-loader.tsx"
+    }
+  ]
+}

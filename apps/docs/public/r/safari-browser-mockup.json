@@ -1,0 +1,56 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "safari-browser-mockup",
+  "type": "registry:block",
+  "title": "Safari Browser Mockup",
+  "description": "Responsive macOS Safari browser window wrapper with dark/light chrome, search URL omnibox, and viewport slot.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "mockup",
+    "browser",
+    "safari",
+    "window",
+    "launch-ui",
+    "magic-ui",
+    "showcase"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 2,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "presentation",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://launch-ui.com",
+    "license_type": "MIT",
+    "author": "Launch UI",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/safari-browser-mockup.tsx",
+      "content": "/**\n * @license MIT\n * @origin Launch UI / Magic UI (https://launch-ui.com)\n * @author Launch UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { ArrowLeft, ArrowRight, RotateCw, Lock, Plus, Share2 } from \"lucide-react\";\n\nexport interface SafariBrowserMockupProps extends React.HTMLAttributes<HTMLDivElement> {\n  url?: string;\n  title?: string;\n  showControls?: boolean;\n  children?: React.ReactNode;\n}\n\nexport function SafariBrowserMockup({\n  url = \"https://agent-wiki.dev/r/floating-dock\",\n  title = \"Design Agent Wiki\",\n  showControls = true,\n  children,\n  className,\n  ...props\n}: SafariBrowserMockupProps) {\n  return (\n    <div\n      className={cn(\n        \"w-full rounded-xl border border-border bg-card shadow-2xl overflow-hidden text-card-foreground flex flex-col\",\n        className\n      )}\n      {...props}\n    >\n      {/* Safari Window Header Bar */}\n      <div className=\"flex items-center justify-between gap-2 px-4 py-2.5 bg-muted/50 border-b border-border select-none\">\n        {/* Window Controls (Traffic Lights) */}\n        <div className=\"flex items-center gap-1.5 min-w-[54px]\" role=\"presentation\">\n          <span className=\"h-3 w-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/40 shadow-xs\" aria-hidden=\"true\" />\n          <span className=\"h-3 w-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/40 shadow-xs\" aria-hidden=\"true\" />\n          <span className=\"h-3 w-3 rounded-full bg-[#27c93f] border border-[#1aab29]/40 shadow-xs\" aria-hidden=\"true\" />\n        </div>\n\n        {/* Navigation & URL Bar */}\n        <div className=\"flex items-center gap-2 flex-1 max-w-xl mx-auto\">\n          {showControls && (\n            <div className=\"hidden sm:flex items-center gap-1 text-muted-foreground\">\n              <button\n                type=\"button\"\n                aria-label=\"Back\"\n                className=\"p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n              >\n                <ArrowLeft className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n              </button>\n              <button\n                type=\"button\"\n                aria-label=\"Forward\"\n                className=\"p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n              >\n                <ArrowRight className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n              </button>\n              <button\n                type=\"button\"\n                aria-label=\"Reload page\"\n                className=\"p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n              >\n                <RotateCw className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n              </button>\n            </div>\n          )}\n\n          {/* Omnibox / Search & Address Input */}\n          <div className=\"flex items-center justify-center gap-2 flex-1 h-7 px-3 rounded-md bg-background border border-border text-xs text-muted-foreground font-mono transition-all\">\n            <Lock className=\"h-3 w-3 text-emerald-500 shrink-0\" aria-hidden=\"true\" />\n            <span className=\"truncate max-w-[280px] sm:max-w-md text-foreground font-medium select-all\">\n              {url}\n            </span>\n          </div>\n        </div>\n\n        {/* Right Utility Icons */}\n        <div className=\"hidden sm:flex items-center gap-1 text-muted-foreground min-w-[54px] justify-end\">\n          <button\n            type=\"button\"\n            aria-label=\"Share URL\"\n            className=\"p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <Share2 className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n          </button>\n          <button\n            type=\"button\"\n            aria-label=\"New tab\"\n            className=\"p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <Plus className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n          </button>\n        </div>\n      </div>\n\n      {/* Browser Viewport Canvas Body */}\n      <div className=\"relative flex-1 min-h-[300px] bg-background\">\n        {children ? (\n          children\n        ) : (\n          <div className=\"p-8 md:p-12 flex flex-col items-center justify-center min-h-[300px] text-center space-y-4\">\n            <div className=\"h-12 w-12 rounded-xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center font-bold text-lg shadow-xs\">\n              DW\n            </div>\n            <div className=\"space-y-1\">\n              <h3 className=\"text-base font-semibold text-foreground\">{title}</h3>\n              <p className=\"text-xs text-muted-foreground max-w-sm\">\n                Clean safari frame wrapper for rendering responsive UI components and landing prototypes.\n              </p>\n            </div>\n          </div>\n        )}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/safari-browser-mockup.tsx"
+    }
+  ]
+}

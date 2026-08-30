@@ -1,0 +1,60 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "strategy-canvas-value-curve",
+  "type": "registry:component",
+  "title": "Strategy Canvas Value Curve",
+  "description": "Blue Ocean Strategy value curve comparison diagram plotting competitor performance against industry factors.",
+  "category": "ui:editorial",
+  "tags": [
+    "webgl",
+    "threejs",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "canvas",
+    "diagram",
+    "strategy",
+    "value-curve",
+    "blue-ocean",
+    "comparison",
+    "diagram-design"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 3,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/cathrynlavery/diagram-design",
+    "license_type": "MIT",
+    "author": "Cathryn Lavery",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "three",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/strategy-canvas-value-curve.tsx",
+      "content": "/**\n * @license MIT\n * @origin Diagram Design (https://github.com/cathrynlavery/diagram-design)\n * @author Cathryn Lavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface StrategyFactor {\n  id: string;\n  name: string;\n}\n\nexport interface StrategyCurve {\n  id: string;\n  name: string;\n  color: string;\n  values: number[]; // 1 to 10 scale matching factors index\n  isHighlighted?: boolean;\n}\n\nexport interface StrategyCanvasValueCurveProps extends React.HTMLAttributes<HTMLDivElement> {\n  factors?: StrategyFactor[];\n  curves?: StrategyCurve[];\n  title?: string;\n  description?: string;\n}\n\nexport function StrategyCanvasValueCurve({\n  title = \"Blue Ocean Strategy Canvas (Value Curves)\",\n  description = \"Compare competitive value curves across primary industry factors to identify differentiation zones.\",\n  factors = [\n    { id: \"1\", name: \"Zero AI Slop\" },\n    { id: \"2\", name: \"Context Size (<15KB)\" },\n    { id: \"3\", name: \"MCP Tool Speed\" },\n    { id: \"4\", name: \"WCAG AA A11y\" },\n    { id: \"5\", name: \"Tailwind v4 First\" },\n    { id: \"6\", name: \"AST Auto-Unslop\" },\n    { id: \"7\", name: \"Price / Free OSS\" },\n  ],\n  curves = [\n    {\n      id: \"agent-wiki\",\n      name: \"Agent Wiki Stack\",\n      color: \"#10b981\", // emerald-500\n      values: [10, 10, 9, 10, 10, 9, 10],\n      isHighlighted: true,\n    },\n    {\n      id: \"traditional-ui\",\n      name: \"Standard Component Lib\",\n      color: \"#64748b\", // slate-500\n      values: [4, 3, 2, 7, 5, 1, 8],\n    },\n    {\n      id: \"raw-ai-gen\",\n      name: \"Unguided AI Generation\",\n      color: \"#ef4444\", // red-500\n      values: [1, 2, 8, 2, 3, 2, 5],\n    },\n  ],\n  className,\n  ...props\n}: StrategyCanvasValueCurveProps) {\n  const [activeCurveId, setActiveCurveId] = React.useState<string | null>(null);\n\n  const svgWidth = 700;\n  const svgHeight = 280;\n  const paddingX = 50;\n  const paddingY = 40;\n\n  const chartWidth = svgWidth - paddingX * 2;\n  const chartHeight = svgHeight - paddingY * 2;\n\n  const stepX = factors.length > 1 ? chartWidth / (factors.length - 1) : chartWidth;\n\n  const getYCoord = (val: number) => {\n    const clamped = Math.max(1, Math.min(10, val));\n    return svgHeight - paddingY - ((clamped - 1) / 9) * chartHeight;\n  };\n\n  const getXCoord = (index: number) => paddingX + index * stepX;\n\n  return (\n    <div\n      className={cn(\n        \"w-full rounded-2xl border border-border bg-card p-6 shadow-sm text-card-foreground flex flex-col gap-6\",\n        className\n      )}\n      {...props}\n    >\n      {/* Header & Legend */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-4\">\n        <div>\n          <h3 className=\"text-base font-bold text-foreground\">{title}</h3>\n          <p className=\"text-xs text-muted-foreground\">{description}</p>\n        </div>\n\n        {/* Legend */}\n        <div className=\"flex flex-wrap items-center gap-3\">\n          {curves.map((curve) => {\n            const isHovered = activeCurveId === curve.id;\n            return (\n              <button\n                key={curve.id}\n                type=\"button\"\n                onMouseEnter={() => setActiveCurveId(curve.id)}\n                onMouseLeave={() => setActiveCurveId(null)}\n                className={cn(\n                  \"flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                  isHovered || curve.isHighlighted\n                    ? \"border-border bg-muted/60 text-foreground\"\n                    : \"border-transparent text-muted-foreground opacity-80\"\n                )}\n                aria-label={`Toggle ${curve.name} curve`}\n              >\n                <span\n                  className=\"h-2.5 w-2.5 rounded-full\"\n                  style={{ backgroundColor: curve.color }}\n                  aria-hidden=\"true\"\n                />\n                <span>{curve.name}</span>\n              </button>\n            );\n          })}\n        </div>\n      </div>\n\n      {/* SVG Value Curve Canvas */}\n      <div className=\"relative w-full overflow-x-auto\">\n        <svg\n          viewBox={`0 0 ${svgWidth} ${svgHeight}`}\n          className=\"w-full h-auto min-w-[560px] select-none\"\n          role=\"img\"\n          aria-labelledby=\"strategy-canvas-title\"\n        >\n          <title id=\"strategy-canvas-title\">{title}</title>\n\n          {/* Horizontal Rating Guideline Lines */}\n          {[1, 3, 5, 7, 10].map((level) => {\n            const y = getYCoord(level);\n            return (\n              <g key={level}>\n                <line\n                  x1={paddingX}\n                  y1={y}\n                  x2={svgWidth - paddingX}\n                  y2={y}\n                  stroke=\"currentColor\"\n                  strokeOpacity=\"0.1\"\n                  strokeDasharray=\"4 4\"\n                />\n                <text\n                  x={paddingX - 10}\n                  y={y + 3}\n                  fill=\"currentColor\"\n                  fillOpacity=\"0.4\"\n                  fontSize=\"10\"\n                  fontFamily=\"monospace\"\n                  textAnchor=\"end\"\n                >\n                  {level === 10 ? \"High\" : level === 1 ? \"Low\" : level}\n                </text>\n              </g>\n            );\n          })}\n\n          {/* Vertical Factor Column Lines */}\n          {factors.map((f, i) => {\n            const x = getXCoord(i);\n            return (\n              <line\n                key={f.id}\n                x1={x}\n                y1={paddingY}\n                x2={x}\n                y2={svgHeight - paddingY}\n                stroke=\"currentColor\"\n                strokeOpacity=\"0.08\"\n              />\n            );\n          })}\n\n          {/* Render Curve Paths */}\n          {curves.map((curve) => {\n            const points = curve.values.map((v, i) => `${getXCoord(i)},${getYCoord(v)}`).join(\" \");\n            const isTarget = activeCurveId === curve.id || (!activeCurveId && curve.isHighlighted);\n\n            return (\n              <g key={curve.id} className=\"transition-opacity duration-300\">\n                <polyline\n                  fill=\"none\"\n                  stroke={curve.color}\n                  strokeWidth={isTarget ? \"3.5\" : \"2\"}\n                  strokeOpacity={isTarget ? \"1\" : \"0.4\"}\n                  strokeLinecap=\"round\"\n                  strokeLinejoin=\"round\"\n                  points={points}\n                />\n\n                {/* Point Dots */}\n                {curve.values.map((val, i) => (\n                  <circle\n                    key={i}\n                    cx={getXCoord(i)}\n                    cy={getYCoord(val)}\n                    r={isTarget ? 5 : 3.5}\n                    fill={curve.color}\n                    stroke=\"var(--color-card, #09090b)\"\n                    strokeWidth=\"2\"\n                  />\n                ))}\n              </g>\n            );\n          })}\n\n          {/* Bottom X-Axis Factor Labels */}\n          {factors.map((factor, i) => {\n            const x = getXCoord(i);\n            return (\n              <text\n                key={factor.id}\n                x={x}\n                y={svgHeight - 12}\n                fill=\"currentColor\"\n                fillOpacity=\"0.8\"\n                fontSize=\"10.5\"\n                fontWeight=\"600\"\n                textAnchor=\"middle\"\n              >\n                {factor.name}\n              </text>\n            );\n          })}\n        </svg>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/strategy-canvas-value-curve.tsx"
+    }
+  ]
+}

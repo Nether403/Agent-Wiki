@@ -1,0 +1,54 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "mobile-app-frame-mockup",
+  "type": "registry:block",
+  "title": "Mobile App Frame Mockup",
+  "description": "Smartphone chassis container with dynamic island, glass highlight, status bar, and mobile viewport slot.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "glassmorphism",
+    "wai-aria-compliant",
+    "mobile",
+    "mockup",
+    "iphone",
+    "smartphone",
+    "launch-ui",
+    "showcase",
+    "viewport"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 2,
+    "visual_density": 6
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "presentation",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://launch-ui.com",
+    "license_type": "MIT",
+    "author": "Launch UI",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/mobile-app-frame-mockup.tsx",
+      "content": "/**\n * @license MIT\n * @origin Launch UI (https://launch-ui.com)\n * @author Launch UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Wifi, BatteryMedium, Signal } from \"lucide-react\";\n\nexport interface MobileAppFrameMockupProps extends React.HTMLAttributes<HTMLDivElement> {\n  time?: string;\n  dynamicIslandContent?: React.ReactNode;\n  children?: React.ReactNode;\n}\n\nexport function MobileAppFrameMockup({\n  time = \"9:41\",\n  dynamicIslandContent,\n  children,\n  className,\n  ...props\n}: MobileAppFrameMockupProps) {\n  return (\n    <div\n      className={cn(\n        \"relative mx-auto w-[320px] sm:w-[360px] h-[660px] sm:h-[720px] rounded-[48px] border-[10px] border-zinc-900 bg-background shadow-2xl overflow-hidden flex flex-col select-none ring-1 ring-white/10\",\n        className\n      )}\n      {...props}\n    >\n      {/* Glossy bezel highlight border */}\n      <div className=\"pointer-events-none absolute inset-0 rounded-[38px] ring-1 ring-white/20 z-30\" aria-hidden=\"true\" />\n\n      {/* Top Status Bar & Dynamic Island */}\n      <div className=\"relative z-20 flex items-center justify-between px-7 pt-3.5 pb-2 text-foreground\">\n        {/* Clock */}\n        <span className=\"text-xs font-semibold tracking-tight\">{time}</span>\n\n        {/* Dynamic Island Capsule */}\n        <div className=\"absolute left-1/2 -translate-x-1/2 top-2.5 h-6 px-3 min-w-[90px] rounded-full bg-zinc-950 text-white flex items-center justify-center shadow-md transition-all\">\n          {dynamicIslandContent ? (\n            dynamicIslandContent\n          ) : (\n            <div className=\"flex items-center gap-1.5\" role=\"presentation\">\n              <span className=\"h-2 w-2 rounded-full bg-emerald-500 animate-pulse\" aria-hidden=\"true\" />\n              <span className=\"text-[10px] font-mono text-zinc-400\">Ready</span>\n            </div>\n          )}\n        </div>\n\n        {/* Status Icons */}\n        <div className=\"flex items-center gap-1.5 text-foreground\" role=\"presentation\">\n          <Signal className=\"h-3 w-3\" aria-hidden=\"true\" />\n          <Wifi className=\"h-3 w-3\" aria-hidden=\"true\" />\n          <BatteryMedium className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n        </div>\n      </div>\n\n      {/* Screen Viewport Container */}\n      <div className=\"relative flex-1 overflow-y-auto px-4 py-3 z-10 flex flex-col\">\n        {children ? (\n          children\n        ) : (\n          <div className=\"flex-1 flex flex-col items-center justify-center text-center p-6 space-y-3\">\n            <div className=\"h-14 w-14 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center font-bold text-xl shadow-lg\">\n              📱\n            </div>\n            <h4 className=\"text-base font-bold text-foreground\">Mobile Showcase Frame</h4>\n            <p className=\"text-xs text-muted-foreground leading-relaxed\">\n              Mobile-first viewport container designed for evaluating touch navigation, responsive ergonomics, and swipe gestures.\n            </p>\n          </div>\n        )}\n      </div>\n\n      {/* Home Indicator Bar */}\n      <div className=\"relative z-20 flex justify-center py-2 bg-background/80 backdrop-blur-xs\">\n        <div className=\"h-1 w-32 rounded-full bg-muted-foreground/30\" aria-hidden=\"true\" />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/mobile-app-frame-mockup.tsx"
+    }
+  ]
+}

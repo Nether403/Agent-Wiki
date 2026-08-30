@@ -2193,6 +2193,177 @@ test.describe("${routeName} Accessibility & Visual Flow", () => {
     }
   );
 
+  // Tool 23: audit_bundle_cost
+  server.registerTool(
+    "audit_bundle_cost",
+    {
+      description:
+        "Estimates the gzipped JavaScript bundle size, CSS overhead, and runtime GPU/DOM rendering cost for a component or code snippet.",
+      inputSchema: z.object({
+        code: z.string().describe("Component source code string to analyze for bundle impact"),
+        componentName: z.string().optional().describe("Optional component name for reporting"),
+      }),
+    },
+    async ({ code, componentName = "Component" }) => {
+      let jsBytesGzip = 1200; // base React primitive footprint
+      let cssBytesGzip = 450;
+      let gpuOverhead: "None" | "Low" | "Medium" | "High" = "None";
+      const heavyImports: string[] = [];
+
+      if (/three|@react-three/i.test(code)) {
+        jsBytesGzip += 140000;
+        gpuOverhead = "High";
+        heavyImports.push("three (@react-three/fiber): ~140KB gzipped");
+      }
+      if (/motion\/react|framer-motion/i.test(code)) {
+        jsBytesGzip += 28000;
+        gpuOverhead = "Low";
+        heavyImports.push("motion/react: ~28KB gzipped");
+      }
+      if (/lucide-react/i.test(code)) {
+        jsBytesGzip += 2400; // Tree-shaken icon imports
+      }
+      if (/canvas|requestAnimationFrame|webgl/i.test(code)) {
+        gpuOverhead = gpuOverhead === "High" ? "High" : "Medium";
+      }
+
+      const report = {
+        component: componentName,
+        estimatedGzipJs: `${(jsBytesGzip / 1024).toFixed(1)} KB`,
+        estimatedGzipCss: `${(cssBytesGzip / 1024).toFixed(1)} KB`,
+        totalGzipPayload: `${((jsBytesGzip + cssBytesGzip) / 1024).toFixed(1)} KB`,
+        gpuRenderingOverhead: gpuOverhead,
+        heavyDependenciesDetected: heavyImports.length > 0 ? heavyImports : ["None (Zero-dependency or lightweight)"],
+        budgetStatus: jsBytesGzip < 45000 ? "PASS_LEAN_BUDGET" : "ACTION_RECOMMENDED_CODE_SPLIT",
+        recommendation:
+          gpuOverhead === "High"
+            ? "Ensure dynamic import with next/dynamic or React.lazy to defer Three.js bundle loading until client visible."
+            : "Bundle within optimal <45KB production performance budget.",
+      };
+
+      return {
+        content: [{ type: "text", text: JSON.stringify(report, null, 2) }],
+      };
+    }
+  );
+
+  // Tool 24: generate_lighthouse_budget_spec
+  server.registerTool(
+    "generate_lighthouse_budget_spec",
+    {
+      description:
+        "Generates an automated .lighthouserc.json configuration file enforcing performance (FCP < 1.2s, LCP < 2.0s, CLS < 0.05) and 100% accessibility CI gates.",
+      inputSchema: z.object({
+        targetUrl: z.string().optional().default("http://localhost:3000").describe("Target URL or route to audit"),
+        minPerformanceScore: z.number().min(50).max(100).optional().default(90).describe("Minimum Performance score (0-100)"),
+        minA11yScore: z.number().min(50).max(100).optional().default(100).describe("Minimum Accessibility score (0-100)"),
+      }),
+    },
+    async ({ targetUrl = "http://localhost:3000", minPerformanceScore = 90, minA11yScore = 100 }) => {
+      const config = {
+        ci: {
+          collect: {
+            url: [targetUrl],
+            numberOfRuns: 3,
+            startServerCommand: "pnpm start",
+          },
+          assert: {
+            assertions: {
+              "categories:performance": ["error", { minScore: minPerformanceScore / 100 }],
+              "categories:accessibility": ["error", { minScore: minA11yScore / 100 }],
+              "first-contentful-paint": ["warn", { maxNumericValue: 1200 }],
+              "largest-contentful-paint": ["error", { maxNumericValue: 2000 }],
+              "cumulative-layout-shift": ["error", { maxNumericValue: 0.05 }],
+              "categories:best-practices": ["warn", { minScore: 0.95 }],
+            },
+          },
+          upload: {
+            target: "temporary-public-storage",
+          },
+        },
+      };
+
+      return {
+        content: [{ type: "text", text: JSON.stringify(config, null, 2) }],
+      };
+    }
+  );
+
+  // Tool 25: deconstruct_video_interaction
+  server.registerTool(
+    "deconstruct_video_interaction",
+    {
+      description:
+        "Translates visual interaction archetypes (tabs, bouncy badge, drawer, hero reveal) into verified motion/react spring configurations and accessible TSX snippets.",
+      inputSchema: z.object({
+        interactionType: z
+          .enum(["snappy-tab", "bouncy-badge", "spatial-drawer", "hero-reveal", "continuous-float"])
+          .describe("Observed visual interaction archetype"),
+        customStiffness: z.number().optional().describe("Optional spring stiffness override"),
+        customDamping: z.number().optional().describe("Optional spring damping override"),
+      }),
+    },
+    async ({ interactionType, customStiffness, customDamping }) => {
+      const configs: Record<string, { stiffness: number; damping: number; mass: number; snippet: string }> = {
+        "snappy-tab": {
+          stiffness: customStiffness || 380,
+          damping: customDamping || 28,
+          mass: 1.0,
+          snippet: `<motion.div layoutId="activeTabPill" transition={{ type: "spring", stiffness: 380, damping: 28 }} className="absolute inset-0 bg-primary/10 rounded-lg" />`,
+        },
+        "bouncy-badge": {
+          stiffness: customStiffness || 450,
+          damping: customDamping || 16,
+          mass: 0.9,
+          snippet: `<motion.span whileHover={{ scale: 1.15, rotate: 2 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 450, damping: 16 }} className="inline-block" />`,
+        },
+        "spatial-drawer": {
+          stiffness: customStiffness || 220,
+          damping: customDamping || 26,
+          mass: 1.1,
+          snippet: `<motion.aside initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "spring", stiffness: 220, damping: 26 }} className="fixed right-0 top-0 h-full w-80 bg-card" />`,
+        },
+        "hero-reveal": {
+          stiffness: customStiffness || 180,
+          damping: customDamping || 24,
+          mass: 1.2,
+          snippet: `<motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="text-5xl font-black" />`,
+        },
+        "continuous-float": {
+          stiffness: customStiffness || 100,
+          damping: customDamping || 10,
+          mass: 1.0,
+          snippet: `<motion.div animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }} />`,
+        },
+      };
+
+      const matched = configs[interactionType] || configs["snappy-tab"];
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                archetype: interactionType,
+                springParameters: {
+                  stiffness: matched.stiffness,
+                  damping: matched.damping,
+                  mass: matched.mass,
+                },
+                motionReactSnippet: matched.snippet,
+                a11yGuard: "Wrap with motion-reduce:transition-none or check window.matchMedia('(prefers-reduced-motion: reduce)')",
+              },
+              null,
+              2
+            ),
+          },
+        ],
+      };
+    }
+  );
+
   return server;
 }
+
 

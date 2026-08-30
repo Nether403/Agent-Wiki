@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "dynamic-island-telemetry",
+  "type": "registry:component",
+  "title": "Dynamic Island Telemetry",
+  "description": "Morphing floating status pill that expands from a compact badge into a full agent token and latency HUD.",
+  "category": "ui:motion",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "motion",
+    "telemetry",
+    "dynamic-island",
+    "smoothui",
+    "hud",
+    "status-pill"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 5,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://smoothui.dev",
+    "license_type": "MIT",
+    "author": "SmoothUI",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/dynamic-island-telemetry.tsx",
+      "content": "/**\n * @license MIT\n * @origin SmoothUI (https://smoothui.dev)\n * @author SmoothUI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Sparkles, Terminal, Activity, ChevronDown, ChevronUp, Zap, Cpu } from \"lucide-react\";\n\nexport type TelemetryState = \"idle\" | \"reasoning\" | \"executing\" | \"verified\" | \"error\";\n\nexport interface DynamicIslandTelemetryProps extends React.HTMLAttributes<HTMLDivElement> {\n  state?: TelemetryState;\n  modelName?: string;\n  tokensConsumed?: number;\n  latencyMs?: number;\n  activeSubagents?: number;\n  currentAction?: string;\n}\n\nexport function DynamicIslandTelemetry({\n  state = \"executing\",\n  modelName = \"claude-3-7-sonnet\",\n  tokensConsumed = 14280,\n  latencyMs = 412,\n  activeSubagents = 2,\n  currentAction = \"AST Dial Classification & Slop Linting\",\n  className,\n  ...props\n}: DynamicIslandTelemetryProps) {\n  const [isExpanded, setIsExpanded] = React.useState(false);\n\n  const stateColors: Record<TelemetryState, { dot: string; text: string; bg: string }> = {\n    idle: { dot: \"bg-muted-foreground\", text: \"text-muted-foreground\", bg: \"bg-muted/40\" },\n    reasoning: { dot: \"bg-amber-500\", text: \"text-amber-500\", bg: \"bg-amber-500/10\" },\n    executing: { dot: \"bg-primary\", text: \"text-primary\", bg: \"bg-primary/10\" },\n    verified: { dot: \"bg-emerald-500\", text: \"text-emerald-500\", bg: \"bg-emerald-500/10\" },\n    error: { dot: \"bg-destructive\", text: \"text-destructive\", bg: \"bg-destructive/10\" },\n  };\n\n  const currentTheme = stateColors[state] || stateColors.executing;\n\n  return (\n    <div className=\"relative inline-flex flex-col items-center select-none\" {...props}>\n      {/* Dynamic Island Capsule Container */}\n      <div\n        className={cn(\n          \"rounded-3xl bg-zinc-950 text-white border border-zinc-800/80 shadow-2xl transition-[width,padding,colors] duration-200 overflow-hidden flex flex-col cursor-pointer\",\n          isExpanded ? \"w-[340px] sm:w-[400px] p-4.5 rounded-2xl\" : \"w-auto px-4 py-2 hover:border-zinc-700\",\n          className\n        )}\n        onClick={() => setIsExpanded(!isExpanded)}\n        role=\"region\"\n        aria-expanded={isExpanded}\n        aria-label=\"Agent Dynamic Island Telemetry\"\n      >\n        {/* Compact View Pill */}\n        <div className=\"flex items-center justify-between gap-3 w-full\">\n          {/* Status Indicator */}\n          <div className=\"flex items-center gap-2\">\n            <span className={cn(\"h-2.5 w-2.5 rounded-full animate-pulse\", currentTheme.dot)} aria-hidden=\"true\" />\n            <span className=\"text-xs font-bold tracking-tight capitalize text-white\">\n              {state}\n            </span>\n          </div>\n\n          {/* Middle Action / Token Summary */}\n          {!isExpanded ? (\n            <div className=\"flex items-center gap-3 text-[11px] font-mono text-zinc-400\">\n              <span className=\"truncate max-w-[140px]\">{currentAction}</span>\n              <span className=\"text-zinc-500\">|</span>\n              <span className=\"text-primary font-semibold\">{tokensConsumed.toLocaleString()} tkn</span>\n            </div>\n          ) : (\n            <span className=\"text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300\">\n              {modelName}\n            </span>\n          )}\n\n          {/* Expand / Collapse Icon */}\n          <button\n            type=\"button\"\n            aria-label={isExpanded ? \"Collapse telemetry\" : \"Expand telemetry\"}\n            className=\"text-zinc-400 hover:text-white transition-colors\"\n          >\n            {isExpanded ? (\n              <ChevronUp className=\"h-4 w-4\" aria-hidden=\"true\" />\n            ) : (\n              <ChevronDown className=\"h-4 w-4\" aria-hidden=\"true\" />\n            )}\n          </button>\n        </div>\n\n        {/* Expanded Telemetry HUD Body */}\n        {isExpanded && (\n          <div className=\"mt-4 pt-3 border-t border-zinc-800/80 flex flex-col gap-3 text-xs animate-in fade-in duration-200\">\n            {/* Current Action Banner */}\n            <div className=\"flex items-start gap-2 p-2 rounded-lg bg-zinc-900 border border-zinc-800\">\n              <Terminal className=\"h-4 w-4 text-primary shrink-0 mt-0.5\" aria-hidden=\"true\" />\n              <div className=\"flex-1 min-w-0\">\n                <span className=\"text-[10px] text-zinc-500 font-mono block\">ACTIVE INSTRUCTION</span>\n                <p className=\"text-xs text-zinc-200 font-medium truncate\">{currentAction}</p>\n              </div>\n            </div>\n\n            {/* Metrics Telemetry Grid */}\n            <div className=\"grid grid-cols-3 gap-2\">\n              <div className=\"p-2 rounded-lg bg-zinc-900 border border-zinc-800 flex flex-col\">\n                <span className=\"text-[10px] text-zinc-500 font-mono flex items-center gap-1\">\n                  <Zap className=\"h-2.5 w-2.5 text-amber-400\" aria-hidden=\"true\" /> TOKENS\n                </span>\n                <span className=\"text-xs font-bold text-white font-mono mt-0.5\">\n                  {tokensConsumed.toLocaleString()}\n                </span>\n              </div>\n\n              <div className=\"p-2 rounded-lg bg-zinc-900 border border-zinc-800 flex flex-col\">\n                <span className=\"text-[10px] text-zinc-500 font-mono flex items-center gap-1\">\n                  <Activity className=\"h-2.5 w-2.5 text-emerald-400\" aria-hidden=\"true\" /> LATENCY\n                </span>\n                <span className=\"text-xs font-bold text-white font-mono mt-0.5\">\n                  {latencyMs}ms\n                </span>\n              </div>\n\n              <div className=\"p-2 rounded-lg bg-zinc-900 border border-zinc-800 flex flex-col\">\n                <span className=\"text-[10px] text-zinc-500 font-mono flex items-center gap-1\">\n                  <Cpu className=\"h-2.5 w-2.5 text-primary\" aria-hidden=\"true\" /> AGENTS\n                </span>\n                <span className=\"text-xs font-bold text-white font-mono mt-0.5\">\n                  {activeSubagents} Active\n                </span>\n              </div>\n            </div>\n          </div>\n        )}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/dynamic-island-telemetry.tsx"
+    }
+  ]
+}

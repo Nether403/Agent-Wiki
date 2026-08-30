@@ -7,7 +7,7 @@
 - Raw Markdown Docs: /raw/components/[slug]
 - MCP Server: npx @design-wiki/mcp
 
-## Available Registry Components (225 verified zero-slop items)
+## Available Registry Components (234 verified zero-slop items)
 
 ### Category: ui:ai-native
 - [ai-artifact-sandbox-iframe](/r/ai-artifact-sandbox-iframe.json): Split-screen live preview canvas with responsive device switcher, code/preview toggle, and version history diff slider. (Variance: 7, Motion: 4, Density: 6)
@@ -54,6 +54,10 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, token-budget, context-window, compression, ai-native, memory-pruner
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/context-window-budget-pruner.json
+- [multi-step-agent-loader](/r/multi-step-agent-loader.json): Stepped progression card for long-running AI workflows with live step verification states and latency timers. (Variance: 5, Motion: 4, Density: 6)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, ai, loader, stepper, agent, kokonutui, aceternity, progress
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/multi-step-agent-loader.json
 - [voice-call-session-hud](/r/voice-call-session-hud.json): Real-time AI voice agent call overlay with live audio reactive ring, turn-taking status indicators, interrupt controls, and transcript drawer. (Variance: 6, Motion: 6, Density: 6)
   - Tags: lucide-react, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, voice-agent, webrtc, audio-hud, ai-native, turn-taking, interruption
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -412,6 +416,14 @@
   - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, editorial, block, kpi, dashboard, analytics, tremor
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/kpi-stat-card-group.json
+- [lamp-section-header](/r/lamp-section-header.json): Conical spotlight lamp header effect with gradient light beam pouring down over titles and subtitles. (Variance: 8, Motion: 5, Density: 5)
+  - Tags: glassmorphism, neon-scifi, wai-aria-compliant, layout-block, hero, header, lamp, spotlight, aceternity, glow, gradient
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/lamp-section-header.json
+- [mobile-app-frame-mockup](/r/mobile-app-frame-mockup.json): Smartphone chassis container with dynamic island, glass highlight, status bar, and mobile viewport slot. (Variance: 4, Motion: 2, Density: 6)
+  - Tags: lucide-react, glassmorphism, wai-aria-compliant, mobile, mockup, iphone, smartphone, launch-ui, showcase, viewport
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/mobile-app-frame-mockup.json
 - [navbar-sticky](/r/navbar-sticky.json): Sticky responsive top navigation bar with blur backdrop, link routing, and mobile drawer. (Variance: 4, Motion: 3, Density: 6)
   - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, layout-block, navbar, navigation, header, responsive
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -428,6 +440,10 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
   - Dependencies: lucide-react
   - Install: npx shadcn@latest add http://localhost:3000/r/saas-hero-browser-mockup.json
+- [safari-browser-mockup](/r/safari-browser-mockup.json): Responsive macOS Safari browser window wrapper with dark/light chrome, search URL omnibox, and viewport slot. (Variance: 4, Motion: 2, Density: 6)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, mockup, browser, safari, window, launch-ui, magic-ui, showcase
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/safari-browser-mockup.json
 - [testimonial-masonry-marquee](/r/testimonial-masonry-marquee.json): Masonry grid of verified user review cards with avatar verification and star ratings. (Variance: 6, Motion: 6, Density: 6)
   - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, block, testimonials, masonry, reviews, tailark
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -602,6 +618,10 @@
   - Tags: tailwind-v4, wai-aria-compliant, editorial
   - Dependencies: None
   - Install: npx shadcn@latest add http://localhost:3000/r/strategic-quadrant-matrix.json
+- [strategy-canvas-value-curve](/r/strategy-canvas-value-curve.json): Blue Ocean Strategy value curve comparison diagram plotting competitor performance against industry factors. (Variance: 6, Motion: 3, Density: 6)
+  - Tags: webgl, threejs, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, canvas, diagram, strategy, value-curve, blue-ocean, comparison, diagram-design
+  - Dependencies: three, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/strategy-canvas-value-curve.json
 - [swot-analysis-matrix](/r/swot-analysis-matrix.json): 2x2 grid layout for Strengths, Weaknesses, Opportunities, and Threats with distinct visual accents. (Variance: 5, Motion: 2, Density: 8)
   - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, diagram, swot, matrix, strategic, diagram-design
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -610,6 +630,10 @@
   - Tags: tailwind-v4, wai-aria-compliant, editorial, status, uptime, kpi, tremor
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/tracker-status-strip.json
+- [two-by-two-prioritization-matrix](/r/two-by-two-prioritization-matrix.json): Interactive 2x2 quadrant matrix (Impact vs Effort, Urgency vs Importance) with interactive pins and threshold lines. (Variance: 6, Motion: 3, Density: 6)
+  - Tags: bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, diagram, matrix, prioritization, 2x2, impact-effort, diagram-design
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/two-by-two-prioritization-matrix.json
 - [venn-comparison-matrix](/r/venn-comparison-matrix.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
   - Tags: tailwind-v4, wai-aria-compliant, editorial
   - Dependencies: None
@@ -676,6 +700,10 @@
   - Tags: webgl, threejs, canvas, tailwind-v4, glassmorphism, wai-aria-compliant, creative, shader, iridescence, react-bits
   - Dependencies: three, clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/iridescence-shader-plane.json
+- [laser-flow-border-card](/r/laser-flow-border-card.json): Card with continuous directional laser pulse border animation using SVG and CSS conic gradients with reduced-motion fallback. (Variance: 7, Motion: 6, Density: 5)
+  - Tags: lucide-react, tailwind-v4, neon-scifi, accessible, keyboard-accessible, wai-aria-compliant, creative, laser, border, card, cult-ui, glow, conic-gradient
+  - Dependencies: lucide-react, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/laser-flow-border-card.json
 - [light-rays-ambient-shader](/r/light-rays-ambient-shader.json): GPU-accelerated volumetric light rays and caustic ambient backdrop with cursor tracking and reduced-motion fallback. (Variance: 8, Motion: 7, Density: 3)
   - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, volumetric, light-rays, shaders, creative
   - Dependencies: three, clsx, tailwind-merge, motion
@@ -784,6 +812,10 @@
   - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, motion, dock, magnification, macos, magic-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/dock-magnification.json
+- [dynamic-island-telemetry](/r/dynamic-island-telemetry.json): Morphing floating status pill that expands from a compact badge into a full agent token and latency HUD. (Variance: 7, Motion: 5, Density: 6)
+  - Tags: lucide-react, bento-grid, keyboard-accessible, wai-aria-compliant, layout-block, motion, telemetry, dynamic-island, smoothui, hud, status-pill
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/dynamic-island-telemetry.json
 - [evil-button](/r/evil-button.json): Playful tactile spring-physics button with synthesized audio feedback and chaotic variants. (Variance: 8, Motion: 7, Density: 5)
   - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, playful, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, sound-physics, interactive, button
   - Dependencies: motion, lucide-react, clsx, tailwind-merge
@@ -888,6 +920,10 @@
   - Tags: framer-motion, motion/react, animation, tailwind-v4, wai-aria-compliant, spring-physics
   - Dependencies: motion
   - Install: npx shadcn@latest add http://localhost:3000/r/tilt-card.json
+- [true-focus-text](/r/true-focus-text.json): Kinetic typography effect where words snap into crisp focus sequentially or via cursor hover. (Variance: 6, Motion: 5, Density: 5)
+  - Tags: neon-scifi, wai-aria-compliant, motion, text, focus, kinetic, react-bits, typography, blur
+  - Dependencies: clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/true-focus-text.json
 - [view-transition-page-morph](/r/view-transition-page-morph.json): React 19 / Next.js View Transition coordinator primitive supporting seamless element morphs and layout transitions with cross-browser fallback. (Variance: 6, Motion: 6, Density: 5)
   - Tags: framer-motion, motion/react, animation, lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, view-transition, react-19, page-morph, spring-physics
   - Dependencies: motion, lucide-react, clsx, tailwind-merge
@@ -3295,6 +3331,172 @@ export const ContextWindowBudgetPruner: React.FC<ContextWindowBudgetPrunerProps>
   );
 };
 export default ContextWindowBudgetPruner;
+
+```
+
+---
+
+### Multi-Step Agent Loader (`multi-step-agent-loader`)
+- **Category**: `ui:ai-native`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 5/10, Motion 4/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Aceternity UI & KokonutUI (https://ui.aceternity.com, https://kokonutui.com)
+ * @author Aceternity / Kokonut & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+import { CheckCircle2, Circle, Loader2, AlertCircle, Clock } from "lucide-react";
+
+export type AgentStepStatus = "pending" | "running" | "completed" | "error";
+
+export interface AgentWorkflowStep {
+  id: string;
+  title: string;
+  description?: string;
+  status: AgentStepStatus;
+  durationMs?: number;
+}
+
+export interface MultiStepAgentLoaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  title?: string;
+  steps?: AgentWorkflowStep[];
+  onCancel?: () => void;
+}
+
+export function MultiStepAgentLoader({
+  title = "Agent Workflow In Progress",
+  steps = [
+    { id: "1", title: "Ingesting Repository AST", description: "Parsing TSX files and AST dependency trees", status: "completed", durationMs: 340 },
+    { id: "2", title: "Running Anti-Slop Audit", description: "Evaluating against 50 zero-slop AST rules", status: "completed", durationMs: 180 },
+    { id: "3", title: "Compiling Tailwind v4 Tokens", description: "Resolving semantic design tokens and @theme block", status: "running", durationMs: 620 },
+    { id: "4", title: "Axe-Core A11y Verification", description: "Ensuring 100% WCAG 2.1 AA compliance", status: "pending" },
+    { id: "5", title: "Emitting Registry JSON Artifact", description: "Validating shadcn v3 registry schema", status: "pending" },
+  ],
+  onCancel,
+  className,
+  ...props
+}: MultiStepAgentLoaderProps) {
+  const completedCount = steps.filter((s) => s.status === "completed").length;
+  const progressPercent = Math.round((completedCount / steps.length) * 100);
+
+  return (
+    <div
+      className={cn(
+        "w-full max-w-md mx-auto rounded-2xl border border-border bg-card p-6 shadow-xl text-card-foreground flex flex-col gap-5",
+        className
+      )}
+      role="status"
+      aria-live="polite"
+      {...props}
+    >
+      {/* Header with Title & Percentage */}
+      <div className="flex items-center justify-between border-b border-border pb-3">
+        <div className="flex items-center gap-2.5">
+          <div className="h-7 w-7 rounded-lg bg-primary/10 border border-primary/20 text-primary flex items-center justify-center font-bold text-xs shadow-xs">
+            AI
+          </div>
+          <div>
+            <h4 className="text-sm font-bold text-foreground leading-tight">{title}</h4>
+            <p className="text-[11px] text-muted-foreground">
+              {completedCount} of {steps.length} operations completed
+            </p>
+          </div>
+        </div>
+        <span className="text-xs font-mono font-bold text-primary px-2 py-0.5 rounded-md bg-primary/10 border border-primary/20">
+          {progressPercent}%
+        </span>
+      </div>
+
+      {/* Progress Bar Line */}
+      <div className="w-full h-1.5 rounded-full bg-muted overflow-hidden">
+        <div
+          className="h-full w-full bg-primary origin-left transition-transform duration-300 rounded-full"
+          style={{ transform: `scaleX(${progressPercent / 100})` }}
+        />
+      </div>
+
+      {/* Step Sequence List */}
+      <div className="flex flex-col gap-3">
+        {steps.map((step, idx) => {
+          const isRunning = step.status === "running";
+          const isCompleted = step.status === "completed";
+          const isError = step.status === "error";
+
+          return (
+            <div
+              key={step.id}
+              className={cn(
+                "flex items-start gap-3 p-2.5 rounded-xl border transition-all",
+                isRunning
+                  ? "border-primary/40 bg-primary/5 shadow-xs"
+                  : isCompleted
+                  ? "border-border/60 bg-muted/20"
+                  : isError
+                  ? "border-destructive/40 bg-destructive/5"
+                  : "border-transparent opacity-60"
+              )}
+            >
+              {/* Step Icon Indicator */}
+              <div className="mt-0.5 shrink-0">
+                {isCompleted && <CheckCircle2 className="h-4 w-4 text-emerald-500" aria-hidden="true" />}
+                {isRunning && <Loader2 className="h-4 w-4 text-primary animate-spin" aria-hidden="true" />}
+                {isError && <AlertCircle className="h-4 w-4 text-destructive" aria-hidden="true" />}
+                {step.status === "pending" && <Circle className="h-4 w-4 text-muted-foreground" aria-hidden="true" />}
+              </div>
+
+              {/* Step Title & Details */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2">
+                  <span
+                    className={cn(
+                      "text-xs font-semibold truncate",
+                      isRunning ? "text-primary" : "text-foreground"
+                    )}
+                  >
+                    {idx + 1}. {step.title}
+                  </span>
+                  {step.durationMs !== undefined && (
+                    <span className="text-[10px] font-mono text-muted-foreground flex items-center gap-1 shrink-0">
+                      <Clock className="h-2.5 w-2.5" aria-hidden="true" />
+                      {step.durationMs}ms
+                    </span>
+                  )}
+                </div>
+                {step.description && (
+                  <p className="text-[11px] text-muted-foreground truncate mt-0.5">
+                    {step.description}
+                  </p>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Footer / Cancel Button */}
+      {onCancel && (
+        <div className="flex justify-end pt-2 border-t border-border">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="px-3 py-1.5 rounded-lg border border-border bg-card hover:bg-muted text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            Cancel Pipeline
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
 
 ```
 
@@ -6104,6 +6306,212 @@ export function KpiStatCardGroup({
 
 ---
 
+### Lamp Section Header (`lamp-section-header`)
+- **Category**: `ui:block`
+- **Dependencies**: clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 8/10, Motion 5/10, Density 5/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Aceternity UI (https://ui.aceternity.com)
+ * @author Aceternity & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+
+export interface LampSectionHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  badgeText?: string;
+  headline?: string;
+  subheadline?: string;
+  lampColor?: string;
+}
+
+export function LampSectionHeader({
+  badgeText = "Curated Registry",
+  headline = "Deterministic UI for Autonomous Agents",
+  subheadline = "High-performance primitives, verified token contracts, and instant Model Context Protocol resolution.",
+  lampColor = "var(--color-primary, #10b981)",
+  className,
+  ...props
+}: LampSectionHeaderProps) {
+  return (
+    <div
+      className={cn(
+        "relative flex flex-col items-center justify-center min-h-[440px] overflow-hidden bg-background w-full z-0 text-center px-4 py-16",
+        className
+      )}
+      {...props}
+    >
+      {/* Conical Lamp Glow Cone Beam */}
+      <div className="relative flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0 pointer-events-none">
+        {/* Left Glowing Beam Wedge */}
+        <div
+          className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-primary via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top] opacity-50 blur-2xl"
+          style={{ backgroundImage: `conic-gradient(from 70deg at center top, ${lampColor}, transparent 60%)` }}
+          aria-hidden="true"
+        />
+
+        {/* Right Glowing Beam Wedge */}
+        <div
+          className="absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-primary text-white [--conic-position:from_290deg_at_center_top] opacity-50 blur-2xl"
+          style={{ backgroundImage: `conic-gradient(from 290deg at center top, transparent 40%, ${lampColor})` }}
+          aria-hidden="true"
+        />
+
+        {/* Top Lamp Horizontal Light Strip */}
+        <div
+          className="absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 bg-background blur-2xl"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute top-1/2 z-50 h-48 w-full bg-transparent opacity-10 backdrop-blur-md"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-primary opacity-30 blur-3xl"
+          style={{ backgroundColor: lampColor }}
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-primary/40 blur-2xl"
+          style={{ backgroundColor: lampColor }}
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-primary"
+          style={{ backgroundColor: lampColor }}
+          aria-hidden="true"
+        />
+      </div>
+
+      {/* Foreground Header Content */}
+      <div className="relative z-50 flex -translate-y-8 flex-col items-center px-4 max-w-3xl">
+        {badgeText && (
+          <span className="mb-4 inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary shadow-xs">
+            {badgeText}
+          </span>
+        )}
+
+        <h2 className="bg-gradient-to-b from-foreground to-muted-foreground bg-clip-text text-3xl font-black tracking-tight text-transparent sm:text-5xl md:text-6xl">
+          {headline}
+        </h2>
+
+        <p className="mt-4 max-w-xl text-sm sm:text-base text-muted-foreground leading-relaxed">
+          {subheadline}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Mobile App Frame Mockup (`mobile-app-frame-mockup`)
+- **Category**: `ui:block`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 4/10, Motion 2/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Launch UI (https://launch-ui.com)
+ * @author Launch UI & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+import { Wifi, BatteryMedium, Signal } from "lucide-react";
+
+export interface MobileAppFrameMockupProps extends React.HTMLAttributes<HTMLDivElement> {
+  time?: string;
+  dynamicIslandContent?: React.ReactNode;
+  children?: React.ReactNode;
+}
+
+export function MobileAppFrameMockup({
+  time = "9:41",
+  dynamicIslandContent,
+  children,
+  className,
+  ...props
+}: MobileAppFrameMockupProps) {
+  return (
+    <div
+      className={cn(
+        "relative mx-auto w-[320px] sm:w-[360px] h-[660px] sm:h-[720px] rounded-[48px] border-[10px] border-zinc-900 bg-background shadow-2xl overflow-hidden flex flex-col select-none ring-1 ring-white/10",
+        className
+      )}
+      {...props}
+    >
+      {/* Glossy bezel highlight border */}
+      <div className="pointer-events-none absolute inset-0 rounded-[38px] ring-1 ring-white/20 z-30" aria-hidden="true" />
+
+      {/* Top Status Bar & Dynamic Island */}
+      <div className="relative z-20 flex items-center justify-between px-7 pt-3.5 pb-2 text-foreground">
+        {/* Clock */}
+        <span className="text-xs font-semibold tracking-tight">{time}</span>
+
+        {/* Dynamic Island Capsule */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-2.5 h-6 px-3 min-w-[90px] rounded-full bg-zinc-950 text-white flex items-center justify-center shadow-md transition-all">
+          {dynamicIslandContent ? (
+            dynamicIslandContent
+          ) : (
+            <div className="flex items-center gap-1.5" role="presentation">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
+              <span className="text-[10px] font-mono text-zinc-400">Ready</span>
+            </div>
+          )}
+        </div>
+
+        {/* Status Icons */}
+        <div className="flex items-center gap-1.5 text-foreground" role="presentation">
+          <Signal className="h-3 w-3" aria-hidden="true" />
+          <Wifi className="h-3 w-3" aria-hidden="true" />
+          <BatteryMedium className="h-3.5 w-3.5" aria-hidden="true" />
+        </div>
+      </div>
+
+      {/* Screen Viewport Container */}
+      <div className="relative flex-1 overflow-y-auto px-4 py-3 z-10 flex flex-col">
+        {children ? (
+          children
+        ) : (
+          <div className="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-3">
+            <div className="h-14 w-14 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center font-bold text-xl shadow-lg">
+              📱
+            </div>
+            <h4 className="text-base font-bold text-foreground">Mobile Showcase Frame</h4>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Mobile-first viewport container designed for evaluating touch navigation, responsive ergonomics, and swipe gestures.
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* Home Indicator Bar */}
+      <div className="relative z-20 flex justify-center py-2 bg-background/80 backdrop-blur-xs">
+        <div className="h-1 w-32 rounded-full bg-muted-foreground/30" aria-hidden="true" />
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Navbar Sticky (`navbar-sticky`)
 - **Category**: `ui:block`
 - **Dependencies**: lucide-react, clsx, tailwind-merge
@@ -6838,6 +7246,140 @@ export function SaasHeroBrowserMockup({
         </div>
       </div>
     </section>
+  );
+}
+
+```
+
+---
+
+### Safari Browser Mockup (`safari-browser-mockup`)
+- **Category**: `ui:block`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 4/10, Motion 2/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Launch UI / Magic UI (https://launch-ui.com)
+ * @author Launch UI & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+import { ArrowLeft, ArrowRight, RotateCw, Lock, Plus, Share2 } from "lucide-react";
+
+export interface SafariBrowserMockupProps extends React.HTMLAttributes<HTMLDivElement> {
+  url?: string;
+  title?: string;
+  showControls?: boolean;
+  children?: React.ReactNode;
+}
+
+export function SafariBrowserMockup({
+  url = "https://agent-wiki.dev/r/floating-dock",
+  title = "Design Agent Wiki",
+  showControls = true,
+  children,
+  className,
+  ...props
+}: SafariBrowserMockupProps) {
+  return (
+    <div
+      className={cn(
+        "w-full rounded-xl border border-border bg-card shadow-2xl overflow-hidden text-card-foreground flex flex-col",
+        className
+      )}
+      {...props}
+    >
+      {/* Safari Window Header Bar */}
+      <div className="flex items-center justify-between gap-2 px-4 py-2.5 bg-muted/50 border-b border-border select-none">
+        {/* Window Controls (Traffic Lights) */}
+        <div className="flex items-center gap-1.5 min-w-[54px]" role="presentation">
+          <span className="h-3 w-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/40 shadow-xs" aria-hidden="true" />
+          <span className="h-3 w-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/40 shadow-xs" aria-hidden="true" />
+          <span className="h-3 w-3 rounded-full bg-[#27c93f] border border-[#1aab29]/40 shadow-xs" aria-hidden="true" />
+        </div>
+
+        {/* Navigation & URL Bar */}
+        <div className="flex items-center gap-2 flex-1 max-w-xl mx-auto">
+          {showControls && (
+            <div className="hidden sm:flex items-center gap-1 text-muted-foreground">
+              <button
+                type="button"
+                aria-label="Back"
+                className="p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                aria-label="Forward"
+                className="p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                aria-label="Reload page"
+                className="p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <RotateCw className="h-3.5 w-3.5" aria-hidden="true" />
+              </button>
+            </div>
+          )}
+
+          {/* Omnibox / Search & Address Input */}
+          <div className="flex items-center justify-center gap-2 flex-1 h-7 px-3 rounded-md bg-background border border-border text-xs text-muted-foreground font-mono transition-all">
+            <Lock className="h-3 w-3 text-emerald-500 shrink-0" aria-hidden="true" />
+            <span className="truncate max-w-[280px] sm:max-w-md text-foreground font-medium select-all">
+              {url}
+            </span>
+          </div>
+        </div>
+
+        {/* Right Utility Icons */}
+        <div className="hidden sm:flex items-center gap-1 text-muted-foreground min-w-[54px] justify-end">
+          <button
+            type="button"
+            aria-label="Share URL"
+            className="p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <Share2 className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            aria-label="New tab"
+            className="p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <Plus className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      {/* Browser Viewport Canvas Body */}
+      <div className="relative flex-1 min-h-[300px] bg-background">
+        {children ? (
+          children
+        ) : (
+          <div className="p-8 md:p-12 flex flex-col items-center justify-center min-h-[300px] text-center space-y-4">
+            <div className="h-12 w-12 rounded-xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center font-bold text-lg shadow-xs">
+              DW
+            </div>
+            <div className="space-y-1">
+              <h3 className="text-base font-semibold text-foreground">{title}</h3>
+              <p className="text-xs text-muted-foreground max-w-sm">
+                Clean safari frame wrapper for rendering responsive UI components and landing prototypes.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -9487,6 +10029,123 @@ export function IridescenceShaderPlane({
 
 function FRAGMENT_SRC_SAFE(src: string) {
   return src;
+}
+
+```
+
+---
+
+### Laser Flow Border Card (`laser-flow-border-card`)
+- **Category**: `ui:creative`
+- **Dependencies**: lucide-react, clsx, tailwind-merge, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 7/10, Motion 6/10, Density 5/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Cult UI (https://cult-ui.com)
+ * @author Cult UI & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+import { Sparkles, ArrowRight } from "lucide-react";
+
+export interface LaserFlowBorderCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  title?: string;
+  description?: string;
+  badgeText?: string;
+  ctaText?: string;
+  onCtaClick?: () => void;
+  laserColor?: string;
+  durationSeconds?: number;
+  children?: React.ReactNode;
+}
+
+export function LaserFlowBorderCard({
+  title = "Agentic Laser Flow Card",
+  description = "Continuous directional laser beam border effect utilizing SVG stroke animations and CSS conic gradients for high-craft UI moments.",
+  badgeText = "Cult UI Pattern",
+  ctaText = "Inspect Primitive",
+  onCtaClick,
+  laserColor = "var(--color-primary, #10b981)",
+  durationSeconds = 4,
+  children,
+  className,
+  ...props
+}: LaserFlowBorderCardProps) {
+  return (
+    <div
+      className={cn(
+        "relative rounded-2xl p-[1.5px] overflow-hidden group shadow-xl transition-transform duration-300 hover:scale-[1.01]",
+        className
+      )}
+      {...props}
+    >
+      {/* Animated Rotating Laser Glow Gradient */}
+      <div
+        className="pointer-events-none absolute -inset-[150%] animate-[spin_4s_linear_infinite] motion-reduce:hidden"
+        style={{
+          background: `conic-gradient(from 0deg, transparent 0 320deg, ${laserColor} 360deg)`,
+          animationDuration: `${durationSeconds}s`,
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Static Fallback Border for prefers-reduced-motion */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl border border-primary/40 hidden motion-reduce:block"
+        aria-hidden="true"
+      />
+
+      {/* Card Body Surface */}
+      <div className="relative rounded-[15px] bg-card p-6 md:p-8 text-card-foreground border border-border/80 h-full flex flex-col justify-between gap-6 z-10">
+        {children ? (
+          children
+        ) : (
+          <>
+            <div className="space-y-4">
+              {badgeText && (
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold shadow-xs">
+                  <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                  <span>{badgeText}</span>
+                </div>
+              )}
+
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold tracking-tight text-foreground">
+                  {title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {description}
+                </p>
+              </div>
+            </div>
+
+            {ctaText && (
+              <div className="pt-4 border-t border-border flex items-center justify-between">
+                <span className="text-xs font-mono text-muted-foreground">
+                  @cult-ui/laser-flow
+                </span>
+                <button
+                  type="button"
+                  onClick={onCtaClick}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <span>{ctaText}</span>
+                  <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
 }
 
 ```
@@ -15089,6 +15748,261 @@ export function StrategicQuadrantMatrix({
 
 ---
 
+### Strategy Canvas Value Curve (`strategy-canvas-value-curve`)
+- **Category**: `ui:editorial`
+- **Dependencies**: three, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 3/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Diagram Design (https://github.com/cathrynlavery/diagram-design)
+ * @author Cathryn Lavery & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+
+export interface StrategyFactor {
+  id: string;
+  name: string;
+}
+
+export interface StrategyCurve {
+  id: string;
+  name: string;
+  color: string;
+  values: number[]; // 1 to 10 scale matching factors index
+  isHighlighted?: boolean;
+}
+
+export interface StrategyCanvasValueCurveProps extends React.HTMLAttributes<HTMLDivElement> {
+  factors?: StrategyFactor[];
+  curves?: StrategyCurve[];
+  title?: string;
+  description?: string;
+}
+
+export function StrategyCanvasValueCurve({
+  title = "Blue Ocean Strategy Canvas (Value Curves)",
+  description = "Compare competitive value curves across primary industry factors to identify differentiation zones.",
+  factors = [
+    { id: "1", name: "Zero AI Slop" },
+    { id: "2", name: "Context Size (<15KB)" },
+    { id: "3", name: "MCP Tool Speed" },
+    { id: "4", name: "WCAG AA A11y" },
+    { id: "5", name: "Tailwind v4 First" },
+    { id: "6", name: "AST Auto-Unslop" },
+    { id: "7", name: "Price / Free OSS" },
+  ],
+  curves = [
+    {
+      id: "agent-wiki",
+      name: "Agent Wiki Stack",
+      color: "#10b981", // emerald-500
+      values: [10, 10, 9, 10, 10, 9, 10],
+      isHighlighted: true,
+    },
+    {
+      id: "traditional-ui",
+      name: "Standard Component Lib",
+      color: "#64748b", // slate-500
+      values: [4, 3, 2, 7, 5, 1, 8],
+    },
+    {
+      id: "raw-ai-gen",
+      name: "Unguided AI Generation",
+      color: "#ef4444", // red-500
+      values: [1, 2, 8, 2, 3, 2, 5],
+    },
+  ],
+  className,
+  ...props
+}: StrategyCanvasValueCurveProps) {
+  const [activeCurveId, setActiveCurveId] = React.useState<string | null>(null);
+
+  const svgWidth = 700;
+  const svgHeight = 280;
+  const paddingX = 50;
+  const paddingY = 40;
+
+  const chartWidth = svgWidth - paddingX * 2;
+  const chartHeight = svgHeight - paddingY * 2;
+
+  const stepX = factors.length > 1 ? chartWidth / (factors.length - 1) : chartWidth;
+
+  const getYCoord = (val: number) => {
+    const clamped = Math.max(1, Math.min(10, val));
+    return svgHeight - paddingY - ((clamped - 1) / 9) * chartHeight;
+  };
+
+  const getXCoord = (index: number) => paddingX + index * stepX;
+
+  return (
+    <div
+      className={cn(
+        "w-full rounded-2xl border border-border bg-card p-6 shadow-sm text-card-foreground flex flex-col gap-6",
+        className
+      )}
+      {...props}
+    >
+      {/* Header & Legend */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-4">
+        <div>
+          <h3 className="text-base font-bold text-foreground">{title}</h3>
+          <p className="text-xs text-muted-foreground">{description}</p>
+        </div>
+
+        {/* Legend */}
+        <div className="flex flex-wrap items-center gap-3">
+          {curves.map((curve) => {
+            const isHovered = activeCurveId === curve.id;
+            return (
+              <button
+                key={curve.id}
+                type="button"
+                onMouseEnter={() => setActiveCurveId(curve.id)}
+                onMouseLeave={() => setActiveCurveId(null)}
+                className={cn(
+                  "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  isHovered || curve.isHighlighted
+                    ? "border-border bg-muted/60 text-foreground"
+                    : "border-transparent text-muted-foreground opacity-80"
+                )}
+                aria-label={`Toggle ${curve.name} curve`}
+              >
+                <span
+                  className="h-2.5 w-2.5 rounded-full"
+                  style={{ backgroundColor: curve.color }}
+                  aria-hidden="true"
+                />
+                <span>{curve.name}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* SVG Value Curve Canvas */}
+      <div className="relative w-full overflow-x-auto">
+        <svg
+          viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+          className="w-full h-auto min-w-[560px] select-none"
+          role="img"
+          aria-labelledby="strategy-canvas-title"
+        >
+          <title id="strategy-canvas-title">{title}</title>
+
+          {/* Horizontal Rating Guideline Lines */}
+          {[1, 3, 5, 7, 10].map((level) => {
+            const y = getYCoord(level);
+            return (
+              <g key={level}>
+                <line
+                  x1={paddingX}
+                  y1={y}
+                  x2={svgWidth - paddingX}
+                  y2={y}
+                  stroke="currentColor"
+                  strokeOpacity="0.1"
+                  strokeDasharray="4 4"
+                />
+                <text
+                  x={paddingX - 10}
+                  y={y + 3}
+                  fill="currentColor"
+                  fillOpacity="0.4"
+                  fontSize="10"
+                  fontFamily="monospace"
+                  textAnchor="end"
+                >
+                  {level === 10 ? "High" : level === 1 ? "Low" : level}
+                </text>
+              </g>
+            );
+          })}
+
+          {/* Vertical Factor Column Lines */}
+          {factors.map((f, i) => {
+            const x = getXCoord(i);
+            return (
+              <line
+                key={f.id}
+                x1={x}
+                y1={paddingY}
+                x2={x}
+                y2={svgHeight - paddingY}
+                stroke="currentColor"
+                strokeOpacity="0.08"
+              />
+            );
+          })}
+
+          {/* Render Curve Paths */}
+          {curves.map((curve) => {
+            const points = curve.values.map((v, i) => `${getXCoord(i)},${getYCoord(v)}`).join(" ");
+            const isTarget = activeCurveId === curve.id || (!activeCurveId && curve.isHighlighted);
+
+            return (
+              <g key={curve.id} className="transition-opacity duration-300">
+                <polyline
+                  fill="none"
+                  stroke={curve.color}
+                  strokeWidth={isTarget ? "3.5" : "2"}
+                  strokeOpacity={isTarget ? "1" : "0.4"}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  points={points}
+                />
+
+                {/* Point Dots */}
+                {curve.values.map((val, i) => (
+                  <circle
+                    key={i}
+                    cx={getXCoord(i)}
+                    cy={getYCoord(val)}
+                    r={isTarget ? 5 : 3.5}
+                    fill={curve.color}
+                    stroke="var(--color-card, #09090b)"
+                    strokeWidth="2"
+                  />
+                ))}
+              </g>
+            );
+          })}
+
+          {/* Bottom X-Axis Factor Labels */}
+          {factors.map((factor, i) => {
+            const x = getXCoord(i);
+            return (
+              <text
+                key={factor.id}
+                x={x}
+                y={svgHeight - 12}
+                fill="currentColor"
+                fillOpacity="0.8"
+                fontSize="10.5"
+                fontWeight="600"
+                textAnchor="middle"
+              >
+                {factor.name}
+              </text>
+            );
+          })}
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Structured S L A S L O Gauge (`structured-sla-slo-gauge`)
 - **Category**: `ui:primitive`
 - **Dependencies**: lucide-react
@@ -15682,6 +16596,199 @@ export function TreeHierarchyMap({
         </svg>
       </div>
     </figure>
+  );
+}
+
+```
+
+---
+
+### 2×2 Prioritization Matrix (`two-by-two-prioritization-matrix`)
+- **Category**: `ui:editorial`
+- **Dependencies**: clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 3/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Diagram Design (https://github.com/cathrynlavery/diagram-design)
+ * @author Cathryn Lavery & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+
+export interface MatrixItem {
+  id: string;
+  title: string;
+  x: number; // 0 to 100 (horizontal axis: e.g. Effort or Cost)
+  y: number; // 0 to 100 (vertical axis: e.g. Impact or Value)
+  category?: string;
+  description?: string;
+}
+
+export interface TwoByTwoPrioritizationMatrixProps extends React.HTMLAttributes<HTMLDivElement> {
+  xAxisLabel?: string;
+  yAxisLabel?: string;
+  quadrantLabels?: {
+    topLeft?: string;     // High Impact, Low Effort (Quick Wins)
+    topRight?: string;    // High Impact, High Effort (Major Projects)
+    bottomLeft?: string;  // Low Impact, Low Effort (Fill-ins)
+    bottomRight?: string; // Low Impact, High Effort (Thankless Tasks)
+  };
+  items?: MatrixItem[];
+  onSelectItem?: (item: MatrixItem) => void;
+}
+
+export function TwoByTwoPrioritizationMatrix({
+  xAxisLabel = "Effort / Complexity →",
+  yAxisLabel = "↑ Impact / Business Value",
+  quadrantLabels = {
+    topLeft: "Quick Wins (High Impact, Low Effort)",
+    topRight: "Strategic Bets (High Impact, High Effort)",
+    bottomLeft: "Fill-Ins (Low Impact, Low Effort)",
+    bottomRight: "Deprioritize (Low Impact, High Effort)",
+  },
+  items = [
+    { id: "1", title: "AST Slop Linter", x: 25, y: 85, category: "Core Tooling" },
+    { id: "2", title: "MCP Registry Server", x: 35, y: 90, category: "Distribution" },
+    { id: "3", title: "Automated Sandbox E2E", x: 75, y: 80, category: "Quality Gate" },
+    { id: "4", title: "Full Video Codemods", x: 85, y: 40, category: "Experimental" },
+    { id: "5", title: "CLI Shortcut Alias", x: 20, y: 35, category: "DX" },
+  ],
+  onSelectItem,
+  className,
+  ...props
+}: TwoByTwoPrioritizationMatrixProps) {
+  const [selectedId, setSelectedId] = React.useState<string | null>(items[0]?.id || null);
+
+  const selectedItem = items.find((i) => i.id === selectedId);
+
+  return (
+    <div
+      className={cn(
+        "w-full rounded-2xl border border-border bg-card p-6 shadow-sm text-card-foreground flex flex-col gap-6",
+        className
+      )}
+      {...props}
+    >
+      {/* Header & Axis Legends */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-4">
+        <div>
+          <h3 className="text-base font-bold text-foreground">2×2 Prioritization Matrix</h3>
+          <p className="text-xs text-muted-foreground">
+            Evaluate strategic trade-offs and component priorities across impact vs effort.
+          </p>
+        </div>
+        <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground">
+          <span className="px-2 py-0.5 rounded-md bg-muted border border-border">{yAxisLabel}</span>
+          <span className="px-2 py-0.5 rounded-md bg-muted border border-border">{xAxisLabel}</span>
+        </div>
+      </div>
+
+      {/* Main 2x2 Canvas */}
+      <div className="relative w-full aspect-square sm:aspect-16/10 rounded-xl border border-border bg-background/50 overflow-hidden flex flex-col">
+        {/* Quadrant Grid Background Lines */}
+        <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 divide-x divide-y divide-border pointer-events-none">
+          {/* Top-Left Quadrant */}
+          <div className="p-3 bg-emerald-500/5 flex flex-col justify-between">
+            <span className="text-[11px] font-bold text-emerald-500 tracking-wide uppercase">
+              {quadrantLabels.topLeft}
+            </span>
+          </div>
+
+          {/* Top-Right Quadrant */}
+          <div className="p-3 bg-primary/5 flex flex-col justify-between">
+            <span className="text-[11px] font-bold text-primary tracking-wide uppercase">
+              {quadrantLabels.topRight}
+            </span>
+          </div>
+
+          {/* Bottom-Left Quadrant */}
+          <div className="p-3 bg-muted/20 flex flex-col justify-end">
+            <span className="text-[11px] font-bold text-muted-foreground tracking-wide uppercase">
+              {quadrantLabels.bottomLeft}
+            </span>
+          </div>
+
+          {/* Bottom-Right Quadrant */}
+          <div className="p-3 bg-destructive/5 flex flex-col justify-end">
+            <span className="text-[11px] font-bold text-destructive/80 tracking-wide uppercase">
+              {quadrantLabels.bottomRight}
+            </span>
+          </div>
+        </div>
+
+        {/* Center Crosshairs */}
+        <div className="absolute top-1/2 left-0 right-0 h-px bg-border -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2 pointer-events-none" aria-hidden="true" />
+
+        {/* Interactive Placed Items */}
+        <div className="relative flex-1">
+          {items.map((item) => {
+            const isSelected = item.id === selectedId;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => {
+                  setSelectedId(item.id);
+                  onSelectItem?.(item);
+                }}
+                style={{
+                  left: `${Math.min(92, Math.max(8, item.x))}%`,
+                  bottom: `${Math.min(92, Math.max(8, item.y))}%`,
+                }}
+                className={cn(
+                  "absolute -translate-x-1/2 translate-y-1/2 group flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring z-10",
+                  isSelected
+                    ? "bg-primary text-primary-foreground ring-2 ring-primary/40 scale-105"
+                    : "bg-card hover:bg-muted text-foreground border border-border"
+                )}
+                aria-label={`${item.title} at ${item.x}% effort, ${item.y}% impact`}
+              >
+                <span
+                  className={cn(
+                    "h-2 w-2 rounded-full",
+                    item.y >= 50 && item.x <= 50
+                      ? "bg-emerald-500"
+                      : item.y >= 50 && item.x > 50
+                      ? "bg-primary"
+                      : item.y < 50 && item.x <= 50
+                      ? "bg-muted-foreground"
+                      : "bg-destructive"
+                  )}
+                  aria-hidden="true"
+                />
+                <span className="truncate max-w-[130px]">{item.title}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Selected Item Drawer / Detail Inspector */}
+      {selectedItem && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl border border-border bg-muted/40 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-foreground">{selectedItem.title}</span>
+            {selectedItem.category && (
+              <span className="px-2 py-0.5 rounded-md bg-background border border-border text-muted-foreground font-mono text-[10px]">
+                {selectedItem.category}
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-4 text-muted-foreground font-mono">
+            <span>Impact: <strong className="text-foreground">{selectedItem.y}%</strong></span>
+            <span>Effort: <strong className="text-foreground">{selectedItem.x}%</strong></span>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -18002,6 +19109,162 @@ export function DockMagnification({
           </button>
         );
       })}
+    </div>
+  );
+}
+
+```
+
+---
+
+### Dynamic Island Telemetry (`dynamic-island-telemetry`)
+- **Category**: `ui:motion`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 7/10, Motion 5/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin SmoothUI (https://smoothui.dev)
+ * @author SmoothUI & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+import { Sparkles, Terminal, Activity, ChevronDown, ChevronUp, Zap, Cpu } from "lucide-react";
+
+export type TelemetryState = "idle" | "reasoning" | "executing" | "verified" | "error";
+
+export interface DynamicIslandTelemetryProps extends React.HTMLAttributes<HTMLDivElement> {
+  state?: TelemetryState;
+  modelName?: string;
+  tokensConsumed?: number;
+  latencyMs?: number;
+  activeSubagents?: number;
+  currentAction?: string;
+}
+
+export function DynamicIslandTelemetry({
+  state = "executing",
+  modelName = "claude-3-7-sonnet",
+  tokensConsumed = 14280,
+  latencyMs = 412,
+  activeSubagents = 2,
+  currentAction = "AST Dial Classification & Slop Linting",
+  className,
+  ...props
+}: DynamicIslandTelemetryProps) {
+  const [isExpanded, setIsExpanded] = React.useState(false);
+
+  const stateColors: Record<TelemetryState, { dot: string; text: string; bg: string }> = {
+    idle: { dot: "bg-muted-foreground", text: "text-muted-foreground", bg: "bg-muted/40" },
+    reasoning: { dot: "bg-amber-500", text: "text-amber-500", bg: "bg-amber-500/10" },
+    executing: { dot: "bg-primary", text: "text-primary", bg: "bg-primary/10" },
+    verified: { dot: "bg-emerald-500", text: "text-emerald-500", bg: "bg-emerald-500/10" },
+    error: { dot: "bg-destructive", text: "text-destructive", bg: "bg-destructive/10" },
+  };
+
+  const currentTheme = stateColors[state] || stateColors.executing;
+
+  return (
+    <div className="relative inline-flex flex-col items-center select-none" {...props}>
+      {/* Dynamic Island Capsule Container */}
+      <div
+        className={cn(
+          "rounded-3xl bg-zinc-950 text-white border border-zinc-800/80 shadow-2xl transition-[width,padding,colors] duration-200 overflow-hidden flex flex-col cursor-pointer",
+          isExpanded ? "w-[340px] sm:w-[400px] p-4.5 rounded-2xl" : "w-auto px-4 py-2 hover:border-zinc-700",
+          className
+        )}
+        onClick={() => setIsExpanded(!isExpanded)}
+        role="region"
+        aria-expanded={isExpanded}
+        aria-label="Agent Dynamic Island Telemetry"
+      >
+        {/* Compact View Pill */}
+        <div className="flex items-center justify-between gap-3 w-full">
+          {/* Status Indicator */}
+          <div className="flex items-center gap-2">
+            <span className={cn("h-2.5 w-2.5 rounded-full animate-pulse", currentTheme.dot)} aria-hidden="true" />
+            <span className="text-xs font-bold tracking-tight capitalize text-white">
+              {state}
+            </span>
+          </div>
+
+          {/* Middle Action / Token Summary */}
+          {!isExpanded ? (
+            <div className="flex items-center gap-3 text-[11px] font-mono text-zinc-400">
+              <span className="truncate max-w-[140px]">{currentAction}</span>
+              <span className="text-zinc-500">|</span>
+              <span className="text-primary font-semibold">{tokensConsumed.toLocaleString()} tkn</span>
+            </div>
+          ) : (
+            <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300">
+              {modelName}
+            </span>
+          )}
+
+          {/* Expand / Collapse Icon */}
+          <button
+            type="button"
+            aria-label={isExpanded ? "Collapse telemetry" : "Expand telemetry"}
+            className="text-zinc-400 hover:text-white transition-colors"
+          >
+            {isExpanded ? (
+              <ChevronUp className="h-4 w-4" aria-hidden="true" />
+            ) : (
+              <ChevronDown className="h-4 w-4" aria-hidden="true" />
+            )}
+          </button>
+        </div>
+
+        {/* Expanded Telemetry HUD Body */}
+        {isExpanded && (
+          <div className="mt-4 pt-3 border-t border-zinc-800/80 flex flex-col gap-3 text-xs animate-in fade-in duration-200">
+            {/* Current Action Banner */}
+            <div className="flex items-start gap-2 p-2 rounded-lg bg-zinc-900 border border-zinc-800">
+              <Terminal className="h-4 w-4 text-primary shrink-0 mt-0.5" aria-hidden="true" />
+              <div className="flex-1 min-w-0">
+                <span className="text-[10px] text-zinc-500 font-mono block">ACTIVE INSTRUCTION</span>
+                <p className="text-xs text-zinc-200 font-medium truncate">{currentAction}</p>
+              </div>
+            </div>
+
+            {/* Metrics Telemetry Grid */}
+            <div className="grid grid-cols-3 gap-2">
+              <div className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 flex flex-col">
+                <span className="text-[10px] text-zinc-500 font-mono flex items-center gap-1">
+                  <Zap className="h-2.5 w-2.5 text-amber-400" aria-hidden="true" /> TOKENS
+                </span>
+                <span className="text-xs font-bold text-white font-mono mt-0.5">
+                  {tokensConsumed.toLocaleString()}
+                </span>
+              </div>
+
+              <div className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 flex flex-col">
+                <span className="text-[10px] text-zinc-500 font-mono flex items-center gap-1">
+                  <Activity className="h-2.5 w-2.5 text-emerald-400" aria-hidden="true" /> LATENCY
+                </span>
+                <span className="text-xs font-bold text-white font-mono mt-0.5">
+                  {latencyMs}ms
+                </span>
+              </div>
+
+              <div className="p-2 rounded-lg bg-zinc-900 border border-zinc-800 flex flex-col">
+                <span className="text-[10px] text-zinc-500 font-mono flex items-center gap-1">
+                  <Cpu className="h-2.5 w-2.5 text-primary" aria-hidden="true" /> AGENTS
+                </span>
+                <span className="text-xs font-bold text-white font-mono mt-0.5">
+                  {activeSubagents} Active
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -20858,6 +22121,97 @@ export function TiltCard({
         {children && <div className="pt-2">{children}</div>}
       </div>
     </motion.div>
+  );
+}
+
+```
+
+---
+
+### True Focus Text (`true-focus-text`)
+- **Category**: `ui:motion`
+- **Dependencies**: clsx, tailwind-merge, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 5/10, Density 5/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin React Bits (https://reactbits.dev)
+ * @author DavidHDev & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+import * as React from "react";
+import { cn } from "../lib/utils";
+
+export interface TrueFocusTextProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  words?: string[];
+  intervalMs?: number;
+  glowColor?: string;
+}
+
+export function TrueFocusText({
+  words = ["Deterministic", "Zero-Slop", "Accessible", "Agent-Native", "Verified"],
+  intervalMs = 2400,
+  glowColor = "var(--color-primary, #10b981)",
+  className,
+  ...props
+}: TrueFocusTextProps) {
+  const [activeIndex, setActiveIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    if (words.length <= 1) return;
+
+    const timer = window.setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % words.length);
+    }, intervalMs);
+
+    return () => window.clearInterval(timer);
+  }, [words.length, intervalMs]);
+
+  return (
+    <div className="flex flex-col items-center justify-center p-6 text-center select-none">
+      <h2
+        className={cn(
+          "flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-foreground",
+          className
+        )}
+        {...props}
+      >
+        {words.map((word, index) => {
+          const isFocused = index === activeIndex;
+
+          return (
+            <span
+              key={`${word}-${index}`}
+              onMouseEnter={() => setActiveIndex(index)}
+              className={cn(
+                "relative cursor-pointer px-2 py-1 rounded-lg transition-[filter,transform,color] duration-200",
+                isFocused
+                  ? "text-primary scale-105 filter-none font-black"
+                  : "text-muted-foreground/60 blur-[1.5px] scale-95 opacity-50 hover:opacity-80"
+              )}
+            >
+              {/* Focus highlight bracket/box */}
+              {isFocused && (
+                <span
+                  className="pointer-events-none absolute -inset-1 rounded-lg border border-primary/40 bg-primary/10 shadow-xs motion-reduce:border-primary"
+                  style={{ borderColor: glowColor }}
+                  aria-hidden="true"
+                />
+              )}
+              <span className="relative z-10">{word}</span>
+            </span>
+          );
+        })}
+      </h2>
+      <p className="mt-4 text-xs font-mono text-muted-foreground">
+        Interactive kinetic focus • Hover any word or let auto-cycle
+      </p>
+    </div>
   );
 }
 

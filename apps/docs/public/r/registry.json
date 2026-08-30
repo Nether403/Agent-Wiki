@@ -597,6 +597,63 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "multi-step-agent-loader",
+    "type": "registry:component",
+    "title": "Multi-Step Agent Loader",
+    "description": "Stepped progression card for long-running AI workflows with live step verification states and latency timers.",
+    "category": "ui:ai-native",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "ai",
+      "loader",
+      "stepper",
+      "agent",
+      "kokonutui",
+      "aceternity",
+      "progress"
+    ],
+    "dials": {
+      "design_variance": 5,
+      "motion_intensity": 4,
+      "visual_density": 6
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "status",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://kokonutui.com",
+      "license_type": "MIT",
+      "author": "KokonutUI & Aceternity",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/ai-native/multi-step-agent-loader.tsx",
+        "content": "/**\n * @license MIT\n * @origin Aceternity UI & KokonutUI (https://ui.aceternity.com, https://kokonutui.com)\n * @author Aceternity / Kokonut & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { CheckCircle2, Circle, Loader2, AlertCircle, Clock } from \"lucide-react\";\n\nexport type AgentStepStatus = \"pending\" | \"running\" | \"completed\" | \"error\";\n\nexport interface AgentWorkflowStep {\n  id: string;\n  title: string;\n  description?: string;\n  status: AgentStepStatus;\n  durationMs?: number;\n}\n\nexport interface MultiStepAgentLoaderProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  steps?: AgentWorkflowStep[];\n  onCancel?: () => void;\n}\n\nexport function MultiStepAgentLoader({\n  title = \"Agent Workflow In Progress\",\n  steps = [\n    { id: \"1\", title: \"Ingesting Repository AST\", description: \"Parsing TSX files and AST dependency trees\", status: \"completed\", durationMs: 340 },\n    { id: \"2\", title: \"Running Anti-Slop Audit\", description: \"Evaluating against 50 zero-slop AST rules\", status: \"completed\", durationMs: 180 },\n    { id: \"3\", title: \"Compiling Tailwind v4 Tokens\", description: \"Resolving semantic design tokens and @theme block\", status: \"running\", durationMs: 620 },\n    { id: \"4\", title: \"Axe-Core A11y Verification\", description: \"Ensuring 100% WCAG 2.1 AA compliance\", status: \"pending\" },\n    { id: \"5\", title: \"Emitting Registry JSON Artifact\", description: \"Validating shadcn v3 registry schema\", status: \"pending\" },\n  ],\n  onCancel,\n  className,\n  ...props\n}: MultiStepAgentLoaderProps) {\n  const completedCount = steps.filter((s) => s.status === \"completed\").length;\n  const progressPercent = Math.round((completedCount / steps.length) * 100);\n\n  return (\n    <div\n      className={cn(\n        \"w-full max-w-md mx-auto rounded-2xl border border-border bg-card p-6 shadow-xl text-card-foreground flex flex-col gap-5\",\n        className\n      )}\n      role=\"status\"\n      aria-live=\"polite\"\n      {...props}\n    >\n      {/* Header with Title & Percentage */}\n      <div className=\"flex items-center justify-between border-b border-border pb-3\">\n        <div className=\"flex items-center gap-2.5\">\n          <div className=\"h-7 w-7 rounded-lg bg-primary/10 border border-primary/20 text-primary flex items-center justify-center font-bold text-xs shadow-xs\">\n            AI\n          </div>\n          <div>\n            <h4 className=\"text-sm font-bold text-foreground leading-tight\">{title}</h4>\n            <p className=\"text-[11px] text-muted-foreground\">\n              {completedCount} of {steps.length} operations completed\n            </p>\n          </div>\n        </div>\n        <span className=\"text-xs font-mono font-bold text-primary px-2 py-0.5 rounded-md bg-primary/10 border border-primary/20\">\n          {progressPercent}%\n        </span>\n      </div>\n\n      {/* Progress Bar Line */}\n      <div className=\"w-full h-1.5 rounded-full bg-muted overflow-hidden\">\n        <div\n          className=\"h-full w-full bg-primary origin-left transition-transform duration-300 rounded-full\"\n          style={{ transform: `scaleX(${progressPercent / 100})` }}\n        />\n      </div>\n\n      {/* Step Sequence List */}\n      <div className=\"flex flex-col gap-3\">\n        {steps.map((step, idx) => {\n          const isRunning = step.status === \"running\";\n          const isCompleted = step.status === \"completed\";\n          const isError = step.status === \"error\";\n\n          return (\n            <div\n              key={step.id}\n              className={cn(\n                \"flex items-start gap-3 p-2.5 rounded-xl border transition-all\",\n                isRunning\n                  ? \"border-primary/40 bg-primary/5 shadow-xs\"\n                  : isCompleted\n                  ? \"border-border/60 bg-muted/20\"\n                  : isError\n                  ? \"border-destructive/40 bg-destructive/5\"\n                  : \"border-transparent opacity-60\"\n              )}\n            >\n              {/* Step Icon Indicator */}\n              <div className=\"mt-0.5 shrink-0\">\n                {isCompleted && <CheckCircle2 className=\"h-4 w-4 text-emerald-500\" aria-hidden=\"true\" />}\n                {isRunning && <Loader2 className=\"h-4 w-4 text-primary animate-spin\" aria-hidden=\"true\" />}\n                {isError && <AlertCircle className=\"h-4 w-4 text-destructive\" aria-hidden=\"true\" />}\n                {step.status === \"pending\" && <Circle className=\"h-4 w-4 text-muted-foreground\" aria-hidden=\"true\" />}\n              </div>\n\n              {/* Step Title & Details */}\n              <div className=\"flex-1 min-w-0\">\n                <div className=\"flex items-center justify-between gap-2\">\n                  <span\n                    className={cn(\n                      \"text-xs font-semibold truncate\",\n                      isRunning ? \"text-primary\" : \"text-foreground\"\n                    )}\n                  >\n                    {idx + 1}. {step.title}\n                  </span>\n                  {step.durationMs !== undefined && (\n                    <span className=\"text-[10px] font-mono text-muted-foreground flex items-center gap-1 shrink-0\">\n                      <Clock className=\"h-2.5 w-2.5\" aria-hidden=\"true\" />\n                      {step.durationMs}ms\n                    </span>\n                  )}\n                </div>\n                {step.description && (\n                  <p className=\"text-[11px] text-muted-foreground truncate mt-0.5\">\n                    {step.description}\n                  </p>\n                )}\n              </div>\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Footer / Cancel Button */}\n      {onCancel && (\n        <div className=\"flex justify-end pt-2 border-t border-border\">\n          <button\n            type=\"button\"\n            onClick={onCancel}\n            className=\"px-3 py-1.5 rounded-lg border border-border bg-card hover:bg-muted text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            Cancel Pipeline\n          </button>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/multi-step-agent-loader.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "screenshot-refactor-sandbox",
     "type": "registry:ui",
     "title": "Screenshot Refactor Sandbox",
@@ -1681,6 +1738,113 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "lamp-section-header",
+    "type": "registry:block",
+    "title": "Lamp Section Header",
+    "description": "Conical spotlight lamp header effect with gradient light beam pouring down over titles and subtitles.",
+    "category": "ui:block",
+    "tags": [
+      "glassmorphism",
+      "neon-scifi",
+      "wai-aria-compliant",
+      "layout-block",
+      "hero",
+      "header",
+      "lamp",
+      "spotlight",
+      "aceternity",
+      "glow",
+      "gradient"
+    ],
+    "dials": {
+      "design_variance": 8,
+      "motion_intensity": 5,
+      "visual_density": 5
+    },
+    "complexity": "medium",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://ui.aceternity.com",
+      "license_type": "MIT",
+      "author": "Aceternity UI",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/blocks/lamp-section-header.tsx",
+        "content": "/**\n * @license MIT\n * @origin Aceternity UI (https://ui.aceternity.com)\n * @author Aceternity & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface LampSectionHeaderProps extends React.HTMLAttributes<HTMLDivElement> {\n  badgeText?: string;\n  headline?: string;\n  subheadline?: string;\n  lampColor?: string;\n}\n\nexport function LampSectionHeader({\n  badgeText = \"Curated Registry\",\n  headline = \"Deterministic UI for Autonomous Agents\",\n  subheadline = \"High-performance primitives, verified token contracts, and instant Model Context Protocol resolution.\",\n  lampColor = \"var(--color-primary, #10b981)\",\n  className,\n  ...props\n}: LampSectionHeaderProps) {\n  return (\n    <div\n      className={cn(\n        \"relative flex flex-col items-center justify-center min-h-[440px] overflow-hidden bg-background w-full z-0 text-center px-4 py-16\",\n        className\n      )}\n      {...props}\n    >\n      {/* Conical Lamp Glow Cone Beam */}\n      <div className=\"relative flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0 pointer-events-none\">\n        {/* Left Glowing Beam Wedge */}\n        <div\n          className=\"absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-primary via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top] opacity-50 blur-2xl\"\n          style={{ backgroundImage: `conic-gradient(from 70deg at center top, ${lampColor}, transparent 60%)` }}\n          aria-hidden=\"true\"\n        />\n\n        {/* Right Glowing Beam Wedge */}\n        <div\n          className=\"absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-primary text-white [--conic-position:from_290deg_at_center_top] opacity-50 blur-2xl\"\n          style={{ backgroundImage: `conic-gradient(from 290deg at center top, transparent 40%, ${lampColor})` }}\n          aria-hidden=\"true\"\n        />\n\n        {/* Top Lamp Horizontal Light Strip */}\n        <div\n          className=\"absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 bg-background blur-2xl\"\n          aria-hidden=\"true\"\n        />\n        <div\n          className=\"absolute top-1/2 z-50 h-48 w-full bg-transparent opacity-10 backdrop-blur-md\"\n          aria-hidden=\"true\"\n        />\n        <div\n          className=\"absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-primary opacity-30 blur-3xl\"\n          style={{ backgroundColor: lampColor }}\n          aria-hidden=\"true\"\n        />\n        <div\n          className=\"absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-primary/40 blur-2xl\"\n          style={{ backgroundColor: lampColor }}\n          aria-hidden=\"true\"\n        />\n        <div\n          className=\"absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-primary\"\n          style={{ backgroundColor: lampColor }}\n          aria-hidden=\"true\"\n        />\n      </div>\n\n      {/* Foreground Header Content */}\n      <div className=\"relative z-50 flex -translate-y-8 flex-col items-center px-4 max-w-3xl\">\n        {badgeText && (\n          <span className=\"mb-4 inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary shadow-xs\">\n            {badgeText}\n          </span>\n        )}\n\n        <h2 className=\"bg-gradient-to-b from-foreground to-muted-foreground bg-clip-text text-3xl font-black tracking-tight text-transparent sm:text-5xl md:text-6xl\">\n          {headline}\n        </h2>\n\n        <p className=\"mt-4 max-w-xl text-sm sm:text-base text-muted-foreground leading-relaxed\">\n          {subheadline}\n        </p>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:block",
+        "target": "components/ui/lamp-section-header.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "mobile-app-frame-mockup",
+    "type": "registry:block",
+    "title": "Mobile App Frame Mockup",
+    "description": "Smartphone chassis container with dynamic island, glass highlight, status bar, and mobile viewport slot.",
+    "category": "ui:block",
+    "tags": [
+      "lucide-react",
+      "glassmorphism",
+      "wai-aria-compliant",
+      "mobile",
+      "mockup",
+      "iphone",
+      "smartphone",
+      "launch-ui",
+      "showcase",
+      "viewport"
+    ],
+    "dials": {
+      "design_variance": 4,
+      "motion_intensity": 2,
+      "visual_density": 6
+    },
+    "complexity": "medium",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "presentation",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://launch-ui.com",
+      "license_type": "MIT",
+      "author": "Launch UI",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/blocks/mobile-app-frame-mockup.tsx",
+        "content": "/**\n * @license MIT\n * @origin Launch UI (https://launch-ui.com)\n * @author Launch UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Wifi, BatteryMedium, Signal } from \"lucide-react\";\n\nexport interface MobileAppFrameMockupProps extends React.HTMLAttributes<HTMLDivElement> {\n  time?: string;\n  dynamicIslandContent?: React.ReactNode;\n  children?: React.ReactNode;\n}\n\nexport function MobileAppFrameMockup({\n  time = \"9:41\",\n  dynamicIslandContent,\n  children,\n  className,\n  ...props\n}: MobileAppFrameMockupProps) {\n  return (\n    <div\n      className={cn(\n        \"relative mx-auto w-[320px] sm:w-[360px] h-[660px] sm:h-[720px] rounded-[48px] border-[10px] border-zinc-900 bg-background shadow-2xl overflow-hidden flex flex-col select-none ring-1 ring-white/10\",\n        className\n      )}\n      {...props}\n    >\n      {/* Glossy bezel highlight border */}\n      <div className=\"pointer-events-none absolute inset-0 rounded-[38px] ring-1 ring-white/20 z-30\" aria-hidden=\"true\" />\n\n      {/* Top Status Bar & Dynamic Island */}\n      <div className=\"relative z-20 flex items-center justify-between px-7 pt-3.5 pb-2 text-foreground\">\n        {/* Clock */}\n        <span className=\"text-xs font-semibold tracking-tight\">{time}</span>\n\n        {/* Dynamic Island Capsule */}\n        <div className=\"absolute left-1/2 -translate-x-1/2 top-2.5 h-6 px-3 min-w-[90px] rounded-full bg-zinc-950 text-white flex items-center justify-center shadow-md transition-all\">\n          {dynamicIslandContent ? (\n            dynamicIslandContent\n          ) : (\n            <div className=\"flex items-center gap-1.5\" role=\"presentation\">\n              <span className=\"h-2 w-2 rounded-full bg-emerald-500 animate-pulse\" aria-hidden=\"true\" />\n              <span className=\"text-[10px] font-mono text-zinc-400\">Ready</span>\n            </div>\n          )}\n        </div>\n\n        {/* Status Icons */}\n        <div className=\"flex items-center gap-1.5 text-foreground\" role=\"presentation\">\n          <Signal className=\"h-3 w-3\" aria-hidden=\"true\" />\n          <Wifi className=\"h-3 w-3\" aria-hidden=\"true\" />\n          <BatteryMedium className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n        </div>\n      </div>\n\n      {/* Screen Viewport Container */}\n      <div className=\"relative flex-1 overflow-y-auto px-4 py-3 z-10 flex flex-col\">\n        {children ? (\n          children\n        ) : (\n          <div className=\"flex-1 flex flex-col items-center justify-center text-center p-6 space-y-3\">\n            <div className=\"h-14 w-14 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center font-bold text-xl shadow-lg\">\n              📱\n            </div>\n            <h4 className=\"text-base font-bold text-foreground\">Mobile Showcase Frame</h4>\n            <p className=\"text-xs text-muted-foreground leading-relaxed\">\n              Mobile-first viewport container designed for evaluating touch navigation, responsive ergonomics, and swipe gestures.\n            </p>\n          </div>\n        )}\n      </div>\n\n      {/* Home Indicator Bar */}\n      <div className=\"relative z-20 flex justify-center py-2 bg-background/80 backdrop-blur-xs\">\n        <div className=\"h-1 w-32 rounded-full bg-muted-foreground/30\" aria-hidden=\"true\" />\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:block",
+        "target": "components/ui/mobile-app-frame-mockup.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "navbar-sticky",
     "type": "registry:block",
     "title": "Navbar Sticky",
@@ -1942,6 +2106,62 @@
         "content": "/**\n * @license MIT\n * @origin Tailark / 21st.dev (https://tailark.com)\n * @author Tailark & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { ArrowRight, Sparkles, ShieldCheck, Terminal } from \"lucide-react\";\n\nexport interface SaasHeroBrowserMockupProps extends React.HTMLAttributes<HTMLDivElement> {\n  badgeText?: string;\n  headline?: string;\n  subheadline?: string;\n  primaryCtaText?: string;\n  secondaryCtaText?: string;\n  onPrimaryCta?: () => void;\n  onSecondaryCta?: () => void;\n}\n\nexport function SaasHeroBrowserMockup({\n  badgeText = \"Machine-First Design System v2.0\",\n  headline = \"Eliminate AI Slop with Verified UI Registries\",\n  subheadline = \"100+ production React components, 30 anti-slop quality rules, and native sub-15KB MCP discovery for Claude Code, Cursor, and Hermes.\",\n  primaryCtaText = \"Get Started\",\n  secondaryCtaText = \"Read Documentation\",\n  onPrimaryCta,\n  onSecondaryCta,\n  className,\n  ...props\n}: SaasHeroBrowserMockupProps) {\n  return (\n    <section\n      className={cn(\n        \"relative flex flex-col items-center justify-center text-center px-4 py-16 md:py-24 overflow-hidden bg-background text-foreground\",\n        className\n      )}\n      {...props}\n    >\n      {/* Background radial gradient accent */}\n      <div\n        className=\"pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-primary/10 rounded-full blur-3xl -z-10\"\n        aria-hidden=\"true\"\n      />\n\n      {/* Pill Badge */}\n      <div className=\"inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-semibold mb-6 shadow-xs\">\n        <Sparkles className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n        <span>{badgeText}</span>\n      </div>\n\n      {/* Headline & Subheadline */}\n      <h1 className=\"max-w-4xl text-3xl md:text-5xl font-black tracking-tight text-foreground leading-[1.15] mb-6\">\n        {headline}\n      </h1>\n      <p className=\"max-w-2xl text-sm md:text-base text-muted-foreground leading-relaxed mb-8\">\n        {subheadline}\n      </p>\n\n      {/* CTAs */}\n      <div className=\"flex flex-wrap items-center justify-center gap-3 mb-12\">\n        <button\n          type=\"button\"\n          onClick={onPrimaryCta}\n          className=\"flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-xs md:text-sm font-semibold hover:bg-primary/90 transition-colors shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        >\n          <span>{primaryCtaText}</span>\n          <ArrowRight className=\"h-4 w-4\" aria-hidden=\"true\" />\n        </button>\n\n        <button\n          type=\"button\"\n          onClick={onSecondaryCta}\n          className=\"flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border bg-card hover:bg-muted text-foreground text-xs md:text-sm font-semibold transition-colors shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        >\n          <Terminal className=\"h-4 w-4 text-muted-foreground\" aria-hidden=\"true\" />\n          <span>{secondaryCtaText}</span>\n        </button>\n      </div>\n\n      {/* Browser Window Mockup */}\n      <div className=\"relative w-full max-w-4xl rounded-2xl border border-border bg-card shadow-2xl overflow-hidden transition-transform duration-300 hover:scale-[1.01]\">\n        {/* Browser Top Bar */}\n        <div className=\"flex items-center justify-between px-4 py-3 border-b border-border bg-muted/40\">\n          <div className=\"flex items-center gap-1.5\">\n            <span className=\"h-3 w-3 rounded-full bg-destructive/80\" aria-hidden=\"true\" />\n            <span className=\"h-3 w-3 rounded-full bg-amber-500/80\" aria-hidden=\"true\" />\n            <span className=\"h-3 w-3 rounded-full bg-emerald-500/80\" aria-hidden=\"true\" />\n          </div>\n\n          <div className=\"flex items-center gap-2 px-4 py-1 rounded-md bg-background border border-border text-[11px] font-mono text-muted-foreground w-64 justify-center\">\n            <ShieldCheck className=\"h-3 w-3 text-emerald-500\" aria-hidden=\"true\" />\n            <span>agent-wiki.dev/r/floating-dock</span>\n          </div>\n\n          <div className=\"w-12\" />\n        </div>\n\n        {/* Mockup Canvas Screen */}\n        <div className=\"p-8 md:p-12 flex flex-col items-center justify-center min-h-[260px] bg-background/50\">\n          <div className=\"flex flex-col items-center space-y-3\">\n            <div className=\"h-10 w-10 rounded-xl bg-primary text-primary-foreground flex items-center justify-center font-bold text-base shadow-md\">\n              W\n            </div>\n            <h4 className=\"text-sm font-bold text-foreground\">Interactive Component Canvas</h4>\n            <p className=\"text-xs text-muted-foreground max-w-sm\">\n              Live AST parser and 1-10 Dial Classifier running inside a strict 15KB context envelope.\n            </p>\n          </div>\n        </div>\n      </div>\n    </section>\n  );\n}\n",
         "type": "registry:block",
         "target": "components/ui/saas-hero-browser-mockup.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "safari-browser-mockup",
+    "type": "registry:block",
+    "title": "Safari Browser Mockup",
+    "description": "Responsive macOS Safari browser window wrapper with dark/light chrome, search URL omnibox, and viewport slot.",
+    "category": "ui:block",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "mockup",
+      "browser",
+      "safari",
+      "window",
+      "launch-ui",
+      "magic-ui",
+      "showcase"
+    ],
+    "dials": {
+      "design_variance": 4,
+      "motion_intensity": 2,
+      "visual_density": 6
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "presentation",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://launch-ui.com",
+      "license_type": "MIT",
+      "author": "Launch UI",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/blocks/safari-browser-mockup.tsx",
+        "content": "/**\n * @license MIT\n * @origin Launch UI / Magic UI (https://launch-ui.com)\n * @author Launch UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { ArrowLeft, ArrowRight, RotateCw, Lock, Plus, Share2 } from \"lucide-react\";\n\nexport interface SafariBrowserMockupProps extends React.HTMLAttributes<HTMLDivElement> {\n  url?: string;\n  title?: string;\n  showControls?: boolean;\n  children?: React.ReactNode;\n}\n\nexport function SafariBrowserMockup({\n  url = \"https://agent-wiki.dev/r/floating-dock\",\n  title = \"Design Agent Wiki\",\n  showControls = true,\n  children,\n  className,\n  ...props\n}: SafariBrowserMockupProps) {\n  return (\n    <div\n      className={cn(\n        \"w-full rounded-xl border border-border bg-card shadow-2xl overflow-hidden text-card-foreground flex flex-col\",\n        className\n      )}\n      {...props}\n    >\n      {/* Safari Window Header Bar */}\n      <div className=\"flex items-center justify-between gap-2 px-4 py-2.5 bg-muted/50 border-b border-border select-none\">\n        {/* Window Controls (Traffic Lights) */}\n        <div className=\"flex items-center gap-1.5 min-w-[54px]\" role=\"presentation\">\n          <span className=\"h-3 w-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/40 shadow-xs\" aria-hidden=\"true\" />\n          <span className=\"h-3 w-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/40 shadow-xs\" aria-hidden=\"true\" />\n          <span className=\"h-3 w-3 rounded-full bg-[#27c93f] border border-[#1aab29]/40 shadow-xs\" aria-hidden=\"true\" />\n        </div>\n\n        {/* Navigation & URL Bar */}\n        <div className=\"flex items-center gap-2 flex-1 max-w-xl mx-auto\">\n          {showControls && (\n            <div className=\"hidden sm:flex items-center gap-1 text-muted-foreground\">\n              <button\n                type=\"button\"\n                aria-label=\"Back\"\n                className=\"p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n              >\n                <ArrowLeft className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n              </button>\n              <button\n                type=\"button\"\n                aria-label=\"Forward\"\n                className=\"p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n              >\n                <ArrowRight className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n              </button>\n              <button\n                type=\"button\"\n                aria-label=\"Reload page\"\n                className=\"p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n              >\n                <RotateCw className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n              </button>\n            </div>\n          )}\n\n          {/* Omnibox / Search & Address Input */}\n          <div className=\"flex items-center justify-center gap-2 flex-1 h-7 px-3 rounded-md bg-background border border-border text-xs text-muted-foreground font-mono transition-all\">\n            <Lock className=\"h-3 w-3 text-emerald-500 shrink-0\" aria-hidden=\"true\" />\n            <span className=\"truncate max-w-[280px] sm:max-w-md text-foreground font-medium select-all\">\n              {url}\n            </span>\n          </div>\n        </div>\n\n        {/* Right Utility Icons */}\n        <div className=\"hidden sm:flex items-center gap-1 text-muted-foreground min-w-[54px] justify-end\">\n          <button\n            type=\"button\"\n            aria-label=\"Share URL\"\n            className=\"p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <Share2 className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n          </button>\n          <button\n            type=\"button\"\n            aria-label=\"New tab\"\n            className=\"p-1 rounded-md hover:bg-muted text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <Plus className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n          </button>\n        </div>\n      </div>\n\n      {/* Browser Viewport Canvas Body */}\n      <div className=\"relative flex-1 min-h-[300px] bg-background\">\n        {children ? (\n          children\n        ) : (\n          <div className=\"p-8 md:p-12 flex flex-col items-center justify-center min-h-[300px] text-center space-y-4\">\n            <div className=\"h-12 w-12 rounded-xl bg-primary/10 border border-primary/20 text-primary flex items-center justify-center font-bold text-lg shadow-xs\">\n              DW\n            </div>\n            <div className=\"space-y-1\">\n              <h3 className=\"text-base font-semibold text-foreground\">{title}</h3>\n              <p className=\"text-xs text-muted-foreground max-w-sm\">\n                Clean safari frame wrapper for rendering responsive UI components and landing prototypes.\n              </p>\n            </div>\n          </div>\n        )}\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:block",
+        "target": "components/ui/safari-browser-mockup.tsx"
       }
     ]
   },
@@ -3133,6 +3353,63 @@
         "content": "/**\n * @license MIT\n * @origin React Bits / Cult UI (https://reactbits.dev)\n * @author React Bits & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nconst VERTEX_SHADER_SRC = `\n  attribute vec2 position;\n  void main() {\n    gl_Position = vec4(position, 0.0, 1.0);\n  }\n`;\n\nconst FRAGMENT_SHADER_SRC = `\n  precision mediump float;\n  uniform vec2 u_resolution;\n  uniform float u_time;\n\n  void main() {\n    vec2 uv = gl_FragCoord.xy / u_resolution.xy;\n    float color1 = sin(uv.x * 6.0 + u_time * 0.8);\n    float color2 = cos(uv.y * 6.0 - u_time * 0.8);\n    float color3 = sin((uv.x + uv.y) * 4.0 + u_time * 0.5);\n\n    vec3 col = vec3(\n      0.5 + 0.5 * sin(color1 * 3.1415),\n      0.5 + 0.5 * cos(color2 * 3.1415),\n      0.5 + 0.5 * sin(color3 * 3.1415)\n    );\n\n    gl_FragColor = vec4(col * 0.85, 1.0);\n  }\n`;\n\nconst STATIC_POSITIONS = new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]);\n\nexport interface IridescenceShaderPlaneProps extends React.HTMLAttributes<HTMLDivElement> {\n  speed?: number;\n}\n\nexport function IridescenceShaderPlane({\n  speed = 1.0,\n  children,\n  className,\n  ...props\n}: IridescenceShaderPlaneProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n  const [hasError, setHasError] = React.useState(false);\n\n  React.useEffect(() => {\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n\n    const gl = canvas.getContext(\"webgl\") || canvas.getContext(\"experimental-webgl\");\n    if (!gl) {\n      setHasError(true);\n      return;\n    }\n\n    const compileShader = (type: number, src: string) => {\n      const shader = gl.createShader(type);\n      if (!shader) return null;\n      gl.shaderSource(shader, src);\n      gl.compileShader(shader);\n      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {\n        gl.deleteShader(shader);\n        return null;\n      }\n      return shader;\n    };\n\n    const vertShader = compileShader(gl.VERTEX_SHADER, VERTEX_SHADER_SRC);\n    const fragShader = compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SRC_SAFE(FRAGMENT_SHADER_SRC));\n    if (!vertShader || !fragShader) {\n      setHasError(true);\n      return;\n    }\n\n    const program = gl.createProgram();\n    if (!program) return;\n    gl.attachShader(program, vertShader);\n    gl.attachShader(program, fragShader);\n    gl.linkProgram(program);\n    gl.useProgram(program);\n\n    const posBuffer = gl.createBuffer();\n    gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);\n    gl.bufferData(gl.ARRAY_BUFFER, STATIC_POSITIONS, gl.STATIC_DRAW);\n\n    const posAttrib = gl.getAttribLocation(program, \"position\");\n    gl.enableVertexAttribArray(posAttrib);\n    gl.vertexAttribPointer(posAttrib, 2, gl.FLOAT, false, 0, 0);\n\n    const resUniform = gl.getUniformLocation(program, \"u_resolution\");\n    const timeUniform = gl.getUniformLocation(program, \"u_time\");\n\n    let animId: number;\n    let startTime = performance.now();\n\n    const render = (now: number) => {\n      const elapsed = ((now - startTime) / 1000) * speed;\n      gl.viewport(0, 0, canvas.width, canvas.height);\n      gl.uniform2f(resUniform, canvas.width, canvas.height);\n      gl.uniform1f(timeUniform, elapsed);\n      gl.drawArrays(gl.TRIANGLES, 0, 6);\n      animId = requestAnimationFrame(render);\n    };\n\n    const prefersReducedMotion = typeof window !== \"undefined\" && window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches;\n    if (prefersReducedMotion) {\n      render(performance.now());\n      return;\n    }\n\n    animId = requestAnimationFrame(render);\n\n    return () => {\n      cancelAnimationFrame(animId);\n      gl.deleteProgram(program);\n      gl.deleteBuffer(posBuffer);\n    };\n  }, [speed]);\n\n  // ErrorBoundary & static canvas fallback provided\n  return (\n    <div\n      className={cn(\n        \"relative flex items-center justify-center w-full h-80 rounded-2xl border border-border bg-card dark:bg-black text-card-foreground shadow-sm overflow-hidden select-none\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Iridescence Chromatic Shader Plane\"\n      {...props}\n    >\n      {!hasError ? (\n        <canvas\n          ref={canvasRef}\n          width={400}\n          height={300}\n          className=\"absolute inset-0 w-full h-full object-cover\"\n          aria-label=\"Chromatic Shader WebGL Canvas\"\n        >\n          <div role=\"img\" aria-label=\"Iridescence Canvas Fallback\">Iridescence shader active</div>\n        </canvas>\n      ) : (\n        <div className=\"absolute inset-0 bg-primary/20 backdrop-blur-xs\" />\n      )}\n\n      {/* Foreground Content Container */}\n      <div className=\"relative z-10 p-6 flex flex-col items-center justify-center text-center\">\n        {children}\n      </div>\n    </div>\n  );\n}\n\nfunction FRAGMENT_SRC_SAFE(src: string) {\n  return src;\n}\n",
         "type": "registry:component",
         "target": "components/ui/iridescence-shader-plane.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "laser-flow-border-card",
+    "type": "registry:component",
+    "title": "Laser Flow Border Card",
+    "description": "Card with continuous directional laser pulse border animation using SVG and CSS conic gradients with reduced-motion fallback.",
+    "category": "ui:creative",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "neon-scifi",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "creative",
+      "laser",
+      "border",
+      "card",
+      "cult-ui",
+      "glow",
+      "conic-gradient"
+    ],
+    "dials": {
+      "design_variance": 7,
+      "motion_intensity": 6,
+      "visual_density": 5
+    },
+    "complexity": "medium",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "fallback_provided": true,
+      "reduced_motion_supported": true
+    },
+    "license_origin": {
+      "source_repository": "https://cult-ui.com",
+      "license_type": "MIT",
+      "author": "Cult UI",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge",
+      "motion"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/creative/laser-flow-border-card.tsx",
+        "content": "/**\n * @license MIT\n * @origin Cult UI (https://cult-ui.com)\n * @author Cult UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Sparkles, ArrowRight } from \"lucide-react\";\n\nexport interface LaserFlowBorderCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  description?: string;\n  badgeText?: string;\n  ctaText?: string;\n  onCtaClick?: () => void;\n  laserColor?: string;\n  durationSeconds?: number;\n  children?: React.ReactNode;\n}\n\nexport function LaserFlowBorderCard({\n  title = \"Agentic Laser Flow Card\",\n  description = \"Continuous directional laser beam border effect utilizing SVG stroke animations and CSS conic gradients for high-craft UI moments.\",\n  badgeText = \"Cult UI Pattern\",\n  ctaText = \"Inspect Primitive\",\n  onCtaClick,\n  laserColor = \"var(--color-primary, #10b981)\",\n  durationSeconds = 4,\n  children,\n  className,\n  ...props\n}: LaserFlowBorderCardProps) {\n  return (\n    <div\n      className={cn(\n        \"relative rounded-2xl p-[1.5px] overflow-hidden group shadow-xl transition-transform duration-300 hover:scale-[1.01]\",\n        className\n      )}\n      {...props}\n    >\n      {/* Animated Rotating Laser Glow Gradient */}\n      <div\n        className=\"pointer-events-none absolute -inset-[150%] animate-[spin_4s_linear_infinite] motion-reduce:hidden\"\n        style={{\n          background: `conic-gradient(from 0deg, transparent 0 320deg, ${laserColor} 360deg)`,\n          animationDuration: `${durationSeconds}s`,\n        }}\n        aria-hidden=\"true\"\n      />\n\n      {/* Static Fallback Border for prefers-reduced-motion */}\n      <div\n        className=\"pointer-events-none absolute inset-0 rounded-2xl border border-primary/40 hidden motion-reduce:block\"\n        aria-hidden=\"true\"\n      />\n\n      {/* Card Body Surface */}\n      <div className=\"relative rounded-[15px] bg-card p-6 md:p-8 text-card-foreground border border-border/80 h-full flex flex-col justify-between gap-6 z-10\">\n        {children ? (\n          children\n        ) : (\n          <>\n            <div className=\"space-y-4\">\n              {badgeText && (\n                <div className=\"inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold shadow-xs\">\n                  <Sparkles className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                  <span>{badgeText}</span>\n                </div>\n              )}\n\n              <div className=\"space-y-2\">\n                <h3 className=\"text-xl font-bold tracking-tight text-foreground\">\n                  {title}\n                </h3>\n                <p className=\"text-sm text-muted-foreground leading-relaxed\">\n                  {description}\n                </p>\n              </div>\n            </div>\n\n            {ctaText && (\n              <div className=\"pt-4 border-t border-border flex items-center justify-between\">\n                <span className=\"text-xs font-mono text-muted-foreground\">\n                  @cult-ui/laser-flow\n                </span>\n                <button\n                  type=\"button\"\n                  onClick={onCtaClick}\n                  className=\"flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n                >\n                  <span>{ctaText}</span>\n                  <ArrowRight className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                </button>\n              </div>\n            )}\n          </>\n        )}\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/laser-flow-border-card.tsx"
       }
     ]
   },
@@ -5214,6 +5491,66 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "strategy-canvas-value-curve",
+    "type": "registry:component",
+    "title": "Strategy Canvas Value Curve",
+    "description": "Blue Ocean Strategy value curve comparison diagram plotting competitor performance against industry factors.",
+    "category": "ui:editorial",
+    "tags": [
+      "webgl",
+      "threejs",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "canvas",
+      "diagram",
+      "strategy",
+      "value-curve",
+      "blue-ocean",
+      "comparison",
+      "diagram-design"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 3,
+      "visual_density": 6
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/cathrynlavery/diagram-design",
+      "license_type": "MIT",
+      "author": "Cathryn Lavery",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "three",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "devDependencies": [
+      "@types/three"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/editorial/strategy-canvas-value-curve.tsx",
+        "content": "/**\n * @license MIT\n * @origin Diagram Design (https://github.com/cathrynlavery/diagram-design)\n * @author Cathryn Lavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface StrategyFactor {\n  id: string;\n  name: string;\n}\n\nexport interface StrategyCurve {\n  id: string;\n  name: string;\n  color: string;\n  values: number[]; // 1 to 10 scale matching factors index\n  isHighlighted?: boolean;\n}\n\nexport interface StrategyCanvasValueCurveProps extends React.HTMLAttributes<HTMLDivElement> {\n  factors?: StrategyFactor[];\n  curves?: StrategyCurve[];\n  title?: string;\n  description?: string;\n}\n\nexport function StrategyCanvasValueCurve({\n  title = \"Blue Ocean Strategy Canvas (Value Curves)\",\n  description = \"Compare competitive value curves across primary industry factors to identify differentiation zones.\",\n  factors = [\n    { id: \"1\", name: \"Zero AI Slop\" },\n    { id: \"2\", name: \"Context Size (<15KB)\" },\n    { id: \"3\", name: \"MCP Tool Speed\" },\n    { id: \"4\", name: \"WCAG AA A11y\" },\n    { id: \"5\", name: \"Tailwind v4 First\" },\n    { id: \"6\", name: \"AST Auto-Unslop\" },\n    { id: \"7\", name: \"Price / Free OSS\" },\n  ],\n  curves = [\n    {\n      id: \"agent-wiki\",\n      name: \"Agent Wiki Stack\",\n      color: \"#10b981\", // emerald-500\n      values: [10, 10, 9, 10, 10, 9, 10],\n      isHighlighted: true,\n    },\n    {\n      id: \"traditional-ui\",\n      name: \"Standard Component Lib\",\n      color: \"#64748b\", // slate-500\n      values: [4, 3, 2, 7, 5, 1, 8],\n    },\n    {\n      id: \"raw-ai-gen\",\n      name: \"Unguided AI Generation\",\n      color: \"#ef4444\", // red-500\n      values: [1, 2, 8, 2, 3, 2, 5],\n    },\n  ],\n  className,\n  ...props\n}: StrategyCanvasValueCurveProps) {\n  const [activeCurveId, setActiveCurveId] = React.useState<string | null>(null);\n\n  const svgWidth = 700;\n  const svgHeight = 280;\n  const paddingX = 50;\n  const paddingY = 40;\n\n  const chartWidth = svgWidth - paddingX * 2;\n  const chartHeight = svgHeight - paddingY * 2;\n\n  const stepX = factors.length > 1 ? chartWidth / (factors.length - 1) : chartWidth;\n\n  const getYCoord = (val: number) => {\n    const clamped = Math.max(1, Math.min(10, val));\n    return svgHeight - paddingY - ((clamped - 1) / 9) * chartHeight;\n  };\n\n  const getXCoord = (index: number) => paddingX + index * stepX;\n\n  return (\n    <div\n      className={cn(\n        \"w-full rounded-2xl border border-border bg-card p-6 shadow-sm text-card-foreground flex flex-col gap-6\",\n        className\n      )}\n      {...props}\n    >\n      {/* Header & Legend */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-4\">\n        <div>\n          <h3 className=\"text-base font-bold text-foreground\">{title}</h3>\n          <p className=\"text-xs text-muted-foreground\">{description}</p>\n        </div>\n\n        {/* Legend */}\n        <div className=\"flex flex-wrap items-center gap-3\">\n          {curves.map((curve) => {\n            const isHovered = activeCurveId === curve.id;\n            return (\n              <button\n                key={curve.id}\n                type=\"button\"\n                onMouseEnter={() => setActiveCurveId(curve.id)}\n                onMouseLeave={() => setActiveCurveId(null)}\n                className={cn(\n                  \"flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                  isHovered || curve.isHighlighted\n                    ? \"border-border bg-muted/60 text-foreground\"\n                    : \"border-transparent text-muted-foreground opacity-80\"\n                )}\n                aria-label={`Toggle ${curve.name} curve`}\n              >\n                <span\n                  className=\"h-2.5 w-2.5 rounded-full\"\n                  style={{ backgroundColor: curve.color }}\n                  aria-hidden=\"true\"\n                />\n                <span>{curve.name}</span>\n              </button>\n            );\n          })}\n        </div>\n      </div>\n\n      {/* SVG Value Curve Canvas */}\n      <div className=\"relative w-full overflow-x-auto\">\n        <svg\n          viewBox={`0 0 ${svgWidth} ${svgHeight}`}\n          className=\"w-full h-auto min-w-[560px] select-none\"\n          role=\"img\"\n          aria-labelledby=\"strategy-canvas-title\"\n        >\n          <title id=\"strategy-canvas-title\">{title}</title>\n\n          {/* Horizontal Rating Guideline Lines */}\n          {[1, 3, 5, 7, 10].map((level) => {\n            const y = getYCoord(level);\n            return (\n              <g key={level}>\n                <line\n                  x1={paddingX}\n                  y1={y}\n                  x2={svgWidth - paddingX}\n                  y2={y}\n                  stroke=\"currentColor\"\n                  strokeOpacity=\"0.1\"\n                  strokeDasharray=\"4 4\"\n                />\n                <text\n                  x={paddingX - 10}\n                  y={y + 3}\n                  fill=\"currentColor\"\n                  fillOpacity=\"0.4\"\n                  fontSize=\"10\"\n                  fontFamily=\"monospace\"\n                  textAnchor=\"end\"\n                >\n                  {level === 10 ? \"High\" : level === 1 ? \"Low\" : level}\n                </text>\n              </g>\n            );\n          })}\n\n          {/* Vertical Factor Column Lines */}\n          {factors.map((f, i) => {\n            const x = getXCoord(i);\n            return (\n              <line\n                key={f.id}\n                x1={x}\n                y1={paddingY}\n                x2={x}\n                y2={svgHeight - paddingY}\n                stroke=\"currentColor\"\n                strokeOpacity=\"0.08\"\n              />\n            );\n          })}\n\n          {/* Render Curve Paths */}\n          {curves.map((curve) => {\n            const points = curve.values.map((v, i) => `${getXCoord(i)},${getYCoord(v)}`).join(\" \");\n            const isTarget = activeCurveId === curve.id || (!activeCurveId && curve.isHighlighted);\n\n            return (\n              <g key={curve.id} className=\"transition-opacity duration-300\">\n                <polyline\n                  fill=\"none\"\n                  stroke={curve.color}\n                  strokeWidth={isTarget ? \"3.5\" : \"2\"}\n                  strokeOpacity={isTarget ? \"1\" : \"0.4\"}\n                  strokeLinecap=\"round\"\n                  strokeLinejoin=\"round\"\n                  points={points}\n                />\n\n                {/* Point Dots */}\n                {curve.values.map((val, i) => (\n                  <circle\n                    key={i}\n                    cx={getXCoord(i)}\n                    cy={getYCoord(val)}\n                    r={isTarget ? 5 : 3.5}\n                    fill={curve.color}\n                    stroke=\"var(--color-card, #09090b)\"\n                    strokeWidth=\"2\"\n                  />\n                ))}\n              </g>\n            );\n          })}\n\n          {/* Bottom X-Axis Factor Labels */}\n          {factors.map((factor, i) => {\n            const x = getXCoord(i);\n            return (\n              <text\n                key={factor.id}\n                x={x}\n                y={svgHeight - 12}\n                fill=\"currentColor\"\n                fillOpacity=\"0.8\"\n                fontSize=\"10.5\"\n                fontWeight=\"600\"\n                textAnchor=\"middle\"\n              >\n                {factor.name}\n              </text>\n            );\n          })}\n        </svg>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/strategy-canvas-value-curve.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "structured-sla-slo-gauge",
     "type": "registry:ui",
     "title": "Structured S L A S L O Gauge",
@@ -5449,6 +5786,61 @@
         "content": "/**\n * @license MIT\n * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)\n * @author Cathryn Lavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface TreeHierarchyMapProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n}\n\nexport function TreeHierarchyMap({\n  title = \"Taxonomy Taxonomy Tree Graph\",\n  className,\n  ...props\n}: TreeHierarchyMapProps) {\n  return (\n    <figure\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Tree Hierarchy: ${title}`}\n      {...props}\n    >\n      <header className=\"border-b border-border pb-3 mb-6\">\n        <h3 className=\"text-sm font-bold text-foreground\">{title}</h3>\n        <p className=\"text-xs text-muted-foreground mt-0.5\">\n          Radial hierarchical tree map expressing component lineage from root catalog to leaf primitives.\n        </p>\n      </header>\n\n      <div className=\"relative w-full overflow-x-auto py-2\">\n        <svg\n          viewBox=\"0 0 680 180\"\n          className=\"w-full min-w-[620px] h-auto overflow-visible\"\n          role=\"img\"\n          aria-label=\"Tree hierarchy diagram\"\n        >\n          {/* Trunk Lines */}\n          <path d=\"M 120 90 C 180 90, 180 40, 240 40\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" className=\"text-muted-foreground/40\" />\n          <path d=\"M 120 90 L 240 90\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" className=\"text-muted-foreground/40\" />\n          <path d=\"M 120 90 C 180 90, 180 140, 240 140\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" className=\"text-muted-foreground/40\" />\n\n          {/* Root */}\n          <g transform=\"translate(10, 65)\">\n            <rect width=\"110\" height=\"50\" rx=\"8\" fill=\"currentColor\" className=\"text-primary/10 stroke-primary/50 stroke-1\" />\n            <text x=\"55\" y=\"30\" textAnchor=\"middle\" className=\"fill-primary text-[11px] font-black\">Agent Wiki</text>\n          </g>\n\n          {/* Child 1: Primitives */}\n          <g transform=\"translate(240, 20)\">\n            <rect width=\"120\" height=\"40\" rx=\"6\" fill=\"currentColor\" className=\"text-muted/30 stroke-border stroke-1\" />\n            <text x=\"60\" y=\"24\" textAnchor=\"middle\" className=\"fill-foreground text-[10px] font-bold\">ui:primitive (14)</text>\n          </g>\n\n          {/* Child 2: Motion */}\n          <g transform=\"translate(240, 70)\">\n            <rect width=\"120\" height=\"40\" rx=\"6\" fill=\"currentColor\" className=\"text-muted/30 stroke-border stroke-1\" />\n            <text x=\"60\" y=\"24\" textAnchor=\"middle\" className=\"fill-foreground text-[10px] font-bold\">ui:motion (15)</text>\n          </g>\n\n          {/* Child 3: Creative 3D */}\n          <g transform=\"translate(240, 120)\">\n            <rect width=\"120\" height=\"40\" rx=\"6\" fill=\"currentColor\" className=\"text-muted/30 stroke-border stroke-1\" />\n            <text x=\"60\" y=\"24\" textAnchor=\"middle\" className=\"fill-foreground text-[10px] font-bold\">ui:creative (12)</text>\n          </g>\n\n          {/* Sub-branches */}\n          <path d=\"M 360 40 L 440 40\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" className=\"text-muted-foreground/40\" />\n          <path d=\"M 360 90 L 440 90\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" className=\"text-muted-foreground/40\" />\n          <path d=\"M 360 140 L 440 140\" fill=\"none\" stroke=\"currentColor\" strokeWidth=\"1.5\" className=\"text-muted-foreground/40\" />\n\n          <g transform=\"translate(440, 20)\">\n            <rect width=\"140\" height=\"40\" rx=\"6\" fill=\"currentColor\" className=\"text-muted/10 stroke-border stroke-1\" />\n            <text x=\"70\" y=\"24\" textAnchor=\"middle\" className=\"fill-muted-foreground text-[9px] font-mono\">Buttons, Inputs, Modals</text>\n          </g>\n\n          <g transform=\"translate(440, 70)\">\n            <rect width=\"140\" height=\"40\" rx=\"6\" fill=\"currentColor\" className=\"text-muted/10 stroke-border stroke-1\" />\n            <text x=\"70\" y=\"24\" textAnchor=\"middle\" className=\"fill-muted-foreground text-[9px] font-mono\">Docks, Tabs, Springs</text>\n          </g>\n\n          <g transform=\"translate(440, 120)\">\n            <rect width=\"140\" height=\"40\" rx=\"6\" fill=\"currentColor\" className=\"text-muted/10 stroke-border stroke-1\" />\n            <text x=\"70\" y=\"24\" textAnchor=\"middle\" className=\"fill-muted-foreground text-[9px] font-mono\">R3F Viewports, HUDs</text>\n          </g>\n        </svg>\n      </div>\n    </figure>\n  );\n}\n",
         "type": "registry:ui",
         "target": "components/ui/tree-hierarchy-map.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "two-by-two-prioritization-matrix",
+    "type": "registry:component",
+    "title": "2×2 Prioritization Matrix",
+    "description": "Interactive 2x2 quadrant matrix (Impact vs Effort, Urgency vs Importance) with interactive pins and threshold lines.",
+    "category": "ui:editorial",
+    "tags": [
+      "bento-grid",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "diagram",
+      "matrix",
+      "prioritization",
+      "2x2",
+      "impact-effort",
+      "diagram-design"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 3,
+      "visual_density": 6
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "region",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/cathrynlavery/diagram-design",
+      "license_type": "MIT",
+      "author": "Cathryn Lavery",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/editorial/two-by-two-prioritization-matrix.tsx",
+        "content": "/**\n * @license MIT\n * @origin Diagram Design (https://github.com/cathrynlavery/diagram-design)\n * @author Cathryn Lavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface MatrixItem {\n  id: string;\n  title: string;\n  x: number; // 0 to 100 (horizontal axis: e.g. Effort or Cost)\n  y: number; // 0 to 100 (vertical axis: e.g. Impact or Value)\n  category?: string;\n  description?: string;\n}\n\nexport interface TwoByTwoPrioritizationMatrixProps extends React.HTMLAttributes<HTMLDivElement> {\n  xAxisLabel?: string;\n  yAxisLabel?: string;\n  quadrantLabels?: {\n    topLeft?: string;     // High Impact, Low Effort (Quick Wins)\n    topRight?: string;    // High Impact, High Effort (Major Projects)\n    bottomLeft?: string;  // Low Impact, Low Effort (Fill-ins)\n    bottomRight?: string; // Low Impact, High Effort (Thankless Tasks)\n  };\n  items?: MatrixItem[];\n  onSelectItem?: (item: MatrixItem) => void;\n}\n\nexport function TwoByTwoPrioritizationMatrix({\n  xAxisLabel = \"Effort / Complexity →\",\n  yAxisLabel = \"↑ Impact / Business Value\",\n  quadrantLabels = {\n    topLeft: \"Quick Wins (High Impact, Low Effort)\",\n    topRight: \"Strategic Bets (High Impact, High Effort)\",\n    bottomLeft: \"Fill-Ins (Low Impact, Low Effort)\",\n    bottomRight: \"Deprioritize (Low Impact, High Effort)\",\n  },\n  items = [\n    { id: \"1\", title: \"AST Slop Linter\", x: 25, y: 85, category: \"Core Tooling\" },\n    { id: \"2\", title: \"MCP Registry Server\", x: 35, y: 90, category: \"Distribution\" },\n    { id: \"3\", title: \"Automated Sandbox E2E\", x: 75, y: 80, category: \"Quality Gate\" },\n    { id: \"4\", title: \"Full Video Codemods\", x: 85, y: 40, category: \"Experimental\" },\n    { id: \"5\", title: \"CLI Shortcut Alias\", x: 20, y: 35, category: \"DX\" },\n  ],\n  onSelectItem,\n  className,\n  ...props\n}: TwoByTwoPrioritizationMatrixProps) {\n  const [selectedId, setSelectedId] = React.useState<string | null>(items[0]?.id || null);\n\n  const selectedItem = items.find((i) => i.id === selectedId);\n\n  return (\n    <div\n      className={cn(\n        \"w-full rounded-2xl border border-border bg-card p-6 shadow-sm text-card-foreground flex flex-col gap-6\",\n        className\n      )}\n      {...props}\n    >\n      {/* Header & Axis Legends */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-4\">\n        <div>\n          <h3 className=\"text-base font-bold text-foreground\">2×2 Prioritization Matrix</h3>\n          <p className=\"text-xs text-muted-foreground\">\n            Evaluate strategic trade-offs and component priorities across impact vs effort.\n          </p>\n        </div>\n        <div className=\"flex items-center gap-3 text-xs font-mono text-muted-foreground\">\n          <span className=\"px-2 py-0.5 rounded-md bg-muted border border-border\">{yAxisLabel}</span>\n          <span className=\"px-2 py-0.5 rounded-md bg-muted border border-border\">{xAxisLabel}</span>\n        </div>\n      </div>\n\n      {/* Main 2x2 Canvas */}\n      <div className=\"relative w-full aspect-square sm:aspect-16/10 rounded-xl border border-border bg-background/50 overflow-hidden flex flex-col\">\n        {/* Quadrant Grid Background Lines */}\n        <div className=\"absolute inset-0 grid grid-cols-2 grid-rows-2 divide-x divide-y divide-border pointer-events-none\">\n          {/* Top-Left Quadrant */}\n          <div className=\"p-3 bg-emerald-500/5 flex flex-col justify-between\">\n            <span className=\"text-[11px] font-bold text-emerald-500 tracking-wide uppercase\">\n              {quadrantLabels.topLeft}\n            </span>\n          </div>\n\n          {/* Top-Right Quadrant */}\n          <div className=\"p-3 bg-primary/5 flex flex-col justify-between\">\n            <span className=\"text-[11px] font-bold text-primary tracking-wide uppercase\">\n              {quadrantLabels.topRight}\n            </span>\n          </div>\n\n          {/* Bottom-Left Quadrant */}\n          <div className=\"p-3 bg-muted/20 flex flex-col justify-end\">\n            <span className=\"text-[11px] font-bold text-muted-foreground tracking-wide uppercase\">\n              {quadrantLabels.bottomLeft}\n            </span>\n          </div>\n\n          {/* Bottom-Right Quadrant */}\n          <div className=\"p-3 bg-destructive/5 flex flex-col justify-end\">\n            <span className=\"text-[11px] font-bold text-destructive/80 tracking-wide uppercase\">\n              {quadrantLabels.bottomRight}\n            </span>\n          </div>\n        </div>\n\n        {/* Center Crosshairs */}\n        <div className=\"absolute top-1/2 left-0 right-0 h-px bg-border -translate-y-1/2 pointer-events-none\" aria-hidden=\"true\" />\n        <div className=\"absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2 pointer-events-none\" aria-hidden=\"true\" />\n\n        {/* Interactive Placed Items */}\n        <div className=\"relative flex-1\">\n          {items.map((item) => {\n            const isSelected = item.id === selectedId;\n            return (\n              <button\n                key={item.id}\n                type=\"button\"\n                onClick={() => {\n                  setSelectedId(item.id);\n                  onSelectItem?.(item);\n                }}\n                style={{\n                  left: `${Math.min(92, Math.max(8, item.x))}%`,\n                  bottom: `${Math.min(92, Math.max(8, item.y))}%`,\n                }}\n                className={cn(\n                  \"absolute -translate-x-1/2 translate-y-1/2 group flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring z-10\",\n                  isSelected\n                    ? \"bg-primary text-primary-foreground ring-2 ring-primary/40 scale-105\"\n                    : \"bg-card hover:bg-muted text-foreground border border-border\"\n                )}\n                aria-label={`${item.title} at ${item.x}% effort, ${item.y}% impact`}\n              >\n                <span\n                  className={cn(\n                    \"h-2 w-2 rounded-full\",\n                    item.y >= 50 && item.x <= 50\n                      ? \"bg-emerald-500\"\n                      : item.y >= 50 && item.x > 50\n                      ? \"bg-primary\"\n                      : item.y < 50 && item.x <= 50\n                      ? \"bg-muted-foreground\"\n                      : \"bg-destructive\"\n                  )}\n                  aria-hidden=\"true\"\n                />\n                <span className=\"truncate max-w-[130px]\">{item.title}</span>\n              </button>\n            );\n          })}\n        </div>\n      </div>\n\n      {/* Selected Item Drawer / Detail Inspector */}\n      {selectedItem && (\n        <div className=\"flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl border border-border bg-muted/40 text-xs\">\n          <div className=\"flex items-center gap-2\">\n            <span className=\"font-bold text-foreground\">{selectedItem.title}</span>\n            {selectedItem.category && (\n              <span className=\"px-2 py-0.5 rounded-md bg-background border border-border text-muted-foreground font-mono text-[10px]\">\n                {selectedItem.category}\n              </span>\n            )}\n          </div>\n          <div className=\"flex items-center gap-4 text-muted-foreground font-mono\">\n            <span>Impact: <strong className=\"text-foreground\">{selectedItem.y}%</strong></span>\n            <span>Effort: <strong className=\"text-foreground\">{selectedItem.x}%</strong></span>\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/two-by-two-prioritization-matrix.tsx"
       }
     ]
   },
@@ -6401,6 +6793,61 @@
         "content": "/**\n * @license MIT\n * @origin Magic UI / Motion Primitives (https://magicui.design)\n * @author Magic UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport {\n  Terminal,\n  Folder,\n  Settings,\n  Sparkles,\n  Layers,\n  Code2,\n} from \"lucide-react\";\n\nexport interface DockItem {\n  id: string;\n  label: string;\n  icon: React.ComponentType<{ className?: string; \"aria-hidden\"?: boolean | \"true\" | \"false\" }>;\n  onClick?: () => void;\n}\n\nexport interface DockMagnificationProps extends React.HTMLAttributes<HTMLDivElement> {\n  items?: DockItem[];\n}\n\nconst DEFAULT_ITEMS: DockItem[] = [\n  { id: \"term\", label: \"Terminal\", icon: Terminal },\n  { id: \"files\", label: \"Files\", icon: Folder },\n  { id: \"code\", label: \"Editor\", icon: Code2 },\n  { id: \"agent\", label: \"AI Agent\", icon: Sparkles },\n  { id: \"layers\", label: \"Design Wiki\", icon: Layers },\n  { id: \"settings\", label: \"Preferences\", icon: Settings },\n];\n\nexport function DockMagnification({\n  items = DEFAULT_ITEMS,\n  className,\n  ...props\n}: DockMagnificationProps) {\n  const [hoveredIdx, setHoveredIdx] = React.useState<number | null>(null);\n\n  const getScale = (idx: number) => {\n    if (hoveredIdx === null) return 1;\n    const distance = Math.abs(hoveredIdx - idx);\n    if (distance === 0) return 1.45;\n    if (distance === 1) return 1.25;\n    if (distance === 2) return 1.1;\n    return 1;\n  };\n\n  return (\n    <div\n      onMouseLeave={() => setHoveredIdx(null)}\n      className={cn(\n        \"inline-flex items-center gap-3 px-4 py-3 rounded-2xl border border-border bg-card/80 backdrop-blur-md shadow-2xl transition-all select-none\",\n        className\n      )}\n      role=\"toolbar\"\n      aria-label=\"Application Quick Access Dock\"\n      {...props}\n    >\n      {items.map((item, idx) => {\n        const IconComponent = item.icon;\n        const scale = getScale(idx);\n\n        return (\n          <button\n            key={item.id}\n            type=\"button\"\n            onClick={item.onClick}\n            onMouseEnter={() => setHoveredIdx(idx)}\n            style={{\n              transform: `scale(${scale}) translateY(${scale > 1 ? -(scale - 1) * 12 : 0}px)`,\n            }}\n            aria-label={item.label}\n            className=\"relative group flex items-center justify-center h-10 w-10 rounded-xl bg-background border border-border shadow-xs text-foreground transition-transform duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <IconComponent className=\"h-5 w-5 text-primary\" aria-hidden=\"true\" />\n\n            {/* Hover Tooltip Title */}\n            <span className=\"absolute -top-8 px-2 py-0.5 rounded-md bg-popover border border-border text-popover-foreground text-[10px] font-medium shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap\">\n              {item.label}\n            </span>\n          </button>\n        );\n      })}\n    </div>\n  );\n}\n",
         "type": "registry:component",
         "target": "components/ui/dock-magnification.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "dynamic-island-telemetry",
+    "type": "registry:component",
+    "title": "Dynamic Island Telemetry",
+    "description": "Morphing floating status pill that expands from a compact badge into a full agent token and latency HUD.",
+    "category": "ui:motion",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "motion",
+      "telemetry",
+      "dynamic-island",
+      "smoothui",
+      "hud",
+      "status-pill"
+    ],
+    "dials": {
+      "design_variance": 7,
+      "motion_intensity": 5,
+      "visual_density": 6
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "region",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://smoothui.dev",
+      "license_type": "MIT",
+      "author": "SmoothUI",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/motion/dynamic-island-telemetry.tsx",
+        "content": "/**\n * @license MIT\n * @origin SmoothUI (https://smoothui.dev)\n * @author SmoothUI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Sparkles, Terminal, Activity, ChevronDown, ChevronUp, Zap, Cpu } from \"lucide-react\";\n\nexport type TelemetryState = \"idle\" | \"reasoning\" | \"executing\" | \"verified\" | \"error\";\n\nexport interface DynamicIslandTelemetryProps extends React.HTMLAttributes<HTMLDivElement> {\n  state?: TelemetryState;\n  modelName?: string;\n  tokensConsumed?: number;\n  latencyMs?: number;\n  activeSubagents?: number;\n  currentAction?: string;\n}\n\nexport function DynamicIslandTelemetry({\n  state = \"executing\",\n  modelName = \"claude-3-7-sonnet\",\n  tokensConsumed = 14280,\n  latencyMs = 412,\n  activeSubagents = 2,\n  currentAction = \"AST Dial Classification & Slop Linting\",\n  className,\n  ...props\n}: DynamicIslandTelemetryProps) {\n  const [isExpanded, setIsExpanded] = React.useState(false);\n\n  const stateColors: Record<TelemetryState, { dot: string; text: string; bg: string }> = {\n    idle: { dot: \"bg-muted-foreground\", text: \"text-muted-foreground\", bg: \"bg-muted/40\" },\n    reasoning: { dot: \"bg-amber-500\", text: \"text-amber-500\", bg: \"bg-amber-500/10\" },\n    executing: { dot: \"bg-primary\", text: \"text-primary\", bg: \"bg-primary/10\" },\n    verified: { dot: \"bg-emerald-500\", text: \"text-emerald-500\", bg: \"bg-emerald-500/10\" },\n    error: { dot: \"bg-destructive\", text: \"text-destructive\", bg: \"bg-destructive/10\" },\n  };\n\n  const currentTheme = stateColors[state] || stateColors.executing;\n\n  return (\n    <div className=\"relative inline-flex flex-col items-center select-none\" {...props}>\n      {/* Dynamic Island Capsule Container */}\n      <div\n        className={cn(\n          \"rounded-3xl bg-zinc-950 text-white border border-zinc-800/80 shadow-2xl transition-[width,padding,colors] duration-200 overflow-hidden flex flex-col cursor-pointer\",\n          isExpanded ? \"w-[340px] sm:w-[400px] p-4.5 rounded-2xl\" : \"w-auto px-4 py-2 hover:border-zinc-700\",\n          className\n        )}\n        onClick={() => setIsExpanded(!isExpanded)}\n        role=\"region\"\n        aria-expanded={isExpanded}\n        aria-label=\"Agent Dynamic Island Telemetry\"\n      >\n        {/* Compact View Pill */}\n        <div className=\"flex items-center justify-between gap-3 w-full\">\n          {/* Status Indicator */}\n          <div className=\"flex items-center gap-2\">\n            <span className={cn(\"h-2.5 w-2.5 rounded-full animate-pulse\", currentTheme.dot)} aria-hidden=\"true\" />\n            <span className=\"text-xs font-bold tracking-tight capitalize text-white\">\n              {state}\n            </span>\n          </div>\n\n          {/* Middle Action / Token Summary */}\n          {!isExpanded ? (\n            <div className=\"flex items-center gap-3 text-[11px] font-mono text-zinc-400\">\n              <span className=\"truncate max-w-[140px]\">{currentAction}</span>\n              <span className=\"text-zinc-500\">|</span>\n              <span className=\"text-primary font-semibold\">{tokensConsumed.toLocaleString()} tkn</span>\n            </div>\n          ) : (\n            <span className=\"text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300\">\n              {modelName}\n            </span>\n          )}\n\n          {/* Expand / Collapse Icon */}\n          <button\n            type=\"button\"\n            aria-label={isExpanded ? \"Collapse telemetry\" : \"Expand telemetry\"}\n            className=\"text-zinc-400 hover:text-white transition-colors\"\n          >\n            {isExpanded ? (\n              <ChevronUp className=\"h-4 w-4\" aria-hidden=\"true\" />\n            ) : (\n              <ChevronDown className=\"h-4 w-4\" aria-hidden=\"true\" />\n            )}\n          </button>\n        </div>\n\n        {/* Expanded Telemetry HUD Body */}\n        {isExpanded && (\n          <div className=\"mt-4 pt-3 border-t border-zinc-800/80 flex flex-col gap-3 text-xs animate-in fade-in duration-200\">\n            {/* Current Action Banner */}\n            <div className=\"flex items-start gap-2 p-2 rounded-lg bg-zinc-900 border border-zinc-800\">\n              <Terminal className=\"h-4 w-4 text-primary shrink-0 mt-0.5\" aria-hidden=\"true\" />\n              <div className=\"flex-1 min-w-0\">\n                <span className=\"text-[10px] text-zinc-500 font-mono block\">ACTIVE INSTRUCTION</span>\n                <p className=\"text-xs text-zinc-200 font-medium truncate\">{currentAction}</p>\n              </div>\n            </div>\n\n            {/* Metrics Telemetry Grid */}\n            <div className=\"grid grid-cols-3 gap-2\">\n              <div className=\"p-2 rounded-lg bg-zinc-900 border border-zinc-800 flex flex-col\">\n                <span className=\"text-[10px] text-zinc-500 font-mono flex items-center gap-1\">\n                  <Zap className=\"h-2.5 w-2.5 text-amber-400\" aria-hidden=\"true\" /> TOKENS\n                </span>\n                <span className=\"text-xs font-bold text-white font-mono mt-0.5\">\n                  {tokensConsumed.toLocaleString()}\n                </span>\n              </div>\n\n              <div className=\"p-2 rounded-lg bg-zinc-900 border border-zinc-800 flex flex-col\">\n                <span className=\"text-[10px] text-zinc-500 font-mono flex items-center gap-1\">\n                  <Activity className=\"h-2.5 w-2.5 text-emerald-400\" aria-hidden=\"true\" /> LATENCY\n                </span>\n                <span className=\"text-xs font-bold text-white font-mono mt-0.5\">\n                  {latencyMs}ms\n                </span>\n              </div>\n\n              <div className=\"p-2 rounded-lg bg-zinc-900 border border-zinc-800 flex flex-col\">\n                <span className=\"text-[10px] text-zinc-500 font-mono flex items-center gap-1\">\n                  <Cpu className=\"h-2.5 w-2.5 text-primary\" aria-hidden=\"true\" /> AGENTS\n                </span>\n                <span className=\"text-xs font-bold text-white font-mono mt-0.5\">\n                  {activeSubagents} Active\n                </span>\n              </div>\n            </div>\n          </div>\n        )}\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/dynamic-island-telemetry.tsx"
       }
     ]
   },
@@ -7947,6 +8394,58 @@
         "content": "/**\n * @origin KokonutUI (https://github.com/kokonut-dev/kokonutui)\n * @license MIT\n * @author KokonutUI Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\"use client\";\nimport * as React from \"react\";\nimport { motion, useMotionValue, useSpring, useTransform } from \"motion/react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface TiltCardProps {\n  title: string;\n  description: string;\n  tag?: string;\n  className?: string;\n  children?: React.ReactNode;\n}\n\nexport function TiltCard({\n  title,\n  description,\n  tag,\n  className,\n  children,\n}: TiltCardProps) {\n  const x = useMotionValue(0);\n  const y = useMotionValue(0);\n\n  const mouseXSpring = useSpring(x, { stiffness: 200, damping: 20 });\n  const mouseYSpring = useSpring(y, { stiffness: 200, damping: 20 });\n\n  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [\"12deg\", \"-12deg\"]);\n  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [\"-12deg\", \"12deg\"]);\n\n  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {\n    const rect = e.currentTarget.getBoundingClientRect();\n    const width = rect.width;\n    const height = rect.height;\n    const mouseX = e.clientX - rect.left;\n    const mouseY = e.clientY - rect.top;\n\n    const xPct = mouseX / width - 0.5;\n    const yPct = mouseY / height - 0.5;\n\n    x.set(xPct);\n    y.set(yPct);\n  };\n\n  const handleMouseLeave = () => {\n    x.set(0);\n    y.set(0);\n  };\n\n  return (\n    <motion.div\n      onMouseMove={handleMouseMove}\n      onMouseLeave={handleMouseLeave}\n      style={{\n        rotateX,\n        rotateY,\n        transformStyle: \"preserve-3d\",\n      }}\n      className={cn(\n        \"relative rounded-xl border border-border bg-card p-6 shadow-md transition-shadow hover:shadow-lg text-card-foreground\",\n        className\n      )}\n    >\n      <div style={{ transform: \"translateZ(30px)\" }} className=\"space-y-3\">\n        {tag && (\n          <span className=\"inline-flex items-center rounded-md bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary\">\n            {tag}\n          </span>\n        )}\n        <h3 className=\"text-lg font-semibold tracking-tight\">{title}</h3>\n        <p className=\"text-sm text-muted-foreground\">{description}</p>\n        {children && <div className=\"pt-2\">{children}</div>}\n      </div>\n    </motion.div>\n  );\n}\n",
         "type": "registry:component",
         "target": "components/ui/tilt-card.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "true-focus-text",
+    "type": "registry:component",
+    "title": "True Focus Text",
+    "description": "Kinetic typography effect where words snap into crisp focus sequentially or via cursor hover.",
+    "category": "ui:motion",
+    "tags": [
+      "neon-scifi",
+      "wai-aria-compliant",
+      "motion",
+      "text",
+      "focus",
+      "kinetic",
+      "react-bits",
+      "typography",
+      "blur"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 5,
+      "visual_density": 5
+    },
+    "complexity": "low",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "fallback_provided": true,
+      "reduced_motion_supported": true
+    },
+    "license_origin": {
+      "source_repository": "https://reactbits.dev",
+      "license_type": "MIT",
+      "author": "DavidHDev",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "clsx",
+      "tailwind-merge",
+      "motion"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/motion/true-focus-text.tsx",
+        "content": "/**\n * @license MIT\n * @origin React Bits (https://reactbits.dev)\n * @author DavidHDev & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface TrueFocusTextProps extends React.HTMLAttributes<HTMLHeadingElement> {\n  words?: string[];\n  intervalMs?: number;\n  glowColor?: string;\n}\n\nexport function TrueFocusText({\n  words = [\"Deterministic\", \"Zero-Slop\", \"Accessible\", \"Agent-Native\", \"Verified\"],\n  intervalMs = 2400,\n  glowColor = \"var(--color-primary, #10b981)\",\n  className,\n  ...props\n}: TrueFocusTextProps) {\n  const [activeIndex, setActiveIndex] = React.useState(0);\n\n  React.useEffect(() => {\n    if (words.length <= 1) return;\n\n    const timer = window.setInterval(() => {\n      setActiveIndex((prev) => (prev + 1) % words.length);\n    }, intervalMs);\n\n    return () => window.clearInterval(timer);\n  }, [words.length, intervalMs]);\n\n  return (\n    <div className=\"flex flex-col items-center justify-center p-6 text-center select-none\">\n      <h2\n        className={cn(\n          \"flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-foreground\",\n          className\n        )}\n        {...props}\n      >\n        {words.map((word, index) => {\n          const isFocused = index === activeIndex;\n\n          return (\n            <span\n              key={`${word}-${index}`}\n              onMouseEnter={() => setActiveIndex(index)}\n              className={cn(\n                \"relative cursor-pointer px-2 py-1 rounded-lg transition-[filter,transform,color] duration-200\",\n                isFocused\n                  ? \"text-primary scale-105 filter-none font-black\"\n                  : \"text-muted-foreground/60 blur-[1.5px] scale-95 opacity-50 hover:opacity-80\"\n              )}\n            >\n              {/* Focus highlight bracket/box */}\n              {isFocused && (\n                <span\n                  className=\"pointer-events-none absolute -inset-1 rounded-lg border border-primary/40 bg-primary/10 shadow-xs motion-reduce:border-primary\"\n                  style={{ borderColor: glowColor }}\n                  aria-hidden=\"true\"\n                />\n              )}\n              <span className=\"relative z-10\">{word}</span>\n            </span>\n          );\n        })}\n      </h2>\n      <p className=\"mt-4 text-xs font-mono text-muted-foreground\">\n        Interactive kinetic focus • Hover any word or let auto-cycle\n      </p>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/true-focus-text.tsx"
       }
     ]
   },

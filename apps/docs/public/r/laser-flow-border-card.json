@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "laser-flow-border-card",
+  "type": "registry:component",
+  "title": "Laser Flow Border Card",
+  "description": "Card with continuous directional laser pulse border animation using SVG and CSS conic gradients with reduced-motion fallback.",
+  "category": "ui:creative",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "neon-scifi",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "creative",
+    "laser",
+    "border",
+    "card",
+    "cult-ui",
+    "glow",
+    "conic-gradient"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 6,
+    "visual_density": 5
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://cult-ui.com",
+    "license_type": "MIT",
+    "author": "Cult UI",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/laser-flow-border-card.tsx",
+      "content": "/**\n * @license MIT\n * @origin Cult UI (https://cult-ui.com)\n * @author Cult UI & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Sparkles, ArrowRight } from \"lucide-react\";\n\nexport interface LaserFlowBorderCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  description?: string;\n  badgeText?: string;\n  ctaText?: string;\n  onCtaClick?: () => void;\n  laserColor?: string;\n  durationSeconds?: number;\n  children?: React.ReactNode;\n}\n\nexport function LaserFlowBorderCard({\n  title = \"Agentic Laser Flow Card\",\n  description = \"Continuous directional laser beam border effect utilizing SVG stroke animations and CSS conic gradients for high-craft UI moments.\",\n  badgeText = \"Cult UI Pattern\",\n  ctaText = \"Inspect Primitive\",\n  onCtaClick,\n  laserColor = \"var(--color-primary, #10b981)\",\n  durationSeconds = 4,\n  children,\n  className,\n  ...props\n}: LaserFlowBorderCardProps) {\n  return (\n    <div\n      className={cn(\n        \"relative rounded-2xl p-[1.5px] overflow-hidden group shadow-xl transition-transform duration-300 hover:scale-[1.01]\",\n        className\n      )}\n      {...props}\n    >\n      {/* Animated Rotating Laser Glow Gradient */}\n      <div\n        className=\"pointer-events-none absolute -inset-[150%] animate-[spin_4s_linear_infinite] motion-reduce:hidden\"\n        style={{\n          background: `conic-gradient(from 0deg, transparent 0 320deg, ${laserColor} 360deg)`,\n          animationDuration: `${durationSeconds}s`,\n        }}\n        aria-hidden=\"true\"\n      />\n\n      {/* Static Fallback Border for prefers-reduced-motion */}\n      <div\n        className=\"pointer-events-none absolute inset-0 rounded-2xl border border-primary/40 hidden motion-reduce:block\"\n        aria-hidden=\"true\"\n      />\n\n      {/* Card Body Surface */}\n      <div className=\"relative rounded-[15px] bg-card p-6 md:p-8 text-card-foreground border border-border/80 h-full flex flex-col justify-between gap-6 z-10\">\n        {children ? (\n          children\n        ) : (\n          <>\n            <div className=\"space-y-4\">\n              {badgeText && (\n                <div className=\"inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold shadow-xs\">\n                  <Sparkles className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                  <span>{badgeText}</span>\n                </div>\n              )}\n\n              <div className=\"space-y-2\">\n                <h3 className=\"text-xl font-bold tracking-tight text-foreground\">\n                  {title}\n                </h3>\n                <p className=\"text-sm text-muted-foreground leading-relaxed\">\n                  {description}\n                </p>\n              </div>\n            </div>\n\n            {ctaText && (\n              <div className=\"pt-4 border-t border-border flex items-center justify-between\">\n                <span className=\"text-xs font-mono text-muted-foreground\">\n                  @cult-ui/laser-flow\n                </span>\n                <button\n                  type=\"button\"\n                  onClick={onCtaClick}\n                  className=\"flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 transition-colors shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n                >\n                  <span>{ctaText}</span>\n                  <ArrowRight className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                </button>\n              </div>\n            )}\n          </>\n        )}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/laser-flow-border-card.tsx"
+    }
+  ]
+}

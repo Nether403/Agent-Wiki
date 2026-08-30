@@ -1,0 +1,52 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "true-focus-text",
+  "type": "registry:component",
+  "title": "True Focus Text",
+  "description": "Kinetic typography effect where words snap into crisp focus sequentially or via cursor hover.",
+  "category": "ui:motion",
+  "tags": [
+    "neon-scifi",
+    "wai-aria-compliant",
+    "motion",
+    "text",
+    "focus",
+    "kinetic",
+    "react-bits",
+    "typography",
+    "blur"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 5,
+    "visual_density": 5
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://reactbits.dev",
+    "license_type": "MIT",
+    "author": "DavidHDev",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/true-focus-text.tsx",
+      "content": "/**\n * @license MIT\n * @origin React Bits (https://reactbits.dev)\n * @author DavidHDev & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface TrueFocusTextProps extends React.HTMLAttributes<HTMLHeadingElement> {\n  words?: string[];\n  intervalMs?: number;\n  glowColor?: string;\n}\n\nexport function TrueFocusText({\n  words = [\"Deterministic\", \"Zero-Slop\", \"Accessible\", \"Agent-Native\", \"Verified\"],\n  intervalMs = 2400,\n  glowColor = \"var(--color-primary, #10b981)\",\n  className,\n  ...props\n}: TrueFocusTextProps) {\n  const [activeIndex, setActiveIndex] = React.useState(0);\n\n  React.useEffect(() => {\n    if (words.length <= 1) return;\n\n    const timer = window.setInterval(() => {\n      setActiveIndex((prev) => (prev + 1) % words.length);\n    }, intervalMs);\n\n    return () => window.clearInterval(timer);\n  }, [words.length, intervalMs]);\n\n  return (\n    <div className=\"flex flex-col items-center justify-center p-6 text-center select-none\">\n      <h2\n        className={cn(\n          \"flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-foreground\",\n          className\n        )}\n        {...props}\n      >\n        {words.map((word, index) => {\n          const isFocused = index === activeIndex;\n\n          return (\n            <span\n              key={`${word}-${index}`}\n              onMouseEnter={() => setActiveIndex(index)}\n              className={cn(\n                \"relative cursor-pointer px-2 py-1 rounded-lg transition-[filter,transform,color] duration-200\",\n                isFocused\n                  ? \"text-primary scale-105 filter-none font-black\"\n                  : \"text-muted-foreground/60 blur-[1.5px] scale-95 opacity-50 hover:opacity-80\"\n              )}\n            >\n              {/* Focus highlight bracket/box */}\n              {isFocused && (\n                <span\n                  className=\"pointer-events-none absolute -inset-1 rounded-lg border border-primary/40 bg-primary/10 shadow-xs motion-reduce:border-primary\"\n                  style={{ borderColor: glowColor }}\n                  aria-hidden=\"true\"\n                />\n              )}\n              <span className=\"relative z-10\">{word}</span>\n            </span>\n          );\n        })}\n      </h2>\n      <p className=\"mt-4 text-xs font-mono text-muted-foreground\">\n        Interactive kinetic focus • Hover any word or let auto-cycle\n      </p>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/true-focus-text.tsx"
+    }
+  ]
+}

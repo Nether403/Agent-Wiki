@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "two-by-two-prioritization-matrix",
+  "type": "registry:component",
+  "title": "2×2 Prioritization Matrix",
+  "description": "Interactive 2x2 quadrant matrix (Impact vs Effort, Urgency vs Importance) with interactive pins and threshold lines.",
+  "category": "ui:editorial",
+  "tags": [
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "diagram",
+    "matrix",
+    "prioritization",
+    "2x2",
+    "impact-effort",
+    "diagram-design"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 3,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/cathrynlavery/diagram-design",
+    "license_type": "MIT",
+    "author": "Cathryn Lavery",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/two-by-two-prioritization-matrix.tsx",
+      "content": "/**\n * @license MIT\n * @origin Diagram Design (https://github.com/cathrynlavery/diagram-design)\n * @author Cathryn Lavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface MatrixItem {\n  id: string;\n  title: string;\n  x: number; // 0 to 100 (horizontal axis: e.g. Effort or Cost)\n  y: number; // 0 to 100 (vertical axis: e.g. Impact or Value)\n  category?: string;\n  description?: string;\n}\n\nexport interface TwoByTwoPrioritizationMatrixProps extends React.HTMLAttributes<HTMLDivElement> {\n  xAxisLabel?: string;\n  yAxisLabel?: string;\n  quadrantLabels?: {\n    topLeft?: string;     // High Impact, Low Effort (Quick Wins)\n    topRight?: string;    // High Impact, High Effort (Major Projects)\n    bottomLeft?: string;  // Low Impact, Low Effort (Fill-ins)\n    bottomRight?: string; // Low Impact, High Effort (Thankless Tasks)\n  };\n  items?: MatrixItem[];\n  onSelectItem?: (item: MatrixItem) => void;\n}\n\nexport function TwoByTwoPrioritizationMatrix({\n  xAxisLabel = \"Effort / Complexity →\",\n  yAxisLabel = \"↑ Impact / Business Value\",\n  quadrantLabels = {\n    topLeft: \"Quick Wins (High Impact, Low Effort)\",\n    topRight: \"Strategic Bets (High Impact, High Effort)\",\n    bottomLeft: \"Fill-Ins (Low Impact, Low Effort)\",\n    bottomRight: \"Deprioritize (Low Impact, High Effort)\",\n  },\n  items = [\n    { id: \"1\", title: \"AST Slop Linter\", x: 25, y: 85, category: \"Core Tooling\" },\n    { id: \"2\", title: \"MCP Registry Server\", x: 35, y: 90, category: \"Distribution\" },\n    { id: \"3\", title: \"Automated Sandbox E2E\", x: 75, y: 80, category: \"Quality Gate\" },\n    { id: \"4\", title: \"Full Video Codemods\", x: 85, y: 40, category: \"Experimental\" },\n    { id: \"5\", title: \"CLI Shortcut Alias\", x: 20, y: 35, category: \"DX\" },\n  ],\n  onSelectItem,\n  className,\n  ...props\n}: TwoByTwoPrioritizationMatrixProps) {\n  const [selectedId, setSelectedId] = React.useState<string | null>(items[0]?.id || null);\n\n  const selectedItem = items.find((i) => i.id === selectedId);\n\n  return (\n    <div\n      className={cn(\n        \"w-full rounded-2xl border border-border bg-card p-6 shadow-sm text-card-foreground flex flex-col gap-6\",\n        className\n      )}\n      {...props}\n    >\n      {/* Header & Axis Legends */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-4\">\n        <div>\n          <h3 className=\"text-base font-bold text-foreground\">2×2 Prioritization Matrix</h3>\n          <p className=\"text-xs text-muted-foreground\">\n            Evaluate strategic trade-offs and component priorities across impact vs effort.\n          </p>\n        </div>\n        <div className=\"flex items-center gap-3 text-xs font-mono text-muted-foreground\">\n          <span className=\"px-2 py-0.5 rounded-md bg-muted border border-border\">{yAxisLabel}</span>\n          <span className=\"px-2 py-0.5 rounded-md bg-muted border border-border\">{xAxisLabel}</span>\n        </div>\n      </div>\n\n      {/* Main 2x2 Canvas */}\n      <div className=\"relative w-full aspect-square sm:aspect-16/10 rounded-xl border border-border bg-background/50 overflow-hidden flex flex-col\">\n        {/* Quadrant Grid Background Lines */}\n        <div className=\"absolute inset-0 grid grid-cols-2 grid-rows-2 divide-x divide-y divide-border pointer-events-none\">\n          {/* Top-Left Quadrant */}\n          <div className=\"p-3 bg-emerald-500/5 flex flex-col justify-between\">\n            <span className=\"text-[11px] font-bold text-emerald-500 tracking-wide uppercase\">\n              {quadrantLabels.topLeft}\n            </span>\n          </div>\n\n          {/* Top-Right Quadrant */}\n          <div className=\"p-3 bg-primary/5 flex flex-col justify-between\">\n            <span className=\"text-[11px] font-bold text-primary tracking-wide uppercase\">\n              {quadrantLabels.topRight}\n            </span>\n          </div>\n\n          {/* Bottom-Left Quadrant */}\n          <div className=\"p-3 bg-muted/20 flex flex-col justify-end\">\n            <span className=\"text-[11px] font-bold text-muted-foreground tracking-wide uppercase\">\n              {quadrantLabels.bottomLeft}\n            </span>\n          </div>\n\n          {/* Bottom-Right Quadrant */}\n          <div className=\"p-3 bg-destructive/5 flex flex-col justify-end\">\n            <span className=\"text-[11px] font-bold text-destructive/80 tracking-wide uppercase\">\n              {quadrantLabels.bottomRight}\n            </span>\n          </div>\n        </div>\n\n        {/* Center Crosshairs */}\n        <div className=\"absolute top-1/2 left-0 right-0 h-px bg-border -translate-y-1/2 pointer-events-none\" aria-hidden=\"true\" />\n        <div className=\"absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2 pointer-events-none\" aria-hidden=\"true\" />\n\n        {/* Interactive Placed Items */}\n        <div className=\"relative flex-1\">\n          {items.map((item) => {\n            const isSelected = item.id === selectedId;\n            return (\n              <button\n                key={item.id}\n                type=\"button\"\n                onClick={() => {\n                  setSelectedId(item.id);\n                  onSelectItem?.(item);\n                }}\n                style={{\n                  left: `${Math.min(92, Math.max(8, item.x))}%`,\n                  bottom: `${Math.min(92, Math.max(8, item.y))}%`,\n                }}\n                className={cn(\n                  \"absolute -translate-x-1/2 translate-y-1/2 group flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring z-10\",\n                  isSelected\n                    ? \"bg-primary text-primary-foreground ring-2 ring-primary/40 scale-105\"\n                    : \"bg-card hover:bg-muted text-foreground border border-border\"\n                )}\n                aria-label={`${item.title} at ${item.x}% effort, ${item.y}% impact`}\n              >\n                <span\n                  className={cn(\n                    \"h-2 w-2 rounded-full\",\n                    item.y >= 50 && item.x <= 50\n                      ? \"bg-emerald-500\"\n                      : item.y >= 50 && item.x > 50\n                      ? \"bg-primary\"\n                      : item.y < 50 && item.x <= 50\n                      ? \"bg-muted-foreground\"\n                      : \"bg-destructive\"\n                  )}\n                  aria-hidden=\"true\"\n                />\n                <span className=\"truncate max-w-[130px]\">{item.title}</span>\n              </button>\n            );\n          })}\n        </div>\n      </div>\n\n      {/* Selected Item Drawer / Detail Inspector */}\n      {selectedItem && (\n        <div className=\"flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl border border-border bg-muted/40 text-xs\">\n          <div className=\"flex items-center gap-2\">\n            <span className=\"font-bold text-foreground\">{selectedItem.title}</span>\n            {selectedItem.category && (\n              <span className=\"px-2 py-0.5 rounded-md bg-background border border-border text-muted-foreground font-mono text-[10px]\">\n                {selectedItem.category}\n              </span>\n            )}\n          </div>\n          <div className=\"flex items-center gap-4 text-muted-foreground font-mono\">\n            <span>Impact: <strong className=\"text-foreground\">{selectedItem.y}%</strong></span>\n            <span>Effort: <strong className=\"text-foreground\">{selectedItem.x}%</strong></span>\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/two-by-two-prioritization-matrix.tsx"
+    }
+  ]
+}

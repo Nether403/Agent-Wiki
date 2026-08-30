@@ -1,0 +1,53 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "lamp-section-header",
+  "type": "registry:block",
+  "title": "Lamp Section Header",
+  "description": "Conical spotlight lamp header effect with gradient light beam pouring down over titles and subtitles.",
+  "category": "ui:block",
+  "tags": [
+    "glassmorphism",
+    "neon-scifi",
+    "wai-aria-compliant",
+    "layout-block",
+    "hero",
+    "header",
+    "lamp",
+    "spotlight",
+    "aceternity",
+    "glow",
+    "gradient"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 5,
+    "visual_density": 5
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://ui.aceternity.com",
+    "license_type": "MIT",
+    "author": "Aceternity UI",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/lamp-section-header.tsx",
+      "content": "/**\n * @license MIT\n * @origin Aceternity UI (https://ui.aceternity.com)\n * @author Aceternity & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface LampSectionHeaderProps extends React.HTMLAttributes<HTMLDivElement> {\n  badgeText?: string;\n  headline?: string;\n  subheadline?: string;\n  lampColor?: string;\n}\n\nexport function LampSectionHeader({\n  badgeText = \"Curated Registry\",\n  headline = \"Deterministic UI for Autonomous Agents\",\n  subheadline = \"High-performance primitives, verified token contracts, and instant Model Context Protocol resolution.\",\n  lampColor = \"var(--color-primary, #10b981)\",\n  className,\n  ...props\n}: LampSectionHeaderProps) {\n  return (\n    <div\n      className={cn(\n        \"relative flex flex-col items-center justify-center min-h-[440px] overflow-hidden bg-background w-full z-0 text-center px-4 py-16\",\n        className\n      )}\n      {...props}\n    >\n      {/* Conical Lamp Glow Cone Beam */}\n      <div className=\"relative flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0 pointer-events-none\">\n        {/* Left Glowing Beam Wedge */}\n        <div\n          className=\"absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-primary via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top] opacity-50 blur-2xl\"\n          style={{ backgroundImage: `conic-gradient(from 70deg at center top, ${lampColor}, transparent 60%)` }}\n          aria-hidden=\"true\"\n        />\n\n        {/* Right Glowing Beam Wedge */}\n        <div\n          className=\"absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-primary text-white [--conic-position:from_290deg_at_center_top] opacity-50 blur-2xl\"\n          style={{ backgroundImage: `conic-gradient(from 290deg at center top, transparent 40%, ${lampColor})` }}\n          aria-hidden=\"true\"\n        />\n\n        {/* Top Lamp Horizontal Light Strip */}\n        <div\n          className=\"absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 bg-background blur-2xl\"\n          aria-hidden=\"true\"\n        />\n        <div\n          className=\"absolute top-1/2 z-50 h-48 w-full bg-transparent opacity-10 backdrop-blur-md\"\n          aria-hidden=\"true\"\n        />\n        <div\n          className=\"absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-primary opacity-30 blur-3xl\"\n          style={{ backgroundColor: lampColor }}\n          aria-hidden=\"true\"\n        />\n        <div\n          className=\"absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-primary/40 blur-2xl\"\n          style={{ backgroundColor: lampColor }}\n          aria-hidden=\"true\"\n        />\n        <div\n          className=\"absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-primary\"\n          style={{ backgroundColor: lampColor }}\n          aria-hidden=\"true\"\n        />\n      </div>\n\n      {/* Foreground Header Content */}\n      <div className=\"relative z-50 flex -translate-y-8 flex-col items-center px-4 max-w-3xl\">\n        {badgeText && (\n          <span className=\"mb-4 inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary shadow-xs\">\n            {badgeText}\n          </span>\n        )}\n\n        <h2 className=\"bg-gradient-to-b from-foreground to-muted-foreground bg-clip-text text-3xl font-black tracking-tight text-transparent sm:text-5xl md:text-6xl\">\n          {headline}\n        </h2>\n\n        <p className=\"mt-4 max-w-xl text-sm sm:text-base text-muted-foreground leading-relaxed\">\n          {subheadline}\n        </p>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/lamp-section-header.tsx"
+    }
+  ]
+}
