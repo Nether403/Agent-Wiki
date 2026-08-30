@@ -1,6 +1,6 @@
 ---
 title: "Model Context Protocol (MCP) Integration"
-description: "How to connect Claude Code, Cursor, and Codex to the @design-wiki/mcp server."
+description: "How to connect Claude Code, Cursor, Windsurf, and Codex to the @design-wiki/mcp server."
 ---
 
 # Model Context Protocol (MCP) Setup
@@ -30,7 +30,64 @@ Add into `.cursor/mcp.json`:
 }
 ```
 
-### Core MCP Tools
+### Windsurf Setup
+
+Add into `.windsurf/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "design-wiki": {
+      "command": "npx",
+      "args": ["@design-wiki/mcp"]
+    }
+  }
+}
+```
+
+### OpenAI Codex Setup
+
+Add the MCP server to your Codex plugin configuration in `.codex/config.json`:
+
+```json
+{
+  "plugins": [
+    {
+      "name": "design-wiki",
+      "command": "npx",
+      "args": ["@design-wiki/mcp"],
+      "transport": "stdio"
+    }
+  ]
+}
+```
+
+---
+
+## Global IDE Rulepack Distribution
+
+In addition to the MCP server, the Design Agent Wiki distributes the canonical agent execution contract and taste dials to all supported IDE rule formats automatically:
+
+```bash
+# Distribute SKILL.md rules to all supported IDE configurations
+pnpm sync:rules
+```
+
+This command reads `SKILL.md` from the repository root and writes synchronized rule files to:
+
+| Target File | IDE / Tool |
+| :--- | :--- |
+| `.cursorrules` | Cursor |
+| `.windsurfrules` | Windsurf / Codeium |
+| `.github/copilot-instructions.md` | GitHub Copilot |
+| `.codex-plugin/rules.json` | OpenAI Codex |
+| `apps/docs/public/SKILL.md` | Remote endpoint for LLM agents |
+
+Run `pnpm sync:rules` after any change to `SKILL.md` to keep all IDE configurations in sync. The `apps/docs/public/SKILL.md` endpoint is served at `https://<your-domain>/SKILL.md` and can be referenced by remote agents for rule discovery.
+
+---
+
+## Core MCP Tools
 
 All tools are optimized to deliver structured responses well under **15KB**, ensuring high LLM context efficiency and zero truncation:
 
@@ -57,4 +114,3 @@ All tools are optimized to deliver structured responses well under **15KB**, ens
    ```json
    { "code": "<your-tsx-code>" }
    ```
-

@@ -22,7 +22,7 @@ VISUAL_DENSITY       Generous whitespace;           Balanced SaaS presentation; 
 
 ### Calibrating Your AI Agent
 
-Add this configuration into your project's `.cursor/rules/design.mdc` or `SKILL.md`:
+Add this configuration into your project's `SKILL.md` (then run `pnpm sync:rules` to distribute to all IDEs):
 
 ```yaml
 dials:
@@ -30,6 +30,8 @@ dials:
   MOTION_INTENSITY: 4    # 1: Basic hover   · 10: Canvas/WebGL springs
   VISUAL_DENSITY: 6      # 1: Generous space · 10: Dense analytical UI
 ```
+
+> **`pnpm sync:rules`** — After editing `SKILL.md`, run this script to automatically distribute the updated dials configuration to `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`, `.codex-plugin/rules.json`, and `apps/docs/public/SKILL.md` in a single pass.
 
 ---
 
@@ -45,6 +47,7 @@ pnpm review:taste ./packages/registry/src/creative/canvas-fluid-wave.tsx
 
 1. **Dark-Mode Procedural Shaders (`ui:creative`)**:
    - Permitted high variance (8–9) and high motion (8–10) **only** when verified with `prefers-reduced-motion` media queries and static visual fallbacks.
+   - Components that pass this check receive `reduced_motion_supported: true` in their accessibility contract, indicating they are WCAG AA compliant for vestibular disorder users.
    - If canvas loops run without media listener fallbacks, motion score is capped and layout/accessibility warnings are triggered.
 2. **Controlled Glassmorphism**:
    - Blanket blur hacks (`bg-white/10 backdrop-blur`) are penalized under `SLOP-003`.
@@ -55,4 +58,5 @@ pnpm review:taste ./packages/registry/src/creative/canvas-fluid-wave.tsx
 4. **Shaded & Tokenized Surfaces**:
    - Raw unshaded backgrounds (`bg-white`, `bg-black`, `bg-[#ffffff]`) without dark-mode variants or semantic tokens are blocked under `SLOP-021`.
    - Ensures components seamlessly adapt to light and dark themes with curated semantic tokens (`bg-card`, `bg-background`, `bg-muted`).
+
 

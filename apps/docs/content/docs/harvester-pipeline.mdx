@@ -5,7 +5,7 @@ description: "How the harvester ingests upstream repositories, parses AST metada
 
 # Ingestion Harvester Pipeline
 
-The **Harvester Engine** (`@design-wiki/harvester`) connects the Design Agent Wiki to upstream open-source repositories (HeroUI, SmoothUI, Aceternity, Canvas UI, KokonutUI, Tailark, Dot Matrix, etc.), ensuring all imported assets are normalized, typed, and guaranteed zero-slop.
+The **Harvester Engine** (`@design-wiki/harvester`) connects the Design Agent Wiki to upstream open-source repositories, ensuring all imported assets are normalized, typed, and guaranteed zero-slop.
 
 ## Architecture
 
@@ -17,26 +17,27 @@ The **Harvester Engine** (`@design-wiki/harvester`) connects the Design Agent Wi
 
 The cloner manages shallow clones (`git clone --depth 1`) from verified upstream repositories into a local staging sandbox (`staging/clones/`).
 
-Supported upstream repositories:
-- **HeroUI** (`ui:primitive`): Accessible form controls and navigation
-- **SmoothUI** (`ui:motion`): Spring-physics micro-interactions
-- **Aceternity UI** (`ui:motion`): Landing page motion primitives
-- **Canvas UI** (`ui:creative`): WebGL and Canvas shaders
-- **diagram-design** (`ui:editorial`): Analytical data cards and SVG diagrams
-- **Evil-Buttons** (`ui:motion`): Tactile physics button interactions
-- **Tailark** (`ui:block`): Asymmetrical bento grid layouts
-- **Remocn** (`ui:media`): Timeline-based video composition and frame-scrubbing controllers
-- **KokonutUI** (`ui:motion`): Spring dialogs and modals
-- **Dot Matrix** (`ui:utility`): Specialized canvas dot loaders
-- **ReUI** (`ui:primitive`): Radix primitives and animated icons
-- **beUI** (`ui:primitive`): Tailwind v4 & View Transition API controls
+Each repository in `KNOWN_REPOSITORIES` (`ast-parser.ts`) is pre-configured with a canonical taxonomy category, default taste dial presets (`defaultDials`), and semantic tag groups. The seven curated library mappings are:
+
+| Library | Category | Core Tags | Default Dials (Var/Mot/Den) |
+| :--- | :--- | :--- | :--- |
+| **Aceternity UI** | `ui:motion` | `framer-motion, tailwind-v4, micro-interaction` | 6 / 8 / 4 |
+| **Canvas UI** | `ui:creative` | `threejs, webgl, framer-motion, interactive` | 9 / 9 / 3 |
+| **diagram-design** | `ui:editorial` | `svg, zero-dependency, static, analytical` | 5 / 1 / 9 |
+| **HeroUI v3** | `ui:primitive` | `react, tailwind-v4, headless, accessible` | 3 / 3 / 6 |
+| **Evil-Buttons** | `ui:motion` | `playful, framer-motion, sound-physics` | 8 / 7 / 5 |
+| **SmoothUI** | `ui:motion` | `framer-motion, shadcn-compatible, spring-physics` | 4 / 6 / 5 |
+| **Tailark** | `ui:block` | `tailwind-v4, marketing, bento-grid` | 5 / 4 / 6 |
 
 ### 2. AST Static Analysis & Auto-Cross-Referencing
 
 Using the TypeScript Compiler API (`ts.createSourceFile`), the parser statically extracts:
 - **Exported Signatures**: Components, functions, and TypeScript prop interfaces.
-- **Dependency & Graphic Tells**: Automatically identifies core imports (`framer-motion`, `motion/react`, `three`, `@react-three/fiber`, `remotion`, Radix UI, Ark UI).
-- **Three.js & WebGL Cross-Referencing**: When analyzing creative canvas and WebGL components (such as `canvas-fluid-wave.tsx`), the parser automatically cross-references `threejs`, `webgl`, and `canvas` tags, automatically injecting `three` into `dependencies` and `@types/three` into `devDependencies` to ensure seamless downstream consumption.
+- **Dependency & Graphic Tells**: Automatically identifies core imports (`framer-motion`, `motion/react`, `three`, `@react-three/fiber`, Radix UI, Ark UI).
+- **Radix/Ark Primitive Binding**: When a component imports from `@radix-ui/react-*` or `@ark-ui/react`, those package names are automatically injected into `registryDependencies` and `peerDependencies`, ensuring clean downstream installation.
+- **Three.js & WebGL Cross-Referencing**: When analyzing creative canvas and WebGL components, the parser automatically cross-references `threejs`, `webgl`, and `canvas` tags, injecting `three` into `dependencies` and `@types/three` into `devDependencies`.
+- **`defaultDials` Preset Support**: If the parsed component belongs to a `KNOWN_REPOSITORIES` entry, the repo-level `defaultDials` preset is merged into the component's dial calibration before scoring overrides are applied.
+- **`prefers-reduced-motion` Detection**: The parser scans for `prefers-reduced-motion` media query usage in both TSX source (`window.matchMedia`) and CSS-in-JS patterns. Components using this fallback automatically receive `reduced_motion_supported: true` in their accessibility contract and the `motion-safe` tag in their taxonomy.
 - **Structural Complexity Scoring**: Evaluates mathematical loops (`requestAnimationFrame` with sinusoidal oscillations), shader code, and lines of code to score complexity as `low`, `medium`, or `high`.
 - **Dynamic YAML Frontmatter Injection**: Formats component metadata, dial calibrations, and accessibility contracts directly into standard YAML frontmatter blocks.
 - **Accessibility Markers**: WAI-ARIA roles, attributes, keyboard handlers, and `prefers-reduced-motion` fallbacks.
@@ -53,6 +54,7 @@ Incoming code is sanitized automatically:
 
 Components are scored on the three Taste Dials (1–10) and evaluated against the 21 Anti-Slop Rules:
 - **Health Score**: Starts at 100 with deductions (15 for High, 8 for Medium, 3 for Low)
+- **`defaultDials` Override**: Repo-level presets from `KNOWN_REPOSITORIES` are applied before per-component heuristics, ensuring library-wide dial consistency.
 - **Automated Gating**: Any component with High-severity slop (`as any as`, fake TODOs, missing accessible labels, raw unshaded backgrounds) is blocked from ingestion.
 
 ## CLI Usage

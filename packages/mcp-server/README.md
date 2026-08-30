@@ -25,6 +25,32 @@ claude mcp add design-wiki npx @design-wiki/mcp
 }
 ```
 
+### Windsurf (`.windsurf/mcp.json`)
+```json
+{
+  "mcpServers": {
+    "design-wiki": {
+      "command": "npx",
+      "args": ["@design-wiki/mcp"]
+    }
+  }
+}
+```
+
+### OpenAI Codex (`.codex/config.json`)
+```json
+{
+  "plugins": [
+    {
+      "name": "design-wiki",
+      "command": "npx",
+      "args": ["@design-wiki/mcp"],
+      "transport": "stdio"
+    }
+  ]
+}
+```
+
 ---
 
 ## 🛠️ Available MCP Tools
@@ -32,7 +58,8 @@ claude mcp add design-wiki npx @design-wiki/mcp
 All tools are engineered to deliver deterministic payloads strictly **< 15KB**, ensuring lightning-fast responses within AI agent context windows.
 
 ### 1. `search_library` / `search_components`
-Searches the 29+ component catalog across all 7 taxonomy categories with multi-dimensional taste dial filtering.
+Searches the 29 component catalog across all 7 taxonomy categories with multi-dimensional taste dial filtering.
+
 * **Parameters**:
   - `query` (string, optional)
   - `category` (`ui:primitive` | `ui:motion` | `ui:creative` | `ui:editorial` | `ui:block` | `ui:media` | `ui:utility`, optional)

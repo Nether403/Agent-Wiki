@@ -2,7 +2,8 @@
 
 > **A deterministic, pre-tested, zero-slop UI component registry and Model Context Protocol (MCP) ecosystem engineered specifically for AI developer agents.**
 
-[![CI / Quality Gate](https://img.shields.io/badge/Slop%20Audit-100%2F100%20(S--Grade)-emerald?style=flat-square)](./COMPLETED-DESIGN-AUDIT.md)
+[![CI / Quality Gate](https://img.shields.io/badge/Slop%20Audit-92%2F100%20(A--Grade)-emerald?style=flat-square)](./COMPLETED-DESIGN-AUDIT.md)
+[![A11y CI](https://img.shields.io/badge/A11y%20WCAG%202.1%20AA-29%2F29%20PASS-green?style=flat-square)](./scripts/test-a11y-linter.ts)
 [![MCP Protocol](https://img.shields.io/badge/MCP%20Server-Compliant%20v1.0-blue?style=flat-square)](./packages/mcp-server)
 [![React 19 & Tailwind v4](https://img.shields.io/badge/Stack-React%2019%20%7C%20Tailwind%20v4-violet?style=flat-square)](./apps/docs)
 [![License](https://img.shields.io/badge/License-MIT-gray?style=flat-square)](./LICENSE)
@@ -31,7 +32,7 @@ The platform runs on a **Double-Exposure Architecture**:
 ```
                                   ┌────────────────────────────────────────────────────────┐
                                   │                   Curated Repositories                 │
-                                  │     (HeroUI, SmoothUI, Aceternity, Canvas UI, ReUI)    │
+                                  │  (HeroUI v3, SmoothUI, Aceternity, Canvas UI, Tailark) │
                                   └───────────────────────────┬────────────────────────────┘
                                                               │
                                                [1. Ingestion Harvester]
@@ -52,6 +53,7 @@ The platform runs on a **Double-Exposure Architecture**:
                 │ - Taste Dial Playground      │                              │  - /r/[name].json (shadcn v3)│
                 │ - Architecture Documentation │                              │  - /r/registry.json Master   │
                 └──────────────────────────────┘                              │  - @design-wiki/mcp Server   │
+                                                                              │  - /SKILL.md (agent rules)   │
                                                                               └──────────────────────────────┘
 ```
 
@@ -67,15 +69,20 @@ Agent Wiki/
 │   └── docs/                        # Next.js 15 App Router + Tailwind v4 human docs & static /r/ host
 │       ├── app/                     # Web routes, /llms.txt, /r/[name]/route.ts, /raw/
 │       ├── content/docs/            # MDX architectural guides and setup manuals
-│       └── public/r/                # Compiled static shadcn JSON schemas and registry.json
+│       └── public/                  # Static build artifacts served by the docs app
+│           ├── r/                   # Compiled shadcn JSON schemas and registry.json index
+│           ├── raw/components/      # Machine-first markdown with YAML frontmatter and TSX source
+│           ├── SKILL.md             # Public endpoint for remote LLM agent skill discovery
+│           ├── llms.txt             # Flat agent discovery index
+│           └── llms-full.txt        # Full-context machine manifest with embedded source
 ├── packages/
 │   ├── harvester/                   # Ingestion engine, shallow git cloner, AST analyzer, slop blocker
-│   │   ├── src/ast-parser.ts        # TypeScript Compiler API AST extractor & repo manifests
+│   │   ├── src/ast-parser.ts        # TypeScript Compiler API AST extractor & 7-library repo manifests
 │   │   ├── src/dial-classifier.ts   # Taste-dial scoring heuristics & 21-rule slop review
 │   │   ├── src/codemods/            # Tailwind v4 & React 19 / motion/react transformers
 │   │   ├── src/attribution.ts       # Open-source SPDX license header injector
 │   │   └── src/cli.ts               # Standalone Harvester CLI (pnpm harvest)
-│   ├── registry/                    # 29+ seed zero-slop components & dynamic registry compiler
+│   ├── registry/                    # 29 seed zero-slop components & dynamic registry compiler
 │   │   ├── src/                     # TSX source files (primitives, motion, creative, editorial, blocks, media, utility)
 │   │   ├── compiler/build-registry.ts # Dynamic component sweeper and /r/ JSON compiler
 │   │   └── schema.json              # Component JSON Schema extending shadcn registry-item
@@ -90,15 +97,18 @@ Agent Wiki/
 │   │   └── src/index.ts             # Executable CLI router
 │   └── audit-linter/                # 21-rule AST + regex anti-slop verification & taste auditing
 │       ├── src/rules.ts             # Rule definitions (SLOP-001 through SLOP-021) & scanCssAntiPatterns
+│       ├── src/dial-classifier.ts   # Standalone dial classifier with defaultDials preset support
 │       ├── src/llm-review.ts        # Automated LLM taste audit & 1-10 dial calibration engine
 │       └── src/cli.ts               # verify-audit & taste review CLI (pnpm review:taste)
-├── skills/
-│   └── design-system-agent/         # Portable agent skillpacks for Claude Code, Cursor, and Codex
-│       ├── SKILL.md                 # Agent execution contract and 4-phase loop
-│       ├── .cursorrules             # Cursor agent instructions and dial configurations
-│       └── claude-code-config.json  # Claude Code MCP integration manifest
+├── scripts/
+│   ├── sync-rulepacks.ts            # IDE rulepack synchronizer: SKILL.md → .cursorrules, .windsurfrules, copilot, codex
+│   └── test-a11y-linter.ts          # WCAG 2.1 AA CI linter: checks all 29 registry components
+├── SKILL.md                         # Agent execution contract, 4-phase loop, active taste dials
+├── .cursorrules                     # Cursor IDE agent instructions (auto-synced from SKILL.md)
+├── .windsurfrules                   # Windsurf IDE agent instructions (auto-synced from SKILL.md)
+├── .github/copilot-instructions.md  # GitHub Copilot agent instructions (auto-synced from SKILL.md)
+├── .codex-plugin/rules.json         # OpenAI Codex ruleset (auto-synced from SKILL.md)
 ├── registry-item-schema.json        # Canonical JSON schema for registry items
-├── verify-audit.py                  # Python audit runner fallback
 └── pnpm-workspace.yaml              # Workspace package configuration
 ```
 
@@ -236,22 +246,36 @@ pnpm build:registry
 ```
 
 ### 3. Run Anti-Slop Audit & Taste Review
-Scans all workspace components against the 20-rule linter and generates `COMPLETED-DESIGN-AUDIT.md`:
+Scans all workspace components against the 21-rule linter and generates `COMPLETED-DESIGN-AUDIT.md`:
 ```bash
-# Workspace wide 20-rule anti-slop audit
+# Workspace wide 21-rule anti-slop audit
 pnpm lint:slop
 
 # Automated taste audit & 1-10 dial calibration on a specific component
 pnpm review:taste packages/registry/src/creative/canvas-fluid-wave.tsx
 ```
 
-### 4. Use the Native Installer CLI (`design-wiki`)
+### 4. Run Automated Accessibility CI Linter
+Validates WCAG 2.1 AA compliance, keyboard navigability, WAI-ARIA contracts, and motion fallbacks across all 29 registry components:
+```bash
+pnpm test:a11y
+```
+
+### 5. Sync IDE Rulepacks from SKILL.md
+Distributes the canonical agent rules from `SKILL.md` into all supported IDE configurations:
+```bash
+pnpm sync:rules
+# Synchronizes: .cursorrules, .windsurfrules, .github/copilot-instructions.md, .codex-plugin/rules.json
+# Also publishes: apps/docs/public/SKILL.md (remote endpoint for LLM agents)
+```
+
+### 6. Use the Native Installer CLI (`design-wiki`)
 Install zero-slop components directly into your local Next.js / Vite UI directories:
 ```bash
 # Add a component (resolves components.json, tsconfig path maps, and missing peer dependencies)
 npx design-wiki add canvas-fluid-wave
 
-# List all 27 verified zero-slop components with dials & tags
+# List all 29 verified zero-slop components with dials & tags
 npx design-wiki list
 
 # Search components by keyword or category
@@ -261,13 +285,13 @@ npx design-wiki search dock
 npx design-wiki audit ./components/ui
 ```
 
-### 5. Run Autonomous Agent Sandbox Test
-Simulates an AI agent executing the 4-phase loop (**Discover &rarr; Inspect &rarr; Install &rarr; Audit**) with zero human intervention:
+### 7. Run Autonomous Agent Sandbox Test
+Simulates an AI agent executing the 4-phase loop (**Discover → Inspect → Install → Audit**) with zero human intervention:
 ```bash
 pnpm test:sandbox
 ```
 
-### 6. Harvest Upstream Repositories
+### 8. Harvest Upstream Repositories
 Run the ingestion engine to shallow-clone, parse AST, and evaluate upstream libraries:
 ```bash
 # Harvest a specific repository
@@ -283,7 +307,7 @@ pnpm harvest file ./packages/registry/src/creative/canvas-fluid-wave.tsx
 pnpm harvest list
 ```
 
-### 7. Start the Documentation Web Showcase
+### 9. Start the Documentation Web Showcase
 ```bash
 pnpm dev
 ```
@@ -294,7 +318,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the human interface,
 
 ## 🤖 The 4-Phase Agent Execution Loop
 
-When an AI coding agent pair-programs in this repository, it follows the mandatory contract defined in [`skills/design-system-agent/SKILL.md`](./skills/design-system-agent/SKILL.md) and [`.cursorrules`](./.cursorrules):
+When an AI coding agent pair-programs in this repository, it follows the mandatory contract defined in [`SKILL.md`](./SKILL.md) and [`.cursorrules`](./.cursorrules):
 
 ```
 [Phase 1: Discover] ──► Query search_components or /llms.txt
@@ -303,7 +327,7 @@ When an AI coding agent pair-programs in this repository, it follows the mandato
 [Phase 2: Inspect]  ──► Query fetch_raw_markup for un-truncated TSX source
          │
          ▼
-[Phase 3: Install]  ──► Query get_installation_schema & run npx shadcn add
+[Phase 3: Install]  ──► Query get_installation_schema & run npx design-wiki add
          │
          ▼
 [Phase 4: Audit]    ──► Run audit_code_slop (Require 85+ score & 0 High flags)
@@ -317,8 +341,8 @@ When an AI coding agent pair-programs in this repository, it follows the mandato
 ### 📋 Integration Receipt
 * **Installed Components**: `['floating-dock', 'bento-grid']`
 * **Added Dependencies**: `motion`, `lucide-react`, `clsx`, `tailwind-merge`
-* **Taste Profile**: Variance `6`, Motion `7`, Density `5`
-* **A11y Status**: WCAG 2.1 AA verified; keyboard navigation + focus-visible confirmed
+* **Taste Profile**: Variance `6`, Motion `8`, Density `4`
+* **A11y Status**: WCAG 2.1 AA verified; keyboard navigation + WAI-ARIA toolbar + focus-visible confirmed
 * **Anti-Slop Audit**: 0 flags detected (Score: 100/100)
 ```
 

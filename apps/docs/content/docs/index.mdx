@@ -25,16 +25,19 @@ The Design Agent Wiki solves this by implementing a dual-interface model:
 2. **Machine Interface**: Ultra-lean, token-efficient programmatic endpoints designed specifically for LLM context windows:
    - `/llms.txt`: Flat discovery index summarizing categories, components, and taste dials.
    - `/llms-full.txt`: Complete flat markdown specification with embedded TypeScript source.
-   - `/raw/components/[slug]`: Clean, token-efficient Markdown representations of component usage.
+   - `/raw/components/[slug]`: Clean, token-efficient Markdown representations with structured YAML frontmatter and verified TSX source.
    - `/r/[name].json`: Programmatic endpoint adhering to the shadcn v3 registry schema.
    - `/r/registry.json`: Master index of all registered items for rapid agent discovery.
+   - `/SKILL.md`: Public endpoint exposing the canonical agent execution contract and active taste dials.
    - `@design-wiki/mcp`: Official Model Context Protocol server exposing `search_library` / `search_components`, `fetch_raw_markup`, `get_installation_schema`, and `audit_code_slop` (< 15KB payloads).
 
 ## Platform Modules
 
 - **`apps/docs`**: Next.js 15 App Router documentation and static registry host.
-- **`packages/registry`**: 29+ seed zero-slop components across all 7 taxonomy categories and the dynamic static compiler (`build-registry.ts`).
-- **`packages/harvester`**: AST static analysis engine, repository shallow cloner, dial scorer, and automated anti-slop review gate.
+- **`packages/registry`**: 29 seed zero-slop components across all 7 taxonomy categories with dynamic static compiler (`build-registry.ts`) and 7-library preset mapping.
+- **`packages/harvester`**: AST static analysis engine, repository shallow cloner, dial scorer, and automated anti-slop review gate. Supports `KNOWN_REPOSITORIES` for Aceternity UI, Canvas UI, diagram-design, HeroUI v3, Evil-Buttons, SmoothUI, and Tailark.
 - **`packages/mcp-server`**: Model Context Protocol stdio service for Claude Code, Cursor, and Codex.
-- **`packages/audit-linter`**: 21-rule AST + regex anti-slop linter (`verify-audit`) and automated taste review engine.
-- **`skills/design-system-agent`**: Portable agent skill packs and `.cursorrules` for autonomous agent pair-programming.
+- **`packages/audit-linter`**: 21-rule AST + regex anti-slop linter and automated taste review engine, including the standalone `dial-classifier.ts` with `defaultDials` preset support.
+- **`scripts/test-a11y-linter.ts`**: Automated WCAG 2.1 AA CI linter. Validates keyboard navigability, WAI-ARIA roles, and motion fallbacks across all 29 registry components (`pnpm test:a11y`).
+- **`scripts/sync-rulepacks.ts`**: IDE rulepack synchronizer that distributes `SKILL.md` rules into `.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`, `.codex-plugin/rules.json`, and `apps/docs/public/SKILL.md` (`pnpm sync:rules`).
+

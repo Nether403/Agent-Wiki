@@ -40,7 +40,13 @@ tsx src/cli.ts audit packages/registry/src --report COMPLETED-DESIGN-AUDIT.md
 ## 📦 Programmatic Usage
 
 ```typescript
-import { auditCode, scanCssAntiPatterns, runLlmTasteReview } from "@design-wiki/audit-linter";
+import {
+  auditCode,
+  scanCssAntiPatterns,
+  runLlmTasteReview,
+  classifyComponentDials,
+  evaluateLLMReview,
+} from "@design-wiki/audit-linter";
 
 // 1. Audit arbitrary code string
 const result = auditCode(codeString, "component.tsx");
@@ -52,7 +58,24 @@ for (const match of cssAntiPatterns) {
   console.warn(`Line ${match.line}: ${match.matchedText} -> Suggested: ${match.suggestedToken}`);
 }
 
-// 3. Run full taste review with dials & guardrails
+// 3. Classify taste dials with optional defaultDials preset
+//    Pass a `defaultDials` preset to anchor dial calibration from a known library's baseline
+//    (e.g., Aceternity UI defaults: { design_variance: 6, motion_intensity: 8, visual_density: 4 })
+const dials = classifyComponentDials(codeString, "canvas-fluid-wave.tsx", {
+  defaultDials: { design_variance: 9, motion_intensity: 9, visual_density: 3 },
+});
+console.log("Taste Dials:", dials); // { design_variance: 9, motion_intensity: 9, visual_density: 3 }
+
+// 4. Evaluate an LLM-generated review for quality and hallucination risk
+const evaluation = evaluateLLMReview({
+  reviewText: "This component uses framer-motion spring animations...",
+  componentSlug: "floating-dock",
+  claimedDials: { design_variance: 6, motion_intensity: 8, visual_density: 4 },
+});
+console.log("Review Quality:", evaluation.confidence); // "high" | "medium" | "low"
+console.log("Hallucination Flags:", evaluation.hallucinations);
+
+// 5. Run full taste review with dials & guardrails
 const review = runLlmTasteReview(codeString, "canvas-fluid-wave.tsx");
 console.log("Taste Dials:", review.dials);
 console.log("Passed Guardrails:", review.guardrails);

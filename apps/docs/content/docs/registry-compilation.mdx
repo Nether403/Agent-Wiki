@@ -33,17 +33,17 @@ The **Registry Compiler** (`@design-wiki/registry/compiler/build-registry.ts`) d
 ## Features
 
 ### 1. Dynamic Asset Sweeper
-Recursively scans `packages/registry/src/` (primitives, motion, creative, editorial, blocks, utility) and any candidate `/components` folders. If a component lacks manual metadata overrides, the compiler dynamically infers titles, descriptions, categories, taste dials, and tags using the Harvester AST engine.
+Recursively scans `packages/registry/src/` across all 7 taxonomy category subdirectories: `primitives`, `motion`, `creative`, `editorial`, `blocks`, `media`, and `utility`. Across 29 confirmed components, if a component lacks manual metadata overrides in `COMPONENT_OVERRIDES`, the compiler dynamically infers titles, descriptions, categories, taste dials, and tags using the Harvester AST engine with `KNOWN_REPOSITORIES` preset support.
 
 ### 2. Dependency Auto-Mapping
 Peer npm dependencies are automatically identified from AST import specifiers:
-- `motion/react`, `framer-motion` &rarr; `motion`
-- `lucide-react` &rarr; `lucide-react`
-- `three` &rarr; `three`
-- `@radix-ui/react-*` &rarr; `@radix-ui/react-*`
-- `@ark-ui/react` &rarr; `@ark-ui/react`
-- `clsx`, `tailwind-merge`, `class-variance-authority` &rarr; appended to `dependencies`
-- `@/components/ui/[primitive]` &rarr; appended to `registryDependencies`
+- `motion/react`, `framer-motion` → `motion`
+- `lucide-react` → `lucide-react`
+- `three` → `three`
+- `@radix-ui/react-*` → `@radix-ui/react-*` (auto-bound to `registryDependencies`)
+- `@ark-ui/react` → `@ark-ui/react` (auto-bound to `registryDependencies`)
+- `clsx`, `tailwind-merge`, `class-variance-authority` → appended to `dependencies`
+- `@/components/ui/[primitive]` → appended to `registryDependencies`
 
 ### 3. Schema Conformance
 Every generated JSON item complies with `registry-item-schema.json` (extending the shadcn v3 registry item schema).
@@ -53,10 +53,14 @@ Every generated JSON item complies with `registry-item-schema.json` (extending t
 | Destination | Format | Description |
 | :--- | :--- | :--- |
 | `apps/docs/public/r/[name].json` | JSON | Component installation schema consumed by `npx design-wiki add` and `npx shadcn add` |
-| `apps/docs/public/r/registry.json` | JSON | Master index of all registered components with taxonomy and taste dials |
+| `apps/docs/public/r/registry.json` | JSON | Master index of all 29 registered components with taxonomy and taste dials |
 | `apps/docs/public/raw/components/[name].md` | Markdown | Machine-first component documentation with structured YAML frontmatter and verified TSX source |
 | `apps/docs/public/llms.txt` | Plain Text | Flat machine discovery index summarizing components, taxonomy, and dials |
 | `apps/docs/public/llms-full.txt` | Markdown | Complete flat context payload with embedded component code |
+
+#### Raw Proxy Route & `.md` Extension Transparency
+
+The `/raw/[...slug]` Next.js route (`apps/docs/app/raw/[...slug]/route.ts`) transparently strips the `.md` extension from incoming request slugs. This means both `/raw/components/button` and `/raw/components/button.md` resolve to the same resource, allowing agents and curl requests to use either format without error.
 
 ## Running the Compiler
 
@@ -76,4 +80,5 @@ npx design-wiki add <component-name>
 # Traditional shadcn v3 installer
 npx shadcn@latest add http://localhost:3000/r/<component-name>.json
 ```
+
 

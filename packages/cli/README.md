@@ -52,7 +52,7 @@ npx design-wiki add spring-dialog --install-deps
 ---
 
 ### 2. `list`
-Lists all 29+ verified zero-slop components indexed in the registry with their taxonomy categories, taste dials, and tags.
+Lists all 29 verified zero-slop components indexed in the registry with their taxonomy categories, taste dials, and tags.
 
 ```bash
 npx design-wiki list
