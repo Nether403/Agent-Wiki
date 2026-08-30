@@ -307,16 +307,20 @@ Every component source file compiled into `/r/` includes an immutable legal comm
 *   **MCP Service**: Distributed as an npm package (`@design-wiki/mcp`) for local stdio, with an optional Cloudflare Worker deployment for cloud agent streaming.
 
 ### 7.2 GitHub Actions Workflows
-1.  **`pull-request-gate.yml`**:
+1.  **`audit-guardrails.yml`**:
+    *   Runs `verify-audit.py` across `packages/registry/src` with 21 anti-slop rules, arbitrary pixel checks (`p-[17px]`), and WCAG contrast validation.
+    *   Executes `pnpm lint:slop` and verifies registry compilation with `pnpm build:registry`.
+    *   Runs `@design-wiki/mcp` sandbox test and autonomous agent trial runner (`scripts/run-agent-sandbox.ts`).
+2.  **`pull-request-gate.yml`**:
     *   Runs `verify-audit` across modified components (fails on any High severity violation).
     *   Validates all updated registry JSON files against `registry-item-schema.json`.
     *   Executes `tsc --noEmit` and component unit tests.
-2.  **`build-and-deploy-registry.yml`** (On merge to `main`):
+3.  **`build-and-deploy-registry.yml`** (On merge to `main`):
     *   Executes `build-registry.ts` to re-compile all `/public/r/*` artifacts.
     *   Rebuilds Next.js Fumadocs static documentation.
     *   Deploys static site to CDN.
     *   Publishes updated `@design-wiki/mcp` package to npm if server source changed.
-3.  **`nightly-fidelity-benchmark.yml`**:
+4.  **`nightly-fidelity-benchmark.yml`**:
     *   Spins up headless evaluation sandboxes to test random sample components with AI coding agents, reporting pass-rate metrics to the repository status board.
 
 ---

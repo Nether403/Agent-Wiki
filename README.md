@@ -2,8 +2,8 @@
 
 > **A deterministic, pre-tested, zero-slop UI component registry and Model Context Protocol (MCP) ecosystem engineered specifically for AI developer agents.**
 
-[![CI / Quality Gate](https://img.shields.io/badge/Slop%20Audit-92%2F100%20(A--Grade)-emerald?style=flat-square)](./COMPLETED-DESIGN-AUDIT.md)
-[![A11y CI](https://img.shields.io/badge/A11y%20WCAG%202.1%20AA-29%2F29%20PASS-green?style=flat-square)](./scripts/test-a11y-linter.ts)
+[![CI / Quality Gate](https://img.shields.io/badge/Slop%20Audit-100%2F100%20(S--Grade)-emerald?style=flat-square)](./COMPLETED-DESIGN-AUDIT.md)
+[![A11y CI](https://img.shields.io/badge/A11y%20WCAG%202.1%20AA-30%2F30%20PASS-green?style=flat-square)](./scripts/test-a11y-linter.ts)
 [![MCP Protocol](https://img.shields.io/badge/MCP%20Server-Compliant%20v1.0-blue?style=flat-square)](./packages/mcp-server)
 [![React 19 & Tailwind v4](https://img.shields.io/badge/Stack-React%2019%20%7C%20Tailwind%20v4-violet?style=flat-square)](./apps/docs)
 [![License](https://img.shields.io/badge/License-MIT-gray?style=flat-square)](./LICENSE)
@@ -32,20 +32,20 @@ The platform runs on a **Double-Exposure Architecture**:
 ```
                                   ┌────────────────────────────────────────────────────────┐
                                   │                   Curated Repositories                 │
-                                  │  (HeroUI v3, SmoothUI, Aceternity, Canvas UI, Tailark) │
+                                  │ (HeroUI v3, SmoothUI, Aceternity, KokonutUI, Tailark)  │
                                   └───────────────────────────┬────────────────────────────┘
                                                               │
-                                               [1. Ingestion Harvester]
-                                               (ast-parser.ts + cloner)
+                                                [1. Ingestion Harvester]
+                                                (ast-parser.ts + git cloner)
                                                               │
                                                 [2. Dial Scorer & Slop Gate]
                                                 (21 anti-slop rules + LLM review)
                                                               │
-                                               [3. Static Registry Compiler]
-                                               (build-registry.ts dynamic sweeper)
+                                                [3. Static Registry Compiler]
+                                                (build-registry.ts dynamic sweeper)
                                                               │
-                               ┌──────────────────────────────┴──────────────────────────────┐
-                               ▼                                                             ▼
+                                ┌──────────────────────────────┴──────────────────────────────┐
+                                ▼                                                             ▼
                 ┌──────────────────────────────┐                              ┌──────────────────────────────┐
                 │       Human Interface        │                              │      Machine Interface       │
                 │   (Next.js 15 + Tailwind v4) │                              │  - /llms.txt & /llms-full.txt│
@@ -77,17 +77,28 @@ Agent Wiki/
 │           └── llms-full.txt        # Full-context machine manifest with embedded source
 ├── packages/
 │   ├── harvester/                   # Ingestion engine, shallow git cloner, AST analyzer, slop blocker
-│   │   ├── src/ast-parser.ts        # TypeScript Compiler API AST extractor & 7-library repo manifests
+│   │   ├── src/ast-parser.ts        # TypeScript Compiler API AST extractor & 8-library repo manifests
 │   │   ├── src/dial-classifier.ts   # Taste-dial scoring heuristics & 21-rule slop review
 │   │   ├── src/codemods/            # Tailwind v4 & React 19 / motion/react transformers
 │   │   ├── src/attribution.ts       # Open-source SPDX license header injector
-│   │   └── src/cli.ts               # Standalone Harvester CLI (pnpm harvest)
-│   ├── registry/                    # 29 seed zero-slop components & dynamic registry compiler
+│   │   └── src/cli.ts               # Standalone Harvester CLI (pnpm harvest ingest <repo>)
+│   ├── registry/                    # 30 seed zero-slop components & dynamic registry compiler
 │   │   ├── src/                     # TSX source files (primitives, motion, creative, editorial, blocks, media, utility)
 │   │   ├── compiler/build-registry.ts # Dynamic component sweeper and /r/ JSON compiler
 │   │   └── schema.json              # Component JSON Schema extending shadcn registry-item
 │   ├── mcp-server/                  # Model Context Protocol (MCP) service for developer agents
-│   │   ├── src/server.ts            # search_library, fetch_raw_markup, get_installation_schema (<15KB)
+│   │   ├── src/server.ts            # search_library, fetch_raw_markup, get_installation_schema (<15KB budget)
+│   │   ├── src/index.ts             # Stdio transport entrypoint
+│   │   └── test/agent-sandbox.test.ts # Autonomous end-to-end sandbox verification test
+│   ├── cli/                         # Native installer CLI (npx design-wiki add <slug>)
+│   │   ├── src/commands/add.ts      # Path map resolver, recursive downloader & peer installer
+│   │   ├── src/commands/list.ts     # Component catalog browser with taste dials
+│   │   ├── src/commands/audit.ts    # Standalone anti-slop audit scanner
+│   │   └── src/index.ts             # Executable CLI router with --cwd & --path support
+│   └── audit-linter/                # 21-rule AST + regex anti-slop verification & taste auditing
+│       ├── src/rules.ts             # Rule definitions (SLOP-001 through SLOP-021) & scanCssAntiPatterns
+│       ├── src/dial-classifier.ts   # Standalone dial classifier with defaultDials preset support
+etch_raw_markup, get_installation_schema (<15KB)
 │   │   ├── src/index.ts             # Stdio transport entrypoint
 │   │   └── test/agent-sandbox.test.ts # Autonomous end-to-end sandbox verification test
 │   ├── cli/                         # Native installer CLI (npx design-wiki add <slug>)
@@ -256,7 +267,7 @@ pnpm review:taste packages/registry/src/creative/canvas-fluid-wave.tsx
 ```
 
 ### 4. Run Automated Accessibility CI Linter
-Validates WCAG 2.1 AA compliance, keyboard navigability, WAI-ARIA contracts, and motion fallbacks across all 29 registry components:
+Validates WCAG 2.1 AA compliance, keyboard navigability, WAI-ARIA contracts, and motion fallbacks across all 30 registry components:
 ```bash
 pnpm test:a11y
 ```
@@ -275,7 +286,10 @@ Install zero-slop components directly into your local Next.js / Vite UI director
 # Add a component (resolves components.json, tsconfig path maps, and missing peer dependencies)
 npx design-wiki add canvas-fluid-wave
 
-# List all 29 verified zero-slop components with dials & tags
+# Install into a specific directory or sandbox with recursive dependency resolution
+npx design-wiki add pricing-table --cwd staging/sandbox-nextjs
+
+# List all 30 verified zero-slop components with dials & tags
 npx design-wiki list
 
 # Search components by keyword or category
@@ -285,15 +299,24 @@ npx design-wiki search dock
 npx design-wiki audit ./components/ui
 ```
 
-### 7. Run Autonomous Agent Sandbox Test
+### 7. Run Autonomous Agent Sandbox Trial & MCP Tests
 Simulates an AI agent executing the 4-phase loop (**Discover → Inspect → Install → Audit**) with zero human intervention:
 ```bash
-pnpm test:sandbox
+# Run MCP sandbox integration test
+pnpm --filter @design-wiki/mcp test:sandbox
+
+# Run end-to-end Agent Sandbox trial (Pricing table discovery & installation in Next.js sandbox)
+pnpm tsx scripts/run-agent-sandbox.ts
 ```
 
-### 8. Harvest Upstream Repositories
-Run the ingestion engine to shallow-clone, parse AST, and evaluate upstream libraries:
+### 8. Harvest Upstream Repositories & Ingest Components
+Run the end-to-end ingestion engine to clone, parse AST, score taste dials, inject YAML frontmatter, and rebuild the registry:
 ```bash
+# End-to-end ingestion pipeline (e.g. KokonutUI)
+node ast-parse-ingest.js kokonutui
+# Or via harvester CLI
+pnpm harvest ingest kokonutui
+
 # Harvest a specific repository
 pnpm harvest repo smoothui
 

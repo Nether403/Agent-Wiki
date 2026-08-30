@@ -2,12 +2,13 @@
 
 The automated ingestion engine and AST static analyzer for the **Machine-First Design Agent Wiki**.
 
-Connects to seven curated upstream repositories (HeroUI v3, SmoothUI, Aceternity UI, Canvas UI, Evil-Buttons, diagram-design, Tailark) and any local staging directory, parses TypeScript AST structures, scores structural complexity, and generates clean, machine-readable YAML frontmatter contracts.
+Connects to eight curated upstream repositories (HeroUI v3, SmoothUI, Aceternity UI, KokonutUI, Canvas UI, Evil-Buttons, diagram-design, Tailark) and any local staging directory, parses TypeScript AST structures, scores structural complexity, and generates clean, machine-readable YAML frontmatter contracts.
 
 ---
 
 ## 🚀 Features
 
+* **End-to-End Automated Ingestion**: Chains shallow clone $\rightarrow$ AST static analysis $\rightarrow$ Taste Dial scoring $\rightarrow$ anti-slop gate $\rightarrow$ YAML frontmatter generation $\rightarrow$ registry rebuild.
 * **AST Parsing & Dependency Extraction**: Statically extracts third-party packages (`motion`, `lucide-react`, `three`, `@radix-ui/*`, `@ark-ui/react`), props interfaces, and local shadcn dependencies using the TypeScript Compiler API.
 * **Radix/Ark Primitive Auto-Binding**: When a component imports from `@radix-ui/react-*` or `@ark-ui/react`, those package names are automatically injected into `registryDependencies` and `peerDependencies` to ensure clean downstream installation without manual override.
 * **Three.js, WebGL & Media Auto-Cross-Referencing**: When scanning creative canvas or WebGL shader files, automatically injects `three` into `dependencies`, adds `@types/three` to `devDependencies`, and cross-references taxonomy tags (`webgl`, `threejs`, `canvas`).
@@ -23,6 +24,11 @@ Connects to seven curated upstream repositories (HeroUI v3, SmoothUI, Aceternity
 ## 🛠️ CLI Usage
 
 ```bash
+# Full end-to-end ingestion and registry rebuild
+pnpm harvest ingest kokonutui
+# or via root runner
+node ast-parse-ingest.js kokonutui
+
 # Harvest a specific upstream repository
 pnpm harvest repo smoothui
 

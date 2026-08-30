@@ -25,6 +25,9 @@ Evaluates TypeScript, React, and Tailwind CSS code against 21 anti-slop rules, s
 # Run the 21-rule linter across all registry components
 pnpm lint:slop
 
+# Run Python CI/CD guardrail (enforces non-zero exit codes on slop violations)
+python verify-audit.py packages/registry/src
+
 # Or run the CLI directly:
 tsx src/cli.ts audit packages/registry/src
 

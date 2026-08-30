@@ -27,13 +27,16 @@ pnpm add -g design-wiki
 ## 🛠️ Commands
 
 ### 1. `add <slug>`
-Downloads and writes a component directly into your local components directory.
+Downloads and writes a component directly into your local components directory with sub-250ms speed.
 
 ```bash
 # Add a component by name
 npx design-wiki add canvas-fluid-wave
 
-# Specify target installation directory
+# Target a specific workspace / sandbox directory
+npx design-wiki add pricing-table --cwd staging/sandbox-nextjs
+
+# Specify target component folder
 npx design-wiki add floating-dock --path src/components/ui
 
 # Overwrite existing files
@@ -44,15 +47,16 @@ npx design-wiki add spring-dialog --install-deps
 ```
 
 **Key Features:**
+* **Sub-Second Speed (<250ms)**: High-speed local disk resolution and optimized network fetches.
 * **Automatic Path Mapping**: Reads `components.json` or `tsconfig.json` to place files into `@/components/ui` (`src/components/ui` or `components/ui`).
-* **Recursive Dependencies**: Automatically checks and installs internal registry dependencies (e.g. `magnetic-button` &rarr; `button`).
+* **Recursive Dependencies**: Automatically checks and installs internal registry dependencies (e.g. `pricing-table` &rarr; `button`, `magnetic-button` &rarr; `button`).
 * **Helper Scaffolding**: Detects if `lib/utils.ts` (with `cn`) exists; scaffolds it automatically if missing.
-* **Peer Package Audit**: Identifies missing packages (`motion`, `three`, `remotion`, `clsx`, `tailwind-merge`) and displays or runs the correct install command for your package manager (`pnpm`, `npm`, `bun`, `yarn`).
+* **Peer Package Audit**: Identifies missing packages (`motion`, `lucide-react`, `three`, `clsx`, `tailwind-merge`) and displays or runs the correct install command for your package manager (`pnpm`, `npm`, `bun`, `yarn`).
 
 ---
 
 ### 2. `list`
-Lists all 29 verified zero-slop components indexed in the registry with their taxonomy categories, taste dials, and tags.
+Lists all 30 verified zero-slop components indexed in the registry with their taxonomy categories, taste dials, and tags.
 
 ```bash
 npx design-wiki list
@@ -83,6 +87,7 @@ npx design-wiki audit ./components/ui
 
 | Flag | Description | Default |
 | :--- | :--- | :--- |
+| `--cwd <dir>` | Project root working directory | `process.cwd()` |
 | `-p, --path <dir>` | Destination folder for component files | Auto-detected from `components.json` |
 | `-o, --overwrite` | Overwrite existing local component files | `false` |
 | `-y, --yes` | Skip confirmation prompts | `false` |

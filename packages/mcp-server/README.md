@@ -55,10 +55,10 @@ claude mcp add design-wiki npx @design-wiki/mcp
 
 ## 🛠️ Available MCP Tools
 
-All tools are engineered to deliver deterministic payloads strictly **< 15KB**, ensuring lightning-fast responses within AI agent context windows.
+All tools are engineered to deliver deterministic payloads strictly **< 15KB** (15,360 bytes) via our built-in `stripPayloadToBudget` context optimizer, ensuring lightning-fast responses within AI agent context windows.
 
 ### 1. `search_library` / `search_components`
-Searches the 29 component catalog across all 7 taxonomy categories with multi-dimensional taste dial filtering.
+Searches the 30 component catalog across all 7 taxonomy categories with multi-dimensional taste dial filtering.
 
 * **Parameters**:
   - `query` (string, optional)
@@ -75,7 +75,7 @@ Returns complete raw Markdown or structured TSX markup including:
 - CLI recipes (`npx design-wiki add <slug>`)
 - Verified, copy-pasteable TSX production source code block
 * **Parameters**:
-  - `name` (string, required): Component slug (e.g. `canvas-fluid-wave`, `floating-dock`, `evil-button`, `timeline-player`)
+  - `name` (string, required): Component slug (e.g. `pricing-table`, `canvas-fluid-wave`, `floating-dock`, `evil-button`, `spring-dialog`)
 
 ### 3. `get_installation_schema` / `get_installation_commands` *(Alias: `get_install_recipe`)*
 Returns exact terminal commands, shadcn v3 registry schemas, peer dependency installations, import syntax, and step-by-step setup instructions.
@@ -91,12 +91,16 @@ Lints user or agent-generated React/Tailwind code against the 21 Anti-Slop Rules
 
 ---
 
-## 🧪 Testing the Server
+## 🧪 Testing the Server & Sandbox Autonomy
 
-Run the autonomous agent sandbox test suite:
+Run the autonomous agent sandbox test suite and Next.js trial:
 
 ```bash
+# Run MCP tool protocol tests
 pnpm test:sandbox
+
+# Run the complete Next.js Autonomous Agent Trial (Pricing Table layout assembly)
+pnpm tsx scripts/run-agent-sandbox.ts
 ```
 
 ---

@@ -169,6 +169,42 @@ Build high-speed programmatic bridges allowing AI developer agents (Claude Code,
 > - [x] Native installer CLI `npx design-wiki add <slug>` operational with automatic path map resolution and recursive dependency scaffolding.
 > - [x] Automated taste audit engine and calibrated 1–10 dial review pipeline active with layout stability guardrails.
 
+---
+
+## 4.5. Phase 3.5: Pipeline Integration & Agent Validation (Completed)
+
+### Goal:
+Transition from isolated packages to a cohesive, automated end-to-end workflow, proving the "Zero-Draft Fidelity" KPI with autonomous AI agents across three integrated milestones.
+
+### Milestone 1: End-to-End Harvester Pipeline
+*   **Target Ingestion**: Ingested KokonutUI (`spring-dialog`, `tilt-card`).
+*   **Sequential Pipeline Chain**: Connected `ast-parse-ingest.js` and `pnpm harvest ingest <repo>`:
+    1. Clone/stage target component source.
+    2. Run TypeScript Compiler AST parser to map peer/registry dependencies (`motion/react`, `lucide-react`, `clsx`, `tailwind-merge`).
+    3. Run `dial-classifier.ts` to generate aesthetic Taste Dial JSON mapping (Variance, Motion, Density).
+    4. Run 21-rule anti-slop check to guarantee 100/100 code health.
+    5. Write `.tsx` and `.mdx` with YAML frontmatter to `packages/registry/src/` and trigger dynamic registry compiler (`build-registry.ts`).
+
+### Milestone 2: MCP Server & Agent Sandbox Testing
+*   **Token Budget Stripper**: Implemented `stripPayloadToBudget` in `packages/mcp-server/src/server.ts` enforcing `<15KB` (15,360 bytes) context payloads across all MCP tool endpoints (`search_library`, `fetch_raw_markdown`, `fetch_raw_markup`, `get_installation_commands`, `get_installation_schema`).
+*   **Autonomous Next.js Sandbox Trial**: Validated autonomous agent prompt: *"Build a pricing section using the Machine-First Design Agent Wiki. Find a suitable layout and install it."*
+    *   Discovery rate: 100% first prompt match (`pricing-table`).
+    *   Payload size: 12.9KB (within 15KB budget).
+    *   Installed into `staging/sandbox-nextjs` and verified zero slop (100/100 Health Score).
+
+### Milestone 3: CLI Hardening & Anti-Slop Enforcement
+*   **CLI Performance Benchmark**: Component installation (`npx design-wiki add pricing-table --cwd staging/sandbox-nextjs`) completes in **203ms** (< 2000ms SLA target).
+*   **Recursive Dependencies**: Automatically resolved nested `registryDependencies` (`pricing-table` $\rightarrow$ `button`).
+*   **CI/CD Guardrail**: Upgraded `verify-audit.py` with 21 anti-slop rules, arbitrary pixel checks (`p-[17px]`), and non-zero exit codes. Integrated with `.github/workflows/audit-guardrails.yml` to block PRs introducing slop.
+
+> [!NOTE]
+> **Phase 3.5 Checkpoint Gate (Zero-Draft Fidelity Verified)**:
+> - [x] End-to-end harvester pipeline successfully ingests third-party component libraries and updates registry artifacts.
+> - [x] Autonomous agent sandbox trial passes with 100% first-prompt discovery and implementation rate.
+> - [x] All MCP response payloads strictly conform to the <15KB token context budget.
+> - [x] CLI add command installs components and recursive dependencies in under 2 seconds (203ms achieved).
+> - [x] CI/CD anti-slop GitHub Actions workflow active and enforcing zero-slop standards.
+
 
 ---
 
