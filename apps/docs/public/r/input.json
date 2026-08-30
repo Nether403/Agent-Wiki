@@ -6,9 +6,10 @@
   "description": "Accessible text input with floating state, error boundaries, and focus-visible ring.",
   "category": "ui:primitive",
   "tags": [
+    "accessible",
+    "utility",
     "tailwind-v4",
     "form",
-    "accessible",
     "input"
   ],
   "dials": {
@@ -20,7 +21,8 @@
     "keyboard_navigable": true,
     "wai_aria_compliant": true,
     "wai_aria_role": "textbox",
-    "fallback_provided": true
+    "fallback_provided": true,
+    "reduced_motion_supported": false
   },
   "license_origin": {
     "source_repository": "https://ui.shadcn.com",

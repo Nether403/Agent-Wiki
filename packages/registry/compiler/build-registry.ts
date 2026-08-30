@@ -1,5 +1,10 @@
 import fs from "fs";
 import path from "path";
+import {
+  parseComponentAST,
+  classifyComponentDials,
+  TaxonomyCategory,
+} from "@design-wiki/harvester";
 
 interface RegistryDial {
   design_variance: number;
@@ -30,14 +35,7 @@ interface RegistryItem {
   type: "registry:ui" | "registry:component" | "registry:block";
   title: string;
   description: string;
-  category:
-    | "ui:primitive"
-    | "ui:motion"
-    | "ui:creative"
-    | "ui:editorial"
-    | "ui:block"
-    | "ui:media"
-    | "ui:utility";
+  category: TaxonomyCategory;
   tags: string[];
   dials: RegistryDial;
   a11y: RegistryA11y;
@@ -53,19 +51,19 @@ interface RegistryItem {
   }>;
 }
 
-// Map component slug to curated metadata
-const COMPONENT_METADATA: Record<
+// Hand-tuned metadata overrides for seed catalog items
+const COMPONENT_METADATA_OVERRIDES: Record<
   string,
   {
-    title: string;
-    description: string;
-    category: RegistryItem["category"];
-    tags: string[];
-    dials: RegistryDial;
-    a11y: RegistryA11y;
-    license: RegistryLicenseOrigin;
-    dependencies: string[];
-    registryDependencies: string[];
+    title?: string;
+    description?: string;
+    category?: TaxonomyCategory;
+    tags?: string[];
+    dials?: Partial<RegistryDial>;
+    a11y?: Partial<RegistryA11y>;
+    license?: Partial<RegistryLicenseOrigin>;
+    dependencies?: string[];
+    registryDependencies?: string[];
   }
 > = {
   button: {
@@ -367,79 +365,203 @@ const COMPONENT_METADATA: Record<
   },
 };
 
+/**
+ * Traverses candidate directories to collect all component files
+ */
+function sweepComponentFiles(targetDirs: string[]): Array<{ filePath: string; relativeSubpath: string }> {
+  const fileList: Array<{ filePath: string; relativeSubpath: string }> = [];
+
+  for (const baseDir of targetDirs) {
+    if (!fs.existsSync(baseDir)) continue;
+
+    function walk(currentDir: string) {
+      const entries = fs.readdirSync(currentDir, { withFileTypes: true });
+      for (const entry of entries) {
+        const fullPath = path.join(currentDir, entry.name);
+        if (entry.isDirectory()) {
+          if (!["node_modules", ".git", "dist", ".next", "out", "build"].includes(entry.name)) {
+            walk(fullPath);
+          }
+        } else if (
+          /\.(tsx|ts|jsx|js)$/.test(entry.name) &&
+          !entry.name.endsWith(".d.ts") &&
+          entry.name !== "utils.ts"
+        ) {
+          fileList.push({
+            filePath: fullPath,
+            relativeSubpath: path.relative(baseDir, fullPath).replace(/\\/g, "/"),
+          });
+        }
+      }
+    }
+
+    walk(baseDir);
+  }
+
+  return fileList;
+}
+
+/**
+ * Validates item integrity against registry-item schema expectations
+ */
+function validateRegistryItem(item: RegistryItem): boolean {
+  if (!item.name || !item.type || !item.title || !item.category || !item.files || item.files.length === 0) {
+    return false;
+  }
+  if (!item.dials || typeof item.dials.design_variance !== "number") {
+    return false;
+  }
+  if (!item.a11y || typeof item.a11y.keyboard_navigable !== "boolean") {
+    return false;
+  }
+  return true;
+}
+
 function main() {
-  console.log("🚀 Starting Design Agent Wiki Registry Compilation...");
+  console.log("🚀 Starting Design Agent Wiki Registry Compilation & Dynamic Sweeper...");
 
   const rootDir = path.resolve(__dirname, "..");
   const srcDir = path.join(rootDir, "src");
-  const distRDir = path.join(rootDir, "dist", "r");
   const monorepoRoot = path.resolve(rootDir, "../..");
+  const distRDir = path.join(rootDir, "dist", "r");
   const docsPublicDir = path.resolve(monorepoRoot, "apps/docs/public");
   const docsRDir = path.resolve(docsPublicDir, "r");
+
+  // Additional component candidate paths
+  const candidateDirs = [
+    srcDir,
+    path.join(monorepoRoot, "components"),
+    path.join(monorepoRoot, "apps/docs/components"),
+  ];
 
   [distRDir, docsRDir, docsPublicDir].forEach((dir) => {
     fs.mkdirSync(dir, { recursive: true });
   });
 
-  const categories = ["primitives", "motion", "creative", "editorial", "blocks", "utility"];
+  const discoveredFiles = sweepComponentFiles(candidateDirs);
+  console.log(`📂 Swept directories: found ${discoveredFiles.length} candidate component files.`);
+
   const allRegistryItems: RegistryItem[] = [];
+  const processedSlugs = new Set<string>();
 
-  for (const cat of categories) {
-    const catDir = path.join(srcDir, cat);
-    if (!fs.existsSync(catDir)) continue;
+  for (const { filePath, relativeSubpath } of discoveredFiles) {
+    const slug = path.basename(filePath, path.extname(filePath));
+    if (processedSlugs.has(slug)) continue;
+    processedSlugs.add(slug);
 
-    const files = fs.readdirSync(catDir).filter((f) => f.endsWith(".tsx") || f.endsWith(".ts"));
+    const fileContent = fs.readFileSync(filePath, "utf-8");
 
-    for (const file of files) {
-      const slug = path.basename(file, path.extname(file));
-      const filePath = path.join(catDir, file);
-      const content = fs.readFileSync(filePath, "utf-8");
+    // 1. Dynamic AST Parsing via Harvester
+    const astMeta = parseComponentAST(filePath, fileContent);
+    const dialClassification = classifyComponentDials(astMeta, fileContent);
 
-      const meta = COMPONENT_METADATA[slug];
-      if (!meta) {
-        console.warn(`⚠️ Warning: No explicit metadata configured for slug "${slug}".`);
-        continue;
-      }
+    // 2. Fetch or build metadata overrides
+    const override = COMPONENT_METADATA_OVERRIDES[slug];
 
-      const itemType =
-        meta.category === "ui:block"
-          ? "registry:block"
-          : meta.category === "ui:primitive"
-          ? "registry:ui"
-          : "registry:component";
+    const category = override?.category || dialClassification.category;
+    const itemType =
+      category === "ui:block"
+        ? "registry:block"
+        : category === "ui:primitive"
+        ? "registry:ui"
+        : "registry:component";
 
-      const registryItem: RegistryItem = {
-        $schema: "https://design-wiki.dev/schemas/registry-item.json",
-        name: slug,
-        type: itemType,
-        title: meta.title,
-        description: meta.description,
-        category: meta.category,
-        tags: meta.tags,
-        dials: meta.dials,
-        a11y: meta.a11y,
-        license_origin: meta.license,
-        dependencies: meta.dependencies,
-        registryDependencies: meta.registryDependencies,
-        files: [
-          {
-            path: `registry/${cat}/${file}`,
-            content: content,
-            type: itemType,
-            target: `components/ui/${file}`,
-          },
-        ],
-      };
-
-      allRegistryItems.push(registryItem);
-
-      // Write individual item JSON
-      const itemJson = JSON.stringify(registryItem, null, 2);
-      fs.writeFileSync(path.join(distRDir, `${slug}.json`), itemJson);
-      fs.writeFileSync(path.join(docsRDir, `${slug}.json`), itemJson);
-
-      console.log(`  ✓ Compiled [${meta.category}]: ${slug}.json`);
+    // 3. Map Dependencies & Peer Dependencies accurately
+    const dependenciesSet = new Set<string>(astMeta.dependencies);
+    if (override?.dependencies) {
+      override.dependencies.forEach((d) => dependenciesSet.add(d));
     }
+
+    // Auto-map peer dependencies based on AST imports
+    if (fileContent.includes("motion") || fileContent.includes("framer-motion")) {
+      dependenciesSet.add("motion");
+    }
+    if (fileContent.includes("lucide-react")) {
+      dependenciesSet.add("lucide-react");
+    }
+    if (fileContent.includes("three")) {
+      dependenciesSet.add("three");
+    }
+    if (fileContent.includes("clsx")) {
+      dependenciesSet.add("clsx");
+    }
+    if (fileContent.includes("tailwind-merge")) {
+      dependenciesSet.add("tailwind-merge");
+    }
+    if (fileContent.includes("class-variance-authority") || fileContent.includes("cva(")) {
+      dependenciesSet.add("class-variance-authority");
+    }
+
+    // Auto-map registryDependencies
+    const registryDependenciesSet = new Set<string>(astMeta.registryDependencies);
+    if (override?.registryDependencies) {
+      override.registryDependencies.forEach((rd) => registryDependenciesSet.add(rd));
+    }
+
+    // Combine tags
+    const combinedTags = Array.from(
+      new Set([...dialClassification.tags, ...(override?.tags || [])])
+    );
+
+    const dials: RegistryDial = {
+      design_variance: override?.dials?.design_variance ?? dialClassification.dials.design_variance,
+      motion_intensity: override?.dials?.motion_intensity ?? dialClassification.dials.motion_intensity,
+      visual_density: override?.dials?.visual_density ?? dialClassification.dials.visual_density,
+    };
+
+    const a11y: RegistryA11y = {
+      keyboard_navigable: override?.a11y?.keyboard_navigable ?? astMeta.a11y.keyboard_navigable,
+      wai_aria_compliant: override?.a11y?.wai_aria_compliant ?? astMeta.a11y.wai_aria_compliant,
+      wai_aria_role: override?.a11y?.wai_aria_role ?? astMeta.a11y.wai_aria_role,
+      fallback_provided: override?.a11y?.fallback_provided ?? astMeta.a11y.fallback_provided,
+      reduced_motion_supported: override?.a11y?.reduced_motion_supported ?? astMeta.a11y.reduced_motion_supported,
+    };
+
+    const license: RegistryLicenseOrigin = {
+      source_repository: override?.license?.source_repository || "https://github.com/design-agent-wiki",
+      license_type: override?.license?.license_type || astMeta.license || "MIT",
+      author: override?.license?.author || astMeta.author || "Community Contributor",
+      attribution_required: override?.license?.attribution_required ?? true,
+      redistribution_mode: override?.license?.redistribution_mode || "full_source",
+    };
+
+    const registryItem: RegistryItem = {
+      $schema: "https://design-wiki.dev/schemas/registry-item.json",
+      name: slug,
+      type: itemType,
+      title: override?.title || astMeta.title,
+      description: override?.description || astMeta.description,
+      category,
+      tags: combinedTags,
+      dials,
+      a11y,
+      license_origin: license,
+      dependencies: Array.from(dependenciesSet),
+      devDependencies: astMeta.devDependencies.length > 0 ? astMeta.devDependencies : undefined,
+      registryDependencies: Array.from(registryDependenciesSet),
+      files: [
+        {
+          path: `registry/${relativeSubpath}`,
+          content: fileContent,
+          type: itemType,
+          target: `components/ui/${path.basename(filePath)}`,
+        },
+      ],
+    };
+
+    if (!validateRegistryItem(registryItem)) {
+      console.error(`❌ Validation failed for registry item: ${slug}`);
+      continue;
+    }
+
+    allRegistryItems.push(registryItem);
+
+    // Serialize individual item JSON (with escaped JSX/TSX source strings)
+    const itemJson = JSON.stringify(registryItem, null, 2);
+    fs.writeFileSync(path.join(distRDir, `${slug}.json`), itemJson);
+    fs.writeFileSync(path.join(docsRDir, `${slug}.json`), itemJson);
+
+    console.log(`  ✓ Compiled [${registryItem.category}]: ${slug}.json (Deps: ${registryItem.dependencies.length}, RegDeps: ${registryItem.registryDependencies.length})`);
   }
 
   // Write master registry.json
@@ -447,7 +569,7 @@ function main() {
   fs.writeFileSync(path.join(distRDir, "registry.json"), registryJson);
   fs.writeFileSync(path.join(docsRDir, "registry.json"), registryJson);
 
-  // Generate /llms.txt and /llms-full.txt
+  // Generate /llms.txt
   let llmsTxt = `# Machine-First Design Agent Wiki\n> Curated High-Performance UI Registries & Anti-Slop Safeguards\n\n`;
   llmsTxt += `## System Architecture & Endpoints\n`;
   llmsTxt += `- Registry Index: /r/registry.json\n`;
@@ -462,11 +584,12 @@ function main() {
     grouped[item.category].push(item);
   });
 
-  for (const [category, items] of Object.entries(grouped)) {
-    llmsTxt += `### Category: ${category}\n`;
+  for (const [cat, items] of Object.entries(grouped)) {
+    llmsTxt += `### Category: ${cat}\n`;
     items.forEach((item) => {
       llmsTxt += `- [${item.name}](/r/${item.name}.json): ${item.description} (Variance: ${item.dials.design_variance}, Motion: ${item.dials.motion_intensity}, Density: ${item.dials.visual_density})\n`;
       llmsTxt += `  - Tags: ${item.tags.join(", ")}\n`;
+      llmsTxt += `  - Dependencies: ${item.dependencies.join(", ") || "None"}\n`;
       llmsTxt += `  - Install: npx shadcn@latest add http://localhost:3000/r/${item.name}.json\n`;
     });
     llmsTxt += `\n`;
@@ -474,12 +597,13 @@ function main() {
 
   fs.writeFileSync(path.join(docsPublicDir, "llms.txt"), llmsTxt);
 
-  // Full LLM context file
+  // Generate full LLM context index (/llms-full.txt)
   let llmsFullTxt = llmsTxt + `\n## Component Specifications & Source Contracts\n\n`;
   allRegistryItems.forEach((item) => {
     llmsFullTxt += `### ${item.title} (\`${item.name}\`)\n`;
     llmsFullTxt += `- **Category**: \`${item.category}\`\n`;
     llmsFullTxt += `- **Dependencies**: ${item.dependencies.join(", ") || "None"}\n`;
+    llmsFullTxt += `- **Registry Dependencies**: ${item.registryDependencies.join(", ") || "None"}\n`;
     llmsFullTxt += `- **Taste Dials**: Variance ${item.dials.design_variance}/10, Motion ${item.dials.motion_intensity}/10, Density ${item.dials.visual_density}/10\n`;
     llmsFullTxt += `- **A11y**: Keyboard Nav: ${item.a11y.keyboard_navigable}, ARIA: ${item.a11y.wai_aria_compliant}, Fallback: ${item.a11y.fallback_provided}\n\n`;
     llmsFullTxt += "```tsx\n" + item.files[0].content + "\n```\n\n---\n\n";

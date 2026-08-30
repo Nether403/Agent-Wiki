@@ -6,6 +6,7 @@
   "description": "Contrast-checked status indicator using semantic design tokens.",
   "category": "ui:primitive",
   "tags": [
+    "utility",
     "tailwind-v4",
     "status",
     "indicator",
@@ -19,7 +20,8 @@
   "a11y": {
     "keyboard_navigable": false,
     "wai_aria_compliant": true,
-    "fallback_provided": true
+    "fallback_provided": true,
+    "reduced_motion_supported": false
   },
   "license_origin": {
     "source_repository": "https://ui.shadcn.com",

@@ -6,6 +6,9 @@
   "description": "Precision SVG diagramming card with minimal vector lines and zero decorative emojis.",
   "category": "ui:editorial",
   "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
     "editorial",
     "svg",
     "analytical",
@@ -19,7 +22,8 @@
   "a11y": {
     "keyboard_navigable": false,
     "wai_aria_compliant": true,
-    "fallback_provided": true
+    "fallback_provided": true,
+    "reduced_motion_supported": false
   },
   "license_origin": {
     "source_repository": "https://diagram.com",

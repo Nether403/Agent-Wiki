@@ -6,6 +6,7 @@
   "description": "High-craft noise-dithered backdrop with crisp typography overlay and zero AI slop.",
   "category": "ui:creative",
   "tags": [
+    "tailwind-v4",
     "svg-noise",
     "editorial",
     "texture",
@@ -19,7 +20,8 @@
   "a11y": {
     "keyboard_navigable": false,
     "wai_aria_compliant": true,
-    "fallback_provided": true
+    "fallback_provided": true,
+    "reduced_motion_supported": false
   },
   "license_origin": {
     "source_repository": "https://reactbits.dev",

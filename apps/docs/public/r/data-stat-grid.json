@@ -6,6 +6,10 @@
   "description": "Asymmetrical metric showcase for SaaS analytics with high visual density and clean type.",
   "category": "ui:editorial",
   "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "layout-block",
     "analytical",
     "metrics",
     "grid",
@@ -19,7 +23,8 @@
   "a11y": {
     "keyboard_navigable": false,
     "wai_aria_compliant": true,
-    "fallback_provided": true
+    "fallback_provided": true,
+    "reduced_motion_supported": false
   },
   "license_origin": {
     "source_repository": "https://diagram.com",

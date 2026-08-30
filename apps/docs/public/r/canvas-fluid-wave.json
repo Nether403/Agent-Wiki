@@ -7,6 +7,8 @@
   "category": "ui:creative",
   "tags": [
     "canvas",
+    "tailwind-v4",
+    "webgl",
     "shader-simulation",
     "interactive",
     "a11y-fallback"
@@ -31,7 +33,8 @@
   },
   "dependencies": [
     "clsx",
-    "tailwind-merge"
+    "tailwind-merge",
+    "motion"
   ],
   "registryDependencies": [],
   "files": [

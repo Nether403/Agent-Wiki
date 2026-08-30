@@ -6,8 +6,8 @@
   "description": "Polymorphic button with accessible variants, focus rings, and zero arbitrary spacing.",
   "category": "ui:primitive",
   "tags": [
-    "tailwind-v4",
     "accessible",
+    "tailwind-v4",
     "radix-primitive",
     "button"
   ],
@@ -20,7 +20,8 @@
     "keyboard_navigable": true,
     "wai_aria_compliant": true,
     "wai_aria_role": "button",
-    "fallback_provided": true
+    "fallback_provided": true,
+    "reduced_motion_supported": false
   },
   "license_origin": {
     "source_repository": "https://ui.shadcn.com",

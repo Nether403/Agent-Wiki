@@ -7,6 +7,8 @@
   "category": "ui:motion",
   "tags": [
     "motion/react",
+    "tailwind-v4",
+    "accessible",
     "spring-physics",
     "dock",
     "macos-style"

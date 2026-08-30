@@ -1,339 +1,125 @@
 [
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "avatar",
-    "type": "registry:ui",
-    "title": "Avatar",
-    "description": "Fallback-aware image avatar with initials display and smooth loading states.",
-    "category": "ui:primitive",
+    "name": "bento-grid",
+    "type": "registry:block",
+    "title": "Bento Grid",
+    "description": "Multi-pane asymmetrical layout grid with responsive column spans and structural borders.",
+    "category": "ui:block",
     "tags": [
-      "radix-primitives",
-      "avatar",
-      "image",
-      "headless"
-    ],
-    "dials": {
-      "design_variance": 2,
-      "motion_intensity": 1,
-      "visual_density": 6
-    },
-    "a11y": {
-      "keyboard_navigable": false,
-      "wai_aria_compliant": true,
-      "fallback_provided": true
-    },
-    "license_origin": {
-      "source_repository": "https://radix-ui.com",
-      "license_type": "MIT",
-      "author": "Radix UI",
-      "attribution_required": true,
-      "redistribution_mode": "full_source"
-    },
-    "dependencies": [
-      "@radix-ui/react-avatar",
-      "clsx",
-      "tailwind-merge"
-    ],
-    "registryDependencies": [],
-    "files": [
-      {
-        "path": "registry/primitives/avatar.tsx",
-        "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as AvatarPrimitive from \"@radix-ui/react-avatar\";\nimport { cn } from \"../lib/utils\";\n\nexport const Avatar = React.forwardRef<\n  React.ElementRef<typeof AvatarPrimitive.Root>,\n  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>\n>(({ className, ...props }, ref) => (\n  <AvatarPrimitive.Root\n    ref={ref}\n    className={cn(\n      \"relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full\",\n      className\n    )}\n    {...props}\n  />\n));\nAvatar.displayName = AvatarPrimitive.Root.displayName;\n\nexport const AvatarImage = React.forwardRef<\n  React.ElementRef<typeof AvatarPrimitive.Image>,\n  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>\n>(({ className, ...props }, ref) => (\n  <AvatarPrimitive.Image\n    ref={ref}\n    className={cn(\"aspect-square h-full w-full\", className)}\n    {...props}\n  />\n));\nAvatarImage.displayName = AvatarPrimitive.Image.displayName;\n\nexport const AvatarFallback = React.forwardRef<\n  React.ElementRef<typeof AvatarPrimitive.Fallback>,\n  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>\n>(({ className, ...props }, ref) => (\n  <AvatarPrimitive.Fallback\n    ref={ref}\n    className={cn(\n      \"flex h-full w-full items-center justify-center rounded-full bg-muted font-medium text-muted-foreground\",\n      className\n    )}\n    {...props}\n  />\n));\nAvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;\n",
-        "type": "registry:ui",
-        "target": "components/ui/avatar.tsx"
-      }
-    ]
-  },
-  {
-    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "badge",
-    "type": "registry:ui",
-    "title": "Badge",
-    "description": "Contrast-checked status indicator using semantic design tokens.",
-    "category": "ui:primitive",
-    "tags": [
+      "lucide-react",
+      "bento-grid",
       "tailwind-v4",
-      "status",
-      "indicator",
-      "badge"
+      "layout-block",
+      "asymmetry",
+      "marketing"
     ],
     "dials": {
-      "design_variance": 2,
-      "motion_intensity": 1,
-      "visual_density": 8
-    },
-    "a11y": {
-      "keyboard_navigable": false,
-      "wai_aria_compliant": true,
-      "fallback_provided": true
-    },
-    "license_origin": {
-      "source_repository": "https://ui.shadcn.com",
-      "license_type": "MIT",
-      "author": "Shadcn & Community",
-      "attribution_required": true,
-      "redistribution_mode": "full_source"
-    },
-    "dependencies": [
-      "class-variance-authority",
-      "clsx",
-      "tailwind-merge"
-    ],
-    "registryDependencies": [],
-    "files": [
-      {
-        "path": "registry/primitives/badge.tsx",
-        "content": "/**\n * @license MIT\n * @origin Shadcn UI (https://ui.shadcn.com)\n * @author Shadcn & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"../lib/utils\";\n\nexport const badgeVariants = cva(\n  \"inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2\",\n  {\n    variants: {\n      variant: {\n        default:\n          \"border-transparent bg-primary text-primary-foreground shadow-xs hover:bg-primary/80\",\n        secondary:\n          \"border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80\",\n        destructive:\n          \"border-transparent bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/80\",\n        outline: \"text-foreground\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  }\n);\n\nexport interface BadgeProps\n  extends React.HTMLAttributes<HTMLDivElement>,\n    VariantProps<typeof badgeVariants> {}\n\nexport function Badge({ className, variant, ...props }: BadgeProps) {\n  return (\n    <div className={cn(badgeVariants({ variant }), className)} {...props} />\n  );\n}\n",
-        "type": "registry:ui",
-        "target": "components/ui/badge.tsx"
-      }
-    ]
-  },
-  {
-    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "button",
-    "type": "registry:ui",
-    "title": "Button",
-    "description": "Polymorphic button with accessible variants, focus rings, and zero arbitrary spacing.",
-    "category": "ui:primitive",
-    "tags": [
-      "tailwind-v4",
-      "accessible",
-      "radix-primitive",
-      "button"
-    ],
-    "dials": {
-      "design_variance": 2,
-      "motion_intensity": 2,
+      "design_variance": 7,
+      "motion_intensity": 3,
       "visual_density": 6
     },
     "a11y": {
       "keyboard_navigable": true,
       "wai_aria_compliant": true,
-      "wai_aria_role": "button",
-      "fallback_provided": true
+      "fallback_provided": true,
+      "reduced_motion_supported": false
     },
     "license_origin": {
-      "source_repository": "https://ui.shadcn.com",
+      "source_repository": "https://tailark.com",
       "license_type": "MIT",
-      "author": "Shadcn & Community",
+      "author": "Tailark Team",
       "attribution_required": true,
       "redistribution_mode": "full_source"
     },
     "dependencies": [
-      "class-variance-authority",
+      "lucide-react",
       "clsx",
       "tailwind-merge"
     ],
     "registryDependencies": [],
     "files": [
       {
-        "path": "registry/primitives/button.tsx",
-        "content": "/**\n * @license MIT\n * @origin Shadcn UI / Radix Primitives (https://ui.shadcn.com)\n * @author Shadcn & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"../lib/utils\";\n\nexport const buttonVariants = cva(\n  \"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0\",\n  {\n    variants: {\n      variant: {\n        default:\n          \"bg-primary text-primary-foreground shadow-xs hover:bg-primary/90\",\n        destructive:\n          \"bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90\",\n        outline:\n          \"border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground\",\n        secondary:\n          \"bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80\",\n        ghost: \"hover:bg-accent hover:text-accent-foreground\",\n        link: \"text-primary underline-offset-4 hover:underline\",\n      },\n      size: {\n        default: \"h-9 px-4 py-2\",\n        sm: \"h-8 rounded-md px-3 text-xs\",\n        lg: \"h-10 rounded-md px-8\",\n        icon: \"h-9 w-9\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"default\",\n    },\n  }\n);\n\nexport interface ButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement>,\n    VariantProps<typeof buttonVariants> {\n  asChild?: boolean;\n}\n\nexport const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(\n  ({ className, variant, size, asChild = false, ...props }, ref) => {\n    return (\n      <button\n        className={cn(buttonVariants({ variant, size, className }))}\n        ref={ref}\n        type={props.type || \"button\"}\n        {...props}\n      />\n    );\n  }\n);\n\nButton.displayName = \"Button\";\n",
-        "type": "registry:ui",
-        "target": "components/ui/button.tsx"
+        "path": "registry/blocks/bento-grid.tsx",
+        "content": "/**\n * @license MIT\n * @origin Tailark / Aceternity (https://tailark.com)\n * @author Tailark Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { ArrowUpRight } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface BentoItem {\n  title: string;\n  description: string;\n  header?: React.ReactNode;\n  icon?: React.ReactNode;\n  className?: string;\n}\n\nexport function BentoGrid({\n  className,\n  children,\n}: {\n  className?: string;\n  children: React.ReactNode;\n}) {\n  return (\n    <div\n      className={cn(\n        \"grid grid-cols-1 gap-4 md:grid-cols-3 md:auto-rows-[18rem]\",\n        className\n      )}\n    >\n      {children}\n    </div>\n  );\n}\n\nexport function BentoGridItem({\n  className,\n  title,\n  description,\n  header,\n  icon,\n}: BentoItem) {\n  return (\n    <div\n      className={cn(\n        \"group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-xs transition-colors hover:border-primary/40\",\n        className\n      )}\n    >\n      <div className=\"flex h-full flex-col justify-between\">\n        {header && <div className=\"mb-4\">{header}</div>}\n        <div>\n          {icon && <div className=\"mb-3 text-primary\">{icon}</div>}\n          <h3 className=\"text-lg font-semibold tracking-tight text-foreground\">\n            {title}\n          </h3>\n          <p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">\n            {description}\n          </p>\n        </div>\n      </div>\n      <div className=\"mt-4 flex items-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100\">\n        <span>Explore architecture</span>\n        <ArrowUpRight className=\"h-3.5 w-3.5\" />\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:block",
+        "target": "components/ui/bento-grid.tsx"
       }
     ]
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "card",
-    "type": "registry:ui",
-    "title": "Card",
-    "description": "Structural surface card with crisp border-border and no glassmorphism slop.",
-    "category": "ui:primitive",
+    "name": "hero-section",
+    "type": "registry:block",
+    "title": "Hero Section",
+    "description": "Editorial SaaS hero section featuring typography discipline, badge pill, and active CTA.",
+    "category": "ui:block",
     "tags": [
+      "lucide-react",
       "tailwind-v4",
-      "layout",
-      "surface",
-      "card"
+      "accessible",
+      "layout-block",
+      "hero",
+      "marketing",
+      "typography",
+      "block"
     ],
     "dials": {
-      "design_variance": 3,
-      "motion_intensity": 1,
-      "visual_density": 6
-    },
-    "a11y": {
-      "keyboard_navigable": false,
-      "wai_aria_compliant": true,
-      "fallback_provided": true
-    },
-    "license_origin": {
-      "source_repository": "https://ui.shadcn.com",
-      "license_type": "MIT",
-      "author": "Shadcn & Community",
-      "attribution_required": true,
-      "redistribution_mode": "full_source"
-    },
-    "dependencies": [
-      "clsx",
-      "tailwind-merge"
-    ],
-    "registryDependencies": [],
-    "files": [
-      {
-        "path": "registry/primitives/card.tsx",
-        "content": "/**\n * @license MIT\n * @origin Shadcn UI (https://ui.shadcn.com)\n * @author Shadcn & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport const Card = React.forwardRef<\n  HTMLDivElement,\n  React.HTMLAttributes<HTMLDivElement>\n>(({ className, ...props }, ref) => (\n  <div\n    ref={ref}\n    className={cn(\n      \"rounded-xl border border-border bg-card text-card-foreground shadow-sm\",\n      className\n    )}\n    {...props}\n  />\n));\nCard.displayName = \"Card\";\n\nexport const CardHeader = React.forwardRef<\n  HTMLDivElement,\n  React.HTMLAttributes<HTMLDivElement>\n>(({ className, ...props }, ref) => (\n  <div\n    ref={ref}\n    className={cn(\"flex flex-col space-y-1.5 p-6\", className)}\n    {...props}\n  />\n));\nCardHeader.displayName = \"CardHeader\";\n\nexport const CardTitle = React.forwardRef<\n  HTMLDivElement,\n  React.HTMLAttributes<HTMLDivElement>\n>(({ className, ...props }, ref) => (\n  <div\n    ref={ref}\n    className={cn(\"font-semibold leading-none tracking-tight\", className)}\n    {...props}\n  />\n));\nCardTitle.displayName = \"CardTitle\";\n\nexport const CardDescription = React.forwardRef<\n  HTMLDivElement,\n  React.HTMLAttributes<HTMLDivElement>\n>(({ className, ...props }, ref) => (\n  <div\n    ref={ref}\n    className={cn(\"text-sm text-muted-foreground\", className)}\n    {...props}\n  />\n));\nCardDescription.displayName = \"CardDescription\";\n\nexport const CardContent = React.forwardRef<\n  HTMLDivElement,\n  React.HTMLAttributes<HTMLDivElement>\n>(({ className, ...props }, ref) => (\n  <div ref={ref} className={cn(\"p-6 pt-0\", className)} {...props} />\n));\nCardContent.displayName = \"CardContent\";\n\nexport const CardFooter = React.forwardRef<\n  HTMLDivElement,\n  React.HTMLAttributes<HTMLDivElement>\n>(({ className, ...props }, ref) => (\n  <div\n    ref={ref}\n    className={cn(\"flex items-center p-6 pt-0\", className)}\n    {...props}\n  />\n));\nCardFooter.displayName = \"CardFooter\";\n",
-        "type": "registry:ui",
-        "target": "components/ui/card.tsx"
-      }
-    ]
-  },
-  {
-    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "dialog",
-    "type": "registry:ui",
-    "title": "Dialog",
-    "description": "Headless accessible modal dialog with focus trap, backdrop escape, and screen-reader roles.",
-    "category": "ui:primitive",
-    "tags": [
-      "radix-primitives",
-      "headless",
-      "modal",
-      "dialog",
-      "a11y"
-    ],
-    "dials": {
-      "design_variance": 3,
-      "motion_intensity": 3,
+      "design_variance": 5,
+      "motion_intensity": 2,
       "visual_density": 5
     },
     "a11y": {
       "keyboard_navigable": true,
       "wai_aria_compliant": true,
-      "wai_aria_role": "dialog",
-      "fallback_provided": true
+      "fallback_provided": true,
+      "reduced_motion_supported": false
     },
     "license_origin": {
-      "source_repository": "https://radix-ui.com",
+      "source_repository": "https://kairoui.com",
       "license_type": "MIT",
-      "author": "Radix UI",
+      "author": "Kairo UI Team",
       "attribution_required": true,
       "redistribution_mode": "full_source"
     },
     "dependencies": [
-      "@radix-ui/react-dialog",
       "lucide-react",
       "clsx",
       "tailwind-merge"
     ],
-    "registryDependencies": [],
+    "registryDependencies": [
+      "button"
+    ],
     "files": [
       {
-        "path": "registry/primitives/dialog.tsx",
-        "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as DialogPrimitive from \"@radix-ui/react-dialog\";\nimport { X } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport const Dialog = DialogPrimitive.Root;\nexport const DialogTrigger = DialogPrimitive.Trigger;\nexport const DialogPortal = DialogPrimitive.Portal;\nexport const DialogClose = DialogPrimitive.Close;\n\nexport const DialogOverlay = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Overlay>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>\n>(({ className, ...props }, ref) => (\n  <DialogPrimitive.Overlay\n    ref={ref}\n    className={cn(\n      \"fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\",\n      className\n    )}\n    {...props}\n  />\n));\nDialogOverlay.displayName = DialogPrimitive.Overlay.displayName;\n\nexport const DialogContent = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Content>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>\n>(({ className, children, ...props }, ref) => (\n  <DialogPortal>\n    <DialogOverlay />\n    <DialogPrimitive.Content\n      ref={ref}\n      className={cn(\n        \"fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-border bg-background p-6 shadow-lg duration-200 sm:rounded-lg\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      <DialogPrimitive.Close className=\"absolute right-4 top-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none\">\n        <X className=\"h-4 w-4\" />\n        <span className=\"sr-only\">Close</span>\n      </DialogPrimitive.Close>\n    </DialogPrimitive.Content>\n  </DialogPortal>\n));\nDialogContent.displayName = DialogPrimitive.Content.displayName;\n\nexport const DialogHeader = ({\n  className,\n  ...props\n}: React.HTMLAttributes<HTMLDivElement>) => (\n  <div\n    className={cn(\n      \"flex flex-col space-y-1.5 text-center sm:text-left\",\n      className\n    )}\n    {...props}\n  />\n);\nDialogHeader.displayName = \"DialogHeader\";\n\nexport const DialogFooter = ({\n  className,\n  ...props\n}: React.HTMLAttributes<HTMLDivElement>) => (\n  <div\n    className={cn(\n      \"flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2\",\n      className\n    )}\n    {...props}\n  />\n);\nDialogFooter.displayName = \"DialogFooter\";\n\nexport const DialogTitle = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Title>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>\n>(({ className, ...props }, ref) => (\n  <DialogPrimitive.Title\n    ref={ref}\n    className={cn(\n      \"text-lg font-semibold leading-none tracking-tight\",\n      className\n    )}\n    {...props}\n  />\n));\nDialogTitle.displayName = DialogPrimitive.Title.displayName;\n\nexport const DialogDescription = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Description>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>\n>(({ className, ...props }, ref) => (\n  <DialogPrimitive.Description\n    ref={ref}\n    className={cn(\"text-sm text-muted-foreground\", className)}\n    {...props}\n  />\n));\nDialogDescription.displayName = DialogPrimitive.Description.displayName;\n",
-        "type": "registry:ui",
-        "target": "components/ui/dialog.tsx"
+        "path": "registry/blocks/hero-section.tsx",
+        "content": "/**\n * @license MIT\n * @origin Kairo UI / Tailark (https://kairoui.com)\n * @author Kairo UI Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { ArrowRight, Sparkles } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface HeroSectionProps {\n  badge?: string;\n  title: string;\n  highlightedText?: string;\n  description: string;\n  primaryCtaText?: string;\n  secondaryCtaText?: string;\n  onPrimaryCtaClick?: () => void;\n  onSecondaryCtaClick?: () => void;\n  className?: string;\n}\n\nexport function HeroSection({\n  badge = \"Agent-Native Design System v1.0\",\n  title = \"Deterministic UI Engineering for\",\n  highlightedText = \"Autonomous AI Agents\",\n  description = \"Eliminate AI slop, chained type assertions, and unstyled layout errors. Ground your coding models in pre-tested, accessible component primitives.\",\n  primaryCtaText = \"Explore Registry\",\n  secondaryCtaText = \"Initialize MCP\",\n  onPrimaryCtaClick,\n  onSecondaryCtaClick,\n  className,\n}: HeroSectionProps) {\n  return (\n    <section\n      className={cn(\n        \"relative overflow-hidden rounded-3xl border border-border bg-background px-6 py-20 text-center sm:px-12 lg:py-28\",\n        className\n      )}\n    >\n      <div className=\"mx-auto max-w-3xl\">\n        {/* Release Badge */}\n        <div className=\"inline-flex items-center gap-2 rounded-full border border-border bg-muted/60 px-3.5 py-1 text-xs font-medium text-foreground\">\n          <Sparkles className=\"h-3.5 w-3.5 text-primary\" aria-hidden=\"true\" />\n          <span>{badge}</span>\n        </div>\n\n        {/* Title with typographic hierarchy */}\n        <h1 className=\"mt-6 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl\">\n          {title}{\" \"}\n          <span className=\"text-primary underline decoration-primary/30 underline-offset-8\">\n            {highlightedText}\n          </span>\n        </h1>\n\n        {/* Description */}\n        <p className=\"mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl\">\n          {description}\n        </p>\n\n        {/* Action Buttons */}\n        <div className=\"mt-10 flex flex-wrap items-center justify-center gap-4\">\n          <button\n            onClick={onPrimaryCtaClick}\n            className=\"inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\"\n          >\n            <span>{primaryCtaText}</span>\n            <ArrowRight className=\"h-4 w-4\" />\n          </button>\n          <button\n            onClick={onSecondaryCtaClick}\n            className=\"inline-flex items-center gap-2 rounded-xl border border-border bg-background px-6 py-3 text-sm font-semibold text-foreground shadow-xs transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\"\n          >\n            <span>{secondaryCtaText}</span>\n          </button>\n        </div>\n      </div>\n    </section>\n  );\n}\n",
+        "type": "registry:block",
+        "target": "components/ui/hero-section.tsx"
       }
     ]
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "dropdown-menu",
-    "type": "registry:ui",
-    "title": "Dropdown Menu",
-    "description": "Keyboard-navigable dropdown with arrow key navigation, sub-menus, and ARIA menu attributes.",
-    "category": "ui:primitive",
+    "name": "pricing-table",
+    "type": "registry:block",
+    "title": "Pricing Table",
+    "description": "Multi-tier pricing matrix with monthly/annual toggle and clear feature checkmarks.",
+    "category": "ui:block",
     "tags": [
-      "radix-primitives",
-      "menu",
-      "navigation",
-      "headless"
-    ],
-    "dials": {
-      "design_variance": 3,
-      "motion_intensity": 2,
-      "visual_density": 6
-    },
-    "a11y": {
-      "keyboard_navigable": true,
-      "wai_aria_compliant": true,
-      "wai_aria_role": "menu",
-      "fallback_provided": true
-    },
-    "license_origin": {
-      "source_repository": "https://radix-ui.com",
-      "license_type": "MIT",
-      "author": "Radix UI",
-      "attribution_required": true,
-      "redistribution_mode": "full_source"
-    },
-    "dependencies": [
-      "@radix-ui/react-dropdown-menu",
       "lucide-react",
-      "clsx",
-      "tailwind-merge"
-    ],
-    "registryDependencies": [],
-    "files": [
-      {
-        "path": "registry/primitives/dropdown-menu.tsx",
-        "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as DropdownMenuPrimitive from \"@radix-ui/react-dropdown-menu\";\nimport { Check, ChevronRight, Circle } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport const DropdownMenu = DropdownMenuPrimitive.Root;\nexport const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;\nexport const DropdownMenuGroup = DropdownMenuPrimitive.Group;\nexport const DropdownMenuPortal = DropdownMenuPrimitive.Portal;\nexport const DropdownMenuSub = DropdownMenuPrimitive.Sub;\nexport const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;\n\nexport const DropdownMenuSubTrigger = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {\n    inset?: boolean;\n  }\n>(({ className, inset, children, ...props }, ref) => (\n  <DropdownMenuPrimitive.SubTrigger\n    ref={ref}\n    className={cn(\n      \"flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm focus-visible:outline-none focus:bg-accent data-[state=open]:bg-accent [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0\",\n      inset && \"pl-8\",\n      className\n    )}\n    {...props}\n  >\n    {children}\n    <ChevronRight className=\"ml-auto\" />\n  </DropdownMenuPrimitive.SubTrigger>\n));\nDropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName;\n\nexport const DropdownMenuSubContent = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>\n>(({ className, ...props }, ref) => (\n  <DropdownMenuPrimitive.SubContent\n    ref={ref}\n    className={cn(\n      \"z-50 min-w-32 overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\",\n      className\n    )}\n    {...props}\n  />\n));\nDropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayName;\n\nexport const DropdownMenuContent = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.Content>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>\n>(({ className, sideOffset = 4, ...props }, ref) => (\n  <DropdownMenuPrimitive.Portal>\n    <DropdownMenuPrimitive.Content\n      ref={ref}\n      sideOffset={sideOffset}\n      className={cn(\n        \"z-50 min-w-32 overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\",\n        className\n      )}\n      {...props}\n    />\n  </DropdownMenuPrimitive.Portal>\n));\nDropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;\n\nexport const DropdownMenuItem = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.Item>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {\n    inset?: boolean;\n  }\n>(({ className, inset, ...props }, ref) => (\n  <DropdownMenuPrimitive.Item\n    ref={ref}\n    className={cn(\n      \"relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm focus-visible:outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0\",\n      inset && \"pl-8\",\n      className\n    )}\n    {...props}\n  />\n));\nDropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;\n\nexport const DropdownMenuSeparator = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.Separator>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>\n>(({ className, ...props }, ref) => (\n  <DropdownMenuPrimitive.Separator\n    ref={ref}\n    className={cn(\"-mx-1 my-1 h-px bg-muted\", className)}\n    {...props}\n  />\n));\nDropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;\n",
-        "type": "registry:ui",
-        "target": "components/ui/dropdown-menu.tsx"
-      }
-    ]
-  },
-  {
-    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "input",
-    "type": "registry:ui",
-    "title": "Input",
-    "description": "Accessible text input with floating state, error boundaries, and focus-visible ring.",
-    "category": "ui:primitive",
-    "tags": [
+      "bento-grid",
       "tailwind-v4",
-      "form",
       "accessible",
-      "input"
+      "layout-block",
+      "brutalist",
+      "pricing",
+      "saas",
+      "marketing",
+      "interactive-toggle"
     ],
     "dials": {
-      "design_variance": 2,
-      "motion_intensity": 1,
-      "visual_density": 7
-    },
-    "a11y": {
-      "keyboard_navigable": true,
-      "wai_aria_compliant": true,
-      "wai_aria_role": "textbox",
-      "fallback_provided": true
-    },
-    "license_origin": {
-      "source_repository": "https://ui.shadcn.com",
-      "license_type": "MIT",
-      "author": "Shadcn & Community",
-      "attribution_required": true,
-      "redistribution_mode": "full_source"
-    },
-    "dependencies": [
-      "clsx",
-      "tailwind-merge"
-    ],
-    "registryDependencies": [],
-    "files": [
-      {
-        "path": "registry/primitives/input.tsx",
-        "content": "/**\n * @license MIT\n * @origin Shadcn UI (https://ui.shadcn.com)\n * @author Shadcn & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {\n  error?: boolean;\n}\n\nexport const Input = React.forwardRef<HTMLInputElement, InputProps>(\n  ({ className, type = \"text\", error, ...props }, ref) => {\n    return (\n      <input\n        type={type}\n        className={cn(\n          \"flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm\",\n          error && \"border-destructive focus-visible:ring-destructive\",\n          className\n        )}\n        ref={ref}\n        aria-invalid={error ? true : undefined}\n        {...props}\n      />\n    );\n  }\n);\n\nInput.displayName = \"Input\";\n",
-        "type": "registry:ui",
-        "target": "components/ui/input.tsx"
-      }
-    ]
-  },
-  {
-    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "switch",
-    "type": "registry:ui",
-    "title": "Switch",
-    "description": "Accessible toggle switch with smooth spring thumb and keyboard space/enter toggling.",
-    "category": "ui:primitive",
-    "tags": [
-      "radix-primitives",
-      "toggle",
-      "form",
-      "headless"
-    ],
-    "dials": {
-      "design_variance": 2,
+      "design_variance": 4,
       "motion_intensity": 3,
       "visual_density": 7
     },
@@ -341,119 +127,366 @@
       "keyboard_navigable": true,
       "wai_aria_compliant": true,
       "wai_aria_role": "switch",
-      "fallback_provided": true
+      "fallback_provided": true,
+      "reduced_motion_supported": false
     },
     "license_origin": {
-      "source_repository": "https://radix-ui.com",
+      "source_repository": "https://tailark.com",
       "license_type": "MIT",
-      "author": "Radix UI",
+      "author": "Tailark Team",
       "attribution_required": true,
       "redistribution_mode": "full_source"
     },
     "dependencies": [
-      "@radix-ui/react-switch",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [
+      "button"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/pricing-table.tsx",
+        "content": "/**\n * @license MIT\n * @origin Tailark / Shadcn UI (https://tailark.com)\n * @author Tailark Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { Check } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface PricingPlan {\n  name: string;\n  priceMonthly: number;\n  priceAnnual: number;\n  description: string;\n  features: string[];\n  popular?: boolean;\n  ctaText: string;\n}\n\nexport interface PricingTableProps {\n  plans?: PricingPlan[];\n  className?: string;\n}\n\nconst DEFAULT_PLANS: PricingPlan[] = [\n  {\n    name: \"Developer\",\n    priceMonthly: 0,\n    priceAnnual: 0,\n    description: \"For individual builders and local agent experimentation.\",\n    features: [\n      \"Access to 25+ seed components\",\n      \"Local MCP server stdio integration\",\n      \"Full static /llms.txt discovery\",\n      \"Standard MIT open-source license\",\n    ],\n    ctaText: \"Get Started Free\",\n  },\n  {\n    name: \"Autonomous Team\",\n    priceMonthly: 49,\n    priceAnnual: 39,\n    description: \"For engineering teams running multi-agent continuous pipelines.\",\n    features: [\n      \"Everything in Developer\",\n      \"Streamable HTTP MCP endpoints\",\n      \"Automated CI/CD anti-slop gatekeeper\",\n      \"Zero-Draft Fidelity sandbox reports\",\n      \"Priority AST ingestion requests\",\n    ],\n    popular: true,\n    ctaText: \"Upgrade to Team\",\n  },\n  {\n    name: \"Enterprise\",\n    priceMonthly: 199,\n    priceAnnual: 159,\n    description: \"For organizations scaling private registries and custom design tokens.\",\n    features: [\n      \"Custom private registry namespaces\",\n      \"Tailwind v4 token synchronizer\",\n      \"Dedicated headless test harness\",\n      \"100% WCAG 2.1 AAA accessibility pass\",\n      \"Custom legal IP indemnity warranty\",\n    ],\n    ctaText: \"Contact Enterprise\",\n  },\n];\n\nexport function PricingTable({ plans = DEFAULT_PLANS, className }: PricingTableProps) {\n  const [isAnnual, setIsAnnual] = React.useState(true);\n\n  return (\n    <section className={cn(\"py-12\", className)}>\n      {/* Billing toggle */}\n      <div className=\"flex items-center justify-center gap-3 pb-10\">\n        <span className={cn(\"text-sm font-medium\", !isAnnual ? \"text-foreground\" : \"text-muted-foreground\")}>\n          Monthly billing\n        </span>\n        <button\n          type=\"button\"\n          role=\"switch\"\n          aria-checked={isAnnual}\n          onClick={() => setIsAnnual(!isAnnual)}\n          className={cn(\n            \"relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n            isAnnual ? \"bg-primary\" : \"bg-input\"\n          )}\n        >\n          <span\n            className={cn(\n              \"pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg transition-transform\",\n              isAnnual ? \"translate-x-5\" : \"translate-x-0\"\n            )}\n          />\n        </button>\n        <span className={cn(\"text-sm font-medium\", isAnnual ? \"text-foreground\" : \"text-muted-foreground\")}>\n          Annual billing <span className=\"text-xs font-semibold text-primary\">(Save 20%)</span>\n        </span>\n      </div>\n\n      {/* Plan Cards */}\n      <div className=\"grid gap-6 lg:grid-cols-3\">\n        {plans.map((plan) => {\n          const price = isAnnual ? plan.priceAnnual : plan.priceMonthly;\n          return (\n            <div\n              key={plan.name}\n              className={cn(\n                \"relative flex flex-col justify-between rounded-2xl border p-8 shadow-xs transition-all\",\n                plan.popular\n                  ? \"border-primary bg-card ring-2 ring-primary/20 shadow-md\"\n                  : \"border-border bg-card text-card-foreground hover:border-border/80\"\n              )}\n            >\n              {plan.popular && (\n                <div className=\"absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-0.5 text-xs font-semibold text-primary-foreground\">\n                  Recommended\n                </div>\n              )}\n              <div>\n                <h3 className=\"text-xl font-bold text-foreground\">{plan.name}</h3>\n                <p className=\"mt-2 text-sm text-muted-foreground\">{plan.description}</p>\n                <div className=\"mt-6 flex items-baseline gap-1\">\n                  <span className=\"text-4xl font-extrabold tracking-tight text-foreground\">\n                    ${price}\n                  </span>\n                  <span className=\"text-sm font-medium text-muted-foreground\">/month</span>\n                </div>\n                <ul className=\"mt-8 space-y-3 text-sm text-muted-foreground\">\n                  {plan.features.map((feature, i) => (\n                    <li key={i} className=\"flex items-center gap-2.5\">\n                      <Check className=\"h-4 w-4 shrink-0 text-primary\" aria-hidden=\"true\" />\n                      <span>{feature}</span>\n                    </li>\n                  ))}\n                </ul>\n              </div>\n              <div className=\"mt-8\">\n                <button\n                  type=\"button\"\n                  className={cn(\n                    \"w-full rounded-xl py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                    plan.popular\n                      ? \"bg-primary text-primary-foreground hover:bg-primary/90\"\n                      : \"border border-border bg-background text-foreground hover:bg-muted\"\n                  )}\n                >\n                  {plan.ctaText}\n                </button>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n    </section>\n  );\n}\n",
+        "type": "registry:block",
+        "target": "components/ui/pricing-table.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "canvas-fluid-wave",
+    "type": "registry:component",
+    "title": "Canvas Fluid Wave",
+    "description": "Interactive HTML5 Canvas fluid simulation with mouse interaction and CSS gradient fallback.",
+    "category": "ui:creative",
+    "tags": [
+      "canvas",
+      "tailwind-v4",
+      "webgl",
+      "shader-simulation",
+      "interactive",
+      "a11y-fallback"
+    ],
+    "dials": {
+      "design_variance": 8,
+      "motion_intensity": 9,
+      "visual_density": 3
+    },
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "fallback_provided": true,
+      "reduced_motion_supported": true
+    },
+    "license_origin": {
+      "source_repository": "https://canvas-ui.dev",
+      "license_type": "MIT",
+      "author": "Canvas UI Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "clsx",
+      "tailwind-merge",
+      "motion"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/creative/canvas-fluid-wave.tsx",
+        "content": "/**\n * @license MIT\n * @origin Canvas UI (https://canvas-ui.dev)\n * @author Canvas UI Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface CanvasFluidWaveProps {\n  className?: string;\n  waveColor?: string;\n  speed?: number;\n  amplitude?: number;\n}\n\nexport function CanvasFluidWave({\n  className,\n  waveColor = \"rgba(120, 119, 198, 0.25)\",\n  speed = 0.02,\n  amplitude = 24,\n}: CanvasFluidWaveProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n  const [reducedMotion, setReducedMotion] = React.useState(false);\n\n  React.useEffect(() => {\n    const mediaQuery = window.matchMedia(\"(prefers-reduced-motion: reduce)\");\n    setReducedMotion(mediaQuery.matches);\n    const handler = () => setReducedMotion(mediaQuery.matches);\n    mediaQuery.addEventListener(\"change\", handler);\n    return () => mediaQuery.removeEventListener(\"change\", handler);\n  }, []);\n\n  React.useEffect(() => {\n    if (reducedMotion) return;\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    let animationFrameId: number;\n    let step = 0;\n\n    const resize = () => {\n      canvas.width = canvas.parentElement?.clientWidth || 400;\n      canvas.height = canvas.parentElement?.clientHeight || 200;\n    };\n\n    resize();\n    window.addEventListener(\"resize\", resize);\n\n    const render = () => {\n      step += speed;\n      ctx.clearRect(0, 0, canvas.width, canvas.height);\n\n      ctx.beginPath();\n      ctx.moveTo(0, canvas.height / 2);\n\n      for (let x = 0; x < canvas.width; x++) {\n        const y =\n          Math.sin(x * 0.01 + step) * amplitude +\n          Math.sin(x * 0.02 + step * 1.5) * (amplitude * 0.5) +\n          canvas.height / 2;\n        ctx.lineTo(x, y);\n      }\n\n      ctx.lineTo(canvas.width, canvas.height);\n      ctx.lineTo(0, canvas.height);\n      ctx.closePath();\n\n      ctx.fillStyle = waveColor;\n      ctx.fill();\n\n      animationFrameId = requestAnimationFrame(render);\n    };\n\n    render();\n\n    return () => {\n      window.removeEventListener(\"resize\", resize);\n      cancelAnimationFrame(animationFrameId);\n    };\n  }, [speed, amplitude, waveColor, reducedMotion]);\n\n  return (\n    <div className={cn(\"relative overflow-hidden rounded-xl bg-card border border-border\", className)}>\n      {reducedMotion ? (\n        // Static CSS gradient fallback when prefers-reduced-motion is requested\n        <div\n          className=\"absolute inset-0 bg-gradient-to-b from-transparent to-primary/10\"\n          aria-hidden=\"true\"\n        />\n      ) : (\n        <canvas\n          ref={canvasRef}\n          className=\"absolute inset-0 h-full w-full pointer-events-none\"\n          aria-hidden=\"true\"\n        />\n      )}\n      <div className=\"relative z-10 p-6\">\n        <h3 className=\"text-base font-semibold text-foreground\">Canvas Fluid Wave</h3>\n        <p className=\"mt-1 text-sm text-muted-foreground\">\n          Interactive fluid simulation with automatic reduced-motion accessibility fallbacks.\n        </p>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/canvas-fluid-wave.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "dot-matrix-loader",
+    "type": "registry:component",
+    "title": "Dot Matrix Loader",
+    "description": "Animated dot matrix with wave oscillation, customizable matrix rows, and accessible status role.",
+    "category": "ui:creative",
+    "tags": [
+      "utility",
+      "dot-matrix",
+      "canvas-pattern",
+      "loader",
+      "status"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 5,
+      "visual_density": 7
+    },
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "status",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://dotmatrix.dev",
+      "license_type": "MIT",
+      "author": "Dot Matrix Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
       "clsx",
       "tailwind-merge"
     ],
     "registryDependencies": [],
     "files": [
       {
-        "path": "registry/primitives/switch.tsx",
-        "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as SwitchPrimitives from \"@radix-ui/react-switch\";\nimport { cn } from \"../lib/utils\";\n\nexport const Switch = React.forwardRef<\n  React.ElementRef<typeof SwitchPrimitives.Root>,\n  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>\n>(({ className, ...props }, ref) => (\n  <SwitchPrimitives.Root\n    className={cn(\n      \"peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input\",\n      className\n    )}\n    {...props}\n    ref={ref}\n  >\n    <SwitchPrimitives.Thumb\n      className={cn(\n        \"pointer-events-none block h-4 w-4 rounded-full bg-background shadow-lg transition-transform data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0\"\n      )}\n    />\n  </SwitchPrimitives.Root>\n));\nSwitch.displayName = SwitchPrimitives.Root.displayName;\n",
-        "type": "registry:ui",
-        "target": "components/ui/switch.tsx"
+        "path": "registry/creative/dot-matrix-loader.tsx",
+        "content": "/**\n * @license MIT\n * @origin Dot Matrix UI (https://dotmatrix.dev)\n * @author Dot Matrix Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface DotMatrixLoaderProps {\n  rows?: number;\n  cols?: number;\n  dotSize?: number;\n  gap?: number;\n  className?: string;\n  label?: string;\n}\n\nexport function DotMatrixLoader({\n  rows = 5,\n  cols = 5,\n  dotSize = 6,\n  gap = 6,\n  className,\n  label = \"Loading content\",\n}: DotMatrixLoaderProps) {\n  const [activeFrame, setActiveFrame] = React.useState(0);\n\n  React.useEffect(() => {\n    const timer = setInterval(() => {\n      setActiveFrame((prev) => (prev + 1) % (rows + cols));\n    }, 120);\n    return () => clearInterval(timer);\n  }, [rows, cols]);\n\n  return (\n    <div\n      role=\"status\"\n      aria-label={label}\n      className={cn(\"inline-flex flex-col items-center justify-center p-4\", className)}\n    >\n      <div\n        className=\"grid\"\n        style={{\n          gridTemplateColumns: `repeat(${cols}, ${dotSize}px)`,\n          gap: `${gap}px`,\n        }}\n      >\n        {Array.from({ length: rows * cols }).map((_, i) => {\n          const r = Math.floor(i / cols);\n          const c = i % cols;\n          const distance = r + c;\n          const isLit = (distance + activeFrame) % (rows + cols) < 3;\n\n          return (\n            <div\n              key={i}\n              style={{ width: dotSize, height: dotSize }}\n              className={cn(\n                \"rounded-full transition-colors duration-150\",\n                isLit ? \"bg-primary\" : \"bg-muted-foreground/20\"\n              )}\n            />\n          );\n        })}\n      </div>\n      <span className=\"sr-only\">{label}</span>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/dot-matrix-loader.tsx"
       }
     ]
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "tabs",
-    "type": "registry:ui",
-    "title": "Tabs",
-    "description": "Accessible tabbed interface with keyboard arrow navigation and active state styling.",
-    "category": "ui:primitive",
+    "name": "noise-texture-card",
+    "type": "registry:component",
+    "title": "Noise Texture Card",
+    "description": "High-craft noise-dithered backdrop with crisp typography overlay and zero AI slop.",
+    "category": "ui:creative",
     "tags": [
-      "radix-primitives",
-      "tabs",
-      "navigation",
-      "headless"
+      "tailwind-v4",
+      "svg-noise",
+      "editorial",
+      "texture",
+      "brutalist"
     ],
     "dials": {
-      "design_variance": 3,
+      "design_variance": 7,
       "motion_intensity": 2,
       "visual_density": 6
     },
     "a11y": {
-      "keyboard_navigable": true,
+      "keyboard_navigable": false,
       "wai_aria_compliant": true,
-      "wai_aria_role": "tablist",
-      "fallback_provided": true
+      "fallback_provided": true,
+      "reduced_motion_supported": false
     },
     "license_origin": {
-      "source_repository": "https://radix-ui.com",
+      "source_repository": "https://reactbits.dev",
       "license_type": "MIT",
-      "author": "Radix UI",
+      "author": "React Bits Team",
       "attribution_required": true,
       "redistribution_mode": "full_source"
     },
     "dependencies": [
-      "@radix-ui/react-tabs",
       "clsx",
       "tailwind-merge"
     ],
     "registryDependencies": [],
     "files": [
       {
-        "path": "registry/primitives/tabs.tsx",
-        "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as TabsPrimitive from \"@radix-ui/react-tabs\";\nimport { cn } from \"../lib/utils\";\n\nexport const Tabs = TabsPrimitive.Root;\n\nexport const TabsList = React.forwardRef<\n  React.ElementRef<typeof TabsPrimitive.List>,\n  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>\n>(({ className, ...props }, ref) => (\n  <TabsPrimitive.List\n    ref={ref}\n    className={cn(\n      \"inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground\",\n      className\n    )}\n    {...props}\n  />\n));\nTabsList.displayName = TabsPrimitive.List.displayName;\n\nexport const TabsTrigger = React.forwardRef<\n  React.ElementRef<typeof TabsPrimitive.Trigger>,\n  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>\n>(({ className, ...props }, ref) => (\n  <TabsPrimitive.Trigger\n    ref={ref}\n    className={cn(\n      \"inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs\",\n      className\n    )}\n    {...props}\n  />\n));\nTabsTrigger.displayName = TabsPrimitive.Trigger.displayName;\n\nexport const TabsContent = React.forwardRef<\n  React.ElementRef<typeof TabsPrimitive.Content>,\n  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>\n>(({ className, ...props }, ref) => (\n  <TabsPrimitive.Content\n    ref={ref}\n    className={cn(\n      \"mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\",\n      className\n    )}\n    {...props}\n  />\n));\nTabsContent.displayName = TabsPrimitive.Content.displayName;\n",
-        "type": "registry:ui",
-        "target": "components/ui/tabs.tsx"
+        "path": "registry/creative/noise-texture-card.tsx",
+        "content": "/**\n * @license MIT\n * @origin React Bits (https://reactbits.dev)\n * @author React Bits Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface NoiseTextureCardProps {\n  title: string;\n  subtitle?: string;\n  description: string;\n  tag?: string;\n  className?: string;\n}\n\nexport function NoiseTextureCard({\n  title,\n  subtitle,\n  description,\n  tag = \"Creative Engine\",\n  className,\n}: NoiseTextureCardProps) {\n  return (\n    <div\n      className={cn(\n        \"group relative overflow-hidden rounded-2xl border border-border bg-card p-8 text-card-foreground shadow-sm transition-all hover:border-border/80 hover:shadow-md\",\n        className\n      )}\n    >\n      {/* Micro SVG Noise Texture Pattern */}\n      <svg\n        className=\"pointer-events-none absolute inset-0 h-full w-full opacity-20 transition-opacity group-hover:opacity-30\"\n        aria-hidden=\"true\"\n      >\n        <filter id=\"noiseFilter\">\n          <feTurbulence\n            type=\"fractalNoise\"\n            baseFrequency=\"0.8\"\n            numOctaves=\"3\"\n            stitchTiles=\"stitch\"\n          />\n        </filter>\n        <rect width=\"100%\" height=\"100%\" filter=\"url(#noiseFilter)\" />\n      </svg>\n\n      <div className=\"relative z-10\">\n        <div className=\"inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary\">\n          {tag}\n        </div>\n        <h3 className=\"mt-4 text-xl font-bold tracking-tight text-foreground\">\n          {title}\n        </h3>\n        {subtitle && (\n          <p className=\"mt-1 text-xs font-medium uppercase tracking-wider text-muted-foreground\">\n            {subtitle}\n          </p>\n        )}\n        <p className=\"mt-3 text-sm leading-relaxed text-muted-foreground\">\n          {description}\n        </p>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/noise-texture-card.tsx"
       }
     ]
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "tooltip",
-    "type": "registry:ui",
-    "title": "Tooltip",
-    "description": "Micro-tooltip with delay timers and instant focus visibility for assistive tech.",
-    "category": "ui:primitive",
+    "name": "particle-field",
+    "type": "registry:component",
+    "title": "Particle Field",
+    "description": "GPU-friendly interactive particle web with prefers-reduced-motion fallback.",
+    "category": "ui:creative",
     "tags": [
-      "radix-primitives",
-      "tooltip",
-      "micro-interaction",
-      "a11y"
+      "canvas",
+      "tailwind-v4",
+      "webgl",
+      "particles",
+      "physics",
+      "reduced-motion"
     ],
     "dials": {
-      "design_variance": 2,
-      "motion_intensity": 2,
-      "visual_density": 7
+      "design_variance": 8,
+      "motion_intensity": 8,
+      "visual_density": 4
     },
     "a11y": {
-      "keyboard_navigable": true,
+      "keyboard_navigable": false,
       "wai_aria_compliant": true,
-      "wai_aria_role": "tooltip",
-      "fallback_provided": true
+      "fallback_provided": true,
+      "reduced_motion_supported": true
     },
     "license_origin": {
-      "source_repository": "https://radix-ui.com",
+      "source_repository": "https://threeui.dev",
       "license_type": "MIT",
-      "author": "Radix UI",
+      "author": "ThreeUI Team",
       "attribution_required": true,
       "redistribution_mode": "full_source"
     },
     "dependencies": [
-      "@radix-ui/react-tooltip",
+      "clsx",
+      "tailwind-merge",
+      "motion",
+      "three"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/creative/particle-field.tsx",
+        "content": "/**\n * @license MIT\n * @origin ThreeUI / Canvas UI (https://threeui.dev)\n * @author ThreeUI Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface ParticleFieldProps {\n  particleCount?: number;\n  particleColor?: string;\n  className?: string;\n}\n\nexport function ParticleField({\n  particleCount = 40,\n  particleColor = \"rgba(100, 116, 139, 0.4)\",\n  className,\n}: ParticleFieldProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n  const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);\n\n  React.useEffect(() => {\n    const mq = window.matchMedia(\"(prefers-reduced-motion: reduce)\");\n    setPrefersReducedMotion(mq.matches);\n    const onChange = () => setPrefersReducedMotion(mq.matches);\n    mq.addEventListener(\"change\", onChange);\n    return () => mq.removeEventListener(\"change\", onChange);\n  }, []);\n\n  React.useEffect(() => {\n    if (prefersReducedMotion) return;\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    let animId: number;\n\n    const resize = () => {\n      canvas.width = canvas.parentElement?.clientWidth || 400;\n      canvas.height = canvas.parentElement?.clientHeight || 300;\n    };\n    resize();\n    window.addEventListener(\"resize\", resize);\n\n    const particles = Array.from({ length: particleCount }).map(() => ({\n      x: Math.random() * canvas.width,\n      y: Math.random() * canvas.height,\n      vx: (Math.random() - 0.5) * 0.6,\n      vy: (Math.random() - 0.5) * 0.6,\n      radius: Math.random() * 2 + 1,\n    }));\n\n    const loop = () => {\n      ctx.clearRect(0, 0, canvas.width, canvas.height);\n\n      particles.forEach((p) => {\n        p.x += p.vx;\n        p.y += p.vy;\n\n        if (p.x < 0) p.x = canvas.width;\n        if (p.x > canvas.width) p.x = 0;\n        if (p.y < 0) p.y = canvas.height;\n        if (p.y > canvas.height) p.y = 0;\n\n        ctx.beginPath();\n        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);\n        ctx.fillStyle = particleColor;\n        ctx.fill();\n      });\n\n      animId = requestAnimationFrame(loop);\n    };\n\n    loop();\n\n    return () => {\n      window.removeEventListener(\"resize\", resize);\n      cancelAnimationFrame(animId);\n    };\n  }, [particleCount, particleColor, prefersReducedMotion]);\n\n  return (\n    <div className={cn(\"relative overflow-hidden rounded-xl border border-border bg-card p-6\", className)}>\n      {prefersReducedMotion ? (\n        <div className=\"absolute inset-0 bg-muted/20\" aria-hidden=\"true\" />\n      ) : (\n        <canvas\n          ref={canvasRef}\n          className=\"pointer-events-none absolute inset-0 h-full w-full\"\n          aria-hidden=\"true\"\n        />\n      )}\n      <div className=\"relative z-10\">\n        <h4 className=\"text-base font-semibold text-foreground\">Interactive Particle Web</h4>\n        <p className=\"mt-1 text-sm text-muted-foreground\">\n          Autonomous canvas physics field with automatic performance safeguards.\n        </p>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/particle-field.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "data-stat-grid",
+    "type": "registry:component",
+    "title": "Data Stat Grid",
+    "description": "Asymmetrical metric showcase for SaaS analytics with high visual density and clean type.",
+    "category": "ui:editorial",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "tailwind-v4",
+      "layout-block",
+      "analytical",
+      "metrics",
+      "grid",
+      "saas-dashboard"
+    ],
+    "dials": {
+      "design_variance": 4,
+      "motion_intensity": 1,
+      "visual_density": 9
+    },
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://diagram.com",
+      "license_type": "MIT",
+      "author": "diagram-design team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
       "clsx",
       "tailwind-merge"
     ],
     "registryDependencies": [],
     "files": [
       {
-        "path": "registry/primitives/tooltip.tsx",
-        "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as TooltipPrimitive from \"@radix-ui/react-tooltip\";\nimport { cn } from \"../lib/utils\";\n\nexport const TooltipProvider = TooltipPrimitive.Provider;\nexport const Tooltip = TooltipPrimitive.Root;\nexport const TooltipTrigger = TooltipPrimitive.Trigger;\n\nexport const TooltipContent = React.forwardRef<\n  React.ElementRef<typeof TooltipPrimitive.Content>,\n  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>\n>(({ className, sideOffset = 4, ...props }, ref) => (\n  <TooltipPrimitive.Portal>\n    <TooltipPrimitive.Content\n      ref={ref}\n      sideOffset={sideOffset}\n      className={cn(\n        \"z-50 overflow-hidden rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2\",\n        className\n      )}\n      {...props}\n    />\n  </TooltipPrimitive.Portal>\n));\nTooltipContent.displayName = TooltipPrimitive.Content.displayName;\n",
-        "type": "registry:ui",
-        "target": "components/ui/tooltip.tsx"
+        "path": "registry/editorial/data-stat-grid.tsx",
+        "content": "/**\n * @license MIT\n * @origin diagram-design (https://diagram.com)\n * @author diagram-design team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { TrendingUp, Activity, ShieldCheck, Zap } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface StatItem {\n  label: string;\n  value: string;\n  change: string;\n  isPositive: boolean;\n  description: string;\n}\n\nexport interface DataStatGridProps {\n  stats?: StatItem[];\n  className?: string;\n}\n\nconst DEFAULT_STATS: StatItem[] = [\n  {\n    label: \"Zero-Draft Fidelity\",\n    value: \"94.8%\",\n    change: \"+4.2%\",\n    isPositive: true,\n    description: \"First-run compile rate across AI agents\",\n  },\n  {\n    label: \"Avg Payload Size\",\n    value: \"11.2 KB\",\n    change: \"-2.1 KB\",\n    isPositive: true,\n    description: \"Token footprint per component recipe\",\n  },\n  {\n    label: \"Slop Conformance\",\n    value: \"100/100\",\n    change: \"Flawless\",\n    isPositive: true,\n    description: \"Anti-slop AST linter health index\",\n  },\n  {\n    label: \"Resolver Latency\",\n    value: \"0.82s\",\n    change: \"-0.4s\",\n    isPositive: true,\n    description: \"CLI registry retrieval over CDN edge\",\n  },\n];\n\nexport function DataStatGrid({ stats = DEFAULT_STATS, className }: DataStatGridProps) {\n  return (\n    <div className={cn(\"grid gap-4 sm:grid-cols-2 lg:grid-cols-4\", className)}>\n      {stats.map((stat, i) => (\n        <div\n          key={i}\n          className=\"rounded-xl border border-border bg-card p-5 text-card-foreground shadow-xs\"\n        >\n          <div className=\"flex items-center justify-between\">\n            <span className=\"text-xs font-medium text-muted-foreground\">{stat.label}</span>\n            <span\n              className={cn(\n                \"inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[11px] font-semibold\",\n                stat.isPositive\n                  ? \"bg-emerald-500/10 text-emerald-600 dark:text-emerald-400\"\n                  : \"bg-destructive/10 text-destructive\"\n              )}\n            >\n              <TrendingUp className=\"h-3 w-3\" aria-hidden=\"true\" />\n              {stat.change}\n            </span>\n          </div>\n          <div className=\"mt-3 text-2xl font-bold tracking-tight text-foreground\">\n            {stat.value}\n          </div>\n          <p className=\"mt-1 text-xs text-muted-foreground\">{stat.description}</p>\n        </div>\n      ))}\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/data-stat-grid.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "diagram-card",
+    "type": "registry:component",
+    "title": "Diagram Card",
+    "description": "Precision SVG diagramming card with minimal vector lines and zero decorative emojis.",
+    "category": "ui:editorial",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "tailwind-v4",
+      "editorial",
+      "svg",
+      "analytical",
+      "diagram"
+    ],
+    "dials": {
+      "design_variance": 5,
+      "motion_intensity": 1,
+      "visual_density": 8
+    },
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://diagram.com",
+      "license_type": "MIT",
+      "author": "diagram-design team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/editorial/diagram-card.tsx",
+        "content": "/**\n * @license MIT\n * @origin diagram-design (https://diagram.com)\n * @author diagram-design team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { ArrowUpRight, Cpu, Layers } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface DiagramNode {\n  id: string;\n  title: string;\n  badge: string;\n  description: string;\n}\n\nexport interface DiagramCardProps {\n  nodes?: DiagramNode[];\n  className?: string;\n}\n\nconst DEFAULT_NODES: DiagramNode[] = [\n  {\n    id: \"01\",\n    title: \"Ingestion Pipeline\",\n    badge: \"AST Parse\",\n    description: \"Extracts AST structures, dependencies, and verifies SPDX license headers.\",\n  },\n  {\n    id: \"02\",\n    title: \"Anti-Slop Engine\",\n    badge: \"Verification\",\n    description: \"Evaluates code against 20 strict design-system rules and WCAG AA contrast.\",\n  },\n  {\n    id: \"03\",\n    title: \"Static Compiler\",\n    badge: \"CDN Edge\",\n    description: \"Builds atomic /r/ endpoints and /llms.txt discovery manifests.\",\n  },\n];\n\nexport function DiagramCard({ nodes = DEFAULT_NODES, className }: DiagramCardProps) {\n  return (\n    <div\n      className={cn(\n        \"rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-xs\",\n        className\n      )}\n    >\n      <div className=\"flex items-center justify-between border-b border-border pb-4\">\n        <div className=\"flex items-center gap-2\">\n          <Layers className=\"h-5 w-5 text-primary\" aria-hidden=\"true\" />\n          <span className=\"text-sm font-semibold tracking-wide uppercase text-muted-foreground\">\n            Architecture Map\n          </span>\n        </div>\n        <span className=\"rounded-md border border-border bg-muted px-2 py-0.5 text-xs font-mono text-muted-foreground\">\n          v1.0.0\n        </span>\n      </div>\n\n      <div className=\"mt-6 grid gap-4 md:grid-cols-3\">\n        {nodes.map((node, i) => (\n          <div\n            key={node.id}\n            className=\"group relative rounded-xl border border-border/80 bg-background/60 p-4 transition-colors hover:border-primary/50\"\n          >\n            <div className=\"flex items-center justify-between\">\n              <span className=\"font-mono text-xs text-muted-foreground\">{node.id}</span>\n              <span className=\"rounded-full bg-secondary px-2 py-0.5 text-[11px] font-medium text-secondary-foreground\">\n                {node.badge}\n              </span>\n            </div>\n            <h4 className=\"mt-3 text-sm font-semibold text-foreground\">{node.title}</h4>\n            <p className=\"mt-1 text-xs leading-relaxed text-muted-foreground\">\n              {node.description}\n            </p>\n          </div>\n        ))}\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/diagram-card.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "minimal-table",
+    "type": "registry:component",
+    "title": "Minimal Table",
+    "description": "Clean tabular data display with accessible headers, captions, and responsive overflow.",
+    "category": "ui:editorial",
+    "tags": [
+      "tailwind-v4",
+      "editorial",
+      "table",
+      "data-grid",
+      "accessible"
+    ],
+    "dials": {
+      "design_variance": 3,
+      "motion_intensity": 1,
+      "visual_density": 9
+    },
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "table",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://diagram.com",
+      "license_type": "MIT",
+      "author": "diagram-design team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/editorial/minimal-table.tsx",
+        "content": "/**\n * @license MIT\n * @origin diagram-design (https://diagram.com)\n * @author diagram-design team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface Column<T> {\n  key: keyof T | string;\n  header: string;\n  render?: (item: T) => React.ReactNode;\n}\n\nexport interface MinimalTableProps<T> {\n  data: T[];\n  columns: Column<T>[];\n  caption?: string;\n  className?: string;\n}\n\nexport function MinimalTable<T extends Record<string, any>>({\n  data,\n  columns,\n  caption,\n  className,\n}: MinimalTableProps<T>) {\n  return (\n    <div className={cn(\"w-full overflow-x-auto rounded-xl border border-border bg-card\", className)}>\n      <table className=\"w-full text-left text-sm\">\n        {caption && (\n          <caption className=\"p-4 text-xs font-medium text-muted-foreground text-left\">\n            {caption}\n          </caption>\n        )}\n        <thead className=\"border-b border-border bg-muted/40 text-xs font-semibold uppercase text-muted-foreground\">\n          <tr>\n            {columns.map((col, idx) => (\n              <th key={idx} scope=\"col\" className=\"px-6 py-3\">\n                {col.header}\n              </th>\n            ))}\n          </tr>\n        </thead>\n        <tbody className=\"divide-y divide-border\">\n          {data.map((row, rowIdx) => (\n            <tr\n              key={rowIdx}\n              className=\"transition-colors hover:bg-muted/20 focus-within:bg-muted/30\"\n            >\n              {columns.map((col, colIdx) => (\n                <td key={colIdx} className=\"px-6 py-4 font-normal text-foreground\">\n                  {col.render ? col.render(row) : row[col.key as keyof T]}\n                </td>\n              ))}\n            </tr>\n          ))}\n        </tbody>\n      </table>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/minimal-table.tsx"
       }
     ]
   },
@@ -466,6 +499,8 @@
     "category": "ui:motion",
     "tags": [
       "motion/react",
+      "tailwind-v4",
+      "accessible",
       "spring-physics",
       "tabs",
       "layoutId"
@@ -513,6 +548,8 @@
     "category": "ui:motion",
     "tags": [
       "motion/react",
+      "tailwind-v4",
+      "accessible",
       "spring-physics",
       "dock",
       "macos-style"
@@ -560,6 +597,7 @@
     "category": "ui:motion",
     "tags": [
       "motion/react",
+      "spring-physics",
       "cursor-follower",
       "smooth-spring"
     ],
@@ -605,6 +643,8 @@
     "category": "ui:motion",
     "tags": [
       "motion/react",
+      "accessible",
+      "spring-physics",
       "magnetic-physics",
       "button",
       "interactive"
@@ -654,9 +694,12 @@
     "category": "ui:motion",
     "tags": [
       "motion/react",
+      "lucide-react",
+      "tailwind-v4",
+      "accessible",
+      "spring-physics",
       "animate-presence",
-      "modal",
-      "spring-physics"
+      "modal"
     ],
     "dials": {
       "design_variance": 5,
@@ -695,349 +738,226 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "canvas-fluid-wave",
-    "type": "registry:component",
-    "title": "Canvas Fluid Wave",
-    "description": "Interactive HTML5 Canvas fluid simulation with mouse interaction and CSS gradient fallback.",
-    "category": "ui:creative",
+    "name": "avatar",
+    "type": "registry:ui",
+    "title": "Avatar",
+    "description": "Fallback-aware image avatar with initials display and smooth loading states.",
+    "category": "ui:primitive",
     "tags": [
-      "canvas",
-      "shader-simulation",
-      "interactive",
-      "a11y-fallback"
+      "radix-primitives",
+      "headless",
+      "avatar",
+      "image"
     ],
     "dials": {
-      "design_variance": 8,
-      "motion_intensity": 9,
-      "visual_density": 3
-    },
-    "a11y": {
-      "keyboard_navigable": false,
-      "wai_aria_compliant": true,
-      "fallback_provided": true,
-      "reduced_motion_supported": true
-    },
-    "license_origin": {
-      "source_repository": "https://canvas-ui.dev",
-      "license_type": "MIT",
-      "author": "Canvas UI Team",
-      "attribution_required": true,
-      "redistribution_mode": "full_source"
-    },
-    "dependencies": [
-      "clsx",
-      "tailwind-merge"
-    ],
-    "registryDependencies": [],
-    "files": [
-      {
-        "path": "registry/creative/canvas-fluid-wave.tsx",
-        "content": "/**\n * @license MIT\n * @origin Canvas UI (https://canvas-ui.dev)\n * @author Canvas UI Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface CanvasFluidWaveProps {\n  className?: string;\n  waveColor?: string;\n  speed?: number;\n  amplitude?: number;\n}\n\nexport function CanvasFluidWave({\n  className,\n  waveColor = \"rgba(120, 119, 198, 0.25)\",\n  speed = 0.02,\n  amplitude = 24,\n}: CanvasFluidWaveProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n  const [reducedMotion, setReducedMotion] = React.useState(false);\n\n  React.useEffect(() => {\n    const mediaQuery = window.matchMedia(\"(prefers-reduced-motion: reduce)\");\n    setReducedMotion(mediaQuery.matches);\n    const handler = () => setReducedMotion(mediaQuery.matches);\n    mediaQuery.addEventListener(\"change\", handler);\n    return () => mediaQuery.removeEventListener(\"change\", handler);\n  }, []);\n\n  React.useEffect(() => {\n    if (reducedMotion) return;\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    let animationFrameId: number;\n    let step = 0;\n\n    const resize = () => {\n      canvas.width = canvas.parentElement?.clientWidth || 400;\n      canvas.height = canvas.parentElement?.clientHeight || 200;\n    };\n\n    resize();\n    window.addEventListener(\"resize\", resize);\n\n    const render = () => {\n      step += speed;\n      ctx.clearRect(0, 0, canvas.width, canvas.height);\n\n      ctx.beginPath();\n      ctx.moveTo(0, canvas.height / 2);\n\n      for (let x = 0; x < canvas.width; x++) {\n        const y =\n          Math.sin(x * 0.01 + step) * amplitude +\n          Math.sin(x * 0.02 + step * 1.5) * (amplitude * 0.5) +\n          canvas.height / 2;\n        ctx.lineTo(x, y);\n      }\n\n      ctx.lineTo(canvas.width, canvas.height);\n      ctx.lineTo(0, canvas.height);\n      ctx.closePath();\n\n      ctx.fillStyle = waveColor;\n      ctx.fill();\n\n      animationFrameId = requestAnimationFrame(render);\n    };\n\n    render();\n\n    return () => {\n      window.removeEventListener(\"resize\", resize);\n      cancelAnimationFrame(animationFrameId);\n    };\n  }, [speed, amplitude, waveColor, reducedMotion]);\n\n  return (\n    <div className={cn(\"relative overflow-hidden rounded-xl bg-card border border-border\", className)}>\n      {reducedMotion ? (\n        // Static CSS gradient fallback when prefers-reduced-motion is requested\n        <div\n          className=\"absolute inset-0 bg-gradient-to-b from-transparent to-primary/10\"\n          aria-hidden=\"true\"\n        />\n      ) : (\n        <canvas\n          ref={canvasRef}\n          className=\"absolute inset-0 h-full w-full pointer-events-none\"\n          aria-hidden=\"true\"\n        />\n      )}\n      <div className=\"relative z-10 p-6\">\n        <h3 className=\"text-base font-semibold text-foreground\">Canvas Fluid Wave</h3>\n        <p className=\"mt-1 text-sm text-muted-foreground\">\n          Interactive fluid simulation with automatic reduced-motion accessibility fallbacks.\n        </p>\n      </div>\n    </div>\n  );\n}\n",
-        "type": "registry:component",
-        "target": "components/ui/canvas-fluid-wave.tsx"
-      }
-    ]
-  },
-  {
-    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "dot-matrix-loader",
-    "type": "registry:component",
-    "title": "Dot Matrix Loader",
-    "description": "Animated dot matrix with wave oscillation, customizable matrix rows, and accessible status role.",
-    "category": "ui:creative",
-    "tags": [
-      "dot-matrix",
-      "canvas-pattern",
-      "loader",
-      "status"
-    ],
-    "dials": {
-      "design_variance": 6,
-      "motion_intensity": 5,
-      "visual_density": 7
-    },
-    "a11y": {
-      "keyboard_navigable": false,
-      "wai_aria_compliant": true,
-      "wai_aria_role": "status",
-      "fallback_provided": true
-    },
-    "license_origin": {
-      "source_repository": "https://dotmatrix.dev",
-      "license_type": "MIT",
-      "author": "Dot Matrix Team",
-      "attribution_required": true,
-      "redistribution_mode": "full_source"
-    },
-    "dependencies": [
-      "clsx",
-      "tailwind-merge"
-    ],
-    "registryDependencies": [],
-    "files": [
-      {
-        "path": "registry/creative/dot-matrix-loader.tsx",
-        "content": "/**\n * @license MIT\n * @origin Dot Matrix UI (https://dotmatrix.dev)\n * @author Dot Matrix Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface DotMatrixLoaderProps {\n  rows?: number;\n  cols?: number;\n  dotSize?: number;\n  gap?: number;\n  className?: string;\n  label?: string;\n}\n\nexport function DotMatrixLoader({\n  rows = 5,\n  cols = 5,\n  dotSize = 6,\n  gap = 6,\n  className,\n  label = \"Loading content\",\n}: DotMatrixLoaderProps) {\n  const [activeFrame, setActiveFrame] = React.useState(0);\n\n  React.useEffect(() => {\n    const timer = setInterval(() => {\n      setActiveFrame((prev) => (prev + 1) % (rows + cols));\n    }, 120);\n    return () => clearInterval(timer);\n  }, [rows, cols]);\n\n  return (\n    <div\n      role=\"status\"\n      aria-label={label}\n      className={cn(\"inline-flex flex-col items-center justify-center p-4\", className)}\n    >\n      <div\n        className=\"grid\"\n        style={{\n          gridTemplateColumns: `repeat(${cols}, ${dotSize}px)`,\n          gap: `${gap}px`,\n        }}\n      >\n        {Array.from({ length: rows * cols }).map((_, i) => {\n          const r = Math.floor(i / cols);\n          const c = i % cols;\n          const distance = r + c;\n          const isLit = (distance + activeFrame) % (rows + cols) < 3;\n\n          return (\n            <div\n              key={i}\n              style={{ width: dotSize, height: dotSize }}\n              className={cn(\n                \"rounded-full transition-colors duration-150\",\n                isLit ? \"bg-primary\" : \"bg-muted-foreground/20\"\n              )}\n            />\n          );\n        })}\n      </div>\n      <span className=\"sr-only\">{label}</span>\n    </div>\n  );\n}\n",
-        "type": "registry:component",
-        "target": "components/ui/dot-matrix-loader.tsx"
-      }
-    ]
-  },
-  {
-    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "noise-texture-card",
-    "type": "registry:component",
-    "title": "Noise Texture Card",
-    "description": "High-craft noise-dithered backdrop with crisp typography overlay and zero AI slop.",
-    "category": "ui:creative",
-    "tags": [
-      "svg-noise",
-      "editorial",
-      "texture",
-      "brutalist"
-    ],
-    "dials": {
-      "design_variance": 7,
-      "motion_intensity": 2,
+      "design_variance": 2,
+      "motion_intensity": 1,
       "visual_density": 6
     },
     "a11y": {
       "keyboard_navigable": false,
       "wai_aria_compliant": true,
-      "fallback_provided": true
-    },
-    "license_origin": {
-      "source_repository": "https://reactbits.dev",
-      "license_type": "MIT",
-      "author": "React Bits Team",
-      "attribution_required": true,
-      "redistribution_mode": "full_source"
-    },
-    "dependencies": [
-      "clsx",
-      "tailwind-merge"
-    ],
-    "registryDependencies": [],
-    "files": [
-      {
-        "path": "registry/creative/noise-texture-card.tsx",
-        "content": "/**\n * @license MIT\n * @origin React Bits (https://reactbits.dev)\n * @author React Bits Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface NoiseTextureCardProps {\n  title: string;\n  subtitle?: string;\n  description: string;\n  tag?: string;\n  className?: string;\n}\n\nexport function NoiseTextureCard({\n  title,\n  subtitle,\n  description,\n  tag = \"Creative Engine\",\n  className,\n}: NoiseTextureCardProps) {\n  return (\n    <div\n      className={cn(\n        \"group relative overflow-hidden rounded-2xl border border-border bg-card p-8 text-card-foreground shadow-sm transition-all hover:border-border/80 hover:shadow-md\",\n        className\n      )}\n    >\n      {/* Micro SVG Noise Texture Pattern */}\n      <svg\n        className=\"pointer-events-none absolute inset-0 h-full w-full opacity-20 transition-opacity group-hover:opacity-30\"\n        aria-hidden=\"true\"\n      >\n        <filter id=\"noiseFilter\">\n          <feTurbulence\n            type=\"fractalNoise\"\n            baseFrequency=\"0.8\"\n            numOctaves=\"3\"\n            stitchTiles=\"stitch\"\n          />\n        </filter>\n        <rect width=\"100%\" height=\"100%\" filter=\"url(#noiseFilter)\" />\n      </svg>\n\n      <div className=\"relative z-10\">\n        <div className=\"inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary\">\n          {tag}\n        </div>\n        <h3 className=\"mt-4 text-xl font-bold tracking-tight text-foreground\">\n          {title}\n        </h3>\n        {subtitle && (\n          <p className=\"mt-1 text-xs font-medium uppercase tracking-wider text-muted-foreground\">\n            {subtitle}\n          </p>\n        )}\n        <p className=\"mt-3 text-sm leading-relaxed text-muted-foreground\">\n          {description}\n        </p>\n      </div>\n    </div>\n  );\n}\n",
-        "type": "registry:component",
-        "target": "components/ui/noise-texture-card.tsx"
-      }
-    ]
-  },
-  {
-    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "particle-field",
-    "type": "registry:component",
-    "title": "Particle Field",
-    "description": "GPU-friendly interactive particle web with prefers-reduced-motion fallback.",
-    "category": "ui:creative",
-    "tags": [
-      "canvas",
-      "particles",
-      "physics",
-      "reduced-motion"
-    ],
-    "dials": {
-      "design_variance": 8,
-      "motion_intensity": 8,
-      "visual_density": 4
-    },
-    "a11y": {
-      "keyboard_navigable": false,
-      "wai_aria_compliant": true,
       "fallback_provided": true,
-      "reduced_motion_supported": true
+      "reduced_motion_supported": false
     },
     "license_origin": {
-      "source_repository": "https://threeui.dev",
+      "source_repository": "https://radix-ui.com",
       "license_type": "MIT",
-      "author": "ThreeUI Team",
+      "author": "Radix UI",
       "attribution_required": true,
       "redistribution_mode": "full_source"
     },
     "dependencies": [
+      "@radix-ui/react-avatar",
       "clsx",
       "tailwind-merge"
     ],
     "registryDependencies": [],
     "files": [
       {
-        "path": "registry/creative/particle-field.tsx",
-        "content": "/**\n * @license MIT\n * @origin ThreeUI / Canvas UI (https://threeui.dev)\n * @author ThreeUI Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface ParticleFieldProps {\n  particleCount?: number;\n  particleColor?: string;\n  className?: string;\n}\n\nexport function ParticleField({\n  particleCount = 40,\n  particleColor = \"rgba(100, 116, 139, 0.4)\",\n  className,\n}: ParticleFieldProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n  const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);\n\n  React.useEffect(() => {\n    const mq = window.matchMedia(\"(prefers-reduced-motion: reduce)\");\n    setPrefersReducedMotion(mq.matches);\n    const onChange = () => setPrefersReducedMotion(mq.matches);\n    mq.addEventListener(\"change\", onChange);\n    return () => mq.removeEventListener(\"change\", onChange);\n  }, []);\n\n  React.useEffect(() => {\n    if (prefersReducedMotion) return;\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    let animId: number;\n\n    const resize = () => {\n      canvas.width = canvas.parentElement?.clientWidth || 400;\n      canvas.height = canvas.parentElement?.clientHeight || 300;\n    };\n    resize();\n    window.addEventListener(\"resize\", resize);\n\n    const particles = Array.from({ length: particleCount }).map(() => ({\n      x: Math.random() * canvas.width,\n      y: Math.random() * canvas.height,\n      vx: (Math.random() - 0.5) * 0.6,\n      vy: (Math.random() - 0.5) * 0.6,\n      radius: Math.random() * 2 + 1,\n    }));\n\n    const loop = () => {\n      ctx.clearRect(0, 0, canvas.width, canvas.height);\n\n      particles.forEach((p) => {\n        p.x += p.vx;\n        p.y += p.vy;\n\n        if (p.x < 0) p.x = canvas.width;\n        if (p.x > canvas.width) p.x = 0;\n        if (p.y < 0) p.y = canvas.height;\n        if (p.y > canvas.height) p.y = 0;\n\n        ctx.beginPath();\n        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);\n        ctx.fillStyle = particleColor;\n        ctx.fill();\n      });\n\n      animId = requestAnimationFrame(loop);\n    };\n\n    loop();\n\n    return () => {\n      window.removeEventListener(\"resize\", resize);\n      cancelAnimationFrame(animId);\n    };\n  }, [particleCount, particleColor, prefersReducedMotion]);\n\n  return (\n    <div className={cn(\"relative overflow-hidden rounded-xl border border-border bg-card p-6\", className)}>\n      {prefersReducedMotion ? (\n        <div className=\"absolute inset-0 bg-muted/20\" aria-hidden=\"true\" />\n      ) : (\n        <canvas\n          ref={canvasRef}\n          className=\"pointer-events-none absolute inset-0 h-full w-full\"\n          aria-hidden=\"true\"\n        />\n      )}\n      <div className=\"relative z-10\">\n        <h4 className=\"text-base font-semibold text-foreground\">Interactive Particle Web</h4>\n        <p className=\"mt-1 text-sm text-muted-foreground\">\n          Autonomous canvas physics field with automatic performance safeguards.\n        </p>\n      </div>\n    </div>\n  );\n}\n",
-        "type": "registry:component",
-        "target": "components/ui/particle-field.tsx"
+        "path": "registry/primitives/avatar.tsx",
+        "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as AvatarPrimitive from \"@radix-ui/react-avatar\";\nimport { cn } from \"../lib/utils\";\n\nexport const Avatar = React.forwardRef<\n  React.ElementRef<typeof AvatarPrimitive.Root>,\n  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>\n>(({ className, ...props }, ref) => (\n  <AvatarPrimitive.Root\n    ref={ref}\n    className={cn(\n      \"relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full\",\n      className\n    )}\n    {...props}\n  />\n));\nAvatar.displayName = AvatarPrimitive.Root.displayName;\n\nexport const AvatarImage = React.forwardRef<\n  React.ElementRef<typeof AvatarPrimitive.Image>,\n  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>\n>(({ className, ...props }, ref) => (\n  <AvatarPrimitive.Image\n    ref={ref}\n    className={cn(\"aspect-square h-full w-full\", className)}\n    {...props}\n  />\n));\nAvatarImage.displayName = AvatarPrimitive.Image.displayName;\n\nexport const AvatarFallback = React.forwardRef<\n  React.ElementRef<typeof AvatarPrimitive.Fallback>,\n  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>\n>(({ className, ...props }, ref) => (\n  <AvatarPrimitive.Fallback\n    ref={ref}\n    className={cn(\n      \"flex h-full w-full items-center justify-center rounded-full bg-muted font-medium text-muted-foreground\",\n      className\n    )}\n    {...props}\n  />\n));\nAvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;\n",
+        "type": "registry:ui",
+        "target": "components/ui/avatar.tsx"
       }
     ]
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "data-stat-grid",
-    "type": "registry:component",
-    "title": "Data Stat Grid",
-    "description": "Asymmetrical metric showcase for SaaS analytics with high visual density and clean type.",
-    "category": "ui:editorial",
+    "name": "badge",
+    "type": "registry:ui",
+    "title": "Badge",
+    "description": "Contrast-checked status indicator using semantic design tokens.",
+    "category": "ui:primitive",
     "tags": [
-      "analytical",
-      "metrics",
-      "grid",
-      "saas-dashboard"
+      "utility",
+      "tailwind-v4",
+      "status",
+      "indicator",
+      "badge"
     ],
     "dials": {
-      "design_variance": 4,
-      "motion_intensity": 1,
-      "visual_density": 9
-    },
-    "a11y": {
-      "keyboard_navigable": false,
-      "wai_aria_compliant": true,
-      "fallback_provided": true
-    },
-    "license_origin": {
-      "source_repository": "https://diagram.com",
-      "license_type": "MIT",
-      "author": "diagram-design team",
-      "attribution_required": true,
-      "redistribution_mode": "full_source"
-    },
-    "dependencies": [
-      "lucide-react",
-      "clsx",
-      "tailwind-merge"
-    ],
-    "registryDependencies": [],
-    "files": [
-      {
-        "path": "registry/editorial/data-stat-grid.tsx",
-        "content": "/**\n * @license MIT\n * @origin diagram-design (https://diagram.com)\n * @author diagram-design team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { TrendingUp, Activity, ShieldCheck, Zap } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface StatItem {\n  label: string;\n  value: string;\n  change: string;\n  isPositive: boolean;\n  description: string;\n}\n\nexport interface DataStatGridProps {\n  stats?: StatItem[];\n  className?: string;\n}\n\nconst DEFAULT_STATS: StatItem[] = [\n  {\n    label: \"Zero-Draft Fidelity\",\n    value: \"94.8%\",\n    change: \"+4.2%\",\n    isPositive: true,\n    description: \"First-run compile rate across AI agents\",\n  },\n  {\n    label: \"Avg Payload Size\",\n    value: \"11.2 KB\",\n    change: \"-2.1 KB\",\n    isPositive: true,\n    description: \"Token footprint per component recipe\",\n  },\n  {\n    label: \"Slop Conformance\",\n    value: \"100/100\",\n    change: \"Flawless\",\n    isPositive: true,\n    description: \"Anti-slop AST linter health index\",\n  },\n  {\n    label: \"Resolver Latency\",\n    value: \"0.82s\",\n    change: \"-0.4s\",\n    isPositive: true,\n    description: \"CLI registry retrieval over CDN edge\",\n  },\n];\n\nexport function DataStatGrid({ stats = DEFAULT_STATS, className }: DataStatGridProps) {\n  return (\n    <div className={cn(\"grid gap-4 sm:grid-cols-2 lg:grid-cols-4\", className)}>\n      {stats.map((stat, i) => (\n        <div\n          key={i}\n          className=\"rounded-xl border border-border bg-card p-5 text-card-foreground shadow-xs\"\n        >\n          <div className=\"flex items-center justify-between\">\n            <span className=\"text-xs font-medium text-muted-foreground\">{stat.label}</span>\n            <span\n              className={cn(\n                \"inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[11px] font-semibold\",\n                stat.isPositive\n                  ? \"bg-emerald-500/10 text-emerald-600 dark:text-emerald-400\"\n                  : \"bg-destructive/10 text-destructive\"\n              )}\n            >\n              <TrendingUp className=\"h-3 w-3\" aria-hidden=\"true\" />\n              {stat.change}\n            </span>\n          </div>\n          <div className=\"mt-3 text-2xl font-bold tracking-tight text-foreground\">\n            {stat.value}\n          </div>\n          <p className=\"mt-1 text-xs text-muted-foreground\">{stat.description}</p>\n        </div>\n      ))}\n    </div>\n  );\n}\n",
-        "type": "registry:component",
-        "target": "components/ui/data-stat-grid.tsx"
-      }
-    ]
-  },
-  {
-    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "diagram-card",
-    "type": "registry:component",
-    "title": "Diagram Card",
-    "description": "Precision SVG diagramming card with minimal vector lines and zero decorative emojis.",
-    "category": "ui:editorial",
-    "tags": [
-      "editorial",
-      "svg",
-      "analytical",
-      "diagram"
-    ],
-    "dials": {
-      "design_variance": 5,
+      "design_variance": 2,
       "motion_intensity": 1,
       "visual_density": 8
     },
     "a11y": {
       "keyboard_navigable": false,
       "wai_aria_compliant": true,
-      "fallback_provided": true
+      "fallback_provided": true,
+      "reduced_motion_supported": false
     },
     "license_origin": {
-      "source_repository": "https://diagram.com",
+      "source_repository": "https://ui.shadcn.com",
       "license_type": "MIT",
-      "author": "diagram-design team",
+      "author": "Shadcn & Community",
       "attribution_required": true,
       "redistribution_mode": "full_source"
     },
     "dependencies": [
-      "lucide-react",
+      "class-variance-authority",
       "clsx",
       "tailwind-merge"
     ],
     "registryDependencies": [],
     "files": [
       {
-        "path": "registry/editorial/diagram-card.tsx",
-        "content": "/**\n * @license MIT\n * @origin diagram-design (https://diagram.com)\n * @author diagram-design team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { ArrowUpRight, Cpu, Layers } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface DiagramNode {\n  id: string;\n  title: string;\n  badge: string;\n  description: string;\n}\n\nexport interface DiagramCardProps {\n  nodes?: DiagramNode[];\n  className?: string;\n}\n\nconst DEFAULT_NODES: DiagramNode[] = [\n  {\n    id: \"01\",\n    title: \"Ingestion Pipeline\",\n    badge: \"AST Parse\",\n    description: \"Extracts AST structures, dependencies, and verifies SPDX license headers.\",\n  },\n  {\n    id: \"02\",\n    title: \"Anti-Slop Engine\",\n    badge: \"Verification\",\n    description: \"Evaluates code against 20 strict design-system rules and WCAG AA contrast.\",\n  },\n  {\n    id: \"03\",\n    title: \"Static Compiler\",\n    badge: \"CDN Edge\",\n    description: \"Builds atomic /r/ endpoints and /llms.txt discovery manifests.\",\n  },\n];\n\nexport function DiagramCard({ nodes = DEFAULT_NODES, className }: DiagramCardProps) {\n  return (\n    <div\n      className={cn(\n        \"rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-xs\",\n        className\n      )}\n    >\n      <div className=\"flex items-center justify-between border-b border-border pb-4\">\n        <div className=\"flex items-center gap-2\">\n          <Layers className=\"h-5 w-5 text-primary\" aria-hidden=\"true\" />\n          <span className=\"text-sm font-semibold tracking-wide uppercase text-muted-foreground\">\n            Architecture Map\n          </span>\n        </div>\n        <span className=\"rounded-md border border-border bg-muted px-2 py-0.5 text-xs font-mono text-muted-foreground\">\n          v1.0.0\n        </span>\n      </div>\n\n      <div className=\"mt-6 grid gap-4 md:grid-cols-3\">\n        {nodes.map((node, i) => (\n          <div\n            key={node.id}\n            className=\"group relative rounded-xl border border-border/80 bg-background/60 p-4 transition-colors hover:border-primary/50\"\n          >\n            <div className=\"flex items-center justify-between\">\n              <span className=\"font-mono text-xs text-muted-foreground\">{node.id}</span>\n              <span className=\"rounded-full bg-secondary px-2 py-0.5 text-[11px] font-medium text-secondary-foreground\">\n                {node.badge}\n              </span>\n            </div>\n            <h4 className=\"mt-3 text-sm font-semibold text-foreground\">{node.title}</h4>\n            <p className=\"mt-1 text-xs leading-relaxed text-muted-foreground\">\n              {node.description}\n            </p>\n          </div>\n        ))}\n      </div>\n    </div>\n  );\n}\n",
-        "type": "registry:component",
-        "target": "components/ui/diagram-card.tsx"
+        "path": "registry/primitives/badge.tsx",
+        "content": "/**\n * @license MIT\n * @origin Shadcn UI (https://ui.shadcn.com)\n * @author Shadcn & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"../lib/utils\";\n\nexport const badgeVariants = cva(\n  \"inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2\",\n  {\n    variants: {\n      variant: {\n        default:\n          \"border-transparent bg-primary text-primary-foreground shadow-xs hover:bg-primary/80\",\n        secondary:\n          \"border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80\",\n        destructive:\n          \"border-transparent bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/80\",\n        outline: \"text-foreground\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  }\n);\n\nexport interface BadgeProps\n  extends React.HTMLAttributes<HTMLDivElement>,\n    VariantProps<typeof badgeVariants> {}\n\nexport function Badge({ className, variant, ...props }: BadgeProps) {\n  return (\n    <div className={cn(badgeVariants({ variant }), className)} {...props} />\n  );\n}\n",
+        "type": "registry:ui",
+        "target": "components/ui/badge.tsx"
       }
     ]
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "minimal-table",
-    "type": "registry:component",
-    "title": "Minimal Table",
-    "description": "Clean tabular data display with accessible headers, captions, and responsive overflow.",
-    "category": "ui:editorial",
+    "name": "button",
+    "type": "registry:ui",
+    "title": "Button",
+    "description": "Polymorphic button with accessible variants, focus rings, and zero arbitrary spacing.",
+    "category": "ui:primitive",
     "tags": [
-      "table",
-      "data-grid",
       "accessible",
-      "editorial"
+      "tailwind-v4",
+      "radix-primitive",
+      "button"
     ],
     "dials": {
-      "design_variance": 3,
-      "motion_intensity": 1,
-      "visual_density": 9
-    },
-    "a11y": {
-      "keyboard_navigable": true,
-      "wai_aria_compliant": true,
-      "wai_aria_role": "table",
-      "fallback_provided": true
-    },
-    "license_origin": {
-      "source_repository": "https://diagram.com",
-      "license_type": "MIT",
-      "author": "diagram-design team",
-      "attribution_required": true,
-      "redistribution_mode": "full_source"
-    },
-    "dependencies": [
-      "clsx",
-      "tailwind-merge"
-    ],
-    "registryDependencies": [],
-    "files": [
-      {
-        "path": "registry/editorial/minimal-table.tsx",
-        "content": "/**\n * @license MIT\n * @origin diagram-design (https://diagram.com)\n * @author diagram-design team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface Column<T> {\n  key: keyof T | string;\n  header: string;\n  render?: (item: T) => React.ReactNode;\n}\n\nexport interface MinimalTableProps<T> {\n  data: T[];\n  columns: Column<T>[];\n  caption?: string;\n  className?: string;\n}\n\nexport function MinimalTable<T extends Record<string, any>>({\n  data,\n  columns,\n  caption,\n  className,\n}: MinimalTableProps<T>) {\n  return (\n    <div className={cn(\"w-full overflow-x-auto rounded-xl border border-border bg-card\", className)}>\n      <table className=\"w-full text-left text-sm\">\n        {caption && (\n          <caption className=\"p-4 text-xs font-medium text-muted-foreground text-left\">\n            {caption}\n          </caption>\n        )}\n        <thead className=\"border-b border-border bg-muted/40 text-xs font-semibold uppercase text-muted-foreground\">\n          <tr>\n            {columns.map((col, idx) => (\n              <th key={idx} scope=\"col\" className=\"px-6 py-3\">\n                {col.header}\n              </th>\n            ))}\n          </tr>\n        </thead>\n        <tbody className=\"divide-y divide-border\">\n          {data.map((row, rowIdx) => (\n            <tr\n              key={rowIdx}\n              className=\"transition-colors hover:bg-muted/20 focus-within:bg-muted/30\"\n            >\n              {columns.map((col, colIdx) => (\n                <td key={colIdx} className=\"px-6 py-4 font-normal text-foreground\">\n                  {col.render ? col.render(row) : row[col.key as keyof T]}\n                </td>\n              ))}\n            </tr>\n          ))}\n        </tbody>\n      </table>\n    </div>\n  );\n}\n",
-        "type": "registry:component",
-        "target": "components/ui/minimal-table.tsx"
-      }
-    ]
-  },
-  {
-    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "bento-grid",
-    "type": "registry:block",
-    "title": "Bento Grid",
-    "description": "Multi-pane asymmetrical layout grid with responsive column spans and structural borders.",
-    "category": "ui:block",
-    "tags": [
-      "bento-grid",
-      "layout-block",
-      "asymmetry",
-      "marketing"
-    ],
-    "dials": {
-      "design_variance": 7,
-      "motion_intensity": 3,
+      "design_variance": 2,
+      "motion_intensity": 2,
       "visual_density": 6
     },
     "a11y": {
       "keyboard_navigable": true,
       "wai_aria_compliant": true,
-      "fallback_provided": true
+      "wai_aria_role": "button",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
     },
     "license_origin": {
-      "source_repository": "https://tailark.com",
+      "source_repository": "https://ui.shadcn.com",
       "license_type": "MIT",
-      "author": "Tailark Team",
+      "author": "Shadcn & Community",
       "attribution_required": true,
       "redistribution_mode": "full_source"
     },
     "dependencies": [
+      "class-variance-authority",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/primitives/button.tsx",
+        "content": "/**\n * @license MIT\n * @origin Shadcn UI / Radix Primitives (https://ui.shadcn.com)\n * @author Shadcn & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"../lib/utils\";\n\nexport const buttonVariants = cva(\n  \"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0\",\n  {\n    variants: {\n      variant: {\n        default:\n          \"bg-primary text-primary-foreground shadow-xs hover:bg-primary/90\",\n        destructive:\n          \"bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90\",\n        outline:\n          \"border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground\",\n        secondary:\n          \"bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80\",\n        ghost: \"hover:bg-accent hover:text-accent-foreground\",\n        link: \"text-primary underline-offset-4 hover:underline\",\n      },\n      size: {\n        default: \"h-9 px-4 py-2\",\n        sm: \"h-8 rounded-md px-3 text-xs\",\n        lg: \"h-10 rounded-md px-8\",\n        icon: \"h-9 w-9\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"default\",\n    },\n  }\n);\n\nexport interface ButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement>,\n    VariantProps<typeof buttonVariants> {\n  asChild?: boolean;\n}\n\nexport const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(\n  ({ className, variant, size, asChild = false, ...props }, ref) => {\n    return (\n      <button\n        className={cn(buttonVariants({ variant, size, className }))}\n        ref={ref}\n        type={props.type || \"button\"}\n        {...props}\n      />\n    );\n  }\n);\n\nButton.displayName = \"Button\";\n",
+        "type": "registry:ui",
+        "target": "components/ui/button.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "card",
+    "type": "registry:ui",
+    "title": "Card",
+    "description": "Structural surface card with crisp border-border and no glassmorphism slop.",
+    "category": "ui:primitive",
+    "tags": [
+      "tailwind-v4",
+      "layout",
+      "surface",
+      "card"
+    ],
+    "dials": {
+      "design_variance": 3,
+      "motion_intensity": 1,
+      "visual_density": 6
+    },
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://ui.shadcn.com",
+      "license_type": "MIT",
+      "author": "Shadcn & Community",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/primitives/card.tsx",
+        "content": "/**\n * @license MIT\n * @origin Shadcn UI (https://ui.shadcn.com)\n * @author Shadcn & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport const Card = React.forwardRef<\n  HTMLDivElement,\n  React.HTMLAttributes<HTMLDivElement>\n>(({ className, ...props }, ref) => (\n  <div\n    ref={ref}\n    className={cn(\n      \"rounded-xl border border-border bg-card text-card-foreground shadow-sm\",\n      className\n    )}\n    {...props}\n  />\n));\nCard.displayName = \"Card\";\n\nexport const CardHeader = React.forwardRef<\n  HTMLDivElement,\n  React.HTMLAttributes<HTMLDivElement>\n>(({ className, ...props }, ref) => (\n  <div\n    ref={ref}\n    className={cn(\"flex flex-col space-y-1.5 p-6\", className)}\n    {...props}\n  />\n));\nCardHeader.displayName = \"CardHeader\";\n\nexport const CardTitle = React.forwardRef<\n  HTMLDivElement,\n  React.HTMLAttributes<HTMLDivElement>\n>(({ className, ...props }, ref) => (\n  <div\n    ref={ref}\n    className={cn(\"font-semibold leading-none tracking-tight\", className)}\n    {...props}\n  />\n));\nCardTitle.displayName = \"CardTitle\";\n\nexport const CardDescription = React.forwardRef<\n  HTMLDivElement,\n  React.HTMLAttributes<HTMLDivElement>\n>(({ className, ...props }, ref) => (\n  <div\n    ref={ref}\n    className={cn(\"text-sm text-muted-foreground\", className)}\n    {...props}\n  />\n));\nCardDescription.displayName = \"CardDescription\";\n\nexport const CardContent = React.forwardRef<\n  HTMLDivElement,\n  React.HTMLAttributes<HTMLDivElement>\n>(({ className, ...props }, ref) => (\n  <div ref={ref} className={cn(\"p-6 pt-0\", className)} {...props} />\n));\nCardContent.displayName = \"CardContent\";\n\nexport const CardFooter = React.forwardRef<\n  HTMLDivElement,\n  React.HTMLAttributes<HTMLDivElement>\n>(({ className, ...props }, ref) => (\n  <div\n    ref={ref}\n    className={cn(\"flex items-center p-6 pt-0\", className)}\n    {...props}\n  />\n));\nCardFooter.displayName = \"CardFooter\";\n",
+        "type": "registry:ui",
+        "target": "components/ui/card.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "dialog",
+    "type": "registry:ui",
+    "title": "Dialog",
+    "description": "Headless accessible modal dialog with focus trap, backdrop escape, and screen-reader roles.",
+    "category": "ui:primitive",
+    "tags": [
+      "radix-primitives",
+      "headless",
+      "lucide-react",
+      "tailwind-v4",
+      "modal",
+      "dialog",
+      "a11y"
+    ],
+    "dials": {
+      "design_variance": 3,
+      "motion_intensity": 3,
+      "visual_density": 5
+    },
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "dialog",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://radix-ui.com",
+      "license_type": "MIT",
+      "author": "Radix UI",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "@radix-ui/react-dialog",
       "lucide-react",
       "clsx",
       "tailwind-merge"
@@ -1045,104 +965,255 @@
     "registryDependencies": [],
     "files": [
       {
-        "path": "registry/blocks/bento-grid.tsx",
-        "content": "/**\n * @license MIT\n * @origin Tailark / Aceternity (https://tailark.com)\n * @author Tailark Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { ArrowUpRight } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface BentoItem {\n  title: string;\n  description: string;\n  header?: React.ReactNode;\n  icon?: React.ReactNode;\n  className?: string;\n}\n\nexport function BentoGrid({\n  className,\n  children,\n}: {\n  className?: string;\n  children: React.ReactNode;\n}) {\n  return (\n    <div\n      className={cn(\n        \"grid grid-cols-1 gap-4 md:grid-cols-3 md:auto-rows-[18rem]\",\n        className\n      )}\n    >\n      {children}\n    </div>\n  );\n}\n\nexport function BentoGridItem({\n  className,\n  title,\n  description,\n  header,\n  icon,\n}: BentoItem) {\n  return (\n    <div\n      className={cn(\n        \"group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-xs transition-colors hover:border-primary/40\",\n        className\n      )}\n    >\n      <div className=\"flex h-full flex-col justify-between\">\n        {header && <div className=\"mb-4\">{header}</div>}\n        <div>\n          {icon && <div className=\"mb-3 text-primary\">{icon}</div>}\n          <h3 className=\"text-lg font-semibold tracking-tight text-foreground\">\n            {title}\n          </h3>\n          <p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">\n            {description}\n          </p>\n        </div>\n      </div>\n      <div className=\"mt-4 flex items-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100\">\n        <span>Explore architecture</span>\n        <ArrowUpRight className=\"h-3.5 w-3.5\" />\n      </div>\n    </div>\n  );\n}\n",
-        "type": "registry:block",
-        "target": "components/ui/bento-grid.tsx"
+        "path": "registry/primitives/dialog.tsx",
+        "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as DialogPrimitive from \"@radix-ui/react-dialog\";\nimport { X } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport const Dialog = DialogPrimitive.Root;\nexport const DialogTrigger = DialogPrimitive.Trigger;\nexport const DialogPortal = DialogPrimitive.Portal;\nexport const DialogClose = DialogPrimitive.Close;\n\nexport const DialogOverlay = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Overlay>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>\n>(({ className, ...props }, ref) => (\n  <DialogPrimitive.Overlay\n    ref={ref}\n    className={cn(\n      \"fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\",\n      className\n    )}\n    {...props}\n  />\n));\nDialogOverlay.displayName = DialogPrimitive.Overlay.displayName;\n\nexport const DialogContent = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Content>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>\n>(({ className, children, ...props }, ref) => (\n  <DialogPortal>\n    <DialogOverlay />\n    <DialogPrimitive.Content\n      ref={ref}\n      className={cn(\n        \"fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-border bg-background p-6 shadow-lg duration-200 sm:rounded-lg\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      <DialogPrimitive.Close className=\"absolute right-4 top-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none\">\n        <X className=\"h-4 w-4\" />\n        <span className=\"sr-only\">Close</span>\n      </DialogPrimitive.Close>\n    </DialogPrimitive.Content>\n  </DialogPortal>\n));\nDialogContent.displayName = DialogPrimitive.Content.displayName;\n\nexport const DialogHeader = ({\n  className,\n  ...props\n}: React.HTMLAttributes<HTMLDivElement>) => (\n  <div\n    className={cn(\n      \"flex flex-col space-y-1.5 text-center sm:text-left\",\n      className\n    )}\n    {...props}\n  />\n);\nDialogHeader.displayName = \"DialogHeader\";\n\nexport const DialogFooter = ({\n  className,\n  ...props\n}: React.HTMLAttributes<HTMLDivElement>) => (\n  <div\n    className={cn(\n      \"flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2\",\n      className\n    )}\n    {...props}\n  />\n);\nDialogFooter.displayName = \"DialogFooter\";\n\nexport const DialogTitle = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Title>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>\n>(({ className, ...props }, ref) => (\n  <DialogPrimitive.Title\n    ref={ref}\n    className={cn(\n      \"text-lg font-semibold leading-none tracking-tight\",\n      className\n    )}\n    {...props}\n  />\n));\nDialogTitle.displayName = DialogPrimitive.Title.displayName;\n\nexport const DialogDescription = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Description>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>\n>(({ className, ...props }, ref) => (\n  <DialogPrimitive.Description\n    ref={ref}\n    className={cn(\"text-sm text-muted-foreground\", className)}\n    {...props}\n  />\n));\nDialogDescription.displayName = DialogPrimitive.Description.displayName;\n",
+        "type": "registry:ui",
+        "target": "components/ui/dialog.tsx"
       }
     ]
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "hero-section",
-    "type": "registry:block",
-    "title": "Hero Section",
-    "description": "Editorial SaaS hero section featuring typography discipline, badge pill, and active CTA.",
-    "category": "ui:block",
+    "name": "dropdown-menu",
+    "type": "registry:ui",
+    "title": "Dropdown Menu",
+    "description": "Keyboard-navigable dropdown with arrow key navigation, sub-menus, and ARIA menu attributes.",
+    "category": "ui:primitive",
     "tags": [
-      "hero",
-      "marketing",
-      "typography",
-      "block"
+      "radix-primitives",
+      "headless",
+      "lucide-react",
+      "tailwind-v4",
+      "accessible",
+      "menu",
+      "navigation"
     ],
     "dials": {
-      "design_variance": 5,
+      "design_variance": 3,
       "motion_intensity": 2,
-      "visual_density": 5
+      "visual_density": 6
     },
     "a11y": {
       "keyboard_navigable": true,
       "wai_aria_compliant": true,
-      "fallback_provided": true
+      "wai_aria_role": "menu",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
     },
     "license_origin": {
-      "source_repository": "https://kairoui.com",
+      "source_repository": "https://radix-ui.com",
       "license_type": "MIT",
-      "author": "Kairo UI Team",
+      "author": "Radix UI",
       "attribution_required": true,
       "redistribution_mode": "full_source"
     },
     "dependencies": [
+      "@radix-ui/react-dropdown-menu",
       "lucide-react",
       "clsx",
       "tailwind-merge"
     ],
-    "registryDependencies": [
-      "button"
-    ],
+    "registryDependencies": [],
     "files": [
       {
-        "path": "registry/blocks/hero-section.tsx",
-        "content": "/**\n * @license MIT\n * @origin Kairo UI / Tailark (https://kairoui.com)\n * @author Kairo UI Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { ArrowRight, Sparkles } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface HeroSectionProps {\n  badge?: string;\n  title: string;\n  highlightedText?: string;\n  description: string;\n  primaryCtaText?: string;\n  secondaryCtaText?: string;\n  onPrimaryCtaClick?: () => void;\n  onSecondaryCtaClick?: () => void;\n  className?: string;\n}\n\nexport function HeroSection({\n  badge = \"Agent-Native Design System v1.0\",\n  title = \"Deterministic UI Engineering for\",\n  highlightedText = \"Autonomous AI Agents\",\n  description = \"Eliminate AI slop, chained type assertions, and unstyled layout errors. Ground your coding models in pre-tested, accessible component primitives.\",\n  primaryCtaText = \"Explore Registry\",\n  secondaryCtaText = \"Initialize MCP\",\n  onPrimaryCtaClick,\n  onSecondaryCtaClick,\n  className,\n}: HeroSectionProps) {\n  return (\n    <section\n      className={cn(\n        \"relative overflow-hidden rounded-3xl border border-border bg-background px-6 py-20 text-center sm:px-12 lg:py-28\",\n        className\n      )}\n    >\n      <div className=\"mx-auto max-w-3xl\">\n        {/* Release Badge */}\n        <div className=\"inline-flex items-center gap-2 rounded-full border border-border bg-muted/60 px-3.5 py-1 text-xs font-medium text-foreground\">\n          <Sparkles className=\"h-3.5 w-3.5 text-primary\" aria-hidden=\"true\" />\n          <span>{badge}</span>\n        </div>\n\n        {/* Title with typographic hierarchy */}\n        <h1 className=\"mt-6 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl\">\n          {title}{\" \"}\n          <span className=\"text-primary underline decoration-primary/30 underline-offset-8\">\n            {highlightedText}\n          </span>\n        </h1>\n\n        {/* Description */}\n        <p className=\"mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl\">\n          {description}\n        </p>\n\n        {/* Action Buttons */}\n        <div className=\"mt-10 flex flex-wrap items-center justify-center gap-4\">\n          <button\n            onClick={onPrimaryCtaClick}\n            className=\"inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\"\n          >\n            <span>{primaryCtaText}</span>\n            <ArrowRight className=\"h-4 w-4\" />\n          </button>\n          <button\n            onClick={onSecondaryCtaClick}\n            className=\"inline-flex items-center gap-2 rounded-xl border border-border bg-background px-6 py-3 text-sm font-semibold text-foreground shadow-xs transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\"\n          >\n            <span>{secondaryCtaText}</span>\n          </button>\n        </div>\n      </div>\n    </section>\n  );\n}\n",
-        "type": "registry:block",
-        "target": "components/ui/hero-section.tsx"
+        "path": "registry/primitives/dropdown-menu.tsx",
+        "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as DropdownMenuPrimitive from \"@radix-ui/react-dropdown-menu\";\nimport { Check, ChevronRight, Circle } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport const DropdownMenu = DropdownMenuPrimitive.Root;\nexport const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;\nexport const DropdownMenuGroup = DropdownMenuPrimitive.Group;\nexport const DropdownMenuPortal = DropdownMenuPrimitive.Portal;\nexport const DropdownMenuSub = DropdownMenuPrimitive.Sub;\nexport const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;\n\nexport const DropdownMenuSubTrigger = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {\n    inset?: boolean;\n  }\n>(({ className, inset, children, ...props }, ref) => (\n  <DropdownMenuPrimitive.SubTrigger\n    ref={ref}\n    className={cn(\n      \"flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm focus-visible:outline-none focus:bg-accent data-[state=open]:bg-accent [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0\",\n      inset && \"pl-8\",\n      className\n    )}\n    {...props}\n  >\n    {children}\n    <ChevronRight className=\"ml-auto\" />\n  </DropdownMenuPrimitive.SubTrigger>\n));\nDropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName;\n\nexport const DropdownMenuSubContent = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>\n>(({ className, ...props }, ref) => (\n  <DropdownMenuPrimitive.SubContent\n    ref={ref}\n    className={cn(\n      \"z-50 min-w-32 overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\",\n      className\n    )}\n    {...props}\n  />\n));\nDropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayName;\n\nexport const DropdownMenuContent = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.Content>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>\n>(({ className, sideOffset = 4, ...props }, ref) => (\n  <DropdownMenuPrimitive.Portal>\n    <DropdownMenuPrimitive.Content\n      ref={ref}\n      sideOffset={sideOffset}\n      className={cn(\n        \"z-50 min-w-32 overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\",\n        className\n      )}\n      {...props}\n    />\n  </DropdownMenuPrimitive.Portal>\n));\nDropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;\n\nexport const DropdownMenuItem = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.Item>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {\n    inset?: boolean;\n  }\n>(({ className, inset, ...props }, ref) => (\n  <DropdownMenuPrimitive.Item\n    ref={ref}\n    className={cn(\n      \"relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm focus-visible:outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0\",\n      inset && \"pl-8\",\n      className\n    )}\n    {...props}\n  />\n));\nDropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;\n\nexport const DropdownMenuSeparator = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.Separator>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>\n>(({ className, ...props }, ref) => (\n  <DropdownMenuPrimitive.Separator\n    ref={ref}\n    className={cn(\"-mx-1 my-1 h-px bg-muted\", className)}\n    {...props}\n  />\n));\nDropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;\n",
+        "type": "registry:ui",
+        "target": "components/ui/dropdown-menu.tsx"
       }
     ]
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
-    "name": "pricing-table",
-    "type": "registry:block",
-    "title": "Pricing Table",
-    "description": "Multi-tier pricing matrix with monthly/annual toggle and clear feature checkmarks.",
-    "category": "ui:block",
+    "name": "input",
+    "type": "registry:ui",
+    "title": "Input",
+    "description": "Accessible text input with floating state, error boundaries, and focus-visible ring.",
+    "category": "ui:primitive",
     "tags": [
-      "pricing",
-      "saas",
-      "marketing",
-      "interactive-toggle"
+      "accessible",
+      "utility",
+      "tailwind-v4",
+      "form",
+      "input"
     ],
     "dials": {
-      "design_variance": 4,
+      "design_variance": 2,
+      "motion_intensity": 1,
+      "visual_density": 7
+    },
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "textbox",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://ui.shadcn.com",
+      "license_type": "MIT",
+      "author": "Shadcn & Community",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/primitives/input.tsx",
+        "content": "/**\n * @license MIT\n * @origin Shadcn UI (https://ui.shadcn.com)\n * @author Shadcn & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {\n  error?: boolean;\n}\n\nexport const Input = React.forwardRef<HTMLInputElement, InputProps>(\n  ({ className, type = \"text\", error, ...props }, ref) => {\n    return (\n      <input\n        type={type}\n        className={cn(\n          \"flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm\",\n          error && \"border-destructive focus-visible:ring-destructive\",\n          className\n        )}\n        ref={ref}\n        aria-invalid={error ? true : undefined}\n        {...props}\n      />\n    );\n  }\n);\n\nInput.displayName = \"Input\";\n",
+        "type": "registry:ui",
+        "target": "components/ui/input.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "switch",
+    "type": "registry:ui",
+    "title": "Switch",
+    "description": "Accessible toggle switch with smooth spring thumb and keyboard space/enter toggling.",
+    "category": "ui:primitive",
+    "tags": [
+      "radix-primitives",
+      "headless",
+      "accessible",
+      "utility",
+      "brutalist",
+      "toggle",
+      "form"
+    ],
+    "dials": {
+      "design_variance": 2,
       "motion_intensity": 3,
       "visual_density": 7
     },
     "a11y": {
       "keyboard_navigable": true,
       "wai_aria_compliant": true,
-      "fallback_provided": true
+      "wai_aria_role": "switch",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
     },
     "license_origin": {
-      "source_repository": "https://tailark.com",
+      "source_repository": "https://radix-ui.com",
       "license_type": "MIT",
-      "author": "Tailark Team",
+      "author": "Radix UI",
       "attribution_required": true,
       "redistribution_mode": "full_source"
     },
     "dependencies": [
-      "lucide-react",
+      "@radix-ui/react-switch",
       "clsx",
       "tailwind-merge"
     ],
-    "registryDependencies": [
-      "button"
-    ],
+    "registryDependencies": [],
     "files": [
       {
-        "path": "registry/blocks/pricing-table.tsx",
-        "content": "/**\n * @license MIT\n * @origin Tailark / Shadcn UI (https://tailark.com)\n * @author Tailark Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { Check } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface PricingPlan {\n  name: string;\n  priceMonthly: number;\n  priceAnnual: number;\n  description: string;\n  features: string[];\n  popular?: boolean;\n  ctaText: string;\n}\n\nexport interface PricingTableProps {\n  plans?: PricingPlan[];\n  className?: string;\n}\n\nconst DEFAULT_PLANS: PricingPlan[] = [\n  {\n    name: \"Developer\",\n    priceMonthly: 0,\n    priceAnnual: 0,\n    description: \"For individual builders and local agent experimentation.\",\n    features: [\n      \"Access to 25+ seed components\",\n      \"Local MCP server stdio integration\",\n      \"Full static /llms.txt discovery\",\n      \"Standard MIT open-source license\",\n    ],\n    ctaText: \"Get Started Free\",\n  },\n  {\n    name: \"Autonomous Team\",\n    priceMonthly: 49,\n    priceAnnual: 39,\n    description: \"For engineering teams running multi-agent continuous pipelines.\",\n    features: [\n      \"Everything in Developer\",\n      \"Streamable HTTP MCP endpoints\",\n      \"Automated CI/CD anti-slop gatekeeper\",\n      \"Zero-Draft Fidelity sandbox reports\",\n      \"Priority AST ingestion requests\",\n    ],\n    popular: true,\n    ctaText: \"Upgrade to Team\",\n  },\n  {\n    name: \"Enterprise\",\n    priceMonthly: 199,\n    priceAnnual: 159,\n    description: \"For organizations scaling private registries and custom design tokens.\",\n    features: [\n      \"Custom private registry namespaces\",\n      \"Tailwind v4 token synchronizer\",\n      \"Dedicated headless test harness\",\n      \"100% WCAG 2.1 AAA accessibility pass\",\n      \"Custom legal IP indemnity warranty\",\n    ],\n    ctaText: \"Contact Enterprise\",\n  },\n];\n\nexport function PricingTable({ plans = DEFAULT_PLANS, className }: PricingTableProps) {\n  const [isAnnual, setIsAnnual] = React.useState(true);\n\n  return (\n    <section className={cn(\"py-12\", className)}>\n      {/* Billing toggle */}\n      <div className=\"flex items-center justify-center gap-3 pb-10\">\n        <span className={cn(\"text-sm font-medium\", !isAnnual ? \"text-foreground\" : \"text-muted-foreground\")}>\n          Monthly billing\n        </span>\n        <button\n          type=\"button\"\n          role=\"switch\"\n          aria-checked={isAnnual}\n          onClick={() => setIsAnnual(!isAnnual)}\n          className={cn(\n            \"relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n            isAnnual ? \"bg-primary\" : \"bg-input\"\n          )}\n        >\n          <span\n            className={cn(\n              \"pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg transition-transform\",\n              isAnnual ? \"translate-x-5\" : \"translate-x-0\"\n            )}\n          />\n        </button>\n        <span className={cn(\"text-sm font-medium\", isAnnual ? \"text-foreground\" : \"text-muted-foreground\")}>\n          Annual billing <span className=\"text-xs font-semibold text-primary\">(Save 20%)</span>\n        </span>\n      </div>\n\n      {/* Plan Cards */}\n      <div className=\"grid gap-6 lg:grid-cols-3\">\n        {plans.map((plan) => {\n          const price = isAnnual ? plan.priceAnnual : plan.priceMonthly;\n          return (\n            <div\n              key={plan.name}\n              className={cn(\n                \"relative flex flex-col justify-between rounded-2xl border p-8 shadow-xs transition-all\",\n                plan.popular\n                  ? \"border-primary bg-card ring-2 ring-primary/20 shadow-md\"\n                  : \"border-border bg-card text-card-foreground hover:border-border/80\"\n              )}\n            >\n              {plan.popular && (\n                <div className=\"absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-0.5 text-xs font-semibold text-primary-foreground\">\n                  Recommended\n                </div>\n              )}\n              <div>\n                <h3 className=\"text-xl font-bold text-foreground\">{plan.name}</h3>\n                <p className=\"mt-2 text-sm text-muted-foreground\">{plan.description}</p>\n                <div className=\"mt-6 flex items-baseline gap-1\">\n                  <span className=\"text-4xl font-extrabold tracking-tight text-foreground\">\n                    ${price}\n                  </span>\n                  <span className=\"text-sm font-medium text-muted-foreground\">/month</span>\n                </div>\n                <ul className=\"mt-8 space-y-3 text-sm text-muted-foreground\">\n                  {plan.features.map((feature, i) => (\n                    <li key={i} className=\"flex items-center gap-2.5\">\n                      <Check className=\"h-4 w-4 shrink-0 text-primary\" aria-hidden=\"true\" />\n                      <span>{feature}</span>\n                    </li>\n                  ))}\n                </ul>\n              </div>\n              <div className=\"mt-8\">\n                <button\n                  type=\"button\"\n                  className={cn(\n                    \"w-full rounded-xl py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                    plan.popular\n                      ? \"bg-primary text-primary-foreground hover:bg-primary/90\"\n                      : \"border border-border bg-background text-foreground hover:bg-muted\"\n                  )}\n                >\n                  {plan.ctaText}\n                </button>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n    </section>\n  );\n}\n",
-        "type": "registry:block",
-        "target": "components/ui/pricing-table.tsx"
+        "path": "registry/primitives/switch.tsx",
+        "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as SwitchPrimitives from \"@radix-ui/react-switch\";\nimport { cn } from \"../lib/utils\";\n\nexport const Switch = React.forwardRef<\n  React.ElementRef<typeof SwitchPrimitives.Root>,\n  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>\n>(({ className, ...props }, ref) => (\n  <SwitchPrimitives.Root\n    className={cn(\n      \"peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input\",\n      className\n    )}\n    {...props}\n    ref={ref}\n  >\n    <SwitchPrimitives.Thumb\n      className={cn(\n        \"pointer-events-none block h-4 w-4 rounded-full bg-background shadow-lg transition-transform data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0\"\n      )}\n    />\n  </SwitchPrimitives.Root>\n));\nSwitch.displayName = SwitchPrimitives.Root.displayName;\n",
+        "type": "registry:ui",
+        "target": "components/ui/switch.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "tabs",
+    "type": "registry:ui",
+    "title": "Tabs",
+    "description": "Accessible tabbed interface with keyboard arrow navigation and active state styling.",
+    "category": "ui:primitive",
+    "tags": [
+      "radix-primitives",
+      "headless",
+      "accessible",
+      "tabs",
+      "navigation"
+    ],
+    "dials": {
+      "design_variance": 3,
+      "motion_intensity": 2,
+      "visual_density": 6
+    },
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "tablist",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://radix-ui.com",
+      "license_type": "MIT",
+      "author": "Radix UI",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "@radix-ui/react-tabs",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/primitives/tabs.tsx",
+        "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as TabsPrimitive from \"@radix-ui/react-tabs\";\nimport { cn } from \"../lib/utils\";\n\nexport const Tabs = TabsPrimitive.Root;\n\nexport const TabsList = React.forwardRef<\n  React.ElementRef<typeof TabsPrimitive.List>,\n  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>\n>(({ className, ...props }, ref) => (\n  <TabsPrimitive.List\n    ref={ref}\n    className={cn(\n      \"inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground\",\n      className\n    )}\n    {...props}\n  />\n));\nTabsList.displayName = TabsPrimitive.List.displayName;\n\nexport const TabsTrigger = React.forwardRef<\n  React.ElementRef<typeof TabsPrimitive.Trigger>,\n  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>\n>(({ className, ...props }, ref) => (\n  <TabsPrimitive.Trigger\n    ref={ref}\n    className={cn(\n      \"inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs\",\n      className\n    )}\n    {...props}\n  />\n));\nTabsTrigger.displayName = TabsPrimitive.Trigger.displayName;\n\nexport const TabsContent = React.forwardRef<\n  React.ElementRef<typeof TabsPrimitive.Content>,\n  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>\n>(({ className, ...props }, ref) => (\n  <TabsPrimitive.Content\n    ref={ref}\n    className={cn(\n      \"mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\",\n      className\n    )}\n    {...props}\n  />\n));\nTabsContent.displayName = TabsPrimitive.Content.displayName;\n",
+        "type": "registry:ui",
+        "target": "components/ui/tabs.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "tooltip",
+    "type": "registry:ui",
+    "title": "Tooltip",
+    "description": "Micro-tooltip with delay timers and instant focus visibility for assistive tech.",
+    "category": "ui:primitive",
+    "tags": [
+      "radix-primitives",
+      "headless",
+      "utility",
+      "tooltip",
+      "micro-interaction",
+      "a11y"
+    ],
+    "dials": {
+      "design_variance": 2,
+      "motion_intensity": 2,
+      "visual_density": 7
+    },
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "tooltip",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://radix-ui.com",
+      "license_type": "MIT",
+      "author": "Radix UI",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "@radix-ui/react-tooltip",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/primitives/tooltip.tsx",
+        "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as TooltipPrimitive from \"@radix-ui/react-tooltip\";\nimport { cn } from \"../lib/utils\";\n\nexport const TooltipProvider = TooltipPrimitive.Provider;\nexport const Tooltip = TooltipPrimitive.Root;\nexport const TooltipTrigger = TooltipPrimitive.Trigger;\n\nexport const TooltipContent = React.forwardRef<\n  React.ElementRef<typeof TooltipPrimitive.Content>,\n  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>\n>(({ className, sideOffset = 4, ...props }, ref) => (\n  <TooltipPrimitive.Portal>\n    <TooltipPrimitive.Content\n      ref={ref}\n      sideOffset={sideOffset}\n      className={cn(\n        \"z-50 overflow-hidden rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2\",\n        className\n      )}\n      {...props}\n    />\n  </TooltipPrimitive.Portal>\n));\nTooltipContent.displayName = TooltipPrimitive.Content.displayName;\n",
+        "type": "registry:ui",
+        "target": "components/ui/tooltip.tsx"
       }
     ]
   },
@@ -1154,9 +1225,9 @@
     "description": "Minimalist dot pulsation loader for button states or inline progress indicators.",
     "category": "ui:utility",
     "tags": [
+      "utility",
       "loader",
       "spinner",
-      "utility",
       "minimalist"
     ],
     "dials": {
@@ -1168,7 +1239,8 @@
       "keyboard_navigable": false,
       "wai_aria_compliant": true,
       "wai_aria_role": "status",
-      "fallback_provided": true
+      "fallback_provided": true,
+      "reduced_motion_supported": false
     },
     "license_origin": {
       "source_repository": "https://icons0.dev",
@@ -1199,6 +1271,7 @@
     "description": "Clean animated SVG state toggler (play/pause/check) with accessible title.",
     "category": "ui:utility",
     "tags": [
+      "utility",
       "icon",
       "svg",
       "morph",
@@ -1213,7 +1286,8 @@
       "keyboard_navigable": false,
       "wai_aria_compliant": true,
       "wai_aria_role": "img",
-      "fallback_provided": true
+      "fallback_provided": true,
+      "reduced_motion_supported": false
     },
     "license_origin": {
       "source_repository": "https://reui.dev",

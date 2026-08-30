@@ -7,6 +7,8 @@
   "category": "ui:motion",
   "tags": [
     "motion/react",
+    "accessible",
+    "spring-physics",
     "magnetic-physics",
     "button",
     "interactive"

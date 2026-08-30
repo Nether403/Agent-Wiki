@@ -6,7 +6,9 @@
   "description": "Multi-pane asymmetrical layout grid with responsive column spans and structural borders.",
   "category": "ui:block",
   "tags": [
+    "lucide-react",
     "bento-grid",
+    "tailwind-v4",
     "layout-block",
     "asymmetry",
     "marketing"
@@ -19,7 +21,8 @@
   "a11y": {
     "keyboard_navigable": true,
     "wai_aria_compliant": true,
-    "fallback_provided": true
+    "fallback_provided": true,
+    "reduced_motion_supported": false
   },
   "license_origin": {
     "source_repository": "https://tailark.com",

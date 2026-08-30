@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "harvest": "tsx src/index.ts"
+    "harvest": "tsx src/cli.ts"
   },
   "dependencies": {
     "typescript": "^5.8.2"

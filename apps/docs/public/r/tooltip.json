@@ -7,6 +7,8 @@
   "category": "ui:primitive",
   "tags": [
     "radix-primitives",
+    "headless",
+    "utility",
     "tooltip",
     "micro-interaction",
     "a11y"
@@ -20,7 +22,8 @@
     "keyboard_navigable": true,
     "wai_aria_compliant": true,
     "wai_aria_role": "tooltip",
-    "fallback_provided": true
+    "fallback_provided": true,
+    "reduced_motion_supported": false
   },
   "license_origin": {
     "source_repository": "https://radix-ui.com",

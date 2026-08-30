@@ -6,6 +6,7 @@
   "description": "Clean animated SVG state toggler (play/pause/check) with accessible title.",
   "category": "ui:utility",
   "tags": [
+    "utility",
     "icon",
     "svg",
     "morph",
@@ -20,7 +21,8 @@
     "keyboard_navigable": false,
     "wai_aria_compliant": true,
     "wai_aria_role": "img",
-    "fallback_provided": true
+    "fallback_provided": true,
+    "reduced_motion_supported": false
   },
   "license_origin": {
     "source_repository": "https://reui.dev",

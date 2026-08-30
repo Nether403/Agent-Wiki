@@ -6,9 +6,9 @@
   "description": "Minimalist dot pulsation loader for button states or inline progress indicators.",
   "category": "ui:utility",
   "tags": [
+    "utility",
     "loader",
     "spinner",
-    "utility",
     "minimalist"
   ],
   "dials": {
@@ -20,7 +20,8 @@
     "keyboard_navigable": false,
     "wai_aria_compliant": true,
     "wai_aria_role": "status",
-    "fallback_provided": true
+    "fallback_provided": true,
+    "reduced_motion_supported": false
   },
   "license_origin": {
     "source_repository": "https://icons0.dev",

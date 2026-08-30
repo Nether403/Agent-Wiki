@@ -7,6 +7,7 @@
   "category": "ui:motion",
   "tags": [
     "motion/react",
+    "spring-physics",
     "cursor-follower",
     "smooth-spring"
   ],

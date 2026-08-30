@@ -7,9 +7,12 @@
   "category": "ui:motion",
   "tags": [
     "motion/react",
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "spring-physics",
     "animate-presence",
-    "modal",
-    "spring-physics"
+    "modal"
   ],
   "dials": {
     "design_variance": 5,

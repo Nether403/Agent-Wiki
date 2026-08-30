@@ -83,13 +83,84 @@ const MCP_SLOP_CHECKS: SlopCheck[] = [
     regex: /<button[^>]*>\s*<[A-Z]\w+[^>]*\/>\s*<\/button>/i,
     recommendation: "Add aria-label or accessible <span className='sr-only'> text to icon-only buttons.",
   },
+  {
+    id: "SLOP-011",
+    name: "Inline SVG Missing Role or Title",
+    severity: "Medium",
+    regex: /<svg\b(?![^>]*(?:role=["']img["']|aria-hidden=["']true["']|aria-label))[^>]*>/i,
+    recommendation: "Add role='img' and aria-label or accessible title to inline SVGs.",
+  },
+  {
+    id: "SLOP-012",
+    name: "Focus Ring Suppression Without Replacement",
+    severity: "High",
+    regex: /(?:outline-none|ring-0)\b/i,
+    recommendation: "Provide focus-visible rings (focus-visible:ring-2) when suppressing default outlines.",
+  },
+  {
+    id: "SLOP-013",
+    name: "Layout-Triggering Transitions",
+    severity: "Medium",
+    regex: /transition-\[(?:height|width|margin|padding)\]/i,
+    recommendation: "Animate transform or opacity instead of layout-triggering dimension properties.",
+  },
+  {
+    id: "SLOP-014",
+    name: "Canvas Loop Missing Reduced Motion Check",
+    severity: "Medium",
+    regex: /requestAnimationFrame/i,
+    recommendation: "Check window.matchMedia('(prefers-reduced-motion: reduce)') before starting canvas animation loops.",
+  },
+  {
+    id: "SLOP-015",
+    name: "External Image Missing Fallback Dimensions",
+    severity: "High",
+    regex: /<img[^>]+src=["']http[^"']+["'](?!.*(?:width=|height=|aspect-))/i,
+    recommendation: "Specify explicit width, height, or aspect-ratio on external image elements.",
+  },
+  {
+    id: "SLOP-016",
+    name: "Missing LayoutGroup or Stable Key During Morph",
+    severity: "Low",
+    regex: /layoutId=(?!.*key=)/i,
+    recommendation: "Ensure components with layoutId inside arrays have unique stable React keys.",
+  },
+  {
+    id: "SLOP-017",
+    name: "Implicit Any Props on Component Export",
+    severity: "Medium",
+    regex: /export\s+(?:function|const)\s+\w+\s*=\s*\([^)]*:\s*any\s*\)/i,
+    recommendation: "Define explicit TypeScript interfaces for component props instead of any.",
+  },
+  {
+    id: "SLOP-018",
+    name: "Repetitive Centered Card Layout Pattern",
+    severity: "Medium",
+    regex: /grid-cols-3.*items-center.*text-center.*rounded-xl.*p-6/i,
+    recommendation: "Introduce asymmetrical rhythm or editorial layout styling.",
+  },
+  {
+    id: "SLOP-019",
+    name: "Deep Relative Import Bypassing Aliases",
+    severity: "High",
+    regex: /import\s+.*from\s+["'](?:\.\.\/){3,}/i,
+    recommendation: "Use standard import path aliases (@/components/ui/...).",
+  },
+  {
+    id: "SLOP-020",
+    name: "Missing Mandatory License Attribution",
+    severity: "High",
+    regex: /^$/i,
+    recommendation: "Inject upstream license attribution header before publication.",
+  },
 ];
 
-function getRegistryItems(): any[] {
+export function getRegistryItems(): any[] {
   const possiblePaths = [
     path.resolve(__dirname, "../../../apps/docs/public/r/registry.json"),
     path.resolve(__dirname, "../../registry/dist/r/registry.json"),
     path.resolve(__dirname, "../../apps/docs/public/r/registry.json"),
+    path.resolve(__dirname, "../../../packages/registry/dist/r/registry.json"),
     path.resolve(process.cwd(), "apps/docs/public/r/registry.json"),
     path.resolve(process.cwd(), "packages/registry/dist/r/registry.json"),
     path.resolve(process.cwd(), "../../apps/docs/public/r/registry.json"),
@@ -105,6 +176,32 @@ function getRegistryItems(): any[] {
     }
   }
   return [];
+}
+
+export function getComponentItem(slug: string): any | null {
+  const items = getRegistryItems();
+  const directMatch = items.find((i) => i.name.toLowerCase() === slug.toLowerCase());
+  if (directMatch) return directMatch;
+
+  const possibleItemPaths = [
+    path.resolve(__dirname, `../../../apps/docs/public/r/${slug}.json`),
+    path.resolve(__dirname, `../../registry/dist/r/${slug}.json`),
+    path.resolve(__dirname, `../../apps/docs/public/r/${slug}.json`),
+    path.resolve(process.cwd(), `apps/docs/public/r/${slug}.json`),
+    path.resolve(process.cwd(), `packages/registry/dist/r/${slug}.json`),
+  ];
+
+  for (const p of possibleItemPaths) {
+    if (fs.existsSync(p)) {
+      try {
+        return JSON.parse(fs.readFileSync(p, "utf-8"));
+      } catch (e) {
+        console.error(`Failed to parse item at ${p}`, e);
+      }
+    }
+  }
+
+  return null;
 }
 
 export function createDesignWikiMcpServer(): McpServer {
@@ -136,9 +233,10 @@ export function createDesignWikiMcpServer(): McpServer {
         tag: z.string().optional().describe("Technical or visual tag (e.g., 'tailwind-v4', 'motion/react', 'webgl')"),
         minMotionIntensity: z.number().min(1).max(10).optional().describe("Minimum motion intensity dial (1-10)"),
         maxVisualDensity: z.number().min(1).max(10).optional().describe("Maximum visual density dial (1-10)"),
+        minDesignVariance: z.number().min(1).max(10).optional().describe("Minimum design variance dial (1-10)"),
       }),
     },
-    async ({ query, category, tag, minMotionIntensity, maxVisualDensity }) => {
+    async ({ query, category, tag, minMotionIntensity, maxVisualDensity, minDesignVariance }) => {
       const items = getRegistryItems();
       let filtered = items;
 
@@ -153,6 +251,9 @@ export function createDesignWikiMcpServer(): McpServer {
       }
       if (maxVisualDensity) {
         filtered = filtered.filter((i) => i.dials && i.dials.visual_density <= maxVisualDensity);
+      }
+      if (minDesignVariance) {
+        filtered = filtered.filter((i) => i.dials && i.dials.design_variance >= minDesignVariance);
       }
       if (query) {
         const q = query.toLowerCase();
@@ -173,6 +274,7 @@ export function createDesignWikiMcpServer(): McpServer {
         dials: i.dials,
         a11y: i.a11y,
         dependencies: i.dependencies,
+        registryDependencies: i.registryDependencies,
         installCommand: `npx shadcn@latest add http://localhost:3000/r/${i.name}.json`,
       }));
 
@@ -194,105 +296,149 @@ export function createDesignWikiMcpServer(): McpServer {
     }
   );
 
-  // Tool 2: get_component_markup
-  server.registerTool(
-    "get_component_markup",
-    {
-      description:
-        "Fetch the complete, production-grade TSX source code, dependencies, and styling recipes for a registered component.",
-      inputSchema: z.object({
-        name: z.string().describe("Component slug identifier (e.g., 'floating-dock', 'button', 'canvas-fluid-wave')"),
-      }),
-    },
-    async ({ name }) => {
-      const items = getRegistryItems();
-      const item = items.find((i) => i.name.toLowerCase() === name.toLowerCase());
+  // Helper handler for markup retrieval
+  const handleFetchMarkup = async (name: string) => {
+    const item = getComponentItem(name);
 
-      if (!item) {
-        return {
-          content: [
-            {
-              type: "text",
-              text: `Error: Component "${name}" was not found in the Design Agent Wiki registry. Use search_components to view available slugs.`,
-            },
-          ],
-        };
-      }
-
-      const fileEntry = item.files?.[0];
-      const sourceCode = fileEntry?.content || "// Error: Source code not bundled in registry artifact.";
-
-      const response = {
-        name: item.name,
-        title: item.title,
-        category: item.category,
-        dependencies: item.dependencies,
-        registryDependencies: item.registryDependencies,
-        dials: item.dials,
-        a11y: item.a11y,
-        sourceCode: sourceCode,
-      };
-
+    if (!item) {
       return {
         content: [
           {
-            type: "text",
-            text: JSON.stringify(response, null, 2),
+            type: "text" as const,
+            text: `Error: Component "${name}" was not found in the Design Agent Wiki registry. Use search_components to view available slugs.`,
           },
         ],
       };
     }
+
+    const fileEntry = item.files?.[0];
+    const sourceCode = fileEntry?.content || "// Error: Source code not bundled in registry artifact.";
+
+    const response = {
+      name: item.name,
+      title: item.title,
+      category: item.category,
+      dependencies: item.dependencies,
+      registryDependencies: item.registryDependencies,
+      dials: item.dials,
+      a11y: item.a11y,
+      sourceCode: sourceCode,
+      markdownDocs: `### ${item.title} (\`${item.name}\`)\n${item.description}\n\n**Category**: \`${item.category}\`\n**Dependencies**: ${item.dependencies.join(", ") || "None"}\n**Dials**: Variance ${item.dials?.design_variance}/10, Motion ${item.dials?.motion_intensity}/10, Density ${item.dials?.visual_density}/10\n\n\`\`\`tsx\n${sourceCode}\n\`\`\``,
+    };
+
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(response, null, 2),
+        },
+      ],
+    };
+  };
+
+  // Tool 2: fetch_raw_markup (primary)
+  server.registerTool(
+    "fetch_raw_markup",
+    {
+      description:
+        "Fetch the complete, un-truncated production TSX/JSX source code, peer dependencies, and styling recipes for a registered component.",
+      inputSchema: z.object({
+        name: z.string().describe("Component slug identifier (e.g., 'floating-dock', 'button', 'canvas-fluid-wave')"),
+      }),
+    },
+    async ({ name }) => handleFetchMarkup(name)
   );
 
-  // Tool 3: get_install_recipe
+  // Tool 2 Alias: get_component_markup (backward compatibility)
+  server.registerTool(
+    "get_component_markup",
+    {
+      description:
+        "Fetch the complete TSX source code, peer dependencies, and styling recipes for a registered component (alias to fetch_raw_markup).",
+      inputSchema: z.object({
+        name: z.string().describe("Component slug identifier (e.g., 'floating-dock', 'button', 'canvas-fluid-wave')"),
+      }),
+    },
+    async ({ name }) => handleFetchMarkup(name)
+  );
+
+  // Helper handler for installation schema retrieval
+  const handleGetInstallSchema = async (name: string, baseUrl: string = "http://localhost:3000") => {
+    const activeBaseUrl = baseUrl || "http://localhost:3000";
+    const item = getComponentItem(name);
+
+    if (!item) {
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: `Error: Component "${name}" was not found. Use search_components to find valid component slugs.`,
+          },
+        ],
+      };
+    }
+
+    const schemaResponse = {
+      name: item.name,
+      type: item.type,
+      title: item.title,
+      description: item.description,
+      category: item.category,
+      tags: item.tags,
+      dials: item.dials,
+      a11y: item.a11y,
+      license_origin: item.license_origin,
+      dependencies: item.dependencies,
+      devDependencies: item.devDependencies,
+      registryDependencies: item.registryDependencies,
+      files: item.files,
+      installCommands: {
+        shadcn: `npx shadcn@latest add ${activeBaseUrl}/r/${item.name}.json`,
+        bun: `bunx --bun shadcn add ${activeBaseUrl}/r/${item.name}.json`,
+      },
+      instructions: [
+        `Execute 'npx shadcn@latest add ${activeBaseUrl}/r/${item.name}.json' in your workspace root.`,
+        `Verify required peer packages are installed: ${item.dependencies.join(", ") || "None"}.`,
+        `Import in your layout using '@/components/ui/${item.name}'.`,
+      ],
+    };
+
+    return {
+      content: [
+        {
+          type: "text" as const,
+          text: JSON.stringify(schemaResponse, null, 2),
+        },
+      ],
+    };
+  };
+
+  // Tool 3: get_installation_schema (primary)
+  server.registerTool(
+    "get_installation_schema",
+    {
+      description:
+        "Get the complete shadcn v3 registry JSON installation schema (including files, dependencies, registryDependencies, and CLI install recipe) for a component.",
+      inputSchema: z.object({
+        name: z.string().describe("Component slug identifier (e.g., 'bento-grid', 'dialog', 'floating-dock')"),
+        baseUrl: z.string().optional().default("http://localhost:3000").describe("Base URL hosting the /r/ registry endpoints"),
+      }),
+    },
+    async ({ name, baseUrl = "http://localhost:3000" }) => handleGetInstallSchema(name, baseUrl)
+  );
+
+  // Tool 3 Alias: get_install_recipe (backward compatibility)
   server.registerTool(
     "get_install_recipe",
     {
       description:
-        "Get the exact CLI installation recipe, shadcn command, and required peer npm dependencies for a component.",
+        "Get the exact CLI installation recipe, shadcn command, and required peer npm dependencies for a component (alias to get_installation_schema).",
       inputSchema: z.object({
         name: z.string().describe("Component slug identifier (e.g., 'bento-grid', 'dialog')"),
         baseUrl: z.string().optional().default("http://localhost:3000"),
       }),
     },
-    async ({ name, baseUrl = "http://localhost:3000" }) => {
-      const activeBaseUrl = baseUrl || "http://localhost:3000";
-      const items = getRegistryItems();
-      const item = items.find((i) => i.name.toLowerCase() === name.toLowerCase());
-
-      if (!item) {
-        return {
-          content: [
-            {
-              type: "text",
-              text: `Error: Component "${name}" was not found.`,
-            },
-          ],
-        };
-      }
-
-      const recipe = {
-        component: item.name,
-        shadcnAddCommand: `npx shadcn@latest add ${activeBaseUrl}/r/${item.name}.json`,
-        bunAddCommand: `bunx --bun shadcn add ${activeBaseUrl}/r/${item.name}.json`,
-        npmDependencies: item.dependencies,
-        registryDependencies: item.registryDependencies,
-        quickInstructions: [
-          `Run '${recipeFormat(item.name, activeBaseUrl)}' in your project root.`,
-          `Ensure peer dependencies (${item.dependencies.join(", ")}) are installed.`,
-          `Verify path alias '@/components/ui/${item.name}' is correctly imported.`,
-        ],
-      };
-
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(recipe, null, 2),
-          },
-        ],
-      };
-    }
+    async ({ name, baseUrl = "http://localhost:3000" }) => handleGetInstallSchema(name, baseUrl)
   );
 
   // Tool 4: audit_code_slop
@@ -318,6 +464,14 @@ export function createDesignWikiMcpServer(): McpServer {
 
       lines.forEach((line, idx) => {
         for (const check of MCP_SLOP_CHECKS) {
+          if (check.id === "SLOP-020") continue;
+          if (check.id === "SLOP-012" && (line.includes("focus-visible:") || line.includes("focus:ring"))) {
+            continue;
+          }
+          if (check.id === "SLOP-014" && code.includes("prefers-reduced-motion")) {
+            continue;
+          }
+
           if (check.regex.test(line)) {
             findings.push({
               ruleId: check.id,
@@ -358,8 +512,4 @@ export function createDesignWikiMcpServer(): McpServer {
   );
 
   return server;
-}
-
-function recipeFormat(name: string, baseUrl: string) {
-  return `npx shadcn@latest add ${baseUrl}/r/${name}.json`;
 }

@@ -50,11 +50,12 @@ Before writing code, query our machine-readable discovery endpoints:
 1. Parse `/public/llms.txt` or call MCP `search_components` to look up available components, categories, and tags.
 2. If using MCP, query `@design-wiki/mcp`:
    - `search_components({ query: "modal" })`
-   - `get_component_markup({ name: "spring-dialog" })`
+   - `fetch_raw_markup({ name: "spring-dialog" })`
+   - `get_installation_schema({ name: "spring-dialog" })`
 
 ### Phase 2: Install
 If the component is registered but missing from the local workspace:
-1. Run the programmatic installer CLI:
+1. Fetch the schema via MCP `get_installation_schema({ name: "<component-name>" })` or execute the programmatic CLI:
    ```bash
    npx shadcn@latest add http://localhost:3000/r/<component-name>.json
    ```

@@ -7,9 +7,12 @@
   "category": "ui:primitive",
   "tags": [
     "radix-primitives",
+    "headless",
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
     "menu",
-    "navigation",
-    "headless"
+    "navigation"
   ],
   "dials": {
     "design_variance": 3,
@@ -20,7 +23,8 @@
     "keyboard_navigable": true,
     "wai_aria_compliant": true,
     "wai_aria_role": "menu",
-    "fallback_provided": true
+    "fallback_provided": true,
+    "reduced_motion_supported": false
   },
   "license_origin": {
     "source_repository": "https://radix-ui.com",

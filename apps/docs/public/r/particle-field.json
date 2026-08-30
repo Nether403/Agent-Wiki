@@ -7,6 +7,8 @@
   "category": "ui:creative",
   "tags": [
     "canvas",
+    "tailwind-v4",
+    "webgl",
     "particles",
     "physics",
     "reduced-motion"
@@ -31,7 +33,9 @@
   },
   "dependencies": [
     "clsx",
-    "tailwind-merge"
+    "tailwind-merge",
+    "motion",
+    "three"
   ],
   "registryDependencies": [],
   "files": [
