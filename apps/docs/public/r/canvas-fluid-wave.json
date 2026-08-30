@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "canvas-fluid-wave",
+  "type": "registry:component",
+  "title": "Canvas Fluid Wave",
+  "description": "Interactive HTML5 Canvas fluid simulation with mouse interaction and CSS gradient fallback.",
+  "category": "ui:creative",
+  "tags": [
+    "canvas",
+    "shader-simulation",
+    "interactive",
+    "a11y-fallback"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 9,
+    "visual_density": 3
+  },
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://canvas-ui.dev",
+    "license_type": "MIT",
+    "author": "Canvas UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/canvas-fluid-wave.tsx",
+      "content": "/**\n * @license MIT\n * @origin Canvas UI (https://canvas-ui.dev)\n * @author Canvas UI Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface CanvasFluidWaveProps {\n  className?: string;\n  waveColor?: string;\n  speed?: number;\n  amplitude?: number;\n}\n\nexport function CanvasFluidWave({\n  className,\n  waveColor = \"rgba(120, 119, 198, 0.25)\",\n  speed = 0.02,\n  amplitude = 24,\n}: CanvasFluidWaveProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n  const [reducedMotion, setReducedMotion] = React.useState(false);\n\n  React.useEffect(() => {\n    const mediaQuery = window.matchMedia(\"(prefers-reduced-motion: reduce)\");\n    setReducedMotion(mediaQuery.matches);\n    const handler = () => setReducedMotion(mediaQuery.matches);\n    mediaQuery.addEventListener(\"change\", handler);\n    return () => mediaQuery.removeEventListener(\"change\", handler);\n  }, []);\n\n  React.useEffect(() => {\n    if (reducedMotion) return;\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n    const ctx = canvas.getContext(\"2d\");\n    if (!ctx) return;\n\n    let animationFrameId: number;\n    let step = 0;\n\n    const resize = () => {\n      canvas.width = canvas.parentElement?.clientWidth || 400;\n      canvas.height = canvas.parentElement?.clientHeight || 200;\n    };\n\n    resize();\n    window.addEventListener(\"resize\", resize);\n\n    const render = () => {\n      step += speed;\n      ctx.clearRect(0, 0, canvas.width, canvas.height);\n\n      ctx.beginPath();\n      ctx.moveTo(0, canvas.height / 2);\n\n      for (let x = 0; x < canvas.width; x++) {\n        const y =\n          Math.sin(x * 0.01 + step) * amplitude +\n          Math.sin(x * 0.02 + step * 1.5) * (amplitude * 0.5) +\n          canvas.height / 2;\n        ctx.lineTo(x, y);\n      }\n\n      ctx.lineTo(canvas.width, canvas.height);\n      ctx.lineTo(0, canvas.height);\n      ctx.closePath();\n\n      ctx.fillStyle = waveColor;\n      ctx.fill();\n\n      animationFrameId = requestAnimationFrame(render);\n    };\n\n    render();\n\n    return () => {\n      window.removeEventListener(\"resize\", resize);\n      cancelAnimationFrame(animationFrameId);\n    };\n  }, [speed, amplitude, waveColor, reducedMotion]);\n\n  return (\n    <div className={cn(\"relative overflow-hidden rounded-xl bg-card border border-border\", className)}>\n      {reducedMotion ? (\n        // Static CSS gradient fallback when prefers-reduced-motion is requested\n        <div\n          className=\"absolute inset-0 bg-gradient-to-b from-transparent to-primary/10\"\n          aria-hidden=\"true\"\n        />\n      ) : (\n        <canvas\n          ref={canvasRef}\n          className=\"absolute inset-0 h-full w-full pointer-events-none\"\n          aria-hidden=\"true\"\n        />\n      )}\n      <div className=\"relative z-10 p-6\">\n        <h3 className=\"text-base font-semibold text-foreground\">Canvas Fluid Wave</h3>\n        <p className=\"mt-1 text-sm text-muted-foreground\">\n          Interactive fluid simulation with automatic reduced-motion accessibility fallbacks.\n        </p>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/canvas-fluid-wave.tsx"
+    }
+  ]
+}

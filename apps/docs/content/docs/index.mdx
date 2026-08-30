@@ -1,0 +1,27 @@
+---
+title: "Introduction"
+description: "The Machine-First Design Agent Wiki provides deterministic, pre-tested component registries for AI coding agents."
+---
+
+# Machine-First Design Agent Wiki
+
+Welcome to the **Design Agent Wiki**, the first design engineering platform engineered from the ground up for **AI developer agents** (Claude Code, Cursor, Codex, v0).
+
+## Why Machine-First?
+
+Modern frontend engineering is undergoing a shift: developer agents are becoming the primary consumers and assemblers of code primitives, while human engineers focus on visual curation, high-level architecture, and quality assurance.
+
+Traditional component libraries were designed for human visual browsing—relying on heavy DOM payloads, extensive explanatory prose, and visual trial-and-error. When an AI agent is forced to build interfaces from generic training weights or unstructured documentation, it inevitably produces **"AI Slop"**:
+- Hallucinated component props and nonexistent imports.
+- Chained type assertions (`as any as ComponentProps`).
+- Arbitrary, non-token spacing overrides (`p-[17px]`, `mt-[13px]`).
+- Banned visual clichés (the indigo-600 button, the purple-to-blue linear gradient, decorative emoji grids, and blanket glassmorphism).
+- Catastrophic accessibility failures (unlabeled icons, missing ARIA bindings, unhandled keyboard navigation).
+
+## Core Endpoints
+
+- `/llms.txt`: Machine discovery index summarizing available categories, component slugs, taste dials, and installation commands.
+- `/llms-full.txt`: Complete flat markdown specification with embedded TypeScript source.
+- `/raw/components/[slug]`: Clean, token-efficient Markdown representations of component usage.
+- `/r/[name].json`: Programmatic endpoint adhering to the shadcn v3 registry schema.
+- `/r/registry.json`: Master index of all registered items for rapid agent discovery.

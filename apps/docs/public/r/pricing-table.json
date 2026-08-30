@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "pricing-table",
+  "type": "registry:block",
+  "title": "Pricing Table",
+  "description": "Multi-tier pricing matrix with monthly/annual toggle and clear feature checkmarks.",
+  "category": "ui:block",
+  "tags": [
+    "pricing",
+    "saas",
+    "marketing",
+    "interactive-toggle"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 3,
+    "visual_density": 7
+  },
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true
+  },
+  "license_origin": {
+    "source_repository": "https://tailark.com",
+    "license_type": "MIT",
+    "author": "Tailark Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "registry/blocks/pricing-table.tsx",
+      "content": "/**\n * @license MIT\n * @origin Tailark / Shadcn UI (https://tailark.com)\n * @author Tailark Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { Check } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface PricingPlan {\n  name: string;\n  priceMonthly: number;\n  priceAnnual: number;\n  description: string;\n  features: string[];\n  popular?: boolean;\n  ctaText: string;\n}\n\nexport interface PricingTableProps {\n  plans?: PricingPlan[];\n  className?: string;\n}\n\nconst DEFAULT_PLANS: PricingPlan[] = [\n  {\n    name: \"Developer\",\n    priceMonthly: 0,\n    priceAnnual: 0,\n    description: \"For individual builders and local agent experimentation.\",\n    features: [\n      \"Access to 25+ seed components\",\n      \"Local MCP server stdio integration\",\n      \"Full static /llms.txt discovery\",\n      \"Standard MIT open-source license\",\n    ],\n    ctaText: \"Get Started Free\",\n  },\n  {\n    name: \"Autonomous Team\",\n    priceMonthly: 49,\n    priceAnnual: 39,\n    description: \"For engineering teams running multi-agent continuous pipelines.\",\n    features: [\n      \"Everything in Developer\",\n      \"Streamable HTTP MCP endpoints\",\n      \"Automated CI/CD anti-slop gatekeeper\",\n      \"Zero-Draft Fidelity sandbox reports\",\n      \"Priority AST ingestion requests\",\n    ],\n    popular: true,\n    ctaText: \"Upgrade to Team\",\n  },\n  {\n    name: \"Enterprise\",\n    priceMonthly: 199,\n    priceAnnual: 159,\n    description: \"For organizations scaling private registries and custom design tokens.\",\n    features: [\n      \"Custom private registry namespaces\",\n      \"Tailwind v4 token synchronizer\",\n      \"Dedicated headless test harness\",\n      \"100% WCAG 2.1 AAA accessibility pass\",\n      \"Custom legal IP indemnity warranty\",\n    ],\n    ctaText: \"Contact Enterprise\",\n  },\n];\n\nexport function PricingTable({ plans = DEFAULT_PLANS, className }: PricingTableProps) {\n  const [isAnnual, setIsAnnual] = React.useState(true);\n\n  return (\n    <section className={cn(\"py-12\", className)}>\n      {/* Billing toggle */}\n      <div className=\"flex items-center justify-center gap-3 pb-10\">\n        <span className={cn(\"text-sm font-medium\", !isAnnual ? \"text-foreground\" : \"text-muted-foreground\")}>\n          Monthly billing\n        </span>\n        <button\n          type=\"button\"\n          role=\"switch\"\n          aria-checked={isAnnual}\n          onClick={() => setIsAnnual(!isAnnual)}\n          className={cn(\n            \"relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n            isAnnual ? \"bg-primary\" : \"bg-input\"\n          )}\n        >\n          <span\n            className={cn(\n              \"pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg transition-transform\",\n              isAnnual ? \"translate-x-5\" : \"translate-x-0\"\n            )}\n          />\n        </button>\n        <span className={cn(\"text-sm font-medium\", isAnnual ? \"text-foreground\" : \"text-muted-foreground\")}>\n          Annual billing <span className=\"text-xs font-semibold text-primary\">(Save 20%)</span>\n        </span>\n      </div>\n\n      {/* Plan Cards */}\n      <div className=\"grid gap-6 lg:grid-cols-3\">\n        {plans.map((plan) => {\n          const price = isAnnual ? plan.priceAnnual : plan.priceMonthly;\n          return (\n            <div\n              key={plan.name}\n              className={cn(\n                \"relative flex flex-col justify-between rounded-2xl border p-8 shadow-xs transition-all\",\n                plan.popular\n                  ? \"border-primary bg-card ring-2 ring-primary/20 shadow-md\"\n                  : \"border-border bg-card text-card-foreground hover:border-border/80\"\n              )}\n            >\n              {plan.popular && (\n                <div className=\"absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-0.5 text-xs font-semibold text-primary-foreground\">\n                  Recommended\n                </div>\n              )}\n              <div>\n                <h3 className=\"text-xl font-bold text-foreground\">{plan.name}</h3>\n                <p className=\"mt-2 text-sm text-muted-foreground\">{plan.description}</p>\n                <div className=\"mt-6 flex items-baseline gap-1\">\n                  <span className=\"text-4xl font-extrabold tracking-tight text-foreground\">\n                    ${price}\n                  </span>\n                  <span className=\"text-sm font-medium text-muted-foreground\">/month</span>\n                </div>\n                <ul className=\"mt-8 space-y-3 text-sm text-muted-foreground\">\n                  {plan.features.map((feature, i) => (\n                    <li key={i} className=\"flex items-center gap-2.5\">\n                      <Check className=\"h-4 w-4 shrink-0 text-primary\" aria-hidden=\"true\" />\n                      <span>{feature}</span>\n                    </li>\n                  ))}\n                </ul>\n              </div>\n              <div className=\"mt-8\">\n                <button\n                  type=\"button\"\n                  className={cn(\n                    \"w-full rounded-xl py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                    plan.popular\n                      ? \"bg-primary text-primary-foreground hover:bg-primary/90\"\n                      : \"border border-border bg-background text-foreground hover:bg-muted\"\n                  )}\n                >\n                  {plan.ctaText}\n                </button>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/pricing-table.tsx"
+    }
+  ]
+}

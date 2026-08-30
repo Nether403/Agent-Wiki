@@ -1,0 +1,19 @@
+{
+  "name": "design-agent-wiki-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Machine-First Design Agent Wiki: Curating high-performance UI registries and preventing AI slop.",
+  "scripts": {
+    "dev": "pnpm --filter @design-wiki/docs dev",
+    "build": "pnpm --filter @design-wiki/registry build && pnpm --filter @design-wiki/audit-linter build && pnpm --filter @design-wiki/harvester build && pnpm --filter @design-wiki/mcp build && pnpm --filter @design-wiki/docs build",
+    "build:registry": "pnpm --filter @design-wiki/registry build",
+    "lint:slop": "pnpm --filter @design-wiki/audit-linter run check-slop",
+    "mcp": "pnpm --filter @design-wiki/mcp start",
+    "clean": "turbo clean"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.4",
+    "typescript": "^5.8.2"
+  },
+  "packageManager": "pnpm@11.3.0"
+}

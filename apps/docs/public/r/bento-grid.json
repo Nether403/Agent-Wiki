@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "bento-grid",
+  "type": "registry:block",
+  "title": "Bento Grid",
+  "description": "Multi-pane asymmetrical layout grid with responsive column spans and structural borders.",
+  "category": "ui:block",
+  "tags": [
+    "bento-grid",
+    "layout-block",
+    "asymmetry",
+    "marketing"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 3,
+    "visual_density": 6
+  },
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true
+  },
+  "license_origin": {
+    "source_repository": "https://tailark.com",
+    "license_type": "MIT",
+    "author": "Tailark Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/bento-grid.tsx",
+      "content": "/**\n * @license MIT\n * @origin Tailark / Aceternity (https://tailark.com)\n * @author Tailark Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { ArrowUpRight } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface BentoItem {\n  title: string;\n  description: string;\n  header?: React.ReactNode;\n  icon?: React.ReactNode;\n  className?: string;\n}\n\nexport function BentoGrid({\n  className,\n  children,\n}: {\n  className?: string;\n  children: React.ReactNode;\n}) {\n  return (\n    <div\n      className={cn(\n        \"grid grid-cols-1 gap-4 md:grid-cols-3 md:auto-rows-[18rem]\",\n        className\n      )}\n    >\n      {children}\n    </div>\n  );\n}\n\nexport function BentoGridItem({\n  className,\n  title,\n  description,\n  header,\n  icon,\n}: BentoItem) {\n  return (\n    <div\n      className={cn(\n        \"group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-xs transition-colors hover:border-primary/40\",\n        className\n      )}\n    >\n      <div className=\"flex h-full flex-col justify-between\">\n        {header && <div className=\"mb-4\">{header}</div>}\n        <div>\n          {icon && <div className=\"mb-3 text-primary\">{icon}</div>}\n          <h3 className=\"text-lg font-semibold tracking-tight text-foreground\">\n            {title}\n          </h3>\n          <p className=\"mt-2 text-sm leading-relaxed text-muted-foreground\">\n            {description}\n          </p>\n        </div>\n      </div>\n      <div className=\"mt-4 flex items-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100\">\n        <span>Explore architecture</span>\n        <ArrowUpRight className=\"h-3.5 w-3.5\" />\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/bento-grid.tsx"
+    }
+  ]
+}

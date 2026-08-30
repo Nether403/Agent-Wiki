@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "hero-section",
+  "type": "registry:block",
+  "title": "Hero Section",
+  "description": "Editorial SaaS hero section featuring typography discipline, badge pill, and active CTA.",
+  "category": "ui:block",
+  "tags": [
+    "hero",
+    "marketing",
+    "typography",
+    "block"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 2,
+    "visual_density": 5
+  },
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true
+  },
+  "license_origin": {
+    "source_repository": "https://kairoui.com",
+    "license_type": "MIT",
+    "author": "Kairo UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "registry/blocks/hero-section.tsx",
+      "content": "/**\n * @license MIT\n * @origin Kairo UI / Tailark (https://kairoui.com)\n * @author Kairo UI Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { ArrowRight, Sparkles } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface HeroSectionProps {\n  badge?: string;\n  title: string;\n  highlightedText?: string;\n  description: string;\n  primaryCtaText?: string;\n  secondaryCtaText?: string;\n  onPrimaryCtaClick?: () => void;\n  onSecondaryCtaClick?: () => void;\n  className?: string;\n}\n\nexport function HeroSection({\n  badge = \"Agent-Native Design System v1.0\",\n  title = \"Deterministic UI Engineering for\",\n  highlightedText = \"Autonomous AI Agents\",\n  description = \"Eliminate AI slop, chained type assertions, and unstyled layout errors. Ground your coding models in pre-tested, accessible component primitives.\",\n  primaryCtaText = \"Explore Registry\",\n  secondaryCtaText = \"Initialize MCP\",\n  onPrimaryCtaClick,\n  onSecondaryCtaClick,\n  className,\n}: HeroSectionProps) {\n  return (\n    <section\n      className={cn(\n        \"relative overflow-hidden rounded-3xl border border-border bg-background px-6 py-20 text-center sm:px-12 lg:py-28\",\n        className\n      )}\n    >\n      <div className=\"mx-auto max-w-3xl\">\n        {/* Release Badge */}\n        <div className=\"inline-flex items-center gap-2 rounded-full border border-border bg-muted/60 px-3.5 py-1 text-xs font-medium text-foreground\">\n          <Sparkles className=\"h-3.5 w-3.5 text-primary\" aria-hidden=\"true\" />\n          <span>{badge}</span>\n        </div>\n\n        {/* Title with typographic hierarchy */}\n        <h1 className=\"mt-6 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl\">\n          {title}{\" \"}\n          <span className=\"text-primary underline decoration-primary/30 underline-offset-8\">\n            {highlightedText}\n          </span>\n        </h1>\n\n        {/* Description */}\n        <p className=\"mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl\">\n          {description}\n        </p>\n\n        {/* Action Buttons */}\n        <div className=\"mt-10 flex flex-wrap items-center justify-center gap-4\">\n          <button\n            onClick={onPrimaryCtaClick}\n            className=\"inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\"\n          >\n            <span>{primaryCtaText}</span>\n            <ArrowRight className=\"h-4 w-4\" />\n          </button>\n          <button\n            onClick={onSecondaryCtaClick}\n            className=\"inline-flex items-center gap-2 rounded-xl border border-border bg-background px-6 py-3 text-sm font-semibold text-foreground shadow-xs transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2\"\n          >\n            <span>{secondaryCtaText}</span>\n          </button>\n        </div>\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/hero-section.tsx"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+# Cursor AI Rules: Design Agent Wiki Integration
+
+- Always query the Design Agent Wiki registry before building UI components from scratch.
+- Use `npx shadcn@latest add http://localhost:3000/r/<name>.json` to install components.
+- Adhere strictly to the 20 Anti-Slop Rules:
+  - Reject #4f46e5 / bg-indigo-600 defaults (use Tailwind semantic classes: bg-primary, text-primary-foreground).
+  - Reject purple-to-blue linear gradients.
+  - Reject arbitrary pixel units like p-[17px].
+  - Reject chained type assertions (as unknown as).
+  - Ensure all icon buttons have aria-label.
+- Calibrate design output against dials:
+  - DESIGN_VARIANCE: 5
+  - MOTION_INTENSITY: 4
+  - VISUAL_DENSITY: 6

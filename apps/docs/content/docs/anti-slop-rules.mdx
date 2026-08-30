@@ -1,0 +1,31 @@
+---
+title: "Anti-Slop 20-Rule Specification"
+description: "The complete 20-rule AST and pattern linter specifications enforced by @design-wiki/audit-linter."
+---
+
+# Anti-Slop 20-Rule Specification
+
+Our automated linter checks code across 20 distinct rules before allowing components into the registry or before an agent completes a task:
+
+| Rule ID | Category | Severity | Detection Mechanism | Target Violation |
+| :--- | :--- | :---: | :--- | :--- |
+| **SLOP-001** | Styling / Color | Medium | Regex | Hardcoded indigo shades (`bg-indigo-600`, `#4f46e5`) |
+| **SLOP-002** | Styling / Color | Medium | Regex | Cliché purple-to-blue linear gradients (`from-purple-500 to-blue-500`) |
+| **SLOP-003** | Styling / Surface | Low | Regex | Blanket glassmorphism (`bg-white/10 backdrop-blur-md`) |
+| **SLOP-004** | TypeScript | **High** | AST | Chained type assertions (`as unknown as`, `as any as`) |
+| **SLOP-005** | TypeScript | **High** | AST | Conditional empty object spreads (`...(cond ? { a } : {})`) |
+| **SLOP-006** | Motion | Low | Regex | Blanket `transition-all duration-300` on structural wrappers |
+| **SLOP-007** | Layout / Spacing | Low | Regex | Non-token arbitrary pixel units (`p-[17px]`, `m-[13px]`) |
+| **SLOP-008** | Iconography | Medium | Regex | Decorative emojis inside buttons/cards instead of SVG icons |
+| **SLOP-009** | Code Completeness | **High** | Regex | Truncated code comments (`// TODO: implement logic`, placeholder mocks) |
+| **SLOP-010** | Accessibility | **High** | AST | Interactive elements without accessible text or `aria-label` |
+| **SLOP-011** | Accessibility | Medium | AST | Inline SVGs without `role="img"` or `<title>` element |
+| **SLOP-012** | Accessibility | **High** | AST | Focus outline suppression (`outline-none` without replacement) |
+| **SLOP-013** | Performance | Medium | AST | Layout-triggering transitions (`transition-[height]`) |
+| **SLOP-014** | Performance | Medium | AST | Missing `prefers-reduced-motion` on heavy canvas loops |
+| **SLOP-015** | Architecture | **High** | AST | Hardcoded external HTTP images without dimensions |
+| **SLOP-016** | Motion | Low | AST | Missing `LayoutGroup` or `AnimatePresence` keys |
+| **SLOP-017** | TypeScript | Medium | AST | Implicit `any` props on component exports |
+| **SLOP-018** | Styling / Layout | Medium | Regex | Repetitive centered card layouts |
+| **SLOP-019** | Architecture | **High** | AST | Deep relative imports bypassing standard aliases |
+| **SLOP-020** | Legal / IP | **High** | Regex | Missing mandatory upstream license attribution headers |

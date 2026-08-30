@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "input",
+  "type": "registry:ui",
+  "title": "Input",
+  "description": "Accessible text input with floating state, error boundaries, and focus-visible ring.",
+  "category": "ui:primitive",
+  "tags": [
+    "tailwind-v4",
+    "form",
+    "accessible",
+    "input"
+  ],
+  "dials": {
+    "design_variance": 2,
+    "motion_intensity": 1,
+    "visual_density": 7
+  },
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "textbox",
+    "fallback_provided": true
+  },
+  "license_origin": {
+    "source_repository": "https://ui.shadcn.com",
+    "license_type": "MIT",
+    "author": "Shadcn & Community",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/input.tsx",
+      "content": "/**\n * @license MIT\n * @origin Shadcn UI (https://ui.shadcn.com)\n * @author Shadcn & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {\n  error?: boolean;\n}\n\nexport const Input = React.forwardRef<HTMLInputElement, InputProps>(\n  ({ className, type = \"text\", error, ...props }, ref) => {\n    return (\n      <input\n        type={type}\n        className={cn(\n          \"flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm\",\n          error && \"border-destructive focus-visible:ring-destructive\",\n          className\n        )}\n        ref={ref}\n        aria-invalid={error ? true : undefined}\n        {...props}\n      />\n    );\n  }\n);\n\nInput.displayName = \"Input\";\n",
+      "type": "registry:ui",
+      "target": "components/ui/input.tsx"
+    }
+  ]
+}

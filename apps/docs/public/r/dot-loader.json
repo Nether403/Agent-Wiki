@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "dot-loader",
+  "type": "registry:component",
+  "title": "Dot Loader",
+  "description": "Minimalist dot pulsation loader for button states or inline progress indicators.",
+  "category": "ui:utility",
+  "tags": [
+    "loader",
+    "spinner",
+    "utility",
+    "minimalist"
+  ],
+  "dials": {
+    "design_variance": 2,
+    "motion_intensity": 4,
+    "visual_density": 8
+  },
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "status",
+    "fallback_provided": true
+  },
+  "license_origin": {
+    "source_repository": "https://icons0.dev",
+    "license_type": "MIT",
+    "author": "icons0 Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/utility/dot-loader.tsx",
+      "content": "/**\n * @license MIT\n * @origin icons0 / Dot Matrix (https://icons0.dev)\n * @author icons0 Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface DotLoaderProps {\n  size?: \"sm\" | \"default\" | \"lg\";\n  className?: string;\n  label?: string;\n}\n\nexport function DotLoader({\n  size = \"default\",\n  className,\n  label = \"Loading...\",\n}: DotLoaderProps) {\n  const sizeClasses = {\n    sm: \"h-1.5 w-1.5\",\n    default: \"h-2 w-2\",\n    lg: \"h-3 w-3\",\n  };\n\n  return (\n    <div\n      role=\"status\"\n      aria-label={label}\n      className={cn(\"inline-flex items-center gap-1.5\", className)}\n    >\n      <span\n        className={cn(\n          \"rounded-full bg-current animate-bounce [animation-delay:-0.3s]\",\n          sizeClasses[size]\n        )}\n      />\n      <span\n        className={cn(\n          \"rounded-full bg-current animate-bounce [animation-delay:-0.15s]\",\n          sizeClasses[size]\n        )}\n      />\n      <span\n        className={cn(\"rounded-full bg-current animate-bounce\", sizeClasses[size])}\n      />\n      <span className=\"sr-only\">{label}</span>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/dot-loader.tsx"
+    }
+  ]
+}

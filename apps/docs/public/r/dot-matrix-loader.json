@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "dot-matrix-loader",
+  "type": "registry:component",
+  "title": "Dot Matrix Loader",
+  "description": "Animated dot matrix with wave oscillation, customizable matrix rows, and accessible status role.",
+  "category": "ui:creative",
+  "tags": [
+    "dot-matrix",
+    "canvas-pattern",
+    "loader",
+    "status"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 5,
+    "visual_density": 7
+  },
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "status",
+    "fallback_provided": true
+  },
+  "license_origin": {
+    "source_repository": "https://dotmatrix.dev",
+    "license_type": "MIT",
+    "author": "Dot Matrix Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/dot-matrix-loader.tsx",
+      "content": "/**\n * @license MIT\n * @origin Dot Matrix UI (https://dotmatrix.dev)\n * @author Dot Matrix Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface DotMatrixLoaderProps {\n  rows?: number;\n  cols?: number;\n  dotSize?: number;\n  gap?: number;\n  className?: string;\n  label?: string;\n}\n\nexport function DotMatrixLoader({\n  rows = 5,\n  cols = 5,\n  dotSize = 6,\n  gap = 6,\n  className,\n  label = \"Loading content\",\n}: DotMatrixLoaderProps) {\n  const [activeFrame, setActiveFrame] = React.useState(0);\n\n  React.useEffect(() => {\n    const timer = setInterval(() => {\n      setActiveFrame((prev) => (prev + 1) % (rows + cols));\n    }, 120);\n    return () => clearInterval(timer);\n  }, [rows, cols]);\n\n  return (\n    <div\n      role=\"status\"\n      aria-label={label}\n      className={cn(\"inline-flex flex-col items-center justify-center p-4\", className)}\n    >\n      <div\n        className=\"grid\"\n        style={{\n          gridTemplateColumns: `repeat(${cols}, ${dotSize}px)`,\n          gap: `${gap}px`,\n        }}\n      >\n        {Array.from({ length: rows * cols }).map((_, i) => {\n          const r = Math.floor(i / cols);\n          const c = i % cols;\n          const distance = r + c;\n          const isLit = (distance + activeFrame) % (rows + cols) < 3;\n\n          return (\n            <div\n              key={i}\n              style={{ width: dotSize, height: dotSize }}\n              className={cn(\n                \"rounded-full transition-colors duration-150\",\n                isLit ? \"bg-primary\" : \"bg-muted-foreground/20\"\n              )}\n            />\n          );\n        })}\n      </div>\n      <span className=\"sr-only\">{label}</span>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/dot-matrix-loader.tsx"
+    }
+  ]
+}

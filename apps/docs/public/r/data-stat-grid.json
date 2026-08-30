@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "data-stat-grid",
+  "type": "registry:component",
+  "title": "Data Stat Grid",
+  "description": "Asymmetrical metric showcase for SaaS analytics with high visual density and clean type.",
+  "category": "ui:editorial",
+  "tags": [
+    "analytical",
+    "metrics",
+    "grid",
+    "saas-dashboard"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 1,
+    "visual_density": 9
+  },
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true
+  },
+  "license_origin": {
+    "source_repository": "https://diagram.com",
+    "license_type": "MIT",
+    "author": "diagram-design team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/data-stat-grid.tsx",
+      "content": "/**\n * @license MIT\n * @origin diagram-design (https://diagram.com)\n * @author diagram-design team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { TrendingUp, Activity, ShieldCheck, Zap } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface StatItem {\n  label: string;\n  value: string;\n  change: string;\n  isPositive: boolean;\n  description: string;\n}\n\nexport interface DataStatGridProps {\n  stats?: StatItem[];\n  className?: string;\n}\n\nconst DEFAULT_STATS: StatItem[] = [\n  {\n    label: \"Zero-Draft Fidelity\",\n    value: \"94.8%\",\n    change: \"+4.2%\",\n    isPositive: true,\n    description: \"First-run compile rate across AI agents\",\n  },\n  {\n    label: \"Avg Payload Size\",\n    value: \"11.2 KB\",\n    change: \"-2.1 KB\",\n    isPositive: true,\n    description: \"Token footprint per component recipe\",\n  },\n  {\n    label: \"Slop Conformance\",\n    value: \"100/100\",\n    change: \"Flawless\",\n    isPositive: true,\n    description: \"Anti-slop AST linter health index\",\n  },\n  {\n    label: \"Resolver Latency\",\n    value: \"0.82s\",\n    change: \"-0.4s\",\n    isPositive: true,\n    description: \"CLI registry retrieval over CDN edge\",\n  },\n];\n\nexport function DataStatGrid({ stats = DEFAULT_STATS, className }: DataStatGridProps) {\n  return (\n    <div className={cn(\"grid gap-4 sm:grid-cols-2 lg:grid-cols-4\", className)}>\n      {stats.map((stat, i) => (\n        <div\n          key={i}\n          className=\"rounded-xl border border-border bg-card p-5 text-card-foreground shadow-xs\"\n        >\n          <div className=\"flex items-center justify-between\">\n            <span className=\"text-xs font-medium text-muted-foreground\">{stat.label}</span>\n            <span\n              className={cn(\n                \"inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[11px] font-semibold\",\n                stat.isPositive\n                  ? \"bg-emerald-500/10 text-emerald-600 dark:text-emerald-400\"\n                  : \"bg-destructive/10 text-destructive\"\n              )}\n            >\n              <TrendingUp className=\"h-3 w-3\" aria-hidden=\"true\" />\n              {stat.change}\n            </span>\n          </div>\n          <div className=\"mt-3 text-2xl font-bold tracking-tight text-foreground\">\n            {stat.value}\n          </div>\n          <p className=\"mt-1 text-xs text-muted-foreground\">{stat.description}</p>\n        </div>\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/data-stat-grid.tsx"
+    }
+  ]
+}

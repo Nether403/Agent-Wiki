@@ -1,0 +1,45 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "diagram-card",
+  "type": "registry:component",
+  "title": "Diagram Card",
+  "description": "Precision SVG diagramming card with minimal vector lines and zero decorative emojis.",
+  "category": "ui:editorial",
+  "tags": [
+    "editorial",
+    "svg",
+    "analytical",
+    "diagram"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 1,
+    "visual_density": 8
+  },
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true
+  },
+  "license_origin": {
+    "source_repository": "https://diagram.com",
+    "license_type": "MIT",
+    "author": "diagram-design team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/diagram-card.tsx",
+      "content": "/**\n * @license MIT\n * @origin diagram-design (https://diagram.com)\n * @author diagram-design team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { ArrowUpRight, Cpu, Layers } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface DiagramNode {\n  id: string;\n  title: string;\n  badge: string;\n  description: string;\n}\n\nexport interface DiagramCardProps {\n  nodes?: DiagramNode[];\n  className?: string;\n}\n\nconst DEFAULT_NODES: DiagramNode[] = [\n  {\n    id: \"01\",\n    title: \"Ingestion Pipeline\",\n    badge: \"AST Parse\",\n    description: \"Extracts AST structures, dependencies, and verifies SPDX license headers.\",\n  },\n  {\n    id: \"02\",\n    title: \"Anti-Slop Engine\",\n    badge: \"Verification\",\n    description: \"Evaluates code against 20 strict design-system rules and WCAG AA contrast.\",\n  },\n  {\n    id: \"03\",\n    title: \"Static Compiler\",\n    badge: \"CDN Edge\",\n    description: \"Builds atomic /r/ endpoints and /llms.txt discovery manifests.\",\n  },\n];\n\nexport function DiagramCard({ nodes = DEFAULT_NODES, className }: DiagramCardProps) {\n  return (\n    <div\n      className={cn(\n        \"rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-xs\",\n        className\n      )}\n    >\n      <div className=\"flex items-center justify-between border-b border-border pb-4\">\n        <div className=\"flex items-center gap-2\">\n          <Layers className=\"h-5 w-5 text-primary\" aria-hidden=\"true\" />\n          <span className=\"text-sm font-semibold tracking-wide uppercase text-muted-foreground\">\n            Architecture Map\n          </span>\n        </div>\n        <span className=\"rounded-md border border-border bg-muted px-2 py-0.5 text-xs font-mono text-muted-foreground\">\n          v1.0.0\n        </span>\n      </div>\n\n      <div className=\"mt-6 grid gap-4 md:grid-cols-3\">\n        {nodes.map((node, i) => (\n          <div\n            key={node.id}\n            className=\"group relative rounded-xl border border-border/80 bg-background/60 p-4 transition-colors hover:border-primary/50\"\n          >\n            <div className=\"flex items-center justify-between\">\n              <span className=\"font-mono text-xs text-muted-foreground\">{node.id}</span>\n              <span className=\"rounded-full bg-secondary px-2 py-0.5 text-[11px] font-medium text-secondary-foreground\">\n                {node.badge}\n              </span>\n            </div>\n            <h4 className=\"mt-3 text-sm font-semibold text-foreground\">{node.title}</h4>\n            <p className=\"mt-1 text-xs leading-relaxed text-muted-foreground\">\n              {node.description}\n            </p>\n          </div>\n        ))}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/diagram-card.tsx"
+    }
+  ]
+}

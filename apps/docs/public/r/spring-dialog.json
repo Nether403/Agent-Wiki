@@ -1,0 +1,48 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "spring-dialog",
+  "type": "registry:component",
+  "title": "Spring Dialog",
+  "description": "Scale-and-fade physics modal with AnimatePresence and keyboard escape handling.",
+  "category": "ui:motion",
+  "tags": [
+    "motion/react",
+    "animate-presence",
+    "modal",
+    "spring-physics"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 6,
+    "visual_density": 5
+  },
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "dialog",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://kokonutui.com",
+    "license_type": "MIT",
+    "author": "KokonutUI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/spring-dialog.tsx",
+      "content": "/**\n * @license MIT\n * @origin KokonutUI (https://kokonutui.com)\n * @author KokonutUI\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { motion, AnimatePresence } from \"motion/react\";\nimport { X } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface SpringDialogProps {\n  isOpen: boolean;\n  onClose: () => void;\n  title: string;\n  description?: string;\n  children: React.ReactNode;\n  className?: string;\n}\n\nexport function SpringDialog({\n  isOpen,\n  onClose,\n  title,\n  description,\n  children,\n  className,\n}: SpringDialogProps) {\n  React.useEffect(() => {\n    const handleKeyDown = (e: KeyboardEvent) => {\n      if (e.key === \"Escape\") onClose();\n    };\n    if (isOpen) {\n      window.addEventListener(\"keydown\", handleKeyDown);\n      document.body.style.overflow = \"hidden\";\n    }\n    return () => {\n      window.removeEventListener(\"keydown\", handleKeyDown);\n      document.body.style.overflow = \"unset\";\n    };\n  }, [isOpen, onClose]);\n\n  return (\n    <AnimatePresence>\n      {isOpen && (\n        <div\n          className=\"fixed inset-0 z-50 flex items-center justify-center p-4\"\n          role=\"dialog\"\n          aria-modal=\"true\"\n          aria-labelledby=\"spring-dialog-title\"\n        >\n          {/* Backdrop */}\n          <motion.div\n            initial={{ opacity: 0 }}\n            animate={{ opacity: 1 }}\n            exit={{ opacity: 0 }}\n            transition={{ duration: 0.2 }}\n            onClick={onClose}\n            className=\"fixed inset-0 bg-black/60 backdrop-blur-xs\"\n          />\n\n          {/* Modal Card */}\n          <motion.div\n            initial={{ scale: 0.92, opacity: 0, y: 16 }}\n            animate={{ scale: 1, opacity: 1, y: 0 }}\n            exit={{ scale: 0.95, opacity: 0, y: 8 }}\n            transition={{ type: \"spring\", damping: 25, stiffness: 300 }}\n            className={cn(\n              \"relative z-10 w-full max-w-lg rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-2xl\",\n              className\n            )}\n          >\n            <div className=\"flex items-start justify-between pb-4\">\n              <div>\n                <h2\n                  id=\"spring-dialog-title\"\n                  className=\"text-lg font-semibold tracking-tight text-foreground\"\n                >\n                  {title}\n                </h2>\n                {description && (\n                  <p className=\"mt-1 text-sm text-muted-foreground\">\n                    {description}\n                  </p>\n                )}\n              </div>\n              <button\n                onClick={onClose}\n                aria-label=\"Close dialog\"\n                className=\"rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n              >\n                <X className=\"h-4 w-4\" />\n              </button>\n            </div>\n            <div className=\"py-2\">{children}</div>\n          </motion.div>\n        </div>\n      )}\n    </AnimatePresence>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/spring-dialog.tsx"
+    }
+  ]
+}

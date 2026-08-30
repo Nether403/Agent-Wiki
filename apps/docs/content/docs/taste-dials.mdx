@@ -1,0 +1,32 @@
+---
+title: "Taste-Dial Matrix"
+description: "How agents calibrate their output variance, motion intensity, and visual density."
+---
+
+# The Taste-Dial Matrix
+
+The Design Agent Wiki introduces three quantifiable 1–10 calibration dials configured in `SKILL.md`:
+
+```
+Dial Axis            Low (1 - 3)                    Medium (4 - 7)                   High (8 - 10)
+───────────────────────────────────────────────────────────────────────────────────────────────────
+DESIGN_VARIANCE      Rigid, centered grid;          Subtle asymmetrical offsets;     Avant-garde editorial;
+                     conservative padding           editorial line dividers          brutalist overlaps
+───────────────────────────────────────────────────────────────────────────────────────────────────
+MOTION_INTENSITY     CSS hover transitions;         Spring-based layout animations;  GPU WebGL shaders;
+                     static cards                   staggered entrances              canvas mouse trackers
+───────────────────────────────────────────────────────────────────────────────────────────────────
+VISUAL_DENSITY       Generous whitespace;           Balanced SaaS presentation;      Dense analytical tables;
+                     py-24 sections                 comfortable rhythm               compact multi-pane UI
+```
+
+### Calibrating Your AI Agent
+
+Add this configuration into your project's `.cursor/rules/design.mdc` or `SKILL.md`:
+
+```yaml
+dials:
+  DESIGN_VARIANCE: 5     # 1: Conservative · 10: Asymmetric editorial
+  MOTION_INTENSITY: 4    # 1: Basic hover   · 10: Canvas/WebGL springs
+  VISUAL_DENSITY: 6      # 1: Generous space · 10: Dense analytical UI
+```

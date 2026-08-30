@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "dropdown-menu",
+  "type": "registry:ui",
+  "title": "Dropdown Menu",
+  "description": "Keyboard-navigable dropdown with arrow key navigation, sub-menus, and ARIA menu attributes.",
+  "category": "ui:primitive",
+  "tags": [
+    "radix-primitives",
+    "menu",
+    "navigation",
+    "headless"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 6
+  },
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "menu",
+    "fallback_provided": true
+  },
+  "license_origin": {
+    "source_repository": "https://radix-ui.com",
+    "license_type": "MIT",
+    "author": "Radix UI",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "@radix-ui/react-dropdown-menu",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/dropdown-menu.tsx",
+      "content": "/**\n * @license MIT\n * @origin Radix UI / Shadcn UI (https://radix-ui.com)\n * @author Radix & Shadcn\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport * as DropdownMenuPrimitive from \"@radix-ui/react-dropdown-menu\";\nimport { Check, ChevronRight, Circle } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport const DropdownMenu = DropdownMenuPrimitive.Root;\nexport const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;\nexport const DropdownMenuGroup = DropdownMenuPrimitive.Group;\nexport const DropdownMenuPortal = DropdownMenuPrimitive.Portal;\nexport const DropdownMenuSub = DropdownMenuPrimitive.Sub;\nexport const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;\n\nexport const DropdownMenuSubTrigger = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {\n    inset?: boolean;\n  }\n>(({ className, inset, children, ...props }, ref) => (\n  <DropdownMenuPrimitive.SubTrigger\n    ref={ref}\n    className={cn(\n      \"flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm focus-visible:outline-none focus:bg-accent data-[state=open]:bg-accent [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0\",\n      inset && \"pl-8\",\n      className\n    )}\n    {...props}\n  >\n    {children}\n    <ChevronRight className=\"ml-auto\" />\n  </DropdownMenuPrimitive.SubTrigger>\n));\nDropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName;\n\nexport const DropdownMenuSubContent = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>\n>(({ className, ...props }, ref) => (\n  <DropdownMenuPrimitive.SubContent\n    ref={ref}\n    className={cn(\n      \"z-50 min-w-32 overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\",\n      className\n    )}\n    {...props}\n  />\n));\nDropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayName;\n\nexport const DropdownMenuContent = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.Content>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>\n>(({ className, sideOffset = 4, ...props }, ref) => (\n  <DropdownMenuPrimitive.Portal>\n    <DropdownMenuPrimitive.Content\n      ref={ref}\n      sideOffset={sideOffset}\n      className={cn(\n        \"z-50 min-w-32 overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0\",\n        className\n      )}\n      {...props}\n    />\n  </DropdownMenuPrimitive.Portal>\n));\nDropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;\n\nexport const DropdownMenuItem = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.Item>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {\n    inset?: boolean;\n  }\n>(({ className, inset, ...props }, ref) => (\n  <DropdownMenuPrimitive.Item\n    ref={ref}\n    className={cn(\n      \"relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm focus-visible:outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0\",\n      inset && \"pl-8\",\n      className\n    )}\n    {...props}\n  />\n));\nDropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;\n\nexport const DropdownMenuSeparator = React.forwardRef<\n  React.ElementRef<typeof DropdownMenuPrimitive.Separator>,\n  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>\n>(({ className, ...props }, ref) => (\n  <DropdownMenuPrimitive.Separator\n    ref={ref}\n    className={cn(\"-mx-1 my-1 h-px bg-muted\", className)}\n    {...props}\n  />\n));\nDropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;\n",
+      "type": "registry:ui",
+      "target": "components/ui/dropdown-menu.tsx"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "animated-tabs",
+  "type": "registry:component",
+  "title": "Animated Tabs",
+  "description": "Smooth spring-bound tab slider with layout ID preservation and zero layout shift.",
+  "category": "ui:motion",
+  "tags": [
+    "motion/react",
+    "spring-physics",
+    "tabs",
+    "layoutId"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 6,
+    "visual_density": 5
+  },
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "tablist",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://smoothui.dev",
+    "license_type": "MIT",
+    "author": "SmoothUI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/animated-tabs.tsx",
+      "content": "/**\n * @license MIT\n * @origin SmoothUI (https://smoothui.dev)\n * @author SmoothUI Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { motion } from \"motion/react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface TabOption {\n  id: string;\n  label: string;\n}\n\nexport interface AnimatedTabsProps {\n  tabs: TabOption[];\n  activeTab: string;\n  onChange: (id: string) => void;\n  className?: string;\n  layoutId?: string;\n}\n\nexport function AnimatedTabs({\n  tabs,\n  activeTab,\n  onChange,\n  className,\n  layoutId = \"animated-tab-indicator\",\n}: AnimatedTabsProps) {\n  return (\n    <div\n      role=\"tablist\"\n      aria-orientation=\"horizontal\"\n      className={cn(\n        \"inline-flex items-center gap-1 rounded-xl border border-border bg-muted/50 p-1 text-muted-foreground\",\n        className\n      )}\n    >\n      {tabs.map((tab) => {\n        const isActive = activeTab === tab.id;\n        return (\n          <button\n            key={tab.id}\n            role=\"tab\"\n            aria-selected={isActive}\n            tabIndex={isActive ? 0 : -1}\n            onClick={() => onChange(tab.id)}\n            className={cn(\n              \"relative z-10 rounded-lg px-4 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n              isActive ? \"text-foreground\" : \"hover:text-foreground/80\"\n            )}\n          >\n            {isActive && (\n              <motion.div\n                layoutId={layoutId}\n                transition={{ type: \"spring\", bounce: 0.2, duration: 0.5 }}\n                className=\"absolute inset-0 z-[-1] rounded-lg bg-background shadow-xs\"\n              />\n            )}\n            {tab.label}\n          </button>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/animated-tabs.tsx"
+    }
+  ]
+}

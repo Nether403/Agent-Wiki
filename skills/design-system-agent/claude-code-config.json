@@ -1,0 +1,11 @@
+{
+  "name": "design-system-agent",
+  "version": "1.0.0",
+  "mcpServers": {
+    "design-wiki": {
+      "command": "npx",
+      "args": ["@design-wiki/mcp"]
+    }
+  },
+  "instructions": "When creating or modifying UI components, query the design-wiki MCP tools (search_components, get_component_markup, audit_code_slop) to maintain deterministic, zero-slop UI outputs."
+}

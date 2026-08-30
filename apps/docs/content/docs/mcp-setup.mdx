@@ -1,0 +1,38 @@
+---
+title: "Model Context Protocol (MCP) Integration"
+description: "How to connect Claude Code, Cursor, and Codex to the @design-wiki/mcp server."
+---
+
+# Model Context Protocol (MCP) Setup
+
+The `@design-wiki/mcp` server connects your AI coding agent directly to the curated registry.
+
+### Claude Code Setup
+
+Add to your project's `.claude/mcp.json` or run:
+
+```bash
+claude mcp add design-wiki npx @design-wiki/mcp
+```
+
+### Cursor Setup
+
+Add into `.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "design-wiki": {
+      "command": "npx",
+      "args": ["@design-wiki/mcp"]
+    }
+  }
+}
+```
+
+### Available MCP Tools
+
+1. `search_components`: Search the catalog by query, category, tags, or taste dial parameters.
+2. `get_component_markup`: Fetch complete, production-grade TSX source and dependencies.
+3. `get_install_recipe`: Retrieve exact `npx shadcn add ...` command and peer npm packages.
+4. `audit_code_slop`: Scan arbitrary user code against the 20 anti-slop rules and receive a health scorecard.
