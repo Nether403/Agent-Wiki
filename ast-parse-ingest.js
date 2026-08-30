@@ -231,6 +231,72 @@ export function TiltCard({
     license: "MIT",
     author: "HeroUI Team",
     sampleComponents: []
+  },
+  "cult-ui": {
+    id: "cult-ui",
+    name: "Cult-UI",
+    url: "https://github.com/nolly-studio/cult-ui.git",
+    defaultCategory: "ui:motion",
+    defaultTags: ["motion/react", "framer-motion", "micro-interaction"],
+    defaultDials: { design_variance: 6, motion_intensity: 7, visual_density: 5 },
+    license: "MIT",
+    author: "Cult-UI Team",
+    sampleComponents: []
+  },
+  "evil-buttons": {
+    id: "evil-buttons",
+    name: "Evil-Buttons",
+    url: "https://github.com/radiumcoders/Evil-Buttons.git",
+    defaultCategory: "ui:motion",
+    defaultTags: ["playful", "framer-motion", "sound-physics", "motion/react"],
+    defaultDials: { design_variance: 8, motion_intensity: 7, visual_density: 5 },
+    license: "MIT",
+    author: "Evil-Buttons Team",
+    sampleComponents: []
+  },
+  "diagram-design": {
+    id: "diagram-design",
+    name: "diagram-design",
+    url: "https://github.com/cathrynlavery/diagram-design.git",
+    defaultCategory: "ui:editorial",
+    defaultTags: ["svg", "zero-dependency", "static", "analytical"],
+    defaultDials: { design_variance: 5, motion_intensity: 1, visual_density: 9 },
+    license: "MIT",
+    author: "diagram-design Team",
+    sampleComponents: []
+  },
+  smoothui: {
+    id: "smoothui",
+    name: "SmoothUI",
+    url: "https://github.com/educlopez/smoothui.git",
+    defaultCategory: "ui:motion",
+    defaultTags: ["framer-motion", "shadcn-compatible", "spring-physics"],
+    defaultDials: { design_variance: 4, motion_intensity: 6, visual_density: 5 },
+    license: "MIT",
+    author: "SmoothUI Team",
+    sampleComponents: []
+  },
+  canvasui: {
+    id: "canvasui",
+    name: "Canvas UI",
+    url: "https://github.com/DavidHDev/canvas-ui.git",
+    defaultCategory: "ui:creative",
+    defaultTags: ["threejs", "webgl", "framer-motion", "interactive", "canvas"],
+    defaultDials: { design_variance: 9, motion_intensity: 9, visual_density: 3 },
+    license: "MIT",
+    author: "Canvas UI Team",
+    sampleComponents: []
+  },
+  tailark: {
+    id: "tailark",
+    name: "Tailark",
+    url: "https://github.com/tailark/blocks.git",
+    defaultCategory: "ui:block",
+    defaultTags: ["tailwind-v4", "marketing", "bento-grid"],
+    defaultDials: { design_variance: 5, motion_intensity: 4, visual_density: 6 },
+    license: "MIT",
+    author: "Tailark Team",
+    sampleComponents: []
   }
 };
 

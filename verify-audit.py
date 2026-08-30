@@ -288,9 +288,43 @@ def main():
     report_path = os.path.join(target_dir, "COMPLETED-DESIGN-AUDIT.md") if os.path.isdir(target_dir) else "COMPLETED-DESIGN-AUDIT.md"
     try:
         with open(report_path, "w", encoding="utf-8") as f:
-            f.write(f"# 📊 CI/CD Anti-Slop Audit Report\n\n- Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n- Health Score: **{health_score}/100** ({rating})\n- Total Scanned Files: {len(files)}\n- Violations: {len(all_findings)}\n")
-    except:
-        pass
+            f.write(f"# 📊 Completed Workspace Design Audit & Anti-Slop Scorecard\n\n")
+            f.write(f"> Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} (Automated CI/CD Guardrail Audit)\n")
+            f.write(f"> Target Directory: `{target_dir}`\n\n")
+            f.write(f"---\n\n")
+            f.write(f"## 🏎️ Executive Summary\n\n")
+            f.write(f"| Metrics & Scores | Value | Assessment |\n")
+            f.write(f"| :--- | :--- | :--- |\n")
+            f.write(f"| **Health Index Score** | **{health_score}/100** | **{rating}** |\n")
+            f.write(f"| High Severity Flags | {severity_counts['High']} | Instant failure potential (TypeScript / logic) |\n")
+            f.write(f"| Medium Severity Flags | {severity_counts['Medium']} | Design alignment tells (vibe gradients, colors) |\n")
+            f.write(f"| Low Severity Flags | {severity_counts['Low']} | Micro-detailing flags (spacing, transitions) |\n")
+            f.write(f"| Total Scanned Files | {len(files)} | Source base breadth checked |\n")
+            f.write(f"| Total Findings | {len(all_findings)} | Detection violations count |\n\n")
+            f.write(f"---\n\n")
+            f.write(f"## 🛡️ Anti-Slop Rule Detection Matrix (21 Guardrails)\n\n")
+            f.write(f"| Rule ID | Rule Name | Category | Severity | Detection Status |\n")
+            f.write(f"| :--- | :--- | :--- | :--- | :--- |\n")
+            for p in SLOP_PATTERNS:
+                f.write(f"| **{p['id']}** | {p['name']} | {p['category']} | `{p['severity']}` | ✅ Active Guardrail |\n")
+            f.write(f"\n---\n\n")
+            f.write(f"## 🚫 Detailed Anti-Pattern Detections\n\n")
+            if not all_findings:
+                f.write(f"### 🎉 Zero Slop Detected!\nAll {len(files)} component files strictly adhere to zero-slop design system contracts, Tailwind v4 tokens, accessibility standards, and robust TypeScript typing.\n")
+            else:
+                grouped = {}
+                for finding in all_findings:
+                    grouped.setdefault(finding['filePath'], []).append(finding)
+                for file_path_key, items in grouped.items():
+                    f.write(f"### 📁 File: `{file_path_key}` ({len(items)} findings)\n\n")
+                    f.write(f"| Line | Severity | Category | Rule Detected | Match Snippet |\n")
+                    f.write(f"| :--- | :--- | :--- | :--- | :--- |\n")
+                    for it in items:
+                        safe_snippet = it['lineText'].replace('|', '\\|')[:80]
+                        f.write(f"| **{it['lineNum']}** | `{it['severity']}` | {it['category']} | **{it['patternName']}** ({it['patternId']}) | `{safe_snippet}` |\n")
+                    f.write(f"\n")
+    except Exception as e:
+        print(f"Warning: Failed to write report: {e}")
 
     # CI/CD Gate Enforcement:
     # Fail if High Severity > 0 or Health Score < 85
