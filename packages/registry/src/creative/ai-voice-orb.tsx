@@ -107,7 +107,11 @@ export function AiVoiceOrb({
         height={size}
         className="rounded-full shadow-lg"
         aria-hidden="true"
-      />
+      >
+        <div className="flex h-full w-full items-center justify-center rounded-full bg-primary/10 text-xs text-muted-foreground">
+          Fallback: Voice orb is currently {state}.
+        </div>
+      </canvas>
       <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-foreground">
         <span
           className={cn(

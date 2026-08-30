@@ -6,12 +6,13 @@
   "description": "Curated production-grade component.",
   "category": "ui:editorial",
   "tags": [
-    "wai-aria-compliant"
+    "wai-aria-compliant",
+    "editorial"
   ],
   "dials": {
-    "design_variance": 3,
-    "motion_intensity": 2,
-    "visual_density": 6
+    "design_variance": 5,
+    "motion_intensity": 1,
+    "visual_density": 9
   },
   "complexity": "high",
   "a11y": {

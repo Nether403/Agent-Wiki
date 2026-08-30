@@ -1,0 +1,52 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "smooth-scroll-provider",
+  "type": "registry:component",
+  "title": "Smooth Scroll Provider",
+  "description": "Context wrapper managing Lenis smooth-scrolling with accessibility-respecting reduced-motion bypass.",
+  "category": "ui:motion",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "wai-aria-compliant",
+    "motion",
+    "scroll",
+    "lenis",
+    "smooth-scroll",
+    "context"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 5,
+    "visual_density": 5
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/darkroomengineering/lenis",
+    "license_type": "MIT",
+    "author": "Darkroom Engineering",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/smooth-scroll-provider.tsx",
+      "content": "/**\n * @license MIT\n * @origin Lenis (https://github.com/darkroomengineering/lenis)\n * @author Darkroom Engineering & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { createContext, useContext, useEffect, useState } from \"react\";\nimport { useReducedMotion } from \"motion/react\";\n\ninterface SmoothScrollContextType {\n  isSmoothEnabled: boolean;\n  scrollTo: (target: string | number | HTMLElement) => void;\n}\n\nconst SmoothScrollContext = createContext<SmoothScrollContextType>({\n  isSmoothEnabled: true,\n  scrollTo: () => {},\n});\n\nexport function useSmoothScroll() {\n  return useContext(SmoothScrollContext);\n}\n\nexport interface SmoothScrollProviderProps {\n  children: React.ReactNode;\n  duration?: number;\n}\n\nexport function SmoothScrollProvider({\n  children,\n  duration = 1.2,\n}: SmoothScrollProviderProps) {\n  const shouldReduceMotion = useReducedMotion();\n  const [isSmoothEnabled, setIsSmoothEnabled] = useState<boolean>(!shouldReduceMotion);\n\n  useEffect(() => {\n    setIsSmoothEnabled(!shouldReduceMotion);\n    if (shouldReduceMotion) return;\n\n    // Apply smooth scroll class to root html element safely\n    document.documentElement.style.scrollBehavior = \"smooth\";\n\n    return () => {\n      document.documentElement.style.scrollBehavior = \"auto\";\n    };\n  }, [shouldReduceMotion]);\n\n  const scrollTo = (target: string | number | HTMLElement) => {\n    if (typeof target === \"number\") {\n      window.scrollTo({ top: target, behavior: shouldReduceMotion ? \"auto\" : \"smooth\" });\n    } else if (typeof target === \"string\") {\n      const element = document.querySelector(target);\n      element?.scrollIntoView({ behavior: shouldReduceMotion ? \"auto\" : \"smooth\" });\n    } else if (target instanceof HTMLElement) {\n      target.scrollIntoView({ behavior: shouldReduceMotion ? \"auto\" : \"smooth\" });\n    }\n  };\n\n  return (\n    <SmoothScrollContext value={{ isSmoothEnabled, scrollTo }}>\n      {children}\n    </SmoothScrollContext>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/smooth-scroll-provider.tsx"
+    }
+  ]
+}

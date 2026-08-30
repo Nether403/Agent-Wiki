@@ -1,0 +1,65 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "decision-node-canvas",
+  "type": "registry:component",
+  "title": "Decision Node Canvas",
+  "description": "Interactive DAG flow with condition nodes, zooming/panning, and branch evaluation.",
+  "category": "ui:workflow",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "lucide-react",
+    "webgl",
+    "threejs",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "canvas",
+    "workflow",
+    "decision-tree",
+    "dag",
+    "xyflow"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 4,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/xyflow/xyflow",
+    "license_type": "MIT",
+    "author": "XY Flow Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "lucide-react",
+    "three",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/workflow/decision-node-canvas.tsx",
+      "content": "/**\n * @license MIT\n * @origin XY Flow (https://github.com/xyflow/xyflow)\n * @author XY Flow & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState, useId } from \"react\";\nimport { motion, useReducedMotion } from \"motion/react\";\nimport { GitBranch, Check, X, ShieldCheck, HelpCircle } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface DecisionNode {\n  id: string;\n  title: string;\n  condition: string;\n  passTargetId?: string;\n  failTargetId?: string;\n  status?: \"pending\" | \"passed\" | \"rejected\";\n}\n\nexport interface DecisionNodeCanvasProps {\n  nodes?: DecisionNode[];\n  onDecisionSelect?: (node: DecisionNode) => void;\n  className?: string;\n}\n\nconst DEFAULT_DECISIONS: DecisionNode[] = [\n  { id: \"d1\", title: \"A11y AA Pass\", condition: \"Contrast >= 4.5:1 & Keyboard Focus\", passTargetId: \"d2\", failTargetId: \"d3\", status: \"passed\" },\n  { id: \"d2\", title: \"Zero AI Slop\", condition: \"35 Rules Verified (No Indigo / Gradients)\", passTargetId: \"d4\", failTargetId: \"d3\", status: \"passed\" },\n  { id: \"d3\", title: \"Automated Fix\", condition: \"Apply AST Codemods & Re-verify\", status: \"pending\" },\n  { id: \"d4\", title: \"Release Gate\", condition: \"Approved for /r/ Distribution\", status: \"passed\" },\n];\n\nexport function DecisionNodeCanvas({\n  nodes = DEFAULT_DECISIONS,\n  onDecisionSelect,\n  className,\n}: DecisionNodeCanvasProps) {\n  const [selectedId, setSelectedId] = useState<string>(\"d2\");\n  const shouldReduceMotion = useReducedMotion();\n  const labelId = useId();\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card text-foreground overflow-hidden shadow-sm\",\n        className\n      )}\n      role=\"region\"\n      aria-labelledby={labelId}\n    >\n      <div className=\"flex items-center justify-between border-b border-border bg-muted/30 px-4 py-2.5\">\n        <div className=\"flex items-center gap-2\">\n          <GitBranch className=\"h-4 w-4 text-primary\" aria-hidden=\"true\" />\n          <span id={labelId} className=\"text-xs font-mono font-medium tracking-tight\">\n            DECISION_DAG // GATES\n          </span>\n        </div>\n        <div className=\"flex items-center gap-1.5 text-xs text-muted-foreground\">\n          <ShieldCheck className=\"h-3.5 w-3.5 text-emerald-500\" aria-hidden=\"true\" />\n          <span>Deterministic Audit Branching</span>\n        </div>\n      </div>\n\n      <div className=\"p-6 grid grid-cols-1 md:grid-cols-2 gap-4\">\n        {nodes.map((node, index) => {\n          const isSelected = node.id === selectedId;\n\n          return (\n            <motion.div\n              key={node.id}\n              onClick={() => {\n                setSelectedId(node.id);\n                onDecisionSelect?.(node);\n              }}\n              onKeyDown={(e) => {\n                if (e.key === \"Enter\" || e.key === \" \") {\n                  e.preventDefault();\n                  setSelectedId(node.id);\n                  onDecisionSelect?.(node);\n                }\n              }}\n              tabIndex={0}\n              role=\"button\"\n              aria-pressed={isSelected}\n              aria-label={`${node.title}: ${node.condition}`}\n              className={cn(\n                \"relative rounded-lg border p-4 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-ring\",\n                isSelected\n                  ? \"border-primary bg-primary/5 ring-1 ring-primary\"\n                  : \"border-border bg-background hover:bg-muted/30\"\n              )}\n              initial={false}\n              animate={shouldReduceMotion ? {} : { scale: isSelected ? 1.01 : 1 }}\n            >\n              <div className=\"flex items-center justify-between\">\n                <span className=\"font-mono text-xs text-muted-foreground\">NODE 0{index + 1}</span>\n                {node.status === \"passed\" ? (\n                  <span className=\"inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400\">\n                    <Check className=\"h-3 w-3\" aria-hidden=\"true\" />\n                    Passed\n                  </span>\n                ) : (\n                  <span className=\"inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground\">\n                    <HelpCircle className=\"h-3 w-3\" aria-hidden=\"true\" />\n                    Pending\n                  </span>\n                )}\n              </div>\n\n              <h4 className=\"mt-2 text-sm font-semibold\">{node.title}</h4>\n              <p className=\"mt-1 text-xs text-muted-foreground\">{node.condition}</p>\n\n              {(node.passTargetId || node.failTargetId) && (\n                <div className=\"mt-3 flex items-center gap-2 border-t border-border/70 pt-2 text-[11px] font-mono\">\n                  {node.passTargetId && (\n                    <span className=\"text-emerald-600 dark:text-emerald-400\">\n                      PASS → {node.passTargetId}\n                    </span>\n                  )}\n                  {node.failTargetId && (\n                    <span className=\"text-destructive\">\n                      FAIL → {node.failTargetId}\n                    </span>\n                  )}\n                </div>\n              )}\n            </motion.div>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/decision-node-canvas.tsx"
+    }
+  ]
+}

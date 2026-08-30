@@ -13,8 +13,8 @@ tags:
   - "accessible"
   - "keyboard-accessible"
   - "wai-aria-compliant"
-  - "layout-block"
   - "ai-native"
+  - "agent-ui"
   - "reasoning"
   - "chain-of-thought"
   - "accordion"
@@ -35,7 +35,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:ai-native`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, ai-native, reasoning, chain-of-thought, accordion, cult-ui
+- **Technical Tags**: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, reasoning, chain-of-thought, accordion, cult-ui
 - **Design Dials**: Variance 5/10 · Motion 3/10 · Density 7/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 

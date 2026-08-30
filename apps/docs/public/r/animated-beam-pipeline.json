@@ -9,6 +9,8 @@
     "lucide-react",
     "tailwind-v4",
     "wai-aria-compliant",
+    "workflow",
+    "node-graph",
     "motion",
     "animated-beam",
     "pipeline",

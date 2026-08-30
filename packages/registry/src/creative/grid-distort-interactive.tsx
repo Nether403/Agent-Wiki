@@ -137,7 +137,7 @@ export function GridDistortInteractive({
         className="absolute inset-0 w-full h-full object-cover"
         aria-label="Distortable Grid Canvas"
       >
-        <div>Distortable grid active</div>
+        <div className="p-4 text-xs text-muted-foreground">Fallback: Distortable grid canvas active</div>
       </canvas>
 
       <div className="relative z-10 flex flex-col items-center justify-center p-6 text-center pointer-events-none">

@@ -1,7 +1,7 @@
 ---
 id: "ai-voice-orb"
 name: "Ai Voice Orb"
-category: "ui:creative"
+category: "ui:ai-native"
 library_origin: "https://github.com/design-agent-wiki"
 dependencies:
   - "three"
@@ -12,10 +12,12 @@ tags:
   - "canvas"
   - "neon-scifi"
   - "wai-aria-compliant"
+  - "ai-native"
+  - "agent-ui"
 dials:
-  design_variance: 8      # 1: Conservative · 10: Asymmetric editorial
-  motion_intensity: 9     # 1: Basic hover · 10: Canvas/WebGL springs
-  visual_density: 5       # 1: Generous whitespace · 10: Dense analytical UI
+  design_variance: 6      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: 4     # 1: Basic hover · 10: Canvas/WebGL springs
+  visual_density: 8       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "high"
 a11y:
   keyboard_navigable: false
@@ -26,10 +28,10 @@ a11y:
 # Ai Voice Orb (`ai-voice-orb`)
 > Curated production-grade component.
 
-- **Taxonomy Category**: `ui:creative`
+- **Taxonomy Category**: `ui:ai-native`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: webgl, threejs, canvas, neon-scifi, wai-aria-compliant
-- **Design Dials**: Variance 8/10 · Motion 9/10 · Density 5/10
+- **Technical Tags**: webgl, threejs, canvas, neon-scifi, wai-aria-compliant, ai-native, agent-ui
+- **Design Dials**: Variance 6/10 · Motion 4/10 · Density 8/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ## Installation Recipe
@@ -156,7 +158,11 @@ export function AiVoiceOrb({
         height={size}
         className="rounded-full shadow-lg"
         aria-hidden="true"
-      />
+      >
+        <div className="flex h-full w-full items-center justify-center rounded-full bg-primary/10 text-xs text-muted-foreground">
+          Fallback: Voice orb is currently {state}.
+        </div>
+      </canvas>
       <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-foreground">
         <span
           className={cn(

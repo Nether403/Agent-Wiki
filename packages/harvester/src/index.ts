@@ -173,4 +173,6 @@ export * from "./dependency-graph";
 export * from "./codemods/tailwind-v4-transform";
 export * from "./codemods/motion-react-transform";
 export * from "./codemods/react-19-transform";
+export * from "./codemods/magic-ui-transformer";
+export * from "./codemods/lucide-normalizer";
 

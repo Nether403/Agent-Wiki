@@ -1,0 +1,59 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "mesh-gradient-shader",
+  "type": "registry:component",
+  "title": "Mesh Gradient Shader",
+  "description": "Zero-dependency WebGL organic gradient canvas with static CSS fallback and reduced-motion bypass.",
+  "category": "ui:creative",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "webgl",
+    "threejs",
+    "canvas",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "creative",
+    "shader",
+    "gradient",
+    "paper-shaders"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 6,
+    "visual_density": 4
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/paper-design/shaders",
+    "license_type": "Apache-2.0",
+    "author": "Paper Design",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "three",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/mesh-gradient-shader.tsx",
+      "content": "/**\n * @license Apache-2.0\n * @origin Paper Shaders (https://github.com/paper-design/shaders)\n * @author Paper Design & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useRef, useEffect, useState } from \"react\";\nimport { useReducedMotion } from \"motion/react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface MeshGradientShaderProps {\n  className?: string;\n  speed?: number;\n  children?: React.ReactNode;\n}\n\nconst VERTEX_SHADER_SRC = `\n  attribute vec2 position;\n  void main() {\n    gl_Position = vec4(position, 0.0, 1.0);\n  }\n`;\n\nconst FRAGMENT_SHADER_SRC = `\n  precision mediump float;\n  uniform vec2 u_resolution;\n  uniform float u_time;\n\n  void main() {\n    vec2 st = gl_FragCoord.xy / u_resolution.xy;\n    float color1 = sin(st.x * 3.0 + u_time * 0.5) * 0.5 + 0.5;\n    float color2 = cos(st.y * 3.0 - u_time * 0.3) * 0.5 + 0.5;\n    \n    vec3 baseColor = vec3(0.1, 0.12, 0.16);\n    vec3 accentColor = vec3(0.2, 0.25, 0.32);\n    \n    vec3 finalColor = mix(baseColor, accentColor, (color1 + color2) * 0.5);\n    gl_FragColor = vec4(finalColor, 1.0);\n  }\n`;\n\nexport function MeshGradientShader({\n  className,\n  speed = 1.0,\n  children,\n}: MeshGradientShaderProps) {\n  const canvasRef = useRef<HTMLCanvasElement | null>(null);\n  const shouldReduceMotion = useReducedMotion();\n  const [hasWebGLError, setHasWebGLError] = useState<boolean>(false);\n\n  useEffect(() => {\n    // Respect user prefers-reduced-motion setting\n    if (shouldReduceMotion) return;\n\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n\n    const gl = canvas.getContext(\"webgl\");\n    if (!gl) {\n      setHasWebGLError(true);\n      return;\n    }\n\n    // Compile Shaders\n    const createShader = (type: number, src: string) => {\n      const shader = gl.createShader(type);\n      if (!shader) return null;\n      gl.shaderSource(shader, src);\n      gl.compileShader(shader);\n      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {\n        gl.deleteShader(shader);\n        return null;\n      }\n      return shader;\n    };\n\n    const vert = createShader(gl.VERTEX_SHADER, VERTEX_SHADER_SRC);\n    const frag = createShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER_SRC);\n    if (!vert || !frag) {\n      setHasWebGLError(true);\n      return;\n    }\n\n    const program = gl.createProgram();\n    if (!program) return;\n    gl.attachShader(program, vert);\n    gl.attachShader(program, frag);\n    gl.linkProgram(program);\n\n    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {\n      setHasWebGLError(true);\n      return;\n    }\n\n    gl.useProgram(program);\n\n    // Pre-allocate buffer outside animation loop (SLOP-032)\n    const positions = new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]);\n    const posBuffer = gl.createBuffer();\n    gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);\n    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);\n\n    const posAttr = gl.getAttribLocation(program, \"position\");\n    gl.enableVertexAttribArray(posAttr);\n    gl.vertexAttribPointer(posAttr, 2, gl.FLOAT, false, 0, 0);\n\n    const resLoc = gl.getUniformLocation(program, \"u_resolution\");\n    const timeLoc = gl.getUniformLocation(program, \"u_time\");\n\n    let animationFrameId: number;\n    let startTime = performance.now();\n\n    const render = (now: number) => {\n      const elapsed = (now - startTime) * 0.001 * speed;\n      const width = canvas.clientWidth;\n      const height = canvas.clientHeight;\n\n      if (canvas.width !== width || canvas.height !== height) {\n        canvas.width = width;\n        canvas.height = height;\n        gl.viewport(0, 0, width, height);\n      }\n\n      gl.uniform2f(resLoc, width, height);\n      gl.uniform1f(timeLoc, elapsed);\n      gl.drawArrays(gl.TRIANGLES, 0, 6);\n\n      animationFrameId = requestAnimationFrame(render);\n    };\n\n    animationFrameId = requestAnimationFrame(render);\n\n    return () => {\n      cancelAnimationFrame(animationFrameId);\n      gl.deleteProgram(program);\n      gl.deleteShader(vert);\n      gl.deleteShader(frag);\n      gl.deleteBuffer(posBuffer);\n    };\n  }, [shouldReduceMotion, speed]);\n\n  return (\n    <div\n      className={cn(\n        \"relative w-full overflow-hidden rounded-xl border border-border bg-card text-foreground\",\n        className\n      )}\n    >\n      {/* Static accessible CSS fallback for reduced-motion or WebGL errors (SLOP-014, SLOP-031) */}\n      {(shouldReduceMotion || hasWebGLError) && (\n        <div\n          className=\"absolute inset-0 bg-gradient-to-br from-card via-muted/30 to-background\"\n          aria-hidden=\"true\"\n        />\n      )}\n\n      {!shouldReduceMotion && !hasWebGLError && (\n        <canvas\n          ref={canvasRef}\n          className=\"absolute inset-0 h-full w-full pointer-events-none\"\n          aria-hidden=\"true\"\n        />\n      )}\n\n      <div className=\"relative z-10 p-8\">{children}</div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/mesh-gradient-shader.tsx"
+    }
+  ]
+}

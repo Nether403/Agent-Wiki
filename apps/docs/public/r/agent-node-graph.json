@@ -1,0 +1,60 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "agent-node-graph",
+  "type": "registry:component",
+  "title": "Agent Node Graph",
+  "description": "Dynamic visual canvas representing multi-agent orchestration, pipeline steps, and tool executions.",
+  "category": "ui:workflow",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "spring-physics",
+    "workflow",
+    "canvas",
+    "agent",
+    "xyflow",
+    "dag",
+    "interactive"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 5,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/xyflow/xyflow",
+    "license_type": "MIT",
+    "author": "XY Flow Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/workflow/agent-node-graph.tsx",
+      "content": "/**\n * @license MIT\n * @origin XY Flow (https://github.com/xyflow/xyflow)\n * @author XY Flow Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState, useCallback, useMemo } from \"react\";\nimport { motion, useReducedMotion } from \"motion/react\";\nimport { Play, Pause, RefreshCw, Layers, CheckCircle2, AlertCircle, Clock } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface AgentNode {\n  id: string;\n  name: string;\n  role: string;\n  status: \"idle\" | \"running\" | \"completed\" | \"failed\";\n  x: number;\n  y: number;\n  connections: string[];\n}\n\nexport interface AgentNodeGraphProps {\n  nodes?: AgentNode[];\n  onNodeSelect?: (node: AgentNode) => void;\n  className?: string;\n}\n\nconst DEFAULT_NODES: AgentNode[] = [\n  { id: \"planner\", name: \"Planner Agent\", role: \"Decomposes goals into tasks\", status: \"completed\", x: 60, y: 120, connections: [\"researcher\", \"coder\"] },\n  { id: \"researcher\", name: \"Research Agent\", role: \"Fetches docs & verifies APIs\", status: \"completed\", x: 300, y: 60, connections: [\"evaluator\"] },\n  { id: \"coder\", name: \"Coder Agent\", role: \"Writes zero-slop TSX implementations\", status: \"running\", x: 300, y: 200, connections: [\"evaluator\"] },\n  { id: \"evaluator\", name: \"Quality Gate\", role: \"Runs automated a11y & anti-slop checks\", status: \"idle\", x: 560, y: 130, connections: [] },\n];\n\nexport function AgentNodeGraph({\n  nodes = DEFAULT_NODES,\n  onNodeSelect,\n  className,\n}: AgentNodeGraphProps) {\n  const [activeNodeId, setActiveNodeId] = useState<string>(\"coder\");\n  const [isRunning, setIsRunning] = useState<boolean>(true);\n  const shouldReduceMotion = useReducedMotion();\n\n  const handleSelect = useCallback(\n    (node: AgentNode) => {\n      setActiveNodeId(node.id);\n      onNodeSelect?.(node);\n    },\n    [onNodeSelect]\n  );\n\n  const selectedNode = useMemo(\n    () => nodes.find((n) => n.id === activeNodeId) || nodes[0],\n    [nodes, activeNodeId]\n  );\n\n  return (\n    <div\n      className={cn(\n        \"relative flex flex-col w-full overflow-hidden rounded-xl border border-border bg-card text-foreground shadow-sm\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Agent Orchestration Node Graph\"\n    >\n      {/* Graph Toolbar */}\n      <div className=\"flex items-center justify-between border-b border-border bg-muted/40 px-4 py-2.5\">\n        <div className=\"flex items-center gap-2\">\n          <Layers className=\"h-4 w-4 text-primary\" aria-hidden=\"true\" />\n          <span className=\"text-xs font-mono font-medium tracking-tight\">AGENT // NODE_TOPOLOGY_v1</span>\n        </div>\n        <div className=\"flex items-center gap-2\">\n          <button\n            type=\"button\"\n            onClick={() => setIsRunning((prev) => !prev)}\n            aria-label={isRunning ? \"Pause agent pipeline\" : \"Resume agent pipeline\"}\n            className=\"flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1 text-xs font-medium transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            {isRunning ? (\n              <>\n                <Pause className=\"h-3.5 w-3.5 text-muted-foreground\" aria-hidden=\"true\" />\n                <span>Pause</span>\n              </>\n            ) : (\n              <>\n                <Play className=\"h-3.5 w-3.5 text-primary\" aria-hidden=\"true\" />\n                <span>Resume</span>\n              </>\n            )}\n          </button>\n          <button\n            type=\"button\"\n            onClick={() => setActiveNodeId(\"planner\")}\n            aria-label=\"Reset agent node view\"\n            className=\"rounded-md border border-border bg-background p-1.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <RefreshCw className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n          </button>\n        </div>\n      </div>\n\n      {/* Interactive Spatial Canvas Viewport */}\n      <div className=\"relative h-80 w-full overflow-hidden bg-background\">\n        {/* Subtle coordinate dot grid */}\n        <div\n          className=\"absolute inset-0 opacity-15\"\n          style={{\n            backgroundImage: \"radial-gradient(currentColor 1px, transparent 1px)\",\n            backgroundSize: \"20px 20px\",\n          }}\n          aria-hidden=\"true\"\n        />\n\n        {/* SVG Connection Edges */}\n        <svg className=\"absolute inset-0 h-full w-full pointer-events-none\" aria-hidden=\"true\">\n          <defs>\n            <linearGradient id=\"edge-gradient\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"0%\">\n              <stop offset=\"0%\" stopColor=\"var(--primary)\" stopOpacity=\"0.8\" />\n              <stop offset=\"100%\" stopColor=\"var(--muted-foreground)\" stopOpacity=\"0.3\" />\n            </linearGradient>\n          </defs>\n          {nodes.map((node) =>\n            node.connections.map((targetId) => {\n              const target = nodes.find((n) => n.id === targetId);\n              if (!target) return null;\n              const startX = node.x + 130;\n              const startY = node.y + 36;\n              const endX = target.x;\n              const endY = target.y + 36;\n              const midX = (startX + endX) / 2;\n\n              return (\n                <path\n                  key={`${node.id}-${target.id}`}\n                  d={`M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`}\n                  fill=\"none\"\n                  stroke=\"currentColor\"\n                  strokeWidth=\"2\"\n                  className=\"text-border\"\n                />\n              );\n            })\n          )}\n        </svg>\n\n        {/* Interactive Node Cards */}\n        {nodes.map((node) => {\n          const isSelected = node.id === activeNodeId;\n          const statusIcon =\n            node.status === \"completed\" ? (\n              <CheckCircle2 className=\"h-3.5 w-3.5 text-emerald-500\" aria-hidden=\"true\" />\n            ) : node.status === \"running\" ? (\n              <Clock className=\"h-3.5 w-3.5 animate-spin text-primary\" aria-hidden=\"true\" />\n            ) : (\n              <AlertCircle className=\"h-3.5 w-3.5 text-muted-foreground\" aria-hidden=\"true\" />\n            );\n\n          return (\n            <motion.div\n              key={node.id}\n              onClick={() => handleSelect(node)}\n              onKeyDown={(e) => {\n                if (e.key === \"Enter\" || e.key === \" \") {\n                  e.preventDefault();\n                  handleSelect(node);\n                }\n              }}\n              tabIndex={0}\n              role=\"button\"\n              aria-pressed={isSelected}\n              aria-label={`${node.name} (${node.status})`}\n              className={cn(\n                \"absolute cursor-pointer rounded-lg border bg-card p-3 shadow-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring\",\n                isSelected ? \"border-primary ring-1 ring-primary\" : \"border-border hover:border-muted-foreground\"\n              )}\n              style={{\n                left: `${node.x}px`,\n                top: `${node.y}px`,\n                width: \"150px\",\n              }}\n              initial={false}\n              animate={shouldReduceMotion ? {} : { scale: isSelected ? 1.02 : 1 }}\n              transition={{ type: \"spring\", stiffness: 350, damping: 25 }}\n            >\n              <div className=\"flex items-center justify-between mb-1\">\n                <span className=\"text-xs font-semibold\">{node.name}</span>\n                {statusIcon}\n              </div>\n              <p className=\"text-[11px] text-muted-foreground line-clamp-1\">{node.role}</p>\n              <div className=\"mt-2 flex items-center justify-between border-t border-border/60 pt-1 text-[10px] font-mono text-muted-foreground\">\n                <span>STATUS</span>\n                <span className=\"uppercase\">{node.status}</span>\n              </div>\n            </motion.div>\n          );\n        })}\n      </div>\n\n      {/* Node Details Inspection Footer */}\n      {selectedNode && (\n        <div className=\"border-t border-border bg-muted/20 px-4 py-3 text-xs\">\n          <div className=\"flex items-center justify-between\">\n            <span className=\"font-mono text-muted-foreground\">INSPECTING: {selectedNode.id}</span>\n            <span className=\"font-mono text-[11px] uppercase tracking-wider text-primary\">\n              {selectedNode.status}\n            </span>\n          </div>\n          <p className=\"mt-1 text-sm font-medium\">{selectedNode.role}</p>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/agent-node-graph.tsx"
+    }
+  ]
+}

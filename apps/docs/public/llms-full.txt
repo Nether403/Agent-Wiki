@@ -7,43 +7,301 @@
 - Raw Markdown Docs: /raw/components/[slug]
 - MCP Server: npx @design-wiki/mcp
 
-## Available Registry Components (154 verified zero-slop items)
+## Available Registry Components (173 verified zero-slop items)
 
 ### Category: ui:ai-native
 - [ai-artifact-sandbox-iframe](/r/ai-artifact-sandbox-iframe.json): Split-screen live preview canvas with responsive device switcher, code/preview toggle, and version history diff slider. (Variance: 7, Motion: 4, Density: 6)
-  - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, layout-block, ai-native, artifact-sandbox, preview, iframe, 21st-dev
+  - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, artifact-sandbox, preview, iframe, 21st-dev
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/ai-artifact-sandbox-iframe.json
 - [ai-human-in-the-loop-diff](/r/ai-human-in-the-loop-diff.json): Interactive confirmation drawer displaying code diffs with Approve, Modify Prompt, and Reject feedback controls. (Variance: 6, Motion: 4, Density: 7)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, ai-native, hitl, diff-viewer, review, origin-ui
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, hitl, diff-viewer, review, origin-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/ai-human-in-the-loop-diff.json
 - [ai-prompt-bar-expanded](/r/ai-prompt-bar-expanded.json): Multimodal prompt bar with voice recording button, attachment tray, model selector dropdown, token counter, and slash-command trigger. (Variance: 6, Motion: 4, Density: 6)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, ai-native, prompt-bar, multimodal, kokonut-ui, cult-ui
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, prompt-bar, multimodal, kokonut-ui, cult-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/ai-prompt-bar-expanded.json
 - [ai-prompt-template-library](/r/ai-prompt-template-library.json): Categorized card carousel of pre-tested agent prompts with one-click injection into active input. (Variance: 5, Motion: 3, Density: 6)
-  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, ai-native, prompts, template-library, carousel, cult-ui
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, prompts, template-library, carousel, cult-ui
   - Dependencies: lucide-react, clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/ai-prompt-template-library.json
 - [ai-reasoning-accordion](/r/ai-reasoning-accordion.json): Collapsible thinking process card showing step-by-step agent chain-of-thought, elapsed time counter, and tool execution status badges. (Variance: 5, Motion: 3, Density: 7)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, ai-native, reasoning, chain-of-thought, accordion, cult-ui
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, reasoning, chain-of-thought, accordion, cult-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/ai-reasoning-accordion.json
 - [ai-streaming-message](/r/ai-streaming-message.json): Markdown streaming message container with flicker-free token rendering, copy button, feedback thumbs, and animated cursor stream. (Variance: 5, Motion: 4, Density: 6)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, ai-native, streaming, chat, cursor, cult-ui
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, streaming, chat, cursor, cult-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/ai-streaming-message.json
 - [ai-tool-call-card](/r/ai-tool-call-card.json): Visual inspector for MCP and agent tool executions, showing input parameters, live loading spinner, JSON inspector, and retry/error triggers. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, ai-native, mcp-tool, tool-call, agent, cult-ui
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, mcp-tool, tool-call, agent, cult-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/ai-tool-call-card.json
+- [ai-voice-orb](/r/ai-voice-orb.json): Curated production-grade component. (Variance: 6, Motion: 4, Density: 8)
+  - Tags: webgl, threejs, canvas, neon-scifi, wai-aria-compliant, ai-native, agent-ui
+  - Dependencies: three, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-voice-orb.json
+- [ai-artifact-canvas](/r/ai-artifact-canvas.json): Curated production-grade component. (Variance: 6, Motion: 4, Density: 8)
+  - Tags: lucide-react, webgl, threejs, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, canvas, ai-native, agent-ui
+  - Dependencies: lucide-react, three, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-artifact-canvas.json
+- [ai-chat-bubble](/r/ai-chat-bubble.json): Curated production-grade component. (Variance: 6, Motion: 4, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-chat-bubble.json
+- [ai-message-thread](/r/ai-message-thread.json): Curated production-grade component. (Variance: 6, Motion: 4, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-message-thread.json
+- [ai-model-selector](/r/ai-model-selector.json): Curated production-grade component. (Variance: 6, Motion: 4, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-model-selector.json
+- [ai-prompt-input](/r/ai-prompt-input.json): Curated production-grade component. (Variance: 6, Motion: 4, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-prompt-input.json
+- [ai-reasoning-foldout](/r/ai-reasoning-foldout.json): Curated production-grade component. (Variance: 6, Motion: 4, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-reasoning-foldout.json
+- [ai-token-meter](/r/ai-token-meter.json): Curated production-grade component. (Variance: 6, Motion: 4, Density: 8)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, ai-native, agent-ui
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-token-meter.json
 
-### Category: ui:primitive
-- [agent-step-pipeline](/r/agent-step-pipeline.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
-  - Tags: lucide-react, tailwind-v4, wai-aria-compliant
+### Category: ui:workflow
+- [agent-step-pipeline](/r/agent-step-pipeline.json): Curated production-grade component. (Variance: 6, Motion: 5, Density: 9)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, workflow, node-graph
   - Dependencies: lucide-react, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/agent-step-pipeline.json
+- [agent-node-graph](/r/agent-node-graph.json): Dynamic visual canvas representing multi-agent orchestration, pipeline steps, and tool executions. (Variance: 6, Motion: 5, Density: 7)
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, workflow, canvas, agent, xyflow, dag, interactive
+  - Dependencies: motion, lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/agent-node-graph.json
+- [data-pipeline-canvas](/r/data-pipeline-canvas.json): Real-time streaming data pipeline editor with custom input/output sockets and latency metrics. (Variance: 5, Motion: 4, Density: 7)
+  - Tags: framer-motion, motion/react, animation, lucide-react, webgl, threejs, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, canvas, workflow, node-graph, pipeline, streaming, data
+  - Dependencies: motion, lucide-react, three, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/data-pipeline-canvas.json
+- [decision-node-canvas](/r/decision-node-canvas.json): Interactive DAG flow with condition nodes, zooming/panning, and branch evaluation. (Variance: 6, Motion: 4, Density: 6)
+  - Tags: framer-motion, motion/react, animation, lucide-react, webgl, threejs, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, canvas, workflow, decision-tree, dag, xyflow
+  - Dependencies: motion, lucide-react, three, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/decision-node-canvas.json
+- [embedded-whiteboard](/r/embedded-whiteboard.json): Lightweight vector annotation whiteboard with high-DPI scaling and accessible text transcript fallback. (Variance: 7, Motion: 2, Density: 5)
+  - Tags: lucide-react, webgl, threejs, canvas, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, workflow, whiteboard, sketch, excalidraw
+  - Dependencies: lucide-react, three, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/embedded-whiteboard.json
+
+### Category: ui:block
+- [app-shell-sidebar-layout](/r/app-shell-sidebar-layout.json): Production-ready SaaS dashboard shell with collapsible multi-tier sidebar, breadcrumbs, search bar, and user profile popover. (Variance: 5, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, block, app-shell, sidebar, dashboard, layout, reui
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/app-shell-sidebar-layout.json
+- [audit-timeline-stream](/r/audit-timeline-stream.json): Dense audit log with JSON diff expandable rows and actor attribution avatars. (Variance: 5, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, block, timeline, audit, stream, primer
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/audit-timeline-stream.json
+- [bento-grid](/r/bento-grid.json): Multi-pane asymmetrical layout grid with responsive column spans and structural borders. (Variance: 5, Motion: 4, Density: 6)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, marketing, asymmetry
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/bento-grid.json
+- [data-table-server-faceted](/r/data-table-server-faceted.json): Enterprise data table with column pinning, multi-facet filtering, and keyboard navigation. (Variance: 4, Motion: 2, Density: 9)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, block, table, data-grid, faceted, primer
+  - Dependencies: lucide-react, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/data-table-server-faceted.json
+- [device-mockup-showcase](/r/device-mockup-showcase.json): Pixel-perfect Safari browser and iPhone device frames with screenshot scroll-into-view animations. (Variance: 6, Motion: 4, Density: 5)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, block, device-mockup, safari, iphone, daisyui
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/device-mockup-showcase.json
+- [feature-section](/r/feature-section.json): Asymmetrical 4-column SaaS architectural feature grid with badge pill and structured cards. (Variance: 5, Motion: 3, Density: 6)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, feature, marketing, saas
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/feature-section.json
+- [google-gemini-glow-hero](/r/google-gemini-glow-hero.json): Dark-mode hero section with layered animated SVG laser paths and responsive central CTA. (Variance: 7, Motion: 6, Density: 5)
+  - Tags: lucide-react, tailwind-v4, glassmorphism, neon-scifi, accessible, keyboard-accessible, wai-aria-compliant, layout-block, block, hero, laser-glow, dark-mode, aceternity
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/google-gemini-glow-hero.json
+- [hero-parallax-scroll](/r/hero-parallax-scroll.json): Multi-row 3D perspective image grid that shifts and rotates as the user scrolls down the page. (Variance: 7, Motion: 7, Density: 5)
+  - Tags: lucide-react, bento-grid, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, layout-block, block, hero, parallax, 3d-perspective, aceternity
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/hero-parallax-scroll.json
+- [hero-section](/r/hero-section.json): Editorial SaaS hero section featuring typography discipline, badge pill, and active CTA. (Variance: 5, Motion: 2, Density: 5)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, hero, marketing, typography, block
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/hero-section.json
+- [integration-grid-showcase](/r/integration-grid-showcase.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/integration-grid-showcase.json
+- [interactive-feature-cycler](/r/interactive-feature-cycler.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-feature-cycler.json
+- [interactive-roi-calculator](/r/interactive-roi-calculator.json): Marketing block with interactive price sliders, team size selectors, and dynamic cost savings calculations. (Variance: 5, Motion: 3, Density: 7)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, block, roi-calculator, marketing, pricing, tailark
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-roi-calculator.json
+- [kpi-stat-card-group](/r/kpi-stat-card-group.json): Multi-metric comparison cards with inline delta percentages, target thresholds, and mini sparklines. (Variance: 5, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, editorial, block, kpi, dashboard, analytics, tremor
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/kpi-stat-card-group.json
+- [navbar-sticky](/r/navbar-sticky.json): Sticky responsive top navigation bar with blur backdrop, link routing, and mobile drawer. (Variance: 4, Motion: 3, Density: 6)
+  - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, layout-block, navbar, navigation, header, responsive
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/navbar-sticky.json
+- [pricing-table](/r/pricing-table.json): Multi-tier pricing matrix with monthly/annual toggle and clear feature checkmarks. (Variance: 5, Motion: 4, Density: 6)
+  - Tags: lucide-react, bento-grid, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, marketing, pricing, saas
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/pricing-table.json
+- [saas-hero-browser-mockup](/r/saas-hero-browser-mockup.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/saas-hero-browser-mockup.json
+- [testimonial-masonry-marquee](/r/testimonial-masonry-marquee.json): Masonry grid of verified user review cards with avatar verification and star ratings. (Variance: 6, Motion: 6, Density: 6)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, block, testimonials, masonry, reviews, tailark
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/testimonial-masonry-marquee.json
+- [architecture-topology-diagram](/r/architecture-topology-diagram.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/architecture-topology-diagram.json
+- [decision-tree-node-graph](/r/decision-tree-node-graph.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/decision-tree-node-graph.json
+- [matrix-grid-diagram](/r/matrix-grid-diagram.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: bento-grid, tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/matrix-grid-diagram.json
+- [radar-spider-chart](/r/radar-spider-chart.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/radar-spider-chart.json
+- [timeline-roadmap-track](/r/timeline-roadmap-track.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/timeline-roadmap-track.json
+- [draggable-kanban-board](/r/draggable-kanban-board.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/draggable-kanban-board.json
+- [event-calendar-view](/r/event-calendar-view.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/event-calendar-view.json
+- [filter-builder-toolbar](/r/filter-builder-toolbar.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/filter-builder-toolbar.json
+- [reui-data-grid](/r/reui-data-grid.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/reui-data-grid.json
+- [split-pane-layout](/r/split-pane-layout.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, layout-block
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/split-pane-layout.json
+
+### Category: ui:editorial
+- [competitor-comparison-matrix](/r/competitor-comparison-matrix.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/competitor-comparison-matrix.json
+- [cta-banner-geometric](/r/cta-banner-geometric.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, editorial
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/cta-banner-geometric.json
+- [stats-counter-banner](/r/stats-counter-banner.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: bento-grid, tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/stats-counter-banner.json
+- [dot-matrix-scoreboard](/r/dot-matrix-scoreboard.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/dot-matrix-scoreboard.json
+- [callout-card](/r/callout-card.json): High-contrast editorial callout with semantic state themes (info, warning, success, danger). (Variance: 3, Motion: 1, Density: 7)
+  - Tags: lucide-react, wai-aria-compliant, callout, alert, editorial, semantic
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/callout-card.json
+- [code-block](/r/code-block.json): Editorial syntax display card with line numbering, language badge, and instant copy feedback. (Variance: 4, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, code, syntax, editorial, developer-tool, copy
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/code-block.json
+- [cohort-retention-heatmap](/r/cohort-retention-heatmap.json): Matrix grid displaying user cohort retention percentages over time with conditional color intensity scaling. (Variance: 5, Motion: 2, Density: 9)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial, chart, cohort, heatmap, matrix, tremor-raw
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/cohort-retention-heatmap.json
+- [cycle-loop-diagram](/r/cycle-loop-diagram.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/cycle-loop-diagram.json
+- [data-stat-grid](/r/data-stat-grid.json): Asymmetrical metric showcase for SaaS analytics with high visual density and clean type. (Variance: 5, Motion: 1, Density: 9)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, svg, zero-dependency, static, analytical, metrics, grid
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/data-stat-grid.json
+- [diagram-card](/r/diagram-card.json): Precision SVG diagramming card with minimal vector lines and zero decorative emojis. (Variance: 5, Motion: 1, Density: 9)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, diagram
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/diagram-card.json
+- [donut-metric-card](/r/donut-metric-card.json): Donut chart featuring centered key metric, category percentage breakdown, and hover slice detachment. (Variance: 5, Motion: 3, Density: 7)
+  - Tags: tailwind-v4, wai-aria-compliant, layout-block, chart, donut-chart, metric-card, tremor-raw
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/donut-metric-card.json
+- [fishbone-root-cause-diagram](/r/fishbone-root-cause-diagram.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/fishbone-root-cause-diagram.json
+- [flowchart-process-graph](/r/flowchart-process-graph.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/flowchart-process-graph.json
+- [funnel-conversion-chart](/r/funnel-conversion-chart.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/funnel-conversion-chart.json
+- [gantt-roadmap-chart](/r/gantt-roadmap-chart.json): Timeline schedule view with milestone bars, category grouping, and progress percentage markers. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, chart, gantt, roadmap, timeline, diagram-design
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/gantt-roadmap-chart.json
+- [inline-sparkline-chart](/r/inline-sparkline-chart.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 9)
+  - Tags: wai-aria-compliant, editorial
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/inline-sparkline-chart.json
+- [interactive-area-chart](/r/interactive-area-chart.json): Responsive SVG area chart with linear gradient fill, brush timeline zoom, and interactive cursor tooltip. (Variance: 5, Motion: 3, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant, layout-block, chart, area-chart, data-viz, tremor-raw
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-area-chart.json
+- [minimal-table](/r/minimal-table.json): Clean tabular data display with accessible headers, captions, and responsive overflow. (Variance: 5, Motion: 1, Density: 9)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, table, data-grid
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/minimal-table.json
+- [pyramid-hierarchy-chart](/r/pyramid-hierarchy-chart.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/pyramid-hierarchy-chart.json
+- [sankey-flow-diagram](/r/sankey-flow-diagram.json): Node-to-node stream flow diagram illustrating distribution, funnel loss, and channel routing. (Variance: 6, Motion: 2, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial, diagram, sankey, flow-chart, data-viz, diagram-design
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/sankey-flow-diagram.json
+- [strategic-quadrant-matrix](/r/strategic-quadrant-matrix.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/strategic-quadrant-matrix.json
+- [swot-analysis-matrix](/r/swot-analysis-matrix.json): 2x2 grid layout for Strengths, Weaknesses, Opportunities, and Threats with distinct visual accents. (Variance: 5, Motion: 2, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, diagram, swot, matrix, strategic, diagram-design
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/swot-analysis-matrix.json
+- [venn-comparison-matrix](/r/venn-comparison-matrix.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: None
+  - Install: npx shadcn@latest add http://localhost:3000/r/venn-comparison-matrix.json
+- [stat-metric-card](/r/stat-metric-card.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, editorial
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/stat-metric-card.json
+
+### Category: ui:primitive
 - [customer-story-masonry](/r/customer-story-masonry.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
   - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant
   - Dependencies: lucide-react
@@ -80,6 +338,10 @@
   - Tags: tailwind-v4, wai-aria-compliant
   - Dependencies: motion
   - Install: npx shadcn@latest add http://localhost:3000/r/tree-hierarchy-map.json
+- [tokens](/r/tokens.json): Curated production-grade component. (Variance: 3, Motion: 3, Density: 6)
+  - Tags: wai-aria-compliant, spring-physics
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/tokens.json
 - [karaoke-caption-stream](/r/karaoke-caption-stream.json): Curated production-grade component. (Variance: 5, Motion: 2, Density: 8)
   - Tags: tailwind-v4, brutalist, wai-aria-compliant
   - Dependencies: motion
@@ -104,22 +366,6 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, radix-primitives, accordion, disclosure, headless, a11y
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/accordion.json
-- [ai-chat-bubble](/r/ai-chat-bubble.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/ai-chat-bubble.json
-- [ai-model-selector](/r/ai-model-selector.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/ai-model-selector.json
-- [ai-reasoning-foldout](/r/ai-reasoning-foldout.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/ai-reasoning-foldout.json
-- [ai-token-meter](/r/ai-token-meter.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
-  - Tags: lucide-react, tailwind-v4, wai-aria-compliant
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/ai-token-meter.json
 - [avatar](/r/avatar.json): Fallback-aware image avatar with initials display and smooth loading states. (Variance: 2, Motion: 1, Density: 6)
   - Tags: radix-primitives, headless, wai-aria-compliant, avatar, image
   - Dependencies: @radix-ui/react-avatar, clsx, tailwind-merge
@@ -140,6 +386,10 @@
   - Tags: lucide-react, bento-grid, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, layout-block, form, color-picker, popover, eyedropper, shark-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/color-picker-popover.json
+- [color-picker-primitive](/r/color-picker-primitive.json): Accessible headless color picker with hex/rgb input, palette swatches, and clipboard copy. (Variance: 4, Motion: 2, Density: 7)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, primitive, color-picker, form, headless, ark-ui
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/color-picker-primitive.json
 - [combobox-virtualized](/r/combobox-virtualized.json): High-performance search combobox handling 10,000+ items via virtualization, with keyboard navigation and async loading states. (Variance: 3, Motion: 2, Density: 8)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, combobox, virtualized, large-list, shark-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -148,6 +398,10 @@
   - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, layout-block, cmdk, command-palette, keyboard-first, modal, a11y
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/command-menu.json
+- [date-range-picker-popover](/r/date-range-picker-popover.json): Accessible date range selection popover with calendar grid and keyboard navigation. (Variance: 4, Motion: 3, Density: 7)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, primitive, calendar, date-picker, popover, ariakit
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/date-range-picker-popover.json
 - [dialog](/r/dialog.json): Headless accessible modal dialog with focus trap, backdrop escape, and screen-reader roles. (Variance: 3, Motion: 3, Density: 5)
   - Tags: radix-primitives, headless, lucide-react, tailwind-v4, wai-aria-compliant, modal, dialog, a11y
   - Dependencies: @radix-ui/react-dialog, lucide-react, clsx, tailwind-merge
@@ -217,245 +471,7 @@
   - Dependencies: lucide-react
   - Install: npx shadcn@latest add http://localhost:3000/r/theme-toggle-dropdown.json
 
-### Category: ui:block
-- [app-shell-sidebar-layout](/r/app-shell-sidebar-layout.json): Production-ready SaaS dashboard shell with collapsible multi-tier sidebar, breadcrumbs, search bar, and user profile popover. (Variance: 5, Motion: 3, Density: 8)
-  - Tags: lucide-react, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, block, app-shell, sidebar, dashboard, layout, reui
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/app-shell-sidebar-layout.json
-- [bento-grid](/r/bento-grid.json): Multi-pane asymmetrical layout grid with responsive column spans and structural borders. (Variance: 5, Motion: 4, Density: 6)
-  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, marketing, asymmetry
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/bento-grid.json
-- [device-mockup-showcase](/r/device-mockup-showcase.json): Pixel-perfect Safari browser and iPhone device frames with screenshot scroll-into-view animations. (Variance: 6, Motion: 4, Density: 5)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, block, device-mockup, safari, iphone, daisyui
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/device-mockup-showcase.json
-- [feature-section](/r/feature-section.json): Asymmetrical 4-column SaaS architectural feature grid with badge pill and structured cards. (Variance: 5, Motion: 3, Density: 6)
-  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, feature, marketing, saas
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/feature-section.json
-- [google-gemini-glow-hero](/r/google-gemini-glow-hero.json): Dark-mode hero section with layered animated SVG laser paths and responsive central CTA. (Variance: 7, Motion: 6, Density: 5)
-  - Tags: lucide-react, tailwind-v4, glassmorphism, neon-scifi, accessible, keyboard-accessible, wai-aria-compliant, layout-block, block, hero, laser-glow, dark-mode, aceternity
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/google-gemini-glow-hero.json
-- [hero-parallax-scroll](/r/hero-parallax-scroll.json): Multi-row 3D perspective image grid that shifts and rotates as the user scrolls down the page. (Variance: 7, Motion: 7, Density: 5)
-  - Tags: lucide-react, bento-grid, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, layout-block, block, hero, parallax, 3d-perspective, aceternity
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/hero-parallax-scroll.json
-- [hero-section](/r/hero-section.json): Editorial SaaS hero section featuring typography discipline, badge pill, and active CTA. (Variance: 5, Motion: 2, Density: 5)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, hero, marketing, typography, block
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/hero-section.json
-- [integration-grid-showcase](/r/integration-grid-showcase.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/integration-grid-showcase.json
-- [interactive-feature-cycler](/r/interactive-feature-cycler.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-feature-cycler.json
-- [interactive-roi-calculator](/r/interactive-roi-calculator.json): Marketing block with interactive price sliders, team size selectors, and dynamic cost savings calculations. (Variance: 5, Motion: 3, Density: 7)
-  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, block, roi-calculator, marketing, pricing, tailark
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-roi-calculator.json
-- [navbar-sticky](/r/navbar-sticky.json): Sticky responsive top navigation bar with blur backdrop, link routing, and mobile drawer. (Variance: 4, Motion: 3, Density: 6)
-  - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, navbar, navigation, header, layout-block, responsive
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/navbar-sticky.json
-- [pricing-table](/r/pricing-table.json): Multi-tier pricing matrix with monthly/annual toggle and clear feature checkmarks. (Variance: 5, Motion: 4, Density: 6)
-  - Tags: lucide-react, bento-grid, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, marketing, pricing, saas
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/pricing-table.json
-- [saas-hero-browser-mockup](/r/saas-hero-browser-mockup.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/saas-hero-browser-mockup.json
-- [testimonial-masonry-marquee](/r/testimonial-masonry-marquee.json): Masonry grid of verified user review cards with avatar verification and star ratings. (Variance: 6, Motion: 6, Density: 6)
-  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, block, testimonials, masonry, reviews, tailark
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/testimonial-masonry-marquee.json
-- [architecture-topology-diagram](/r/architecture-topology-diagram.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, layout-block
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/architecture-topology-diagram.json
-- [decision-tree-node-graph](/r/decision-tree-node-graph.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, layout-block
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/decision-tree-node-graph.json
-- [matrix-grid-diagram](/r/matrix-grid-diagram.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: bento-grid, tailwind-v4, wai-aria-compliant, layout-block
-  - Dependencies: None
-  - Install: npx shadcn@latest add http://localhost:3000/r/matrix-grid-diagram.json
-- [radar-spider-chart](/r/radar-spider-chart.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: tailwind-v4, wai-aria-compliant, layout-block
-  - Dependencies: None
-  - Install: npx shadcn@latest add http://localhost:3000/r/radar-spider-chart.json
-- [timeline-roadmap-track](/r/timeline-roadmap-track.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/timeline-roadmap-track.json
-- [ai-message-thread](/r/ai-message-thread.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/ai-message-thread.json
-- [ai-prompt-input](/r/ai-prompt-input.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/ai-prompt-input.json
-- [draggable-kanban-board](/r/draggable-kanban-board.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/draggable-kanban-board.json
-- [event-calendar-view](/r/event-calendar-view.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/event-calendar-view.json
-- [filter-builder-toolbar](/r/filter-builder-toolbar.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
-  - Dependencies: lucide-react, motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/filter-builder-toolbar.json
-- [reui-data-grid](/r/reui-data-grid.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/reui-data-grid.json
-- [split-pane-layout](/r/split-pane-layout.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, layout-block
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/split-pane-layout.json
-
-### Category: ui:utility
-- [competitor-comparison-matrix](/r/competitor-comparison-matrix.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
-  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, utility
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/competitor-comparison-matrix.json
-- [dot-matrix-scoreboard](/r/dot-matrix-scoreboard.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
-  - Tags: tailwind-v4, wai-aria-compliant, utility
-  - Dependencies: None
-  - Install: npx shadcn@latest add http://localhost:3000/r/dot-matrix-scoreboard.json
-- [strategic-quadrant-matrix](/r/strategic-quadrant-matrix.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
-  - Tags: tailwind-v4, wai-aria-compliant, utility
-  - Dependencies: None
-  - Install: npx shadcn@latest add http://localhost:3000/r/strategic-quadrant-matrix.json
-- [venn-comparison-matrix](/r/venn-comparison-matrix.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
-  - Tags: tailwind-v4, wai-aria-compliant, utility
-  - Dependencies: None
-  - Install: npx shadcn@latest add http://localhost:3000/r/venn-comparison-matrix.json
-- [border-trail](/r/border-trail.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
-  - Tags: wai-aria-compliant, utility
-  - Dependencies: motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/border-trail.json
-- [text-shimmer-wave](/r/text-shimmer-wave.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 7)
-  - Tags: wai-aria-compliant, utility
-  - Dependencies: motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/text-shimmer-wave.json
-- [copy-button](/r/copy-button.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 7)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, utility
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/copy-button.json
-- [dot-loader](/r/dot-loader.json): Minimalist dot pulsation loader for button states or inline progress indicators. (Variance: 2, Motion: 4, Density: 8)
-  - Tags: wai-aria-compliant, utility, loader, spinner, minimalist
-  - Dependencies: clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/dot-loader.json
-- [icon-morph](/r/icon-morph.json): Clean animated SVG state toggler (play/pause/check) with accessible title. (Variance: 3, Motion: 4, Density: 7)
-  - Tags: wai-aria-compliant, utility, icon, svg, morph, a11y
-  - Dependencies: clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/icon-morph.json
-- [keyboard-shortcut](/r/keyboard-shortcut.json): Accessible platform-adaptive keyboard key combo pill with monospace token styling. (Variance: 2, Motion: 1, Density: 8)
-  - Tags: tailwind-v4, wai-aria-compliant, utility, kbd, shortcut, keyboard, accessibility
-  - Dependencies: clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/keyboard-shortcut.json
-- [reui-animated-icons-pack](/r/reui-animated-icons-pack.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
-  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, utility
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/reui-animated-icons-pack.json
-
-### Category: ui:editorial
-- [cta-banner-geometric](/r/cta-banner-geometric.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, editorial
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/cta-banner-geometric.json
-- [stats-counter-banner](/r/stats-counter-banner.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
-  - Tags: bento-grid, tailwind-v4, wai-aria-compliant, editorial
-  - Dependencies: None
-  - Install: npx shadcn@latest add http://localhost:3000/r/stats-counter-banner.json
-- [callout-card](/r/callout-card.json): High-contrast editorial callout with semantic state themes (info, warning, success, danger). (Variance: 3, Motion: 1, Density: 7)
-  - Tags: lucide-react, wai-aria-compliant, callout, alert, editorial, semantic
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/callout-card.json
-- [code-block](/r/code-block.json): Editorial syntax display card with line numbering, language badge, and instant copy feedback. (Variance: 4, Motion: 2, Density: 8)
-  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, code, syntax, editorial, developer-tool, copy
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/code-block.json
-- [cohort-retention-heatmap](/r/cohort-retention-heatmap.json): Matrix grid displaying user cohort retention percentages over time with conditional color intensity scaling. (Variance: 5, Motion: 2, Density: 9)
-  - Tags: tailwind-v4, wai-aria-compliant, chart, cohort, heatmap, matrix, tremor-raw
-  - Dependencies: clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/cohort-retention-heatmap.json
-- [cycle-loop-diagram](/r/cycle-loop-diagram.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
-  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, editorial
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/cycle-loop-diagram.json
-- [data-stat-grid](/r/data-stat-grid.json): Asymmetrical metric showcase for SaaS analytics with high visual density and clean type. (Variance: 5, Motion: 1, Density: 9)
-  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, svg, zero-dependency, static, analytical, metrics, grid
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/data-stat-grid.json
-- [diagram-card](/r/diagram-card.json): Precision SVG diagramming card with minimal vector lines and zero decorative emojis. (Variance: 5, Motion: 1, Density: 9)
-  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, diagram
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/diagram-card.json
-- [donut-metric-card](/r/donut-metric-card.json): Donut chart featuring centered key metric, category percentage breakdown, and hover slice detachment. (Variance: 5, Motion: 3, Density: 7)
-  - Tags: tailwind-v4, wai-aria-compliant, layout-block, chart, donut-chart, metric-card, tremor-raw
-  - Dependencies: clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/donut-metric-card.json
-- [fishbone-root-cause-diagram](/r/fishbone-root-cause-diagram.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
-  - Tags: tailwind-v4, wai-aria-compliant, editorial
-  - Dependencies: None
-  - Install: npx shadcn@latest add http://localhost:3000/r/fishbone-root-cause-diagram.json
-- [flowchart-process-graph](/r/flowchart-process-graph.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
-  - Tags: tailwind-v4, wai-aria-compliant
-  - Dependencies: None
-  - Install: npx shadcn@latest add http://localhost:3000/r/flowchart-process-graph.json
-- [funnel-conversion-chart](/r/funnel-conversion-chart.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
-  - Tags: tailwind-v4, wai-aria-compliant
-  - Dependencies: None
-  - Install: npx shadcn@latest add http://localhost:3000/r/funnel-conversion-chart.json
-- [gantt-roadmap-chart](/r/gantt-roadmap-chart.json): Timeline schedule view with milestone bars, category grouping, and progress percentage markers. (Variance: 6, Motion: 3, Density: 8)
-  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, chart, gantt, roadmap, timeline, diagram-design
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/gantt-roadmap-chart.json
-- [inline-sparkline-chart](/r/inline-sparkline-chart.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 6)
-  - Tags: wai-aria-compliant
-  - Dependencies: None
-  - Install: npx shadcn@latest add http://localhost:3000/r/inline-sparkline-chart.json
-- [interactive-area-chart](/r/interactive-area-chart.json): Responsive SVG area chart with linear gradient fill, brush timeline zoom, and interactive cursor tooltip. (Variance: 5, Motion: 3, Density: 8)
-  - Tags: tailwind-v4, wai-aria-compliant, layout-block, chart, area-chart, data-viz, tremor-raw
-  - Dependencies: clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-area-chart.json
-- [minimal-table](/r/minimal-table.json): Clean tabular data display with accessible headers, captions, and responsive overflow. (Variance: 5, Motion: 1, Density: 9)
-  - Tags: tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, table, data-grid
-  - Dependencies: clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/minimal-table.json
-- [pyramid-hierarchy-chart](/r/pyramid-hierarchy-chart.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
-  - Tags: tailwind-v4, wai-aria-compliant
-  - Dependencies: None
-  - Install: npx shadcn@latest add http://localhost:3000/r/pyramid-hierarchy-chart.json
-- [sankey-flow-diagram](/r/sankey-flow-diagram.json): Node-to-node stream flow diagram illustrating distribution, funnel loss, and channel routing. (Variance: 6, Motion: 2, Density: 8)
-  - Tags: tailwind-v4, wai-aria-compliant, editorial, diagram, sankey, flow-chart, data-viz, diagram-design
-  - Dependencies: clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/sankey-flow-diagram.json
-- [swot-analysis-matrix](/r/swot-analysis-matrix.json): 2x2 grid layout for Strengths, Weaknesses, Opportunities, and Threats with distinct visual accents. (Variance: 5, Motion: 2, Density: 8)
-  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, diagram, swot, matrix, strategic, diagram-design
-  - Dependencies: lucide-react, clsx, tailwind-merge
-  - Install: npx shadcn@latest add http://localhost:3000/r/swot-analysis-matrix.json
-- [stat-metric-card](/r/stat-metric-card.json): Curated production-grade component. (Variance: 5, Motion: 1, Density: 10)
-  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, editorial
-  - Dependencies: lucide-react
-  - Install: npx shadcn@latest add http://localhost:3000/r/stat-metric-card.json
-
 ### Category: ui:creative
-- [ai-voice-orb](/r/ai-voice-orb.json): Curated production-grade component. (Variance: 8, Motion: 9, Density: 5)
-  - Tags: webgl, threejs, canvas, neon-scifi, wai-aria-compliant
-  - Dependencies: three, motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/ai-voice-orb.json
 - [audio-reactive-3d-sphere](/r/audio-reactive-3d-sphere.json): 3D vertex-displaced wireframe sphere reacting in real time to synthesized audio frequency data. (Variance: 9, Motion: 9, Density: 4)
   - Tags: lucide-react, webgl, threejs, canvas, tailwind-v4, glassmorphism, wai-aria-compliant, creative, 3d, audio-reactive, wireframe, three-ui
   - Dependencies: lucide-react, three, clsx, tailwind-merge, motion
@@ -473,16 +489,20 @@
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/crt-terminal-scanlines.json
 - [dot-matrix-loader](/r/dot-matrix-loader.json): Animated dot matrix with wave oscillation, customizable matrix rows, and accessible status role. (Variance: 6, Motion: 5, Density: 7)
-  - Tags: wai-aria-compliant, utility, dot-matrix, canvas-pattern, loader, status
+  - Tags: wai-aria-compliant, editorial, dot-matrix, canvas-pattern, loader, status
   - Dependencies: clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/dot-matrix-loader.json
 - [glow-border](/r/glow-border.json): Rotating chromatic gradient glow border wrapper for cards, hero callouts, and featured sections. (Variance: 7, Motion: 7, Density: 5)
   - Tags: tailwind-v4, neon-scifi, wai-aria-compliant, magic-ui, glow, conic-gradient, creative, border
   - Dependencies: clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/glow-border.json
+- [grain-noise-shader](/r/grain-noise-shader.json): Ultra-low-overhead SVG simplex noise backdrop for texture and editorial polish. (Variance: 6, Motion: 2, Density: 5)
+  - Tags: framer-motion, motion/react, animation, webgl, threejs, tailwind-v4, wai-aria-compliant, canvas, creative, noise, shader, svg, paper-shaders
+  - Dependencies: motion, three, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/grain-noise-shader.json
 - [grid-distort-interactive](/r/grid-distort-interactive.json): Interactive grid mesh that warps and ripples under mouse cursor velocity with spring decay. (Variance: 8, Motion: 8, Density: 4)
   - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, creative, interactive, mesh, distortion, react-bits
-  - Dependencies: three, clsx, tailwind-merge
+  - Dependencies: three, clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/grid-distort-interactive.json
 - [hyperspeed-tunnel](/r/hyperspeed-tunnel.json): Three.js/Canvas starfield/light-trail warp speed effect with adjustable speed and neon lighting. (Variance: 9, Motion: 9, Density: 3)
   - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, creative, starfield, warp-speed, tunnel, react-bits
@@ -500,6 +520,14 @@
   - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant
   - Dependencies: three, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/matrix-code-stream.json
+- [mesh-gradient-shader](/r/mesh-gradient-shader.json): Zero-dependency WebGL organic gradient canvas with static CSS fallback and reduced-motion bypass. (Variance: 8, Motion: 6, Density: 4)
+  - Tags: framer-motion, motion/react, animation, webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, creative, shader, gradient, paper-shaders
+  - Dependencies: motion, three, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/mesh-gradient-shader.json
+- [meteors-background](/r/meteors-background.json): Pure CSS/Tailwind animated shooting star and meteor backdrop with reduced-motion support. (Variance: 7, Motion: 6, Density: 4)
+  - Tags: framer-motion, motion/react, animation, tailwind-v4, brutalist, wai-aria-compliant, creative, background, meteors, magic-ui
+  - Dependencies: motion, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/meteors-background.json
 - [noise-texture-card](/r/noise-texture-card.json): High-craft noise-dithered backdrop with crisp typography overlay and zero AI slop. (Variance: 7, Motion: 2, Density: 6)
   - Tags: tailwind-v4, wai-aria-compliant, svg-noise, editorial, texture, brutalist
   - Dependencies: clsx, tailwind-merge
@@ -512,14 +540,14 @@
   - Tags: tailwind-v4, wai-aria-compliant, aceternity, mask, shader-simulation, creative, interactive
   - Dependencies: clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/radial-gradient-mask.json
+- [retro-grid](/r/retro-grid.json): Isometric 3D scrolling grid with linear top-to-bottom opacity fade and perspective horizon. (Variance: 7, Motion: 5, Density: 4)
+  - Tags: framer-motion, motion/react, animation, tailwind-v4, wai-aria-compliant, creative, grid, retro, magic-ui, 3d
+  - Dependencies: motion, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/retro-grid.json
 - [threejs-model-viewport](/r/threejs-model-viewport.json): Curated production-grade component. (Variance: 8, Motion: 9, Density: 5)
   - Tags: lucide-react, webgl, threejs, canvas, tailwind-v4, wai-aria-compliant
   - Dependencies: lucide-react, three, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/threejs-model-viewport.json
-- [ai-artifact-canvas](/r/ai-artifact-canvas.json): Curated production-grade component. (Variance: 8, Motion: 9, Density: 5)
-  - Tags: lucide-react, webgl, threejs, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, canvas
-  - Dependencies: lucide-react, three, motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/ai-artifact-canvas.json
 
 ### Category: ui:media
 - [audio-visualizer](/r/audio-visualizer.json): Acoustic frequency waveform visualizer with playback state toggles and live audio synthesis. (Variance: 6, Motion: 7, Density: 6)
@@ -549,9 +577,13 @@
 
 ### Category: ui:motion
 - [animated-beam-pipeline](/r/animated-beam-pipeline.json): SVG curved beam animation connecting distinct nodes with glowing laser pulses indicating data flow. (Variance: 7, Motion: 7, Density: 6)
-  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, motion, animated-beam, pipeline, laser, magic-ui
+  - Tags: lucide-react, tailwind-v4, wai-aria-compliant, workflow, node-graph, motion, animated-beam, pipeline, laser, magic-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/animated-beam-pipeline.json
+- [animated-beam](/r/animated-beam.json): SVG animated glowing curve connecting multiple nodes with continuous gradient travel. (Variance: 6, Motion: 6, Density: 5)
+  - Tags: framer-motion, motion/react, animation, wai-aria-compliant, motion, beam, svg, curve, magic-ui
+  - Dependencies: motion, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/animated-beam.json
 - [animated-tabs](/r/animated-tabs.json): Smooth spring-bound tab slider with layout ID preservation and zero layout shift. (Variance: 4, Motion: 6, Density: 5)
   - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, shadcn-compatible, spring-physics, tabs, layoutId
   - Dependencies: motion, clsx, tailwind-merge
@@ -584,6 +616,10 @@
   - Tags: tailwind-v4, wai-aria-compliant, motion, mouse-trail, interactive, react-bits
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/image-mouse-trail.json
+- [interactive-hover-button](/r/interactive-hover-button.json): Magnetic particle expansion button with smooth spring scale and focus-visible indicators. (Variance: 5, Motion: 6, Density: 6)
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, motion, button, interactive, hover, animata
+  - Dependencies: motion, lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-hover-button.json
 - [magnetic-badge](/r/magnetic-badge.json): Curated production-grade component. (Variance: 5, Motion: 8, Density: 7)
   - Tags: framer-motion, motion/react, animation, lucide-react, wai-aria-compliant, spring-physics
   - Dependencies: motion, lucide-react
@@ -604,6 +640,10 @@
   - Tags: lucide-react, tailwind-v4, wai-aria-compliant, motion, orbiting-circles, magic-ui, planetary
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/orbiting-circles.json
+- [parallax-scroll-container](/r/parallax-scroll-container.json): Zero-lag scroll-anchored viewport container with reduced-motion fallback. (Variance: 6, Motion: 6, Density: 5)
+  - Tags: framer-motion, motion/react, animation, tailwind-v4, wai-aria-compliant, motion, parallax, scroll, viewport
+  - Dependencies: motion, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/parallax-scroll-container.json
 - [scratch-to-reveal-card](/r/scratch-to-reveal-card.json): Canvas scratch-off surface revealing hidden discount codes or rewards beneath user gestures. (Variance: 7, Motion: 7, Density: 5)
   - Tags: lucide-react, webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, motion, scratch-card, gamification, magic-ui
   - Dependencies: lucide-react, three, clsx, tailwind-merge
@@ -616,6 +656,10 @@
   - Tags: framer-motion, motion/react, animation, wai-aria-compliant, spring-physics
   - Dependencies: motion
   - Install: npx shadcn@latest add http://localhost:3000/r/sliding-number.json
+- [smooth-scroll-provider](/r/smooth-scroll-provider.json): Context wrapper managing Lenis smooth-scrolling with accessibility-respecting reduced-motion bypass. (Variance: 4, Motion: 5, Density: 5)
+  - Tags: framer-motion, motion/react, animation, wai-aria-compliant, motion, scroll, lenis, smooth-scroll, context
+  - Dependencies: motion, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/smooth-scroll-provider.json
 - [spotlight-card](/r/spotlight-card.json): Interactive radial cursor spotlight tracking card with smooth proximity illumination. (Variance: 5, Motion: 5, Density: 5)
   - Tags: tailwind-v4, wai-aria-compliant, aceternity, spotlight, card, mouse-tracking, micro-interaction
   - Dependencies: clsx, tailwind-merge, motion
@@ -624,6 +668,10 @@
   - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, animate-presence, modal
   - Dependencies: motion, lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/spring-dialog.json
+- [spring-orchestrator](/r/spring-orchestrator.json): Coordinated stagger animation manager with spring physics presets and reduced-motion safety. (Variance: 5, Motion: 5, Density: 6)
+  - Tags: framer-motion, motion/react, animation, wai-aria-compliant, spring-physics, motion, spring, orchestration, stagger
+  - Dependencies: motion, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/spring-orchestrator.json
 - [squishy-physics-button](/r/squishy-physics-button.json): Velocity-reactive button with squishy spring physics, elastic rebound, and optional Web Audio synthesis click sounds. (Variance: 8, Motion: 8, Density: 5)
   - Tags: lucide-react, playful, accessible, keyboard-accessible, wai-aria-compliant, motion, physics, spring, evil-buttons
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -640,6 +688,36 @@
   - Tags: framer-motion, motion/react, animation, tailwind-v4, wai-aria-compliant, spring-physics
   - Dependencies: motion
   - Install: npx shadcn@latest add http://localhost:3000/r/tilt-card.json
+
+### Category: ui:utility
+- [border-trail](/r/border-trail.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
+  - Tags: wai-aria-compliant, utility
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/border-trail.json
+- [text-shimmer-wave](/r/text-shimmer-wave.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 7)
+  - Tags: wai-aria-compliant, utility
+  - Dependencies: motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/text-shimmer-wave.json
+- [copy-button](/r/copy-button.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 7)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, utility
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/copy-button.json
+- [dot-loader](/r/dot-loader.json): Minimalist dot pulsation loader for button states or inline progress indicators. (Variance: 2, Motion: 4, Density: 8)
+  - Tags: wai-aria-compliant, utility, loader, spinner, minimalist
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/dot-loader.json
+- [icon-morph](/r/icon-morph.json): Clean animated SVG state toggler (play/pause/check) with accessible title. (Variance: 3, Motion: 4, Density: 7)
+  - Tags: wai-aria-compliant, utility, icon, svg, morph, a11y
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/icon-morph.json
+- [keyboard-shortcut](/r/keyboard-shortcut.json): Accessible platform-adaptive keyboard key combo pill with monospace token styling. (Variance: 2, Motion: 1, Density: 8)
+  - Tags: tailwind-v4, wai-aria-compliant, utility, kbd, shortcut, keyboard, accessibility
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/keyboard-shortcut.json
+- [reui-animated-icons-pack](/r/reui-animated-icons-pack.json): Curated production-grade component. (Variance: 2, Motion: 4, Density: 9)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, utility
+  - Dependencies: lucide-react
+  - Install: npx shadcn@latest add http://localhost:3000/r/reui-animated-icons-pack.json
 
 
 ## Component Specifications & Source Contracts
@@ -2247,10 +2325,10 @@ export function AiToolCallCard({
 ---
 
 ### Agent Step Pipeline (`agent-step-pipeline`)
-- **Category**: `ui:primitive`
+- **Category**: `ui:workflow`
 - **Dependencies**: lucide-react, motion
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **Taste Dials**: Variance 6/10, Motion 5/10, Density 9/10
 - **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ```tsx
@@ -2605,6 +2683,167 @@ export function AppShellSidebarLayout({
 
 ---
 
+### Audit Timeline Stream (`audit-timeline-stream`)
+- **Category**: `ui:block`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 5/10, Motion 3/10, Density 8/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Primer React / Tremor UI
+ * @author GitHub Primer Team & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useState } from "react";
+import { ShieldCheck, ChevronDown, ChevronUp, Bot, Terminal, Check } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface AuditEvent {
+  id: string;
+  actor: string;
+  actorType: "agent" | "human" | "ci";
+  action: string;
+  timestamp: string;
+  diffSummary: string;
+  detailsJson: string;
+}
+
+export interface AuditTimelineStreamProps {
+  events?: AuditEvent[];
+  className?: string;
+}
+
+const DEFAULT_EVENTS: AuditEvent[] = [
+  {
+    id: "evt-101",
+    actor: "harvester-bot",
+    actorType: "agent",
+    action: "Harvested Magic UI Gem Components",
+    timestamp: "2 mins ago",
+    diffSummary: "+6 files normalized to Tailwind v4",
+    detailsJson: JSON.stringify({ codemod: "magic-ui-transformer.ts", status: "success", flags: 0 }, null, 2),
+  },
+  {
+    id: "evt-102",
+    actor: "axe-runner",
+    actorType: "ci",
+    action: "Automated WCAG 2.1 AA Audit Passed",
+    timestamp: "10 mins ago",
+    diffSummary: "100% compliance across all 154 items",
+    detailsJson: JSON.stringify({ suite: "axe-runner.ts", violations: 0, score: 100 }, null, 2),
+  },
+  {
+    id: "evt-103",
+    actor: "lead-engineer",
+    actorType: "human",
+    action: "Tagged v1.2.0 Zero-Slop Registry Release",
+    timestamp: "1 hour ago",
+    diffSummary: "Signed commit sha: 7f9a1c4",
+    detailsJson: JSON.stringify({ release: "v1.2.0", signoff: true }, null, 2),
+  },
+];
+
+export function AuditTimelineStream({
+  events = DEFAULT_EVENTS,
+  className,
+}: AuditTimelineStreamProps) {
+  const [expandedEventId, setExpandedEventId] = useState<string | null>("evt-101");
+
+  const toggleExpand = (id: string) => {
+    setExpandedEventId((prev) => (prev === id ? null : id));
+  };
+
+  return (
+    <div
+      className={cn(
+        "flex flex-col w-full rounded-xl border border-border bg-card text-foreground overflow-hidden shadow-sm",
+        className
+      )}
+      role="region"
+      aria-label="Audit Timeline Stream"
+    >
+      <div className="flex items-center justify-between border-b border-border bg-muted/30 px-4 py-2.5">
+        <div className="flex items-center gap-2">
+          <ShieldCheck className="h-4 w-4 text-emerald-500" aria-hidden="true" />
+          <span className="text-xs font-mono font-medium tracking-tight">
+            AUDIT_STREAM // IMMUTABLE_LOG
+          </span>
+        </div>
+        <span className="text-xs font-mono text-muted-foreground">LIVE LEDGER</span>
+      </div>
+
+      <div className="p-4 divide-y divide-border">
+        {events.map((event) => {
+          const isExpanded = expandedEventId === event.id;
+
+          return (
+            <div key={event.id} className="py-3 first:pt-0 last:pb-0">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full border border-border bg-muted/60 text-foreground">
+                    {event.actorType === "agent" ? (
+                      <Bot className="h-3.5 w-3.5" aria-hidden="true" />
+                    ) : (
+                      <Terminal className="h-3.5 w-3.5" aria-hidden="true" />
+                    )}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold">{event.action}</span>
+                      <span className="rounded bg-muted px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground">
+                        {event.actor}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground">{event.diffSummary}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="text-[11px] font-mono text-muted-foreground">
+                    {event.timestamp}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => toggleExpand(event.id)}
+                    aria-expanded={isExpanded}
+                    aria-label={isExpanded ? "Collapse audit event details" : "Expand audit event details"}
+                    className="p-1 rounded-md border border-border bg-background transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    {isExpanded ? (
+                      <ChevronUp className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
+                    ) : (
+                      <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {isExpanded && (
+                <div className="mt-2.5 rounded-lg border border-border bg-muted/30 p-3">
+                  <pre className="font-mono text-[11px] text-muted-foreground overflow-x-auto">
+                    <code>{event.detailsJson}</code>
+                  </pre>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Bento Grid (`bento-grid`)
 - **Category**: `ui:block`
 - **Dependencies**: lucide-react, clsx, tailwind-merge
@@ -2691,10 +2930,10 @@ export function BentoGridItem({
 ---
 
 ### Competitor Comparison Matrix (`competitor-comparison-matrix`)
-- **Category**: `ui:utility`
+- **Category**: `ui:editorial`
 - **Dependencies**: lucide-react
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 2/10, Motion 4/10, Density 9/10
+- **Taste Dials**: Variance 5/10, Motion 1/10, Density 10/10
 - **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ```tsx
@@ -3042,6 +3281,179 @@ export function CustomerStoryMasonry({
         ))}
       </div>
     </section>
+  );
+}
+
+```
+
+---
+
+### Data Table Server Faceted (`data-table-server-faceted`)
+- **Category**: `ui:block`
+- **Dependencies**: lucide-react, clsx, tailwind-merge, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 4/10, Motion 2/10, Density 9/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Primer React / Tremor UI
+ * @author GitHub Primer Team & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useState, useMemo } from "react";
+import { Search, Filter, ChevronLeft, ChevronRight, CheckCircle, ShieldAlert } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface TableRowItem {
+  id: string;
+  name: string;
+  category: string;
+  status: "verified" | "flagged" | "review";
+  varianceDial: number;
+  lastUpdated: string;
+}
+
+export interface DataTableServerFacetedProps {
+  initialItems?: TableRowItem[];
+  className?: string;
+}
+
+const DEFAULT_ROWS: TableRowItem[] = [
+  { id: "comp-1", name: "agent-node-graph.tsx", category: "ui:workflow", status: "verified", varianceDial: 6, lastUpdated: "2026-08-30" },
+  { id: "comp-2", name: "smooth-scroll-provider.tsx", category: "ui:motion", status: "verified", varianceDial: 4, lastUpdated: "2026-08-30" },
+  { id: "comp-3", name: "mesh-gradient-shader.tsx", category: "ui:creative", status: "verified", varianceDial: 8, lastUpdated: "2026-08-30" },
+  { id: "comp-4", name: "kpi-stat-card-group.tsx", category: "ui:block", status: "verified", varianceDial: 5, lastUpdated: "2026-08-30" },
+  { id: "comp-5", name: "color-picker-primitive.tsx", category: "ui:primitive", status: "verified", varianceDial: 3, lastUpdated: "2026-08-30" },
+];
+
+export function DataTableServerFaceted({
+  initialItems = DEFAULT_ROWS,
+  className,
+}: DataTableServerFacetedProps) {
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+
+  const filteredItems = useMemo(() => {
+    return initialItems.filter((item) => {
+      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = selectedCategory === "all" || item.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [initialItems, searchTerm, selectedCategory]);
+
+  return (
+    <div
+      className={cn(
+        "flex flex-col w-full rounded-xl border border-border bg-card text-foreground overflow-hidden shadow-sm",
+        className
+      )}
+      role="region"
+      aria-label="Server-Faceted Data Table"
+    >
+      {/* Table Control Bar */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-border bg-muted/20 p-4">
+        <div className="relative w-full sm:w-72">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Filter components by name..."
+            aria-label="Search components"
+            className="w-full rounded-md border border-border bg-background pl-9 pr-3 py-1.5 text-xs text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          />
+        </div>
+
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <Filter className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            aria-label="Filter by taxonomy category"
+            className="rounded-md border border-border bg-background px-3 py-1.5 text-xs text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          >
+            <option value="all">All Categories</option>
+            <option value="ui:workflow">Workflow</option>
+            <option value="ui:motion">Motion</option>
+            <option value="ui:creative">Creative</option>
+            <option value="ui:block">Blocks</option>
+            <option value="ui:primitive">Primitives</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Accessible Table */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-left text-xs">
+          <thead className="border-b border-border bg-muted/40 font-mono text-[11px] text-muted-foreground uppercase">
+            <tr>
+              <th scope="col" className="px-4 py-3 font-medium">Component</th>
+              <th scope="col" className="px-4 py-3 font-medium">Category</th>
+              <th scope="col" className="px-4 py-3 font-medium">Status</th>
+              <th scope="col" className="px-4 py-3 font-medium">Variance</th>
+              <th scope="col" className="px-4 py-3 font-medium text-right">Updated</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {filteredItems.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">
+                  No components matching filter criteria.
+                </td>
+              </tr>
+            ) : (
+              filteredItems.map((item) => (
+                <tr key={item.id} className="transition-colors hover:bg-muted/30">
+                  <td className="px-4 py-3 font-mono font-medium">{item.name}</td>
+                  <td className="px-4 py-3">
+                    <span className="rounded-md bg-muted px-2 py-0.5 font-mono text-[10px]">
+                      {item.category}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className="inline-flex items-center gap-1 font-medium text-emerald-600 dark:text-emerald-400">
+                      <CheckCircle className="h-3.5 w-3.5" aria-hidden="true" />
+                      Verified
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 font-mono">{item.varianceDial}/10</td>
+                  <td className="px-4 py-3 text-right font-mono text-muted-foreground">
+                    {item.lastUpdated}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination Footer */}
+      <div className="flex items-center justify-between border-t border-border bg-muted/20 px-4 py-2.5 text-xs text-muted-foreground">
+        <span>Showing {filteredItems.length} entries</span>
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            aria-label="Previous page"
+            className="p-1 rounded-md border border-border bg-background transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            aria-label="Next page"
+            className="p-1 rounded-md border border-border bg-background transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <ChevronRight className="h-4 w-4" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -4171,6 +4583,116 @@ export function InteractiveRoiCalculator({
 
 ---
 
+### KPI Stat Card Group (`kpi-stat-card-group`)
+- **Category**: `ui:block`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 5/10, Motion 3/10, Density 8/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license Apache-2.0
+ * @origin Tremor UI (https://github.com/tremorlabs/tremor)
+ * @author Tremor Labs & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React from "react";
+import { TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface KpiMetric {
+  id: string;
+  title: string;
+  value: string;
+  delta: string;
+  trend: "up" | "down" | "neutral";
+  target: string;
+  sparklineData: number[];
+}
+
+export interface KpiStatCardGroupProps {
+  metrics?: KpiMetric[];
+  className?: string;
+}
+
+const DEFAULT_METRICS: KpiMetric[] = [
+  { id: "m1", title: "API Request Throughput", value: "2.4M", delta: "+14.2%", trend: "up", target: "2.0M target", sparklineData: [40, 55, 60, 75, 80, 95] },
+  { id: "m2", title: "Mean Latency (P95)", value: "32ms", delta: "-4.8%", trend: "up", target: "< 45ms target", sparklineData: [45, 42, 38, 35, 34, 32] },
+  { id: "m3", title: "Zero-Slop Health Score", value: "100%", delta: "0.0%", trend: "neutral", target: "100% threshold", sparklineData: [100, 100, 100, 100, 100, 100] },
+  { id: "m4", title: "A11y Violations", value: "0", delta: "-100%", trend: "up", target: "0 max allowed", sparklineData: [4, 2, 1, 0, 0, 0] },
+];
+
+export function KpiStatCardGroup({
+  metrics = DEFAULT_METRICS,
+  className,
+}: KpiStatCardGroupProps) {
+  return (
+    <div className={cn("grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full", className)}>
+      {metrics.map((metric) => {
+        const TrendIcon =
+          metric.trend === "up"
+            ? TrendingUp
+            : metric.trend === "down"
+            ? TrendingDown
+            : Minus;
+
+        const isPositive =
+          metric.trend === "up" || (metric.trend === "neutral" && metric.delta === "0.0%");
+
+        return (
+          <div
+            key={metric.id}
+            className="flex flex-col rounded-xl border border-border bg-card p-4 text-foreground shadow-sm transition-colors hover:border-muted-foreground/40"
+          >
+            <span className="text-xs font-medium text-muted-foreground">{metric.title}</span>
+            <div className="mt-2 flex items-baseline justify-between">
+              <span className="text-2xl font-bold tracking-tight">{metric.value}</span>
+              <span
+                className={cn(
+                  "inline-flex items-center gap-0.5 text-xs font-medium",
+                  isPositive ? "text-emerald-600 dark:text-emerald-400" : "text-destructive"
+                )}
+              >
+                <TrendIcon className="h-3 w-3" aria-hidden="true" />
+                {metric.delta}
+              </span>
+            </div>
+
+            {/* Sparkline mini-track */}
+            <div className="mt-3 flex items-end gap-1 h-6 w-full pt-1" aria-hidden="true">
+              {metric.sparklineData.map((val, idx) => {
+                const max = Math.max(...metric.sparklineData, 1);
+                const heightPct = Math.max(15, Math.round((val / max) * 100));
+                return (
+                  <div
+                    key={idx}
+                    className="flex-1 rounded-xs bg-primary/20 transition-all hover:bg-primary"
+                    style={{ height: `${heightPct}%` }}
+                  />
+                );
+              })}
+            </div>
+
+            <div className="mt-3 border-t border-border/60 pt-2 text-[11px] font-mono text-muted-foreground flex justify-between">
+              <span>TARGET</span>
+              <span>{metric.target}</span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Navbar Sticky (`navbar-sticky`)
 - **Category**: `ui:block`
 - **Dependencies**: lucide-react, clsx, tailwind-merge
@@ -4221,6 +4743,16 @@ export function NavbarSticky({
   className,
 }: NavbarStickyProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileOpen) {
+        setMobileOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileOpen]);
 
   return (
     <header
@@ -4818,10 +5350,10 @@ export function TestimonialMasonryMarquee({
 ---
 
 ### Ai Voice Orb (`ai-voice-orb`)
-- **Category**: `ui:creative`
+- **Category**: `ui:ai-native`
 - **Dependencies**: three, motion
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 8/10, Motion 9/10, Density 5/10
+- **Taste Dials**: Variance 6/10, Motion 4/10, Density 8/10
 - **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ```tsx
@@ -4934,7 +5466,11 @@ export function AiVoiceOrb({
         height={size}
         className="rounded-full shadow-lg"
         aria-hidden="true"
-      />
+      >
+        <div className="flex h-full w-full items-center justify-center rounded-full bg-primary/10 text-xs text-muted-foreground">
+          Fallback: Voice orb is currently {state}.
+        </div>
+      </canvas>
       <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-foreground">
         <span
           className={cn(
@@ -5740,10 +6276,10 @@ export function DotMatrixLoader({
 ---
 
 ### Dot Matrix Scoreboard (`dot-matrix-scoreboard`)
-- **Category**: `ui:utility`
+- **Category**: `ui:editorial`
 - **Dependencies**: None
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 2/10, Motion 4/10, Density 9/10
+- **Taste Dials**: Variance 5/10, Motion 1/10, Density 10/10
 - **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ```tsx
@@ -5955,9 +6491,88 @@ export function GlowBorder({
 
 ---
 
+### Grain Noise Shader (`grain-noise-shader`)
+- **Category**: `ui:creative`
+- **Dependencies**: motion, three, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 2/10, Density 5/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license Apache-2.0
+ * @origin Paper Shaders (https://github.com/paper-design/shaders)
+ * @author Paper Design & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useId } from "react";
+import { useReducedMotion } from "motion/react";
+import { cn } from "@/lib/utils";
+
+export interface GrainNoiseShaderProps {
+  opacity?: number;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export function GrainNoiseShader({
+  opacity = 0.05,
+  className,
+  children,
+}: GrainNoiseShaderProps) {
+  const filterId = useId();
+  const shouldReduceMotion = useReducedMotion();
+
+  // Respect user prefers-reduced-motion setting
+  if (shouldReduceMotion) {
+    return (
+      <div className={cn("relative w-full rounded-xl border border-border bg-card text-foreground p-6", className)}>
+        {children}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={cn(
+        "relative w-full overflow-hidden rounded-xl border border-border bg-card text-foreground",
+        className
+      )}
+    >
+      {/* Ultra-low-overhead SVG procedural simplex noise texture */}
+      <svg
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        style={{ opacity }}
+        aria-hidden="true"
+      >
+        <filter id={filterId}>
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.8"
+            numOctaves="3"
+            stitchTiles="stitch"
+          />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="100%" height="100%" filter={`url(#${filterId})`} />
+      </svg>
+
+      <div className="relative z-10 p-6">{children}</div>
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Interactive Grid Distort Mesh (`grid-distort-interactive`)
 - **Category**: `ui:creative`
-- **Dependencies**: three, clsx, tailwind-merge
+- **Dependencies**: three, clsx, tailwind-merge, motion
 - **Registry Dependencies**: None
 - **Taste Dials**: Variance 8/10, Motion 8/10, Density 4/10
 - **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
@@ -6013,6 +6628,22 @@ export function GridDistortInteractive({
 
     canvas.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("mouseleave", handleMouseLeave);
+
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      ctx.strokeStyle = "rgba(100, 116, 139, 0.2)";
+      ctx.lineWidth = 1;
+      for (let y = 0; y <= height; y += gridSpacing) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+      return;
+    }
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
@@ -6086,7 +6717,7 @@ export function GridDistortInteractive({
         className="absolute inset-0 w-full h-full object-cover"
         aria-label="Distortable Grid Canvas"
       >
-        <div>Distortable grid active</div>
+        <div className="p-4 text-xs text-muted-foreground">Fallback: Distortable grid canvas active</div>
       </canvas>
 
       <div className="relative z-10 flex flex-col items-center justify-center p-6 text-center pointer-events-none">
@@ -6718,10 +7349,284 @@ export function MatrixCodeStream({
       aria-label="Cascading Matrix Code Stream Background"
       {...props}
     >
-      <canvas ref={canvasRef} width={600} height={256} className="w-full h-full block" aria-hidden="true" />
+      <canvas ref={canvasRef} width={600} height={256} className="w-full h-full block" aria-hidden="true">
+        <div className="p-4 text-xs text-muted-foreground">Fallback: Matrix streaming code animation active.</div>
+      </canvas>
       <div className="absolute bottom-3 left-4 text-xs font-mono text-emerald-400/80 bg-black/60 px-2 py-0.5 rounded border border-emerald-500/20">
         SYS.MATRIX_STREAM // LIVE
       </div>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Mesh Gradient Shader (`mesh-gradient-shader`)
+- **Category**: `ui:creative`
+- **Dependencies**: motion, three, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 8/10, Motion 6/10, Density 4/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license Apache-2.0
+ * @origin Paper Shaders (https://github.com/paper-design/shaders)
+ * @author Paper Design & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useRef, useEffect, useState } from "react";
+import { useReducedMotion } from "motion/react";
+import { cn } from "@/lib/utils";
+
+export interface MeshGradientShaderProps {
+  className?: string;
+  speed?: number;
+  children?: React.ReactNode;
+}
+
+const VERTEX_SHADER_SRC = `
+  attribute vec2 position;
+  void main() {
+    gl_Position = vec4(position, 0.0, 1.0);
+  }
+`;
+
+const FRAGMENT_SHADER_SRC = `
+  precision mediump float;
+  uniform vec2 u_resolution;
+  uniform float u_time;
+
+  void main() {
+    vec2 st = gl_FragCoord.xy / u_resolution.xy;
+    float color1 = sin(st.x * 3.0 + u_time * 0.5) * 0.5 + 0.5;
+    float color2 = cos(st.y * 3.0 - u_time * 0.3) * 0.5 + 0.5;
+    
+    vec3 baseColor = vec3(0.1, 0.12, 0.16);
+    vec3 accentColor = vec3(0.2, 0.25, 0.32);
+    
+    vec3 finalColor = mix(baseColor, accentColor, (color1 + color2) * 0.5);
+    gl_FragColor = vec4(finalColor, 1.0);
+  }
+`;
+
+export function MeshGradientShader({
+  className,
+  speed = 1.0,
+  children,
+}: MeshGradientShaderProps) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const [hasWebGLError, setHasWebGLError] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Respect user prefers-reduced-motion setting
+    if (shouldReduceMotion) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const gl = canvas.getContext("webgl");
+    if (!gl) {
+      setHasWebGLError(true);
+      return;
+    }
+
+    // Compile Shaders
+    const createShader = (type: number, src: string) => {
+      const shader = gl.createShader(type);
+      if (!shader) return null;
+      gl.shaderSource(shader, src);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        gl.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    };
+
+    const vert = createShader(gl.VERTEX_SHADER, VERTEX_SHADER_SRC);
+    const frag = createShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER_SRC);
+    if (!vert || !frag) {
+      setHasWebGLError(true);
+      return;
+    }
+
+    const program = gl.createProgram();
+    if (!program) return;
+    gl.attachShader(program, vert);
+    gl.attachShader(program, frag);
+    gl.linkProgram(program);
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      setHasWebGLError(true);
+      return;
+    }
+
+    gl.useProgram(program);
+
+    // Pre-allocate buffer outside animation loop (SLOP-032)
+    const positions = new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]);
+    const posBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+    const posAttr = gl.getAttribLocation(program, "position");
+    gl.enableVertexAttribArray(posAttr);
+    gl.vertexAttribPointer(posAttr, 2, gl.FLOAT, false, 0, 0);
+
+    const resLoc = gl.getUniformLocation(program, "u_resolution");
+    const timeLoc = gl.getUniformLocation(program, "u_time");
+
+    let animationFrameId: number;
+    let startTime = performance.now();
+
+    const render = (now: number) => {
+      const elapsed = (now - startTime) * 0.001 * speed;
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+        gl.viewport(0, 0, width, height);
+      }
+
+      gl.uniform2f(resLoc, width, height);
+      gl.uniform1f(timeLoc, elapsed);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    animationFrameId = requestAnimationFrame(render);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      gl.deleteProgram(program);
+      gl.deleteShader(vert);
+      gl.deleteShader(frag);
+      gl.deleteBuffer(posBuffer);
+    };
+  }, [shouldReduceMotion, speed]);
+
+  return (
+    <div
+      className={cn(
+        "relative w-full overflow-hidden rounded-xl border border-border bg-card text-foreground",
+        className
+      )}
+    >
+      {/* Static accessible CSS fallback for reduced-motion or WebGL errors (SLOP-014, SLOP-031) */}
+      {(shouldReduceMotion || hasWebGLError) && (
+        <div
+          className="absolute inset-0 bg-gradient-to-br from-card via-muted/30 to-background"
+          aria-hidden="true"
+        />
+      )}
+
+      {!shouldReduceMotion && !hasWebGLError && (
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 h-full w-full pointer-events-none"
+          aria-hidden="true"
+        />
+      )}
+
+      <div className="relative z-10 p-8">{children}</div>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Meteors Background (`meteors-background`)
+- **Category**: `ui:creative`
+- **Dependencies**: motion, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 7/10, Motion 6/10, Density 4/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Magic UI (https://github.com/magicuidesign/magicui)
+ * @author Magic UI Team & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useMemo } from "react";
+import { useReducedMotion } from "motion/react";
+import { cn } from "@/lib/utils";
+
+export interface MeteorsBackgroundProps {
+  number?: number;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+interface MeteorStyle {
+  top: string;
+  left: string;
+  animationDelay: string;
+  animationDuration: string;
+}
+
+export function MeteorsBackground({
+  number = 20,
+  className,
+  children,
+}: MeteorsBackgroundProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  const meteors = useMemo<MeteorStyle[]>(() => {
+    const list: MeteorStyle[] = [];
+    for (let i = 0; i < number; i++) {
+      list.push({
+        top: `${Math.floor(Math.random() * 80) - 20}%`,
+        left: `${Math.floor(Math.random() * 100)}%`,
+        animationDelay: `${(Math.random() * 1 + 0.2).toFixed(2)}s`,
+        animationDuration: `${Math.floor(Math.random() * 8 + 4)}s`,
+      });
+    }
+    return list;
+  }, [number]);
+
+  return (
+    <div
+      className={cn(
+        "relative w-full overflow-hidden rounded-xl border border-border bg-card p-8 text-foreground",
+        className
+      )}
+    >
+      {!shouldReduceMotion && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+          {meteors.map((style, idx) => (
+            <span
+              key={idx}
+              className="absolute h-0.5 w-0.5 rotate-[215deg] rounded-[9999px] bg-primary/80 shadow-[0_0_0_1px_rgba(255,255,255,0.1)] before:absolute before:top-1/2 before:-translate-y-1/2 before:w-12 before:h-[1px] before:bg-gradient-to-r before:from-primary before:to-transparent"
+              style={{
+                top: style.top,
+                left: style.left,
+                animation: `meteor ${style.animationDuration} linear infinite`,
+                animationDelay: style.animationDelay,
+              }}
+            />
+          ))}
+        </div>
+      )}
+      <div className="relative z-10">{children}</div>
     </div>
   );
 }
@@ -6914,7 +7819,9 @@ export function ParticleField({
           ref={canvasRef}
           className="pointer-events-none absolute inset-0 h-full w-full"
           aria-hidden="true"
-        />
+        >
+          <div className="p-4 text-xs text-muted-foreground">Fallback: Particle field animation active.</div>
+        </canvas>
       )}
       <div className="relative z-10">
         <h4 className="text-base font-semibold text-foreground">Interactive Particle Web</h4>
@@ -7003,6 +7910,87 @@ export function RadialGradientMask({
       />
 
       {/* Content */}
+      <div className="relative z-10">{children}</div>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Retro Grid (`retro-grid`)
+- **Category**: `ui:creative`
+- **Dependencies**: motion, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 7/10, Motion 5/10, Density 4/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Magic UI (https://github.com/magicuidesign/magicui)
+ * @author Magic UI Team & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React from "react";
+import { useReducedMotion } from "motion/react";
+import { cn } from "@/lib/utils";
+
+export interface RetroGridProps {
+  angle?: number;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export function RetroGrid({
+  angle = 65,
+  className,
+  children,
+}: RetroGridProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <div
+      className={cn(
+        "relative flex w-full items-center justify-center overflow-hidden rounded-xl border border-border bg-card p-12 text-foreground",
+        className
+      )}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 overflow-hidden [perspective:200px]"
+        aria-hidden="true"
+      >
+        {/* Animated grid plane */}
+        <div
+          className={cn(
+            "absolute inset-0 [transform-origin:100%_0_0]",
+            !shouldReduceMotion && "motion-safe:animate-grid"
+          )}
+          style={{
+            transform: `rotateX(${angle}deg)`,
+            backgroundImage: `linear-gradient(to right, rgba(120, 120, 120, 0.2) 1px, transparent 0),
+                              linear-gradient(to bottom, rgba(120, 120, 120, 0.2) 1px, transparent 0)`,
+            backgroundSize: "40px 40px",
+            backgroundRepeat: "repeat",
+            height: "300%",
+            marginLeft: "-50%",
+            transformOrigin: "50% 0",
+            width: "200%",
+          }}
+        />
+      </div>
+
+      {/* Linear top-to-bottom opacity fade */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent"
+        aria-hidden="true"
+      />
+
       <div className="relative z-10">{children}</div>
     </div>
   );
@@ -7228,7 +8216,9 @@ export function ThreejsModelViewport({
         <span>{modelName}</span>
       </header>
 
-      <canvas ref={canvasRef} width={300} height={300} className="my-4 cursor-grab" aria-hidden="true" />
+      <canvas ref={canvasRef} width={300} height={300} className="my-4 cursor-grab" aria-hidden="true">
+        <div className="p-4 text-xs text-muted-foreground">Fallback: 3D model viewport rendering active.</div>
+      </canvas>
 
       <footer className="w-full flex items-center justify-between pt-2 border-t border-border/40 text-[11px] text-muted-foreground">
         <span className="font-mono">WebGL / Canvas 3D</span>
@@ -8699,7 +9689,7 @@ export function FishboneRootCauseDiagram({
 - **Category**: `ui:editorial`
 - **Dependencies**: None
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **Taste Dials**: Variance 5/10, Motion 1/10, Density 10/10
 - **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ```tsx
@@ -8793,7 +9783,7 @@ export function FlowchartProcessGraph({
 - **Category**: `ui:editorial`
 - **Dependencies**: None
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **Taste Dials**: Variance 5/10, Motion 1/10, Density 10/10
 - **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ```tsx
@@ -9051,7 +10041,7 @@ export function GanttRoadmapChart({
 - **Category**: `ui:editorial`
 - **Dependencies**: None
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 3/10, Motion 2/10, Density 6/10
+- **Taste Dials**: Variance 5/10, Motion 1/10, Density 9/10
 - **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ```tsx
@@ -9535,7 +10525,7 @@ export function MinimalTable<T extends Record<string, unknown>>({
 - **Category**: `ui:editorial`
 - **Dependencies**: None
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **Taste Dials**: Variance 5/10, Motion 1/10, Density 10/10
 - **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ```tsx
@@ -9954,10 +10944,10 @@ export function SankeyFlowDiagram({
 ---
 
 ### Strategic Quadrant Matrix (`strategic-quadrant-matrix`)
-- **Category**: `ui:utility`
+- **Category**: `ui:editorial`
 - **Dependencies**: None
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 2/10, Motion 4/10, Density 9/10
+- **Taste Dials**: Variance 5/10, Motion 1/10, Density 10/10
 - **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ```tsx
@@ -10512,10 +11502,10 @@ export function TreeHierarchyMap({
 ---
 
 ### Venn Comparison Matrix (`venn-comparison-matrix`)
-- **Category**: `ui:utility`
+- **Category**: `ui:editorial`
 - **Dependencies**: None
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 2/10, Motion 4/10, Density 9/10
+- **Taste Dials**: Variance 5/10, Motion 1/10, Density 10/10
 - **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ```tsx
@@ -10656,6 +11646,96 @@ export function VennComparisonMatrix({
     </figure>
   );
 }
+
+```
+
+---
+
+### D E S I G N_ T O K E N S (`tokens`)
+- **Category**: `ui:primitive`
+- **Dependencies**: motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 3/10, Motion 3/10, Density 6/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Machine-First Design Agent Wiki (DTCG Standard)
+ * @author Machine-First Design Team
+ * @curated-by Machine-First Design Agent Wiki
+ * Auto-generated by build-tokens.ts from packages/registry/tokens/design-tokens.json
+ * Do not edit manually.
+ */
+
+export const DESIGN_TOKENS = {
+  colors: {
+    /** Root page background canvas */
+    background: "hsl(0 0% 100%)",
+    /** Default text and icon foreground */
+    foreground: "hsl(240 10% 3.9%)",
+    /** Structured card background surface */
+    card: "hsl(0 0% 100%)",
+    /** Card content foreground text */
+    cardForeground: "hsl(240 10% 3.9%)",
+    /** Primary action and high-emphasis accent */
+    primary: "hsl(240 5.9% 10%)",
+    /** Text rendered over primary surface */
+    primaryForeground: "hsl(0 0% 98%)",
+    /** Secondary surface for subdued cards and badges */
+    secondary: "hsl(240 4.8% 95.9%)",
+    /** Text rendered over secondary surface */
+    secondaryForeground: "hsl(240 5.9% 10%)",
+    /** Muted backgrounds and subtle highlights */
+    muted: "hsl(240 4.8% 95.9%)",
+    /** Subdued secondary text meeting WCAG AA contrast */
+    mutedForeground: "hsl(240 3.8% 46.1%)",
+    /** Interactive hover and selected accent */
+    accent: "hsl(240 4.8% 95.9%)",
+    /** Foreground on interactive accent */
+    accentForeground: "hsl(240 5.9% 10%)",
+    /** Destructive and error state indicators */
+    destructive: "hsl(0 84.2% 60.2%)",
+    /** Text rendered over destructive surface */
+    destructiveForeground: "hsl(0 0% 98%)",
+    /** Hairline structural border divider */
+    border: "hsl(240 5.9% 90%)",
+    /** Form input and toggle border token */
+    input: "hsl(240 5.9% 90%)",
+    /** Accessible focus-visible ring indicator */
+    ring: "hsl(240 5.9% 10%)",
+  },
+  radii: {
+    sm: "0.375rem",
+    md: "0.5rem",
+    lg: "0.75rem",
+    xl: "1rem",
+  },
+  spacing: {
+    "1": "0.25rem",
+    "2": "0.5rem",
+    "3": "0.75rem",
+    "4": "1rem",
+    "6": "1.5rem",
+    "8": "2rem",
+    "12": "3rem",
+    "16": "4rem",
+  },
+  motion: {
+    spring: {
+      stiffness: 300,
+      damping: 28,
+      mass: 0.9,
+    },
+    duration: {
+      fast: "150ms",
+      normal: "200ms",
+      deliberate: "350ms",
+    },
+  },
+} as const;
+
+export type DesignTokens = typeof DESIGN_TOKENS;
 
 ```
 
@@ -11592,6 +12672,128 @@ export function AnimatedBeamPipeline({
 
 ---
 
+### Animated Beam (`animated-beam`)
+- **Category**: `ui:motion`
+- **Dependencies**: motion, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 6/10, Density 5/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Magic UI (https://github.com/magicuidesign/magicui)
+ * @author Magic UI Team & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useId } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { cn } from "@/lib/utils";
+
+export interface AnimatedBeamProps {
+  className?: string;
+  containerRef?: React.RefObject<HTMLElement | null>;
+  fromRef?: React.RefObject<HTMLElement | null>;
+  toRef?: React.RefObject<HTMLElement | null>;
+  curvature?: number;
+  reverse?: boolean;
+  duration?: number;
+  delay?: number;
+  startXOffset?: number;
+  startYOffset?: number;
+  endXOffset?: number;
+  endYOffset?: number;
+}
+
+export function AnimatedBeam({
+  className,
+  curvature = 0,
+  reverse = false,
+  duration = 3,
+  delay = 0,
+  startXOffset = 0,
+  startYOffset = 0,
+  endXOffset = 0,
+  endYOffset = 0,
+}: AnimatedBeamProps) {
+  const id = useId();
+  const shouldReduceMotion = useReducedMotion();
+
+  // Baseline geometric curve coordinates
+  const startX = 50 + startXOffset;
+  const startY = 50 + startYOffset;
+  const endX = 250 + endXOffset;
+  const endY = 50 + endYOffset;
+  const controlY = startY - curvature;
+  const pathD = `M ${startX} ${startY} Q ${(startX + endX) / 2} ${controlY} ${endX} ${endY}`;
+
+  return (
+    <svg
+      fill="none"
+      width="300"
+      height="100"
+      viewBox="0 0 300 100"
+      className={cn("pointer-events-none absolute left-0 top-0 transform-gpu stroke-2", className)}
+      aria-hidden="true"
+    >
+      <path
+        d={pathD}
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeOpacity="0.2"
+        strokeLinecap="round"
+        className="text-muted-foreground"
+      />
+      <path
+        d={pathD}
+        stroke={`url(#${id})`}
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <defs>
+        <motion.linearGradient
+          className="transform-gpu"
+          id={id}
+          gradientUnits="userSpaceOnUse"
+          initial={{
+            x1: "0%",
+            x2: "0%",
+            y1: "0%",
+            y2: "0%",
+          }}
+          animate={
+            shouldReduceMotion
+              ? { x1: "0%", x2: "100%", y1: "0%", y2: "0%" }
+              : {
+                  x1: reverse ? ["90%", "-10%"] : ["-10%", "90%"],
+                  x2: reverse ? ["100%", "0%"] : ["0%", "100%"],
+                }
+          }
+          transition={{
+            delay,
+            duration,
+            ease: [0.16, 1, 0.3, 1],
+            repeat: Infinity,
+            repeatDelay: 0.5,
+          }}
+        >
+          <stop stopColor="var(--primary)" stopOpacity="0" />
+          <stop offset="50%" stopColor="var(--primary)" stopOpacity="1" />
+          <stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
+        </motion.linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
+```
+
+---
+
 ### Animated Tabs (`animated-tabs`)
 - **Category**: `ui:motion`
 - **Dependencies**: motion, clsx, tailwind-merge
@@ -12452,6 +13654,80 @@ export function ImageMouseTrail({
 
 ---
 
+### Interactive Hover Button (`interactive-hover-button`)
+- **Category**: `ui:motion`
+- **Dependencies**: motion, lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 5/10, Motion 6/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Animata / Magic UI
+ * @author Animata Team & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface InteractiveHoverButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  text?: string;
+  className?: string;
+}
+
+export function InteractiveHoverButton({
+  text = "Explore Registry",
+  className,
+  ref,
+  ...props
+}: InteractiveHoverButtonProps & { ref?: React.Ref<HTMLButtonElement> }) {
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <button
+      ref={ref}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={cn(
+        "group relative cursor-pointer overflow-hidden rounded-full border border-border bg-background px-6 py-2.5 text-center font-medium text-foreground transition-colors duration-200 hover:bg-muted/40 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+        className
+      )}
+      {...props}
+    >
+      <span className="inline-block transition-transform transition-opacity duration-300 group-hover:translate-x-12 group-hover:opacity-0">
+        {text}
+      </span>
+
+      <div className="absolute top-0 z-10 flex h-full w-full translate-x-12 items-center justify-center gap-2 text-primary-foreground opacity-0 transition-transform transition-opacity duration-300 group-hover:-translate-x-5 group-hover:opacity-100">
+        <span className="text-sm font-semibold">{text}</span>
+        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+      </div>
+
+      {!shouldReduceMotion && (
+        <motion.div
+          className="absolute left-[20%] top-[40%] h-2 w-2 scale-[1] rounded-full bg-primary transition-transform duration-300 group-hover:left-[0%] group-hover:top-[0%] group-hover:h-full group-hover:w-full group-hover:scale-[1.8]"
+          initial={false}
+          animate={{ scale: isHovered ? 1.8 : 1 }}
+          transition={{ type: "spring", stiffness: 350, damping: 26 }}
+        />
+      )}
+    </button>
+  );
+}
+
+```
+
+---
+
 ### Magnetic Badge (`magnetic-badge`)
 - **Category**: `ui:motion`
 - **Dependencies**: motion, lucide-react
@@ -12927,6 +14203,69 @@ export function OrbitingCircles({
 
 ---
 
+### Parallax Scroll Container (`parallax-scroll-container`)
+- **Category**: `ui:motion`
+- **Dependencies**: motion, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 6/10, Density 5/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Darkroom Engineering / Motion
+ * @author Darkroom Engineering & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
+import { cn } from "@/lib/utils";
+
+export interface ParallaxScrollContainerProps {
+  speedMultiplier?: number;
+  className?: string;
+  children: React.ReactNode;
+}
+
+export function ParallaxScrollContainer({
+  speedMultiplier = 0.2,
+  className,
+  children,
+}: ParallaxScrollContainerProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const yOffset = useTransform(
+    scrollYProgress,
+    [0, 1],
+    shouldReduceMotion ? [0, 0] : [-50 * speedMultiplier, 50 * speedMultiplier]
+  );
+
+  return (
+    <div
+      ref={containerRef}
+      className={cn("relative overflow-hidden rounded-xl border border-border bg-card", className)}
+    >
+      <motion.div style={{ y: yOffset }} className="relative w-full">
+        {children}
+      </motion.div>
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Progressive Blur (`progressive-blur`)
 - **Category**: `ui:primitive`
 - **Dependencies**: motion
@@ -13381,6 +14720,87 @@ export function SlidingNumber({
 
 ---
 
+### Smooth Scroll Provider (`smooth-scroll-provider`)
+- **Category**: `ui:motion`
+- **Dependencies**: motion, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 4/10, Motion 5/10, Density 5/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Lenis (https://github.com/darkroomengineering/lenis)
+ * @author Darkroom Engineering & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { useReducedMotion } from "motion/react";
+
+interface SmoothScrollContextType {
+  isSmoothEnabled: boolean;
+  scrollTo: (target: string | number | HTMLElement) => void;
+}
+
+const SmoothScrollContext = createContext<SmoothScrollContextType>({
+  isSmoothEnabled: true,
+  scrollTo: () => {},
+});
+
+export function useSmoothScroll() {
+  return useContext(SmoothScrollContext);
+}
+
+export interface SmoothScrollProviderProps {
+  children: React.ReactNode;
+  duration?: number;
+}
+
+export function SmoothScrollProvider({
+  children,
+  duration = 1.2,
+}: SmoothScrollProviderProps) {
+  const shouldReduceMotion = useReducedMotion();
+  const [isSmoothEnabled, setIsSmoothEnabled] = useState<boolean>(!shouldReduceMotion);
+
+  useEffect(() => {
+    setIsSmoothEnabled(!shouldReduceMotion);
+    if (shouldReduceMotion) return;
+
+    // Apply smooth scroll class to root html element safely
+    document.documentElement.style.scrollBehavior = "smooth";
+
+    return () => {
+      document.documentElement.style.scrollBehavior = "auto";
+    };
+  }, [shouldReduceMotion]);
+
+  const scrollTo = (target: string | number | HTMLElement) => {
+    if (typeof target === "number") {
+      window.scrollTo({ top: target, behavior: shouldReduceMotion ? "auto" : "smooth" });
+    } else if (typeof target === "string") {
+      const element = document.querySelector(target);
+      element?.scrollIntoView({ behavior: shouldReduceMotion ? "auto" : "smooth" });
+    } else if (target instanceof HTMLElement) {
+      target.scrollIntoView({ behavior: shouldReduceMotion ? "auto" : "smooth" });
+    }
+  };
+
+  return (
+    <SmoothScrollContext value={{ isSmoothEnabled, scrollTo }}>
+      {children}
+    </SmoothScrollContext>
+  );
+}
+
+```
+
+---
+
 ### Spotlight Card (`spotlight-card`)
 - **Category**: `ui:motion`
 - **Dependencies**: clsx, tailwind-merge, motion
@@ -13556,6 +14976,89 @@ export function SpringDialog({
         </div>
       )}
     </AnimatePresence>
+  );
+}
+
+```
+
+---
+
+### Spring Orchestrator (`spring-orchestrator`)
+- **Category**: `ui:motion`
+- **Dependencies**: motion, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 5/10, Motion 5/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Motion (https://github.com/motiondivision/motion)
+ * @author Motion Division & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { cn } from "@/lib/utils";
+
+export interface SpringOrchestratorProps {
+  staggerDelay?: number;
+  className?: string;
+  children: React.ReactNode;
+}
+
+export function SpringOrchestrator({
+  staggerDelay = 0.08,
+  className,
+  children,
+}: SpringOrchestratorProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  const containerVariants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : staggerDelay,
+      },
+    },
+  };
+
+  return (
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+      className={cn("grid gap-4", className)}
+    >
+      {React.Children.map(children, (child, idx) => {
+        if (!React.isValidElement(child)) return child;
+        return (
+          <motion.div
+            key={idx}
+            variants={{
+              hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 16 },
+              show: {
+                opacity: 1,
+                y: 0,
+                transition: {
+                  type: "spring",
+                  stiffness: 320,
+                  damping: 26,
+                  mass: 0.9,
+                },
+              },
+            }}
+          >
+            {child}
+          </motion.div>
+        );
+      })}
+    </motion.div>
   );
 }
 
@@ -14351,10 +15854,10 @@ export function ActivityFeedTimeline({
 ---
 
 ### Ai Artifact Canvas (`ai-artifact-canvas`)
-- **Category**: `ui:creative`
+- **Category**: `ui:ai-native`
 - **Dependencies**: lucide-react, three, motion
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 8/10, Motion 9/10, Density 5/10
+- **Taste Dials**: Variance 6/10, Motion 4/10, Density 8/10
 - **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ```tsx
@@ -14563,10 +16066,10 @@ export function AiArtifactCanvas({
 ---
 
 ### Ai Chat Bubble (`ai-chat-bubble`)
-- **Category**: `ui:primitive`
+- **Category**: `ui:ai-native`
 - **Dependencies**: lucide-react
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **Taste Dials**: Variance 6/10, Motion 4/10, Density 8/10
 - **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ```tsx
@@ -14663,10 +16166,10 @@ export function AiChatBubble({
 ---
 
 ### Ai Message Thread (`ai-message-thread`)
-- **Category**: `ui:block`
+- **Category**: `ui:ai-native`
 - **Dependencies**: lucide-react
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 6/10, Motion 3/10, Density 8/10
+- **Taste Dials**: Variance 6/10, Motion 4/10, Density 8/10
 - **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ```tsx
@@ -14857,10 +16360,10 @@ export function AiMessageThread({
 ---
 
 ### Ai Model Selector (`ai-model-selector`)
-- **Category**: `ui:primitive`
+- **Category**: `ui:ai-native`
 - **Dependencies**: lucide-react
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **Taste Dials**: Variance 6/10, Motion 4/10, Density 8/10
 - **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ```tsx
@@ -14984,10 +16487,10 @@ export function AiModelSelector({
 ---
 
 ### Ai Prompt Input (`ai-prompt-input`)
-- **Category**: `ui:block`
+- **Category**: `ui:ai-native`
 - **Dependencies**: lucide-react
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 6/10, Motion 3/10, Density 8/10
+- **Taste Dials**: Variance 6/10, Motion 4/10, Density 8/10
 - **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ```tsx
@@ -15239,10 +16742,10 @@ export function AiPromptInput({
 ---
 
 ### Ai Reasoning Foldout (`ai-reasoning-foldout`)
-- **Category**: `ui:primitive`
+- **Category**: `ui:ai-native`
 - **Dependencies**: lucide-react
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **Taste Dials**: Variance 6/10, Motion 4/10, Density 8/10
 - **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ```tsx
@@ -15372,10 +16875,10 @@ export function AiReasoningFoldout({
 ---
 
 ### Ai Token Meter (`ai-token-meter`)
-- **Category**: `ui:primitive`
+- **Category**: `ui:ai-native`
 - **Dependencies**: lucide-react
 - **Registry Dependencies**: None
-- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **Taste Dials**: Variance 6/10, Motion 4/10, Density 8/10
 - **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ```tsx
@@ -15954,6 +17457,154 @@ export function ColorPickerPopover({
 
 ---
 
+### Color Picker Primitive (`color-picker-primitive`)
+- **Category**: `ui:primitive`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 4/10, Motion 2/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Ark UI (https://github.com/chakra-ui/ark) / Ariakit
+ * @author Chakra Systems & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useState, useId } from "react";
+import { Pipette, Check, Copy } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface ColorPickerPrimitiveProps {
+  initialHex?: string;
+  onColorChange?: (hex: string) => void;
+  className?: string;
+}
+
+const PRESET_PALETTE = [
+  "#09090b",
+  "#27272a",
+  "#71717a",
+  "#e4e4e7",
+  "#fafafa",
+  "#2563eb",
+  "#059669",
+  "#d97706",
+  "#dc2626",
+];
+
+export function ColorPickerPrimitive({
+  initialHex = "#27272a",
+  onColorChange,
+  className,
+}: ColorPickerPrimitiveProps) {
+  const [selectedHex, setSelectedHex] = useState<string>(initialHex);
+  const [copied, setCopied] = useState<boolean>(false);
+  const inputId = useId();
+
+  const handleSelect = (hex: string) => {
+    setSelectedHex(hex);
+    onColorChange?.(hex);
+  };
+
+  const copyToClipboard = () => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(selectedHex);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    }
+  };
+
+  return (
+    <div
+      className={cn(
+        "flex flex-col w-72 rounded-xl border border-border bg-card p-4 text-foreground shadow-sm",
+        className
+      )}
+      role="region"
+      aria-label="Accessible Headless Color Picker"
+    >
+      <div className="flex items-center justify-between border-b border-border pb-2.5">
+        <span className="text-xs font-semibold">Color Selection</span>
+        <div className="flex items-center gap-1.5">
+          <div
+            className="h-4 w-4 rounded-full border border-border"
+            style={{ backgroundColor: selectedHex }}
+            aria-hidden="true"
+          />
+          <span className="font-mono text-xs text-muted-foreground">{selectedHex}</span>
+        </div>
+      </div>
+
+      {/* Preset Swatches Palette */}
+      <div className="mt-3 grid grid-cols-5 gap-2" role="radiogroup" aria-label="Color swatches">
+        {PRESET_PALETTE.map((hex) => {
+          const isCurrent = hex.toLowerCase() === selectedHex.toLowerCase();
+          return (
+            <button
+              key={hex}
+              type="button"
+              role="radio"
+              aria-checked={isCurrent}
+              aria-label={`Color ${hex}`}
+              onClick={() => handleSelect(hex)}
+              className={cn(
+                "relative flex h-8 w-full items-center justify-center rounded-md border transition-all hover:scale-105 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+                isCurrent ? "border-primary ring-2 ring-primary" : "border-border"
+              )}
+              style={{ backgroundColor: hex }}
+            >
+              {isCurrent && (
+                <Check
+                  className={cn(
+                    "h-3.5 w-3.5",
+                    hex === "#fafafa" || hex === "#e4e4e7" ? "text-zinc-900" : "text-white"
+                  )}
+                  aria-hidden="true"
+                />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Hex Custom Input Field */}
+      <div className="mt-4 flex items-center gap-2">
+        <label htmlFor={inputId} className="text-xs font-medium text-muted-foreground">
+          HEX
+        </label>
+        <input
+          id={inputId}
+          type="text"
+          value={selectedHex}
+          onChange={(e) => handleSelect(e.target.value)}
+          className="flex-1 rounded-md border border-border bg-background px-2.5 py-1 font-mono text-xs focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        />
+        <button
+          type="button"
+          onClick={copyToClipboard}
+          aria-label="Copy hex color code"
+          className="flex items-center gap-1 rounded-md border border-border bg-background px-2 py-1 text-xs transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          {copied ? (
+            <Check className="h-3.5 w-3.5 text-emerald-500" aria-hidden="true" />
+          ) : (
+            <Copy className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
+          )}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Virtualized Search Combobox (`combobox-virtualized`)
 - **Category**: `ui:primitive`
 - **Dependencies**: lucide-react, clsx, tailwind-merge
@@ -16369,6 +18020,158 @@ export function CommandMenu({
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Date Range Picker Popover (`date-range-picker-popover`)
+- **Category**: `ui:primitive`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 4/10, Motion 3/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Ark UI (https://github.com/chakra-ui/ark) / Ariakit
+ * @author Ariakit & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useState } from "react";
+import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface DateRangePickerPopoverProps {
+  startDate?: string;
+  endDate?: string;
+  onRangeChange?: (range: { start: string; end: string }) => void;
+  className?: string;
+}
+
+export function DateRangePickerPopover({
+  startDate = "2026-08-01",
+  endDate = "2026-08-30",
+  onRangeChange,
+  className,
+}: DateRangePickerPopoverProps) {
+  const [range, setRange] = useState<{ start: string; end: string }>({
+    start: startDate,
+    end: endDate,
+  });
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  // Generate simple 30-day mock month grid for keyboard-navigable demonstration
+  const days = Array.from({ length: 31 }, (_, i) => i + 1);
+
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
+  return (
+    <div className={cn("relative inline-block text-foreground", className)}>
+      <button
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
+        aria-expanded={isOpen}
+        aria-haspopup="dialog"
+        aria-label={`Select date range. Currently ${range.start} to ${range.end}`}
+        className="flex items-center gap-2 rounded-lg border border-border bg-background px-3.5 py-2 text-xs font-medium transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+      >
+        <CalendarIcon className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+        <span>
+          {range.start} – {range.end}
+        </span>
+      </button>
+
+      {isOpen && (
+        <div
+          role="dialog"
+          aria-label="Date Range Calendar"
+          className="absolute left-0 top-full z-50 mt-2 w-80 rounded-xl border border-border bg-card p-4 shadow-lg"
+        >
+          <div className="flex items-center justify-between border-b border-border pb-3">
+            <span className="text-xs font-semibold">August 2026</span>
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                aria-label="Previous month"
+                className="p-1 rounded-md border border-border bg-background text-muted-foreground hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <ChevronLeft className="h-3.5 w-3.5" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                aria-label="Next month"
+                className="p-1 rounded-md border border-border bg-background text-muted-foreground hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+
+          {/* Calendar Day Grid */}
+          <div className="mt-3 grid grid-cols-7 gap-1 text-center text-xs">
+            {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
+              <span key={day} className="font-mono text-[10px] text-muted-foreground py-1">
+                {day}
+              </span>
+            ))}
+
+            {days.map((d) => {
+              const isSelected = d >= 1 && d <= 30;
+              const isEdge = d === 1 || d === 30;
+
+              return (
+                <button
+                  key={d}
+                  type="button"
+                  onClick={() => {
+                    const newRange = { start: `2026-08-${d < 10 ? "0" + d : d}`, end: range.end };
+                    setRange(newRange);
+                    onRangeChange?.(newRange);
+                  }}
+                  className={cn(
+                    "flex h-8 w-full items-center justify-center rounded-md font-mono text-xs transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+                    isEdge
+                      ? "bg-primary text-primary-foreground font-semibold"
+                      : isSelected
+                      ? "bg-primary/10 text-primary"
+                      : "hover:bg-muted text-foreground"
+                  )}
+                >
+                  {d}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-4 flex items-center justify-end gap-2 border-t border-border pt-3">
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="rounded-md border border-border px-2.5 py-1 text-xs font-medium hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -19769,6 +21572,695 @@ export function ThemeToggleDropdown({
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+```
+
+---
+
+### Agent Node Graph (`agent-node-graph`)
+- **Category**: `ui:workflow`
+- **Dependencies**: motion, lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 5/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin XY Flow (https://github.com/xyflow/xyflow)
+ * @author XY Flow Team & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useState, useCallback, useMemo } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { Play, Pause, RefreshCw, Layers, CheckCircle2, AlertCircle, Clock } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface AgentNode {
+  id: string;
+  name: string;
+  role: string;
+  status: "idle" | "running" | "completed" | "failed";
+  x: number;
+  y: number;
+  connections: string[];
+}
+
+export interface AgentNodeGraphProps {
+  nodes?: AgentNode[];
+  onNodeSelect?: (node: AgentNode) => void;
+  className?: string;
+}
+
+const DEFAULT_NODES: AgentNode[] = [
+  { id: "planner", name: "Planner Agent", role: "Decomposes goals into tasks", status: "completed", x: 60, y: 120, connections: ["researcher", "coder"] },
+  { id: "researcher", name: "Research Agent", role: "Fetches docs & verifies APIs", status: "completed", x: 300, y: 60, connections: ["evaluator"] },
+  { id: "coder", name: "Coder Agent", role: "Writes zero-slop TSX implementations", status: "running", x: 300, y: 200, connections: ["evaluator"] },
+  { id: "evaluator", name: "Quality Gate", role: "Runs automated a11y & anti-slop checks", status: "idle", x: 560, y: 130, connections: [] },
+];
+
+export function AgentNodeGraph({
+  nodes = DEFAULT_NODES,
+  onNodeSelect,
+  className,
+}: AgentNodeGraphProps) {
+  const [activeNodeId, setActiveNodeId] = useState<string>("coder");
+  const [isRunning, setIsRunning] = useState<boolean>(true);
+  const shouldReduceMotion = useReducedMotion();
+
+  const handleSelect = useCallback(
+    (node: AgentNode) => {
+      setActiveNodeId(node.id);
+      onNodeSelect?.(node);
+    },
+    [onNodeSelect]
+  );
+
+  const selectedNode = useMemo(
+    () => nodes.find((n) => n.id === activeNodeId) || nodes[0],
+    [nodes, activeNodeId]
+  );
+
+  return (
+    <div
+      className={cn(
+        "relative flex flex-col w-full overflow-hidden rounded-xl border border-border bg-card text-foreground shadow-sm",
+        className
+      )}
+      role="region"
+      aria-label="Agent Orchestration Node Graph"
+    >
+      {/* Graph Toolbar */}
+      <div className="flex items-center justify-between border-b border-border bg-muted/40 px-4 py-2.5">
+        <div className="flex items-center gap-2">
+          <Layers className="h-4 w-4 text-primary" aria-hidden="true" />
+          <span className="text-xs font-mono font-medium tracking-tight">AGENT // NODE_TOPOLOGY_v1</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsRunning((prev) => !prev)}
+            aria-label={isRunning ? "Pause agent pipeline" : "Resume agent pipeline"}
+            className="flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1 text-xs font-medium transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {isRunning ? (
+              <>
+                <Pause className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
+                <span>Pause</span>
+              </>
+            ) : (
+              <>
+                <Play className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+                <span>Resume</span>
+              </>
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveNodeId("planner")}
+            aria-label="Reset agent node view"
+            className="rounded-md border border-border bg-background p-1.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      {/* Interactive Spatial Canvas Viewport */}
+      <div className="relative h-80 w-full overflow-hidden bg-background">
+        {/* Subtle coordinate dot grid */}
+        <div
+          className="absolute inset-0 opacity-15"
+          style={{
+            backgroundImage: "radial-gradient(currentColor 1px, transparent 1px)",
+            backgroundSize: "20px 20px",
+          }}
+          aria-hidden="true"
+        />
+
+        {/* SVG Connection Edges */}
+        <svg className="absolute inset-0 h-full w-full pointer-events-none" aria-hidden="true">
+          <defs>
+            <linearGradient id="edge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="var(--muted-foreground)" stopOpacity="0.3" />
+            </linearGradient>
+          </defs>
+          {nodes.map((node) =>
+            node.connections.map((targetId) => {
+              const target = nodes.find((n) => n.id === targetId);
+              if (!target) return null;
+              const startX = node.x + 130;
+              const startY = node.y + 36;
+              const endX = target.x;
+              const endY = target.y + 36;
+              const midX = (startX + endX) / 2;
+
+              return (
+                <path
+                  key={`${node.id}-${target.id}`}
+                  d={`M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="text-border"
+                />
+              );
+            })
+          )}
+        </svg>
+
+        {/* Interactive Node Cards */}
+        {nodes.map((node) => {
+          const isSelected = node.id === activeNodeId;
+          const statusIcon =
+            node.status === "completed" ? (
+              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" aria-hidden="true" />
+            ) : node.status === "running" ? (
+              <Clock className="h-3.5 w-3.5 animate-spin text-primary" aria-hidden="true" />
+            ) : (
+              <AlertCircle className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
+            );
+
+          return (
+            <motion.div
+              key={node.id}
+              onClick={() => handleSelect(node)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleSelect(node);
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-pressed={isSelected}
+              aria-label={`${node.name} (${node.status})`}
+              className={cn(
+                "absolute cursor-pointer rounded-lg border bg-card p-3 shadow-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring",
+                isSelected ? "border-primary ring-1 ring-primary" : "border-border hover:border-muted-foreground"
+              )}
+              style={{
+                left: `${node.x}px`,
+                top: `${node.y}px`,
+                width: "150px",
+              }}
+              initial={false}
+              animate={shouldReduceMotion ? {} : { scale: isSelected ? 1.02 : 1 }}
+              transition={{ type: "spring", stiffness: 350, damping: 25 }}
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-semibold">{node.name}</span>
+                {statusIcon}
+              </div>
+              <p className="text-[11px] text-muted-foreground line-clamp-1">{node.role}</p>
+              <div className="mt-2 flex items-center justify-between border-t border-border/60 pt-1 text-[10px] font-mono text-muted-foreground">
+                <span>STATUS</span>
+                <span className="uppercase">{node.status}</span>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Node Details Inspection Footer */}
+      {selectedNode && (
+        <div className="border-t border-border bg-muted/20 px-4 py-3 text-xs">
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-muted-foreground">INSPECTING: {selectedNode.id}</span>
+            <span className="font-mono text-[11px] uppercase tracking-wider text-primary">
+              {selectedNode.status}
+            </span>
+          </div>
+          <p className="mt-1 text-sm font-medium">{selectedNode.role}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+```
+
+---
+
+### Data Pipeline Canvas (`data-pipeline-canvas`)
+- **Category**: `ui:workflow`
+- **Dependencies**: motion, lucide-react, three, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 5/10, Motion 4/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin XY Flow (https://github.com/xyflow/xyflow)
+ * @author XY Flow & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { Database, ArrowRight, Activity, HardDrive, Cpu } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface PipelineStage {
+  id: string;
+  name: string;
+  type: "source" | "transformer" | "sink";
+  throughput: string;
+  latencyMs: number;
+}
+
+export interface DataPipelineCanvasProps {
+  stages?: PipelineStage[];
+  className?: string;
+}
+
+const DEFAULT_STAGES: PipelineStage[] = [
+  { id: "s1", name: "DTCG Token Store", type: "source", throughput: "1.2 MB/s", latencyMs: 4 },
+  { id: "s2", name: "AST Codemod Engine", type: "transformer", throughput: "850 KB/s", latencyMs: 18 },
+  { id: "s3", name: "Axe A11y Validator", type: "transformer", throughput: "420 KB/s", latencyMs: 32 },
+  { id: "s4", name: "Registry Distribution", type: "sink", throughput: "1.2 MB/s", latencyMs: 2 },
+];
+
+export function DataPipelineCanvas({
+  stages = DEFAULT_STAGES,
+  className,
+}: DataPipelineCanvasProps) {
+  const [activeStageId, setActiveStageId] = useState<string>("s2");
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <div
+      className={cn(
+        "flex flex-col w-full rounded-xl border border-border bg-card text-foreground overflow-hidden shadow-sm",
+        className
+      )}
+      role="region"
+      aria-label="Real-time Streaming Data Pipeline Canvas"
+    >
+      <div className="flex items-center justify-between border-b border-border bg-muted/30 px-4 py-2.5">
+        <div className="flex items-center gap-2">
+          <Activity className="h-4 w-4 text-primary" aria-hidden="true" />
+          <span className="text-xs font-mono font-medium tracking-tight">
+            STREAMING_PIPELINE // HARVEST_INGEST
+          </span>
+        </div>
+        <span className="text-xs font-mono text-muted-foreground">REAL-TIME TELEMETRY</span>
+      </div>
+
+      <div className="p-6 flex flex-col md:flex-row items-center justify-between gap-4 overflow-x-auto">
+        {stages.map((stage, idx) => {
+          const isSelected = stage.id === activeStageId;
+          const StageIcon =
+            stage.type === "source"
+              ? HardDrive
+              : stage.type === "sink"
+              ? Database
+              : Cpu;
+
+          return (
+            <React.Fragment key={stage.id}>
+              <motion.div
+                onClick={() => setActiveStageId(stage.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setActiveStageId(stage.id);
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-pressed={isSelected}
+                aria-label={`Pipeline Stage: ${stage.name}, throughput ${stage.throughput}`}
+                className={cn(
+                  "flex flex-col min-w-[170px] rounded-lg border p-3.5 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-ring",
+                  isSelected
+                    ? "border-primary bg-primary/5 ring-1 ring-primary"
+                    : "border-border bg-background hover:bg-muted/40"
+                )}
+                initial={false}
+                animate={shouldReduceMotion ? {} : { scale: isSelected ? 1.02 : 1 }}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase text-muted-foreground">
+                    {stage.type}
+                  </span>
+                  <StageIcon className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+                </div>
+                <h4 className="mt-2 text-xs font-semibold">{stage.name}</h4>
+                <div className="mt-2 flex items-center justify-between border-t border-border/60 pt-2 text-[11px] font-mono text-muted-foreground">
+                  <span>{stage.throughput}</span>
+                  <span>{stage.latencyMs}ms</span>
+                </div>
+              </motion.div>
+
+              {idx < stages.length - 1 && (
+                <div className="hidden md:flex items-center text-muted-foreground" aria-hidden="true">
+                  <ArrowRight className="h-4 w-4" />
+                </div>
+              )}
+            </React.Fragment>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Decision Node Canvas (`decision-node-canvas`)
+- **Category**: `ui:workflow`
+- **Dependencies**: motion, lucide-react, three, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 4/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin XY Flow (https://github.com/xyflow/xyflow)
+ * @author XY Flow & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useState, useId } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { GitBranch, Check, X, ShieldCheck, HelpCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface DecisionNode {
+  id: string;
+  title: string;
+  condition: string;
+  passTargetId?: string;
+  failTargetId?: string;
+  status?: "pending" | "passed" | "rejected";
+}
+
+export interface DecisionNodeCanvasProps {
+  nodes?: DecisionNode[];
+  onDecisionSelect?: (node: DecisionNode) => void;
+  className?: string;
+}
+
+const DEFAULT_DECISIONS: DecisionNode[] = [
+  { id: "d1", title: "A11y AA Pass", condition: "Contrast >= 4.5:1 & Keyboard Focus", passTargetId: "d2", failTargetId: "d3", status: "passed" },
+  { id: "d2", title: "Zero AI Slop", condition: "35 Rules Verified (No Indigo / Gradients)", passTargetId: "d4", failTargetId: "d3", status: "passed" },
+  { id: "d3", title: "Automated Fix", condition: "Apply AST Codemods & Re-verify", status: "pending" },
+  { id: "d4", title: "Release Gate", condition: "Approved for /r/ Distribution", status: "passed" },
+];
+
+export function DecisionNodeCanvas({
+  nodes = DEFAULT_DECISIONS,
+  onDecisionSelect,
+  className,
+}: DecisionNodeCanvasProps) {
+  const [selectedId, setSelectedId] = useState<string>("d2");
+  const shouldReduceMotion = useReducedMotion();
+  const labelId = useId();
+
+  return (
+    <div
+      className={cn(
+        "flex flex-col w-full rounded-xl border border-border bg-card text-foreground overflow-hidden shadow-sm",
+        className
+      )}
+      role="region"
+      aria-labelledby={labelId}
+    >
+      <div className="flex items-center justify-between border-b border-border bg-muted/30 px-4 py-2.5">
+        <div className="flex items-center gap-2">
+          <GitBranch className="h-4 w-4 text-primary" aria-hidden="true" />
+          <span id={labelId} className="text-xs font-mono font-medium tracking-tight">
+            DECISION_DAG // GATES
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" aria-hidden="true" />
+          <span>Deterministic Audit Branching</span>
+        </div>
+      </div>
+
+      <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        {nodes.map((node, index) => {
+          const isSelected = node.id === selectedId;
+
+          return (
+            <motion.div
+              key={node.id}
+              onClick={() => {
+                setSelectedId(node.id);
+                onDecisionSelect?.(node);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setSelectedId(node.id);
+                  onDecisionSelect?.(node);
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-pressed={isSelected}
+              aria-label={`${node.title}: ${node.condition}`}
+              className={cn(
+                "relative rounded-lg border p-4 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-ring",
+                isSelected
+                  ? "border-primary bg-primary/5 ring-1 ring-primary"
+                  : "border-border bg-background hover:bg-muted/30"
+              )}
+              initial={false}
+              animate={shouldReduceMotion ? {} : { scale: isSelected ? 1.01 : 1 }}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs text-muted-foreground">NODE 0{index + 1}</span>
+                {node.status === "passed" ? (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+                    <Check className="h-3 w-3" aria-hidden="true" />
+                    Passed
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground">
+                    <HelpCircle className="h-3 w-3" aria-hidden="true" />
+                    Pending
+                  </span>
+                )}
+              </div>
+
+              <h4 className="mt-2 text-sm font-semibold">{node.title}</h4>
+              <p className="mt-1 text-xs text-muted-foreground">{node.condition}</p>
+
+              {(node.passTargetId || node.failTargetId) && (
+                <div className="mt-3 flex items-center gap-2 border-t border-border/70 pt-2 text-[11px] font-mono">
+                  {node.passTargetId && (
+                    <span className="text-emerald-600 dark:text-emerald-400">
+                      PASS → {node.passTargetId}
+                    </span>
+                  )}
+                  {node.failTargetId && (
+                    <span className="text-destructive">
+                      FAIL → {node.failTargetId}
+                    </span>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Embedded Whiteboard (`embedded-whiteboard`)
+- **Category**: `ui:workflow`
+- **Dependencies**: lucide-react, three, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 7/10, Motion 2/10, Density 5/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @license MIT
+ * @origin Excalidraw (https://github.com/excalidraw/excalidraw)
+ * @author Excalidraw & Machine-First Design Agent Wiki
+ * @curated-by Machine-First Design Agent Wiki
+ * Maintained under upstream open-source license terms.
+ */
+
+"use client";
+
+import React, { useRef, useState, useEffect } from "react";
+import { PenTool, Eraser, RotateCcw, Download, Sparkles } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface EmbeddedWhiteboardProps {
+  initialText?: string;
+  className?: string;
+}
+
+export function EmbeddedWhiteboard({
+  initialText = "AI Agent Workflow Whiteboard Annotation",
+  className,
+}: EmbeddedWhiteboardProps) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [tool, setTool] = useState<"pen" | "eraser">("pen");
+  const [isDrawing, setIsDrawing] = useState<boolean>(false);
+  const [strokeCount, setStrokeCount] = useState<number>(0);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Set high-DPI scaling
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+
+    // Initial sketch prompt text
+    ctx.fillStyle = "#888888";
+    ctx.font = "14px monospace";
+    ctx.fillText(`// ${initialText}`, 20, 30);
+  }, [initialText]);
+
+  const clearCanvas = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    setStrokeCount(0);
+  };
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    setIsDrawing(true);
+    const rect = canvas.getBoundingClientRect();
+    ctx.beginPath();
+    ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!isDrawing) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const rect = canvas.getBoundingClientRect();
+    ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+    ctx.strokeStyle = tool === "pen" ? "currentColor" : "var(--background, #fff)";
+    ctx.lineWidth = tool === "pen" ? 2 : 16;
+    ctx.lineCap = "round";
+    ctx.stroke();
+  };
+
+  const handlePointerUp = () => {
+    setIsDrawing(false);
+    setStrokeCount((prev) => prev + 1);
+  };
+
+  return (
+    <div
+      className={cn(
+        "flex flex-col w-full rounded-xl border border-border bg-card text-foreground overflow-hidden shadow-sm",
+        className
+      )}
+      role="region"
+      aria-label="Embedded Vector Whiteboard"
+    >
+      <div className="flex items-center justify-between border-b border-border bg-muted/30 px-4 py-2.5">
+        <div className="flex items-center gap-2">
+          <PenTool className="h-4 w-4 text-primary" aria-hidden="true" />
+          <span className="text-xs font-mono font-medium tracking-tight">
+            WHITEBOARD // ANNOTATION_CANVAS
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setTool("pen")}
+            aria-pressed={tool === "pen"}
+            aria-label="Select pen tool"
+            className={cn(
+              "p-1.5 rounded-md border text-xs transition-colors focus-visible:ring-2 focus-visible:ring-ring",
+              tool === "pen" ? "bg-primary text-primary-foreground border-primary" : "bg-background border-border hover:bg-muted"
+            )}
+          >
+            <PenTool className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setTool("eraser")}
+            aria-pressed={tool === "eraser"}
+            aria-label="Select eraser tool"
+            className={cn(
+              "p-1.5 rounded-md border text-xs transition-colors focus-visible:ring-2 focus-visible:ring-ring",
+              tool === "eraser" ? "bg-primary text-primary-foreground border-primary" : "bg-background border-border hover:bg-muted"
+            )}
+          >
+            <Eraser className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={clearCanvas}
+            aria-label="Clear whiteboard canvas"
+            className="p-1.5 rounded-md border border-border bg-background text-xs transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <RotateCcw className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      <div className="relative h-64 w-full bg-background">
+        <canvas
+          ref={canvasRef}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerLeave={handlePointerUp}
+          className="h-full w-full cursor-crosshair touch-none"
+        >
+          {/* Static accessible text fallback for screen-readers & non-canvas clients (SLOP-031) */}
+          <div className="p-4 text-xs text-muted-foreground">
+            Fallback view: {initialText}. Interactive vector sketching is not supported on this device.
+          </div>
+        </canvas>
+      </div>
+
+      <div className="flex items-center justify-between border-t border-border bg-muted/20 px-4 py-2 text-[11px] font-mono text-muted-foreground">
+        <span>STROKES: {strokeCount}</span>
+        <span>EXCALIDRAW_PRIMITIVE</span>
+      </div>
     </div>
   );
 }

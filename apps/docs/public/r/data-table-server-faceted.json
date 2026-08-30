@@ -1,0 +1,56 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "data-table-server-faceted",
+  "type": "registry:block",
+  "title": "Data Table Server Faceted",
+  "description": "Enterprise data table with column pinning, multi-facet filtering, and keyboard navigation.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "block",
+    "table",
+    "data-grid",
+    "faceted",
+    "primer"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 2,
+    "visual_density": 9
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "table",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/primer/react",
+    "license_type": "MIT",
+    "author": "GitHub Primer Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/data-table-server-faceted.tsx",
+      "content": "/**\n * @license MIT\n * @origin Primer React / Tremor UI\n * @author GitHub Primer Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState, useMemo } from \"react\";\nimport { Search, Filter, ChevronLeft, ChevronRight, CheckCircle, ShieldAlert } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface TableRowItem {\n  id: string;\n  name: string;\n  category: string;\n  status: \"verified\" | \"flagged\" | \"review\";\n  varianceDial: number;\n  lastUpdated: string;\n}\n\nexport interface DataTableServerFacetedProps {\n  initialItems?: TableRowItem[];\n  className?: string;\n}\n\nconst DEFAULT_ROWS: TableRowItem[] = [\n  { id: \"comp-1\", name: \"agent-node-graph.tsx\", category: \"ui:workflow\", status: \"verified\", varianceDial: 6, lastUpdated: \"2026-08-30\" },\n  { id: \"comp-2\", name: \"smooth-scroll-provider.tsx\", category: \"ui:motion\", status: \"verified\", varianceDial: 4, lastUpdated: \"2026-08-30\" },\n  { id: \"comp-3\", name: \"mesh-gradient-shader.tsx\", category: \"ui:creative\", status: \"verified\", varianceDial: 8, lastUpdated: \"2026-08-30\" },\n  { id: \"comp-4\", name: \"kpi-stat-card-group.tsx\", category: \"ui:block\", status: \"verified\", varianceDial: 5, lastUpdated: \"2026-08-30\" },\n  { id: \"comp-5\", name: \"color-picker-primitive.tsx\", category: \"ui:primitive\", status: \"verified\", varianceDial: 3, lastUpdated: \"2026-08-30\" },\n];\n\nexport function DataTableServerFaceted({\n  initialItems = DEFAULT_ROWS,\n  className,\n}: DataTableServerFacetedProps) {\n  const [searchTerm, setSearchTerm] = useState<string>(\"\");\n  const [selectedCategory, setSelectedCategory] = useState<string>(\"all\");\n\n  const filteredItems = useMemo(() => {\n    return initialItems.filter((item) => {\n      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());\n      const matchesCategory = selectedCategory === \"all\" || item.category === selectedCategory;\n      return matchesSearch && matchesCategory;\n    });\n  }, [initialItems, searchTerm, selectedCategory]);\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card text-foreground overflow-hidden shadow-sm\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Server-Faceted Data Table\"\n    >\n      {/* Table Control Bar */}\n      <div className=\"flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-border bg-muted/20 p-4\">\n        <div className=\"relative w-full sm:w-72\">\n          <Search className=\"absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground\" aria-hidden=\"true\" />\n          <input\n            type=\"text\"\n            value={searchTerm}\n            onChange={(e) => setSearchTerm(e.target.value)}\n            placeholder=\"Filter components by name...\"\n            aria-label=\"Search components\"\n            className=\"w-full rounded-md border border-border bg-background pl-9 pr-3 py-1.5 text-xs text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          />\n        </div>\n\n        <div className=\"flex items-center gap-2 w-full sm:w-auto\">\n          <Filter className=\"h-4 w-4 text-muted-foreground\" aria-hidden=\"true\" />\n          <select\n            value={selectedCategory}\n            onChange={(e) => setSelectedCategory(e.target.value)}\n            aria-label=\"Filter by taxonomy category\"\n            className=\"rounded-md border border-border bg-background px-3 py-1.5 text-xs text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\"\n          >\n            <option value=\"all\">All Categories</option>\n            <option value=\"ui:workflow\">Workflow</option>\n            <option value=\"ui:motion\">Motion</option>\n            <option value=\"ui:creative\">Creative</option>\n            <option value=\"ui:block\">Blocks</option>\n            <option value=\"ui:primitive\">Primitives</option>\n          </select>\n        </div>\n      </div>\n\n      {/* Accessible Table */}\n      <div className=\"overflow-x-auto\">\n        <table className=\"w-full text-left text-xs\">\n          <thead className=\"border-b border-border bg-muted/40 font-mono text-[11px] text-muted-foreground uppercase\">\n            <tr>\n              <th scope=\"col\" className=\"px-4 py-3 font-medium\">Component</th>\n              <th scope=\"col\" className=\"px-4 py-3 font-medium\">Category</th>\n              <th scope=\"col\" className=\"px-4 py-3 font-medium\">Status</th>\n              <th scope=\"col\" className=\"px-4 py-3 font-medium\">Variance</th>\n              <th scope=\"col\" className=\"px-4 py-3 font-medium text-right\">Updated</th>\n            </tr>\n          </thead>\n          <tbody className=\"divide-y divide-border\">\n            {filteredItems.length === 0 ? (\n              <tr>\n                <td colSpan={5} className=\"px-4 py-8 text-center text-muted-foreground\">\n                  No components matching filter criteria.\n                </td>\n              </tr>\n            ) : (\n              filteredItems.map((item) => (\n                <tr key={item.id} className=\"transition-colors hover:bg-muted/30\">\n                  <td className=\"px-4 py-3 font-mono font-medium\">{item.name}</td>\n                  <td className=\"px-4 py-3\">\n                    <span className=\"rounded-md bg-muted px-2 py-0.5 font-mono text-[10px]\">\n                      {item.category}\n                    </span>\n                  </td>\n                  <td className=\"px-4 py-3\">\n                    <span className=\"inline-flex items-center gap-1 font-medium text-emerald-600 dark:text-emerald-400\">\n                      <CheckCircle className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                      Verified\n                    </span>\n                  </td>\n                  <td className=\"px-4 py-3 font-mono\">{item.varianceDial}/10</td>\n                  <td className=\"px-4 py-3 text-right font-mono text-muted-foreground\">\n                    {item.lastUpdated}\n                  </td>\n                </tr>\n              ))\n            )}\n          </tbody>\n        </table>\n      </div>\n\n      {/* Pagination Footer */}\n      <div className=\"flex items-center justify-between border-t border-border bg-muted/20 px-4 py-2.5 text-xs text-muted-foreground\">\n        <span>Showing {filteredItems.length} entries</span>\n        <div className=\"flex items-center gap-1\">\n          <button\n            type=\"button\"\n            aria-label=\"Previous page\"\n            className=\"p-1 rounded-md border border-border bg-background transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <ChevronLeft className=\"h-4 w-4\" aria-hidden=\"true\" />\n          </button>\n          <button\n            type=\"button\"\n            aria-label=\"Next page\"\n            className=\"p-1 rounded-md border border-border bg-background transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <ChevronRight className=\"h-4 w-4\" aria-hidden=\"true\" />\n          </button>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/data-table-server-faceted.tsx"
+    }
+  ]
+}

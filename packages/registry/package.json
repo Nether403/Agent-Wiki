@@ -6,7 +6,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsx compiler/build-registry.ts"
+    "build": "pnpm build:tokens && tsx compiler/build-registry.ts",
+    "build:tokens": "tsx tokens/build-tokens.ts"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",

@@ -149,7 +149,9 @@ export function ParticleField({
           ref={canvasRef}
           className="pointer-events-none absolute inset-0 h-full w-full"
           aria-hidden="true"
-        />
+        >
+          <div className="p-4 text-xs text-muted-foreground">Fallback: Particle field animation active.</div>
+        </canvas>
       )}
       <div className="relative z-10">
         <h4 className="text-base font-semibold text-foreground">Interactive Particle Web</h4>

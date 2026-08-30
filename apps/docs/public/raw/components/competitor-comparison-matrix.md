@@ -1,7 +1,7 @@
 ---
 id: "competitor-comparison-matrix"
 name: "Competitor Comparison Matrix"
-category: "ui:utility"
+category: "ui:editorial"
 library_origin: "https://github.com/design-agent-wiki"
 dependencies:
   - "lucide-react"
@@ -9,11 +9,11 @@ tags:
   - "lucide-react"
   - "tailwind-v4"
   - "wai-aria-compliant"
-  - "utility"
+  - "editorial"
 dials:
-  design_variance: 2      # 1: Conservative · 10: Asymmetric editorial
-  motion_intensity: 4     # 1: Basic hover · 10: Canvas/WebGL springs
-  visual_density: 9       # 1: Generous whitespace · 10: Dense analytical UI
+  design_variance: 5      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: 1     # 1: Basic hover · 10: Canvas/WebGL springs
+  visual_density: 10       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "high"
 a11y:
   keyboard_navigable: false
@@ -24,10 +24,10 @@ a11y:
 # Competitor Comparison Matrix (`competitor-comparison-matrix`)
 > Curated production-grade component.
 
-- **Taxonomy Category**: `ui:utility`
+- **Taxonomy Category**: `ui:editorial`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: lucide-react, tailwind-v4, wai-aria-compliant, utility
-- **Design Dials**: Variance 2/10 · Motion 4/10 · Density 9/10
+- **Technical Tags**: lucide-react, tailwind-v4, wai-aria-compliant, editorial
+- **Design Dials**: Variance 5/10 · Motion 1/10 · Density 10/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ## Installation Recipe

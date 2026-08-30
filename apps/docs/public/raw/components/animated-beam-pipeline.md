@@ -11,6 +11,8 @@ tags:
   - "lucide-react"
   - "tailwind-v4"
   - "wai-aria-compliant"
+  - "workflow"
+  - "node-graph"
   - "motion"
   - "animated-beam"
   - "pipeline"
@@ -32,7 +34,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:motion`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: lucide-react, tailwind-v4, wai-aria-compliant, motion, animated-beam, pipeline, laser, magic-ui
+- **Technical Tags**: lucide-react, tailwind-v4, wai-aria-compliant, workflow, node-graph, motion, animated-beam, pipeline, laser, magic-ui
 - **Design Dials**: Variance 7/10 · Motion 7/10 · Density 6/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 

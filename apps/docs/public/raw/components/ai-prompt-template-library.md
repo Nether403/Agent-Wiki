@@ -15,8 +15,8 @@ tags:
   - "accessible"
   - "keyboard-accessible"
   - "wai-aria-compliant"
-  - "layout-block"
   - "ai-native"
+  - "agent-ui"
   - "prompts"
   - "template-library"
   - "carousel"
@@ -37,7 +37,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:ai-native`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, ai-native, prompts, template-library, carousel, cult-ui
+- **Technical Tags**: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, prompts, template-library, carousel, cult-ui
 - **Design Dials**: Variance 5/10 · Motion 3/10 · Density 6/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 

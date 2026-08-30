@@ -1013,6 +1013,204 @@ const COMPONENT_METADATA_OVERRIDES: Record<
     dependencies: ["lucide-react", "clsx", "tailwind-merge"],
     registryDependencies: [],
   },
+  "agent-node-graph": {
+    title: "Agent Node Graph",
+    description: "Dynamic visual canvas representing multi-agent orchestration, pipeline steps, and tool executions.",
+    category: "ui:workflow",
+    tags: ["workflow", "canvas", "agent", "xyflow", "dag", "interactive"],
+    dials: { design_variance: 6, motion_intensity: 5, visual_density: 7 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, wai_aria_role: "region", fallback_provided: true },
+    license: { source_repository: "https://github.com/xyflow/xyflow", license_type: "MIT", author: "XY Flow Team", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["motion", "lucide-react", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "decision-node-canvas": {
+    title: "Decision Node Canvas",
+    description: "Interactive DAG flow with condition nodes, zooming/panning, and branch evaluation.",
+    category: "ui:workflow",
+    tags: ["workflow", "canvas", "decision-tree", "dag", "xyflow"],
+    dials: { design_variance: 6, motion_intensity: 4, visual_density: 6 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, wai_aria_role: "region", fallback_provided: true },
+    license: { source_repository: "https://github.com/xyflow/xyflow", license_type: "MIT", author: "XY Flow Team", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["motion", "lucide-react", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "data-pipeline-canvas": {
+    title: "Data Pipeline Canvas",
+    description: "Real-time streaming data pipeline editor with custom input/output sockets and latency metrics.",
+    category: "ui:workflow",
+    tags: ["workflow", "canvas", "pipeline", "streaming", "data"],
+    dials: { design_variance: 5, motion_intensity: 4, visual_density: 7 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, wai_aria_role: "region", fallback_provided: true },
+    license: { source_repository: "https://github.com/xyflow/xyflow", license_type: "MIT", author: "XY Flow Team", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["motion", "lucide-react", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "embedded-whiteboard": {
+    title: "Embedded Whiteboard",
+    description: "Lightweight vector annotation whiteboard with high-DPI scaling and accessible text transcript fallback.",
+    category: "ui:workflow",
+    tags: ["workflow", "whiteboard", "canvas", "sketch", "excalidraw"],
+    dials: { design_variance: 7, motion_intensity: 2, visual_density: 5 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, wai_aria_role: "region", fallback_provided: true },
+    license: { source_repository: "https://github.com/excalidraw/excalidraw", license_type: "MIT", author: "Excalidraw Team", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["lucide-react", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "meteors-background": {
+    title: "Meteors Background",
+    description: "Pure CSS/Tailwind animated shooting star and meteor backdrop with reduced-motion support.",
+    category: "ui:creative",
+    tags: ["creative", "background", "meteors", "magic-ui", "animation"],
+    dials: { design_variance: 7, motion_intensity: 6, visual_density: 4 },
+    a11y: { keyboard_navigable: false, wai_aria_compliant: true, fallback_provided: true, reduced_motion_supported: true },
+    license: { source_repository: "https://github.com/magicuidesign/magicui", license_type: "MIT", author: "Magic UI Team", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["motion", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "retro-grid": {
+    title: "Retro Grid",
+    description: "Isometric 3D scrolling grid with linear top-to-bottom opacity fade and perspective horizon.",
+    category: "ui:creative",
+    tags: ["creative", "grid", "retro", "magic-ui", "3d"],
+    dials: { design_variance: 7, motion_intensity: 5, visual_density: 4 },
+    a11y: { keyboard_navigable: false, wai_aria_compliant: true, fallback_provided: true, reduced_motion_supported: true },
+    license: { source_repository: "https://github.com/magicuidesign/magicui", license_type: "MIT", author: "Magic UI Team", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["motion", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "animated-beam": {
+    title: "Animated Beam",
+    description: "SVG animated glowing curve connecting multiple nodes with continuous gradient travel.",
+    category: "ui:motion",
+    tags: ["motion", "beam", "svg", "curve", "magic-ui"],
+    dials: { design_variance: 6, motion_intensity: 6, visual_density: 5 },
+    a11y: { keyboard_navigable: false, wai_aria_compliant: true, fallback_provided: true, reduced_motion_supported: true },
+    license: { source_repository: "https://github.com/magicuidesign/magicui", license_type: "MIT", author: "Magic UI Team", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["motion", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "mesh-gradient-shader": {
+    title: "Mesh Gradient Shader",
+    description: "Zero-dependency WebGL organic gradient canvas with static CSS fallback and reduced-motion bypass.",
+    category: "ui:creative",
+    tags: ["creative", "webgl", "shader", "gradient", "paper-shaders"],
+    dials: { design_variance: 8, motion_intensity: 6, visual_density: 4 },
+    a11y: { keyboard_navigable: false, wai_aria_compliant: true, fallback_provided: true, reduced_motion_supported: true },
+    license: { source_repository: "https://github.com/paper-design/shaders", license_type: "Apache-2.0", author: "Paper Design", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["motion", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "grain-noise-shader": {
+    title: "Grain Noise Shader",
+    description: "Ultra-low-overhead SVG simplex noise backdrop for texture and editorial polish.",
+    category: "ui:creative",
+    tags: ["creative", "noise", "shader", "svg", "paper-shaders"],
+    dials: { design_variance: 6, motion_intensity: 2, visual_density: 5 },
+    a11y: { keyboard_navigable: false, wai_aria_compliant: true, fallback_provided: true },
+    license: { source_repository: "https://github.com/paper-design/shaders", license_type: "Apache-2.0", author: "Paper Design", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "interactive-hover-button": {
+    title: "Interactive Hover Button",
+    description: "Magnetic particle expansion button with smooth spring scale and focus-visible indicators.",
+    category: "ui:motion",
+    tags: ["motion", "button", "interactive", "hover", "animata"],
+    dials: { design_variance: 5, motion_intensity: 6, visual_density: 6 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, wai_aria_role: "button", fallback_provided: true, reduced_motion_supported: true },
+    license: { source_repository: "https://github.com/codse/animata", license_type: "MIT", author: "Animata Team", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["motion", "lucide-react", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "smooth-scroll-provider": {
+    title: "Smooth Scroll Provider",
+    description: "Context wrapper managing Lenis smooth-scrolling with accessibility-respecting reduced-motion bypass.",
+    category: "ui:motion",
+    tags: ["motion", "scroll", "lenis", "smooth-scroll", "context"],
+    dials: { design_variance: 4, motion_intensity: 5, visual_density: 5 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, fallback_provided: true, reduced_motion_supported: true },
+    license: { source_repository: "https://github.com/darkroomengineering/lenis", license_type: "MIT", author: "Darkroom Engineering", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["motion", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "parallax-scroll-container": {
+    title: "Parallax Scroll Container",
+    description: "Zero-lag scroll-anchored viewport container with reduced-motion fallback.",
+    category: "ui:motion",
+    tags: ["motion", "parallax", "scroll", "viewport"],
+    dials: { design_variance: 6, motion_intensity: 6, visual_density: 5 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, fallback_provided: true, reduced_motion_supported: true },
+    license: { source_repository: "https://github.com/darkroomengineering/lenis", license_type: "MIT", author: "Darkroom Engineering", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["motion", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "spring-orchestrator": {
+    title: "Spring Orchestrator",
+    description: "Coordinated stagger animation manager with spring physics presets and reduced-motion safety.",
+    category: "ui:motion",
+    tags: ["motion", "spring", "orchestration", "stagger"],
+    dials: { design_variance: 5, motion_intensity: 5, visual_density: 6 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, fallback_provided: true, reduced_motion_supported: true },
+    license: { source_repository: "https://github.com/motiondivision/motion", license_type: "MIT", author: "Motion Division", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["motion", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "kpi-stat-card-group": {
+    title: "KPI Stat Card Group",
+    description: "Multi-metric comparison cards with inline delta percentages, target thresholds, and mini sparklines.",
+    category: "ui:block",
+    tags: ["block", "kpi", "dashboard", "analytics", "tremor"],
+    dials: { design_variance: 5, motion_intensity: 3, visual_density: 8 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, fallback_provided: true },
+    license: { source_repository: "https://github.com/tremorlabs/tremor", license_type: "Apache-2.0", author: "Tremor Labs", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["lucide-react", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "data-table-server-faceted": {
+    title: "Data Table Server Faceted",
+    description: "Enterprise data table with column pinning, multi-facet filtering, and keyboard navigation.",
+    category: "ui:block",
+    tags: ["block", "table", "data-grid", "faceted", "primer"],
+    dials: { design_variance: 4, motion_intensity: 2, visual_density: 9 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, wai_aria_role: "table", fallback_provided: true },
+    license: { source_repository: "https://github.com/primer/react", license_type: "MIT", author: "GitHub Primer Team", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["lucide-react", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "audit-timeline-stream": {
+    title: "Audit Timeline Stream",
+    description: "Dense audit log with JSON diff expandable rows and actor attribution avatars.",
+    category: "ui:block",
+    tags: ["block", "timeline", "audit", "stream", "primer"],
+    dials: { design_variance: 5, motion_intensity: 3, visual_density: 8 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, wai_aria_role: "region", fallback_provided: true },
+    license: { source_repository: "https://github.com/primer/react", license_type: "MIT", author: "GitHub Primer Team", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["lucide-react", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "color-picker-primitive": {
+    title: "Color Picker Primitive",
+    description: "Accessible headless color picker with hex/rgb input, palette swatches, and clipboard copy.",
+    category: "ui:primitive",
+    tags: ["primitive", "color-picker", "form", "headless", "ark-ui"],
+    dials: { design_variance: 4, motion_intensity: 2, visual_density: 7 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, wai_aria_role: "region", fallback_provided: true },
+    license: { source_repository: "https://github.com/chakra-ui/ark", license_type: "MIT", author: "Chakra Systems", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["lucide-react", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
+  "date-range-picker-popover": {
+    title: "Date Range Picker Popover",
+    description: "Accessible date range selection popover with calendar grid and keyboard navigation.",
+    category: "ui:primitive",
+    tags: ["primitive", "calendar", "date-picker", "popover", "ariakit"],
+    dials: { design_variance: 4, motion_intensity: 3, visual_density: 7 },
+    a11y: { keyboard_navigable: true, wai_aria_compliant: true, wai_aria_role: "dialog", fallback_provided: true },
+    license: { source_repository: "https://github.com/ariakit/ariakit", license_type: "MIT", author: "Ariakit Team", attribution_required: true, redistribution_mode: "full_source" },
+    dependencies: ["lucide-react", "clsx", "tailwind-merge"],
+    registryDependencies: [],
+  },
 };
 
 /**
@@ -1210,10 +1408,23 @@ function main() {
 
     allRegistryItems.push(registryItem);
 
+function safeWriteFileSync(filePath: string, content: string, retries = 5, delayMs = 30): void {
+  for (let i = 0; i < retries; i++) {
+    try {
+      fs.writeFileSync(filePath, content, "utf-8");
+      return;
+    } catch (err: unknown) {
+      if (i === retries - 1) throw err;
+      const end = Date.now() + delayMs;
+      while (Date.now() < end) {}
+    }
+  }
+}
+
     // Serialize individual item JSON (with escaped JSX/TSX source strings)
     const itemJson = JSON.stringify(registryItem, null, 2);
-    fs.writeFileSync(path.join(distRDir, `${slug}.json`), itemJson);
-    fs.writeFileSync(path.join(docsRDir, `${slug}.json`), itemJson);
+    safeWriteFileSync(path.join(distRDir, `${slug}.json`), itemJson);
+    safeWriteFileSync(path.join(docsRDir, `${slug}.json`), itemJson);
 
     // Generate and write markdown representation with standard YAML frontmatter contract
     const depsYaml =
@@ -1272,15 +1483,15 @@ ${fileContent}
 \`\`\`
 `;
 
-    fs.writeFileSync(path.join(docsRawComponentsDir, `${slug}.md`), markdownDoc);
+    safeWriteFileSync(path.join(docsRawComponentsDir, `${slug}.md`), markdownDoc);
 
     console.log(`  ✓ Compiled [${registryItem.category}]: ${slug}.json + ${slug}.md (Complexity: ${registryItem.complexity}, Deps: ${registryItem.dependencies.length})`);
   }
 
   // Write master registry.json
   const registryJson = JSON.stringify(allRegistryItems, null, 2);
-  fs.writeFileSync(path.join(distRDir, "registry.json"), registryJson);
-  fs.writeFileSync(path.join(docsRDir, "registry.json"), registryJson);
+  safeWriteFileSync(path.join(distRDir, "registry.json"), registryJson);
+  safeWriteFileSync(path.join(docsRDir, "registry.json"), registryJson);
 
   // Generate /llms.txt
   let llmsTxt = `# Machine-First Design Agent Wiki\n> Curated High-Performance UI Registries & Anti-Slop Safeguards\n\n`;
@@ -1308,7 +1519,7 @@ ${fileContent}
     llmsTxt += `\n`;
   }
 
-  fs.writeFileSync(path.join(docsPublicDir, "llms.txt"), llmsTxt);
+  safeWriteFileSync(path.join(docsPublicDir, "llms.txt"), llmsTxt);
 
   // Generate full LLM context index (/llms-full.txt)
   let llmsFullTxt = llmsTxt + `\n## Component Specifications & Source Contracts\n\n`;
@@ -1322,7 +1533,7 @@ ${fileContent}
     llmsFullTxt += "```tsx\n" + item.files[0].content + "\n```\n\n---\n\n";
   });
 
-  fs.writeFileSync(path.join(docsPublicDir, "llms-full.txt"), llmsFullTxt);
+  safeWriteFileSync(path.join(docsPublicDir, "llms-full.txt"), llmsFullTxt);
 
   console.log(`\n🎉 Registry Build Complete! Compiled ${allRegistryItems.length} components.`);
   console.log(`📁 Artifacts generated:`);

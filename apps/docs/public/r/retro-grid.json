@@ -1,0 +1,53 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "retro-grid",
+  "type": "registry:component",
+  "title": "Retro Grid",
+  "description": "Isometric 3D scrolling grid with linear top-to-bottom opacity fade and perspective horizon.",
+  "category": "ui:creative",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "creative",
+    "grid",
+    "retro",
+    "magic-ui",
+    "3d"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 5,
+    "visual_density": 4
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/magicuidesign/magicui",
+    "license_type": "MIT",
+    "author": "Magic UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/retro-grid.tsx",
+      "content": "/**\n * @license MIT\n * @origin Magic UI (https://github.com/magicuidesign/magicui)\n * @author Magic UI Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React from \"react\";\nimport { useReducedMotion } from \"motion/react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface RetroGridProps {\n  angle?: number;\n  className?: string;\n  children?: React.ReactNode;\n}\n\nexport function RetroGrid({\n  angle = 65,\n  className,\n  children,\n}: RetroGridProps) {\n  const shouldReduceMotion = useReducedMotion();\n\n  return (\n    <div\n      className={cn(\n        \"relative flex w-full items-center justify-center overflow-hidden rounded-xl border border-border bg-card p-12 text-foreground\",\n        className\n      )}\n    >\n      <div\n        className=\"pointer-events-none absolute inset-0 overflow-hidden [perspective:200px]\"\n        aria-hidden=\"true\"\n      >\n        {/* Animated grid plane */}\n        <div\n          className={cn(\n            \"absolute inset-0 [transform-origin:100%_0_0]\",\n            !shouldReduceMotion && \"motion-safe:animate-grid\"\n          )}\n          style={{\n            transform: `rotateX(${angle}deg)`,\n            backgroundImage: `linear-gradient(to right, rgba(120, 120, 120, 0.2) 1px, transparent 0),\n                              linear-gradient(to bottom, rgba(120, 120, 120, 0.2) 1px, transparent 0)`,\n            backgroundSize: \"40px 40px\",\n            backgroundRepeat: \"repeat\",\n            height: \"300%\",\n            marginLeft: \"-50%\",\n            transformOrigin: \"50% 0\",\n            width: \"200%\",\n          }}\n        />\n      </div>\n\n      {/* Linear top-to-bottom opacity fade */}\n      <div\n        className=\"pointer-events-none absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent\"\n        aria-hidden=\"true\"\n      />\n\n      <div className=\"relative z-10\">{children}</div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/retro-grid.tsx"
+    }
+  ]
+}

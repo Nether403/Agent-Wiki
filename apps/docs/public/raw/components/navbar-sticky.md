@@ -14,10 +14,10 @@ tags:
   - "accessible"
   - "keyboard-accessible"
   - "wai-aria-compliant"
+  - "layout-block"
   - "navbar"
   - "navigation"
   - "header"
-  - "layout-block"
   - "responsive"
 dials:
   design_variance: 4      # 1: Conservative · 10: Asymmetric editorial
@@ -35,7 +35,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:block`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, navbar, navigation, header, layout-block, responsive
+- **Technical Tags**: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, layout-block, navbar, navigation, header, responsive
 - **Design Dials**: Variance 4/10 · Motion 3/10 · Density 6/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 
@@ -97,6 +97,16 @@ export function NavbarSticky({
   className,
 }: NavbarStickyProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileOpen) {
+        setMobileOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileOpen]);
 
   return (
     <header

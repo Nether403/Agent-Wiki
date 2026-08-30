@@ -13,7 +13,8 @@
     "check-slop": "tsx src/cli.ts",
     "review": "tsx src/cli.ts review",
     "taste": "tsx src/cli.ts taste",
-    "test": "tsx src/cli.ts taste"
+    "axe": "tsx src/axe-runner.ts",
+    "test": "tsx src/cli.ts taste && tsx src/axe-runner.ts"
   },
   "dependencies": {},
   "devDependencies": {

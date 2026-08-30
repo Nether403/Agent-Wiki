@@ -7,10 +7,11 @@ dependencies:
   # No external runtime dependencies
 tags:
   - "wai-aria-compliant"
+  - "editorial"
 dials:
-  design_variance: 3      # 1: Conservative · 10: Asymmetric editorial
-  motion_intensity: 2     # 1: Basic hover · 10: Canvas/WebGL springs
-  visual_density: 6       # 1: Generous whitespace · 10: Dense analytical UI
+  design_variance: 5      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: 1     # 1: Basic hover · 10: Canvas/WebGL springs
+  visual_density: 9       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "high"
 a11y:
   keyboard_navigable: false
@@ -23,8 +24,8 @@ a11y:
 
 - **Taxonomy Category**: `ui:editorial`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: wai-aria-compliant
-- **Design Dials**: Variance 3/10 · Motion 2/10 · Density 6/10
+- **Technical Tags**: wai-aria-compliant, editorial
+- **Design Dials**: Variance 5/10 · Motion 1/10 · Density 9/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ## Installation Recipe

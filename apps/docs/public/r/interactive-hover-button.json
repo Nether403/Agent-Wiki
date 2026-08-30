@@ -1,0 +1,59 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "interactive-hover-button",
+  "type": "registry:component",
+  "title": "Interactive Hover Button",
+  "description": "Magnetic particle expansion button with smooth spring scale and focus-visible indicators.",
+  "category": "ui:motion",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "spring-physics",
+    "motion",
+    "button",
+    "interactive",
+    "hover",
+    "animata"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 6,
+    "visual_density": 6
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "button",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/codse/animata",
+    "license_type": "MIT",
+    "author": "Animata Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/interactive-hover-button.tsx",
+      "content": "/**\n * @license MIT\n * @origin Animata / Magic UI\n * @author Animata Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { motion, useReducedMotion } from \"motion/react\";\nimport { ArrowRight } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface InteractiveHoverButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  text?: string;\n  className?: string;\n}\n\nexport function InteractiveHoverButton({\n  text = \"Explore Registry\",\n  className,\n  ref,\n  ...props\n}: InteractiveHoverButtonProps & { ref?: React.Ref<HTMLButtonElement> }) {\n  const [isHovered, setIsHovered] = useState<boolean>(false);\n  const shouldReduceMotion = useReducedMotion();\n\n  return (\n    <button\n      ref={ref}\n      onMouseEnter={() => setIsHovered(true)}\n      onMouseLeave={() => setIsHovered(false)}\n      className={cn(\n        \"group relative cursor-pointer overflow-hidden rounded-full border border-border bg-background px-6 py-2.5 text-center font-medium text-foreground transition-colors duration-200 hover:bg-muted/40 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\",\n        className\n      )}\n      {...props}\n    >\n      <span className=\"inline-block transition-transform transition-opacity duration-300 group-hover:translate-x-12 group-hover:opacity-0\">\n        {text}\n      </span>\n\n      <div className=\"absolute top-0 z-10 flex h-full w-full translate-x-12 items-center justify-center gap-2 text-primary-foreground opacity-0 transition-transform transition-opacity duration-300 group-hover:-translate-x-5 group-hover:opacity-100\">\n        <span className=\"text-sm font-semibold\">{text}</span>\n        <ArrowRight className=\"h-4 w-4\" aria-hidden=\"true\" />\n      </div>\n\n      {!shouldReduceMotion && (\n        <motion.div\n          className=\"absolute left-[20%] top-[40%] h-2 w-2 scale-[1] rounded-full bg-primary transition-transform duration-300 group-hover:left-[0%] group-hover:top-[0%] group-hover:h-full group-hover:w-full group-hover:scale-[1.8]\"\n          initial={false}\n          animate={{ scale: isHovered ? 1.8 : 1 }}\n          transition={{ type: \"spring\", stiffness: 350, damping: 26 }}\n        />\n      )}\n    </button>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/interactive-hover-button.tsx"
+    }
+  ]
+}

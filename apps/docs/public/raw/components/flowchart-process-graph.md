@@ -8,10 +8,11 @@ dependencies:
 tags:
   - "tailwind-v4"
   - "wai-aria-compliant"
+  - "editorial"
 dials:
-  design_variance: 3      # 1: Conservative · 10: Asymmetric editorial
-  motion_intensity: 2     # 1: Basic hover · 10: Canvas/WebGL springs
-  visual_density: 8       # 1: Generous whitespace · 10: Dense analytical UI
+  design_variance: 5      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: 1     # 1: Basic hover · 10: Canvas/WebGL springs
+  visual_density: 10       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "high"
 a11y:
   keyboard_navigable: false
@@ -24,8 +25,8 @@ a11y:
 
 - **Taxonomy Category**: `ui:editorial`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: tailwind-v4, wai-aria-compliant
-- **Design Dials**: Variance 3/10 · Motion 2/10 · Density 8/10
+- **Technical Tags**: tailwind-v4, wai-aria-compliant, editorial
+- **Design Dials**: Variance 5/10 · Motion 1/10 · Density 10/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ## Installation Recipe

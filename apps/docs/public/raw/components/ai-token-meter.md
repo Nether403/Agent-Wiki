@@ -1,7 +1,7 @@
 ---
 id: "ai-token-meter"
 name: "Ai Token Meter"
-category: "ui:primitive"
+category: "ui:ai-native"
 library_origin: "https://github.com/design-agent-wiki"
 dependencies:
   - "lucide-react"
@@ -9,9 +9,11 @@ tags:
   - "lucide-react"
   - "tailwind-v4"
   - "wai-aria-compliant"
+  - "ai-native"
+  - "agent-ui"
 dials:
-  design_variance: 3      # 1: Conservative · 10: Asymmetric editorial
-  motion_intensity: 2     # 1: Basic hover · 10: Canvas/WebGL springs
+  design_variance: 6      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: 4     # 1: Basic hover · 10: Canvas/WebGL springs
   visual_density: 8       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "medium"
 a11y:
@@ -23,10 +25,10 @@ a11y:
 # Ai Token Meter (`ai-token-meter`)
 > Curated production-grade component.
 
-- **Taxonomy Category**: `ui:primitive`
+- **Taxonomy Category**: `ui:ai-native`
 - **Structural Complexity**: `MEDIUM`
-- **Technical Tags**: lucide-react, tailwind-v4, wai-aria-compliant
-- **Design Dials**: Variance 3/10 · Motion 2/10 · Density 8/10
+- **Technical Tags**: lucide-react, tailwind-v4, wai-aria-compliant, ai-native, agent-ui
+- **Design Dials**: Variance 6/10 · Motion 4/10 · Density 8/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ## Installation Recipe

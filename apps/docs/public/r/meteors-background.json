@@ -1,0 +1,53 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "meteors-background",
+  "type": "registry:component",
+  "title": "Meteors Background",
+  "description": "Pure CSS/Tailwind animated shooting star and meteor backdrop with reduced-motion support.",
+  "category": "ui:creative",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "tailwind-v4",
+    "brutalist",
+    "wai-aria-compliant",
+    "creative",
+    "background",
+    "meteors",
+    "magic-ui"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 6,
+    "visual_density": 4
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/magicuidesign/magicui",
+    "license_type": "MIT",
+    "author": "Magic UI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/meteors-background.tsx",
+      "content": "/**\n * @license MIT\n * @origin Magic UI (https://github.com/magicuidesign/magicui)\n * @author Magic UI Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useMemo } from \"react\";\nimport { useReducedMotion } from \"motion/react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface MeteorsBackgroundProps {\n  number?: number;\n  className?: string;\n  children?: React.ReactNode;\n}\n\ninterface MeteorStyle {\n  top: string;\n  left: string;\n  animationDelay: string;\n  animationDuration: string;\n}\n\nexport function MeteorsBackground({\n  number = 20,\n  className,\n  children,\n}: MeteorsBackgroundProps) {\n  const shouldReduceMotion = useReducedMotion();\n\n  const meteors = useMemo<MeteorStyle[]>(() => {\n    const list: MeteorStyle[] = [];\n    for (let i = 0; i < number; i++) {\n      list.push({\n        top: `${Math.floor(Math.random() * 80) - 20}%`,\n        left: `${Math.floor(Math.random() * 100)}%`,\n        animationDelay: `${(Math.random() * 1 + 0.2).toFixed(2)}s`,\n        animationDuration: `${Math.floor(Math.random() * 8 + 4)}s`,\n      });\n    }\n    return list;\n  }, [number]);\n\n  return (\n    <div\n      className={cn(\n        \"relative w-full overflow-hidden rounded-xl border border-border bg-card p-8 text-foreground\",\n        className\n      )}\n    >\n      {!shouldReduceMotion && (\n        <div className=\"absolute inset-0 pointer-events-none overflow-hidden\" aria-hidden=\"true\">\n          {meteors.map((style, idx) => (\n            <span\n              key={idx}\n              className=\"absolute h-0.5 w-0.5 rotate-[215deg] rounded-[9999px] bg-primary/80 shadow-[0_0_0_1px_rgba(255,255,255,0.1)] before:absolute before:top-1/2 before:-translate-y-1/2 before:w-12 before:h-[1px] before:bg-gradient-to-r before:from-primary before:to-transparent\"\n              style={{\n                top: style.top,\n                left: style.left,\n                animation: `meteor ${style.animationDuration} linear infinite`,\n                animationDelay: style.animationDelay,\n              }}\n            />\n          ))}\n        </div>\n      )}\n      <div className=\"relative z-10\">{children}</div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/meteors-background.tsx"
+    }
+  ]
+}

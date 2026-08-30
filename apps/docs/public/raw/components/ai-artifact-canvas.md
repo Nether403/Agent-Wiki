@@ -1,7 +1,7 @@
 ---
 id: "ai-artifact-canvas"
 name: "Ai Artifact Canvas"
-category: "ui:creative"
+category: "ui:ai-native"
 library_origin: "https://github.com/design-agent-wiki"
 dependencies:
   - "lucide-react"
@@ -17,10 +17,12 @@ tags:
   - "keyboard-accessible"
   - "wai-aria-compliant"
   - "canvas"
+  - "ai-native"
+  - "agent-ui"
 dials:
-  design_variance: 8      # 1: Conservative · 10: Asymmetric editorial
-  motion_intensity: 9     # 1: Basic hover · 10: Canvas/WebGL springs
-  visual_density: 5       # 1: Generous whitespace · 10: Dense analytical UI
+  design_variance: 6      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: 4     # 1: Basic hover · 10: Canvas/WebGL springs
+  visual_density: 8       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "high"
 a11y:
   keyboard_navigable: true
@@ -31,10 +33,10 @@ a11y:
 # Ai Artifact Canvas (`ai-artifact-canvas`)
 > Curated production-grade component.
 
-- **Taxonomy Category**: `ui:creative`
+- **Taxonomy Category**: `ui:ai-native`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: lucide-react, webgl, threejs, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, canvas
-- **Design Dials**: Variance 8/10 · Motion 9/10 · Density 5/10
+- **Technical Tags**: lucide-react, webgl, threejs, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, canvas, ai-native, agent-ui
+- **Design Dials**: Variance 6/10 · Motion 4/10 · Density 8/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ## Installation Recipe

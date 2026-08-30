@@ -4,16 +4,16 @@
   "type": "registry:component",
   "title": "Dot Matrix Scoreboard",
   "description": "Curated production-grade component.",
-  "category": "ui:utility",
+  "category": "ui:editorial",
   "tags": [
     "tailwind-v4",
     "wai-aria-compliant",
-    "utility"
+    "editorial"
   ],
   "dials": {
-    "design_variance": 2,
-    "motion_intensity": 4,
-    "visual_density": 9
+    "design_variance": 5,
+    "motion_intensity": 1,
+    "visual_density": 10
   },
   "complexity": "high",
   "a11y": {

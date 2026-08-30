@@ -7,6 +7,7 @@ dependencies:
   - "three"
   - "clsx"
   - "tailwind-merge"
+  - "motion"
 tags:
   - "webgl"
   - "threejs"
@@ -51,6 +52,7 @@ npx shadcn@latest add http://localhost:3000/r/grid-distort-interactive.json
 - `three`
 - `clsx`
 - `tailwind-merge`
+- `motion`
 
 ## Verified TypeScript Source
 ```tsx
@@ -104,6 +106,22 @@ export function GridDistortInteractive({
 
     canvas.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("mouseleave", handleMouseLeave);
+
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      ctx.strokeStyle = "rgba(100, 116, 139, 0.2)";
+      ctx.lineWidth = 1;
+      for (let y = 0; y <= height; y += gridSpacing) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+      return;
+    }
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
@@ -177,7 +195,7 @@ export function GridDistortInteractive({
         className="absolute inset-0 w-full h-full object-cover"
         aria-label="Distortable Grid Canvas"
       >
-        <div>Distortable grid active</div>
+        <div className="p-4 text-xs text-muted-foreground">Fallback: Distortable grid canvas active</div>
       </canvas>
 
       <div className="relative z-10 flex flex-col items-center justify-center p-6 text-center pointer-events-none">

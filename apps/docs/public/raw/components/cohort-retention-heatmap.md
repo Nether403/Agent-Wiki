@@ -9,6 +9,7 @@ dependencies:
 tags:
   - "tailwind-v4"
   - "wai-aria-compliant"
+  - "editorial"
   - "chart"
   - "cohort"
   - "heatmap"
@@ -30,7 +31,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:editorial`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: tailwind-v4, wai-aria-compliant, chart, cohort, heatmap, matrix, tremor-raw
+- **Technical Tags**: tailwind-v4, wai-aria-compliant, editorial, chart, cohort, heatmap, matrix, tremor-raw
 - **Design Dials**: Variance 5/10 · Motion 2/10 · Density 9/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 

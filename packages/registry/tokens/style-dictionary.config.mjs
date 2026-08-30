@@ -1,0 +1,31 @@
+/**
+ * @license MIT
+ * @origin Machine-First Design Agent Wiki
+ * Style Dictionary Multi-Target Configuration
+ */
+
+export default {
+  source: ["packages/registry/tokens/design-tokens.json"],
+  platforms: {
+    css: {
+      transformGroup: "css",
+      buildPath: "apps/docs/app/",
+      files: [
+        {
+          destination: "tokens.css",
+          format: "css/variables",
+        },
+      ],
+    },
+    ts: {
+      transformGroup: "js",
+      buildPath: "packages/registry/src/lib/",
+      files: [
+        {
+          destination: "tokens.ts",
+          format: "javascript/es6",
+        },
+      ],
+    },
+  },
+};

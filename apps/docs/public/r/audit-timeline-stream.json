@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "audit-timeline-stream",
+  "type": "registry:block",
+  "title": "Audit Timeline Stream",
+  "description": "Dense audit log with JSON diff expandable rows and actor attribution avatars.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "block",
+    "timeline",
+    "audit",
+    "stream",
+    "primer"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 3,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/primer/react",
+    "license_type": "MIT",
+    "author": "GitHub Primer Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/audit-timeline-stream.tsx",
+      "content": "/**\n * @license MIT\n * @origin Primer React / Tremor UI\n * @author GitHub Primer Team & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { ShieldCheck, ChevronDown, ChevronUp, Bot, Terminal, Check } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface AuditEvent {\n  id: string;\n  actor: string;\n  actorType: \"agent\" | \"human\" | \"ci\";\n  action: string;\n  timestamp: string;\n  diffSummary: string;\n  detailsJson: string;\n}\n\nexport interface AuditTimelineStreamProps {\n  events?: AuditEvent[];\n  className?: string;\n}\n\nconst DEFAULT_EVENTS: AuditEvent[] = [\n  {\n    id: \"evt-101\",\n    actor: \"harvester-bot\",\n    actorType: \"agent\",\n    action: \"Harvested Magic UI Gem Components\",\n    timestamp: \"2 mins ago\",\n    diffSummary: \"+6 files normalized to Tailwind v4\",\n    detailsJson: JSON.stringify({ codemod: \"magic-ui-transformer.ts\", status: \"success\", flags: 0 }, null, 2),\n  },\n  {\n    id: \"evt-102\",\n    actor: \"axe-runner\",\n    actorType: \"ci\",\n    action: \"Automated WCAG 2.1 AA Audit Passed\",\n    timestamp: \"10 mins ago\",\n    diffSummary: \"100% compliance across all 154 items\",\n    detailsJson: JSON.stringify({ suite: \"axe-runner.ts\", violations: 0, score: 100 }, null, 2),\n  },\n  {\n    id: \"evt-103\",\n    actor: \"lead-engineer\",\n    actorType: \"human\",\n    action: \"Tagged v1.2.0 Zero-Slop Registry Release\",\n    timestamp: \"1 hour ago\",\n    diffSummary: \"Signed commit sha: 7f9a1c4\",\n    detailsJson: JSON.stringify({ release: \"v1.2.0\", signoff: true }, null, 2),\n  },\n];\n\nexport function AuditTimelineStream({\n  events = DEFAULT_EVENTS,\n  className,\n}: AuditTimelineStreamProps) {\n  const [expandedEventId, setExpandedEventId] = useState<string | null>(\"evt-101\");\n\n  const toggleExpand = (id: string) => {\n    setExpandedEventId((prev) => (prev === id ? null : id));\n  };\n\n  return (\n    <div\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card text-foreground overflow-hidden shadow-sm\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Audit Timeline Stream\"\n    >\n      <div className=\"flex items-center justify-between border-b border-border bg-muted/30 px-4 py-2.5\">\n        <div className=\"flex items-center gap-2\">\n          <ShieldCheck className=\"h-4 w-4 text-emerald-500\" aria-hidden=\"true\" />\n          <span className=\"text-xs font-mono font-medium tracking-tight\">\n            AUDIT_STREAM // IMMUTABLE_LOG\n          </span>\n        </div>\n        <span className=\"text-xs font-mono text-muted-foreground\">LIVE LEDGER</span>\n      </div>\n\n      <div className=\"p-4 divide-y divide-border\">\n        {events.map((event) => {\n          const isExpanded = expandedEventId === event.id;\n\n          return (\n            <div key={event.id} className=\"py-3 first:pt-0 last:pb-0\">\n              <div className=\"flex items-center justify-between gap-3\">\n                <div className=\"flex items-center gap-3\">\n                  <div className=\"flex h-7 w-7 items-center justify-center rounded-full border border-border bg-muted/60 text-foreground\">\n                    {event.actorType === \"agent\" ? (\n                      <Bot className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                    ) : (\n                      <Terminal className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n                    )}\n                  </div>\n                  <div>\n                    <div className=\"flex items-center gap-2\">\n                      <span className=\"text-xs font-semibold\">{event.action}</span>\n                      <span className=\"rounded bg-muted px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground\">\n                        {event.actor}\n                      </span>\n                    </div>\n                    <p className=\"text-[11px] text-muted-foreground\">{event.diffSummary}</p>\n                  </div>\n                </div>\n\n                <div className=\"flex items-center gap-3\">\n                  <span className=\"text-[11px] font-mono text-muted-foreground\">\n                    {event.timestamp}\n                  </span>\n                  <button\n                    type=\"button\"\n                    onClick={() => toggleExpand(event.id)}\n                    aria-expanded={isExpanded}\n                    aria-label={isExpanded ? \"Collapse audit event details\" : \"Expand audit event details\"}\n                    className=\"p-1 rounded-md border border-border bg-background transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring\"\n                  >\n                    {isExpanded ? (\n                      <ChevronUp className=\"h-3.5 w-3.5 text-muted-foreground\" aria-hidden=\"true\" />\n                    ) : (\n                      <ChevronDown className=\"h-3.5 w-3.5 text-muted-foreground\" aria-hidden=\"true\" />\n                    )}\n                  </button>\n                </div>\n              </div>\n\n              {isExpanded && (\n                <div className=\"mt-2.5 rounded-lg border border-border bg-muted/30 p-3\">\n                  <pre className=\"font-mono text-[11px] text-muted-foreground overflow-x-auto\">\n                    <code>{event.detailsJson}</code>\n                  </pre>\n                </div>\n              )}\n            </div>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/audit-timeline-stream.tsx"
+    }
+  ]
+}

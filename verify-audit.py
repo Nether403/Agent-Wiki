@@ -328,6 +328,7 @@ EXCLUDE_FILES = {
     'add.ts',
     'list.ts',
     'build-registry.ts',
+    'build-tokens.ts',
     'eval-runner.ts',
     'a11y-eval.ts',
     'compiler-eval.ts',

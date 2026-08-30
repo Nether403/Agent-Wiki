@@ -1,0 +1,134 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "color": {
+    "background": {
+      "$value": "hsl(0 0% 100%)",
+      "$type": "color",
+      "$description": "Root page background canvas"
+    },
+    "foreground": {
+      "$value": "hsl(240 10% 3.9%)",
+      "$type": "color",
+      "$description": "Default text and icon foreground"
+    },
+    "card": {
+      "$value": "hsl(0 0% 100%)",
+      "$type": "color",
+      "$description": "Structured card background surface"
+    },
+    "cardForeground": {
+      "$value": "hsl(240 10% 3.9%)",
+      "$type": "color",
+      "$description": "Card content foreground text"
+    },
+    "primary": {
+      "$value": "hsl(240 5.9% 10%)",
+      "$type": "color",
+      "$description": "Primary action and high-emphasis accent"
+    },
+    "primaryForeground": {
+      "$value": "hsl(0 0% 98%)",
+      "$type": "color",
+      "$description": "Text rendered over primary surface"
+    },
+    "secondary": {
+      "$value": "hsl(240 4.8% 95.9%)",
+      "$type": "color",
+      "$description": "Secondary surface for subdued cards and badges"
+    },
+    "secondaryForeground": {
+      "$value": "hsl(240 5.9% 10%)",
+      "$type": "color",
+      "$description": "Text rendered over secondary surface"
+    },
+    "muted": {
+      "$value": "hsl(240 4.8% 95.9%)",
+      "$type": "color",
+      "$description": "Muted backgrounds and subtle highlights"
+    },
+    "mutedForeground": {
+      "$value": "hsl(240 3.8% 46.1%)",
+      "$type": "color",
+      "$description": "Subdued secondary text meeting WCAG AA contrast"
+    },
+    "accent": {
+      "$value": "hsl(240 4.8% 95.9%)",
+      "$type": "color",
+      "$description": "Interactive hover and selected accent"
+    },
+    "accentForeground": {
+      "$value": "hsl(240 5.9% 10%)",
+      "$type": "color",
+      "$description": "Foreground on interactive accent"
+    },
+    "destructive": {
+      "$value": "hsl(0 84.2% 60.2%)",
+      "$type": "color",
+      "$description": "Destructive and error state indicators"
+    },
+    "destructiveForeground": {
+      "$value": "hsl(0 0% 98%)",
+      "$type": "color",
+      "$description": "Text rendered over destructive surface"
+    },
+    "border": {
+      "$value": "hsl(240 5.9% 90%)",
+      "$type": "color",
+      "$description": "Hairline structural border divider"
+    },
+    "input": {
+      "$value": "hsl(240 5.9% 90%)",
+      "$type": "color",
+      "$description": "Form input and toggle border token"
+    },
+    "ring": {
+      "$value": "hsl(240 5.9% 10%)",
+      "$type": "color",
+      "$description": "Accessible focus-visible ring indicator"
+    }
+  },
+  "radius": {
+    "sm": {
+      "$value": "0.375rem",
+      "$type": "dimension",
+      "$description": "Small border radius for badges and tags"
+    },
+    "md": {
+      "$value": "0.5rem",
+      "$type": "dimension",
+      "$description": "Medium radius for inputs and buttons"
+    },
+    "lg": {
+      "$value": "0.75rem",
+      "$type": "dimension",
+      "$description": "Standard card and dialog border radius"
+    },
+    "xl": {
+      "$value": "1rem",
+      "$type": "dimension",
+      "$description": "Large container and hero module radius"
+    }
+  },
+  "spacing": {
+    "1": { "$value": "0.25rem", "$type": "dimension" },
+    "2": { "$value": "0.5rem", "$type": "dimension" },
+    "3": { "$value": "0.75rem", "$type": "dimension" },
+    "4": { "$value": "1rem", "$type": "dimension" },
+    "6": { "$value": "1.5rem", "$type": "dimension" },
+    "8": { "$value": "2rem", "$type": "dimension" },
+    "12": { "$value": "3rem", "$type": "dimension" },
+    "16": { "$value": "4rem", "$type": "dimension" }
+  },
+  "motion": {
+    "spring": {
+      "stiffness": { "$value": 300, "$type": "number" },
+      "damping": { "$value": 28, "$type": "number" },
+      "mass": { "$value": 0.9, "$type": "number" }
+    },
+    "duration": {
+      "fast": { "$value": "150ms", "$type": "duration" },
+      "normal": { "$value": "200ms", "$type": "duration" },
+      "deliberate": { "$value": "350ms", "$type": "duration" }
+    }
+  }
+}

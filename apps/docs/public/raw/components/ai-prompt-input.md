@@ -1,7 +1,7 @@
 ---
 id: "ai-prompt-input"
 name: "Ai Prompt Input"
-category: "ui:block"
+category: "ui:ai-native"
 library_origin: "https://github.com/design-agent-wiki"
 dependencies:
   - "lucide-react"
@@ -11,10 +11,11 @@ tags:
   - "accessible"
   - "keyboard-accessible"
   - "wai-aria-compliant"
-  - "layout-block"
+  - "ai-native"
+  - "agent-ui"
 dials:
   design_variance: 6      # 1: Conservative · 10: Asymmetric editorial
-  motion_intensity: 3     # 1: Basic hover · 10: Canvas/WebGL springs
+  motion_intensity: 4     # 1: Basic hover · 10: Canvas/WebGL springs
   visual_density: 8       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "high"
 a11y:
@@ -26,10 +27,10 @@ a11y:
 # Ai Prompt Input (`ai-prompt-input`)
 > Curated production-grade component.
 
-- **Taxonomy Category**: `ui:block`
+- **Taxonomy Category**: `ui:ai-native`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
-- **Design Dials**: Variance 6/10 · Motion 3/10 · Density 8/10
+- **Technical Tags**: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui
+- **Design Dials**: Variance 6/10 · Motion 4/10 · Density 8/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ## Installation Recipe

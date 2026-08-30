@@ -122,7 +122,9 @@ export function ThreejsModelViewport({
         <span>{modelName}</span>
       </header>
 
-      <canvas ref={canvasRef} width={300} height={300} className="my-4 cursor-grab" aria-hidden="true" />
+      <canvas ref={canvasRef} width={300} height={300} className="my-4 cursor-grab" aria-hidden="true">
+        <div className="p-4 text-xs text-muted-foreground">Fallback: 3D model viewport rendering active.</div>
+      </canvas>
 
       <footer className="w-full flex items-center justify-between pt-2 border-t border-border/40 text-[11px] text-muted-foreground">
         <span className="font-mono">WebGL / Canvas 3D</span>

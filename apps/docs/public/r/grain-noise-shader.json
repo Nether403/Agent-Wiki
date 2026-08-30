@@ -1,0 +1,60 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "grain-noise-shader",
+  "type": "registry:component",
+  "title": "Grain Noise Shader",
+  "description": "Ultra-low-overhead SVG simplex noise backdrop for texture and editorial polish.",
+  "category": "ui:creative",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "webgl",
+    "threejs",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "canvas",
+    "creative",
+    "noise",
+    "shader",
+    "svg",
+    "paper-shaders"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 2,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/paper-design/shaders",
+    "license_type": "Apache-2.0",
+    "author": "Paper Design",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "three",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/grain-noise-shader.tsx",
+      "content": "/**\n * @license Apache-2.0\n * @origin Paper Shaders (https://github.com/paper-design/shaders)\n * @author Paper Design & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useId } from \"react\";\nimport { useReducedMotion } from \"motion/react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface GrainNoiseShaderProps {\n  opacity?: number;\n  className?: string;\n  children?: React.ReactNode;\n}\n\nexport function GrainNoiseShader({\n  opacity = 0.05,\n  className,\n  children,\n}: GrainNoiseShaderProps) {\n  const filterId = useId();\n  const shouldReduceMotion = useReducedMotion();\n\n  // Respect user prefers-reduced-motion setting\n  if (shouldReduceMotion) {\n    return (\n      <div className={cn(\"relative w-full rounded-xl border border-border bg-card text-foreground p-6\", className)}>\n        {children}\n      </div>\n    );\n  }\n\n  return (\n    <div\n      className={cn(\n        \"relative w-full overflow-hidden rounded-xl border border-border bg-card text-foreground\",\n        className\n      )}\n    >\n      {/* Ultra-low-overhead SVG procedural simplex noise texture */}\n      <svg\n        className=\"pointer-events-none absolute inset-0 h-full w-full\"\n        style={{ opacity }}\n        aria-hidden=\"true\"\n      >\n        <filter id={filterId}>\n          <feTurbulence\n            type=\"fractalNoise\"\n            baseFrequency=\"0.8\"\n            numOctaves=\"3\"\n            stitchTiles=\"stitch\"\n          />\n          <feColorMatrix type=\"saturate\" values=\"0\" />\n        </filter>\n        <rect width=\"100%\" height=\"100%\" filter={`url(#${filterId})`} />\n      </svg>\n\n      <div className=\"relative z-10 p-6\">{children}</div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/grain-noise-shader.tsx"
+    }
+  ]
+}

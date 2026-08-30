@@ -1,0 +1,52 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "spring-orchestrator",
+  "type": "registry:component",
+  "title": "Spring Orchestrator",
+  "description": "Coordinated stagger animation manager with spring physics presets and reduced-motion safety.",
+  "category": "ui:motion",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "wai-aria-compliant",
+    "spring-physics",
+    "motion",
+    "spring",
+    "orchestration",
+    "stagger"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 5,
+    "visual_density": 6
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/motiondivision/motion",
+    "license_type": "MIT",
+    "author": "Motion Division",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/spring-orchestrator.tsx",
+      "content": "/**\n * @license MIT\n * @origin Motion (https://github.com/motiondivision/motion)\n * @author Motion Division & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React from \"react\";\nimport { motion, useReducedMotion } from \"motion/react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SpringOrchestratorProps {\n  staggerDelay?: number;\n  className?: string;\n  children: React.ReactNode;\n}\n\nexport function SpringOrchestrator({\n  staggerDelay = 0.08,\n  className,\n  children,\n}: SpringOrchestratorProps) {\n  const shouldReduceMotion = useReducedMotion();\n\n  const containerVariants = {\n    hidden: { opacity: shouldReduceMotion ? 1 : 0 },\n    show: {\n      opacity: 1,\n      transition: {\n        staggerChildren: shouldReduceMotion ? 0 : staggerDelay,\n      },\n    },\n  };\n\n  return (\n    <motion.div\n      variants={containerVariants}\n      initial=\"hidden\"\n      animate=\"show\"\n      className={cn(\"grid gap-4\", className)}\n    >\n      {React.Children.map(children, (child, idx) => {\n        if (!React.isValidElement(child)) return child;\n        return (\n          <motion.div\n            key={idx}\n            variants={{\n              hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 16 },\n              show: {\n                opacity: 1,\n                y: 0,\n                transition: {\n                  type: \"spring\",\n                  stiffness: 320,\n                  damping: 26,\n                  mass: 0.9,\n                },\n              },\n            }}\n          >\n            {child}\n          </motion.div>\n        );\n      })}\n    </motion.div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/spring-orchestrator.tsx"
+    }
+  ]
+}

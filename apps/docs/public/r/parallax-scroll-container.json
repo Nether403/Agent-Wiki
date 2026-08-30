@@ -1,0 +1,52 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "parallax-scroll-container",
+  "type": "registry:component",
+  "title": "Parallax Scroll Container",
+  "description": "Zero-lag scroll-anchored viewport container with reduced-motion fallback.",
+  "category": "ui:motion",
+  "tags": [
+    "framer-motion",
+    "motion/react",
+    "animation",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "motion",
+    "parallax",
+    "scroll",
+    "viewport"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 6,
+    "visual_density": 5
+  },
+  "complexity": "medium",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/darkroomengineering/lenis",
+    "license_type": "MIT",
+    "author": "Darkroom Engineering",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "motion",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/motion/parallax-scroll-container.tsx",
+      "content": "/**\n * @license MIT\n * @origin Darkroom Engineering / Motion\n * @author Darkroom Engineering & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useRef } from \"react\";\nimport { motion, useScroll, useTransform, useReducedMotion } from \"motion/react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface ParallaxScrollContainerProps {\n  speedMultiplier?: number;\n  className?: string;\n  children: React.ReactNode;\n}\n\nexport function ParallaxScrollContainer({\n  speedMultiplier = 0.2,\n  className,\n  children,\n}: ParallaxScrollContainerProps) {\n  const containerRef = useRef<HTMLDivElement | null>(null);\n  const shouldReduceMotion = useReducedMotion();\n\n  const { scrollYProgress } = useScroll({\n    target: containerRef,\n    offset: [\"start end\", \"end start\"],\n  });\n\n  const yOffset = useTransform(\n    scrollYProgress,\n    [0, 1],\n    shouldReduceMotion ? [0, 0] : [-50 * speedMultiplier, 50 * speedMultiplier]\n  );\n\n  return (\n    <div\n      ref={containerRef}\n      className={cn(\"relative overflow-hidden rounded-xl border border-border bg-card\", className)}\n    >\n      <motion.div style={{ y: yOffset }} className=\"relative w-full\">\n        {children}\n      </motion.div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/parallax-scroll-container.tsx"
+    }
+  ]
+}

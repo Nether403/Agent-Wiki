@@ -4,7 +4,7 @@
   "type": "registry:component",
   "title": "Ai Artifact Canvas",
   "description": "Curated production-grade component.",
-  "category": "ui:creative",
+  "category": "ui:ai-native",
   "tags": [
     "lucide-react",
     "webgl",
@@ -14,12 +14,14 @@
     "accessible",
     "keyboard-accessible",
     "wai-aria-compliant",
-    "canvas"
+    "canvas",
+    "ai-native",
+    "agent-ui"
   ],
   "dials": {
-    "design_variance": 8,
-    "motion_intensity": 9,
-    "visual_density": 5
+    "design_variance": 6,
+    "motion_intensity": 4,
+    "visual_density": 8
   },
   "complexity": "high",
   "a11y": {

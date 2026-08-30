@@ -74,7 +74,9 @@ export function MatrixCodeStream({
       aria-label="Cascading Matrix Code Stream Background"
       {...props}
     >
-      <canvas ref={canvasRef} width={600} height={256} className="w-full h-full block" aria-hidden="true" />
+      <canvas ref={canvasRef} width={600} height={256} className="w-full h-full block" aria-hidden="true">
+        <div className="p-4 text-xs text-muted-foreground">Fallback: Matrix streaming code animation active.</div>
+      </canvas>
       <div className="absolute bottom-3 left-4 text-xs font-mono text-emerald-400/80 bg-black/60 px-2 py-0.5 rounded border border-emerald-500/20">
         SYS.MATRIX_STREAM // LIVE
       </div>

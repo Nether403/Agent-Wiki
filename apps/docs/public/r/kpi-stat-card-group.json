@@ -1,0 +1,53 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "kpi-stat-card-group",
+  "type": "registry:block",
+  "title": "KPI Stat Card Group",
+  "description": "Multi-metric comparison cards with inline delta percentages, target thresholds, and mini sparklines.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "editorial",
+    "block",
+    "kpi",
+    "dashboard",
+    "analytics",
+    "tremor"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 3,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/tremorlabs/tremor",
+    "license_type": "Apache-2.0",
+    "author": "Tremor Labs",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/kpi-stat-card-group.tsx",
+      "content": "/**\n * @license Apache-2.0\n * @origin Tremor UI (https://github.com/tremorlabs/tremor)\n * @author Tremor Labs & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React from \"react\";\nimport { TrendingUp, TrendingDown, Minus } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface KpiMetric {\n  id: string;\n  title: string;\n  value: string;\n  delta: string;\n  trend: \"up\" | \"down\" | \"neutral\";\n  target: string;\n  sparklineData: number[];\n}\n\nexport interface KpiStatCardGroupProps {\n  metrics?: KpiMetric[];\n  className?: string;\n}\n\nconst DEFAULT_METRICS: KpiMetric[] = [\n  { id: \"m1\", title: \"API Request Throughput\", value: \"2.4M\", delta: \"+14.2%\", trend: \"up\", target: \"2.0M target\", sparklineData: [40, 55, 60, 75, 80, 95] },\n  { id: \"m2\", title: \"Mean Latency (P95)\", value: \"32ms\", delta: \"-4.8%\", trend: \"up\", target: \"< 45ms target\", sparklineData: [45, 42, 38, 35, 34, 32] },\n  { id: \"m3\", title: \"Zero-Slop Health Score\", value: \"100%\", delta: \"0.0%\", trend: \"neutral\", target: \"100% threshold\", sparklineData: [100, 100, 100, 100, 100, 100] },\n  { id: \"m4\", title: \"A11y Violations\", value: \"0\", delta: \"-100%\", trend: \"up\", target: \"0 max allowed\", sparklineData: [4, 2, 1, 0, 0, 0] },\n];\n\nexport function KpiStatCardGroup({\n  metrics = DEFAULT_METRICS,\n  className,\n}: KpiStatCardGroupProps) {\n  return (\n    <div className={cn(\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full\", className)}>\n      {metrics.map((metric) => {\n        const TrendIcon =\n          metric.trend === \"up\"\n            ? TrendingUp\n            : metric.trend === \"down\"\n            ? TrendingDown\n            : Minus;\n\n        const isPositive =\n          metric.trend === \"up\" || (metric.trend === \"neutral\" && metric.delta === \"0.0%\");\n\n        return (\n          <div\n            key={metric.id}\n            className=\"flex flex-col rounded-xl border border-border bg-card p-4 text-foreground shadow-sm transition-colors hover:border-muted-foreground/40\"\n          >\n            <span className=\"text-xs font-medium text-muted-foreground\">{metric.title}</span>\n            <div className=\"mt-2 flex items-baseline justify-between\">\n              <span className=\"text-2xl font-bold tracking-tight\">{metric.value}</span>\n              <span\n                className={cn(\n                  \"inline-flex items-center gap-0.5 text-xs font-medium\",\n                  isPositive ? \"text-emerald-600 dark:text-emerald-400\" : \"text-destructive\"\n                )}\n              >\n                <TrendIcon className=\"h-3 w-3\" aria-hidden=\"true\" />\n                {metric.delta}\n              </span>\n            </div>\n\n            {/* Sparkline mini-track */}\n            <div className=\"mt-3 flex items-end gap-1 h-6 w-full pt-1\" aria-hidden=\"true\">\n              {metric.sparklineData.map((val, idx) => {\n                const max = Math.max(...metric.sparklineData, 1);\n                const heightPct = Math.max(15, Math.round((val / max) * 100));\n                return (\n                  <div\n                    key={idx}\n                    className=\"flex-1 rounded-xs bg-primary/20 transition-all hover:bg-primary\"\n                    style={{ height: `${heightPct}%` }}\n                  />\n                );\n              })}\n            </div>\n\n            <div className=\"mt-3 border-t border-border/60 pt-2 text-[11px] font-mono text-muted-foreground flex justify-between\">\n              <span>TARGET</span>\n              <span>{metric.target}</span>\n            </div>\n          </div>\n        );\n      })}\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/kpi-stat-card-group.tsx"
+    }
+  ]
+}
