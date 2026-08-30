@@ -10,6 +10,7 @@
     "headless",
     "lucide-react",
     "tailwind-v4",
+    "wai-aria-compliant",
     "modal",
     "dialog",
     "a11y"
@@ -40,7 +41,9 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "dialog"
+  ],
   "files": [
     {
       "path": "registry/primitives/dialog.tsx",

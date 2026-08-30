@@ -7,7 +7,8 @@ export async function GET(
   { params }: { params: Promise<{ slug: string[] }> }
 ) {
   const { slug } = await params;
-  const componentName = slug[slug.length - 1];
+  const rawComponent = slug[slug.length - 1];
+  const componentName = rawComponent.replace(/\.md$/, "");
 
   const registryItemPath = path.resolve(
     process.cwd(),

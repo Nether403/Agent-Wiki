@@ -7,6 +7,7 @@ dependencies:
   - "clsx"
   - "tailwind-merge"
 tags:
+  - "wai-aria-compliant"
   - "utility"
   - "icon"
   - "svg"
@@ -28,7 +29,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:utility`
 - **Structural Complexity**: `LOW`
-- **Technical Tags**: utility, icon, svg, morph, a11y
+- **Technical Tags**: wai-aria-compliant, utility, icon, svg, morph, a11y
 - **Design Dials**: Variance 3/10 · Motion 4/10 · Density 7/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 

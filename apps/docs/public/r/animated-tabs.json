@@ -11,6 +11,9 @@
     "animation",
     "tailwind-v4",
     "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "shadcn-compatible",
     "spring-physics",
     "tabs",
     "layoutId"

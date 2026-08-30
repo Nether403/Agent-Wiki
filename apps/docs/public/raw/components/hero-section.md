@@ -11,6 +11,8 @@ tags:
   - "lucide-react"
   - "tailwind-v4"
   - "accessible"
+  - "keyboard-accessible"
+  - "wai-aria-compliant"
   - "layout-block"
   - "hero"
   - "marketing"
@@ -32,7 +34,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:block`
 - **Structural Complexity**: `MEDIUM`
-- **Technical Tags**: lucide-react, tailwind-v4, accessible, layout-block, hero, marketing, typography, block
+- **Technical Tags**: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, hero, marketing, typography, block
 - **Design Dials**: Variance 5/10 · Motion 2/10 · Density 5/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 

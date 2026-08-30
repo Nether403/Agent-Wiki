@@ -11,6 +11,8 @@ tags:
   - "radix-primitives"
   - "headless"
   - "accessible"
+  - "keyboard-accessible"
+  - "wai-aria-compliant"
   - "tabs"
   - "navigation"
 dials:
@@ -29,7 +31,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:primitive`
 - **Structural Complexity**: `LOW`
-- **Technical Tags**: radix-primitives, headless, accessible, tabs, navigation
+- **Technical Tags**: radix-primitives, headless, accessible, keyboard-accessible, wai-aria-compliant, tabs, navigation
 - **Design Dials**: Variance 3/10 · Motion 2/10 · Density 6/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 

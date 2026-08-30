@@ -10,12 +10,13 @@
     "threejs",
     "canvas",
     "tailwind-v4",
-    "shader-simulation",
+    "wai-aria-compliant",
+    "framer-motion",
     "interactive",
     "a11y-fallback"
   ],
   "dials": {
-    "design_variance": 8,
+    "design_variance": 9,
     "motion_intensity": 9,
     "visual_density": 3
   },

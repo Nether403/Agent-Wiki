@@ -139,4 +139,5 @@ export function runAudit(targetDir: string): AuditReport {
 
 export * from "./rules";
 export * from "./llm-review";
+export * from "./dial-classifier";
 

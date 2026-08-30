@@ -8,9 +8,11 @@
   "tags": [
     "radix-primitives",
     "headless",
-    "accessible",
-    "utility",
     "brutalist",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "utility",
     "toggle",
     "form"
   ],
@@ -39,7 +41,9 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "switch"
+  ],
   "files": [
     {
       "path": "registry/primitives/switch.tsx",

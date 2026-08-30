@@ -11,14 +11,17 @@ tags:
   - "lucide-react"
   - "bento-grid"
   - "tailwind-v4"
+  - "wai-aria-compliant"
   - "editorial"
   - "svg"
+  - "zero-dependency"
+  - "static"
   - "analytical"
   - "diagram"
 dials:
   design_variance: 5      # 1: Conservative · 10: Asymmetric editorial
   motion_intensity: 1     # 1: Basic hover · 10: Canvas/WebGL springs
-  visual_density: 8       # 1: Generous whitespace · 10: Dense analytical UI
+  visual_density: 9       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "medium"
 a11y:
   keyboard_navigable: false
@@ -31,8 +34,8 @@ a11y:
 
 - **Taxonomy Category**: `ui:editorial`
 - **Structural Complexity**: `MEDIUM`
-- **Technical Tags**: lucide-react, bento-grid, tailwind-v4, editorial, svg, analytical, diagram
-- **Design Dials**: Variance 5/10 · Motion 1/10 · Density 8/10
+- **Technical Tags**: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, diagram
+- **Design Dials**: Variance 5/10 · Motion 1/10 · Density 9/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ## Installation Recipe

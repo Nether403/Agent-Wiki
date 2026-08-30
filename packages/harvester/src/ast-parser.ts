@@ -20,6 +20,11 @@ export interface RepositoryConfig {
   subpath?: string;
   defaultCategory: TaxonomyCategory;
   defaultTags: string[];
+  defaultDials?: {
+    design_variance: number;
+    motion_intensity: number;
+    visual_density: number;
+  };
   license: string;
   author: string;
   description: string;
@@ -31,11 +36,12 @@ export interface RepositoryConfig {
 export const KNOWN_REPOSITORIES: Record<string, RepositoryConfig> = {
   heroui: {
     id: "heroui",
-    name: "HeroUI (formerly NextUI)",
+    name: "HeroUI v3 (formerly NextUI)",
     url: "https://github.com/heroui-inc/heroui.git",
     subpath: "packages/components",
     defaultCategory: "ui:primitive",
-    defaultTags: ["tailwind-v4", "accessible", "headless", "react"],
+    defaultTags: ["react", "tailwind-v4", "headless", "accessible"],
+    defaultDials: { design_variance: 3, motion_intensity: 3, visual_density: 6 },
     license: "MIT",
     author: "HeroUI Team",
     description: "Accessible, robust UI primitives optimized for standard SaaS forms and navigation.",
@@ -46,7 +52,8 @@ export const KNOWN_REPOSITORIES: Record<string, RepositoryConfig> = {
     url: "https://github.com/eduardconstantin/smoothui.git",
     subpath: "components/ui",
     defaultCategory: "ui:motion",
-    defaultTags: ["motion/react", "spring-physics", "micro-interactions"],
+    defaultTags: ["framer-motion", "shadcn-compatible", "spring-physics"],
+    defaultDials: { design_variance: 4, motion_intensity: 6, visual_density: 5 },
     license: "MIT",
     author: "SmoothUI Team",
     description: "Spring physics micro-interactions and animated transitions with Framer Motion.",
@@ -57,7 +64,8 @@ export const KNOWN_REPOSITORIES: Record<string, RepositoryConfig> = {
     url: "https://github.com/aceternity/ui.git",
     subpath: "components/ui",
     defaultCategory: "ui:motion",
-    defaultTags: ["motion/react", "framer-motion", "tailwind-v4", "landing-page"],
+    defaultTags: ["framer-motion", "tailwind-v4", "micro-interaction"],
+    defaultDials: { design_variance: 6, motion_intensity: 8, visual_density: 4 },
     license: "MIT",
     author: "Manu Arora & Community",
     description: "High-end landing page components built on Motion and Tailwind CSS.",
@@ -68,7 +76,8 @@ export const KNOWN_REPOSITORIES: Record<string, RepositoryConfig> = {
     url: "https://github.com/canvas-ui/canvas-ui.git",
     subpath: "components/canvas",
     defaultCategory: "ui:creative",
-    defaultTags: ["webgl", "canvas", "threejs", "shader-simulation"],
+    defaultTags: ["threejs", "webgl", "framer-motion", "interactive"],
+    defaultDials: { design_variance: 9, motion_intensity: 9, visual_density: 3 },
     license: "MIT",
     author: "Canvas UI Team",
     description: "GPU-driven HTML5 Canvas and WebGL interactive shaders with graceful fallbacks.",
@@ -79,7 +88,8 @@ export const KNOWN_REPOSITORIES: Record<string, RepositoryConfig> = {
     url: "https://github.com/diagram-design/diagram.git",
     subpath: "components",
     defaultCategory: "ui:editorial",
-    defaultTags: ["svg", "editorial", "analytical", "zero-dependency"],
+    defaultTags: ["svg", "zero-dependency", "static", "analytical"],
+    defaultDials: { design_variance: 5, motion_intensity: 1, visual_density: 9 },
     license: "MIT",
     author: "diagram-design Team",
     description: "Pure, static and analytical visual blocks free of generic decorative clutter.",
@@ -90,7 +100,8 @@ export const KNOWN_REPOSITORIES: Record<string, RepositoryConfig> = {
     url: "https://github.com/evil-buttons/evil-buttons.git",
     subpath: "components",
     defaultCategory: "ui:motion",
-    defaultTags: ["playful", "framer-motion", "sound-physics", "interactive"],
+    defaultTags: ["playful", "framer-motion", "sound-physics"],
+    defaultDials: { design_variance: 8, motion_intensity: 7, visual_density: 5 },
     license: "MIT",
     author: "Evil-Buttons Team",
     description: "Playful, tactile physics-based button interactions.",
@@ -101,7 +112,8 @@ export const KNOWN_REPOSITORIES: Record<string, RepositoryConfig> = {
     url: "https://github.com/tailark/tailark.git",
     subpath: "components/blocks",
     defaultCategory: "ui:block",
-    defaultTags: ["bento-grid", "layout-block", "marketing", "tailwind-v4"],
+    defaultTags: ["tailwind-v4", "marketing", "bento-grid"],
+    defaultDials: { design_variance: 5, motion_intensity: 4, visual_density: 6 },
     license: "MIT",
     author: "Tailark Team",
     description: "Multi-component bento grid layouts and SaaS marketing sections.",
@@ -113,6 +125,7 @@ export const KNOWN_REPOSITORIES: Record<string, RepositoryConfig> = {
     subpath: "components/ui",
     defaultCategory: "ui:motion",
     defaultTags: ["motion/react", "spring-physics", "dialog", "modal"],
+    defaultDials: { design_variance: 5, motion_intensity: 6, visual_density: 5 },
     license: "MIT",
     author: "KokonutUI Team",
     description: "Modern animated dialogs, buttons, and layout transitions.",
@@ -124,6 +137,7 @@ export const KNOWN_REPOSITORIES: Record<string, RepositoryConfig> = {
     subpath: "components/loaders",
     defaultCategory: "ui:utility",
     defaultTags: ["dot-matrix", "loader", "status", "utility"],
+    defaultDials: { design_variance: 6, motion_intensity: 5, visual_density: 7 },
     license: "MIT",
     author: "Dot Matrix Team",
     description: "Specialized SVG and Canvas dot matrix loaders and animated matrices.",
@@ -135,6 +149,7 @@ export const KNOWN_REPOSITORIES: Record<string, RepositoryConfig> = {
     subpath: "components/ui",
     defaultCategory: "ui:primitive",
     defaultTags: ["radix-primitives", "headless", "animated-icons"],
+    defaultDials: { design_variance: 3, motion_intensity: 4, visual_density: 7 },
     license: "MIT",
     author: "ReUI Team",
     description: "Large design-forward platform offering robust primitives and animated icons.",
@@ -146,6 +161,7 @@ export const KNOWN_REPOSITORIES: Record<string, RepositoryConfig> = {
     subpath: "components/ui",
     defaultCategory: "ui:primitive",
     defaultTags: ["tailwind-v4", "view-transition", "react-19"],
+    defaultDials: { design_variance: 3, motion_intensity: 3, visual_density: 6 },
     license: "MIT",
     author: "beUI Team",
     description: "React 19 and Tailwind 4 optimized primitives using View Transition API.",
@@ -157,6 +173,7 @@ export const KNOWN_REPOSITORIES: Record<string, RepositoryConfig> = {
     subpath: "components/media",
     defaultCategory: "ui:media",
     defaultTags: ["remotion", "video", "motion", "timeline", "media"],
+    defaultDials: { design_variance: 7, motion_intensity: 8, visual_density: 4 },
     license: "MIT",
     author: "Remocn Team",
     description: "Advanced, timeline-based motion and video compositions built on Remotion.",
@@ -240,6 +257,11 @@ export interface ComponentParsedMetadata {
   origin?: string;
   license?: string;
   author?: string;
+  defaultDials?: {
+    design_variance: number;
+    motion_intensity: number;
+    visual_density: number;
+  };
 }
 
 /**
@@ -294,6 +316,7 @@ export function parseComponentAST(
     origin: repoConfig?.name || "Open-Source Registry",
     license: repoConfig?.license || "MIT",
     author: repoConfig?.author || "Community Contributor",
+    defaultDials: repoConfig?.defaultDials,
   };
 
   const depSet = new Set<string>();
@@ -342,10 +365,18 @@ export function parseComponentAST(
         tagSet.add("radix-primitives");
         tagSet.add("headless");
         depSet.add(specifier);
+        if (specifier.startsWith("@radix-ui/react-")) {
+          const primitive = specifier.replace("@radix-ui/react-", "");
+          regDepSet.add(primitive);
+        }
       } else if (specifier.startsWith("@ark-ui/")) {
         tagSet.add("ark-ui");
         tagSet.add("headless");
         depSet.add(specifier);
+        if (specifier.startsWith("@ark-ui/react/")) {
+          const primitive = specifier.replace("@ark-ui/react/", "");
+          regDepSet.add(primitive);
+        }
       } else if (specifier === "lucide-react") {
         tagSet.add("lucide-react");
         depSet.add("lucide-react");
@@ -469,9 +500,27 @@ export function parseComponentAST(
   if (fileContent.includes("border-border") || fileContent.includes("bg-card")) {
     tagSet.add("tailwind-v4");
   }
+  if (fileContent.includes("backdrop-blur")) {
+    tagSet.add("glassmorphism");
+  }
+  if (/border-2|border-black|shadow-\[|brutalist/i.test(fileContent)) {
+    tagSet.add("brutalist");
+  }
+  if (/neon|glow|cyan|fuchsia/i.test(fileContent)) {
+    tagSet.add("neon-scifi");
+  }
+  if (/playful|sound-physics|audioContext/i.test(fileContent) || repoConfig?.id === "evil-buttons") {
+    tagSet.add("playful");
+  }
   if (fileContent.includes("focus-visible:")) {
     tagSet.add("accessible");
     metadata.a11y.keyboard_navigable = true;
+  }
+  if (metadata.a11y.keyboard_navigable) {
+    tagSet.add("keyboard-accessible");
+  }
+  if (metadata.a11y.wai_aria_compliant) {
+    tagSet.add("wai-aria-compliant");
   }
   if (fileContent.includes("prefers-reduced-motion")) {
     metadata.a11y.reduced_motion_supported = true;

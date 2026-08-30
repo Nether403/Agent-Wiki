@@ -13,6 +13,7 @@ tags:
   - "headless"
   - "lucide-react"
   - "tailwind-v4"
+  - "wai-aria-compliant"
   - "modal"
   - "dialog"
   - "a11y"
@@ -32,7 +33,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:primitive`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: radix-primitives, headless, lucide-react, tailwind-v4, modal, dialog, a11y
+- **Technical Tags**: radix-primitives, headless, lucide-react, tailwind-v4, wai-aria-compliant, modal, dialog, a11y
 - **Design Dials**: Variance 3/10 · Motion 3/10 · Density 5/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 

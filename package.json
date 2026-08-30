@@ -13,10 +13,13 @@
     "review:taste": "pnpm --filter @design-wiki/audit-linter review",
     "harvest": "pnpm --filter @design-wiki/harvester harvest",
     "test:sandbox": "pnpm --filter @design-wiki/mcp test:sandbox",
+    "test:a11y": "tsx scripts/test-a11y-linter.ts",
+    "sync:rules": "tsx scripts/sync-rulepacks.ts",
     "mcp": "pnpm --filter @design-wiki/mcp start",
     "clean": "turbo clean"
   },
   "devDependencies": {
+    "tsx": "^4.19.3",
     "turbo": "^2.4.4",
     "typescript": "^5.8.2"
   },

@@ -9,6 +9,8 @@
     "framer-motion",
     "motion/react",
     "animation",
+    "glassmorphism",
+    "wai-aria-compliant",
     "spring-physics",
     "cursor-follower",
     "smooth-spring"

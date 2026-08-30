@@ -12,6 +12,8 @@
     "lucide-react",
     "tailwind-v4",
     "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
     "remotion",
     "video",
     "motion",

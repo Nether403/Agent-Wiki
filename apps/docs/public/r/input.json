@@ -7,15 +7,19 @@
   "category": "ui:primitive",
   "tags": [
     "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
     "utility",
+    "react",
     "tailwind-v4",
+    "headless",
     "form",
     "input"
   ],
   "dials": {
-    "design_variance": 2,
-    "motion_intensity": 1,
-    "visual_density": 7
+    "design_variance": 3,
+    "motion_intensity": 3,
+    "visual_density": 6
   },
   "complexity": "low",
   "a11y": {
@@ -26,9 +30,9 @@
     "reduced_motion_supported": false
   },
   "license_origin": {
-    "source_repository": "https://ui.shadcn.com",
+    "source_repository": "https://github.com/heroui-inc/heroui",
     "license_type": "MIT",
-    "author": "Shadcn & Community",
+    "author": "HeroUI Team",
     "attribution_required": true,
     "redistribution_mode": "full_source"
   },

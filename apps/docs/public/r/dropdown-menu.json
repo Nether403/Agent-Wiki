@@ -11,6 +11,8 @@
     "lucide-react",
     "tailwind-v4",
     "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
     "menu",
     "navigation"
   ],
@@ -40,7 +42,9 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "dropdown-menu"
+  ],
   "files": [
     {
       "path": "registry/primitives/dropdown-menu.tsx",

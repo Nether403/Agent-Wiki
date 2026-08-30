@@ -1,0 +1,19 @@
+{
+  "name": "design-agent-wiki-rulepack",
+  "version": "1.0.0",
+  "description": "Machine-First Design Agent Wiki ruleset ensuring zero AI slop and deterministic UI assembly.",
+  "rules": [
+    "Scan Before You Build: query Design Wiki MCP tools before authoring UI components.",
+    "Zero AI Slop: reject hardcoded indigo, purple-to-blue linear gradients, blanket glassmorphism, and arbitrary pixel sizing like p-[17px].",
+    "Strict Accessibility: WCAG AA contrast, keyboard navigation, focus-visible rings, and WAI-ARIA roles.",
+    "Tailwind v4 First: use semantic tokens and theme variables.",
+    "Taste Dials: adhere to DESIGN_VARIANCE (5), MOTION_INTENSITY (4), and VISUAL_DENSITY (6)."
+  ],
+  "mcpTools": [
+    "search_components",
+    "fetch_raw_markdown",
+    "get_installation_commands",
+    "audit_code_slop"
+  ],
+  "skillSource": "https://design-wiki.dev/SKILL.md"
+}

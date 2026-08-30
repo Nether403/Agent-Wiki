@@ -6,7 +6,9 @@ library_origin: "https://dotmatrix.dev"
 dependencies:
   - "clsx"
   - "tailwind-merge"
+  - "motion"
 tags:
+  - "wai-aria-compliant"
   - "utility"
   - "dot-matrix"
   - "canvas-pattern"
@@ -28,7 +30,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:creative`
 - **Structural Complexity**: `LOW`
-- **Technical Tags**: utility, dot-matrix, canvas-pattern, loader, status
+- **Technical Tags**: wai-aria-compliant, utility, dot-matrix, canvas-pattern, loader, status
 - **Design Dials**: Variance 6/10 · Motion 5/10 · Density 7/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 
@@ -44,6 +46,7 @@ npx shadcn@latest add http://localhost:3000/r/dot-matrix-loader.json
 ## Peer Dependencies
 - `clsx`
 - `tailwind-merge`
+- `motion`
 
 ## Verified TypeScript Source
 ```tsx
@@ -78,6 +81,9 @@ export function DotMatrixLoader({
   const [activeFrame, setActiveFrame] = React.useState(0);
 
   React.useEffect(() => {
+    const mediaQuery = typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+    if (mediaQuery?.matches) return;
+
     const timer = setInterval(() => {
       setActiveFrame((prev) => (prev + 1) % (rows + cols));
     }, 120);

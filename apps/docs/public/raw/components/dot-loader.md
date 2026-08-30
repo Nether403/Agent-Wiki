@@ -7,6 +7,7 @@ dependencies:
   - "clsx"
   - "tailwind-merge"
 tags:
+  - "wai-aria-compliant"
   - "utility"
   - "loader"
   - "spinner"
@@ -27,7 +28,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:utility`
 - **Structural Complexity**: `LOW`
-- **Technical Tags**: utility, loader, spinner, minimalist
+- **Technical Tags**: wai-aria-compliant, utility, loader, spinner, minimalist
 - **Design Dials**: Variance 2/10 · Motion 4/10 · Density 8/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 

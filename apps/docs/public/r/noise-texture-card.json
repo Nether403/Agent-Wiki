@@ -7,6 +7,7 @@
   "category": "ui:creative",
   "tags": [
     "tailwind-v4",
+    "wai-aria-compliant",
     "svg-noise",
     "editorial",
     "texture",
@@ -22,7 +23,7 @@
     "keyboard_navigable": false,
     "wai_aria_compliant": true,
     "fallback_provided": true,
-    "reduced_motion_supported": false
+    "reduced_motion_supported": true
   },
   "license_origin": {
     "source_repository": "https://reactbits.dev",

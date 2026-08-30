@@ -29,6 +29,9 @@ export function DotMatrixLoader({
   const [activeFrame, setActiveFrame] = React.useState(0);
 
   React.useEffect(() => {
+    const mediaQuery = typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+    if (mediaQuery?.matches) return;
+
     const timer = setInterval(() => {
       setActiveFrame((prev) => (prev + 1) % (rows + cols));
     }, 120);

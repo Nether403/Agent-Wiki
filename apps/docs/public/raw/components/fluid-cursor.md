@@ -11,6 +11,8 @@ tags:
   - "framer-motion"
   - "motion/react"
   - "animation"
+  - "glassmorphism"
+  - "wai-aria-compliant"
   - "spring-physics"
   - "cursor-follower"
   - "smooth-spring"
@@ -30,7 +32,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:motion`
 - **Structural Complexity**: `MEDIUM`
-- **Technical Tags**: framer-motion, motion/react, animation, spring-physics, cursor-follower, smooth-spring
+- **Technical Tags**: framer-motion, motion/react, animation, glassmorphism, wai-aria-compliant, spring-physics, cursor-follower, smooth-spring
 - **Design Dials**: Variance 8/10 · Motion 8/10 · Density 3/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 

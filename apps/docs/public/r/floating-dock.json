@@ -11,13 +11,16 @@
     "animation",
     "tailwind-v4",
     "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
     "spring-physics",
+    "micro-interaction",
     "dock",
     "macos-style"
   ],
   "dials": {
     "design_variance": 6,
-    "motion_intensity": 7,
+    "motion_intensity": 8,
     "visual_density": 4
   },
   "complexity": "high",

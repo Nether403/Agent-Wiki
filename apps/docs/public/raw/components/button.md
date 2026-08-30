@@ -2,19 +2,23 @@
 id: "button"
 name: "Button"
 category: "ui:primitive"
-library_origin: "https://ui.shadcn.com"
+library_origin: "https://github.com/heroui-inc/heroui"
 dependencies:
   - "class-variance-authority"
   - "clsx"
   - "tailwind-merge"
 tags:
   - "accessible"
+  - "keyboard-accessible"
+  - "wai-aria-compliant"
+  - "react"
   - "tailwind-v4"
+  - "headless"
   - "radix-primitive"
   - "button"
 dials:
-  design_variance: 2      # 1: Conservative · 10: Asymmetric editorial
-  motion_intensity: 2     # 1: Basic hover · 10: Canvas/WebGL springs
+  design_variance: 3      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: 3     # 1: Basic hover · 10: Canvas/WebGL springs
   visual_density: 6       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "low"
 a11y:
@@ -28,8 +32,8 @@ a11y:
 
 - **Taxonomy Category**: `ui:primitive`
 - **Structural Complexity**: `LOW`
-- **Technical Tags**: accessible, tailwind-v4, radix-primitive, button
-- **Design Dials**: Variance 2/10 · Motion 2/10 · Density 6/10
+- **Technical Tags**: accessible, keyboard-accessible, wai-aria-compliant, react, tailwind-v4, headless, radix-primitive, button
+- **Design Dials**: Variance 3/10 · Motion 3/10 · Density 6/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ## Installation Recipe

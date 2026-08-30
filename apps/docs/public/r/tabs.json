@@ -9,6 +9,8 @@
     "radix-primitives",
     "headless",
     "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
     "tabs",
     "navigation"
   ],
@@ -37,7 +39,9 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "tabs"
+  ],
   "files": [
     {
       "path": "registry/primitives/tabs.tsx",

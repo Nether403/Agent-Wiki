@@ -2,20 +2,24 @@
 id: "input"
 name: "Input"
 category: "ui:primitive"
-library_origin: "https://ui.shadcn.com"
+library_origin: "https://github.com/heroui-inc/heroui"
 dependencies:
   - "clsx"
   - "tailwind-merge"
 tags:
   - "accessible"
+  - "keyboard-accessible"
+  - "wai-aria-compliant"
   - "utility"
+  - "react"
   - "tailwind-v4"
+  - "headless"
   - "form"
   - "input"
 dials:
-  design_variance: 2      # 1: Conservative · 10: Asymmetric editorial
-  motion_intensity: 1     # 1: Basic hover · 10: Canvas/WebGL springs
-  visual_density: 7       # 1: Generous whitespace · 10: Dense analytical UI
+  design_variance: 3      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: 3     # 1: Basic hover · 10: Canvas/WebGL springs
+  visual_density: 6       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "low"
 a11y:
   keyboard_navigable: true
@@ -28,8 +32,8 @@ a11y:
 
 - **Taxonomy Category**: `ui:primitive`
 - **Structural Complexity**: `LOW`
-- **Technical Tags**: accessible, utility, tailwind-v4, form, input
-- **Design Dials**: Variance 2/10 · Motion 1/10 · Density 7/10
+- **Technical Tags**: accessible, keyboard-accessible, wai-aria-compliant, utility, react, tailwind-v4, headless, form, input
+- **Design Dials**: Variance 3/10 · Motion 3/10 · Density 6/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ## Installation Recipe

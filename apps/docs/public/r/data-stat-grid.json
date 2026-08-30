@@ -9,14 +9,17 @@
     "lucide-react",
     "bento-grid",
     "tailwind-v4",
+    "wai-aria-compliant",
     "layout-block",
+    "svg",
+    "zero-dependency",
+    "static",
     "analytical",
     "metrics",
-    "grid",
-    "saas-dashboard"
+    "grid"
   ],
   "dials": {
-    "design_variance": 4,
+    "design_variance": 5,
     "motion_intensity": 1,
     "visual_density": 9
   },

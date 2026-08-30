@@ -14,7 +14,10 @@ tags:
   - "animation"
   - "lucide-react"
   - "tailwind-v4"
+  - "glassmorphism"
   - "accessible"
+  - "keyboard-accessible"
+  - "wai-aria-compliant"
   - "spring-physics"
   - "animate-presence"
   - "modal"
@@ -34,7 +37,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:motion`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, spring-physics, animate-presence, modal
+- **Technical Tags**: framer-motion, motion/react, animation, lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, animate-presence, modal
 - **Design Dials**: Variance 5/10 · Motion 6/10 · Density 5/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 

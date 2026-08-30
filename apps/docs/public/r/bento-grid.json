@@ -9,13 +9,14 @@
     "lucide-react",
     "bento-grid",
     "tailwind-v4",
+    "wai-aria-compliant",
     "layout-block",
-    "asymmetry",
-    "marketing"
+    "marketing",
+    "asymmetry"
   ],
   "dials": {
-    "design_variance": 7,
-    "motion_intensity": 3,
+    "design_variance": 5,
+    "motion_intensity": 4,
     "visual_density": 6
   },
   "complexity": "low",

@@ -8,6 +8,7 @@
   "tags": [
     "radix-primitives",
     "headless",
+    "wai-aria-compliant",
     "avatar",
     "image"
   ],
@@ -35,7 +36,9 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "avatar"
+  ],
   "files": [
     {
       "path": "registry/primitives/avatar.tsx",

@@ -12,13 +12,16 @@ tags:
   - "motion/react"
   - "animation"
   - "accessible"
+  - "keyboard-accessible"
+  - "wai-aria-compliant"
   - "spring-physics"
+  - "shadcn-compatible"
   - "magnetic-physics"
   - "button"
   - "interactive"
 dials:
-  design_variance: 7      # 1: Conservative · 10: Asymmetric editorial
-  motion_intensity: 7     # 1: Basic hover · 10: Canvas/WebGL springs
+  design_variance: 4      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: 6     # 1: Basic hover · 10: Canvas/WebGL springs
   visual_density: 5       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "medium"
 a11y:
@@ -32,8 +35,8 @@ a11y:
 
 - **Taxonomy Category**: `ui:motion`
 - **Structural Complexity**: `MEDIUM`
-- **Technical Tags**: framer-motion, motion/react, animation, accessible, spring-physics, magnetic-physics, button, interactive
-- **Design Dials**: Variance 7/10 · Motion 7/10 · Density 5/10
+- **Technical Tags**: framer-motion, motion/react, animation, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, shadcn-compatible, magnetic-physics, button, interactive
+- **Design Dials**: Variance 4/10 · Motion 6/10 · Density 5/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ## Installation Recipe

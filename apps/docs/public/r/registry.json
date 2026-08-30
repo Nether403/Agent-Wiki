@@ -10,13 +10,14 @@
       "lucide-react",
       "bento-grid",
       "tailwind-v4",
+      "wai-aria-compliant",
       "layout-block",
-      "asymmetry",
-      "marketing"
+      "marketing",
+      "asymmetry"
     ],
     "dials": {
-      "design_variance": 7,
-      "motion_intensity": 3,
+      "design_variance": 5,
+      "motion_intensity": 4,
       "visual_density": 6
     },
     "complexity": "low",
@@ -59,6 +60,8 @@
       "lucide-react",
       "tailwind-v4",
       "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
       "layout-block",
       "hero",
       "marketing",
@@ -112,18 +115,19 @@
       "lucide-react",
       "bento-grid",
       "tailwind-v4",
-      "accessible",
-      "layout-block",
       "brutalist",
-      "pricing",
-      "saas",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
       "marketing",
-      "interactive-toggle"
+      "pricing",
+      "saas"
     ],
     "dials": {
-      "design_variance": 4,
-      "motion_intensity": 3,
-      "visual_density": 7
+      "design_variance": 5,
+      "motion_intensity": 4,
+      "visual_density": 6
     },
     "complexity": "high",
     "a11y": {
@@ -169,12 +173,13 @@
       "threejs",
       "canvas",
       "tailwind-v4",
-      "shader-simulation",
+      "wai-aria-compliant",
+      "framer-motion",
       "interactive",
       "a11y-fallback"
     ],
     "dials": {
-      "design_variance": 8,
+      "design_variance": 9,
       "motion_intensity": 9,
       "visual_density": 3
     },
@@ -219,6 +224,7 @@
     "description": "Animated dot matrix with wave oscillation, customizable matrix rows, and accessible status role.",
     "category": "ui:creative",
     "tags": [
+      "wai-aria-compliant",
       "utility",
       "dot-matrix",
       "canvas-pattern",
@@ -236,7 +242,7 @@
       "wai_aria_compliant": true,
       "wai_aria_role": "status",
       "fallback_provided": true,
-      "reduced_motion_supported": false
+      "reduced_motion_supported": true
     },
     "license_origin": {
       "source_repository": "https://dotmatrix.dev",
@@ -247,13 +253,14 @@
     },
     "dependencies": [
       "clsx",
-      "tailwind-merge"
+      "tailwind-merge",
+      "motion"
     ],
     "registryDependencies": [],
     "files": [
       {
         "path": "registry/creative/dot-matrix-loader.tsx",
-        "content": "/**\n * @license MIT\n * @origin Dot Matrix UI (https://dotmatrix.dev)\n * @author Dot Matrix Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface DotMatrixLoaderProps {\n  rows?: number;\n  cols?: number;\n  dotSize?: number;\n  gap?: number;\n  className?: string;\n  label?: string;\n}\n\nexport function DotMatrixLoader({\n  rows = 5,\n  cols = 5,\n  dotSize = 6,\n  gap = 6,\n  className,\n  label = \"Loading content\",\n}: DotMatrixLoaderProps) {\n  const [activeFrame, setActiveFrame] = React.useState(0);\n\n  React.useEffect(() => {\n    const timer = setInterval(() => {\n      setActiveFrame((prev) => (prev + 1) % (rows + cols));\n    }, 120);\n    return () => clearInterval(timer);\n  }, [rows, cols]);\n\n  return (\n    <div\n      role=\"status\"\n      aria-label={label}\n      className={cn(\"inline-flex flex-col items-center justify-center p-4\", className)}\n    >\n      <div\n        className=\"grid\"\n        style={{\n          gridTemplateColumns: `repeat(${cols}, ${dotSize}px)`,\n          gap: `${gap}px`,\n        }}\n      >\n        {Array.from({ length: rows * cols }).map((_, i) => {\n          const r = Math.floor(i / cols);\n          const c = i % cols;\n          const distance = r + c;\n          const isLit = (distance + activeFrame) % (rows + cols) < 3;\n\n          return (\n            <div\n              key={i}\n              style={{ width: dotSize, height: dotSize }}\n              className={cn(\n                \"rounded-full transition-colors duration-150\",\n                isLit ? \"bg-primary\" : \"bg-muted-foreground/20\"\n              )}\n            />\n          );\n        })}\n      </div>\n      <span className=\"sr-only\">{label}</span>\n    </div>\n  );\n}\n",
+        "content": "/**\n * @license MIT\n * @origin Dot Matrix UI (https://dotmatrix.dev)\n * @author Dot Matrix Team\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface DotMatrixLoaderProps {\n  rows?: number;\n  cols?: number;\n  dotSize?: number;\n  gap?: number;\n  className?: string;\n  label?: string;\n}\n\nexport function DotMatrixLoader({\n  rows = 5,\n  cols = 5,\n  dotSize = 6,\n  gap = 6,\n  className,\n  label = \"Loading content\",\n}: DotMatrixLoaderProps) {\n  const [activeFrame, setActiveFrame] = React.useState(0);\n\n  React.useEffect(() => {\n    const mediaQuery = typeof window !== \"undefined\" ? window.matchMedia(\"(prefers-reduced-motion: reduce)\") : null;\n    if (mediaQuery?.matches) return;\n\n    const timer = setInterval(() => {\n      setActiveFrame((prev) => (prev + 1) % (rows + cols));\n    }, 120);\n    return () => clearInterval(timer);\n  }, [rows, cols]);\n\n  return (\n    <div\n      role=\"status\"\n      aria-label={label}\n      className={cn(\"inline-flex flex-col items-center justify-center p-4\", className)}\n    >\n      <div\n        className=\"grid\"\n        style={{\n          gridTemplateColumns: `repeat(${cols}, ${dotSize}px)`,\n          gap: `${gap}px`,\n        }}\n      >\n        {Array.from({ length: rows * cols }).map((_, i) => {\n          const r = Math.floor(i / cols);\n          const c = i % cols;\n          const distance = r + c;\n          const isLit = (distance + activeFrame) % (rows + cols) < 3;\n\n          return (\n            <div\n              key={i}\n              style={{ width: dotSize, height: dotSize }}\n              className={cn(\n                \"rounded-full transition-colors duration-150\",\n                isLit ? \"bg-primary\" : \"bg-muted-foreground/20\"\n              )}\n            />\n          );\n        })}\n      </div>\n      <span className=\"sr-only\">{label}</span>\n    </div>\n  );\n}\n",
         "type": "registry:component",
         "target": "components/ui/dot-matrix-loader.tsx"
       }
@@ -268,6 +275,7 @@
     "category": "ui:creative",
     "tags": [
       "tailwind-v4",
+      "wai-aria-compliant",
       "svg-noise",
       "editorial",
       "texture",
@@ -283,7 +291,7 @@
       "keyboard_navigable": false,
       "wai_aria_compliant": true,
       "fallback_provided": true,
-      "reduced_motion_supported": false
+      "reduced_motion_supported": true
     },
     "license_origin": {
       "source_repository": "https://reactbits.dev",
@@ -318,6 +326,7 @@
       "threejs",
       "canvas",
       "tailwind-v4",
+      "wai-aria-compliant",
       "particles",
       "physics",
       "reduced-motion"
@@ -371,14 +380,17 @@
       "lucide-react",
       "bento-grid",
       "tailwind-v4",
+      "wai-aria-compliant",
       "layout-block",
+      "svg",
+      "zero-dependency",
+      "static",
       "analytical",
       "metrics",
-      "grid",
-      "saas-dashboard"
+      "grid"
     ],
     "dials": {
-      "design_variance": 4,
+      "design_variance": 5,
       "motion_intensity": 1,
       "visual_density": 9
     },
@@ -422,15 +434,18 @@
       "lucide-react",
       "bento-grid",
       "tailwind-v4",
+      "wai-aria-compliant",
       "editorial",
       "svg",
+      "zero-dependency",
+      "static",
       "analytical",
       "diagram"
     ],
     "dials": {
       "design_variance": 5,
       "motion_intensity": 1,
-      "visual_density": 8
+      "visual_density": 9
     },
     "complexity": "medium",
     "a11y": {
@@ -470,13 +485,17 @@
     "category": "ui:editorial",
     "tags": [
       "tailwind-v4",
+      "wai-aria-compliant",
       "editorial",
+      "svg",
+      "zero-dependency",
+      "static",
+      "analytical",
       "table",
-      "data-grid",
-      "accessible"
+      "data-grid"
     ],
     "dials": {
-      "design_variance": 3,
+      "design_variance": 5,
       "motion_intensity": 1,
       "visual_density": 9
     },
@@ -523,6 +542,8 @@
       "lucide-react",
       "tailwind-v4",
       "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
       "remotion",
       "video",
       "motion",
@@ -579,6 +600,9 @@
       "animation",
       "tailwind-v4",
       "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "shadcn-compatible",
       "spring-physics",
       "tabs",
       "layoutId"
@@ -631,9 +655,11 @@
       "animation",
       "lucide-react",
       "tailwind-v4",
-      "accessible",
-      "spring-physics",
       "playful",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "spring-physics",
       "sound-physics",
       "interactive",
       "button"
@@ -687,13 +713,16 @@
       "animation",
       "tailwind-v4",
       "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
       "spring-physics",
+      "micro-interaction",
       "dock",
       "macos-style"
     ],
     "dials": {
       "design_variance": 6,
-      "motion_intensity": 7,
+      "motion_intensity": 8,
       "visual_density": 4
     },
     "complexity": "high",
@@ -737,6 +766,8 @@
       "framer-motion",
       "motion/react",
       "animation",
+      "glassmorphism",
+      "wai-aria-compliant",
       "spring-physics",
       "cursor-follower",
       "smooth-spring"
@@ -787,14 +818,17 @@
       "motion/react",
       "animation",
       "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
       "spring-physics",
+      "shadcn-compatible",
       "magnetic-physics",
       "button",
       "interactive"
     ],
     "dials": {
-      "design_variance": 7,
-      "motion_intensity": 7,
+      "design_variance": 4,
+      "motion_intensity": 6,
       "visual_density": 5
     },
     "complexity": "medium",
@@ -842,7 +876,10 @@
       "animation",
       "lucide-react",
       "tailwind-v4",
+      "glassmorphism",
       "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
       "spring-physics",
       "animate-presence",
       "modal"
@@ -893,6 +930,7 @@
     "tags": [
       "radix-primitives",
       "headless",
+      "wai-aria-compliant",
       "avatar",
       "image"
     ],
@@ -920,7 +958,9 @@
       "clsx",
       "tailwind-merge"
     ],
-    "registryDependencies": [],
+    "registryDependencies": [
+      "avatar"
+    ],
     "files": [
       {
         "path": "registry/primitives/avatar.tsx",
@@ -938,6 +978,7 @@
     "description": "Contrast-checked status indicator using semantic design tokens.",
     "category": "ui:primitive",
     "tags": [
+      "wai-aria-compliant",
       "utility",
       "tailwind-v4",
       "status",
@@ -987,13 +1028,17 @@
     "category": "ui:primitive",
     "tags": [
       "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "react",
       "tailwind-v4",
+      "headless",
       "radix-primitive",
       "button"
     ],
     "dials": {
-      "design_variance": 2,
-      "motion_intensity": 2,
+      "design_variance": 3,
+      "motion_intensity": 3,
       "visual_density": 6
     },
     "complexity": "low",
@@ -1005,9 +1050,9 @@
       "reduced_motion_supported": false
     },
     "license_origin": {
-      "source_repository": "https://ui.shadcn.com",
+      "source_repository": "https://github.com/heroui-inc/heroui",
       "license_type": "MIT",
-      "author": "Shadcn & Community",
+      "author": "HeroUI Team",
       "attribution_required": true,
       "redistribution_mode": "full_source"
     },
@@ -1035,6 +1080,7 @@
     "category": "ui:primitive",
     "tags": [
       "tailwind-v4",
+      "wai-aria-compliant",
       "layout",
       "surface",
       "card"
@@ -1084,6 +1130,7 @@
       "headless",
       "lucide-react",
       "tailwind-v4",
+      "wai-aria-compliant",
       "modal",
       "dialog",
       "a11y"
@@ -1114,7 +1161,9 @@
       "clsx",
       "tailwind-merge"
     ],
-    "registryDependencies": [],
+    "registryDependencies": [
+      "dialog"
+    ],
     "files": [
       {
         "path": "registry/primitives/dialog.tsx",
@@ -1137,6 +1186,8 @@
       "lucide-react",
       "tailwind-v4",
       "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
       "menu",
       "navigation"
     ],
@@ -1166,7 +1217,9 @@
       "clsx",
       "tailwind-merge"
     ],
-    "registryDependencies": [],
+    "registryDependencies": [
+      "dropdown-menu"
+    ],
     "files": [
       {
         "path": "registry/primitives/dropdown-menu.tsx",
@@ -1185,15 +1238,19 @@
     "category": "ui:primitive",
     "tags": [
       "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
       "utility",
+      "react",
       "tailwind-v4",
+      "headless",
       "form",
       "input"
     ],
     "dials": {
-      "design_variance": 2,
-      "motion_intensity": 1,
-      "visual_density": 7
+      "design_variance": 3,
+      "motion_intensity": 3,
+      "visual_density": 6
     },
     "complexity": "low",
     "a11y": {
@@ -1204,9 +1261,9 @@
       "reduced_motion_supported": false
     },
     "license_origin": {
-      "source_repository": "https://ui.shadcn.com",
+      "source_repository": "https://github.com/heroui-inc/heroui",
       "license_type": "MIT",
-      "author": "Shadcn & Community",
+      "author": "HeroUI Team",
       "attribution_required": true,
       "redistribution_mode": "full_source"
     },
@@ -1234,9 +1291,11 @@
     "tags": [
       "radix-primitives",
       "headless",
-      "accessible",
-      "utility",
       "brutalist",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "utility",
       "toggle",
       "form"
     ],
@@ -1265,7 +1324,9 @@
       "clsx",
       "tailwind-merge"
     ],
-    "registryDependencies": [],
+    "registryDependencies": [
+      "switch"
+    ],
     "files": [
       {
         "path": "registry/primitives/switch.tsx",
@@ -1286,6 +1347,8 @@
       "radix-primitives",
       "headless",
       "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
       "tabs",
       "navigation"
     ],
@@ -1314,7 +1377,9 @@
       "clsx",
       "tailwind-merge"
     ],
-    "registryDependencies": [],
+    "registryDependencies": [
+      "tabs"
+    ],
     "files": [
       {
         "path": "registry/primitives/tabs.tsx",
@@ -1334,6 +1399,7 @@
     "tags": [
       "radix-primitives",
       "headless",
+      "wai-aria-compliant",
       "utility",
       "tooltip",
       "micro-interaction",
@@ -1364,7 +1430,9 @@
       "clsx",
       "tailwind-merge"
     ],
-    "registryDependencies": [],
+    "registryDependencies": [
+      "tooltip"
+    ],
     "files": [
       {
         "path": "registry/primitives/tooltip.tsx",
@@ -1382,6 +1450,7 @@
     "description": "Minimalist dot pulsation loader for button states or inline progress indicators.",
     "category": "ui:utility",
     "tags": [
+      "wai-aria-compliant",
       "utility",
       "loader",
       "spinner",
@@ -1429,6 +1498,7 @@
     "description": "Clean animated SVG state toggler (play/pause/check) with accessible title.",
     "category": "ui:utility",
     "tags": [
+      "wai-aria-compliant",
       "utility",
       "icon",
       "svg",

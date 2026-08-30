@@ -11,9 +11,11 @@
     "animation",
     "lucide-react",
     "tailwind-v4",
-    "accessible",
-    "spring-physics",
     "playful",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "spring-physics",
     "sound-physics",
     "interactive",
     "button"

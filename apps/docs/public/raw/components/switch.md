@@ -10,9 +10,11 @@ dependencies:
 tags:
   - "radix-primitives"
   - "headless"
-  - "accessible"
-  - "utility"
   - "brutalist"
+  - "accessible"
+  - "keyboard-accessible"
+  - "wai-aria-compliant"
+  - "utility"
   - "toggle"
   - "form"
 dials:
@@ -31,7 +33,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:primitive`
 - **Structural Complexity**: `LOW`
-- **Technical Tags**: radix-primitives, headless, accessible, utility, brutalist, toggle, form
+- **Technical Tags**: radix-primitives, headless, brutalist, accessible, keyboard-accessible, wai-aria-compliant, utility, toggle, form
 - **Design Dials**: Variance 2/10 · Motion 3/10 · Density 7/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 

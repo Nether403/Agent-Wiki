@@ -6,6 +6,7 @@
   "description": "Clean animated SVG state toggler (play/pause/check) with accessible title.",
   "category": "ui:utility",
   "tags": [
+    "wai-aria-compliant",
     "utility",
     "icon",
     "svg",

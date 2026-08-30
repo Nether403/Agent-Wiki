@@ -9,18 +9,19 @@
     "lucide-react",
     "bento-grid",
     "tailwind-v4",
-    "accessible",
-    "layout-block",
     "brutalist",
-    "pricing",
-    "saas",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
     "marketing",
-    "interactive-toggle"
+    "pricing",
+    "saas"
   ],
   "dials": {
-    "design_variance": 4,
-    "motion_intensity": 3,
-    "visual_density": 7
+    "design_variance": 5,
+    "motion_intensity": 4,
+    "visual_density": 6
   },
   "complexity": "high",
   "a11y": {

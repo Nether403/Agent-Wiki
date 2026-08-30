@@ -10,6 +10,7 @@
     "threejs",
     "canvas",
     "tailwind-v4",
+    "wai-aria-compliant",
     "particles",
     "physics",
     "reduced-motion"

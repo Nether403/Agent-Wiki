@@ -10,6 +10,7 @@ dependencies:
 tags:
   - "radix-primitives"
   - "headless"
+  - "wai-aria-compliant"
   - "avatar"
   - "image"
 dials:
@@ -28,7 +29,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:primitive`
 - **Structural Complexity**: `LOW`
-- **Technical Tags**: radix-primitives, headless, avatar, image
+- **Technical Tags**: radix-primitives, headless, wai-aria-compliant, avatar, image
 - **Design Dials**: Variance 2/10 · Motion 1/10 · Density 6/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 

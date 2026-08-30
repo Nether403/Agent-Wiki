@@ -14,6 +14,8 @@ tags:
   - "lucide-react"
   - "tailwind-v4"
   - "accessible"
+  - "keyboard-accessible"
+  - "wai-aria-compliant"
   - "menu"
   - "navigation"
 dials:
@@ -32,7 +34,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:primitive`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: radix-primitives, headless, lucide-react, tailwind-v4, accessible, menu, navigation
+- **Technical Tags**: radix-primitives, headless, lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, menu, navigation
 - **Design Dials**: Variance 3/10 · Motion 2/10 · Density 6/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 

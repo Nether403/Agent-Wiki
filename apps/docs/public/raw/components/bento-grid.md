@@ -11,12 +11,13 @@ tags:
   - "lucide-react"
   - "bento-grid"
   - "tailwind-v4"
+  - "wai-aria-compliant"
   - "layout-block"
-  - "asymmetry"
   - "marketing"
+  - "asymmetry"
 dials:
-  design_variance: 7      # 1: Conservative · 10: Asymmetric editorial
-  motion_intensity: 3     # 1: Basic hover · 10: Canvas/WebGL springs
+  design_variance: 5      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: 4     # 1: Basic hover · 10: Canvas/WebGL springs
   visual_density: 6       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "low"
 a11y:
@@ -30,8 +31,8 @@ a11y:
 
 - **Taxonomy Category**: `ui:block`
 - **Structural Complexity**: `LOW`
-- **Technical Tags**: lucide-react, bento-grid, tailwind-v4, layout-block, asymmetry, marketing
-- **Design Dials**: Variance 7/10 · Motion 3/10 · Density 6/10
+- **Technical Tags**: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, marketing, asymmetry
+- **Design Dials**: Variance 5/10 · Motion 4/10 · Density 6/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ## Installation Recipe

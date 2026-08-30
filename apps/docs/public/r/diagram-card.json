@@ -9,15 +9,18 @@
     "lucide-react",
     "bento-grid",
     "tailwind-v4",
+    "wai-aria-compliant",
     "editorial",
     "svg",
+    "zero-dependency",
+    "static",
     "analytical",
     "diagram"
   ],
   "dials": {
     "design_variance": 5,
     "motion_intensity": 1,
-    "visual_density": 8
+    "visual_density": 9
   },
   "complexity": "medium",
   "a11y": {

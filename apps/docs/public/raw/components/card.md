@@ -8,6 +8,7 @@ dependencies:
   - "tailwind-merge"
 tags:
   - "tailwind-v4"
+  - "wai-aria-compliant"
   - "layout"
   - "surface"
   - "card"
@@ -27,7 +28,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:primitive`
 - **Structural Complexity**: `MEDIUM`
-- **Technical Tags**: tailwind-v4, layout, surface, card
+- **Technical Tags**: tailwind-v4, wai-aria-compliant, layout, surface, card
 - **Design Dials**: Variance 3/10 · Motion 1/10 · Density 6/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 

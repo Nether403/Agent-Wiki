@@ -13,12 +13,15 @@ tags:
   - "animation"
   - "tailwind-v4"
   - "accessible"
+  - "keyboard-accessible"
+  - "wai-aria-compliant"
   - "spring-physics"
+  - "micro-interaction"
   - "dock"
   - "macos-style"
 dials:
   design_variance: 6      # 1: Conservative · 10: Asymmetric editorial
-  motion_intensity: 7     # 1: Basic hover · 10: Canvas/WebGL springs
+  motion_intensity: 8     # 1: Basic hover · 10: Canvas/WebGL springs
   visual_density: 4       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "high"
 a11y:
@@ -32,8 +35,8 @@ a11y:
 
 - **Taxonomy Category**: `ui:motion`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: framer-motion, motion/react, animation, tailwind-v4, accessible, spring-physics, dock, macos-style
-- **Design Dials**: Variance 6/10 · Motion 7/10 · Density 4/10
+- **Technical Tags**: framer-motion, motion/react, animation, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, micro-interaction, dock, macos-style
+- **Design Dials**: Variance 6/10 · Motion 8/10 · Density 4/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ## Installation Recipe

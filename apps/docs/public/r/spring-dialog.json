@@ -11,7 +11,10 @@
     "animation",
     "lucide-react",
     "tailwind-v4",
+    "glassmorphism",
     "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
     "spring-physics",
     "animate-presence",
     "modal"

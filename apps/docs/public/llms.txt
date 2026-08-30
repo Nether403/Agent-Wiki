@@ -10,132 +10,132 @@
 ## Available Registry Components (29 verified zero-slop items)
 
 ### Category: ui:block
-- [bento-grid](/r/bento-grid.json): Multi-pane asymmetrical layout grid with responsive column spans and structural borders. (Variance: 7, Motion: 3, Density: 6)
-  - Tags: lucide-react, bento-grid, tailwind-v4, layout-block, asymmetry, marketing
+- [bento-grid](/r/bento-grid.json): Multi-pane asymmetrical layout grid with responsive column spans and structural borders. (Variance: 5, Motion: 4, Density: 6)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, marketing, asymmetry
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/bento-grid.json
 - [hero-section](/r/hero-section.json): Editorial SaaS hero section featuring typography discipline, badge pill, and active CTA. (Variance: 5, Motion: 2, Density: 5)
-  - Tags: lucide-react, tailwind-v4, accessible, layout-block, hero, marketing, typography, block
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, hero, marketing, typography, block
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/hero-section.json
-- [pricing-table](/r/pricing-table.json): Multi-tier pricing matrix with monthly/annual toggle and clear feature checkmarks. (Variance: 4, Motion: 3, Density: 7)
-  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, layout-block, brutalist, pricing, saas, marketing, interactive-toggle
+- [pricing-table](/r/pricing-table.json): Multi-tier pricing matrix with monthly/annual toggle and clear feature checkmarks. (Variance: 5, Motion: 4, Density: 6)
+  - Tags: lucide-react, bento-grid, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, marketing, pricing, saas
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/pricing-table.json
 
 ### Category: ui:creative
-- [canvas-fluid-wave](/r/canvas-fluid-wave.json): Interactive HTML5 Canvas fluid simulation with mouse interaction, WebGL / Three.js bridge compatibility, and CSS gradient fallback. (Variance: 8, Motion: 9, Density: 3)
-  - Tags: webgl, threejs, canvas, tailwind-v4, shader-simulation, interactive, a11y-fallback
+- [canvas-fluid-wave](/r/canvas-fluid-wave.json): Interactive HTML5 Canvas fluid simulation with mouse interaction, WebGL / Three.js bridge compatibility, and CSS gradient fallback. (Variance: 9, Motion: 9, Density: 3)
+  - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, framer-motion, interactive, a11y-fallback
   - Dependencies: three, clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/canvas-fluid-wave.json
 - [dot-matrix-loader](/r/dot-matrix-loader.json): Animated dot matrix with wave oscillation, customizable matrix rows, and accessible status role. (Variance: 6, Motion: 5, Density: 7)
-  - Tags: utility, dot-matrix, canvas-pattern, loader, status
-  - Dependencies: clsx, tailwind-merge
+  - Tags: wai-aria-compliant, utility, dot-matrix, canvas-pattern, loader, status
+  - Dependencies: clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/dot-matrix-loader.json
 - [noise-texture-card](/r/noise-texture-card.json): High-craft noise-dithered backdrop with crisp typography overlay and zero AI slop. (Variance: 7, Motion: 2, Density: 6)
-  - Tags: tailwind-v4, svg-noise, editorial, texture, brutalist
+  - Tags: tailwind-v4, wai-aria-compliant, svg-noise, editorial, texture, brutalist
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/noise-texture-card.json
 - [particle-field](/r/particle-field.json): GPU-friendly interactive particle web with prefers-reduced-motion fallback. (Variance: 8, Motion: 8, Density: 4)
-  - Tags: webgl, threejs, canvas, tailwind-v4, particles, physics, reduced-motion
+  - Tags: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, particles, physics, reduced-motion
   - Dependencies: three, clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/particle-field.json
 
 ### Category: ui:editorial
-- [data-stat-grid](/r/data-stat-grid.json): Asymmetrical metric showcase for SaaS analytics with high visual density and clean type. (Variance: 4, Motion: 1, Density: 9)
-  - Tags: lucide-react, bento-grid, tailwind-v4, layout-block, analytical, metrics, grid, saas-dashboard
+- [data-stat-grid](/r/data-stat-grid.json): Asymmetrical metric showcase for SaaS analytics with high visual density and clean type. (Variance: 5, Motion: 1, Density: 9)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, layout-block, svg, zero-dependency, static, analytical, metrics, grid
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/data-stat-grid.json
-- [diagram-card](/r/diagram-card.json): Precision SVG diagramming card with minimal vector lines and zero decorative emojis. (Variance: 5, Motion: 1, Density: 8)
-  - Tags: lucide-react, bento-grid, tailwind-v4, editorial, svg, analytical, diagram
+- [diagram-card](/r/diagram-card.json): Precision SVG diagramming card with minimal vector lines and zero decorative emojis. (Variance: 5, Motion: 1, Density: 9)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, diagram
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/diagram-card.json
-- [minimal-table](/r/minimal-table.json): Clean tabular data display with accessible headers, captions, and responsive overflow. (Variance: 3, Motion: 1, Density: 9)
-  - Tags: tailwind-v4, editorial, table, data-grid, accessible
+- [minimal-table](/r/minimal-table.json): Clean tabular data display with accessible headers, captions, and responsive overflow. (Variance: 5, Motion: 1, Density: 9)
+  - Tags: tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, table, data-grid
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/minimal-table.json
 
 ### Category: ui:media
 - [timeline-player](/r/timeline-player.json): Precision timeline-based motion and video composition controller with frame scrubbing and timecode. (Variance: 7, Motion: 8, Density: 4)
-  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, remotion, video, motion, timeline, media, player
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, remotion, video, motion, timeline, media, player
   - Dependencies: motion, lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/timeline-player.json
 
 ### Category: ui:motion
 - [animated-tabs](/r/animated-tabs.json): Smooth spring-bound tab slider with layout ID preservation and zero layout shift. (Variance: 4, Motion: 6, Density: 5)
-  - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, spring-physics, tabs, layoutId
+  - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, shadcn-compatible, spring-physics, tabs, layoutId
   - Dependencies: motion, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/animated-tabs.json
 - [evil-button](/r/evil-button.json): Playful tactile spring-physics button with synthesized audio feedback and chaotic variants. (Variance: 8, Motion: 7, Density: 5)
-  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, spring-physics, playful, sound-physics, interactive, button
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, playful, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, sound-physics, interactive, button
   - Dependencies: motion, lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/evil-button.json
-- [floating-dock](/r/floating-dock.json): macOS-style interactive dock with mouse proximity magnification and spring physics. (Variance: 6, Motion: 7, Density: 4)
-  - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, spring-physics, dock, macos-style
+- [floating-dock](/r/floating-dock.json): macOS-style interactive dock with mouse proximity magnification and spring physics. (Variance: 6, Motion: 8, Density: 4)
+  - Tags: framer-motion, motion/react, animation, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, micro-interaction, dock, macos-style
   - Dependencies: motion, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/floating-dock.json
 - [fluid-cursor](/r/fluid-cursor.json): Smooth trailing cursor follower with graceful coarse-pointer (mobile) disablement. (Variance: 8, Motion: 8, Density: 3)
-  - Tags: framer-motion, motion/react, animation, spring-physics, cursor-follower, smooth-spring
+  - Tags: framer-motion, motion/react, animation, glassmorphism, wai-aria-compliant, spring-physics, cursor-follower, smooth-spring
   - Dependencies: motion, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/fluid-cursor.json
-- [magnetic-button](/r/magnetic-button.json): Physics-based cursor magnetic attraction button for high-taste calls to action. (Variance: 7, Motion: 7, Density: 5)
-  - Tags: framer-motion, motion/react, animation, accessible, spring-physics, magnetic-physics, button, interactive
+- [magnetic-button](/r/magnetic-button.json): Physics-based cursor magnetic attraction button for high-taste calls to action. (Variance: 4, Motion: 6, Density: 5)
+  - Tags: framer-motion, motion/react, animation, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, shadcn-compatible, magnetic-physics, button, interactive
   - Dependencies: motion, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/magnetic-button.json
 - [spring-dialog](/r/spring-dialog.json): Scale-and-fade physics modal with AnimatePresence and keyboard escape handling. (Variance: 5, Motion: 6, Density: 5)
-  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, spring-physics, animate-presence, modal
+  - Tags: framer-motion, motion/react, animation, lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, animate-presence, modal
   - Dependencies: motion, lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/spring-dialog.json
 
 ### Category: ui:primitive
 - [avatar](/r/avatar.json): Fallback-aware image avatar with initials display and smooth loading states. (Variance: 2, Motion: 1, Density: 6)
-  - Tags: radix-primitives, headless, avatar, image
+  - Tags: radix-primitives, headless, wai-aria-compliant, avatar, image
   - Dependencies: @radix-ui/react-avatar, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/avatar.json
 - [badge](/r/badge.json): Contrast-checked status indicator using semantic design tokens. (Variance: 2, Motion: 1, Density: 8)
-  - Tags: utility, tailwind-v4, status, indicator, badge
+  - Tags: wai-aria-compliant, utility, tailwind-v4, status, indicator, badge
   - Dependencies: class-variance-authority, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/badge.json
-- [button](/r/button.json): Polymorphic button with accessible variants, focus rings, and zero arbitrary spacing. (Variance: 2, Motion: 2, Density: 6)
-  - Tags: accessible, tailwind-v4, radix-primitive, button
+- [button](/r/button.json): Polymorphic button with accessible variants, focus rings, and zero arbitrary spacing. (Variance: 3, Motion: 3, Density: 6)
+  - Tags: accessible, keyboard-accessible, wai-aria-compliant, react, tailwind-v4, headless, radix-primitive, button
   - Dependencies: class-variance-authority, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/button.json
 - [card](/r/card.json): Structural surface card with crisp border-border and no glassmorphism slop. (Variance: 3, Motion: 1, Density: 6)
-  - Tags: tailwind-v4, layout, surface, card
+  - Tags: tailwind-v4, wai-aria-compliant, layout, surface, card
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/card.json
 - [dialog](/r/dialog.json): Headless accessible modal dialog with focus trap, backdrop escape, and screen-reader roles. (Variance: 3, Motion: 3, Density: 5)
-  - Tags: radix-primitives, headless, lucide-react, tailwind-v4, modal, dialog, a11y
+  - Tags: radix-primitives, headless, lucide-react, tailwind-v4, wai-aria-compliant, modal, dialog, a11y
   - Dependencies: @radix-ui/react-dialog, lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/dialog.json
 - [dropdown-menu](/r/dropdown-menu.json): Keyboard-navigable dropdown with arrow key navigation, sub-menus, and ARIA menu attributes. (Variance: 3, Motion: 2, Density: 6)
-  - Tags: radix-primitives, headless, lucide-react, tailwind-v4, accessible, menu, navigation
+  - Tags: radix-primitives, headless, lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, menu, navigation
   - Dependencies: @radix-ui/react-dropdown-menu, lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/dropdown-menu.json
-- [input](/r/input.json): Accessible text input with floating state, error boundaries, and focus-visible ring. (Variance: 2, Motion: 1, Density: 7)
-  - Tags: accessible, utility, tailwind-v4, form, input
+- [input](/r/input.json): Accessible text input with floating state, error boundaries, and focus-visible ring. (Variance: 3, Motion: 3, Density: 6)
+  - Tags: accessible, keyboard-accessible, wai-aria-compliant, utility, react, tailwind-v4, headless, form, input
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/input.json
 - [switch](/r/switch.json): Accessible toggle switch with smooth spring thumb and keyboard space/enter toggling. (Variance: 2, Motion: 3, Density: 7)
-  - Tags: radix-primitives, headless, accessible, utility, brutalist, toggle, form
+  - Tags: radix-primitives, headless, brutalist, accessible, keyboard-accessible, wai-aria-compliant, utility, toggle, form
   - Dependencies: @radix-ui/react-switch, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/switch.json
 - [tabs](/r/tabs.json): Accessible tabbed interface with keyboard arrow navigation and active state styling. (Variance: 3, Motion: 2, Density: 6)
-  - Tags: radix-primitives, headless, accessible, tabs, navigation
+  - Tags: radix-primitives, headless, accessible, keyboard-accessible, wai-aria-compliant, tabs, navigation
   - Dependencies: @radix-ui/react-tabs, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/tabs.json
 - [tooltip](/r/tooltip.json): Micro-tooltip with delay timers and instant focus visibility for assistive tech. (Variance: 2, Motion: 2, Density: 7)
-  - Tags: radix-primitives, headless, utility, tooltip, micro-interaction, a11y
+  - Tags: radix-primitives, headless, wai-aria-compliant, utility, tooltip, micro-interaction, a11y
   - Dependencies: @radix-ui/react-tooltip, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/tooltip.json
 
 ### Category: ui:utility
 - [dot-loader](/r/dot-loader.json): Minimalist dot pulsation loader for button states or inline progress indicators. (Variance: 2, Motion: 4, Density: 8)
-  - Tags: utility, loader, spinner, minimalist
+  - Tags: wai-aria-compliant, utility, loader, spinner, minimalist
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/dot-loader.json
 - [icon-morph](/r/icon-morph.json): Clean animated SVG state toggler (play/pause/check) with accessible title. (Variance: 3, Motion: 4, Density: 7)
-  - Tags: utility, icon, svg, morph, a11y
+  - Tags: wai-aria-compliant, utility, icon, svg, morph, a11y
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/icon-morph.json
 

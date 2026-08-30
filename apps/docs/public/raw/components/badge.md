@@ -8,6 +8,7 @@ dependencies:
   - "clsx"
   - "tailwind-merge"
 tags:
+  - "wai-aria-compliant"
   - "utility"
   - "tailwind-v4"
   - "status"
@@ -29,7 +30,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:primitive`
 - **Structural Complexity**: `LOW`
-- **Technical Tags**: utility, tailwind-v4, status, indicator, badge
+- **Technical Tags**: wai-aria-compliant, utility, tailwind-v4, status, indicator, badge
 - **Design Dials**: Variance 2/10 · Motion 1/10 · Density 8/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 

@@ -7,6 +7,7 @@
   "category": "ui:primitive",
   "tags": [
     "tailwind-v4",
+    "wai-aria-compliant",
     "layout",
     "surface",
     "card"

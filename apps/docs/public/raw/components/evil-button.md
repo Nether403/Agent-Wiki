@@ -14,9 +14,11 @@ tags:
   - "animation"
   - "lucide-react"
   - "tailwind-v4"
-  - "accessible"
-  - "spring-physics"
   - "playful"
+  - "accessible"
+  - "keyboard-accessible"
+  - "wai-aria-compliant"
+  - "spring-physics"
   - "sound-physics"
   - "interactive"
   - "button"
@@ -36,7 +38,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:motion`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, spring-physics, playful, sound-physics, interactive, button
+- **Technical Tags**: framer-motion, motion/react, animation, lucide-react, tailwind-v4, playful, accessible, keyboard-accessible, wai-aria-compliant, spring-physics, sound-physics, interactive, button
 - **Design Dials**: Variance 8/10 · Motion 7/10 · Density 5/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 

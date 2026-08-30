@@ -207,42 +207,49 @@ export function classifyComponentDials(
   let category: TaxonomyCategory = meta.category || "ui:primitive";
   const tags = new Set(meta.tags);
 
-  let designVariance = 3;
-  let motionIntensity = 2;
-  let visualDensity = 6;
+  let designVariance = meta.defaultDials?.design_variance ?? 3;
+  let motionIntensity = meta.defaultDials?.motion_intensity ?? 2;
+  let visualDensity = meta.defaultDials?.visual_density ?? 6;
 
-  // 1. Dial Scoring: Category & Structure tells
-  if (meta.hasWebGL || meta.hasCanvas) {
-    category = "ui:creative";
-    motionIntensity = 9;
-    designVariance = 8;
-    visualDensity = 3;
-    tags.add("webgl");
-    tags.add("canvas");
-  } else if (meta.hasMotion) {
-    category = "ui:motion";
-    motionIntensity = 7;
-    designVariance = 5;
-    visualDensity = 5;
-    tags.add("motion/react");
-  } else if (/Grid|Bento|Hero|Section|Pricing|Layout/i.test(meta.name) || meta.linesCount > 140) {
-    category = "ui:block";
-    designVariance = 6;
-    motionIntensity = 3;
-    visualDensity = 6;
-    tags.add("layout-block");
-  } else if (/Diagram|Metric|Stat|Table|Analytics/i.test(meta.name)) {
-    category = "ui:editorial";
-    designVariance = 4;
-    motionIntensity = 1;
-    visualDensity = 8;
-    tags.add("editorial");
-  } else if (/Loader|Icon|Spinner|Pill|Matrix/i.test(meta.name) || meta.linesCount < 50) {
-    category = "ui:utility";
-    designVariance = 2;
-    motionIntensity = 4;
-    visualDensity = 7;
-    tags.add("utility");
+  // 1. Dial Scoring: Category & Structure tells (if defaultDials not explicitly preset)
+  if (!meta.defaultDials) {
+    if (meta.hasWebGL || meta.hasCanvas) {
+      category = "ui:creative";
+      motionIntensity = 9;
+      designVariance = 8;
+      visualDensity = 3;
+      tags.add("webgl");
+      tags.add("canvas");
+    } else if (meta.hasMotion) {
+      category = "ui:motion";
+      motionIntensity = 7;
+      designVariance = 5;
+      visualDensity = 5;
+      tags.add("motion/react");
+    } else if (/Grid|Bento|Hero|Section|Pricing|Layout/i.test(meta.name) || meta.linesCount > 140) {
+      category = "ui:block";
+      designVariance = 6;
+      motionIntensity = 3;
+      visualDensity = 6;
+      tags.add("layout-block");
+    } else if (/Diagram|Metric|Stat|Table|Analytics/i.test(meta.name)) {
+      category = "ui:editorial";
+      designVariance = 5;
+      motionIntensity = 1;
+      visualDensity = 9;
+      tags.add("editorial");
+    } else if (/Loader|Icon|Spinner|Pill|Matrix/i.test(meta.name) || meta.linesCount < 50) {
+      category = "ui:utility";
+      designVariance = 2;
+      motionIntensity = 4;
+      visualDensity = 7;
+      tags.add("utility");
+    }
+  } else {
+    if (meta.hasWebGL || meta.hasCanvas) {
+      tags.add("webgl");
+      tags.add("canvas");
+    }
   }
 
   // 2. Motion adjustments

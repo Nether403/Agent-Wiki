@@ -7,13 +7,17 @@
   "category": "ui:editorial",
   "tags": [
     "tailwind-v4",
+    "wai-aria-compliant",
     "editorial",
+    "svg",
+    "zero-dependency",
+    "static",
+    "analytical",
     "table",
-    "data-grid",
-    "accessible"
+    "data-grid"
   ],
   "dials": {
-    "design_variance": 3,
+    "design_variance": 5,
     "motion_intensity": 1,
     "visual_density": 9
   },

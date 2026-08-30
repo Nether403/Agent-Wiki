@@ -8,6 +8,7 @@
   "tags": [
     "radix-primitives",
     "headless",
+    "wai-aria-compliant",
     "utility",
     "tooltip",
     "micro-interaction",
@@ -38,7 +39,9 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "tooltip"
+  ],
   "files": [
     {
       "path": "registry/primitives/tooltip.tsx",

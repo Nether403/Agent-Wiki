@@ -6,6 +6,7 @@
   "description": "Minimalist dot pulsation loader for button states or inline progress indicators.",
   "category": "ui:utility",
   "tags": [
+    "wai-aria-compliant",
     "utility",
     "loader",
     "spinner",

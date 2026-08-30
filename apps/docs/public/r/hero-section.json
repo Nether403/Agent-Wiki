@@ -9,6 +9,8 @@
     "lucide-react",
     "tailwind-v4",
     "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
     "layout-block",
     "hero",
     "marketing",

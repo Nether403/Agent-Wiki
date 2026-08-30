@@ -11,17 +11,18 @@ tags:
   - "lucide-react"
   - "bento-grid"
   - "tailwind-v4"
-  - "accessible"
-  - "layout-block"
   - "brutalist"
+  - "accessible"
+  - "keyboard-accessible"
+  - "wai-aria-compliant"
+  - "layout-block"
+  - "marketing"
   - "pricing"
   - "saas"
-  - "marketing"
-  - "interactive-toggle"
 dials:
-  design_variance: 4      # 1: Conservative · 10: Asymmetric editorial
-  motion_intensity: 3     # 1: Basic hover · 10: Canvas/WebGL springs
-  visual_density: 7       # 1: Generous whitespace · 10: Dense analytical UI
+  design_variance: 5      # 1: Conservative · 10: Asymmetric editorial
+  motion_intensity: 4     # 1: Basic hover · 10: Canvas/WebGL springs
+  visual_density: 6       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "high"
 a11y:
   keyboard_navigable: true
@@ -34,8 +35,8 @@ a11y:
 
 - **Taxonomy Category**: `ui:block`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: lucide-react, bento-grid, tailwind-v4, accessible, layout-block, brutalist, pricing, saas, marketing, interactive-toggle
-- **Design Dials**: Variance 4/10 · Motion 3/10 · Density 7/10
+- **Technical Tags**: lucide-react, bento-grid, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, marketing, pricing, saas
+- **Design Dials**: Variance 5/10 · Motion 4/10 · Density 6/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ## Installation Recipe

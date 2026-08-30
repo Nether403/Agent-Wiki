@@ -13,11 +13,12 @@ tags:
   - "threejs"
   - "canvas"
   - "tailwind-v4"
-  - "shader-simulation"
+  - "wai-aria-compliant"
+  - "framer-motion"
   - "interactive"
   - "a11y-fallback"
 dials:
-  design_variance: 8      # 1: Conservative · 10: Asymmetric editorial
+  design_variance: 9      # 1: Conservative · 10: Asymmetric editorial
   motion_intensity: 9     # 1: Basic hover · 10: Canvas/WebGL springs
   visual_density: 3       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "high"
@@ -32,8 +33,8 @@ a11y:
 
 - **Taxonomy Category**: `ui:creative`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: webgl, threejs, canvas, tailwind-v4, shader-simulation, interactive, a11y-fallback
-- **Design Dials**: Variance 8/10 · Motion 9/10 · Density 3/10
+- **Technical Tags**: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, framer-motion, interactive, a11y-fallback
+- **Design Dials**: Variance 9/10 · Motion 9/10 · Density 3/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 
 ## Installation Recipe

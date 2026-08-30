@@ -8,12 +8,16 @@ dependencies:
   - "tailwind-merge"
 tags:
   - "tailwind-v4"
+  - "wai-aria-compliant"
   - "editorial"
+  - "svg"
+  - "zero-dependency"
+  - "static"
+  - "analytical"
   - "table"
   - "data-grid"
-  - "accessible"
 dials:
-  design_variance: 3      # 1: Conservative · 10: Asymmetric editorial
+  design_variance: 5      # 1: Conservative · 10: Asymmetric editorial
   motion_intensity: 1     # 1: Basic hover · 10: Canvas/WebGL springs
   visual_density: 9       # 1: Generous whitespace · 10: Dense analytical UI
 complexity: "low"
@@ -28,8 +32,8 @@ a11y:
 
 - **Taxonomy Category**: `ui:editorial`
 - **Structural Complexity**: `LOW`
-- **Technical Tags**: tailwind-v4, editorial, table, data-grid, accessible
-- **Design Dials**: Variance 3/10 · Motion 1/10 · Density 9/10
+- **Technical Tags**: tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, table, data-grid
+- **Design Dials**: Variance 5/10 · Motion 1/10 · Density 9/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 
 ## Installation Recipe

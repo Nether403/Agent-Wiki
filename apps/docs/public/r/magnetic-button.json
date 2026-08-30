@@ -10,14 +10,17 @@
     "motion/react",
     "animation",
     "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
     "spring-physics",
+    "shadcn-compatible",
     "magnetic-physics",
     "button",
     "interactive"
   ],
   "dials": {
-    "design_variance": 7,
-    "motion_intensity": 7,
+    "design_variance": 4,
+    "motion_intensity": 6,
     "visual_density": 5
   },
   "complexity": "medium",

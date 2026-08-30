@@ -8,6 +8,7 @@ dependencies:
   - "tailwind-merge"
 tags:
   - "tailwind-v4"
+  - "wai-aria-compliant"
   - "svg-noise"
   - "editorial"
   - "texture"
@@ -28,7 +29,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:creative`
 - **Structural Complexity**: `LOW`
-- **Technical Tags**: tailwind-v4, svg-noise, editorial, texture, brutalist
+- **Technical Tags**: tailwind-v4, wai-aria-compliant, svg-noise, editorial, texture, brutalist
 - **Design Dials**: Variance 7/10 · Motion 2/10 · Density 6/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 

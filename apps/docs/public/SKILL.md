@@ -1,5 +1,13 @@
-# Machine-First Design System Agent Rules
-# Auto-generated from SKILL.md - Governs Cursor, Claude Code, and local coding agents
+---
+name: "design-system-agent-skill"
+description: "Instructs AI agents how to discover, configure, install, and audit components from our Design Wiki registry."
+version: "1.0.0"
+freshness: "2026-08-30"
+dials:
+  DESIGN_VARIANCE: 5     # 1: Conservative/centered · 10: Asymmetric/Avant-garde editorial
+  MOTION_INTENSITY: 4    # 1: Basic hover changes  · 10: Orchestrated canvas/WebGL/spring states
+  VISUAL_DENSITY: 6      # 1: Generous whitespace  · 10: Dense analytical/SaaS grid layouts
+---
 
 # Design System Agent Skill
 You are an expert design engineer agent. This document is your mandatory execution contract when constructing, updating, or reviewing interfaces in this repository. It prevents you from writing generic "AI slop" (such as centered cards, purple-to-blue gradients, or unstyled margins) and forces you to use our verified, high-performance UI registry components.

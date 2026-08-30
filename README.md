@@ -110,13 +110,27 @@ All components are classified into a canonical taxonomy framework:
 
 | Category | Description | Representative Upstream Libraries |
 | :--- | :--- | :--- |
-| `ui:primitive` | Accessible, headless, battle-tested UI controls (buttons, dialogs, dropdowns, inputs, tabs). | HeroUI, Radix UI, Ark UI, ReUI, beUI |
+| `ui:primitive` | Accessible, headless, battle-tested UI controls (buttons, dialogs, dropdowns, inputs, tabs). | HeroUI v3, Radix UI, Ark UI, beUI |
 | `ui:motion` | Micro-interactions, spring physics, and animated transitions built with `motion/react`. | SmoothUI, KokonutUI, Aceternity UI, Evil-Buttons |
 | `ui:creative` | Interactive HTML5 Canvas simulations, WebGL shaders, Three.js scenes with graceful CSS fallbacks. | Canvas UI, ThreeUI, React Bits |
 | `ui:editorial` | Clean, static, typography-disciplined analytical cards and SVG diagrams free of decorative clutter. | diagram-design |
 | `ui:block` | Complete multi-component sections, bento grids, navigation headers, and marketing hero wrappers. | Tailark, Kairo UI, Shadcn blocks |
 | `ui:utility` | Fast micro-assets, status indicators, and specialized dot matrix loaders. | Dot Matrix, icons0 |
 | `ui:media` | Timeline-based motion wrappers, audio visualizers, and video compositions. | Remocn |
+
+### Curated Library Mapping Matrix
+
+All incoming components from our 7 primary curated libraries are pre-classified with standardized technical tags and preset taste dials:
+
+| Library | Category | Technical Tags | Preset Dials (Var / Mot / Den) |
+| :--- | :--- | :--- | :--- |
+| **Aceternity UI** | `ui:motion` | `framer-motion`, `tailwind-v4`, `micro-interaction` | Var: 6 · Mot: 8 · Den: 4 |
+| **Canvas UI** | `ui:creative` | `threejs`, `webgl`, `framer-motion`, `interactive` | Var: 9 · Mot: 9 · Den: 3 |
+| **diagram-design** | `ui:editorial` | `svg`, `zero-dependency`, `static`, `analytical` | Var: 5 · Mot: 1 · Den: 9 |
+| **HeroUI v3** | `ui:primitive` | `react`, `tailwind-v4`, `headless`, `accessible` | Var: 3 · Mot: 3 · Den: 6 |
+| **Evil-Buttons** | `ui:motion` | `playful`, `framer-motion`, `sound-physics` | Var: 8 · Mot: 7 · Den: 5 |
+| **SmoothUI** | `ui:motion` | `framer-motion`, `shadcn-compatible`, `spring-physics` | Var: 4 · Mot: 6 · Den: 5 |
+| **Tailark** | `ui:block` | `tailwind-v4`, `marketing`, `bento-grid` | Var: 5 · Mot: 4 · Den: 6 |
 
 ---
 

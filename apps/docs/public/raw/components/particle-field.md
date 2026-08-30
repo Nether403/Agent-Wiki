@@ -13,6 +13,7 @@ tags:
   - "threejs"
   - "canvas"
   - "tailwind-v4"
+  - "wai-aria-compliant"
   - "particles"
   - "physics"
   - "reduced-motion"
@@ -32,7 +33,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:creative`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: webgl, threejs, canvas, tailwind-v4, particles, physics, reduced-motion
+- **Technical Tags**: webgl, threejs, canvas, tailwind-v4, wai-aria-compliant, particles, physics, reduced-motion
 - **Design Dials**: Variance 8/10 · Motion 8/10 · Density 4/10
 - **Accessibility AA**: Keyboard Nav: false, ARIA: true, Fallback: true
 

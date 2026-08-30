@@ -15,6 +15,8 @@ tags:
   - "lucide-react"
   - "tailwind-v4"
   - "accessible"
+  - "keyboard-accessible"
+  - "wai-aria-compliant"
   - "remotion"
   - "video"
   - "motion"
@@ -37,7 +39,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:media`
 - **Structural Complexity**: `HIGH`
-- **Technical Tags**: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, remotion, video, motion, timeline, media, player
+- **Technical Tags**: framer-motion, motion/react, animation, lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, remotion, video, motion, timeline, media, player
 - **Design Dials**: Variance 7/10 · Motion 8/10 · Density 4/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 

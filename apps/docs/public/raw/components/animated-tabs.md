@@ -13,6 +13,9 @@ tags:
   - "animation"
   - "tailwind-v4"
   - "accessible"
+  - "keyboard-accessible"
+  - "wai-aria-compliant"
+  - "shadcn-compatible"
   - "spring-physics"
   - "tabs"
   - "layoutId"
@@ -32,7 +35,7 @@ a11y:
 
 - **Taxonomy Category**: `ui:motion`
 - **Structural Complexity**: `MEDIUM`
-- **Technical Tags**: framer-motion, motion/react, animation, tailwind-v4, accessible, spring-physics, tabs, layoutId
+- **Technical Tags**: framer-motion, motion/react, animation, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, shadcn-compatible, spring-physics, tabs, layoutId
 - **Design Dials**: Variance 4/10 · Motion 6/10 · Density 5/10
 - **Accessibility AA**: Keyboard Nav: true, ARIA: true, Fallback: true
 
