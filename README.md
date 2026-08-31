@@ -1,4 +1,7 @@
-# 🏛️ Machine-First Design Agent Wiki
+# Machine-First Design Agent Wiki
+
+<img width="1201" height="1393" alt="image" src="https://github.com/user-attachments/assets/b7d9b587-78bc-45cc-9abe-459e9e7dd1dc" />
+
 
 > **A deterministic, pre-tested, zero-slop UI component registry and Model Context Protocol (MCP) ecosystem engineered specifically for AI developer agents.**
 
@@ -28,7 +31,7 @@ The **Machine-First Design Agent Wiki** flips this paradigm. By providing determ
 
 ---
 
-## 🏛️ System Architecture
+## System Architecture
 
 The platform runs on a **Double-Exposure Architecture**:
 
@@ -62,7 +65,7 @@ The platform runs on a **Double-Exposure Architecture**:
 
 ---
 
-## 📂 Monorepo Topology
+## Monorepo Topology
 
 The repository is structured as an integrated `pnpm` monorepo orchestrated with Turborepo:
 
@@ -139,7 +142,7 @@ Agent Wiki/
 
 ---
 
-## 🏷️ Standardized Taxonomy Framework
+## Standardized Taxonomy Framework
 
 Component counts are generated at compile time into [`catalog-stats.json`](./catalog-stats.json). Do not hand-edit them. Taxonomy domains:
 
@@ -157,7 +160,7 @@ Component counts are generated at compile time into [`catalog-stats.json`](./cat
 
 ---
 
-## 🔌 Model Context Protocol (MCP) Server
+## Model Context Protocol (MCP) Server
 
 AI developer agents connect via the `@design-wiki/mcp` **stdio** server from this repo (`pnpm mcp`). The package is private and is not on npm yet. The Cloudflare Worker is a prototype and is not a public production endpoint. Registry origin: `--registry` or `DESIGN_WIKI_REGISTRY_URL` (see [`CATALOG.md`](./CATALOG.md)).
 
@@ -200,7 +203,7 @@ Canonical list: [`catalog-contract.json`](./catalog-contract.json) (`mcpTools`).
 
 ---
 
-## 🛡️ Anti-Slop 50-Rule Specification
+## Anti-Slop 50-Rule Specification
 
 Every component ingested or generated is validated against our 50 Anti-Slop Rules:
 
@@ -259,7 +262,7 @@ Every component ingested or generated is validated against our 50 Anti-Slop Rule
 
 ---
 
-## ⚡ Quickstart & Development Guide
+## Quickstart & Development Guide
 
 ### Prerequisites
 - **Node.js**: `v20+` (tested on `v26.7.0`)
@@ -342,7 +345,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the human interface,
 
 ---
 
-## 🤖 The 4-Phase Agent Execution Loop
+## The 4-Phase Agent Execution Loop
 
 When an AI coding agent pair-programs in this repository, it follows the mandatory contract defined in [`SKILL.md`](./SKILL.md) and [`.cursorrules`](./.cursorrules):
 
@@ -364,7 +367,7 @@ When an AI coding agent pair-programs in this repository, it follows the mandato
 
 ### Sample Agent Integration Receipt
 ```markdown
-### 📋 Integration Receipt
+###  Integration Receipt
 * **Installed Components**: `['floating-dock', 'ai-prompt-input']`
 * **Added Dependencies**: `motion`, `lucide-react`, `clsx`, `tailwind-merge`
 * **Taste Profile**: Variance `6`, Motion `7`, Density `4`
@@ -374,6 +377,6 @@ When an AI coding agent pair-programs in this repository, it follows the mandato
 
 ---
 
-## 📄 License & Attribution
+## License & Attribution
 
 All curated components in this registry maintain their original open-source licenses (MIT, Apache-2.0, BSD-3-Clause) with immutable legal attribution headers. See individual component schemas or `/r/[name].json` for upstream author credits.
