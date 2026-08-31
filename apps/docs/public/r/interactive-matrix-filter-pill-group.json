@@ -1,0 +1,56 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "interactive-matrix-filter-pill-group",
+  "type": "registry:ui",
+  "title": "Interactive Matrix Filter Pill Group",
+  "description": "Keyboard-navigable faceted pill group with multi-select tag toggles, count badges, and clear-all triggers.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "editorial",
+    "primer",
+    "heroui",
+    "filter-pills",
+    "faceted",
+    "tags"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://primer.style",
+    "license_type": "MIT",
+    "author": "GitHub Primer & HeroUI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/interactive-matrix-filter-pill-group.tsx",
+      "content": "/**\n * @origin GitHub Primer & HeroUI (https://primer.style, https://heroui.com)\n * @license MIT\n * @author GitHub Primer Team & HeroUI Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Filter, X, Check } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface FilterPillOption {\n  id: string;\n  label: string;\n  count?: number;\n  category?: string;\n}\n\nexport interface InteractiveMatrixFilterPillGroupProps {\n  options?: FilterPillOption[];\n  selectedIds?: string[];\n  onChange?: (selected: string[]) => void;\n  title?: string;\n  className?: string;\n}\n\nconst DEFAULT_FILTER_OPTIONS: FilterPillOption[] = [\n  { id: \"ai-native\", label: \"AI Native\", count: 24, category: \"Domain\" },\n  { id: \"workflow\", label: \"Workflow Graph\", count: 12, category: \"Domain\" },\n  { id: \"motion\", label: \"Spring Motion\", count: 42, category: \"Interaction\" },\n  { id: \"wcag-aaa\", label: \"WCAG AAA\", count: 18, category: \"A11y\" },\n  { id: \"tailwind-v4\", label: \"Tailwind v4\", count: 280, category: \"Tech\" },\n];\n\nexport function InteractiveMatrixFilterPillGroup({\n  options = DEFAULT_FILTER_OPTIONS,\n  selectedIds: controlledSelected,\n  onChange,\n  title = \"Faceted Taxonomy Filters\",\n  className,\n}: InteractiveMatrixFilterPillGroupProps) {\n  const [internalSelected, setInternalSelected] = React.useState<string[]>([\"ai-native\", \"tailwind-v4\"]);\n  const selected = controlledSelected !== undefined ? controlledSelected : internalSelected;\n\n  const toggleOption = (id: string) => {\n    const next = selected.includes(id) ? selected.filter((x) => x !== id) : [...selected, id];\n    if (controlledSelected === undefined) setInternalSelected(next);\n    onChange?.(next);\n  };\n\n  const clearAll = () => {\n    if (controlledSelected === undefined) setInternalSelected([]);\n    onChange?.([]);\n  };\n\n  return (\n    <div className={cn(\"w-full space-y-3 rounded-xl border border-border bg-card p-4 shadow-xs select-none\", className)}>\n      <div className=\"flex items-center justify-between\">\n        <div className=\"flex items-center gap-2\">\n          <Filter className=\"h-3.5 w-3.5 text-primary\" role=\"img\" aria-hidden=\"true\" />\n          <span className=\"text-xs font-semibold text-foreground tracking-tight\">{title}</span>\n        </div>\n\n        {selected.length > 0 && (\n          <button\n            type=\"button\"\n            onClick={clearAll}\n            className=\"text-2xs text-muted-foreground hover:text-foreground transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xs\"\n          >\n            Clear Selected ({selected.length})\n          </button>\n        )}\n      </div>\n\n      {/* Pill Group */}\n      <div className=\"flex flex-wrap items-center gap-2\">\n        {options.map((opt) => {\n          const isSelected = selected.includes(opt.id);\n          return (\n            <button\n              key={opt.id}\n              type=\"button\"\n              onClick={() => toggleOption(opt.id)}\n              className={cn(\n                \"inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                isSelected\n                  ? \"bg-primary text-primary-foreground shadow-xs\"\n                  : \"border border-border bg-background text-muted-foreground hover:text-foreground hover:bg-muted\"\n              )}\n              aria-pressed={isSelected}\n            >\n              {isSelected && <Check className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" />}\n              <span>{opt.label}</span>\n              {opt.count !== undefined && (\n                <span\n                  className={cn(\n                    \"rounded-full px-1.5 py-0.2 text-3xs font-mono font-semibold\",\n                    isSelected ? \"bg-primary-foreground/20 text-primary-foreground\" : \"bg-muted text-muted-foreground\"\n                  )}\n                >\n                  {opt.count}\n                </span>\n              )}\n            </button>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/interactive-matrix-filter-pill-group.tsx"
+    }
+  ]
+}

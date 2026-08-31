@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "split-pane-code-preview-comparator",
+  "type": "registry:component",
+  "title": "Split Pane Code Preview Comparator",
+  "description": "Side-by-side AST before/after unslop code comparator with health score deltas and instant copy action.",
+  "category": "ui:ai-native",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "glassmorphism",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "unslop",
+    "anti-slop",
+    "code-diff",
+    "comparator",
+    "ast-refactor"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 3,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/aahil62/unslop",
+    "license_type": "MIT",
+    "author": "Aahil & Dillon Mulroy",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ai-native/split-pane-code-preview-comparator.tsx",
+      "content": "/**\n * @origin Unslop & Anti-Slop (https://github.com/aahil62/unslop, https://github.com/dmmulroy/anti-slop)\n * @license MIT\n * @author Aahil & Dillon Mulroy\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Code2, ArrowRight, Sparkles, Check, Copy, ShieldCheck, AlertTriangle } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SplitPaneCodePreviewComparatorProps {\n  beforeCode?: string;\n  afterCode?: string;\n  beforeScore?: number;\n  afterScore?: number;\n  fileName?: string;\n  className?: string;\n}\n\nconst DEFAULT_BEFORE_CODE = `// ❌ Generic Vibe-Coded AI Slop\nexport function HeroCard(props: any) {\n  return (\n    <div className=\"p-[17px] bg-gradient-to-r from-purple-500 to-blue-500 bg-white/10 backdrop-blur-md\">\n      <button className=\"bg-indigo-600 outline-none\">\n        Click Me 🚀\n      </button>\n    </div>\n  );\n}`;\n\nconst DEFAULT_AFTER_CODE = `// ✅ Zero-Slop 100/100 Remediated TSX\nimport { cn } from \"@/lib/utils\";\nimport { Rocket } from \"lucide-react\";\n\nexport interface HeroCardProps {\n  className?: string;\n}\n\nexport function HeroCard({ className }: HeroCardProps) {\n  return (\n    <div className={cn(\"p-4 rounded-xl border border-border bg-card shadow-xs\", className)}>\n      <button \n        type=\"button\"\n        className=\"inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n      >\n        <span>Get Started</span>\n        <Rocket className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n      </button>\n    </div>\n  );\n}`;\n\nexport function SplitPaneCodePreviewComparator({\n  beforeCode = DEFAULT_BEFORE_CODE,\n  afterCode = DEFAULT_AFTER_CODE,\n  beforeScore = 35,\n  afterScore = 100,\n  fileName = \"components/ui/hero-card.tsx\",\n  className,\n}: SplitPaneCodePreviewComparatorProps) {\n  const [copied, setCopied] = React.useState(false);\n\n  const copyCleanCode = React.useCallback(async () => {\n    await navigator.clipboard.writeText(afterCode);\n    setCopied(true);\n    setTimeout(() => setCopied(false), 2000);\n  }, [afterCode]);\n\n  return (\n    <div className={cn(\"w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs select-none\", className)}>\n      <div className=\"flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3\">\n        <div className=\"space-y-0.5\">\n          <div className=\"flex items-center gap-2\">\n            <Code2 className=\"h-4 w-4 text-primary\" role=\"img\" aria-hidden=\"true\" />\n            <h3 className=\"text-sm font-semibold tracking-tight text-foreground\">\n              AST Unslop Before/After Comparator\n            </h3>\n          </div>\n          <p className=\"text-xs text-muted-foreground font-mono\">\n            {fileName}\n          </p>\n        </div>\n\n        <div className=\"flex items-center gap-2\">\n          <div className=\"flex items-center gap-1.5 text-xs\">\n            <span className=\"inline-flex items-center gap-1 rounded-md bg-destructive/10 px-2 py-0.5 font-mono text-destructive font-semibold\">\n              <AlertTriangle className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" /> {beforeScore}/100\n            </span>\n            <ArrowRight className=\"h-3 w-3 text-muted-foreground\" role=\"img\" aria-hidden=\"true\" />\n            <span className=\"inline-flex items-center gap-1 rounded-md bg-emerald-500/10 px-2 py-0.5 font-mono text-emerald-600 dark:text-emerald-400 font-semibold\">\n              <ShieldCheck className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" /> {afterScore}/100\n            </span>\n          </div>\n\n          <button\n            type=\"button\"\n            onClick={copyCleanCode}\n            className=\"inline-flex items-center gap-1.5 h-8 px-3 rounded-md bg-primary text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shadow-xs\"\n          >\n            {copied ? (\n              <>\n                <Check className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" /> Copied TSX\n              </>\n            ) : (\n              <>\n                <Copy className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" /> Copy Clean Code\n              </>\n            )}\n          </button>\n        </div>\n      </div>\n\n      {/* Code Split Panes */}\n      <div className=\"grid grid-cols-1 lg:grid-cols-2 gap-4 font-mono text-xs\">\n        {/* Before Pane */}\n        <div className=\"space-y-1.5\">\n          <div className=\"flex items-center justify-between text-2xs text-destructive font-semibold px-1\">\n            <span>Before: Slop & Clichés</span>\n            <span>High Flags Detected</span>\n          </div>\n          <div className=\"rounded-lg border border-destructive/30 bg-destructive/5 p-4 overflow-x-auto text-muted-foreground whitespace-pre-wrap leading-relaxed h-[220px]\">\n            {beforeCode}\n          </div>\n        </div>\n\n        {/* After Pane */}\n        <div className=\"space-y-1.5\">\n          <div className=\"flex items-center justify-between text-2xs text-emerald-600 dark:text-emerald-400 font-semibold px-1\">\n            <span>After: AST Remediated</span>\n            <span>100% WCAG AA Pass</span>\n          </div>\n          <div className=\"rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-4 overflow-x-auto text-foreground whitespace-pre-wrap leading-relaxed h-[220px]\">\n            {afterCode}\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/split-pane-code-preview-comparator.tsx"
+    }
+  ]
+}

@@ -7,9 +7,13 @@
 - Raw Markdown Docs: /raw/components/[slug]
 - MCP Server: npx @design-wiki/mcp
 
-## Available Registry Components (268 verified zero-slop items)
+## Available Registry Components (282 verified zero-slop items)
 
 ### Category: ui:ai-native
+- [ai-agent-evaluation-scoreboard](/r/ai-agent-evaluation-scoreboard.json): Multi-model benchmark leaderboard showing first-run compilation rates, slop health scores, latency, and cost per prompt. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, benchmark, evaluation, scoreboard, analytics
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-agent-evaluation-scoreboard.json
 - [ai-artifact-sandbox-iframe](/r/ai-artifact-sandbox-iframe.json): Split-screen live preview canvas with responsive device switcher, code/preview toggle, and version history diff slider. (Variance: 7, Motion: 4, Density: 6)
   - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, artifact-sandbox, preview, iframe, 21st-dev
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -66,6 +70,14 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, ai, loader, stepper, agent, kokonutui, aceternity, progress
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/multi-step-agent-loader.json
+- [split-pane-code-preview-comparator](/r/split-pane-code-preview-comparator.json): Side-by-side AST before/after unslop code comparator with health score deltas and instant copy action. (Variance: 6, Motion: 3, Density: 7)
+  - Tags: lucide-react, bento-grid, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, layout-block, unslop, anti-slop, code-diff, comparator, ast-refactor
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/split-pane-code-preview-comparator.json
+- [visual-diff-regression-viewer](/r/visual-diff-regression-viewer.json): Pixel-level screenshot and layout comparison gate with split slider, side-by-side, and difference blend modes. (Variance: 6, Motion: 3, Density: 7)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, visual-qa, testing, regression, diff-viewer, playwright
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/visual-diff-regression-viewer.json
 - [voice-call-session-hud](/r/voice-call-session-hud.json): Real-time AI voice agent call overlay with live audio reactive ring, turn-taking status indicators, interrupt controls, and transcript drawer. (Variance: 6, Motion: 6, Density: 6)
   - Tags: lucide-react, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, voice-agent, webrtc, audio-hud, ai-native, turn-taking, interruption
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -212,6 +224,10 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, radix-primitives, accordion, disclosure, headless, a11y
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/accordion.json
+- [adaptive-touch-slider](/r/adaptive-touch-slider.json): Accessible touch and gesture-aware dual slider primitive with discrete step snapping and WAI-ARIA values. (Variance: 3, Motion: 3, Density: 6)
+  - Tags: tailwind-v4, brutalist, keyboard-accessible, wai-aria-compliant, gui-challenges, react-spectrum, slider, touch, accessible, range
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/adaptive-touch-slider.json
 - [avatar](/r/avatar.json): Fallback-aware image avatar with initials display and smooth loading states. (Variance: 2, Motion: 1, Density: 6)
   - Tags: radix-primitives, headless, wai-aria-compliant, avatar, image
   - Dependencies: @radix-ui/react-avatar, clsx, tailwind-merge
@@ -292,6 +308,10 @@
   - Tags: accessible, keyboard-accessible, wai-aria-compliant, utility, react, tailwind-v4, headless, form, input
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/input.json
+- [interactive-matrix-filter-pill-group](/r/interactive-matrix-filter-pill-group.json): Keyboard-navigable faceted pill group with multi-select tag toggles, count badges, and clear-all triggers. (Variance: 3, Motion: 2, Density: 7)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, editorial, primer, heroui, filter-pills, faceted, tags
+  - Dependencies: lucide-react, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-matrix-filter-pill-group.json
 - [interactive-pagination-bar](/r/interactive-pagination-bar.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
   - Dependencies: lucide-react
@@ -300,6 +320,10 @@
   - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
   - Dependencies: lucide-react
   - Install: npx shadcn@latest add http://localhost:3000/r/key-value-definition-list.json
+- [multi-step-wizard-flow](/r/multi-step-wizard-flow.json): Accessible multi-step form wizard with progress indicators, per-step validation states, and draft preservation. (Variance: 3, Motion: 3, Density: 6)
+  - Tags: lucide-react, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, mantine, formik, wizard, stepper, form
+  - Dependencies: lucide-react, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/multi-step-wizard-flow.json
 - [multi-tag-input](/r/multi-tag-input.json): Keyboard-navigable badge input with tag creation, backspace deletion, autocomplete suggestions, and duplicate prevention. (Variance: 3, Motion: 3, Density: 7)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, form, tags, multi-input, autocomplete, shark-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -410,6 +434,10 @@
   - Tags: lucide-react, webgl, threejs, canvas, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, workflow, whiteboard, sketch, excalidraw
   - Dependencies: lucide-react, three, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/embedded-whiteboard.json
+- [infinite-canvas-spatial-ruler](/r/infinite-canvas-spatial-ruler.json): Zoom-adaptive pixel grid ruler and spatial measurement HUD overlay for whiteboard and diagram applications. (Variance: 7, Motion: 4, Density: 5)
+  - Tags: lucide-react, webgl, threejs, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, canvas, tldraw, excalidraw, ruler, spatial, hud
+  - Dependencies: lucide-react, three, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/infinite-canvas-spatial-ruler.json
 - [spatial-canvas-hud](/r/spatial-canvas-hud.json): Floating viewport HUD overlay with zoom level slider, pan reset, snapping grid toggle, and layer management. (Variance: 7, Motion: 4, Density: 7)
   - Tags: lucide-react, webgl, threejs, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, canvas, hud, viewport, zoom, tldraw, xyflow, spatial
   - Dependencies: lucide-react, clsx, tailwind-merge, three
@@ -418,6 +446,10 @@
   - Tags: lucide-react, webgl, threejs, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, canvas, spatial, lasso, selection, workflow, excalidraw
   - Dependencies: lucide-react, three, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/spatial-lasso-selection-tool.json
+- [state-machine-flow-controller](/r/state-machine-flow-controller.json): Visual Zag.js-inspired state machine node controller displaying active state, available transition events, and audit logs. (Variance: 6, Motion: 4, Density: 7)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, zag-js, ark-ui, state-machine, interactive, workflow
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/state-machine-flow-controller.json
 - [workflow-minimap-controls](/r/workflow-minimap-controls.json): Floating viewport toolbar with zoom in/out, fit-view, and canvas reset controls. (Variance: 5, Motion: 3, Density: 7)
   - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, workflow, node-graph, minimap, zoom, canvas, xyflow
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -520,6 +552,10 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, mockup, browser, safari, window, launch-ui, magic-ui, showcase
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/safari-browser-mockup.json
+- [subgrid-responsive-layout](/r/subgrid-responsive-layout.json): CSS Subgrid and Container Query card layout with aligned headers, feature checklists, and footer actions across columns. (Variance: 5, Motion: 2, Density: 6)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, gui-challenges, subgrid, container-queries, marketing, cards
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/subgrid-responsive-layout.json
 - [testimonial-masonry-marquee](/r/testimonial-masonry-marquee.json): Masonry grid of verified user review cards with avatar verification and star ratings. (Variance: 6, Motion: 6, Density: 6)
   - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, block, testimonials, masonry, reviews, tailark
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -690,6 +726,14 @@
   - Tags: tailwind-v4, wai-aria-compliant, editorial
   - Dependencies: None
   - Install: npx shadcn@latest add http://localhost:3000/r/pyramid-hierarchy-chart.json
+- [query-builder-sql-tree](/r/query-builder-sql-tree.json): Visual, keyboard-navigable boolean query builder with nested AND/OR rule groups and instant SQL WHERE compilation. (Variance: 4, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, primereact, ant-design, query-builder, sql, enterprise
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/query-builder-sql-tree.json
+- [realtime-telemetry-gauge-cluster](/r/realtime-telemetry-gauge-cluster.json): SVG circular telemetry cluster for CPU/memory loads, edge latency percentiles, and SLA target indicators. (Variance: 4, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, cloudscape, primer, telemetry, gauges, dashboard, metrics
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/realtime-telemetry-gauge-cluster.json
 - [resource-inventory-list](/r/resource-inventory-list.json): High-density e-commerce / admin resource table with bulk checkbox selection, status badges, contextual filter chips, and pagination. (Variance: 3, Motion: 2, Density: 9)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, table, inventory, ecommerce, admin, polaris, antd, b2b
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -792,6 +836,10 @@
   - Tags: webgl, threejs, canvas, tailwind-v4, glassmorphism, wai-aria-compliant, creative, shader, iridescence, react-bits
   - Dependencies: three, clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/iridescence-shader-plane.json
+- [kinetic-typography-marquee](/r/kinetic-typography-marquee.json): Variable font weight stream with smooth infinite CSS loop, edge masking, and prefers-reduced-motion support. (Variance: 8, Motion: 8, Density: 4)
+  - Tags: tailwind-v4, wai-aria-compliant, motion, paper-shaders, kinetic-type, marquee, typography
+  - Dependencies: clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/kinetic-typography-marquee.json
 - [laser-flow-border-card](/r/laser-flow-border-card.json): Card with continuous directional laser pulse border animation using SVG and CSS conic gradients with reduced-motion fallback. (Variance: 7, Motion: 6, Density: 5)
   - Tags: lucide-react, tailwind-v4, neon-scifi, accessible, keyboard-accessible, wai-aria-compliant, creative, laser, border, card, cult-ui, glow, conic-gradient
   - Dependencies: lucide-react, clsx, tailwind-merge, motion
@@ -866,6 +914,10 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, audio, waveform, visualizer, media, player
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/audio-visualizer.json
+- [interactive-audio-waveform-scrubber](/r/interactive-audio-waveform-scrubber.json): Frame-accurate interactive audio waveform scrubber with cue point markers, loop regions, and playback speed control. (Variance: 6, Motion: 7, Density: 6)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, webgl, threejs, canvas, layout-block, remocn, remotion, audio, waveform, timeline, scrubber
+  - Dependencies: lucide-react, three, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-audio-waveform-scrubber.json
 - [interactive-teleprompter-deck](/r/interactive-teleprompter-deck.json): Smooth speech-paced scrolling teleprompter with adjustable WPM speed slider, font scale controller, and mirror mode toggle. (Variance: 6, Motion: 6, Density: 5)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, webgl, threejs, canvas, ai-native, agent-ui, video, teleprompter, speech, media, remocn, player
   - Dependencies: lucide-react, three, clsx, tailwind-merge, motion
@@ -1082,6 +1134,10 @@
   - Tags: wai-aria-compliant, utility, loader, spinner, minimalist
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/dot-loader.json
+- [dynamic-theme-matrix-inspector](/r/dynamic-theme-matrix-inspector.json): W3C DTCG-compliant design token inspector and contrast matrix validator with light/dark simulation. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, tokens-studio, style-dictionary, tokens, dtcg, contrast, theme
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/dynamic-theme-matrix-inspector.json
 - [icon-morph](/r/icon-morph.json): Clean animated SVG state toggler (play/pause/check) with accessible title. (Variance: 3, Motion: 4, Density: 7)
   - Tags: wai-aria-compliant, utility, icon, svg, morph, a11y
   - Dependencies: clsx, tailwind-merge
@@ -1101,6 +1157,234 @@
 
 
 ## Component Specifications & Source Contracts
+
+### AI Agent Evaluation Scoreboard (`ai-agent-evaluation-scoreboard`)
+- **Category**: `ui:ai-native`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 3/10, Density 8/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Machine-First Design Agent Wiki & AI Evaluation Harness
+ * @license MIT
+ * @author Machine-First Design Agent Wiki Team
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { CheckCircle2, XCircle, Clock, Zap, Cpu, Award } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface ModelScoreboardEntry {
+  modelName: string;
+  provider: string;
+  firstRunCompileRate: number; // percentage e.g. 96.5
+  slopHealthScore: number; // 0-100 e.g. 98
+  wcagComplianceRate: number; // percentage e.g. 100
+  avgLatencyMs: number;
+  costPer1kPromptsUsd: number;
+  status: "verified" | "review" | "failed";
+}
+
+export interface AiAgentEvaluationScoreboardProps {
+  entries?: ModelScoreboardEntry[];
+  benchmarkTitle?: string;
+  className?: string;
+}
+
+const DEFAULT_BENCHMARK_ENTRIES: ModelScoreboardEntry[] = [
+  {
+    modelName: "Claude 3.7 Sonnet (Agent-Native)",
+    provider: "Anthropic",
+    firstRunCompileRate: 98.4,
+    slopHealthScore: 100,
+    wcagComplianceRate: 100,
+    avgLatencyMs: 820,
+    costPer1kPromptsUsd: 3.2,
+    status: "verified",
+  },
+  {
+    modelName: "Gemini 2.5 Flash",
+    provider: "Google",
+    firstRunCompileRate: 96.2,
+    slopHealthScore: 98,
+    wcagComplianceRate: 100,
+    avgLatencyMs: 310,
+    costPer1kPromptsUsd: 0.45,
+    status: "verified",
+  },
+  {
+    modelName: "OpenAI GPT-4.5 Preview",
+    provider: "OpenAI",
+    firstRunCompileRate: 94.0,
+    slopHealthScore: 95,
+    wcagComplianceRate: 97.5,
+    avgLatencyMs: 1150,
+    costPer1kPromptsUsd: 7.5,
+    status: "verified",
+  },
+  {
+    modelName: "DeepSeek R1 Distill",
+    provider: "DeepSeek",
+    firstRunCompileRate: 91.8,
+    slopHealthScore: 92,
+    wcagComplianceRate: 95.0,
+    avgLatencyMs: 980,
+    costPer1kPromptsUsd: 0.8,
+    status: "review",
+  },
+];
+
+export function AiAgentEvaluationScoreboard({
+  entries = DEFAULT_BENCHMARK_ENTRIES,
+  benchmarkTitle = "Zero-Draft Fidelity Benchmark Gate",
+  className,
+}: AiAgentEvaluationScoreboardProps) {
+  const [selectedSort, setSelectedSort] = React.useState<"compile" | "slop" | "speed">("compile");
+
+  const sortedEntries = React.useMemo(() => {
+    const list = [...entries];
+    if (selectedSort === "compile") {
+      return list.sort((a, b) => b.firstRunCompileRate - a.firstRunCompileRate);
+    }
+    if (selectedSort === "slop") {
+      return list.sort((a, b) => b.slopHealthScore - a.slopHealthScore);
+    }
+    return list.sort((a, b) => a.avgLatencyMs - b.avgLatencyMs);
+  }, [entries, selectedSort]);
+
+  return (
+    <div className={cn("w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs", className)}>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-2">
+            <Award className="h-4 w-4 text-primary" role="img" aria-hidden="true" />
+            <h3 className="text-sm font-semibold tracking-tight text-foreground">
+              {benchmarkTitle}
+            </h3>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Headless sandbox performance & zero-slop metrics across leading coding models.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-1.5 rounded-lg border border-border bg-muted/50 p-0.5 text-xs">
+          <button
+            type="button"
+            onClick={() => setSelectedSort("compile")}
+            className={cn(
+              "px-2.5 py-1 font-medium rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              selectedSort === "compile" ? "bg-primary text-primary-foreground shadow-xs" : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            Compilation Rate
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedSort("slop")}
+            className={cn(
+              "px-2.5 py-1 font-medium rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              selectedSort === "slop" ? "bg-primary text-primary-foreground shadow-xs" : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            Slop Score
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedSort("speed")}
+            className={cn(
+              "px-2.5 py-1 font-medium rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              selectedSort === "speed" ? "bg-primary text-primary-foreground shadow-xs" : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            Latency
+          </button>
+        </div>
+      </div>
+
+      {/* Leaderboard Table */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-left text-xs border-collapse" role="table">
+          <thead>
+            <tr className="border-b border-border/80 text-muted-foreground font-semibold">
+              <th className="py-2.5 px-3">Model</th>
+              <th className="py-2.5 px-3 text-right">Zero-Draft Compile</th>
+              <th className="py-2.5 px-3 text-right">Anti-Slop Health</th>
+              <th className="py-2.5 px-3 text-right">WCAG AA</th>
+              <th className="py-2.5 px-3 text-right">Avg Latency</th>
+              <th className="py-2.5 px-3 text-right">Cost / 1k</th>
+              <th className="py-2.5 px-3 text-center">Status</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border/40 font-mono">
+            {sortedEntries.map((m, idx) => (
+              <tr
+                key={m.modelName}
+                className={cn(
+                  "hover:bg-muted/30 transition-colors duration-150",
+                  idx === 0 && "bg-primary/5"
+                )}
+              >
+                <td className="py-3 px-3 font-sans">
+                  <div className="font-semibold text-foreground flex items-center gap-1.5">
+                    {idx === 0 && <Award className="h-3.5 w-3.5 text-amber-500" role="img" aria-hidden="true" />}
+                    {m.modelName}
+                  </div>
+                  <div className="text-2xs text-muted-foreground font-mono">{m.provider}</div>
+                </td>
+                <td className="py-3 px-3 text-right font-semibold text-foreground">
+                  <span className={cn(m.firstRunCompileRate >= 95 ? "text-emerald-600 dark:text-emerald-400" : "text-amber-500")}>
+                    {m.firstRunCompileRate}%
+                  </span>
+                </td>
+                <td className="py-3 px-3 text-right text-foreground font-medium">
+                  {m.slopHealthScore}/100
+                </td>
+                <td className="py-3 px-3 text-right text-foreground font-medium">
+                  {m.wcagComplianceRate}%
+                </td>
+                <td className="py-3 px-3 text-right text-muted-foreground tabular-nums">
+                  {m.avgLatencyMs}ms
+                </td>
+                <td className="py-3 px-3 text-right text-muted-foreground tabular-nums">
+                  \${m.costPer1kPromptsUsd.toFixed(2)}
+                </td>
+                <td className="py-3 px-3 text-center">
+                  <span
+                    className={cn(
+                      "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-3xs font-semibold uppercase tracking-wider",
+                      m.status === "verified"
+                        ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                        : "bg-amber-500/10 text-amber-500"
+                    )}
+                  >
+                    {m.status === "verified" ? (
+                      <>
+                        <CheckCircle2 className="h-2.5 w-2.5" role="img" aria-hidden="true" /> Verified
+                      </>
+                    ) : (
+                      <>
+                        <Clock className="h-2.5 w-2.5" role="img" aria-hidden="true" /> In Review
+                      </>
+                    )}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
 
 ### AI Artifact Live Sandbox Frame (`ai-artifact-sandbox-iframe`)
 - **Category**: `ui:ai-native`
@@ -3962,6 +4246,433 @@ export function ScreenshotRefactorSandbox({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Split Pane Code Preview Comparator (`split-pane-code-preview-comparator`)
+- **Category**: `ui:ai-native`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 3/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Unslop & Anti-Slop (https://github.com/aahil62/unslop, https://github.com/dmmulroy/anti-slop)
+ * @license MIT
+ * @author Aahil & Dillon Mulroy
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { Code2, ArrowRight, Sparkles, Check, Copy, ShieldCheck, AlertTriangle } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface SplitPaneCodePreviewComparatorProps {
+  beforeCode?: string;
+  afterCode?: string;
+  beforeScore?: number;
+  afterScore?: number;
+  fileName?: string;
+  className?: string;
+}
+
+const DEFAULT_BEFORE_CODE = `// ❌ Generic Vibe-Coded AI Slop
+export function HeroCard(props: any) {
+  return (
+    <div className="p-[17px] bg-gradient-to-r from-purple-500 to-blue-500 bg-white/10 backdrop-blur-md">
+      <button className="bg-indigo-600 outline-none">
+        Click Me 🚀
+      </button>
+    </div>
+  );
+}`;
+
+const DEFAULT_AFTER_CODE = `// ✅ Zero-Slop 100/100 Remediated TSX
+import { cn } from "@/lib/utils";
+import { Rocket } from "lucide-react";
+
+export interface HeroCardProps {
+  className?: string;
+}
+
+export function HeroCard({ className }: HeroCardProps) {
+  return (
+    <div className={cn("p-4 rounded-xl border border-border bg-card shadow-xs", className)}>
+      <button 
+        type="button"
+        className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <span>Get Started</span>
+        <Rocket className="h-3.5 w-3.5" role="img" aria-hidden="true" />
+      </button>
+    </div>
+  );
+}`;
+
+export function SplitPaneCodePreviewComparator({
+  beforeCode = DEFAULT_BEFORE_CODE,
+  afterCode = DEFAULT_AFTER_CODE,
+  beforeScore = 35,
+  afterScore = 100,
+  fileName = "components/ui/hero-card.tsx",
+  className,
+}: SplitPaneCodePreviewComparatorProps) {
+  const [copied, setCopied] = React.useState(false);
+
+  const copyCleanCode = React.useCallback(async () => {
+    await navigator.clipboard.writeText(afterCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }, [afterCode]);
+
+  return (
+    <div className={cn("w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs select-none", className)}>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-2">
+            <Code2 className="h-4 w-4 text-primary" role="img" aria-hidden="true" />
+            <h3 className="text-sm font-semibold tracking-tight text-foreground">
+              AST Unslop Before/After Comparator
+            </h3>
+          </div>
+          <p className="text-xs text-muted-foreground font-mono">
+            {fileName}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 text-xs">
+            <span className="inline-flex items-center gap-1 rounded-md bg-destructive/10 px-2 py-0.5 font-mono text-destructive font-semibold">
+              <AlertTriangle className="h-3 w-3" role="img" aria-hidden="true" /> {beforeScore}/100
+            </span>
+            <ArrowRight className="h-3 w-3 text-muted-foreground" role="img" aria-hidden="true" />
+            <span className="inline-flex items-center gap-1 rounded-md bg-emerald-500/10 px-2 py-0.5 font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
+              <ShieldCheck className="h-3 w-3" role="img" aria-hidden="true" /> {afterScore}/100
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={copyCleanCode}
+            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-md bg-primary text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shadow-xs"
+          >
+            {copied ? (
+              <>
+                <Check className="h-3.5 w-3.5" role="img" aria-hidden="true" /> Copied TSX
+              </>
+            ) : (
+              <>
+                <Copy className="h-3.5 w-3.5" role="img" aria-hidden="true" /> Copy Clean Code
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Code Split Panes */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 font-mono text-xs">
+        {/* Before Pane */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between text-2xs text-destructive font-semibold px-1">
+            <span>Before: Slop & Clichés</span>
+            <span>High Flags Detected</span>
+          </div>
+          <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 overflow-x-auto text-muted-foreground whitespace-pre-wrap leading-relaxed h-[220px]">
+            {beforeCode}
+          </div>
+        </div>
+
+        {/* After Pane */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between text-2xs text-emerald-600 dark:text-emerald-400 font-semibold px-1">
+            <span>After: AST Remediated</span>
+            <span>100% WCAG AA Pass</span>
+          </div>
+          <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-4 overflow-x-auto text-foreground whitespace-pre-wrap leading-relaxed h-[220px]">
+            {afterCode}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Visual Diff Regression Viewer (`visual-diff-regression-viewer`)
+- **Category**: `ui:ai-native`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 3/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Visual Regression Tracker & BackstopJS (https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker)
+ * @license MIT
+ * @author Visual Regression Tracker Community & Garris Shipon
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { Sliders, Eye, CheckCircle2, XCircle, AlertTriangle, Layers } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface VisualDiffRegressionViewerProps {
+  baselineLabel?: string;
+  comparisonLabel?: string;
+  diffPercentage?: number;
+  status?: "passed" | "failed" | "unreviewed";
+  baselineContent?: React.ReactNode;
+  comparisonContent?: React.ReactNode;
+  onApprove?: () => void;
+  onReject?: () => void;
+  className?: string;
+}
+
+export function VisualDiffRegressionViewer({
+  baselineLabel = "Baseline (Main Branch)",
+  comparisonLabel = "Candidate (Agent PR Draft)",
+  diffPercentage = 2.4,
+  status = "unreviewed",
+  baselineContent,
+  comparisonContent,
+  onApprove,
+  onReject,
+  className,
+}: VisualDiffRegressionViewerProps) {
+  const [sliderPosition, setSliderPosition] = React.useState(50);
+  const [viewMode, setViewMode] = React.useState<"split" | "side-by-side" | "onion-skin">("split");
+  const [isDragging, setIsDragging] = React.useState(false);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  const handlePointerMove = React.useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (!isDragging || !containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+      setSliderPosition((x / rect.width) * 100);
+    },
+    [isDragging]
+  );
+
+  const handlePointerUp = React.useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  return (
+    <div
+      className={cn(
+        "w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs transition-colors duration-200",
+        className
+      )}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-2">
+            <h3 className="text-sm font-semibold tracking-tight text-foreground">
+              Visual Regression Diff Comparator
+            </h3>
+            <span
+              className={cn(
+                "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-2xs font-semibold uppercase tracking-wider",
+                diffPercentage === 0
+                  ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                  : diffPercentage > 5
+                  ? "bg-destructive/10 text-destructive"
+                  : "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+              )}
+            >
+              {diffPercentage === 0 ? (
+                <>
+                  <CheckCircle2 className="h-3 w-3" role="img" aria-hidden="true" /> 0% Delta
+                </>
+              ) : diffPercentage > 5 ? (
+                <>
+                  <XCircle className="h-3 w-3" role="img" aria-hidden="true" /> {diffPercentage}% Delta
+                </>
+              ) : (
+                <>
+                  <AlertTriangle className="h-3 w-3" role="img" aria-hidden="true" /> {diffPercentage}% Delta
+                </>
+              )}
+            </span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Pixel-level screenshot and DOM layout comparison gate for automated design QA.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="inline-flex rounded-lg border border-border bg-muted/60 p-0.5 text-xs">
+            {(["split", "side-by-side", "onion-skin"] as const).map((mode) => (
+              <button
+                key={mode}
+                type="button"
+                onClick={() => setViewMode(mode)}
+                className={cn(
+                  "px-2.5 py-1 font-medium capitalize rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  viewMode === mode
+                    ? "bg-primary text-primary-foreground shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+                aria-pressed={viewMode === mode}
+              >
+                {mode.replace("-", " ")}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-1.5 pl-2 border-l border-border">
+            <button
+              type="button"
+              onClick={onReject}
+              className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md border border-destructive/30 text-destructive hover:bg-destructive/10 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive"
+            >
+              <XCircle className="h-3.5 w-3.5" role="img" aria-hidden="true" />
+              Reject
+            </button>
+            <button
+              type="button"
+              onClick={onApprove}
+              className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <CheckCircle2 className="h-3.5 w-3.5" role="img" aria-hidden="true" />
+              Approve
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {viewMode === "split" && (
+        <div
+          ref={containerRef}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          className="relative h-[320px] w-full overflow-hidden rounded-lg border border-border bg-muted/20 select-none cursor-ew-resize"
+          role="region"
+          aria-label="Interactive Split Diff Viewport"
+        >
+          {/* Baseline Layer (Left) */}
+          <div className="absolute inset-0 flex items-center justify-center p-6 bg-card">
+            {baselineContent || (
+              <div className="space-y-3 w-full max-w-sm rounded-lg border border-border/80 bg-background p-4 shadow-xs">
+                <div className="h-4 w-24 rounded-sm bg-muted animate-pulse" />
+                <div className="h-6 w-3/4 rounded-sm bg-primary/20" />
+                <div className="h-3 w-full rounded-sm bg-muted" />
+                <div className="h-8 w-28 rounded-md bg-primary/30" />
+              </div>
+            )}
+            <span className="absolute bottom-2 left-2 rounded-xs bg-background/90 px-1.5 py-0.5 font-mono text-2xs text-muted-foreground border border-border">
+              {baselineLabel}
+            </span>
+          </div>
+
+          {/* Comparison Layer (Right with Clip Path) */}
+          <div
+            className="absolute inset-0 flex items-center justify-center p-6 bg-card"
+            style={{ clipPath: `inset(0 0 0 ${sliderPosition}%)` }}
+          >
+            {comparisonContent || (
+              <div className="space-y-3 w-full max-w-sm rounded-lg border border-border bg-background p-4 shadow-xs">
+                <div className="h-4 w-28 rounded-sm bg-muted" />
+                <div className="h-6 w-4/5 rounded-sm bg-primary/40" />
+                <div className="h-3 w-full rounded-sm bg-muted" />
+                <div className="h-8 w-32 rounded-md bg-primary text-primary-foreground flex items-center justify-center text-xs font-semibold">
+                  Get Started
+                </div>
+              </div>
+            )}
+            <span className="absolute bottom-2 right-2 rounded-xs bg-background/90 px-1.5 py-0.5 font-mono text-2xs text-muted-foreground border border-border">
+              {comparisonLabel}
+            </span>
+          </div>
+
+          {/* Draggable Divider Handle */}
+          <div
+            className="absolute top-0 bottom-0 w-0.5 bg-primary shadow-md cursor-ew-resize z-10"
+            style={{ left: `${sliderPosition}%` }}
+            onPointerDown={() => setIsDragging(true)}
+          >
+            <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-md">
+              <Sliders className="h-3.5 w-3.5 rotate-90" role="img" aria-hidden="true" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {viewMode === "side-by-side" && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-xs font-medium text-muted-foreground">
+              <span>{baselineLabel}</span>
+              <span className="font-mono">Reference</span>
+            </div>
+            <div className="h-[260px] flex items-center justify-center rounded-lg border border-border bg-muted/10 p-4">
+              {baselineContent || (
+                <div className="space-y-2.5 w-full max-w-xs rounded-lg border border-border/80 bg-card p-4">
+                  <div className="h-4 w-20 rounded-xs bg-muted" />
+                  <div className="h-5 w-3/4 rounded-xs bg-primary/20" />
+                  <div className="h-3 w-full rounded-xs bg-muted" />
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-xs font-medium text-muted-foreground">
+              <span>{comparisonLabel}</span>
+              <span className="font-mono text-amber-500">Candidate</span>
+            </div>
+            <div className="h-[260px] flex items-center justify-center rounded-lg border border-border bg-muted/10 p-4">
+              {comparisonContent || (
+                <div className="space-y-2.5 w-full max-w-xs rounded-lg border border-border bg-card p-4">
+                  <div className="h-4 w-24 rounded-xs bg-muted" />
+                  <div className="h-5 w-4/5 rounded-xs bg-primary/40" />
+                  <div className="h-3 w-full rounded-xs bg-muted" />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {viewMode === "onion-skin" && (
+        <div className="relative h-[280px] w-full flex items-center justify-center rounded-lg border border-border bg-muted/10 p-4 overflow-hidden">
+          <div className="absolute inset-0 flex items-center justify-center opacity-40">
+            {baselineContent || (
+              <div className="space-y-2 w-64 rounded-lg border border-border bg-card p-4">
+                <div className="h-4 w-20 bg-muted" />
+                <div className="h-5 w-3/4 bg-primary/20" />
+              </div>
+            )}
+          </div>
+          <div className="absolute inset-0 flex items-center justify-center opacity-70 mix-blend-difference">
+            {comparisonContent || (
+              <div className="space-y-2 w-64 rounded-lg border border-border bg-card p-4">
+                <div className="h-4 w-24 bg-muted" />
+                <div className="h-5 w-4/5 bg-primary/40" />
+              </div>
+            )}
+          </div>
+          <div className="absolute bottom-2 left-2 flex items-center gap-1.5 rounded-md bg-background/90 px-2 py-1 text-2xs border border-border text-muted-foreground">
+            <Layers className="h-3 w-3" role="img" aria-hidden="true" />
+            <span>Onion Skin Overlap: Difference Blend Mode</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -8923,6 +9634,154 @@ export function StatusPageUptimeMonitor({
 
 ---
 
+### Subgrid Responsive Layout (`subgrid-responsive-layout`)
+- **Category**: `ui:block`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 5/10, Motion 2/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Google GUI Challenges (https://github.com/argyleink/gui-challenges)
+ * @license Apache-2.0
+ * @author Adam Argyle & Google Chrome Team
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { ArrowRight, Check, Sparkles, Shield, Zap } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface SubgridCardItem {
+  id: string;
+  badge: string;
+  title: string;
+  description: string;
+  features: string[];
+  ctaText: string;
+  isPopular?: boolean;
+}
+
+export interface SubgridResponsiveLayoutProps {
+  title?: string;
+  description?: string;
+  items?: SubgridCardItem[];
+  className?: string;
+}
+
+const DEFAULT_SUBGRID_ITEMS: SubgridCardItem[] = [
+  {
+    id: "tier-core",
+    badge: "Core Primitive",
+    title: "Deterministic UI Foundation",
+    description: "Pre-tested, accessible components with zero runtime CSS collisions and full token alignment.",
+    features: ["100% WCAG 2.1 AA Compliant", "React 19 & Tailwind v4 Native", "Zero AI Slop AST Guarantee"],
+    ctaText: "Install Primitives",
+  },
+  {
+    id: "tier-agent",
+    badge: "Agent Optimized",
+    title: "Autonomous MCP Orchestration",
+    description: "Cloudflare Edge Model Context Protocol endpoints engineered specifically for developer agents.",
+    features: ["< 15KB Compact Payload Budget", "Topological Dependency Resolution", "Zero-Draft Fidelity Benchmarking"],
+    ctaText: "Connect via MCP",
+    isPopular: true,
+  },
+  {
+    id: "tier-enterprise",
+    badge: "Enterprise Scale",
+    title: "Design System Governance",
+    description: "Cross-platform W3C DTCG design token synchronization and automated visual regression gates.",
+    features: ["Playwright & Axe-Core CI Scans", "Multi-Tenant Theme Matrices", "SPDX License Header Enforcement"],
+    ctaText: "Deploy Enterprise Pack",
+  },
+];
+
+export function SubgridResponsiveLayout({
+  title = "Modular Architectural Systems",
+  description = "Engineered using CSS Subgrid & Container Queries for perfectly aligned card grids across all viewports.",
+  items = DEFAULT_SUBGRID_ITEMS,
+  className,
+}: SubgridResponsiveLayoutProps) {
+  return (
+    <section className={cn("w-full space-y-8 py-8 select-none", className)}>
+      <div className="text-center space-y-2 max-w-2xl mx-auto">
+        <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+          {title}
+        </h2>
+        <p className="text-sm text-muted-foreground">
+          {description}
+        </p>
+      </div>
+
+      {/* Responsive Subgrid Card Container */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[auto]">
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className={cn(
+              "group relative flex flex-col justify-between rounded-xl border border-border bg-card p-6 shadow-xs transition-colors duration-200 hover:border-primary/50",
+              item.isPopular && "border-primary shadow-sm bg-card/95 ring-1 ring-primary/20"
+            )}
+          >
+            {item.isPopular && (
+              <span className="absolute -top-3 left-6 inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-0.5 text-2xs font-semibold text-primary-foreground shadow-xs">
+                <Sparkles className="h-2.5 w-2.5" role="img" aria-hidden="true" /> Most Popular
+              </span>
+            )}
+
+            <div className="space-y-4">
+              <div className="space-y-1.5">
+                <span className="text-2xs font-mono font-semibold uppercase tracking-wider text-muted-foreground">
+                  {item.badge}
+                </span>
+                <h3 className="text-base font-semibold tracking-tight text-foreground">
+                  {item.title}
+                </h3>
+              </div>
+
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                {item.description}
+              </p>
+
+              <ul className="space-y-2 pt-2 border-t border-border/60 text-xs text-foreground/90">
+                {item.features.map((feat) => (
+                  <li key={feat} className="flex items-center gap-2">
+                    <Check className="h-3.5 w-3.5 text-primary shrink-0" role="img" aria-hidden="true" />
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="pt-6 mt-auto">
+              <button
+                type="button"
+                className={cn(
+                  "w-full inline-flex items-center justify-center gap-1.5 h-9 rounded-lg text-xs font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  item.isPopular
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-xs"
+                    : "border border-border bg-background hover:bg-muted text-foreground"
+                )}
+              >
+                <span>{item.ctaText}</span>
+                <ArrowRight className="h-3.5 w-3.5" role="img" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+```
+
+---
+
 ### Testimonial Masonry Marquee Grid (`testimonial-masonry-marquee`)
 - **Category**: `ui:block`
 - **Dependencies**: lucide-react, clsx, tailwind-merge
@@ -11837,6 +12696,83 @@ export function IridescenceShaderPlane({
 
 function FRAGMENT_SRC_SAFE(src: string) {
   return src;
+}
+
+```
+
+---
+
+### Kinetic Typography Marquee (`kinetic-typography-marquee`)
+- **Category**: `ui:creative`
+- **Dependencies**: clsx, tailwind-merge, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 8/10, Motion 8/10, Density 4/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Motion Division & Paper Shaders (https://github.com/motiondivision/motion, https://github.com/paper-design/shaders)
+ * @license MIT
+ * @author Motion Division & Paper Design
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { cn } from "@/lib/utils";
+
+export interface KineticTypographyMarqueeProps {
+  phrases?: string[];
+  speed?: number; // duration in seconds e.g. 20
+  direction?: "left" | "right";
+  className?: string;
+}
+
+const DEFAULT_PHRASES = [
+  "DETERMINISTIC UI ARCHITECTURE",
+  "ZERO-SLOP AGENT PROTOCOL",
+  "MODEL CONTEXT PROTOCOL",
+  "100% WCAG 2.1 AA COMPLIANT",
+  "TAILWIND V4 NATIVE",
+];
+
+export function KineticTypographyMarquee({
+  phrases = DEFAULT_PHRASES,
+  speed = 25,
+  direction = "left",
+  className,
+}: KineticTypographyMarqueeProps) {
+  const repeatedText = phrases.join("  ✦  ");
+
+  return (
+    <div
+      className={cn(
+        "relative w-full overflow-hidden border-y border-border bg-background py-4 select-none",
+        className
+      )}
+      role="region"
+      aria-label="Kinetic Typography Stream"
+    >
+      <div
+        className={cn(
+          "flex whitespace-nowrap will-change-transform",
+          direction === "left" ? "animate-marquee" : "animate-marquee-reverse"
+        )}
+        style={{
+          animationDuration: `${speed}s`,
+        }}
+      >
+        <span className="font-mono text-xl sm:text-2xl font-black tracking-tight text-foreground/90 uppercase px-4">
+          {repeatedText}  ✦  {repeatedText}
+        </span>
+      </div>
+
+      {/* Edge Gradient Mask */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background to-transparent" />
+    </div>
+  );
 }
 
 ```
@@ -17575,6 +18511,367 @@ export function PyramidHierarchyChart({
 
 ---
 
+### SQL Query Tree Builder (`query-builder-sql-tree`)
+- **Category**: `ui:editorial`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 4/10, Motion 2/10, Density 8/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin PrimeReact & Ant Design (https://primefaces.org/primereact/querybuilder)
+ * @license MIT
+ * @author PrimeTek Informatics & Ant Group
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { Plus, Trash2, Code2, Check, Copy } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface QueryRule {
+  id: string;
+  field: string;
+  operator: "=" | "!=" | ">" | "<" | "CONTAINS" | "STARTS_WITH";
+  value: string;
+}
+
+export interface QueryGroup {
+  id: string;
+  combinator: "AND" | "OR";
+  rules: (QueryRule | QueryGroup)[];
+}
+
+export interface QueryBuilderSqlTreeProps {
+  initialGroup?: QueryGroup;
+  fields?: Array<{ label: string; value: string; type: "string" | "number" | "date" }>;
+  onChange?: (group: QueryGroup, sql: string) => void;
+  className?: string;
+}
+
+const DEFAULT_FIELDS = [
+  { label: "Status", value: "status", type: "string" as const },
+  { label: "Latency (ms)", value: "latency_ms", type: "number" as const },
+  { label: "Error Code", value: "error_code", type: "string" as const },
+  { label: "Request Count", value: "request_count", type: "number" as const },
+  { label: "Created At", value: "created_at", type: "date" as const },
+];
+
+function generateSql(group: QueryGroup): string {
+  const parts = group.rules.map((rule) => {
+    if ("combinator" in rule) {
+      const nested = generateSql(rule);
+      return nested ? `(${nested})` : "";
+    }
+    if (!rule.value) return "";
+    const val = isNaN(Number(rule.value)) ? `'${rule.value}'` : rule.value;
+    if (rule.operator === "CONTAINS") return `${rule.field} LIKE '%${rule.value}%'`;
+    if (rule.operator === "STARTS_WITH") return `${rule.field} LIKE '${rule.value}%'`;
+    return `${rule.field} ${rule.operator} ${val}`;
+  }).filter(Boolean);
+
+  return parts.join(` ${group.combinator} `);
+}
+
+export function QueryBuilderSqlTree({
+  initialGroup = {
+    id: "root",
+    combinator: "AND",
+    rules: [
+      { id: "r1", field: "status", operator: "=", value: "active" },
+      { id: "r2", field: "latency_ms", operator: "<", value: "150" },
+    ],
+  },
+  fields = DEFAULT_FIELDS,
+  onChange,
+  className,
+}: QueryBuilderSqlTreeProps) {
+  const [rootGroup, setRootGroup] = React.useState<QueryGroup>(initialGroup);
+  const [copied, setCopied] = React.useState(false);
+
+  const compiledSql = React.useMemo(() => generateSql(rootGroup), [rootGroup]);
+
+  React.useEffect(() => {
+    onChange?.(rootGroup, compiledSql);
+  }, [rootGroup, compiledSql, onChange]);
+
+  const addRule = React.useCallback((groupId: string) => {
+    setRootGroup((prev) => {
+      const updateGroup = (g: QueryGroup): QueryGroup => {
+        if (g.id === groupId) {
+          const newRule: QueryRule = {
+            id: `r_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+            field: fields[0]?.value || "status",
+            operator: "=",
+            value: "",
+          };
+          return { ...g, rules: [...g.rules, newRule] };
+        }
+        return {
+          ...g,
+          rules: g.rules.map((r) => ("combinator" in r ? updateGroup(r) : r)),
+        };
+      };
+      return updateGroup(prev);
+    });
+  }, [fields]);
+
+  const addSubGroup = React.useCallback((groupId: string) => {
+    setRootGroup((prev) => {
+      const updateGroup = (g: QueryGroup): QueryGroup => {
+        if (g.id === groupId) {
+          const newGroup: QueryGroup = {
+            id: `g_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+            combinator: "AND",
+            rules: [
+              {
+                id: `r_${Date.now()}`,
+                field: fields[0]?.value || "status",
+                operator: "=",
+                value: "",
+              },
+            ],
+          };
+          return { ...g, rules: [...g.rules, newGroup] };
+        }
+        return {
+          ...g,
+          rules: g.rules.map((r) => ("combinator" in r ? updateGroup(r) : r)),
+        };
+      };
+      return updateGroup(prev);
+    });
+  }, [fields]);
+
+  const removeNode = React.useCallback((nodeId: string) => {
+    setRootGroup((prev) => {
+      const filterGroup = (g: QueryGroup): QueryGroup => ({
+        ...g,
+        rules: g.rules
+          .filter((r) => r.id !== nodeId)
+          .map((r) => ("combinator" in r ? filterGroup(r) : r)),
+      });
+      return filterGroup(prev);
+    });
+  }, []);
+
+  const updateRule = React.useCallback((ruleId: string, patch: Partial<QueryRule>) => {
+    setRootGroup((prev) => {
+      const modify = (g: QueryGroup): QueryGroup => ({
+        ...g,
+        rules: g.rules.map((r) => {
+          if ("combinator" in r) return modify(r);
+          return r.id === ruleId ? { ...r, ...patch } : r;
+        }),
+      });
+      return modify(prev);
+    });
+  }, []);
+
+  const updateCombinator = React.useCallback((groupId: string, combinator: "AND" | "OR") => {
+    setRootGroup((prev) => {
+      const modify = (g: QueryGroup): QueryGroup => {
+        if (g.id === groupId) return { ...g, combinator };
+        return {
+          ...g,
+          rules: g.rules.map((r) => ("combinator" in r ? modify(r) : r)),
+        };
+      };
+      return modify(prev);
+    });
+  }, []);
+
+  const copySql = React.useCallback(async () => {
+    if (!compiledSql) return;
+    await navigator.clipboard.writeText(compiledSql);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }, [compiledSql]);
+
+  const renderGroup = (group: QueryGroup, depth = 0) => (
+    <div
+      key={group.id}
+      className={cn(
+        "relative rounded-xl border border-border bg-card p-4 transition-colors duration-200",
+        depth > 0 && "ml-4 mt-3 border-dashed bg-muted/30"
+      )}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-border/60">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Match
+          </span>
+          <div className="inline-flex rounded-lg border border-border bg-muted/60 p-0.5">
+            {(["AND", "OR"] as const).map((comb) => (
+              <button
+                key={comb}
+                type="button"
+                onClick={() => updateCombinator(group.id, comb)}
+                className={cn(
+                  "px-2.5 py-1 text-xs font-medium rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  group.combinator === comb
+                    ? "bg-primary text-primary-foreground shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+                aria-pressed={group.combinator === comb}
+              >
+                {comb}
+              </button>
+            ))}
+          </div>
+          <span className="text-xs text-muted-foreground">
+            ({group.rules.length} {group.rules.length === 1 ? "rule" : "rules"})
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => addRule(group.id)}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md border border-border bg-background hover:bg-muted text-foreground transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <Plus className="h-3.5 w-3.5" role="img" aria-hidden="true" />
+            Add Rule
+          </button>
+          <button
+            type="button"
+            onClick={() => addSubGroup(group.id)}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md border border-border bg-background hover:bg-muted text-foreground transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <Plus className="h-3.5 w-3.5" role="img" aria-hidden="true" />
+            Add Group
+          </button>
+          {depth > 0 && (
+            <button
+              type="button"
+              onClick={() => removeNode(group.id)}
+              aria-label="Remove group"
+              className="inline-flex items-center justify-center h-7 w-7 rounded-md text-destructive hover:bg-destructive/10 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive"
+            >
+              <Trash2 className="h-3.5 w-3.5" role="img" aria-hidden="true" />
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="space-y-2.5 pt-3">
+        {group.rules.map((rule) => {
+          if ("combinator" in rule) {
+            return renderGroup(rule, depth + 1);
+          }
+          return (
+            <div
+              key={rule.id}
+              className="flex flex-wrap items-center gap-2 rounded-lg border border-border/70 bg-background/80 px-3 py-2 text-sm"
+            >
+              <select
+                value={rule.field}
+                onChange={(e) => updateRule(rule.id, { field: e.target.value })}
+                className="h-8 rounded-md border border-border bg-card px-2.5 text-xs font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-label="Filter Field"
+              >
+                {fields.map((f) => (
+                  <option key={f.value} value={f.value}>
+                    {f.label}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={rule.operator}
+                onChange={(e) =>
+                  updateRule(rule.id, {
+                    operator: e.target.value as QueryRule["operator"],
+                  })
+                }
+                className="h-8 rounded-md border border-border bg-card px-2 text-xs font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-label="Filter Operator"
+              >
+                <option value="=">=</option>
+                <option value="!=">!=</option>
+                <option value=">">&gt;</option>
+                <option value="<">&lt;</option>
+                <option value="CONTAINS">contains</option>
+                <option value="STARTS_WITH">starts with</option>
+              </select>
+
+              <input
+                type="text"
+                value={rule.value}
+                placeholder="Enter value..."
+                onChange={(e) => updateRule(rule.id, { value: e.target.value })}
+                className="h-8 min-w-[140px] flex-1 rounded-md border border-border bg-card px-3 text-xs text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-label="Rule value"
+              />
+
+              <button
+                type="button"
+                onClick={() => removeNode(rule.id)}
+                aria-label="Delete rule"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive"
+              >
+                <Trash2 className="h-3.5 w-3.5" role="img" aria-hidden="true" />
+              </button>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  return (
+    <div className={cn("w-full space-y-4 rounded-xl border border-border bg-background p-5 shadow-xs", className)}>
+      <div className="flex items-center justify-between">
+        <div className="space-y-0.5">
+          <h3 className="text-sm font-semibold tracking-tight text-foreground">
+            Structured SQL Query Builder
+          </h3>
+          <p className="text-xs text-muted-foreground">
+            Visual rule tree generator for complex database filters and telemetry queries.
+          </p>
+        </div>
+      </div>
+
+      {renderGroup(rootGroup)}
+
+      <div className="rounded-lg border border-border bg-muted/40 p-3">
+        <div className="flex items-center justify-between pb-1.5">
+          <span className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
+            <Code2 className="h-3.5 w-3.5 text-primary" role="img" aria-hidden="true" />
+            Generated SQL WHERE Clause
+          </span>
+          <button
+            type="button"
+            onClick={copySql}
+            disabled={!compiledSql}
+            className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xs"
+          >
+            {copied ? (
+              <>
+                <Check className="h-3 w-3" role="img" aria-hidden="true" /> Copied
+              </>
+            ) : (
+              <>
+                <Copy className="h-3 w-3" role="img" aria-hidden="true" /> Copy SQL
+              </>
+            )}
+          </button>
+        </div>
+        <pre className="overflow-x-auto font-mono text-xs text-foreground/90 whitespace-pre-wrap">
+          {compiledSql || <span className="text-muted-foreground italic">WHERE true (No active filters)</span>}
+        </pre>
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Radar Spider Chart (`radar-spider-chart`)
 - **Category**: `ui:block`
 - **Dependencies**: None
@@ -17721,6 +19018,135 @@ export function RadarSpiderChart({
         </svg>
       </div>
     </figure>
+  );
+}
+
+```
+
+---
+
+### Realtime Telemetry Gauge Cluster (`realtime-telemetry-gauge-cluster`)
+- **Category**: `ui:editorial`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 4/10, Motion 3/10, Density 8/10
+- **A11y**: Keyboard Nav: false, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Cloudscape Design & GitHub Primer (https://cloudscape.design, https://primer.style)
+ * @license Apache-2.0
+ * @author Amazon Web Services & GitHub Primer Team
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { Activity, Cpu, Server, Wifi, ShieldCheck } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface TelemetryMetric {
+  id: string;
+  name: string;
+  value: number; // 0-100 percentage
+  unit: string;
+  status: "normal" | "warning" | "critical";
+  subtitle: string;
+}
+
+export interface RealtimeTelemetryGaugeClusterProps {
+  clusterName?: string;
+  metrics?: TelemetryMetric[];
+  className?: string;
+}
+
+const DEFAULT_METRICS: TelemetryMetric[] = [
+  { id: "cpu", name: "Host CPU Load", value: 34, unit: "%", status: "normal", subtitle: "8 Cores Active" },
+  { id: "memory", name: "Memory Allocated", value: 68, unit: "%", status: "normal", subtitle: "10.8 / 16 GB" },
+  { id: "latency", name: "Edge p99 Latency", value: 18, unit: "ms", status: "normal", subtitle: "Cloudflare CDN" },
+  { id: "mcp-eval", name: "MCP Zero-Draft", value: 99, unit: "%", status: "normal", subtitle: "0 High Flags" },
+];
+
+export function RealtimeTelemetryGaugeCluster({
+  clusterName = "Edge MCP Telemetry Cluster",
+  metrics = DEFAULT_METRICS,
+  className,
+}: RealtimeTelemetryGaugeClusterProps) {
+  return (
+    <div className={cn("w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs select-none", className)}>
+      <div className="flex items-center justify-between border-b border-border/60 pb-3">
+        <div className="flex items-center gap-2">
+          <Activity className="h-4 w-4 text-primary" role="img" aria-hidden="true" />
+          <h3 className="text-sm font-semibold tracking-tight text-foreground">
+            {clusterName}
+          </h3>
+        </div>
+        <span className="flex items-center gap-1 text-2xs font-mono text-emerald-600 dark:text-emerald-400">
+          <ShieldCheck className="h-3 w-3" role="img" aria-hidden="true" /> Live Monitored
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {metrics.map((metric) => {
+          const radius = 32;
+          const circumference = 2 * Math.PI * radius;
+          const strokeDashoffset = circumference - (metric.value / 100) * circumference;
+
+          return (
+            <div
+              key={metric.id}
+              className="flex items-center gap-3.5 rounded-lg border border-border/70 bg-background/80 p-3.5"
+            >
+              {/* Circular SVG Gauge */}
+              <div className="relative h-16 w-16 shrink-0 flex items-center justify-center">
+                <svg className="h-16 w-16 -rotate-90" viewBox="0 0 80 80" role="img" aria-label={`${metric.name}: ${metric.value}${metric.unit}`}>
+                  <circle
+                    cx="40"
+                    cy="40"
+                    r={radius}
+                    className="stroke-muted"
+                    strokeWidth="6"
+                    fill="transparent"
+                  />
+                  <circle
+                    cx="40"
+                    cy="40"
+                    r={radius}
+                    className={cn(
+                      "transition-all duration-500",
+                      metric.status === "normal"
+                        ? "stroke-primary"
+                        : metric.status === "warning"
+                        ? "stroke-amber-500"
+                        : "stroke-destructive"
+                    )}
+                    strokeWidth="6"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={strokeDashoffset}
+                    strokeLinecap="round"
+                    fill="transparent"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center font-mono text-xs font-bold text-foreground">
+                  {metric.value}
+                  <span className="text-3xs font-normal text-muted-foreground">{metric.unit}</span>
+                </div>
+              </div>
+
+              <div className="space-y-0.5 min-w-0">
+                <div className="text-xs font-semibold text-foreground truncate">
+                  {metric.name}
+                </div>
+                <div className="text-3xs font-mono text-muted-foreground truncate">
+                  {metric.subtitle}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
@@ -20049,6 +21475,248 @@ export function AudioVisualizer({
             className="h-full w-full max-w-1.5 origin-bottom rounded-full bg-primary transition-transform duration-100 ease-out"
           />
         ))}
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
+### Interactive Audio Waveform Scrubber (`interactive-audio-waveform-scrubber`)
+- **Category**: `ui:media`
+- **Dependencies**: lucide-react, three, clsx, tailwind-merge, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 7/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Remocn & Remotion (https://remocn.dev, https://remotion.dev)
+ * @license MIT
+ * @author Remocn Team & Remotion Community
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { Play, Pause, RotateCcw, Volume2, Bookmark, FastForward } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface AudioCuePoint {
+  timeSec: number;
+  label: string;
+}
+
+export interface InteractiveAudioWaveformScrubberProps {
+  durationSec?: number;
+  cuePoints?: AudioCuePoint[];
+  onSeek?: (timeSec: number) => void;
+  className?: string;
+}
+
+export function InteractiveAudioWaveformScrubber({
+  durationSec = 45,
+  cuePoints = [
+    { timeSec: 5, label: "Intro Hook" },
+    { timeSec: 18, label: "Core Feature Drop" },
+    { timeSec: 36, label: "Call to Action" },
+  ],
+  onSeek,
+  className,
+}: InteractiveAudioWaveformScrubberProps) {
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const [currentTime, setCurrentTime] = React.useState(0);
+  const [playbackRate, setPlaybackRate] = React.useState<number>(1);
+  const animationFrameRef = React.useRef<number | null>(null);
+
+  // Generate deterministic synthetic waveform bar heights (36 bars)
+  const waveformHeights = React.useMemo(() => {
+    const heights: number[] = [];
+    for (let i = 0; i < 48; i++) {
+      const h = Math.sin(i * 0.45) * 40 + Math.cos(i * 0.9) * 20 + 45;
+      heights.push(Math.max(15, Math.min(95, h)));
+    }
+    return heights;
+  }, []);
+
+  React.useEffect(() => {
+    const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!isPlaying || prefersReducedMotion) {
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+      return;
+    }
+
+    let lastTimestamp = performance.now();
+
+    const tick = (now: number) => {
+      const deltaSec = (now - lastTimestamp) / 1000;
+      lastTimestamp = now;
+
+      setCurrentTime((prev) => {
+        const next = prev + deltaSec * playbackRate;
+        if (next >= durationSec) {
+          setIsPlaying(false);
+          return durationSec;
+        }
+        return next;
+      });
+
+      animationFrameRef.current = requestAnimationFrame(tick);
+    };
+
+    animationFrameRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+    };
+  }, [isPlaying, playbackRate, durationSec]);
+
+  const handleBarClick = (index: number) => {
+    const targetTime = (index / waveformHeights.length) * durationSec;
+    setCurrentTime(targetTime);
+    onSeek?.(targetTime);
+  };
+
+  const progressPercentage = (currentTime / durationSec) * 100;
+
+  const formatTime = (sec: number) => {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    const ms = Math.floor((sec % 1) * 10);
+    return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}.${ms}`;
+  };
+
+  return (
+    <div className={cn("w-full space-y-3.5 rounded-xl border border-border bg-card p-5 shadow-xs select-none", className)}>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Volume2 className="h-4 w-4 text-primary" role="img" aria-hidden="true" />
+          <span className="text-xs font-semibold text-foreground tracking-tight">
+            Audio Stem Scrubber & Cue Editor
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
+          <span className="text-primary font-medium tabular-nums">{formatTime(currentTime)}</span>
+          <span>/</span>
+          <span className="tabular-nums">{formatTime(durationSec)}</span>
+        </div>
+      </div>
+
+      {/* Interactive Waveform Bar Visualizer */}
+      <div
+        className="relative flex h-20 w-full items-end gap-1 overflow-hidden rounded-lg bg-muted/40 p-2 cursor-pointer"
+        role="slider"
+        aria-label="Audio Timeline Scrubber"
+        aria-valuemin={0}
+        aria-valuemax={durationSec}
+        aria-valuenow={currentTime}
+        aria-valuetext={formatTime(currentTime)}
+      >
+        {waveformHeights.map((height, idx) => {
+          const barProgress = (idx / waveformHeights.length) * 100;
+          const isPassed = barProgress <= progressPercentage;
+
+          return (
+            <div
+              key={`bar-${idx}`}
+              onClick={() => handleBarClick(idx)}
+              className="group relative flex-1 h-full flex items-end"
+            >
+              <div
+                className={cn(
+                  "w-full rounded-xs transition-all duration-75",
+                  isPassed
+                    ? "bg-primary"
+                    : "bg-muted-foreground/30 group-hover:bg-muted-foreground/60"
+                )}
+                style={{ height: `${height}%` }}
+              />
+            </div>
+          );
+        })}
+
+        {/* Playhead Marker */}
+        <div
+          className="pointer-events-none absolute top-0 bottom-0 w-0.5 bg-destructive z-10"
+          style={{ left: `${progressPercentage}%` }}
+        >
+          <div className="h-2 w-2 -translate-x-[3px] rounded-full bg-destructive shadow-xs" />
+        </div>
+
+        {/* Cue Point Markers */}
+        {cuePoints.map((cue) => {
+          const cuePercent = (cue.timeSec / durationSec) * 100;
+          return (
+            <div
+              key={cue.label}
+              className="absolute top-1 -translate-x-1/2 z-20 group"
+              style={{ left: `${cuePercent}%` }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentTime(cue.timeSec);
+              }}
+            >
+              <Bookmark className="h-3 w-3 text-amber-500 fill-amber-500 cursor-pointer hover:scale-125 transition-transform duration-150" role="img" aria-label={cue.label} />
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none whitespace-nowrap rounded-xs bg-background/95 px-1.5 py-0.5 font-mono text-3xs border border-border text-foreground shadow-xs">
+                {cue.label} ({Math.round(cue.timeSec)}s)
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Scrubber Transport Controls */}
+      <div className="flex items-center justify-between pt-1">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsPlaying((p) => !p)}
+            className="inline-flex h-8 items-center gap-1.5 rounded-md bg-primary px-3 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {isPlaying ? (
+              <>
+                <Pause className="h-3.5 w-3.5" role="img" aria-hidden="true" /> Pause
+              </>
+            ) : (
+              <>
+                <Play className="h-3.5 w-3.5" role="img" aria-hidden="true" /> Play
+              </>
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setCurrentTime(0)}
+            aria-label="Restart Audio"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-card text-muted-foreground hover:text-foreground hover:bg-muted transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <RotateCcw className="h-3.5 w-3.5" role="img" aria-hidden="true" />
+          </button>
+        </div>
+
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <span>Speed:</span>
+          {[1, 1.5, 2].map((rate) => (
+            <button
+              key={rate}
+              type="button"
+              onClick={() => setPlaybackRate(rate)}
+              className={cn(
+                "px-2 py-0.5 rounded-md font-mono transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                playbackRate === rate
+                  ? "bg-muted text-foreground font-semibold"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {rate}x
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -26140,6 +27808,137 @@ export function ActivityFeedTimeline({
 
 ---
 
+### Adaptive Touch Slider (`adaptive-touch-slider`)
+- **Category**: `ui:primitive`
+- **Dependencies**: clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 3/10, Motion 3/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Google GUI Challenges & Adobe React Spectrum (https://github.com/argyleink/gui-challenges, https://github.com/adobe/react-spectrum)
+ * @license Apache-2.0
+ * @author Adam Argyle & Adobe React Spectrum Team
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { cn } from "@/lib/utils";
+
+export interface AdaptiveTouchSliderProps {
+  label?: string;
+  min?: number;
+  max?: number;
+  step?: number;
+  value?: number;
+  defaultValue?: number;
+  unit?: string;
+  onChange?: (value: number) => void;
+  disabled?: boolean;
+  className?: string;
+}
+
+export function AdaptiveTouchSlider({
+  label = "Adaptive Density Slider",
+  min = 0,
+  max = 100,
+  step = 1,
+  value: controlledValue,
+  defaultValue = 50,
+  unit = "%",
+  onChange,
+  disabled = false,
+  className,
+}: AdaptiveTouchSliderProps) {
+  const [internalValue, setInternalValue] = React.useState(defaultValue);
+  const value = controlledValue !== undefined ? controlledValue : internalValue;
+
+  const percentage = React.useMemo(() => {
+    return Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100));
+  }, [value, min, max]);
+
+  const handleChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const num = Number(e.target.value);
+      if (controlledValue === undefined) {
+        setInternalValue(num);
+      }
+      onChange?.(num);
+    },
+    [controlledValue, onChange]
+  );
+
+  return (
+    <div className={cn("w-full space-y-2.5 rounded-lg border border-border bg-card p-4 shadow-xs", className)}>
+      <div className="flex items-center justify-between">
+        <label
+          htmlFor="adaptive-slider-input"
+          className="text-xs font-semibold text-foreground tracking-tight"
+        >
+          {label}
+        </label>
+        <span className="font-mono text-xs font-medium text-primary tabular-nums">
+          {value}
+          {unit}
+        </span>
+      </div>
+
+      <div className="relative flex items-center select-none touch-none h-7">
+        {/* Track Background */}
+        <div className="relative h-2 w-full overflow-hidden rounded-full bg-muted">
+          {/* Active Fill Bar */}
+          <div
+            className="h-full bg-primary transition-all duration-75"
+            style={{ width: `${percentage}%` }}
+          />
+        </div>
+
+        {/* Accessible Range Input */}
+        <input
+          id="adaptive-slider-input"
+          type="range"
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          disabled={disabled}
+          onChange={handleChange}
+          aria-label={label}
+          aria-valuemin={min}
+          aria-valuemax={max}
+          aria-valuenow={value}
+          aria-valuetext={`${value}${unit}`}
+          className="absolute inset-0 h-full w-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
+        />
+
+        {/* Custom Visual Thumb */}
+        <div
+          className="pointer-events-none absolute h-5 w-5 -translate-x-1/2 rounded-full border-2 border-primary bg-background shadow-md transition-transform duration-75"
+          style={{ left: `${percentage}%` }}
+        />
+      </div>
+
+      <div className="flex justify-between text-2xs font-mono text-muted-foreground">
+        <span>
+          {min}
+          {unit}
+        </span>
+        <span>
+          {max}
+          {unit}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Ai Artifact Canvas (`ai-artifact-canvas`)
 - **Category**: `ui:ai-native`
 - **Dependencies**: lucide-react, three, motion
@@ -30689,6 +32488,131 @@ Input.displayName = "Input";
 
 ---
 
+### Interactive Matrix Filter Pill Group (`interactive-matrix-filter-pill-group`)
+- **Category**: `ui:primitive`
+- **Dependencies**: lucide-react, clsx, tailwind-merge, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 3/10, Motion 2/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin GitHub Primer & HeroUI (https://primer.style, https://heroui.com)
+ * @license MIT
+ * @author GitHub Primer Team & HeroUI Team
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { Filter, X, Check } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface FilterPillOption {
+  id: string;
+  label: string;
+  count?: number;
+  category?: string;
+}
+
+export interface InteractiveMatrixFilterPillGroupProps {
+  options?: FilterPillOption[];
+  selectedIds?: string[];
+  onChange?: (selected: string[]) => void;
+  title?: string;
+  className?: string;
+}
+
+const DEFAULT_FILTER_OPTIONS: FilterPillOption[] = [
+  { id: "ai-native", label: "AI Native", count: 24, category: "Domain" },
+  { id: "workflow", label: "Workflow Graph", count: 12, category: "Domain" },
+  { id: "motion", label: "Spring Motion", count: 42, category: "Interaction" },
+  { id: "wcag-aaa", label: "WCAG AAA", count: 18, category: "A11y" },
+  { id: "tailwind-v4", label: "Tailwind v4", count: 280, category: "Tech" },
+];
+
+export function InteractiveMatrixFilterPillGroup({
+  options = DEFAULT_FILTER_OPTIONS,
+  selectedIds: controlledSelected,
+  onChange,
+  title = "Faceted Taxonomy Filters",
+  className,
+}: InteractiveMatrixFilterPillGroupProps) {
+  const [internalSelected, setInternalSelected] = React.useState<string[]>(["ai-native", "tailwind-v4"]);
+  const selected = controlledSelected !== undefined ? controlledSelected : internalSelected;
+
+  const toggleOption = (id: string) => {
+    const next = selected.includes(id) ? selected.filter((x) => x !== id) : [...selected, id];
+    if (controlledSelected === undefined) setInternalSelected(next);
+    onChange?.(next);
+  };
+
+  const clearAll = () => {
+    if (controlledSelected === undefined) setInternalSelected([]);
+    onChange?.([]);
+  };
+
+  return (
+    <div className={cn("w-full space-y-3 rounded-xl border border-border bg-card p-4 shadow-xs select-none", className)}>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Filter className="h-3.5 w-3.5 text-primary" role="img" aria-hidden="true" />
+          <span className="text-xs font-semibold text-foreground tracking-tight">{title}</span>
+        </div>
+
+        {selected.length > 0 && (
+          <button
+            type="button"
+            onClick={clearAll}
+            className="text-2xs text-muted-foreground hover:text-foreground transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xs"
+          >
+            Clear Selected ({selected.length})
+          </button>
+        )}
+      </div>
+
+      {/* Pill Group */}
+      <div className="flex flex-wrap items-center gap-2">
+        {options.map((opt) => {
+          const isSelected = selected.includes(opt.id);
+          return (
+            <button
+              key={opt.id}
+              type="button"
+              onClick={() => toggleOption(opt.id)}
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                isSelected
+                  ? "bg-primary text-primary-foreground shadow-xs"
+                  : "border border-border bg-background text-muted-foreground hover:text-foreground hover:bg-muted"
+              )}
+              aria-pressed={isSelected}
+            >
+              {isSelected && <Check className="h-3 w-3" role="img" aria-hidden="true" />}
+              <span>{opt.label}</span>
+              {opt.count !== undefined && (
+                <span
+                  className={cn(
+                    "rounded-full px-1.5 py-0.2 text-3xs font-mono font-semibold",
+                    isSelected ? "bg-primary-foreground/20 text-primary-foreground" : "bg-muted text-muted-foreground"
+                  )}
+                >
+                  {opt.count}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Interactive Pagination Bar (`interactive-pagination-bar`)
 - **Category**: `ui:primitive`
 - **Dependencies**: lucide-react
@@ -31023,6 +32947,218 @@ export function KeyValueDefinitionList({
         </div>
       ))}
     </dl>
+  );
+}
+
+```
+
+---
+
+### Multi-Step Wizard Flow (`multi-step-wizard-flow`)
+- **Category**: `ui:primitive`
+- **Dependencies**: lucide-react, clsx, tailwind-merge, motion
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 3/10, Motion 3/10, Density 6/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Mantine & Formik (https://github.com/mantinedev/mantine, https://github.com/jaredpalmer/formik)
+ * @license MIT
+ * @author Vitaly Rtishchev & Jared Palmer
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { Check, ArrowRight, ArrowLeft, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface WizardStep {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface MultiStepWizardFlowProps {
+  steps?: WizardStep[];
+  onComplete?: (data: Record<string, string>) => void;
+  className?: string;
+}
+
+const DEFAULT_WIZARD_STEPS: WizardStep[] = [
+  { id: "account", title: "Account Info", description: "Identity & domain configuration" },
+  { id: "presets", title: "Taste Calibration", description: "Variance, motion & density dials" },
+  { id: "tokens", title: "Token Distribution", description: "Connect DTCG Style Dictionary" },
+];
+
+export function MultiStepWizardFlow({
+  steps = DEFAULT_WIZARD_STEPS,
+  onComplete,
+  className,
+}: MultiStepWizardFlowProps) {
+  const [currentStepIndex, setCurrentStepIndex] = React.useState(0);
+  const [formData, setFormData] = React.useState<Record<string, string>>({
+    workspaceName: "Nova Agent Wiki",
+    designVariance: "5",
+    motionIntensity: "6",
+    tokenTheme: "modern-minimal",
+  });
+  const [isCompleted, setIsCompleted] = React.useState(false);
+
+  const isLastStep = currentStepIndex === steps.length - 1;
+
+  const handleNext = () => {
+    if (isLastStep) {
+      setIsCompleted(true);
+      onComplete?.(formData);
+    } else {
+      setCurrentStepIndex((prev) => prev + 1);
+    }
+  };
+
+  const handleBack = () => {
+    setCurrentStepIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  return (
+    <div className={cn("w-full space-y-6 rounded-xl border border-border bg-card p-6 shadow-xs select-none", className)}>
+      {/* Wizard Progress Stepper */}
+      <div className="flex items-center justify-between border-b border-border/60 pb-5">
+        {steps.map((step, idx) => {
+          const isDone = idx < currentStepIndex || isCompleted;
+          const isCurrent = idx === currentStepIndex && !isCompleted;
+
+          return (
+            <div key={step.id} className="flex items-center gap-3">
+              <div
+                className={cn(
+                  "flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold transition-colors duration-150",
+                  isDone
+                    ? "bg-primary text-primary-foreground shadow-xs"
+                    : isCurrent
+                    ? "border-2 border-primary text-primary bg-background"
+                    : "border border-border text-muted-foreground bg-muted/40"
+                )}
+              >
+                {isDone ? <Check className="h-4 w-4" role="img" aria-hidden="true" /> : idx + 1}
+              </div>
+
+              <div className="hidden sm:block">
+                <div className={cn("text-xs font-semibold", isCurrent ? "text-foreground" : "text-muted-foreground")}>
+                  {step.title}
+                </div>
+                <div className="text-3xs text-muted-foreground">{step.description}</div>
+              </div>
+
+              {idx < steps.length - 1 && (
+                <div className="hidden md:block h-px w-12 bg-border mx-2" />
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Step Form Body */}
+      {!isCompleted ? (
+        <div className="space-y-4 py-2">
+          {currentStepIndex === 0 && (
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-foreground">Workspace Project Name</label>
+                <input
+                  type="text"
+                  value={formData.workspaceName}
+                  onChange={(e) => setFormData((p) => ({ ...p, workspaceName: e.target.value }))}
+                  className="h-9 w-full rounded-md border border-border bg-background px-3 text-xs text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                />
+              </div>
+            </div>
+          )}
+
+          {currentStepIndex === 1 && (
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <div className="flex justify-between text-xs font-semibold text-foreground">
+                  <span>Design Variance Calibration</span>
+                  <span className="font-mono text-primary">{formData.designVariance}/10</span>
+                </div>
+                <input
+                  type="range"
+                  min="1"
+                  max="10"
+                  value={formData.designVariance}
+                  onChange={(e) => setFormData((p) => ({ ...p, designVariance: e.target.value }))}
+                  className="w-full h-2 rounded-full bg-muted cursor-pointer"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <div className="flex justify-between text-xs font-semibold text-foreground">
+                  <span>Motion Intensity Level</span>
+                  <span className="font-mono text-primary">{formData.motionIntensity}/10</span>
+                </div>
+                <input
+                  type="range"
+                  min="1"
+                  max="10"
+                  value={formData.motionIntensity}
+                  onChange={(e) => setFormData((p) => ({ ...p, motionIntensity: e.target.value }))}
+                  className="w-full h-2 rounded-full bg-muted cursor-pointer"
+                />
+              </div>
+            </div>
+          )}
+
+          {currentStepIndex === 2 && (
+            <div className="space-y-3">
+              <label className="text-xs font-semibold text-foreground">Design Token Strategy</label>
+              <select
+                value={formData.tokenTheme}
+                onChange={(e) => setFormData((p) => ({ ...p, tokenTheme: e.target.value }))}
+                className="h-9 w-full rounded-md border border-border bg-background px-3 text-xs font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <option value="modern-minimal">Modern Minimal (DTCG Standards)</option>
+                <option value="neo-tokyo">Neo Tokyo Cyberpunk</option>
+                <option value="midnight">Midnight Enterprise</option>
+              </select>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="py-6 text-center space-y-2">
+          <CheckCircle2 className="h-10 w-10 text-emerald-500 mx-auto" role="img" aria-hidden="true" />
+          <h4 className="text-sm font-semibold text-foreground">Configuration Verified</h4>
+          <p className="text-xs text-muted-foreground">
+            Zero-slop setup contract initialized successfully for workspace.
+          </p>
+        </div>
+      )}
+
+      {/* Navigation Footer */}
+      {!isCompleted && (
+        <div className="flex items-center justify-between pt-4 border-t border-border/60">
+          <button
+            type="button"
+            onClick={handleBack}
+            disabled={currentStepIndex === 0}
+            className="inline-flex items-center gap-1 h-8 px-3 rounded-md border border-border bg-background text-xs font-medium text-foreground hover:bg-muted disabled:opacity-40 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" role="img" aria-hidden="true" /> Back
+          </button>
+
+          <button
+            type="button"
+            onClick={handleNext}
+            className="inline-flex items-center gap-1.5 h-8 px-4 rounded-md bg-primary text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shadow-xs"
+          >
+            <span>{isLastStep ? "Complete Setup" : "Next Step"}</span>
+            <ArrowRight className="h-3.5 w-3.5" role="img" aria-hidden="true" />
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -33794,6 +35930,206 @@ export function DotLoader({
 
 ---
 
+### Dynamic Theme Matrix Inspector (`dynamic-theme-matrix-inspector`)
+- **Category**: `ui:utility`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 3/10, Motion 2/10, Density 8/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Tokens Studio & Style Dictionary (https://github.com/tokens-studio/figma-plugin, https://style-dictionary.net)
+ * @license MIT
+ * @author Tokens Studio & Amazon Style Dictionary Team
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { Check, Copy, Sliders, Palette, ShieldCheck, AlertCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface DesignTokenEntry {
+  name: string;
+  cssVariable: string;
+  lightHex: string;
+  darkHex: string;
+  contrastRatioOnLight: number; // against white e.g. 7.2
+  contrastRatioOnDark: number; // against black e.g. 9.1
+}
+
+export interface DynamicThemeMatrixInspectorProps {
+  tokens?: DesignTokenEntry[];
+  themeName?: string;
+  className?: string;
+}
+
+const DEFAULT_THEME_TOKENS: DesignTokenEntry[] = [
+  {
+    name: "Primary Action",
+    cssVariable: "--color-primary",
+    lightHex: "#09090b",
+    darkHex: "#fafafa",
+    contrastRatioOnLight: 19.8,
+    contrastRatioOnDark: 19.8,
+  },
+  {
+    name: "Background Surface",
+    cssVariable: "--color-background",
+    lightHex: "#ffffff",
+    darkHex: "#09090b",
+    contrastRatioOnLight: 1.0,
+    contrastRatioOnDark: 1.0,
+  },
+  {
+    name: "Card Surface",
+    cssVariable: "--color-card",
+    lightHex: "#ffffff",
+    darkHex: "#121215",
+    contrastRatioOnLight: 1.0,
+    contrastRatioOnDark: 1.1,
+  },
+  {
+    name: "Muted Text",
+    cssVariable: "--color-muted-foreground",
+    lightHex: "#71717a",
+    darkHex: "#a1a1aa",
+    contrastRatioOnLight: 4.6,
+    contrastRatioOnDark: 5.8,
+  },
+  {
+    name: "Destructive Alert",
+    cssVariable: "--color-destructive",
+    lightHex: "#dc2626",
+    darkHex: "#ef4444",
+    contrastRatioOnLight: 4.8,
+    contrastRatioOnDark: 4.9,
+  },
+];
+
+export function DynamicThemeMatrixInspector({
+  tokens = DEFAULT_THEME_TOKENS,
+  themeName = "Modern Minimal DTCG Token Pack",
+  className,
+}: DynamicThemeMatrixInspectorProps) {
+  const [activeMode, setActiveMode] = React.useState<"light" | "dark">("dark");
+  const [copiedVar, setCopiedVar] = React.useState<string | null>(null);
+
+  const copyVariable = React.useCallback(async (varName: string) => {
+    await navigator.clipboard.writeText(`var(${varName})`);
+    setCopiedVar(varName);
+    setTimeout(() => setCopiedVar(null), 1800);
+  }, []);
+
+  return (
+    <div className={cn("w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs select-none", className)}>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-2">
+            <Palette className="h-4 w-4 text-primary" role="img" aria-hidden="true" />
+            <h3 className="text-sm font-semibold tracking-tight text-foreground">
+              {themeName}
+            </h3>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            W3C DTCG-compliant design token registry with real-time contrast verification.
+          </p>
+        </div>
+
+        <div className="inline-flex rounded-lg border border-border bg-muted/60 p-0.5 text-xs">
+          {(["light", "dark"] as const).map((mode) => (
+            <button
+              key={mode}
+              type="button"
+              onClick={() => setActiveMode(mode)}
+              className={cn(
+                "px-3 py-1 font-medium capitalize rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                activeMode === mode
+                  ? "bg-primary text-primary-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+              aria-pressed={activeMode === mode}
+            >
+              {mode} Mode
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {tokens.map((token) => {
+          const hex = activeMode === "light" ? token.lightHex : token.darkHex;
+          const ratio = activeMode === "light" ? token.contrastRatioOnLight : token.contrastRatioOnDark;
+          const isAccessible = ratio >= 4.5;
+
+          return (
+            <div
+              key={token.cssVariable}
+              className="flex flex-col justify-between rounded-lg border border-border/80 bg-background p-3 space-y-2.5 transition-colors duration-150 hover:border-border"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div
+                    className="h-5 w-5 rounded-full border border-border/60 shadow-xs"
+                    style={{ backgroundColor: hex }}
+                  />
+                  <span className="text-xs font-semibold text-foreground tracking-tight">
+                    {token.name}
+                  </span>
+                </div>
+
+                <span
+                  className={cn(
+                    "inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-3xs font-mono font-semibold",
+                    isAccessible
+                      ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                      : "bg-amber-500/10 text-amber-500"
+                  )}
+                >
+                  {isAccessible ? (
+                    <>
+                      <ShieldCheck className="h-2.5 w-2.5" role="img" aria-hidden="true" /> {ratio}:1 AA
+                    </>
+                  ) : (
+                    <>
+                      <AlertCircle className="h-2.5 w-2.5" role="img" aria-hidden="true" /> {ratio}:1
+                    </>
+                  )}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between pt-1 border-t border-border/50 text-2xs font-mono text-muted-foreground">
+                <span>{hex}</span>
+                <button
+                  type="button"
+                  onClick={() => copyVariable(token.cssVariable)}
+                  className="inline-flex items-center gap-1 text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xs"
+                >
+                  {copiedVar === token.cssVariable ? (
+                    <>
+                      <Check className="h-2.5 w-2.5" role="img" aria-hidden="true" /> Copied
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-2.5 w-2.5" role="img" aria-hidden="true" /> {token.cssVariable}
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Icon Morph (`icon-morph`)
 - **Category**: `ui:utility`
 - **Dependencies**: clsx, tailwind-merge
@@ -35630,6 +37966,182 @@ export function EmbeddedWhiteboard({
 
 ---
 
+### Infinite Canvas Spatial Ruler (`infinite-canvas-spatial-ruler`)
+- **Category**: `ui:workflow`
+- **Dependencies**: lucide-react, three, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 7/10, Motion 4/10, Density 5/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin tldraw & Excalidraw (https://github.com/tldraw/tldraw, https://github.com/excalidraw/excalidraw)
+ * @license Apache-2.0
+ * @author tldraw Team & Excalidraw Team
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { Move, ZoomIn, ZoomOut, Compass, Grid } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface InfiniteCanvasSpatialRulerProps {
+  zoom?: number;
+  offsetX?: number;
+  offsetY?: number;
+  gridSize?: number;
+  unit?: string;
+  className?: string;
+}
+
+export function InfiniteCanvasSpatialRuler({
+  zoom = 1,
+  offsetX = 0,
+  offsetY = 0,
+  gridSize = 20,
+  unit = "px",
+  className,
+}: InfiniteCanvasSpatialRulerProps) {
+  const [currentZoom, setCurrentZoom] = React.useState(zoom);
+  const [showGrid, setShowGrid] = React.useState(true);
+
+  const majorStep = React.useMemo(() => {
+    if (currentZoom < 0.5) return 200;
+    if (currentZoom > 2) return 50;
+    return 100;
+  }, [currentZoom]);
+
+  const tickMarks = React.useMemo(() => {
+    const marks: number[] = [];
+    for (let i = 0; i <= 600; i += 20) {
+      marks.push(i);
+    }
+    return marks;
+  }, []);
+
+  return (
+    <div className={cn("relative w-full h-[360px] overflow-hidden rounded-xl border border-border bg-background select-none", className)}>
+      {/* Top Horizontal Ruler */}
+      <div className="absolute top-0 left-6 right-0 h-6 border-b border-border bg-card/90 backdrop-blur-xs flex items-end overflow-hidden z-20">
+        {tickMarks.map((pos) => {
+          const isMajor = pos % majorStep === 0;
+          return (
+            <div
+              key={`h-${pos}`}
+              className="absolute bottom-0 flex flex-col items-center"
+              style={{ left: `${pos}px` }}
+            >
+              {isMajor && (
+                <span className="text-3xs font-mono text-muted-foreground -translate-x-1/2 mb-1">
+                  {Math.round(pos / currentZoom)}
+                </span>
+              )}
+              <div
+                className={cn(
+                  "w-px bg-border",
+                  isMajor ? "h-3 bg-muted-foreground/80" : "h-1.5 bg-border/80"
+                )}
+              />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Left Vertical Ruler */}
+      <div className="absolute top-6 bottom-0 left-0 w-6 border-r border-border bg-card/90 backdrop-blur-xs flex justify-end overflow-hidden z-20">
+        {tickMarks.map((pos) => {
+          const isMajor = pos % majorStep === 0;
+          return (
+            <div
+              key={`v-${pos}`}
+              className="absolute right-0 flex items-center justify-end"
+              style={{ top: `${pos}px` }}
+            >
+              {isMajor && (
+                <span className="text-3xs font-mono text-muted-foreground -rotate-90 -translate-x-2">
+                  {Math.round(pos / currentZoom)}
+                </span>
+              )}
+              <div
+                className={cn(
+                  "h-px bg-border",
+                  isMajor ? "w-3 bg-muted-foreground/80" : "w-1.5 bg-border/80"
+                )}
+              />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Top Left Origin Corner */}
+      <div className="absolute top-0 left-0 h-6 w-6 border-r border-b border-border bg-muted/60 flex items-center justify-center z-30">
+        <Compass className="h-3 w-3 text-muted-foreground" role="img" aria-hidden="true" />
+      </div>
+
+      {/* Canvas Viewport Grid */}
+      <div
+        className={cn(
+          "absolute inset-0 top-6 left-6 flex items-center justify-center p-8",
+          showGrid && "bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)]"
+        )}
+      >
+        <div className="space-y-2 rounded-lg border border-border bg-card p-4 shadow-sm max-w-xs text-center">
+          <p className="text-xs font-semibold text-foreground">Spatial Canvas Viewport</p>
+          <p className="text-2xs text-muted-foreground">
+            Zoom Level: <span className="font-mono text-primary font-medium">{Math.round(currentZoom * 100)}%</span> | Offset: <span className="font-mono">{offsetX},{offsetY} {unit}</span>
+          </p>
+        </div>
+      </div>
+
+      {/* Floating HUD Controls */}
+      <div className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg border border-border bg-card/95 p-1.5 shadow-md z-30">
+        <button
+          type="button"
+          onClick={() => setCurrentZoom((z) => Math.max(0.25, z - 0.25))}
+          aria-label="Zoom Out"
+          className="inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <ZoomOut className="h-3.5 w-3.5" role="img" aria-hidden="true" />
+        </button>
+
+        <span className="min-w-[44px] text-center font-mono text-xs text-foreground font-medium">
+          {Math.round(currentZoom * 100)}%
+        </span>
+
+        <button
+          type="button"
+          onClick={() => setCurrentZoom((z) => Math.min(3, z + 0.25))}
+          aria-label="Zoom In"
+          className="inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <ZoomIn className="h-3.5 w-3.5" role="img" aria-hidden="true" />
+        </button>
+
+        <div className="h-4 w-px bg-border" />
+
+        <button
+          type="button"
+          onClick={() => setShowGrid((g) => !g)}
+          aria-label="Toggle Grid"
+          className={cn(
+            "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            showGrid ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-muted"
+          )}
+          aria-pressed={showGrid}
+        >
+          <Grid className="h-3.5 w-3.5" role="img" aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+```
+
+---
+
 ### Infinite Canvas Whiteboard (`infinite-canvas-whiteboard`)
 - **Category**: `ui:creative`
 - **Dependencies**: lucide-react, three, motion
@@ -36297,6 +38809,229 @@ export const SpatialLassoSelectionTool: React.FC<SpatialLassoToolProps> = ({
   );
 };
 export default SpatialLassoSelectionTool;
+
+```
+
+---
+
+### State Machine Flow Controller (`state-machine-flow-controller`)
+- **Category**: `ui:workflow`
+- **Dependencies**: lucide-react, clsx, tailwind-merge
+- **Registry Dependencies**: None
+- **Taste Dials**: Variance 6/10, Motion 4/10, Density 7/10
+- **A11y**: Keyboard Nav: true, ARIA: true, Fallback: true
+
+```tsx
+/**
+ * @origin Zag.js & Ark UI (https://github.com/chakra-ui/zag, https://github.com/chakra-ui/ark)
+ * @license MIT
+ * @author Segun Adebayo & Chakra Systems
+ * @curated-by Machine-First Design Agent Wiki
+ */
+
+"use client";
+
+import * as React from "react";
+import { ArrowRight, Play, RotateCcw, Activity, ShieldCheck, HelpCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export interface MachineStateNode {
+  id: string;
+  name: string;
+  type: "initial" | "intermediate" | "final" | "error";
+  description: string;
+  availableEvents: string[];
+}
+
+export interface StateMachineFlowControllerProps {
+  initialState?: string;
+  states?: MachineStateNode[];
+  transitions?: Record<string, Record<string, string>>;
+  onStateChange?: (newState: string, event: string) => void;
+  className?: string;
+}
+
+const DEFAULT_MACHINE_STATES: MachineStateNode[] = [
+  {
+    id: "idle",
+    name: "Idle State",
+    type: "initial",
+    description: "Waiting for user action or automated pipeline dispatch.",
+    availableEvents: ["DISPATCH_PROMPT", "VALIDATE_CACHE"],
+  },
+  {
+    id: "synthesizing",
+    name: "Synthesizing UI",
+    type: "intermediate",
+    description: "Agent is actively assembling AST components and resolving tokens.",
+    availableEvents: ["GENERATION_SUCCESS", "SYNTAX_ERROR", "ABORT"],
+  },
+  {
+    id: "verifying",
+    name: "Zero-Slop Verification",
+    type: "intermediate",
+    description: "Running 50 anti-slop rules, axe-core scans, and compilation check.",
+    availableEvents: ["AUDIT_PASSED", "SLOP_DETECTED"],
+  },
+  {
+    id: "ready",
+    name: "Production Ready",
+    type: "final",
+    description: "100% WCAG AA verified with 0 slop flags and clean build output.",
+    availableEvents: ["RESET"],
+  },
+  {
+    id: "remediating",
+    name: "Remediation Auto-Codemod",
+    type: "error",
+    description: "Auto-remapping arbitrary spacing and fixing contrast violations.",
+    availableEvents: ["REPAIR_COMPLETE", "ABORT"],
+  },
+];
+
+const DEFAULT_TRANSITIONS: Record<string, Record<string, string>> = {
+  idle: {
+    DISPATCH_PROMPT: "synthesizing",
+    VALIDATE_CACHE: "verifying",
+  },
+  synthesizing: {
+    GENERATION_SUCCESS: "verifying",
+    SYNTAX_ERROR: "remediating",
+    ABORT: "idle",
+  },
+  verifying: {
+    AUDIT_PASSED: "ready",
+    SLOP_DETECTED: "remediating",
+  },
+  ready: {
+    RESET: "idle",
+  },
+  remediating: {
+    REPAIR_COMPLETE: "verifying",
+    ABORT: "idle",
+  },
+};
+
+export function StateMachineFlowController({
+  initialState = "idle",
+  states = DEFAULT_MACHINE_STATES,
+  transitions = DEFAULT_TRANSITIONS,
+  onStateChange,
+  className,
+}: StateMachineFlowControllerProps) {
+  const [currentStateId, setCurrentStateId] = React.useState(initialState);
+  const [history, setHistory] = React.useState<string[]>([initialState]);
+
+  const currentState = React.useMemo(() => {
+    return states.find((s) => s.id === currentStateId) || states[0];
+  }, [states, currentStateId]);
+
+  const triggerEvent = React.useCallback(
+    (event: string) => {
+      const nextStateId = transitions[currentStateId]?.[event];
+      if (nextStateId) {
+        setCurrentStateId(nextStateId);
+        setHistory((prev) => [...prev, nextStateId]);
+        onStateChange?.(nextStateId, event);
+      }
+    },
+    [currentStateId, transitions, onStateChange]
+  );
+
+  const resetMachine = React.useCallback(() => {
+    setCurrentStateId(initialState);
+    setHistory([initialState]);
+    onStateChange?.(initialState, "RESET");
+  }, [initialState, onStateChange]);
+
+  return (
+    <div className={cn("w-full space-y-5 rounded-xl border border-border bg-card p-5 shadow-xs select-none", className)}>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-2">
+            <Activity className="h-4 w-4 text-primary" role="img" aria-hidden="true" />
+            <h3 className="text-sm font-semibold tracking-tight text-foreground">
+              Finite State Machine UI Controller
+            </h3>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Deterministic Zag.js-inspired state transitions for complex agentic interaction flows.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={resetMachine}
+          className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xs"
+        >
+          <RotateCcw className="h-3 w-3" role="img" aria-hidden="true" /> Reset Machine
+        </button>
+      </div>
+
+      {/* State Node Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+        {states.map((state) => {
+          const isActive = state.id === currentStateId;
+          return (
+            <div
+              key={state.id}
+              className={cn(
+                "flex flex-col justify-between rounded-lg border p-3 text-xs transition-all duration-200",
+                isActive
+                  ? "border-primary bg-primary/5 shadow-xs ring-1 ring-primary/30"
+                  : "border-border/70 bg-background/50 opacity-70"
+              )}
+            >
+              <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-3xs uppercase font-semibold text-muted-foreground">
+                    {state.type}
+                  </span>
+                  {isActive && (
+                    <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+                  )}
+                </div>
+                <div className="font-semibold text-foreground">{state.name}</div>
+              </div>
+              <p className="text-3xs text-muted-foreground mt-2 leading-relaxed">
+                {state.description}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Active State Context & Trigger Controls */}
+      <div className="rounded-lg border border-border bg-muted/40 p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-medium text-muted-foreground">
+            Current State: <strong className="text-foreground font-mono">{currentState.id}</strong>
+          </span>
+          <span className="text-xs font-mono text-muted-foreground">
+            Transition Steps: {history.length}
+          </span>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-border/50">
+          <span className="text-xs font-semibold text-muted-foreground mr-1">
+            Emit Event:
+          </span>
+          {currentState.availableEvents.map((evt) => (
+            <button
+              key={evt}
+              type="button"
+              onClick={() => triggerEvent(evt)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shadow-xs"
+            >
+              <Play className="h-2.5 w-2.5 fill-primary-foreground" role="img" aria-hidden="true" />
+              <span>{evt}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 ```
 

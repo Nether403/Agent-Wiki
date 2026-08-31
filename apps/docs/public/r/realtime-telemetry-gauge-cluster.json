@@ -1,0 +1,54 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "realtime-telemetry-gauge-cluster",
+  "type": "registry:component",
+  "title": "Realtime Telemetry Gauge Cluster",
+  "description": "SVG circular telemetry cluster for CPU/memory loads, edge latency percentiles, and SLA target indicators.",
+  "category": "ui:editorial",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "cloudscape",
+    "primer",
+    "telemetry",
+    "gauges",
+    "dashboard",
+    "metrics"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 3,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://cloudscape.design",
+    "license_type": "Apache-2.0",
+    "author": "Amazon Web Services & GitHub Primer",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/editorial/realtime-telemetry-gauge-cluster.tsx",
+      "content": "/**\n * @origin Cloudscape Design & GitHub Primer (https://cloudscape.design, https://primer.style)\n * @license Apache-2.0\n * @author Amazon Web Services & GitHub Primer Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Activity, Cpu, Server, Wifi, ShieldCheck } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface TelemetryMetric {\n  id: string;\n  name: string;\n  value: number; // 0-100 percentage\n  unit: string;\n  status: \"normal\" | \"warning\" | \"critical\";\n  subtitle: string;\n}\n\nexport interface RealtimeTelemetryGaugeClusterProps {\n  clusterName?: string;\n  metrics?: TelemetryMetric[];\n  className?: string;\n}\n\nconst DEFAULT_METRICS: TelemetryMetric[] = [\n  { id: \"cpu\", name: \"Host CPU Load\", value: 34, unit: \"%\", status: \"normal\", subtitle: \"8 Cores Active\" },\n  { id: \"memory\", name: \"Memory Allocated\", value: 68, unit: \"%\", status: \"normal\", subtitle: \"10.8 / 16 GB\" },\n  { id: \"latency\", name: \"Edge p99 Latency\", value: 18, unit: \"ms\", status: \"normal\", subtitle: \"Cloudflare CDN\" },\n  { id: \"mcp-eval\", name: \"MCP Zero-Draft\", value: 99, unit: \"%\", status: \"normal\", subtitle: \"0 High Flags\" },\n];\n\nexport function RealtimeTelemetryGaugeCluster({\n  clusterName = \"Edge MCP Telemetry Cluster\",\n  metrics = DEFAULT_METRICS,\n  className,\n}: RealtimeTelemetryGaugeClusterProps) {\n  return (\n    <div className={cn(\"w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs select-none\", className)}>\n      <div className=\"flex items-center justify-between border-b border-border/60 pb-3\">\n        <div className=\"flex items-center gap-2\">\n          <Activity className=\"h-4 w-4 text-primary\" role=\"img\" aria-hidden=\"true\" />\n          <h3 className=\"text-sm font-semibold tracking-tight text-foreground\">\n            {clusterName}\n          </h3>\n        </div>\n        <span className=\"flex items-center gap-1 text-2xs font-mono text-emerald-600 dark:text-emerald-400\">\n          <ShieldCheck className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" /> Live Monitored\n        </span>\n      </div>\n\n      <div className=\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4\">\n        {metrics.map((metric) => {\n          const radius = 32;\n          const circumference = 2 * Math.PI * radius;\n          const strokeDashoffset = circumference - (metric.value / 100) * circumference;\n\n          return (\n            <div\n              key={metric.id}\n              className=\"flex items-center gap-3.5 rounded-lg border border-border/70 bg-background/80 p-3.5\"\n            >\n              {/* Circular SVG Gauge */}\n              <div className=\"relative h-16 w-16 shrink-0 flex items-center justify-center\">\n                <svg className=\"h-16 w-16 -rotate-90\" viewBox=\"0 0 80 80\" role=\"img\" aria-label={`${metric.name}: ${metric.value}${metric.unit}`}>\n                  <circle\n                    cx=\"40\"\n                    cy=\"40\"\n                    r={radius}\n                    className=\"stroke-muted\"\n                    strokeWidth=\"6\"\n                    fill=\"transparent\"\n                  />\n                  <circle\n                    cx=\"40\"\n                    cy=\"40\"\n                    r={radius}\n                    className={cn(\n                      \"transition-all duration-500\",\n                      metric.status === \"normal\"\n                        ? \"stroke-primary\"\n                        : metric.status === \"warning\"\n                        ? \"stroke-amber-500\"\n                        : \"stroke-destructive\"\n                    )}\n                    strokeWidth=\"6\"\n                    strokeDasharray={circumference}\n                    strokeDashoffset={strokeDashoffset}\n                    strokeLinecap=\"round\"\n                    fill=\"transparent\"\n                  />\n                </svg>\n                <div className=\"absolute inset-0 flex items-center justify-center font-mono text-xs font-bold text-foreground\">\n                  {metric.value}\n                  <span className=\"text-3xs font-normal text-muted-foreground\">{metric.unit}</span>\n                </div>\n              </div>\n\n              <div className=\"space-y-0.5 min-w-0\">\n                <div className=\"text-xs font-semibold text-foreground truncate\">\n                  {metric.name}\n                </div>\n                <div className=\"text-3xs font-mono text-muted-foreground truncate\">\n                  {metric.subtitle}\n                </div>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/realtime-telemetry-gauge-cluster.tsx"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "ai-agent-evaluation-scoreboard",
+  "type": "registry:component",
+  "title": "AI Agent Evaluation Scoreboard",
+  "description": "Multi-model benchmark leaderboard showing first-run compilation rates, slop health scores, latency, and cost per prompt.",
+  "category": "ui:ai-native",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "ai-native",
+    "agent-ui",
+    "benchmark",
+    "evaluation",
+    "scoreboard",
+    "analytics"
+  ],
+  "dials": {
+    "design_variance": 6,
+    "motion_intensity": 3,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "table",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://design-wiki.dev",
+    "license_type": "MIT",
+    "author": "Machine-First Design Agent Wiki Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/ai-native/ai-agent-evaluation-scoreboard.tsx",
+      "content": "/**\n * @origin Machine-First Design Agent Wiki & AI Evaluation Harness\n * @license MIT\n * @author Machine-First Design Agent Wiki Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { CheckCircle2, XCircle, Clock, Zap, Cpu, Award } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface ModelScoreboardEntry {\n  modelName: string;\n  provider: string;\n  firstRunCompileRate: number; // percentage e.g. 96.5\n  slopHealthScore: number; // 0-100 e.g. 98\n  wcagComplianceRate: number; // percentage e.g. 100\n  avgLatencyMs: number;\n  costPer1kPromptsUsd: number;\n  status: \"verified\" | \"review\" | \"failed\";\n}\n\nexport interface AiAgentEvaluationScoreboardProps {\n  entries?: ModelScoreboardEntry[];\n  benchmarkTitle?: string;\n  className?: string;\n}\n\nconst DEFAULT_BENCHMARK_ENTRIES: ModelScoreboardEntry[] = [\n  {\n    modelName: \"Claude 3.7 Sonnet (Agent-Native)\",\n    provider: \"Anthropic\",\n    firstRunCompileRate: 98.4,\n    slopHealthScore: 100,\n    wcagComplianceRate: 100,\n    avgLatencyMs: 820,\n    costPer1kPromptsUsd: 3.2,\n    status: \"verified\",\n  },\n  {\n    modelName: \"Gemini 2.5 Flash\",\n    provider: \"Google\",\n    firstRunCompileRate: 96.2,\n    slopHealthScore: 98,\n    wcagComplianceRate: 100,\n    avgLatencyMs: 310,\n    costPer1kPromptsUsd: 0.45,\n    status: \"verified\",\n  },\n  {\n    modelName: \"OpenAI GPT-4.5 Preview\",\n    provider: \"OpenAI\",\n    firstRunCompileRate: 94.0,\n    slopHealthScore: 95,\n    wcagComplianceRate: 97.5,\n    avgLatencyMs: 1150,\n    costPer1kPromptsUsd: 7.5,\n    status: \"verified\",\n  },\n  {\n    modelName: \"DeepSeek R1 Distill\",\n    provider: \"DeepSeek\",\n    firstRunCompileRate: 91.8,\n    slopHealthScore: 92,\n    wcagComplianceRate: 95.0,\n    avgLatencyMs: 980,\n    costPer1kPromptsUsd: 0.8,\n    status: \"review\",\n  },\n];\n\nexport function AiAgentEvaluationScoreboard({\n  entries = DEFAULT_BENCHMARK_ENTRIES,\n  benchmarkTitle = \"Zero-Draft Fidelity Benchmark Gate\",\n  className,\n}: AiAgentEvaluationScoreboardProps) {\n  const [selectedSort, setSelectedSort] = React.useState<\"compile\" | \"slop\" | \"speed\">(\"compile\");\n\n  const sortedEntries = React.useMemo(() => {\n    const list = [...entries];\n    if (selectedSort === \"compile\") {\n      return list.sort((a, b) => b.firstRunCompileRate - a.firstRunCompileRate);\n    }\n    if (selectedSort === \"slop\") {\n      return list.sort((a, b) => b.slopHealthScore - a.slopHealthScore);\n    }\n    return list.sort((a, b) => a.avgLatencyMs - b.avgLatencyMs);\n  }, [entries, selectedSort]);\n\n  return (\n    <div className={cn(\"w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs\", className)}>\n      <div className=\"flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3\">\n        <div className=\"space-y-0.5\">\n          <div className=\"flex items-center gap-2\">\n            <Award className=\"h-4 w-4 text-primary\" role=\"img\" aria-hidden=\"true\" />\n            <h3 className=\"text-sm font-semibold tracking-tight text-foreground\">\n              {benchmarkTitle}\n            </h3>\n          </div>\n          <p className=\"text-xs text-muted-foreground\">\n            Headless sandbox performance & zero-slop metrics across leading coding models.\n          </p>\n        </div>\n\n        <div className=\"flex items-center gap-1.5 rounded-lg border border-border bg-muted/50 p-0.5 text-xs\">\n          <button\n            type=\"button\"\n            onClick={() => setSelectedSort(\"compile\")}\n            className={cn(\n              \"px-2.5 py-1 font-medium rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n              selectedSort === \"compile\" ? \"bg-primary text-primary-foreground shadow-xs\" : \"text-muted-foreground hover:text-foreground\"\n            )}\n          >\n            Compilation Rate\n          </button>\n          <button\n            type=\"button\"\n            onClick={() => setSelectedSort(\"slop\")}\n            className={cn(\n              \"px-2.5 py-1 font-medium rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n              selectedSort === \"slop\" ? \"bg-primary text-primary-foreground shadow-xs\" : \"text-muted-foreground hover:text-foreground\"\n            )}\n          >\n            Slop Score\n          </button>\n          <button\n            type=\"button\"\n            onClick={() => setSelectedSort(\"speed\")}\n            className={cn(\n              \"px-2.5 py-1 font-medium rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n              selectedSort === \"speed\" ? \"bg-primary text-primary-foreground shadow-xs\" : \"text-muted-foreground hover:text-foreground\"\n            )}\n          >\n            Latency\n          </button>\n        </div>\n      </div>\n\n      {/* Leaderboard Table */}\n      <div className=\"overflow-x-auto\">\n        <table className=\"w-full text-left text-xs border-collapse\" role=\"table\">\n          <thead>\n            <tr className=\"border-b border-border/80 text-muted-foreground font-semibold\">\n              <th className=\"py-2.5 px-3\">Model</th>\n              <th className=\"py-2.5 px-3 text-right\">Zero-Draft Compile</th>\n              <th className=\"py-2.5 px-3 text-right\">Anti-Slop Health</th>\n              <th className=\"py-2.5 px-3 text-right\">WCAG AA</th>\n              <th className=\"py-2.5 px-3 text-right\">Avg Latency</th>\n              <th className=\"py-2.5 px-3 text-right\">Cost / 1k</th>\n              <th className=\"py-2.5 px-3 text-center\">Status</th>\n            </tr>\n          </thead>\n          <tbody className=\"divide-y divide-border/40 font-mono\">\n            {sortedEntries.map((m, idx) => (\n              <tr\n                key={m.modelName}\n                className={cn(\n                  \"hover:bg-muted/30 transition-colors duration-150\",\n                  idx === 0 && \"bg-primary/5\"\n                )}\n              >\n                <td className=\"py-3 px-3 font-sans\">\n                  <div className=\"font-semibold text-foreground flex items-center gap-1.5\">\n                    {idx === 0 && <Award className=\"h-3.5 w-3.5 text-amber-500\" role=\"img\" aria-hidden=\"true\" />}\n                    {m.modelName}\n                  </div>\n                  <div className=\"text-2xs text-muted-foreground font-mono\">{m.provider}</div>\n                </td>\n                <td className=\"py-3 px-3 text-right font-semibold text-foreground\">\n                  <span className={cn(m.firstRunCompileRate >= 95 ? \"text-emerald-600 dark:text-emerald-400\" : \"text-amber-500\")}>\n                    {m.firstRunCompileRate}%\n                  </span>\n                </td>\n                <td className=\"py-3 px-3 text-right text-foreground font-medium\">\n                  {m.slopHealthScore}/100\n                </td>\n                <td className=\"py-3 px-3 text-right text-foreground font-medium\">\n                  {m.wcagComplianceRate}%\n                </td>\n                <td className=\"py-3 px-3 text-right text-muted-foreground tabular-nums\">\n                  {m.avgLatencyMs}ms\n                </td>\n                <td className=\"py-3 px-3 text-right text-muted-foreground tabular-nums\">\n                  \\${m.costPer1kPromptsUsd.toFixed(2)}\n                </td>\n                <td className=\"py-3 px-3 text-center\">\n                  <span\n                    className={cn(\n                      \"inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-3xs font-semibold uppercase tracking-wider\",\n                      m.status === \"verified\"\n                        ? \"bg-emerald-500/10 text-emerald-600 dark:text-emerald-400\"\n                        : \"bg-amber-500/10 text-amber-500\"\n                    )}\n                  >\n                    {m.status === \"verified\" ? (\n                      <>\n                        <CheckCircle2 className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> Verified\n                      </>\n                    ) : (\n                      <>\n                        <Clock className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> In Review\n                      </>\n                    )}\n                  </span>\n                </td>\n              </tr>\n            ))}\n          </tbody>\n        </table>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/ai-agent-evaluation-scoreboard.tsx"
+    }
+  ]
+}

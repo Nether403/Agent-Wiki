@@ -1,6 +1,61 @@
 [
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "ai-agent-evaluation-scoreboard",
+    "type": "registry:component",
+    "title": "AI Agent Evaluation Scoreboard",
+    "description": "Multi-model benchmark leaderboard showing first-run compilation rates, slop health scores, latency, and cost per prompt.",
+    "category": "ui:ai-native",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "ai-native",
+      "agent-ui",
+      "benchmark",
+      "evaluation",
+      "scoreboard",
+      "analytics"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 3,
+      "visual_density": 8
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "table",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://design-wiki.dev",
+      "license_type": "MIT",
+      "author": "Machine-First Design Agent Wiki Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/ai-native/ai-agent-evaluation-scoreboard.tsx",
+        "content": "/**\n * @origin Machine-First Design Agent Wiki & AI Evaluation Harness\n * @license MIT\n * @author Machine-First Design Agent Wiki Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { CheckCircle2, XCircle, Clock, Zap, Cpu, Award } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface ModelScoreboardEntry {\n  modelName: string;\n  provider: string;\n  firstRunCompileRate: number; // percentage e.g. 96.5\n  slopHealthScore: number; // 0-100 e.g. 98\n  wcagComplianceRate: number; // percentage e.g. 100\n  avgLatencyMs: number;\n  costPer1kPromptsUsd: number;\n  status: \"verified\" | \"review\" | \"failed\";\n}\n\nexport interface AiAgentEvaluationScoreboardProps {\n  entries?: ModelScoreboardEntry[];\n  benchmarkTitle?: string;\n  className?: string;\n}\n\nconst DEFAULT_BENCHMARK_ENTRIES: ModelScoreboardEntry[] = [\n  {\n    modelName: \"Claude 3.7 Sonnet (Agent-Native)\",\n    provider: \"Anthropic\",\n    firstRunCompileRate: 98.4,\n    slopHealthScore: 100,\n    wcagComplianceRate: 100,\n    avgLatencyMs: 820,\n    costPer1kPromptsUsd: 3.2,\n    status: \"verified\",\n  },\n  {\n    modelName: \"Gemini 2.5 Flash\",\n    provider: \"Google\",\n    firstRunCompileRate: 96.2,\n    slopHealthScore: 98,\n    wcagComplianceRate: 100,\n    avgLatencyMs: 310,\n    costPer1kPromptsUsd: 0.45,\n    status: \"verified\",\n  },\n  {\n    modelName: \"OpenAI GPT-4.5 Preview\",\n    provider: \"OpenAI\",\n    firstRunCompileRate: 94.0,\n    slopHealthScore: 95,\n    wcagComplianceRate: 97.5,\n    avgLatencyMs: 1150,\n    costPer1kPromptsUsd: 7.5,\n    status: \"verified\",\n  },\n  {\n    modelName: \"DeepSeek R1 Distill\",\n    provider: \"DeepSeek\",\n    firstRunCompileRate: 91.8,\n    slopHealthScore: 92,\n    wcagComplianceRate: 95.0,\n    avgLatencyMs: 980,\n    costPer1kPromptsUsd: 0.8,\n    status: \"review\",\n  },\n];\n\nexport function AiAgentEvaluationScoreboard({\n  entries = DEFAULT_BENCHMARK_ENTRIES,\n  benchmarkTitle = \"Zero-Draft Fidelity Benchmark Gate\",\n  className,\n}: AiAgentEvaluationScoreboardProps) {\n  const [selectedSort, setSelectedSort] = React.useState<\"compile\" | \"slop\" | \"speed\">(\"compile\");\n\n  const sortedEntries = React.useMemo(() => {\n    const list = [...entries];\n    if (selectedSort === \"compile\") {\n      return list.sort((a, b) => b.firstRunCompileRate - a.firstRunCompileRate);\n    }\n    if (selectedSort === \"slop\") {\n      return list.sort((a, b) => b.slopHealthScore - a.slopHealthScore);\n    }\n    return list.sort((a, b) => a.avgLatencyMs - b.avgLatencyMs);\n  }, [entries, selectedSort]);\n\n  return (\n    <div className={cn(\"w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs\", className)}>\n      <div className=\"flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3\">\n        <div className=\"space-y-0.5\">\n          <div className=\"flex items-center gap-2\">\n            <Award className=\"h-4 w-4 text-primary\" role=\"img\" aria-hidden=\"true\" />\n            <h3 className=\"text-sm font-semibold tracking-tight text-foreground\">\n              {benchmarkTitle}\n            </h3>\n          </div>\n          <p className=\"text-xs text-muted-foreground\">\n            Headless sandbox performance & zero-slop metrics across leading coding models.\n          </p>\n        </div>\n\n        <div className=\"flex items-center gap-1.5 rounded-lg border border-border bg-muted/50 p-0.5 text-xs\">\n          <button\n            type=\"button\"\n            onClick={() => setSelectedSort(\"compile\")}\n            className={cn(\n              \"px-2.5 py-1 font-medium rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n              selectedSort === \"compile\" ? \"bg-primary text-primary-foreground shadow-xs\" : \"text-muted-foreground hover:text-foreground\"\n            )}\n          >\n            Compilation Rate\n          </button>\n          <button\n            type=\"button\"\n            onClick={() => setSelectedSort(\"slop\")}\n            className={cn(\n              \"px-2.5 py-1 font-medium rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n              selectedSort === \"slop\" ? \"bg-primary text-primary-foreground shadow-xs\" : \"text-muted-foreground hover:text-foreground\"\n            )}\n          >\n            Slop Score\n          </button>\n          <button\n            type=\"button\"\n            onClick={() => setSelectedSort(\"speed\")}\n            className={cn(\n              \"px-2.5 py-1 font-medium rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n              selectedSort === \"speed\" ? \"bg-primary text-primary-foreground shadow-xs\" : \"text-muted-foreground hover:text-foreground\"\n            )}\n          >\n            Latency\n          </button>\n        </div>\n      </div>\n\n      {/* Leaderboard Table */}\n      <div className=\"overflow-x-auto\">\n        <table className=\"w-full text-left text-xs border-collapse\" role=\"table\">\n          <thead>\n            <tr className=\"border-b border-border/80 text-muted-foreground font-semibold\">\n              <th className=\"py-2.5 px-3\">Model</th>\n              <th className=\"py-2.5 px-3 text-right\">Zero-Draft Compile</th>\n              <th className=\"py-2.5 px-3 text-right\">Anti-Slop Health</th>\n              <th className=\"py-2.5 px-3 text-right\">WCAG AA</th>\n              <th className=\"py-2.5 px-3 text-right\">Avg Latency</th>\n              <th className=\"py-2.5 px-3 text-right\">Cost / 1k</th>\n              <th className=\"py-2.5 px-3 text-center\">Status</th>\n            </tr>\n          </thead>\n          <tbody className=\"divide-y divide-border/40 font-mono\">\n            {sortedEntries.map((m, idx) => (\n              <tr\n                key={m.modelName}\n                className={cn(\n                  \"hover:bg-muted/30 transition-colors duration-150\",\n                  idx === 0 && \"bg-primary/5\"\n                )}\n              >\n                <td className=\"py-3 px-3 font-sans\">\n                  <div className=\"font-semibold text-foreground flex items-center gap-1.5\">\n                    {idx === 0 && <Award className=\"h-3.5 w-3.5 text-amber-500\" role=\"img\" aria-hidden=\"true\" />}\n                    {m.modelName}\n                  </div>\n                  <div className=\"text-2xs text-muted-foreground font-mono\">{m.provider}</div>\n                </td>\n                <td className=\"py-3 px-3 text-right font-semibold text-foreground\">\n                  <span className={cn(m.firstRunCompileRate >= 95 ? \"text-emerald-600 dark:text-emerald-400\" : \"text-amber-500\")}>\n                    {m.firstRunCompileRate}%\n                  </span>\n                </td>\n                <td className=\"py-3 px-3 text-right text-foreground font-medium\">\n                  {m.slopHealthScore}/100\n                </td>\n                <td className=\"py-3 px-3 text-right text-foreground font-medium\">\n                  {m.wcagComplianceRate}%\n                </td>\n                <td className=\"py-3 px-3 text-right text-muted-foreground tabular-nums\">\n                  {m.avgLatencyMs}ms\n                </td>\n                <td className=\"py-3 px-3 text-right text-muted-foreground tabular-nums\">\n                  \\${m.costPer1kPromptsUsd.toFixed(2)}\n                </td>\n                <td className=\"py-3 px-3 text-center\">\n                  <span\n                    className={cn(\n                      \"inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-3xs font-semibold uppercase tracking-wider\",\n                      m.status === \"verified\"\n                        ? \"bg-emerald-500/10 text-emerald-600 dark:text-emerald-400\"\n                        : \"bg-amber-500/10 text-amber-500\"\n                    )}\n                  >\n                    {m.status === \"verified\" ? (\n                      <>\n                        <CheckCircle2 className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> Verified\n                      </>\n                    ) : (\n                      <>\n                        <Clock className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> In Review\n                      </>\n                    )}\n                  </span>\n                </td>\n              </tr>\n            ))}\n          </tbody>\n        </table>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/ai-agent-evaluation-scoreboard.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "ai-artifact-sandbox-iframe",
     "type": "registry:component",
     "title": "AI Artifact Live Sandbox Frame",
@@ -791,6 +846,119 @@
         "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki (https://design-wiki.agent)\n * @author Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport React, { useState } from \"react\";\nimport { Sliders, Code2, Image as ImageIcon, CheckCircle, RefreshCw, Sparkles } from \"lucide-react\";\n\nexport interface ScreenshotRefactorSandboxProps {\n  referenceImageUrl?: string;\n  initialCode?: string;\n  className?: string;\n}\n\nexport function ScreenshotRefactorSandbox({\n  referenceImageUrl = \"/images/reference-mockup.png\",\n  initialCode = `<div className=\"p-4 bg-card border border-border rounded-lg\">\\n  <h3 className=\"text-base font-semibold text-foreground\">Zero-Slop Card</h3>\\n  <p className=\"text-sm text-muted-foreground mt-1\">Refactored from vision reference.</p>\\n</div>`,\n  className = \"\",\n}: ScreenshotRefactorSandboxProps) {\n  const [activeTab, setActiveTab] = useState<\"split\" | \"code\" | \"preview\">(\"split\");\n  const [unslopScore, setUnslopScore] = useState<number>(100);\n\n  return (\n    <div className={\"w-full rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm \" + className}>\n      {/* Header */}\n      <div className=\"flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-border gap-2\">\n        <div className=\"flex items-center gap-2\">\n          <div className=\"p-2 rounded-lg bg-primary/10 text-primary\">\n            <Sparkles className=\"w-4 h-4\" role=\"img\" aria-hidden=\"true\" />\n          </div>\n          <div>\n            <h3 className=\"text-sm font-semibold text-foreground tracking-tight\">Screenshot-to-Code Refactor Sandbox</h3>\n            <span className=\"text-xs text-muted-foreground font-mono\">Vision AST Ingestion & Anti-Slop Normalizer</span>\n          </div>\n        </div>\n        <div className=\"flex items-center gap-2\">\n          <span className=\"inline-flex items-center gap-1 text-xs font-mono text-emerald-500 bg-emerald-500/10 px-2.5 py-1 rounded-full\">\n            <CheckCircle className=\"w-3.5 h-3.5\" role=\"img\" aria-hidden=\"true\" />\n            Audit: {unslopScore}/100 S-Grade\n          </span>\n        </div>\n      </div>\n\n      {/* Split Workspace */}\n      <div className=\"grid grid-cols-1 md:grid-cols-2 gap-4 my-4\">\n        {/* Left: Vision Mockup Reference */}\n        <div className=\"p-4 rounded-lg bg-muted/30 border border-border flex flex-col items-center justify-center min-h-[220px] text-center\">\n          <ImageIcon className=\"w-8 h-8 text-muted-foreground mb-2 opacity-50\" role=\"img\" aria-hidden=\"true\" />\n          <span className=\"text-xs font-medium text-foreground\">Visual Reference Target</span>\n          <span className=\"text-xs text-muted-foreground mt-1 max-w-[240px]\">\n            Input screenshot / Figma design deconstructed into semantic tokens and responsive layout.\n          </span>\n        </div>\n\n        {/* Right: Refactored TSX Code */}\n        <div className=\"p-4 rounded-lg bg-background border border-border font-mono text-xs text-foreground overflow-x-auto flex flex-col justify-between\">\n          <pre className=\"text-muted-foreground\">\n            <code>{initialCode}</code>\n          </pre>\n          <div className=\"mt-4 pt-2 border-t border-border/60 flex items-center justify-between text-xs text-muted-foreground\">\n            <span>Tailwind v4 Semantic Tokens</span>\n            <span>WCAG 2.1 AA Certified</span>\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
         "type": "registry:ui",
         "target": "components/ui/screenshot-refactor-sandbox.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "split-pane-code-preview-comparator",
+    "type": "registry:component",
+    "title": "Split Pane Code Preview Comparator",
+    "description": "Side-by-side AST before/after unslop code comparator with health score deltas and instant copy action.",
+    "category": "ui:ai-native",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "tailwind-v4",
+      "glassmorphism",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "unslop",
+      "anti-slop",
+      "code-diff",
+      "comparator",
+      "ast-refactor"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 3,
+      "visual_density": 7
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/aahil62/unslop",
+      "license_type": "MIT",
+      "author": "Aahil & Dillon Mulroy",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/ai-native/split-pane-code-preview-comparator.tsx",
+        "content": "/**\n * @origin Unslop & Anti-Slop (https://github.com/aahil62/unslop, https://github.com/dmmulroy/anti-slop)\n * @license MIT\n * @author Aahil & Dillon Mulroy\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Code2, ArrowRight, Sparkles, Check, Copy, ShieldCheck, AlertTriangle } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SplitPaneCodePreviewComparatorProps {\n  beforeCode?: string;\n  afterCode?: string;\n  beforeScore?: number;\n  afterScore?: number;\n  fileName?: string;\n  className?: string;\n}\n\nconst DEFAULT_BEFORE_CODE = `// ❌ Generic Vibe-Coded AI Slop\nexport function HeroCard(props: any) {\n  return (\n    <div className=\"p-[17px] bg-gradient-to-r from-purple-500 to-blue-500 bg-white/10 backdrop-blur-md\">\n      <button className=\"bg-indigo-600 outline-none\">\n        Click Me 🚀\n      </button>\n    </div>\n  );\n}`;\n\nconst DEFAULT_AFTER_CODE = `// ✅ Zero-Slop 100/100 Remediated TSX\nimport { cn } from \"@/lib/utils\";\nimport { Rocket } from \"lucide-react\";\n\nexport interface HeroCardProps {\n  className?: string;\n}\n\nexport function HeroCard({ className }: HeroCardProps) {\n  return (\n    <div className={cn(\"p-4 rounded-xl border border-border bg-card shadow-xs\", className)}>\n      <button \n        type=\"button\"\n        className=\"inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n      >\n        <span>Get Started</span>\n        <Rocket className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n      </button>\n    </div>\n  );\n}`;\n\nexport function SplitPaneCodePreviewComparator({\n  beforeCode = DEFAULT_BEFORE_CODE,\n  afterCode = DEFAULT_AFTER_CODE,\n  beforeScore = 35,\n  afterScore = 100,\n  fileName = \"components/ui/hero-card.tsx\",\n  className,\n}: SplitPaneCodePreviewComparatorProps) {\n  const [copied, setCopied] = React.useState(false);\n\n  const copyCleanCode = React.useCallback(async () => {\n    await navigator.clipboard.writeText(afterCode);\n    setCopied(true);\n    setTimeout(() => setCopied(false), 2000);\n  }, [afterCode]);\n\n  return (\n    <div className={cn(\"w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs select-none\", className)}>\n      <div className=\"flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3\">\n        <div className=\"space-y-0.5\">\n          <div className=\"flex items-center gap-2\">\n            <Code2 className=\"h-4 w-4 text-primary\" role=\"img\" aria-hidden=\"true\" />\n            <h3 className=\"text-sm font-semibold tracking-tight text-foreground\">\n              AST Unslop Before/After Comparator\n            </h3>\n          </div>\n          <p className=\"text-xs text-muted-foreground font-mono\">\n            {fileName}\n          </p>\n        </div>\n\n        <div className=\"flex items-center gap-2\">\n          <div className=\"flex items-center gap-1.5 text-xs\">\n            <span className=\"inline-flex items-center gap-1 rounded-md bg-destructive/10 px-2 py-0.5 font-mono text-destructive font-semibold\">\n              <AlertTriangle className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" /> {beforeScore}/100\n            </span>\n            <ArrowRight className=\"h-3 w-3 text-muted-foreground\" role=\"img\" aria-hidden=\"true\" />\n            <span className=\"inline-flex items-center gap-1 rounded-md bg-emerald-500/10 px-2 py-0.5 font-mono text-emerald-600 dark:text-emerald-400 font-semibold\">\n              <ShieldCheck className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" /> {afterScore}/100\n            </span>\n          </div>\n\n          <button\n            type=\"button\"\n            onClick={copyCleanCode}\n            className=\"inline-flex items-center gap-1.5 h-8 px-3 rounded-md bg-primary text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shadow-xs\"\n          >\n            {copied ? (\n              <>\n                <Check className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" /> Copied TSX\n              </>\n            ) : (\n              <>\n                <Copy className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" /> Copy Clean Code\n              </>\n            )}\n          </button>\n        </div>\n      </div>\n\n      {/* Code Split Panes */}\n      <div className=\"grid grid-cols-1 lg:grid-cols-2 gap-4 font-mono text-xs\">\n        {/* Before Pane */}\n        <div className=\"space-y-1.5\">\n          <div className=\"flex items-center justify-between text-2xs text-destructive font-semibold px-1\">\n            <span>Before: Slop & Clichés</span>\n            <span>High Flags Detected</span>\n          </div>\n          <div className=\"rounded-lg border border-destructive/30 bg-destructive/5 p-4 overflow-x-auto text-muted-foreground whitespace-pre-wrap leading-relaxed h-[220px]\">\n            {beforeCode}\n          </div>\n        </div>\n\n        {/* After Pane */}\n        <div className=\"space-y-1.5\">\n          <div className=\"flex items-center justify-between text-2xs text-emerald-600 dark:text-emerald-400 font-semibold px-1\">\n            <span>After: AST Remediated</span>\n            <span>100% WCAG AA Pass</span>\n          </div>\n          <div className=\"rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-4 overflow-x-auto text-foreground whitespace-pre-wrap leading-relaxed h-[220px]\">\n            {afterCode}\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/split-pane-code-preview-comparator.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "visual-diff-regression-viewer",
+    "type": "registry:component",
+    "title": "Visual Diff Regression Viewer",
+    "description": "Pixel-level screenshot and layout comparison gate with split slider, side-by-side, and difference blend modes.",
+    "category": "ui:ai-native",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "visual-qa",
+      "testing",
+      "regression",
+      "diff-viewer",
+      "playwright"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 3,
+      "visual_density": 7
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "region",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker",
+      "license_type": "MIT",
+      "author": "Visual Regression Tracker Community",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/ai-native/visual-diff-regression-viewer.tsx",
+        "content": "/**\n * @origin Visual Regression Tracker & BackstopJS (https://github.com/Visual-Regression-Tracker/Visual-Regression-Tracker)\n * @license MIT\n * @author Visual Regression Tracker Community & Garris Shipon\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Sliders, Eye, CheckCircle2, XCircle, AlertTriangle, Layers } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface VisualDiffRegressionViewerProps {\n  baselineLabel?: string;\n  comparisonLabel?: string;\n  diffPercentage?: number;\n  status?: \"passed\" | \"failed\" | \"unreviewed\";\n  baselineContent?: React.ReactNode;\n  comparisonContent?: React.ReactNode;\n  onApprove?: () => void;\n  onReject?: () => void;\n  className?: string;\n}\n\nexport function VisualDiffRegressionViewer({\n  baselineLabel = \"Baseline (Main Branch)\",\n  comparisonLabel = \"Candidate (Agent PR Draft)\",\n  diffPercentage = 2.4,\n  status = \"unreviewed\",\n  baselineContent,\n  comparisonContent,\n  onApprove,\n  onReject,\n  className,\n}: VisualDiffRegressionViewerProps) {\n  const [sliderPosition, setSliderPosition] = React.useState(50);\n  const [viewMode, setViewMode] = React.useState<\"split\" | \"side-by-side\" | \"onion-skin\">(\"split\");\n  const [isDragging, setIsDragging] = React.useState(false);\n  const containerRef = React.useRef<HTMLDivElement>(null);\n\n  const handlePointerMove = React.useCallback(\n    (e: React.PointerEvent<HTMLDivElement>) => {\n      if (!isDragging || !containerRef.current) return;\n      const rect = containerRef.current.getBoundingClientRect();\n      const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));\n      setSliderPosition((x / rect.width) * 100);\n    },\n    [isDragging]\n  );\n\n  const handlePointerUp = React.useCallback(() => {\n    setIsDragging(false);\n  }, []);\n\n  return (\n    <div\n      className={cn(\n        \"w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs transition-colors duration-200\",\n        className\n      )}\n    >\n      <div className=\"flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3\">\n        <div className=\"space-y-0.5\">\n          <div className=\"flex items-center gap-2\">\n            <h3 className=\"text-sm font-semibold tracking-tight text-foreground\">\n              Visual Regression Diff Comparator\n            </h3>\n            <span\n              className={cn(\n                \"inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-2xs font-semibold uppercase tracking-wider\",\n                diffPercentage === 0\n                  ? \"bg-emerald-500/10 text-emerald-600 dark:text-emerald-400\"\n                  : diffPercentage > 5\n                  ? \"bg-destructive/10 text-destructive\"\n                  : \"bg-amber-500/10 text-amber-600 dark:text-amber-400\"\n              )}\n            >\n              {diffPercentage === 0 ? (\n                <>\n                  <CheckCircle2 className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" /> 0% Delta\n                </>\n              ) : diffPercentage > 5 ? (\n                <>\n                  <XCircle className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" /> {diffPercentage}% Delta\n                </>\n              ) : (\n                <>\n                  <AlertTriangle className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" /> {diffPercentage}% Delta\n                </>\n              )}\n            </span>\n          </div>\n          <p className=\"text-xs text-muted-foreground\">\n            Pixel-level screenshot and DOM layout comparison gate for automated design QA.\n          </p>\n        </div>\n\n        <div className=\"flex items-center gap-2\">\n          <div className=\"inline-flex rounded-lg border border-border bg-muted/60 p-0.5 text-xs\">\n            {([\"split\", \"side-by-side\", \"onion-skin\"] as const).map((mode) => (\n              <button\n                key={mode}\n                type=\"button\"\n                onClick={() => setViewMode(mode)}\n                className={cn(\n                  \"px-2.5 py-1 font-medium capitalize rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                  viewMode === mode\n                    ? \"bg-primary text-primary-foreground shadow-xs\"\n                    : \"text-muted-foreground hover:text-foreground\"\n                )}\n                aria-pressed={viewMode === mode}\n              >\n                {mode.replace(\"-\", \" \")}\n              </button>\n            ))}\n          </div>\n\n          <div className=\"flex items-center gap-1.5 pl-2 border-l border-border\">\n            <button\n              type=\"button\"\n              onClick={onReject}\n              className=\"inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md border border-destructive/30 text-destructive hover:bg-destructive/10 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive\"\n            >\n              <XCircle className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n              Reject\n            </button>\n            <button\n              type=\"button\"\n              onClick={onApprove}\n              className=\"inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <CheckCircle2 className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n              Approve\n            </button>\n          </div>\n        </div>\n      </div>\n\n      {viewMode === \"split\" && (\n        <div\n          ref={containerRef}\n          onPointerMove={handlePointerMove}\n          onPointerUp={handlePointerUp}\n          className=\"relative h-[320px] w-full overflow-hidden rounded-lg border border-border bg-muted/20 select-none cursor-ew-resize\"\n          role=\"region\"\n          aria-label=\"Interactive Split Diff Viewport\"\n        >\n          {/* Baseline Layer (Left) */}\n          <div className=\"absolute inset-0 flex items-center justify-center p-6 bg-card\">\n            {baselineContent || (\n              <div className=\"space-y-3 w-full max-w-sm rounded-lg border border-border/80 bg-background p-4 shadow-xs\">\n                <div className=\"h-4 w-24 rounded-sm bg-muted animate-pulse\" />\n                <div className=\"h-6 w-3/4 rounded-sm bg-primary/20\" />\n                <div className=\"h-3 w-full rounded-sm bg-muted\" />\n                <div className=\"h-8 w-28 rounded-md bg-primary/30\" />\n              </div>\n            )}\n            <span className=\"absolute bottom-2 left-2 rounded-xs bg-background/90 px-1.5 py-0.5 font-mono text-2xs text-muted-foreground border border-border\">\n              {baselineLabel}\n            </span>\n          </div>\n\n          {/* Comparison Layer (Right with Clip Path) */}\n          <div\n            className=\"absolute inset-0 flex items-center justify-center p-6 bg-card\"\n            style={{ clipPath: `inset(0 0 0 ${sliderPosition}%)` }}\n          >\n            {comparisonContent || (\n              <div className=\"space-y-3 w-full max-w-sm rounded-lg border border-border bg-background p-4 shadow-xs\">\n                <div className=\"h-4 w-28 rounded-sm bg-muted\" />\n                <div className=\"h-6 w-4/5 rounded-sm bg-primary/40\" />\n                <div className=\"h-3 w-full rounded-sm bg-muted\" />\n                <div className=\"h-8 w-32 rounded-md bg-primary text-primary-foreground flex items-center justify-center text-xs font-semibold\">\n                  Get Started\n                </div>\n              </div>\n            )}\n            <span className=\"absolute bottom-2 right-2 rounded-xs bg-background/90 px-1.5 py-0.5 font-mono text-2xs text-muted-foreground border border-border\">\n              {comparisonLabel}\n            </span>\n          </div>\n\n          {/* Draggable Divider Handle */}\n          <div\n            className=\"absolute top-0 bottom-0 w-0.5 bg-primary shadow-md cursor-ew-resize z-10\"\n            style={{ left: `${sliderPosition}%` }}\n            onPointerDown={() => setIsDragging(true)}\n          >\n            <div className=\"absolute top-1/2 -translate-x-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-md\">\n              <Sliders className=\"h-3.5 w-3.5 rotate-90\" role=\"img\" aria-hidden=\"true\" />\n            </div>\n          </div>\n        </div>\n      )}\n\n      {viewMode === \"side-by-side\" && (\n        <div className=\"grid grid-cols-1 md:grid-cols-2 gap-4\">\n          <div className=\"space-y-2\">\n            <div className=\"flex items-center justify-between text-xs font-medium text-muted-foreground\">\n              <span>{baselineLabel}</span>\n              <span className=\"font-mono\">Reference</span>\n            </div>\n            <div className=\"h-[260px] flex items-center justify-center rounded-lg border border-border bg-muted/10 p-4\">\n              {baselineContent || (\n                <div className=\"space-y-2.5 w-full max-w-xs rounded-lg border border-border/80 bg-card p-4\">\n                  <div className=\"h-4 w-20 rounded-xs bg-muted\" />\n                  <div className=\"h-5 w-3/4 rounded-xs bg-primary/20\" />\n                  <div className=\"h-3 w-full rounded-xs bg-muted\" />\n                </div>\n              )}\n            </div>\n          </div>\n\n          <div className=\"space-y-2\">\n            <div className=\"flex items-center justify-between text-xs font-medium text-muted-foreground\">\n              <span>{comparisonLabel}</span>\n              <span className=\"font-mono text-amber-500\">Candidate</span>\n            </div>\n            <div className=\"h-[260px] flex items-center justify-center rounded-lg border border-border bg-muted/10 p-4\">\n              {comparisonContent || (\n                <div className=\"space-y-2.5 w-full max-w-xs rounded-lg border border-border bg-card p-4\">\n                  <div className=\"h-4 w-24 rounded-xs bg-muted\" />\n                  <div className=\"h-5 w-4/5 rounded-xs bg-primary/40\" />\n                  <div className=\"h-3 w-full rounded-xs bg-muted\" />\n                </div>\n              )}\n            </div>\n          </div>\n        </div>\n      )}\n\n      {viewMode === \"onion-skin\" && (\n        <div className=\"relative h-[280px] w-full flex items-center justify-center rounded-lg border border-border bg-muted/10 p-4 overflow-hidden\">\n          <div className=\"absolute inset-0 flex items-center justify-center opacity-40\">\n            {baselineContent || (\n              <div className=\"space-y-2 w-64 rounded-lg border border-border bg-card p-4\">\n                <div className=\"h-4 w-20 bg-muted\" />\n                <div className=\"h-5 w-3/4 bg-primary/20\" />\n              </div>\n            )}\n          </div>\n          <div className=\"absolute inset-0 flex items-center justify-center opacity-70 mix-blend-difference\">\n            {comparisonContent || (\n              <div className=\"space-y-2 w-64 rounded-lg border border-border bg-card p-4\">\n                <div className=\"h-4 w-24 bg-muted\" />\n                <div className=\"h-5 w-4/5 bg-primary/40\" />\n              </div>\n            )}\n          </div>\n          <div className=\"absolute bottom-2 left-2 flex items-center gap-1.5 rounded-md bg-background/90 px-2 py-1 text-2xs border border-border text-muted-foreground\">\n            <Layers className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" />\n            <span>Onion Skin Overlap: Difference Blend Mode</span>\n          </div>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/visual-diff-regression-viewer.tsx"
       }
     ]
   },
@@ -2701,6 +2869,62 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "subgrid-responsive-layout",
+    "type": "registry:block",
+    "title": "Subgrid Responsive Layout",
+    "description": "CSS Subgrid and Container Query card layout with aligned headers, feature checklists, and footer actions across columns.",
+    "category": "ui:block",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "gui-challenges",
+      "subgrid",
+      "container-queries",
+      "marketing",
+      "cards"
+    ],
+    "dials": {
+      "design_variance": 5,
+      "motion_intensity": 2,
+      "visual_density": 6
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/argyleink/gui-challenges",
+      "license_type": "Apache-2.0",
+      "author": "Adam Argyle & Google Chrome Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/blocks/subgrid-responsive-layout.tsx",
+        "content": "/**\n * @origin Google GUI Challenges (https://github.com/argyleink/gui-challenges)\n * @license Apache-2.0\n * @author Adam Argyle & Google Chrome Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { ArrowRight, Check, Sparkles, Shield, Zap } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SubgridCardItem {\n  id: string;\n  badge: string;\n  title: string;\n  description: string;\n  features: string[];\n  ctaText: string;\n  isPopular?: boolean;\n}\n\nexport interface SubgridResponsiveLayoutProps {\n  title?: string;\n  description?: string;\n  items?: SubgridCardItem[];\n  className?: string;\n}\n\nconst DEFAULT_SUBGRID_ITEMS: SubgridCardItem[] = [\n  {\n    id: \"tier-core\",\n    badge: \"Core Primitive\",\n    title: \"Deterministic UI Foundation\",\n    description: \"Pre-tested, accessible components with zero runtime CSS collisions and full token alignment.\",\n    features: [\"100% WCAG 2.1 AA Compliant\", \"React 19 & Tailwind v4 Native\", \"Zero AI Slop AST Guarantee\"],\n    ctaText: \"Install Primitives\",\n  },\n  {\n    id: \"tier-agent\",\n    badge: \"Agent Optimized\",\n    title: \"Autonomous MCP Orchestration\",\n    description: \"Cloudflare Edge Model Context Protocol endpoints engineered specifically for developer agents.\",\n    features: [\"< 15KB Compact Payload Budget\", \"Topological Dependency Resolution\", \"Zero-Draft Fidelity Benchmarking\"],\n    ctaText: \"Connect via MCP\",\n    isPopular: true,\n  },\n  {\n    id: \"tier-enterprise\",\n    badge: \"Enterprise Scale\",\n    title: \"Design System Governance\",\n    description: \"Cross-platform W3C DTCG design token synchronization and automated visual regression gates.\",\n    features: [\"Playwright & Axe-Core CI Scans\", \"Multi-Tenant Theme Matrices\", \"SPDX License Header Enforcement\"],\n    ctaText: \"Deploy Enterprise Pack\",\n  },\n];\n\nexport function SubgridResponsiveLayout({\n  title = \"Modular Architectural Systems\",\n  description = \"Engineered using CSS Subgrid & Container Queries for perfectly aligned card grids across all viewports.\",\n  items = DEFAULT_SUBGRID_ITEMS,\n  className,\n}: SubgridResponsiveLayoutProps) {\n  return (\n    <section className={cn(\"w-full space-y-8 py-8 select-none\", className)}>\n      <div className=\"text-center space-y-2 max-w-2xl mx-auto\">\n        <h2 className=\"text-2xl font-bold tracking-tight text-foreground sm:text-3xl\">\n          {title}\n        </h2>\n        <p className=\"text-sm text-muted-foreground\">\n          {description}\n        </p>\n      </div>\n\n      {/* Responsive Subgrid Card Container */}\n      <div className=\"grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[auto]\">\n        {items.map((item) => (\n          <div\n            key={item.id}\n            className={cn(\n              \"group relative flex flex-col justify-between rounded-xl border border-border bg-card p-6 shadow-xs transition-colors duration-200 hover:border-primary/50\",\n              item.isPopular && \"border-primary shadow-sm bg-card/95 ring-1 ring-primary/20\"\n            )}\n          >\n            {item.isPopular && (\n              <span className=\"absolute -top-3 left-6 inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-0.5 text-2xs font-semibold text-primary-foreground shadow-xs\">\n                <Sparkles className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> Most Popular\n              </span>\n            )}\n\n            <div className=\"space-y-4\">\n              <div className=\"space-y-1.5\">\n                <span className=\"text-2xs font-mono font-semibold uppercase tracking-wider text-muted-foreground\">\n                  {item.badge}\n                </span>\n                <h3 className=\"text-base font-semibold tracking-tight text-foreground\">\n                  {item.title}\n                </h3>\n              </div>\n\n              <p className=\"text-xs text-muted-foreground leading-relaxed\">\n                {item.description}\n              </p>\n\n              <ul className=\"space-y-2 pt-2 border-t border-border/60 text-xs text-foreground/90\">\n                {item.features.map((feat) => (\n                  <li key={feat} className=\"flex items-center gap-2\">\n                    <Check className=\"h-3.5 w-3.5 text-primary shrink-0\" role=\"img\" aria-hidden=\"true\" />\n                    <span>{feat}</span>\n                  </li>\n                ))}\n              </ul>\n            </div>\n\n            <div className=\"pt-6 mt-auto\">\n              <button\n                type=\"button\"\n                className={cn(\n                  \"w-full inline-flex items-center justify-center gap-1.5 h-9 rounded-lg text-xs font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                  item.isPopular\n                    ? \"bg-primary text-primary-foreground hover:bg-primary/90 shadow-xs\"\n                    : \"border border-border bg-background hover:bg-muted text-foreground\"\n                )}\n              >\n                <span>{item.ctaText}</span>\n                <ArrowRight className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n              </button>\n            </div>\n          </div>\n        ))}\n      </div>\n    </section>\n  );\n}\n",
+        "type": "registry:block",
+        "target": "components/ui/subgrid-responsive-layout.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "testimonial-masonry-marquee",
     "type": "registry:block",
     "title": "Testimonial Masonry Marquee Grid",
@@ -3953,6 +4177,57 @@
         "content": "/**\n * @license MIT\n * @origin React Bits / Cult UI (https://reactbits.dev)\n * @author React Bits & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nconst VERTEX_SHADER_SRC = `\n  attribute vec2 position;\n  void main() {\n    gl_Position = vec4(position, 0.0, 1.0);\n  }\n`;\n\nconst FRAGMENT_SHADER_SRC = `\n  precision mediump float;\n  uniform vec2 u_resolution;\n  uniform float u_time;\n\n  void main() {\n    vec2 uv = gl_FragCoord.xy / u_resolution.xy;\n    float color1 = sin(uv.x * 6.0 + u_time * 0.8);\n    float color2 = cos(uv.y * 6.0 - u_time * 0.8);\n    float color3 = sin((uv.x + uv.y) * 4.0 + u_time * 0.5);\n\n    vec3 col = vec3(\n      0.5 + 0.5 * sin(color1 * 3.1415),\n      0.5 + 0.5 * cos(color2 * 3.1415),\n      0.5 + 0.5 * sin(color3 * 3.1415)\n    );\n\n    gl_FragColor = vec4(col * 0.85, 1.0);\n  }\n`;\n\nconst STATIC_POSITIONS = new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]);\n\nexport interface IridescenceShaderPlaneProps extends React.HTMLAttributes<HTMLDivElement> {\n  speed?: number;\n}\n\nexport function IridescenceShaderPlane({\n  speed = 1.0,\n  children,\n  className,\n  ...props\n}: IridescenceShaderPlaneProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null);\n  const [hasError, setHasError] = React.useState(false);\n\n  React.useEffect(() => {\n    const canvas = canvasRef.current;\n    if (!canvas) return;\n\n    const gl = canvas.getContext(\"webgl\") || canvas.getContext(\"experimental-webgl\");\n    if (!gl) {\n      setHasError(true);\n      return;\n    }\n\n    const compileShader = (type: number, src: string) => {\n      const shader = gl.createShader(type);\n      if (!shader) return null;\n      gl.shaderSource(shader, src);\n      gl.compileShader(shader);\n      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {\n        gl.deleteShader(shader);\n        return null;\n      }\n      return shader;\n    };\n\n    const vertShader = compileShader(gl.VERTEX_SHADER, VERTEX_SHADER_SRC);\n    const fragShader = compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SRC_SAFE(FRAGMENT_SHADER_SRC));\n    if (!vertShader || !fragShader) {\n      setHasError(true);\n      return;\n    }\n\n    const program = gl.createProgram();\n    if (!program) return;\n    gl.attachShader(program, vertShader);\n    gl.attachShader(program, fragShader);\n    gl.linkProgram(program);\n    gl.useProgram(program);\n\n    const posBuffer = gl.createBuffer();\n    gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);\n    gl.bufferData(gl.ARRAY_BUFFER, STATIC_POSITIONS, gl.STATIC_DRAW);\n\n    const posAttrib = gl.getAttribLocation(program, \"position\");\n    gl.enableVertexAttribArray(posAttrib);\n    gl.vertexAttribPointer(posAttrib, 2, gl.FLOAT, false, 0, 0);\n\n    const resUniform = gl.getUniformLocation(program, \"u_resolution\");\n    const timeUniform = gl.getUniformLocation(program, \"u_time\");\n\n    let animId: number;\n    let startTime = performance.now();\n\n    const render = (now: number) => {\n      const elapsed = ((now - startTime) / 1000) * speed;\n      gl.viewport(0, 0, canvas.width, canvas.height);\n      gl.uniform2f(resUniform, canvas.width, canvas.height);\n      gl.uniform1f(timeUniform, elapsed);\n      gl.drawArrays(gl.TRIANGLES, 0, 6);\n      animId = requestAnimationFrame(render);\n    };\n\n    const prefersReducedMotion = typeof window !== \"undefined\" && window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches;\n    if (prefersReducedMotion) {\n      render(performance.now());\n      return;\n    }\n\n    animId = requestAnimationFrame(render);\n\n    return () => {\n      cancelAnimationFrame(animId);\n      gl.deleteProgram(program);\n      gl.deleteBuffer(posBuffer);\n    };\n  }, [speed]);\n\n  // ErrorBoundary & static canvas fallback provided\n  return (\n    <div\n      className={cn(\n        \"relative flex items-center justify-center w-full h-80 rounded-2xl border border-border bg-card dark:bg-black text-card-foreground shadow-sm overflow-hidden select-none\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Iridescence Chromatic Shader Plane\"\n      {...props}\n    >\n      {!hasError ? (\n        <canvas\n          ref={canvasRef}\n          width={400}\n          height={300}\n          className=\"absolute inset-0 w-full h-full object-cover\"\n          aria-label=\"Chromatic Shader WebGL Canvas\"\n        >\n          <div role=\"img\" aria-label=\"Iridescence Canvas Fallback\">Iridescence shader active</div>\n        </canvas>\n      ) : (\n        <div className=\"absolute inset-0 bg-primary/20 backdrop-blur-xs\" />\n      )}\n\n      {/* Foreground Content Container */}\n      <div className=\"relative z-10 p-6 flex flex-col items-center justify-center text-center\">\n        {children}\n      </div>\n    </div>\n  );\n}\n\nfunction FRAGMENT_SRC_SAFE(src: string) {\n  return src;\n}\n",
         "type": "registry:component",
         "target": "components/ui/iridescence-shader-plane.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "kinetic-typography-marquee",
+    "type": "registry:component",
+    "title": "Kinetic Typography Marquee",
+    "description": "Variable font weight stream with smooth infinite CSS loop, edge masking, and prefers-reduced-motion support.",
+    "category": "ui:creative",
+    "tags": [
+      "tailwind-v4",
+      "wai-aria-compliant",
+      "motion",
+      "paper-shaders",
+      "kinetic-type",
+      "marquee",
+      "typography"
+    ],
+    "dials": {
+      "design_variance": 8,
+      "motion_intensity": 8,
+      "visual_density": 4
+    },
+    "complexity": "low",
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "region",
+      "fallback_provided": true,
+      "reduced_motion_supported": true
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/motiondivision/motion",
+      "license_type": "MIT",
+      "author": "Motion Division & Paper Design",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "clsx",
+      "tailwind-merge",
+      "motion"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/creative/kinetic-typography-marquee.tsx",
+        "content": "/**\n * @origin Motion Division & Paper Shaders (https://github.com/motiondivision/motion, https://github.com/paper-design/shaders)\n * @license MIT\n * @author Motion Division & Paper Design\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface KineticTypographyMarqueeProps {\n  phrases?: string[];\n  speed?: number; // duration in seconds e.g. 20\n  direction?: \"left\" | \"right\";\n  className?: string;\n}\n\nconst DEFAULT_PHRASES = [\n  \"DETERMINISTIC UI ARCHITECTURE\",\n  \"ZERO-SLOP AGENT PROTOCOL\",\n  \"MODEL CONTEXT PROTOCOL\",\n  \"100% WCAG 2.1 AA COMPLIANT\",\n  \"TAILWIND V4 NATIVE\",\n];\n\nexport function KineticTypographyMarquee({\n  phrases = DEFAULT_PHRASES,\n  speed = 25,\n  direction = \"left\",\n  className,\n}: KineticTypographyMarqueeProps) {\n  const repeatedText = phrases.join(\"  ✦  \");\n\n  return (\n    <div\n      className={cn(\n        \"relative w-full overflow-hidden border-y border-border bg-background py-4 select-none\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Kinetic Typography Stream\"\n    >\n      <div\n        className={cn(\n          \"flex whitespace-nowrap will-change-transform\",\n          direction === \"left\" ? \"animate-marquee\" : \"animate-marquee-reverse\"\n        )}\n        style={{\n          animationDuration: `${speed}s`,\n        }}\n      >\n        <span className=\"font-mono text-xl sm:text-2xl font-black tracking-tight text-foreground/90 uppercase px-4\">\n          {repeatedText}  ✦  {repeatedText}\n        </span>\n      </div>\n\n      {/* Edge Gradient Mask */}\n      <div className=\"pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background to-transparent\" />\n      <div className=\"pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background to-transparent\" />\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/kinetic-typography-marquee.tsx"
       }
     ]
   },
@@ -6112,6 +6387,61 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "query-builder-sql-tree",
+    "type": "registry:component",
+    "title": "SQL Query Tree Builder",
+    "description": "Visual, keyboard-navigable boolean query builder with nested AND/OR rule groups and instant SQL WHERE compilation.",
+    "category": "ui:editorial",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "primereact",
+      "ant-design",
+      "query-builder",
+      "sql",
+      "enterprise"
+    ],
+    "dials": {
+      "design_variance": 4,
+      "motion_intensity": 2,
+      "visual_density": 8
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "region",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://primefaces.org/primereact/querybuilder",
+      "license_type": "MIT",
+      "author": "PrimeTek & Ant Group",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/editorial/query-builder-sql-tree.tsx",
+        "content": "/**\n * @origin PrimeReact & Ant Design (https://primefaces.org/primereact/querybuilder)\n * @license MIT\n * @author PrimeTek Informatics & Ant Group\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Plus, Trash2, Code2, Check, Copy } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface QueryRule {\n  id: string;\n  field: string;\n  operator: \"=\" | \"!=\" | \">\" | \"<\" | \"CONTAINS\" | \"STARTS_WITH\";\n  value: string;\n}\n\nexport interface QueryGroup {\n  id: string;\n  combinator: \"AND\" | \"OR\";\n  rules: (QueryRule | QueryGroup)[];\n}\n\nexport interface QueryBuilderSqlTreeProps {\n  initialGroup?: QueryGroup;\n  fields?: Array<{ label: string; value: string; type: \"string\" | \"number\" | \"date\" }>;\n  onChange?: (group: QueryGroup, sql: string) => void;\n  className?: string;\n}\n\nconst DEFAULT_FIELDS = [\n  { label: \"Status\", value: \"status\", type: \"string\" as const },\n  { label: \"Latency (ms)\", value: \"latency_ms\", type: \"number\" as const },\n  { label: \"Error Code\", value: \"error_code\", type: \"string\" as const },\n  { label: \"Request Count\", value: \"request_count\", type: \"number\" as const },\n  { label: \"Created At\", value: \"created_at\", type: \"date\" as const },\n];\n\nfunction generateSql(group: QueryGroup): string {\n  const parts = group.rules.map((rule) => {\n    if (\"combinator\" in rule) {\n      const nested = generateSql(rule);\n      return nested ? `(${nested})` : \"\";\n    }\n    if (!rule.value) return \"\";\n    const val = isNaN(Number(rule.value)) ? `'${rule.value}'` : rule.value;\n    if (rule.operator === \"CONTAINS\") return `${rule.field} LIKE '%${rule.value}%'`;\n    if (rule.operator === \"STARTS_WITH\") return `${rule.field} LIKE '${rule.value}%'`;\n    return `${rule.field} ${rule.operator} ${val}`;\n  }).filter(Boolean);\n\n  return parts.join(` ${group.combinator} `);\n}\n\nexport function QueryBuilderSqlTree({\n  initialGroup = {\n    id: \"root\",\n    combinator: \"AND\",\n    rules: [\n      { id: \"r1\", field: \"status\", operator: \"=\", value: \"active\" },\n      { id: \"r2\", field: \"latency_ms\", operator: \"<\", value: \"150\" },\n    ],\n  },\n  fields = DEFAULT_FIELDS,\n  onChange,\n  className,\n}: QueryBuilderSqlTreeProps) {\n  const [rootGroup, setRootGroup] = React.useState<QueryGroup>(initialGroup);\n  const [copied, setCopied] = React.useState(false);\n\n  const compiledSql = React.useMemo(() => generateSql(rootGroup), [rootGroup]);\n\n  React.useEffect(() => {\n    onChange?.(rootGroup, compiledSql);\n  }, [rootGroup, compiledSql, onChange]);\n\n  const addRule = React.useCallback((groupId: string) => {\n    setRootGroup((prev) => {\n      const updateGroup = (g: QueryGroup): QueryGroup => {\n        if (g.id === groupId) {\n          const newRule: QueryRule = {\n            id: `r_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,\n            field: fields[0]?.value || \"status\",\n            operator: \"=\",\n            value: \"\",\n          };\n          return { ...g, rules: [...g.rules, newRule] };\n        }\n        return {\n          ...g,\n          rules: g.rules.map((r) => (\"combinator\" in r ? updateGroup(r) : r)),\n        };\n      };\n      return updateGroup(prev);\n    });\n  }, [fields]);\n\n  const addSubGroup = React.useCallback((groupId: string) => {\n    setRootGroup((prev) => {\n      const updateGroup = (g: QueryGroup): QueryGroup => {\n        if (g.id === groupId) {\n          const newGroup: QueryGroup = {\n            id: `g_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,\n            combinator: \"AND\",\n            rules: [\n              {\n                id: `r_${Date.now()}`,\n                field: fields[0]?.value || \"status\",\n                operator: \"=\",\n                value: \"\",\n              },\n            ],\n          };\n          return { ...g, rules: [...g.rules, newGroup] };\n        }\n        return {\n          ...g,\n          rules: g.rules.map((r) => (\"combinator\" in r ? updateGroup(r) : r)),\n        };\n      };\n      return updateGroup(prev);\n    });\n  }, [fields]);\n\n  const removeNode = React.useCallback((nodeId: string) => {\n    setRootGroup((prev) => {\n      const filterGroup = (g: QueryGroup): QueryGroup => ({\n        ...g,\n        rules: g.rules\n          .filter((r) => r.id !== nodeId)\n          .map((r) => (\"combinator\" in r ? filterGroup(r) : r)),\n      });\n      return filterGroup(prev);\n    });\n  }, []);\n\n  const updateRule = React.useCallback((ruleId: string, patch: Partial<QueryRule>) => {\n    setRootGroup((prev) => {\n      const modify = (g: QueryGroup): QueryGroup => ({\n        ...g,\n        rules: g.rules.map((r) => {\n          if (\"combinator\" in r) return modify(r);\n          return r.id === ruleId ? { ...r, ...patch } : r;\n        }),\n      });\n      return modify(prev);\n    });\n  }, []);\n\n  const updateCombinator = React.useCallback((groupId: string, combinator: \"AND\" | \"OR\") => {\n    setRootGroup((prev) => {\n      const modify = (g: QueryGroup): QueryGroup => {\n        if (g.id === groupId) return { ...g, combinator };\n        return {\n          ...g,\n          rules: g.rules.map((r) => (\"combinator\" in r ? modify(r) : r)),\n        };\n      };\n      return modify(prev);\n    });\n  }, []);\n\n  const copySql = React.useCallback(async () => {\n    if (!compiledSql) return;\n    await navigator.clipboard.writeText(compiledSql);\n    setCopied(true);\n    setTimeout(() => setCopied(false), 2000);\n  }, [compiledSql]);\n\n  const renderGroup = (group: QueryGroup, depth = 0) => (\n    <div\n      key={group.id}\n      className={cn(\n        \"relative rounded-xl border border-border bg-card p-4 transition-colors duration-200\",\n        depth > 0 && \"ml-4 mt-3 border-dashed bg-muted/30\"\n      )}\n    >\n      <div className=\"flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-border/60\">\n        <div className=\"flex items-center gap-2\">\n          <span className=\"text-xs font-semibold uppercase tracking-wider text-muted-foreground\">\n            Match\n          </span>\n          <div className=\"inline-flex rounded-lg border border-border bg-muted/60 p-0.5\">\n            {([\"AND\", \"OR\"] as const).map((comb) => (\n              <button\n                key={comb}\n                type=\"button\"\n                onClick={() => updateCombinator(group.id, comb)}\n                className={cn(\n                  \"px-2.5 py-1 text-xs font-medium rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                  group.combinator === comb\n                    ? \"bg-primary text-primary-foreground shadow-xs\"\n                    : \"text-muted-foreground hover:text-foreground\"\n                )}\n                aria-pressed={group.combinator === comb}\n              >\n                {comb}\n              </button>\n            ))}\n          </div>\n          <span className=\"text-xs text-muted-foreground\">\n            ({group.rules.length} {group.rules.length === 1 ? \"rule\" : \"rules\"})\n          </span>\n        </div>\n\n        <div className=\"flex items-center gap-2\">\n          <button\n            type=\"button\"\n            onClick={() => addRule(group.id)}\n            className=\"inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md border border-border bg-background hover:bg-muted text-foreground transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <Plus className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n            Add Rule\n          </button>\n          <button\n            type=\"button\"\n            onClick={() => addSubGroup(group.id)}\n            className=\"inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md border border-border bg-background hover:bg-muted text-foreground transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <Plus className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n            Add Group\n          </button>\n          {depth > 0 && (\n            <button\n              type=\"button\"\n              onClick={() => removeNode(group.id)}\n              aria-label=\"Remove group\"\n              className=\"inline-flex items-center justify-center h-7 w-7 rounded-md text-destructive hover:bg-destructive/10 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive\"\n            >\n              <Trash2 className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n            </button>\n          )}\n        </div>\n      </div>\n\n      <div className=\"space-y-2.5 pt-3\">\n        {group.rules.map((rule) => {\n          if (\"combinator\" in rule) {\n            return renderGroup(rule, depth + 1);\n          }\n          return (\n            <div\n              key={rule.id}\n              className=\"flex flex-wrap items-center gap-2 rounded-lg border border-border/70 bg-background/80 px-3 py-2 text-sm\"\n            >\n              <select\n                value={rule.field}\n                onChange={(e) => updateRule(rule.id, { field: e.target.value })}\n                className=\"h-8 rounded-md border border-border bg-card px-2.5 text-xs font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n                aria-label=\"Filter Field\"\n              >\n                {fields.map((f) => (\n                  <option key={f.value} value={f.value}>\n                    {f.label}\n                  </option>\n                ))}\n              </select>\n\n              <select\n                value={rule.operator}\n                onChange={(e) =>\n                  updateRule(rule.id, {\n                    operator: e.target.value as QueryRule[\"operator\"],\n                  })\n                }\n                className=\"h-8 rounded-md border border-border bg-card px-2 text-xs font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n                aria-label=\"Filter Operator\"\n              >\n                <option value=\"=\">=</option>\n                <option value=\"!=\">!=</option>\n                <option value=\">\">&gt;</option>\n                <option value=\"<\">&lt;</option>\n                <option value=\"CONTAINS\">contains</option>\n                <option value=\"STARTS_WITH\">starts with</option>\n              </select>\n\n              <input\n                type=\"text\"\n                value={rule.value}\n                placeholder=\"Enter value...\"\n                onChange={(e) => updateRule(rule.id, { value: e.target.value })}\n                className=\"h-8 min-w-[140px] flex-1 rounded-md border border-border bg-card px-3 text-xs text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n                aria-label=\"Rule value\"\n              />\n\n              <button\n                type=\"button\"\n                onClick={() => removeNode(rule.id)}\n                aria-label=\"Delete rule\"\n                className=\"inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive\"\n              >\n                <Trash2 className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n              </button>\n            </div>\n          );\n        })}\n      </div>\n    </div>\n  );\n\n  return (\n    <div className={cn(\"w-full space-y-4 rounded-xl border border-border bg-background p-5 shadow-xs\", className)}>\n      <div className=\"flex items-center justify-between\">\n        <div className=\"space-y-0.5\">\n          <h3 className=\"text-sm font-semibold tracking-tight text-foreground\">\n            Structured SQL Query Builder\n          </h3>\n          <p className=\"text-xs text-muted-foreground\">\n            Visual rule tree generator for complex database filters and telemetry queries.\n          </p>\n        </div>\n      </div>\n\n      {renderGroup(rootGroup)}\n\n      <div className=\"rounded-lg border border-border bg-muted/40 p-3\">\n        <div className=\"flex items-center justify-between pb-1.5\">\n          <span className=\"flex items-center gap-1.5 text-xs font-semibold text-muted-foreground\">\n            <Code2 className=\"h-3.5 w-3.5 text-primary\" role=\"img\" aria-hidden=\"true\" />\n            Generated SQL WHERE Clause\n          </span>\n          <button\n            type=\"button\"\n            onClick={copySql}\n            disabled={!compiledSql}\n            className=\"inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xs\"\n          >\n            {copied ? (\n              <>\n                <Check className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" /> Copied\n              </>\n            ) : (\n              <>\n                <Copy className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" /> Copy SQL\n              </>\n            )}\n          </button>\n        </div>\n        <pre className=\"overflow-x-auto font-mono text-xs text-foreground/90 whitespace-pre-wrap\">\n          {compiledSql || <span className=\"text-muted-foreground italic\">WHERE true (No active filters)</span>}\n        </pre>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/query-builder-sql-tree.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "radar-spider-chart",
     "type": "registry:block",
     "title": "Radar Spider Chart",
@@ -6150,6 +6480,60 @@
         "content": "/**\n * @license MIT\n * @origin diagram-design (https://github.com/cathrynlavery/diagram-design)\n * @author Cathryn Lavery & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface RadarAxis {\n  label: string;\n  value: number; // 0-100\n}\n\nexport interface RadarSpiderChartProps extends React.HTMLAttributes<HTMLDivElement> {\n  title?: string;\n  axes?: RadarAxis[];\n}\n\nconst DEFAULT_AXES: RadarAxis[] = [\n  { label: \"Accessibility AA\", value: 100 },\n  { label: \"Token Hygiene\", value: 95 },\n  { label: \"Performance & Leaks\", value: 98 },\n  { label: \"Design Variance\", value: 85 },\n  { label: \"Motion Fidelity\", value: 90 },\n  { label: \"TypeScript Safety\", value: 100 },\n];\n\nexport function RadarSpiderChart({\n  title = \"Component Quality & Craft Radar\",\n  axes = DEFAULT_AXES,\n  className,\n  ...props\n}: RadarSpiderChartProps) {\n  const size = 260;\n  const center = size / 2;\n  const radius = 90;\n  const numAxes = axes.length;\n\n  // Calculate polygon points\n  const points = axes\n    .map((axis, i) => {\n      const angle = (Math.PI * 2 / numAxes) * i - Math.PI / 2;\n      const r = (axis.value / 100) * radius;\n      const x = center + r * Math.cos(angle);\n      const y = center + r * Math.sin(angle);\n      return `${x.toFixed(1)},${y.toFixed(1)}`;\n    })\n    .join(\" \");\n\n  return (\n    <figure\n      className={cn(\n        \"flex flex-col w-full rounded-xl border border-border bg-card p-6 shadow-xs text-card-foreground\",\n        className\n      )}\n      role=\"region\"\n      aria-label={`Radar Spider Chart: ${title}`}\n      {...props}\n    >\n      <header className=\"border-b border-border pb-3 mb-4\">\n        <h3 className=\"text-sm font-bold text-foreground\">{title}</h3>\n        <p className=\"text-xs text-muted-foreground mt-0.5\">\n          Multi-axis capability spider polygon evaluating 6 craft and compliance dimensions.\n        </p>\n      </header>\n\n      <div className=\"flex items-center justify-center py-2\">\n        <svg\n          viewBox={`0 0 ${size} ${size}`}\n          className=\"w-full max-w-[280px] h-auto overflow-visible\"\n          role=\"img\"\n          aria-label=\"Radar chart polygon\"\n        >\n          {/* Background concentric rings */}\n          {[0.25, 0.5, 0.75, 1].map((scale) => (\n            <polygon\n              key={scale}\n              points={Array.from({ length: numAxes })\n                .map((_, i) => {\n                  const angle = (Math.PI * 2 / numAxes) * i - Math.PI / 2;\n                  const r = radius * scale;\n                  const x = center + r * Math.cos(angle);\n                  const y = center + r * Math.sin(angle);\n                  return `${x.toFixed(1)},${y.toFixed(1)}`;\n                })\n                .join(\" \")}\n              fill=\"none\"\n              stroke=\"currentColor\"\n              strokeWidth=\"1\"\n              className=\"text-border\"\n            />\n          ))}\n\n          {/* Radial axis lines & labels */}\n          {axes.map((axis, i) => {\n            const angle = (Math.PI * 2 / numAxes) * i - Math.PI / 2;\n            const x = center + radius * Math.cos(angle);\n            const y = center + radius * Math.sin(angle);\n            const labelX = center + (radius + 24) * Math.cos(angle);\n            const labelY = center + (radius + 24) * Math.sin(angle) + 3;\n\n            return (\n              <g key={axis.label}>\n                <line\n                  x1={center}\n                  y1={center}\n                  x2={x}\n                  y2={y}\n                  stroke=\"currentColor\"\n                  strokeWidth=\"1\"\n                  className=\"text-border\"\n                />\n                <text\n                  x={labelX}\n                  y={labelY}\n                  textAnchor=\"middle\"\n                  className=\"fill-muted-foreground text-xs font-medium\"\n                >\n                  {axis.label}\n                </text>\n              </g>\n            );\n          })}\n\n          {/* Value Polygon */}\n          <polygon\n            points={points}\n            fill=\"currentColor\"\n            stroke=\"currentColor\"\n            strokeWidth=\"2\"\n            className=\"text-primary/25 stroke-primary\"\n          />\n        </svg>\n      </div>\n    </figure>\n  );\n}\n",
         "type": "registry:block",
         "target": "components/ui/radar-spider-chart.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "realtime-telemetry-gauge-cluster",
+    "type": "registry:component",
+    "title": "Realtime Telemetry Gauge Cluster",
+    "description": "SVG circular telemetry cluster for CPU/memory loads, edge latency percentiles, and SLA target indicators.",
+    "category": "ui:editorial",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "tailwind-v4",
+      "wai-aria-compliant",
+      "cloudscape",
+      "primer",
+      "telemetry",
+      "gauges",
+      "dashboard",
+      "metrics"
+    ],
+    "dials": {
+      "design_variance": 4,
+      "motion_intensity": 3,
+      "visual_density": 8
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": false,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "region",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://cloudscape.design",
+      "license_type": "Apache-2.0",
+      "author": "Amazon Web Services & GitHub Primer",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/editorial/realtime-telemetry-gauge-cluster.tsx",
+        "content": "/**\n * @origin Cloudscape Design & GitHub Primer (https://cloudscape.design, https://primer.style)\n * @license Apache-2.0\n * @author Amazon Web Services & GitHub Primer Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Activity, Cpu, Server, Wifi, ShieldCheck } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface TelemetryMetric {\n  id: string;\n  name: string;\n  value: number; // 0-100 percentage\n  unit: string;\n  status: \"normal\" | \"warning\" | \"critical\";\n  subtitle: string;\n}\n\nexport interface RealtimeTelemetryGaugeClusterProps {\n  clusterName?: string;\n  metrics?: TelemetryMetric[];\n  className?: string;\n}\n\nconst DEFAULT_METRICS: TelemetryMetric[] = [\n  { id: \"cpu\", name: \"Host CPU Load\", value: 34, unit: \"%\", status: \"normal\", subtitle: \"8 Cores Active\" },\n  { id: \"memory\", name: \"Memory Allocated\", value: 68, unit: \"%\", status: \"normal\", subtitle: \"10.8 / 16 GB\" },\n  { id: \"latency\", name: \"Edge p99 Latency\", value: 18, unit: \"ms\", status: \"normal\", subtitle: \"Cloudflare CDN\" },\n  { id: \"mcp-eval\", name: \"MCP Zero-Draft\", value: 99, unit: \"%\", status: \"normal\", subtitle: \"0 High Flags\" },\n];\n\nexport function RealtimeTelemetryGaugeCluster({\n  clusterName = \"Edge MCP Telemetry Cluster\",\n  metrics = DEFAULT_METRICS,\n  className,\n}: RealtimeTelemetryGaugeClusterProps) {\n  return (\n    <div className={cn(\"w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs select-none\", className)}>\n      <div className=\"flex items-center justify-between border-b border-border/60 pb-3\">\n        <div className=\"flex items-center gap-2\">\n          <Activity className=\"h-4 w-4 text-primary\" role=\"img\" aria-hidden=\"true\" />\n          <h3 className=\"text-sm font-semibold tracking-tight text-foreground\">\n            {clusterName}\n          </h3>\n        </div>\n        <span className=\"flex items-center gap-1 text-2xs font-mono text-emerald-600 dark:text-emerald-400\">\n          <ShieldCheck className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" /> Live Monitored\n        </span>\n      </div>\n\n      <div className=\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4\">\n        {metrics.map((metric) => {\n          const radius = 32;\n          const circumference = 2 * Math.PI * radius;\n          const strokeDashoffset = circumference - (metric.value / 100) * circumference;\n\n          return (\n            <div\n              key={metric.id}\n              className=\"flex items-center gap-3.5 rounded-lg border border-border/70 bg-background/80 p-3.5\"\n            >\n              {/* Circular SVG Gauge */}\n              <div className=\"relative h-16 w-16 shrink-0 flex items-center justify-center\">\n                <svg className=\"h-16 w-16 -rotate-90\" viewBox=\"0 0 80 80\" role=\"img\" aria-label={`${metric.name}: ${metric.value}${metric.unit}`}>\n                  <circle\n                    cx=\"40\"\n                    cy=\"40\"\n                    r={radius}\n                    className=\"stroke-muted\"\n                    strokeWidth=\"6\"\n                    fill=\"transparent\"\n                  />\n                  <circle\n                    cx=\"40\"\n                    cy=\"40\"\n                    r={radius}\n                    className={cn(\n                      \"transition-all duration-500\",\n                      metric.status === \"normal\"\n                        ? \"stroke-primary\"\n                        : metric.status === \"warning\"\n                        ? \"stroke-amber-500\"\n                        : \"stroke-destructive\"\n                    )}\n                    strokeWidth=\"6\"\n                    strokeDasharray={circumference}\n                    strokeDashoffset={strokeDashoffset}\n                    strokeLinecap=\"round\"\n                    fill=\"transparent\"\n                  />\n                </svg>\n                <div className=\"absolute inset-0 flex items-center justify-center font-mono text-xs font-bold text-foreground\">\n                  {metric.value}\n                  <span className=\"text-3xs font-normal text-muted-foreground\">{metric.unit}</span>\n                </div>\n              </div>\n\n              <div className=\"space-y-0.5 min-w-0\">\n                <div className=\"text-xs font-semibold text-foreground truncate\">\n                  {metric.name}\n                </div>\n                <div className=\"text-3xs font-mono text-muted-foreground truncate\">\n                  {metric.subtitle}\n                </div>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/realtime-telemetry-gauge-cluster.tsx"
       }
     ]
   },
@@ -6896,6 +7280,70 @@
         "content": "/**\n * @license MIT\n * @origin Remocn / Machine-First Design Agent Wiki\n * @author Remocn Team & Community\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Play, Pause, Volume2 } from \"lucide-react\";\nimport { cn } from \"../lib/utils\";\n\nexport interface AudioVisualizerProps extends React.HTMLAttributes<HTMLDivElement> {\n  barCount?: number;\n  initialPlaying?: boolean;\n}\n\nexport function AudioVisualizer({\n  barCount = 32,\n  initialPlaying = false,\n  className,\n  ...props\n}: AudioVisualizerProps) {\n  const [isPlaying, setIsPlaying] = React.useState(initialPlaying);\n  const [frequencies, setFrequencies] = React.useState<number[]>(() =>\n    Array.from({ length: barCount }, () => Math.random() * 0.5 + 0.2)\n  );\n\n  React.useEffect(() => {\n    if (!isPlaying) return;\n\n    const interval = setInterval(() => {\n      setFrequencies(\n        Array.from({ length: barCount }, () => Math.random() * 0.8 + 0.2)\n      );\n    }, 120);\n\n    return () => clearInterval(interval);\n  }, [isPlaying, barCount]);\n\n  return (\n    <div\n      role=\"region\"\n      aria-label=\"Audio Waveform Visualizer\"\n      className={cn(\n        \"flex flex-col gap-4 rounded-3xl border border-border bg-card p-6 text-card-foreground shadow-xs\",\n        className\n      )}\n      {...props}\n    >\n      <div className=\"flex items-center justify-between\">\n        <div className=\"flex items-center gap-2\">\n          <Volume2 className=\"h-4 w-4 text-primary\" aria-hidden=\"true\" />\n          <span className=\"text-xs font-semibold text-foreground\">\n            Acoustic Signal Stream\n          </span>\n        </div>\n        <button\n          type=\"button\"\n          onClick={() => setIsPlaying(!isPlaying)}\n          aria-label={isPlaying ? \"Pause audio stream\" : \"Play audio stream\"}\n          className=\"inline-flex items-center gap-1.5 rounded-xl bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        >\n          {isPlaying ? (\n            <>\n              <Pause className=\"h-3.5 w-3.5\" />\n              <span>Pause</span>\n            </>\n          ) : (\n            <>\n              <Play className=\"h-3.5 w-3.5\" />\n              <span>Synthesize</span>\n            </>\n          )}\n        </button>\n      </div>\n\n      {/* Waveform Bar Graphic */}\n      <div\n        aria-hidden=\"true\"\n        className=\"flex h-20 items-end justify-between gap-1 rounded-2xl bg-muted/40 px-4 py-3\"\n      >\n        {frequencies.map((freq, idx) => (\n          <div\n            key={idx}\n            style={{\n              transform: `scaleY(${isPlaying ? freq : 0.2})`,\n            }}\n            className=\"h-full w-full max-w-1.5 origin-bottom rounded-full bg-primary transition-transform duration-100 ease-out\"\n          />\n        ))}\n      </div>\n    </div>\n  );\n}\n",
         "type": "registry:component",
         "target": "components/ui/audio-visualizer.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "interactive-audio-waveform-scrubber",
+    "type": "registry:component",
+    "title": "Interactive Audio Waveform Scrubber",
+    "description": "Frame-accurate interactive audio waveform scrubber with cue point markers, loop regions, and playback speed control.",
+    "category": "ui:media",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "webgl",
+      "threejs",
+      "canvas",
+      "layout-block",
+      "remocn",
+      "remotion",
+      "audio",
+      "waveform",
+      "timeline",
+      "scrubber"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 7,
+      "visual_density": 6
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "slider",
+      "fallback_provided": true,
+      "reduced_motion_supported": true
+    },
+    "license_origin": {
+      "source_repository": "https://remocn.dev",
+      "license_type": "MIT",
+      "author": "Remocn & Remotion Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "three",
+      "clsx",
+      "tailwind-merge",
+      "motion"
+    ],
+    "devDependencies": [
+      "@types/three"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/media/interactive-audio-waveform-scrubber.tsx",
+        "content": "/**\n * @origin Remocn & Remotion (https://remocn.dev, https://remotion.dev)\n * @license MIT\n * @author Remocn Team & Remotion Community\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Play, Pause, RotateCcw, Volume2, Bookmark, FastForward } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface AudioCuePoint {\n  timeSec: number;\n  label: string;\n}\n\nexport interface InteractiveAudioWaveformScrubberProps {\n  durationSec?: number;\n  cuePoints?: AudioCuePoint[];\n  onSeek?: (timeSec: number) => void;\n  className?: string;\n}\n\nexport function InteractiveAudioWaveformScrubber({\n  durationSec = 45,\n  cuePoints = [\n    { timeSec: 5, label: \"Intro Hook\" },\n    { timeSec: 18, label: \"Core Feature Drop\" },\n    { timeSec: 36, label: \"Call to Action\" },\n  ],\n  onSeek,\n  className,\n}: InteractiveAudioWaveformScrubberProps) {\n  const [isPlaying, setIsPlaying] = React.useState(false);\n  const [currentTime, setCurrentTime] = React.useState(0);\n  const [playbackRate, setPlaybackRate] = React.useState<number>(1);\n  const animationFrameRef = React.useRef<number | null>(null);\n\n  // Generate deterministic synthetic waveform bar heights (36 bars)\n  const waveformHeights = React.useMemo(() => {\n    const heights: number[] = [];\n    for (let i = 0; i < 48; i++) {\n      const h = Math.sin(i * 0.45) * 40 + Math.cos(i * 0.9) * 20 + 45;\n      heights.push(Math.max(15, Math.min(95, h)));\n    }\n    return heights;\n  }, []);\n\n  React.useEffect(() => {\n    const prefersReducedMotion = typeof window !== \"undefined\" && window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches;\n\n    if (!isPlaying || prefersReducedMotion) {\n      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);\n      return;\n    }\n\n    let lastTimestamp = performance.now();\n\n    const tick = (now: number) => {\n      const deltaSec = (now - lastTimestamp) / 1000;\n      lastTimestamp = now;\n\n      setCurrentTime((prev) => {\n        const next = prev + deltaSec * playbackRate;\n        if (next >= durationSec) {\n          setIsPlaying(false);\n          return durationSec;\n        }\n        return next;\n      });\n\n      animationFrameRef.current = requestAnimationFrame(tick);\n    };\n\n    animationFrameRef.current = requestAnimationFrame(tick);\n\n    return () => {\n      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);\n    };\n  }, [isPlaying, playbackRate, durationSec]);\n\n  const handleBarClick = (index: number) => {\n    const targetTime = (index / waveformHeights.length) * durationSec;\n    setCurrentTime(targetTime);\n    onSeek?.(targetTime);\n  };\n\n  const progressPercentage = (currentTime / durationSec) * 100;\n\n  const formatTime = (sec: number) => {\n    const m = Math.floor(sec / 60);\n    const s = Math.floor(sec % 60);\n    const ms = Math.floor((sec % 1) * 10);\n    return `${m.toString().padStart(2, \"0\")}:${s.toString().padStart(2, \"0\")}.${ms}`;\n  };\n\n  return (\n    <div className={cn(\"w-full space-y-3.5 rounded-xl border border-border bg-card p-5 shadow-xs select-none\", className)}>\n      <div className=\"flex items-center justify-between\">\n        <div className=\"flex items-center gap-2\">\n          <Volume2 className=\"h-4 w-4 text-primary\" role=\"img\" aria-hidden=\"true\" />\n          <span className=\"text-xs font-semibold text-foreground tracking-tight\">\n            Audio Stem Scrubber & Cue Editor\n          </span>\n        </div>\n\n        <div className=\"flex items-center gap-2 font-mono text-xs text-muted-foreground\">\n          <span className=\"text-primary font-medium tabular-nums\">{formatTime(currentTime)}</span>\n          <span>/</span>\n          <span className=\"tabular-nums\">{formatTime(durationSec)}</span>\n        </div>\n      </div>\n\n      {/* Interactive Waveform Bar Visualizer */}\n      <div\n        className=\"relative flex h-20 w-full items-end gap-1 overflow-hidden rounded-lg bg-muted/40 p-2 cursor-pointer\"\n        role=\"slider\"\n        aria-label=\"Audio Timeline Scrubber\"\n        aria-valuemin={0}\n        aria-valuemax={durationSec}\n        aria-valuenow={currentTime}\n        aria-valuetext={formatTime(currentTime)}\n      >\n        {waveformHeights.map((height, idx) => {\n          const barProgress = (idx / waveformHeights.length) * 100;\n          const isPassed = barProgress <= progressPercentage;\n\n          return (\n            <div\n              key={`bar-${idx}`}\n              onClick={() => handleBarClick(idx)}\n              className=\"group relative flex-1 h-full flex items-end\"\n            >\n              <div\n                className={cn(\n                  \"w-full rounded-xs transition-all duration-75\",\n                  isPassed\n                    ? \"bg-primary\"\n                    : \"bg-muted-foreground/30 group-hover:bg-muted-foreground/60\"\n                )}\n                style={{ height: `${height}%` }}\n              />\n            </div>\n          );\n        })}\n\n        {/* Playhead Marker */}\n        <div\n          className=\"pointer-events-none absolute top-0 bottom-0 w-0.5 bg-destructive z-10\"\n          style={{ left: `${progressPercentage}%` }}\n        >\n          <div className=\"h-2 w-2 -translate-x-[3px] rounded-full bg-destructive shadow-xs\" />\n        </div>\n\n        {/* Cue Point Markers */}\n        {cuePoints.map((cue) => {\n          const cuePercent = (cue.timeSec / durationSec) * 100;\n          return (\n            <div\n              key={cue.label}\n              className=\"absolute top-1 -translate-x-1/2 z-20 group\"\n              style={{ left: `${cuePercent}%` }}\n              onClick={(e) => {\n                e.stopPropagation();\n                setCurrentTime(cue.timeSec);\n              }}\n            >\n              <Bookmark className=\"h-3 w-3 text-amber-500 fill-amber-500 cursor-pointer hover:scale-125 transition-transform duration-150\" role=\"img\" aria-label={cue.label} />\n              <div className=\"absolute top-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none whitespace-nowrap rounded-xs bg-background/95 px-1.5 py-0.5 font-mono text-3xs border border-border text-foreground shadow-xs\">\n                {cue.label} ({Math.round(cue.timeSec)}s)\n              </div>\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Scrubber Transport Controls */}\n      <div className=\"flex items-center justify-between pt-1\">\n        <div className=\"flex items-center gap-2\">\n          <button\n            type=\"button\"\n            onClick={() => setIsPlaying((p) => !p)}\n            className=\"inline-flex h-8 items-center gap-1.5 rounded-md bg-primary px-3 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            {isPlaying ? (\n              <>\n                <Pause className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" /> Pause\n              </>\n            ) : (\n              <>\n                <Play className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" /> Play\n              </>\n            )}\n          </button>\n\n          <button\n            type=\"button\"\n            onClick={() => setCurrentTime(0)}\n            aria-label=\"Restart Audio\"\n            className=\"inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-card text-muted-foreground hover:text-foreground hover:bg-muted transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <RotateCcw className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n          </button>\n        </div>\n\n        <div className=\"flex items-center gap-1.5 text-xs text-muted-foreground\">\n          <span>Speed:</span>\n          {[1, 1.5, 2].map((rate) => (\n            <button\n              key={rate}\n              type=\"button\"\n              onClick={() => setPlaybackRate(rate)}\n              className={cn(\n                \"px-2 py-0.5 rounded-md font-mono transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                playbackRate === rate\n                  ? \"bg-muted text-foreground font-semibold\"\n                  : \"text-muted-foreground hover:text-foreground\"\n              )}\n            >\n              {rate}x\n            </button>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/interactive-audio-waveform-scrubber.tsx"
       }
     ]
   },
@@ -9905,6 +10353,59 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "adaptive-touch-slider",
+    "type": "registry:ui",
+    "title": "Adaptive Touch Slider",
+    "description": "Accessible touch and gesture-aware dual slider primitive with discrete step snapping and WAI-ARIA values.",
+    "category": "ui:primitive",
+    "tags": [
+      "tailwind-v4",
+      "brutalist",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "gui-challenges",
+      "react-spectrum",
+      "slider",
+      "touch",
+      "accessible",
+      "range"
+    ],
+    "dials": {
+      "design_variance": 3,
+      "motion_intensity": 3,
+      "visual_density": 6
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "slider",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/argyleink/gui-challenges",
+      "license_type": "Apache-2.0",
+      "author": "Adam Argyle & Adobe React Spectrum",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/primitives/adaptive-touch-slider.tsx",
+        "content": "/**\n * @origin Google GUI Challenges & Adobe React Spectrum (https://github.com/argyleink/gui-challenges, https://github.com/adobe/react-spectrum)\n * @license Apache-2.0\n * @author Adam Argyle & Adobe React Spectrum Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface AdaptiveTouchSliderProps {\n  label?: string;\n  min?: number;\n  max?: number;\n  step?: number;\n  value?: number;\n  defaultValue?: number;\n  unit?: string;\n  onChange?: (value: number) => void;\n  disabled?: boolean;\n  className?: string;\n}\n\nexport function AdaptiveTouchSlider({\n  label = \"Adaptive Density Slider\",\n  min = 0,\n  max = 100,\n  step = 1,\n  value: controlledValue,\n  defaultValue = 50,\n  unit = \"%\",\n  onChange,\n  disabled = false,\n  className,\n}: AdaptiveTouchSliderProps) {\n  const [internalValue, setInternalValue] = React.useState(defaultValue);\n  const value = controlledValue !== undefined ? controlledValue : internalValue;\n\n  const percentage = React.useMemo(() => {\n    return Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100));\n  }, [value, min, max]);\n\n  const handleChange = React.useCallback(\n    (e: React.ChangeEvent<HTMLInputElement>) => {\n      const num = Number(e.target.value);\n      if (controlledValue === undefined) {\n        setInternalValue(num);\n      }\n      onChange?.(num);\n    },\n    [controlledValue, onChange]\n  );\n\n  return (\n    <div className={cn(\"w-full space-y-2.5 rounded-lg border border-border bg-card p-4 shadow-xs\", className)}>\n      <div className=\"flex items-center justify-between\">\n        <label\n          htmlFor=\"adaptive-slider-input\"\n          className=\"text-xs font-semibold text-foreground tracking-tight\"\n        >\n          {label}\n        </label>\n        <span className=\"font-mono text-xs font-medium text-primary tabular-nums\">\n          {value}\n          {unit}\n        </span>\n      </div>\n\n      <div className=\"relative flex items-center select-none touch-none h-7\">\n        {/* Track Background */}\n        <div className=\"relative h-2 w-full overflow-hidden rounded-full bg-muted\">\n          {/* Active Fill Bar */}\n          <div\n            className=\"h-full bg-primary transition-all duration-75\"\n            style={{ width: `${percentage}%` }}\n          />\n        </div>\n\n        {/* Accessible Range Input */}\n        <input\n          id=\"adaptive-slider-input\"\n          type=\"range\"\n          min={min}\n          max={max}\n          step={step}\n          value={value}\n          disabled={disabled}\n          onChange={handleChange}\n          aria-label={label}\n          aria-valuemin={min}\n          aria-valuemax={max}\n          aria-valuenow={value}\n          aria-valuetext={`${value}${unit}`}\n          className=\"absolute inset-0 h-full w-full opacity-0 cursor-pointer disabled:cursor-not-allowed\"\n        />\n\n        {/* Custom Visual Thumb */}\n        <div\n          className=\"pointer-events-none absolute h-5 w-5 -translate-x-1/2 rounded-full border-2 border-primary bg-background shadow-md transition-transform duration-75\"\n          style={{ left: `${percentage}%` }}\n        />\n      </div>\n\n      <div className=\"flex justify-between text-2xs font-mono text-muted-foreground\">\n        <span>\n          {min}\n          {unit}\n        </span>\n        <span>\n          {max}\n          {unit}\n        </span>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:ui",
+        "target": "components/ui/adaptive-touch-slider.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "ai-artifact-canvas",
     "type": "registry:component",
     "title": "Ai Artifact Canvas",
@@ -11444,6 +11945,62 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "interactive-matrix-filter-pill-group",
+    "type": "registry:ui",
+    "title": "Interactive Matrix Filter Pill Group",
+    "description": "Keyboard-navigable faceted pill group with multi-select tag toggles, count badges, and clear-all triggers.",
+    "category": "ui:primitive",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "editorial",
+      "primer",
+      "heroui",
+      "filter-pills",
+      "faceted",
+      "tags"
+    ],
+    "dials": {
+      "design_variance": 3,
+      "motion_intensity": 2,
+      "visual_density": 7
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://primer.style",
+      "license_type": "MIT",
+      "author": "GitHub Primer & HeroUI Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge",
+      "motion"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/primitives/interactive-matrix-filter-pill-group.tsx",
+        "content": "/**\n * @origin GitHub Primer & HeroUI (https://primer.style, https://heroui.com)\n * @license MIT\n * @author GitHub Primer Team & HeroUI Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Filter, X, Check } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface FilterPillOption {\n  id: string;\n  label: string;\n  count?: number;\n  category?: string;\n}\n\nexport interface InteractiveMatrixFilterPillGroupProps {\n  options?: FilterPillOption[];\n  selectedIds?: string[];\n  onChange?: (selected: string[]) => void;\n  title?: string;\n  className?: string;\n}\n\nconst DEFAULT_FILTER_OPTIONS: FilterPillOption[] = [\n  { id: \"ai-native\", label: \"AI Native\", count: 24, category: \"Domain\" },\n  { id: \"workflow\", label: \"Workflow Graph\", count: 12, category: \"Domain\" },\n  { id: \"motion\", label: \"Spring Motion\", count: 42, category: \"Interaction\" },\n  { id: \"wcag-aaa\", label: \"WCAG AAA\", count: 18, category: \"A11y\" },\n  { id: \"tailwind-v4\", label: \"Tailwind v4\", count: 280, category: \"Tech\" },\n];\n\nexport function InteractiveMatrixFilterPillGroup({\n  options = DEFAULT_FILTER_OPTIONS,\n  selectedIds: controlledSelected,\n  onChange,\n  title = \"Faceted Taxonomy Filters\",\n  className,\n}: InteractiveMatrixFilterPillGroupProps) {\n  const [internalSelected, setInternalSelected] = React.useState<string[]>([\"ai-native\", \"tailwind-v4\"]);\n  const selected = controlledSelected !== undefined ? controlledSelected : internalSelected;\n\n  const toggleOption = (id: string) => {\n    const next = selected.includes(id) ? selected.filter((x) => x !== id) : [...selected, id];\n    if (controlledSelected === undefined) setInternalSelected(next);\n    onChange?.(next);\n  };\n\n  const clearAll = () => {\n    if (controlledSelected === undefined) setInternalSelected([]);\n    onChange?.([]);\n  };\n\n  return (\n    <div className={cn(\"w-full space-y-3 rounded-xl border border-border bg-card p-4 shadow-xs select-none\", className)}>\n      <div className=\"flex items-center justify-between\">\n        <div className=\"flex items-center gap-2\">\n          <Filter className=\"h-3.5 w-3.5 text-primary\" role=\"img\" aria-hidden=\"true\" />\n          <span className=\"text-xs font-semibold text-foreground tracking-tight\">{title}</span>\n        </div>\n\n        {selected.length > 0 && (\n          <button\n            type=\"button\"\n            onClick={clearAll}\n            className=\"text-2xs text-muted-foreground hover:text-foreground transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xs\"\n          >\n            Clear Selected ({selected.length})\n          </button>\n        )}\n      </div>\n\n      {/* Pill Group */}\n      <div className=\"flex flex-wrap items-center gap-2\">\n        {options.map((opt) => {\n          const isSelected = selected.includes(opt.id);\n          return (\n            <button\n              key={opt.id}\n              type=\"button\"\n              onClick={() => toggleOption(opt.id)}\n              className={cn(\n                \"inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                isSelected\n                  ? \"bg-primary text-primary-foreground shadow-xs\"\n                  : \"border border-border bg-background text-muted-foreground hover:text-foreground hover:bg-muted\"\n              )}\n              aria-pressed={isSelected}\n            >\n              {isSelected && <Check className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" />}\n              <span>{opt.label}</span>\n              {opt.count !== undefined && (\n                <span\n                  className={cn(\n                    \"rounded-full px-1.5 py-0.2 text-3xs font-mono font-semibold\",\n                    isSelected ? \"bg-primary-foreground/20 text-primary-foreground\" : \"bg-muted text-muted-foreground\"\n                  )}\n                >\n                  {opt.count}\n                </span>\n              )}\n            </button>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:ui",
+        "target": "components/ui/interactive-matrix-filter-pill-group.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "interactive-pagination-bar",
     "type": "registry:ui",
     "title": "Interactive Pagination Bar",
@@ -11586,6 +12143,63 @@
         "content": "/**\n * @license MIT\n * @origin Cloudscape Design & Primer (https://cloudscape.design)\n * @author Cloudscape & Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Maintained under upstream open-source license terms.\n */\n\nimport * as React from \"react\";\nimport { cn } from \"../lib/utils\";\nimport { Copy, Check } from \"lucide-react\";\n\nexport interface KeyValueItem {\n  key: string;\n  value: string | React.ReactNode;\n  copyable?: boolean;\n  copyText?: string;\n}\n\nexport interface KeyValueListProps extends React.HTMLAttributes<HTMLDListElement> {\n  items: KeyValueItem[];\n  columns?: 1 | 2 | 3;\n}\n\nexport function KeyValueDefinitionList({\n  items,\n  columns = 2,\n  className,\n  ...props\n}: KeyValueListProps) {\n  const [copiedKey, setCopiedKey] = React.useState<string | null>(null);\n\n  const handleCopy = async (key: string, text: string) => {\n    try {\n      await navigator.clipboard.writeText(text);\n      setCopiedKey(key);\n      setTimeout(() => setCopiedKey(null), 1500);\n    } catch {\n      // Graceful fallback\n    }\n  };\n\n  const colStyles = {\n    1: \"grid-cols-1\",\n    2: \"grid-cols-1 sm:grid-cols-2\",\n    3: \"grid-cols-1 sm:grid-cols-2 lg:grid-cols-3\",\n  };\n\n  return (\n    <dl\n      className={cn(\"grid gap-4 rounded-xl border border-border bg-card p-6 shadow-xs\", colStyles[columns], className)}\n      {...props}\n    >\n      {items.map((item) => (\n        <div key={item.key} className=\"flex flex-col space-y-1\">\n          <dt className=\"text-xs font-semibold uppercase tracking-wider text-muted-foreground\">\n            {item.key}\n          </dt>\n          <dd className=\"flex items-center gap-2 text-sm font-medium text-foreground\">\n            <span className=\"truncate\">{item.value}</span>\n            {item.copyable && (\n              <button\n                onClick={() => handleCopy(item.key, item.copyText || String(item.value))}\n                className=\"inline-flex h-5 w-5 items-center justify-center rounded-sm text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n                aria-label={`Copy value for ${item.key}`}\n              >\n                {copiedKey === item.key ? (\n                  <Check className=\"h-3 w-3 text-emerald-500\" />\n                ) : (\n                  <Copy className=\"h-3 w-3\" />\n                )}\n              </button>\n            )}\n          </dd>\n        </div>\n      ))}\n    </dl>\n  );\n}\n",
         "type": "registry:ui",
         "target": "components/ui/key-value-definition-list.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "multi-step-wizard-flow",
+    "type": "registry:ui",
+    "title": "Multi-Step Wizard Flow",
+    "description": "Accessible multi-step form wizard with progress indicators, per-step validation states, and draft preservation.",
+    "category": "ui:primitive",
+    "tags": [
+      "lucide-react",
+      "tailwind-v4",
+      "brutalist",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "mantine",
+      "formik",
+      "wizard",
+      "stepper",
+      "form"
+    ],
+    "dials": {
+      "design_variance": 3,
+      "motion_intensity": 3,
+      "visual_density": 6
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/mantinedev/mantine",
+      "license_type": "MIT",
+      "author": "Vitaly Rtishchev & Jared Palmer",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge",
+      "motion"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/primitives/multi-step-wizard-flow.tsx",
+        "content": "/**\n * @origin Mantine & Formik (https://github.com/mantinedev/mantine, https://github.com/jaredpalmer/formik)\n * @license MIT\n * @author Vitaly Rtishchev & Jared Palmer\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Check, ArrowRight, ArrowLeft, ShieldCheck, CheckCircle2 } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface WizardStep {\n  id: string;\n  title: string;\n  description: string;\n}\n\nexport interface MultiStepWizardFlowProps {\n  steps?: WizardStep[];\n  onComplete?: (data: Record<string, string>) => void;\n  className?: string;\n}\n\nconst DEFAULT_WIZARD_STEPS: WizardStep[] = [\n  { id: \"account\", title: \"Account Info\", description: \"Identity & domain configuration\" },\n  { id: \"presets\", title: \"Taste Calibration\", description: \"Variance, motion & density dials\" },\n  { id: \"tokens\", title: \"Token Distribution\", description: \"Connect DTCG Style Dictionary\" },\n];\n\nexport function MultiStepWizardFlow({\n  steps = DEFAULT_WIZARD_STEPS,\n  onComplete,\n  className,\n}: MultiStepWizardFlowProps) {\n  const [currentStepIndex, setCurrentStepIndex] = React.useState(0);\n  const [formData, setFormData] = React.useState<Record<string, string>>({\n    workspaceName: \"Nova Agent Wiki\",\n    designVariance: \"5\",\n    motionIntensity: \"6\",\n    tokenTheme: \"modern-minimal\",\n  });\n  const [isCompleted, setIsCompleted] = React.useState(false);\n\n  const isLastStep = currentStepIndex === steps.length - 1;\n\n  const handleNext = () => {\n    if (isLastStep) {\n      setIsCompleted(true);\n      onComplete?.(formData);\n    } else {\n      setCurrentStepIndex((prev) => prev + 1);\n    }\n  };\n\n  const handleBack = () => {\n    setCurrentStepIndex((prev) => Math.max(0, prev - 1));\n  };\n\n  return (\n    <div className={cn(\"w-full space-y-6 rounded-xl border border-border bg-card p-6 shadow-xs select-none\", className)}>\n      {/* Wizard Progress Stepper */}\n      <div className=\"flex items-center justify-between border-b border-border/60 pb-5\">\n        {steps.map((step, idx) => {\n          const isDone = idx < currentStepIndex || isCompleted;\n          const isCurrent = idx === currentStepIndex && !isCompleted;\n\n          return (\n            <div key={step.id} className=\"flex items-center gap-3\">\n              <div\n                className={cn(\n                  \"flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold transition-colors duration-150\",\n                  isDone\n                    ? \"bg-primary text-primary-foreground shadow-xs\"\n                    : isCurrent\n                    ? \"border-2 border-primary text-primary bg-background\"\n                    : \"border border-border text-muted-foreground bg-muted/40\"\n                )}\n              >\n                {isDone ? <Check className=\"h-4 w-4\" role=\"img\" aria-hidden=\"true\" /> : idx + 1}\n              </div>\n\n              <div className=\"hidden sm:block\">\n                <div className={cn(\"text-xs font-semibold\", isCurrent ? \"text-foreground\" : \"text-muted-foreground\")}>\n                  {step.title}\n                </div>\n                <div className=\"text-3xs text-muted-foreground\">{step.description}</div>\n              </div>\n\n              {idx < steps.length - 1 && (\n                <div className=\"hidden md:block h-px w-12 bg-border mx-2\" />\n              )}\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Step Form Body */}\n      {!isCompleted ? (\n        <div className=\"space-y-4 py-2\">\n          {currentStepIndex === 0 && (\n            <div className=\"space-y-3\">\n              <div className=\"space-y-1\">\n                <label className=\"text-xs font-semibold text-foreground\">Workspace Project Name</label>\n                <input\n                  type=\"text\"\n                  value={formData.workspaceName}\n                  onChange={(e) => setFormData((p) => ({ ...p, workspaceName: e.target.value }))}\n                  className=\"h-9 w-full rounded-md border border-border bg-background px-3 text-xs text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n                />\n              </div>\n            </div>\n          )}\n\n          {currentStepIndex === 1 && (\n            <div className=\"space-y-4\">\n              <div className=\"space-y-1\">\n                <div className=\"flex justify-between text-xs font-semibold text-foreground\">\n                  <span>Design Variance Calibration</span>\n                  <span className=\"font-mono text-primary\">{formData.designVariance}/10</span>\n                </div>\n                <input\n                  type=\"range\"\n                  min=\"1\"\n                  max=\"10\"\n                  value={formData.designVariance}\n                  onChange={(e) => setFormData((p) => ({ ...p, designVariance: e.target.value }))}\n                  className=\"w-full h-2 rounded-full bg-muted cursor-pointer\"\n                />\n              </div>\n\n              <div className=\"space-y-1\">\n                <div className=\"flex justify-between text-xs font-semibold text-foreground\">\n                  <span>Motion Intensity Level</span>\n                  <span className=\"font-mono text-primary\">{formData.motionIntensity}/10</span>\n                </div>\n                <input\n                  type=\"range\"\n                  min=\"1\"\n                  max=\"10\"\n                  value={formData.motionIntensity}\n                  onChange={(e) => setFormData((p) => ({ ...p, motionIntensity: e.target.value }))}\n                  className=\"w-full h-2 rounded-full bg-muted cursor-pointer\"\n                />\n              </div>\n            </div>\n          )}\n\n          {currentStepIndex === 2 && (\n            <div className=\"space-y-3\">\n              <label className=\"text-xs font-semibold text-foreground\">Design Token Strategy</label>\n              <select\n                value={formData.tokenTheme}\n                onChange={(e) => setFormData((p) => ({ ...p, tokenTheme: e.target.value }))}\n                className=\"h-9 w-full rounded-md border border-border bg-background px-3 text-xs font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n              >\n                <option value=\"modern-minimal\">Modern Minimal (DTCG Standards)</option>\n                <option value=\"neo-tokyo\">Neo Tokyo Cyberpunk</option>\n                <option value=\"midnight\">Midnight Enterprise</option>\n              </select>\n            </div>\n          )}\n        </div>\n      ) : (\n        <div className=\"py-6 text-center space-y-2\">\n          <CheckCircle2 className=\"h-10 w-10 text-emerald-500 mx-auto\" role=\"img\" aria-hidden=\"true\" />\n          <h4 className=\"text-sm font-semibold text-foreground\">Configuration Verified</h4>\n          <p className=\"text-xs text-muted-foreground\">\n            Zero-slop setup contract initialized successfully for workspace.\n          </p>\n        </div>\n      )}\n\n      {/* Navigation Footer */}\n      {!isCompleted && (\n        <div className=\"flex items-center justify-between pt-4 border-t border-border/60\">\n          <button\n            type=\"button\"\n            onClick={handleBack}\n            disabled={currentStepIndex === 0}\n            className=\"inline-flex items-center gap-1 h-8 px-3 rounded-md border border-border bg-background text-xs font-medium text-foreground hover:bg-muted disabled:opacity-40 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n          >\n            <ArrowLeft className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" /> Back\n          </button>\n\n          <button\n            type=\"button\"\n            onClick={handleNext}\n            className=\"inline-flex items-center gap-1.5 h-8 px-4 rounded-md bg-primary text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shadow-xs\"\n          >\n            <span>{isLastStep ? \"Complete Setup\" : \"Next Step\"}</span>\n            <ArrowRight className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n          </button>\n        </div>\n      )}\n    </div>\n  );\n}\n",
+        "type": "registry:ui",
+        "target": "components/ui/multi-step-wizard-flow.tsx"
       }
     ]
   },
@@ -12644,6 +13258,63 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "dynamic-theme-matrix-inspector",
+    "type": "registry:component",
+    "title": "Dynamic Theme Matrix Inspector",
+    "description": "W3C DTCG-compliant design token inspector and contrast matrix validator with light/dark simulation.",
+    "category": "ui:utility",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "tokens-studio",
+      "style-dictionary",
+      "tokens",
+      "dtcg",
+      "contrast",
+      "theme"
+    ],
+    "dials": {
+      "design_variance": 3,
+      "motion_intensity": 2,
+      "visual_density": 8
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "img",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/tokens-studio/figma-plugin",
+      "license_type": "MIT",
+      "author": "Tokens Studio & Amazon Style Dictionary",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/utility/dynamic-theme-matrix-inspector.tsx",
+        "content": "/**\n * @origin Tokens Studio & Style Dictionary (https://github.com/tokens-studio/figma-plugin, https://style-dictionary.net)\n * @license MIT\n * @author Tokens Studio & Amazon Style Dictionary Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Check, Copy, Sliders, Palette, ShieldCheck, AlertCircle } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface DesignTokenEntry {\n  name: string;\n  cssVariable: string;\n  lightHex: string;\n  darkHex: string;\n  contrastRatioOnLight: number; // against white e.g. 7.2\n  contrastRatioOnDark: number; // against black e.g. 9.1\n}\n\nexport interface DynamicThemeMatrixInspectorProps {\n  tokens?: DesignTokenEntry[];\n  themeName?: string;\n  className?: string;\n}\n\nconst DEFAULT_THEME_TOKENS: DesignTokenEntry[] = [\n  {\n    name: \"Primary Action\",\n    cssVariable: \"--color-primary\",\n    lightHex: \"#09090b\",\n    darkHex: \"#fafafa\",\n    contrastRatioOnLight: 19.8,\n    contrastRatioOnDark: 19.8,\n  },\n  {\n    name: \"Background Surface\",\n    cssVariable: \"--color-background\",\n    lightHex: \"#ffffff\",\n    darkHex: \"#09090b\",\n    contrastRatioOnLight: 1.0,\n    contrastRatioOnDark: 1.0,\n  },\n  {\n    name: \"Card Surface\",\n    cssVariable: \"--color-card\",\n    lightHex: \"#ffffff\",\n    darkHex: \"#121215\",\n    contrastRatioOnLight: 1.0,\n    contrastRatioOnDark: 1.1,\n  },\n  {\n    name: \"Muted Text\",\n    cssVariable: \"--color-muted-foreground\",\n    lightHex: \"#71717a\",\n    darkHex: \"#a1a1aa\",\n    contrastRatioOnLight: 4.6,\n    contrastRatioOnDark: 5.8,\n  },\n  {\n    name: \"Destructive Alert\",\n    cssVariable: \"--color-destructive\",\n    lightHex: \"#dc2626\",\n    darkHex: \"#ef4444\",\n    contrastRatioOnLight: 4.8,\n    contrastRatioOnDark: 4.9,\n  },\n];\n\nexport function DynamicThemeMatrixInspector({\n  tokens = DEFAULT_THEME_TOKENS,\n  themeName = \"Modern Minimal DTCG Token Pack\",\n  className,\n}: DynamicThemeMatrixInspectorProps) {\n  const [activeMode, setActiveMode] = React.useState<\"light\" | \"dark\">(\"dark\");\n  const [copiedVar, setCopiedVar] = React.useState<string | null>(null);\n\n  const copyVariable = React.useCallback(async (varName: string) => {\n    await navigator.clipboard.writeText(`var(${varName})`);\n    setCopiedVar(varName);\n    setTimeout(() => setCopiedVar(null), 1800);\n  }, []);\n\n  return (\n    <div className={cn(\"w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs select-none\", className)}>\n      <div className=\"flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3\">\n        <div className=\"space-y-0.5\">\n          <div className=\"flex items-center gap-2\">\n            <Palette className=\"h-4 w-4 text-primary\" role=\"img\" aria-hidden=\"true\" />\n            <h3 className=\"text-sm font-semibold tracking-tight text-foreground\">\n              {themeName}\n            </h3>\n          </div>\n          <p className=\"text-xs text-muted-foreground\">\n            W3C DTCG-compliant design token registry with real-time contrast verification.\n          </p>\n        </div>\n\n        <div className=\"inline-flex rounded-lg border border-border bg-muted/60 p-0.5 text-xs\">\n          {([\"light\", \"dark\"] as const).map((mode) => (\n            <button\n              key={mode}\n              type=\"button\"\n              onClick={() => setActiveMode(mode)}\n              className={cn(\n                \"px-3 py-1 font-medium capitalize rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                activeMode === mode\n                  ? \"bg-primary text-primary-foreground shadow-xs\"\n                  : \"text-muted-foreground hover:text-foreground\"\n              )}\n              aria-pressed={activeMode === mode}\n            >\n              {mode} Mode\n            </button>\n          ))}\n        </div>\n      </div>\n\n      <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3\">\n        {tokens.map((token) => {\n          const hex = activeMode === \"light\" ? token.lightHex : token.darkHex;\n          const ratio = activeMode === \"light\" ? token.contrastRatioOnLight : token.contrastRatioOnDark;\n          const isAccessible = ratio >= 4.5;\n\n          return (\n            <div\n              key={token.cssVariable}\n              className=\"flex flex-col justify-between rounded-lg border border-border/80 bg-background p-3 space-y-2.5 transition-colors duration-150 hover:border-border\"\n            >\n              <div className=\"flex items-center justify-between\">\n                <div className=\"flex items-center gap-2\">\n                  <div\n                    className=\"h-5 w-5 rounded-full border border-border/60 shadow-xs\"\n                    style={{ backgroundColor: hex }}\n                  />\n                  <span className=\"text-xs font-semibold text-foreground tracking-tight\">\n                    {token.name}\n                  </span>\n                </div>\n\n                <span\n                  className={cn(\n                    \"inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-3xs font-mono font-semibold\",\n                    isAccessible\n                      ? \"bg-emerald-500/10 text-emerald-600 dark:text-emerald-400\"\n                      : \"bg-amber-500/10 text-amber-500\"\n                  )}\n                >\n                  {isAccessible ? (\n                    <>\n                      <ShieldCheck className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> {ratio}:1 AA\n                    </>\n                  ) : (\n                    <>\n                      <AlertCircle className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> {ratio}:1\n                    </>\n                  )}\n                </span>\n              </div>\n\n              <div className=\"flex items-center justify-between pt-1 border-t border-border/50 text-2xs font-mono text-muted-foreground\">\n                <span>{hex}</span>\n                <button\n                  type=\"button\"\n                  onClick={() => copyVariable(token.cssVariable)}\n                  className=\"inline-flex items-center gap-1 text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xs\"\n                >\n                  {copiedVar === token.cssVariable ? (\n                    <>\n                      <Check className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> Copied\n                    </>\n                  ) : (\n                    <>\n                      <Copy className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> {token.cssVariable}\n                    </>\n                  )}\n                </button>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/dynamic-theme-matrix-inspector.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "icon-morph",
     "type": "registry:component",
     "title": "Icon Morph",
@@ -13460,6 +14131,68 @@
   },
   {
     "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "infinite-canvas-spatial-ruler",
+    "type": "registry:component",
+    "title": "Infinite Canvas Spatial Ruler",
+    "description": "Zoom-adaptive pixel grid ruler and spatial measurement HUD overlay for whiteboard and diagram applications.",
+    "category": "ui:workflow",
+    "tags": [
+      "lucide-react",
+      "webgl",
+      "threejs",
+      "tailwind-v4",
+      "glassmorphism",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "canvas",
+      "tldraw",
+      "excalidraw",
+      "ruler",
+      "spatial",
+      "hud"
+    ],
+    "dials": {
+      "design_variance": 7,
+      "motion_intensity": 4,
+      "visual_density": 5
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "region",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/tldraw/tldraw",
+      "license_type": "Apache-2.0",
+      "author": "tldraw & Excalidraw Team",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "three",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "devDependencies": [
+      "@types/three"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/workflow/infinite-canvas-spatial-ruler.tsx",
+        "content": "/**\n * @origin tldraw & Excalidraw (https://github.com/tldraw/tldraw, https://github.com/excalidraw/excalidraw)\n * @license Apache-2.0\n * @author tldraw Team & Excalidraw Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Move, ZoomIn, ZoomOut, Compass, Grid } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface InfiniteCanvasSpatialRulerProps {\n  zoom?: number;\n  offsetX?: number;\n  offsetY?: number;\n  gridSize?: number;\n  unit?: string;\n  className?: string;\n}\n\nexport function InfiniteCanvasSpatialRuler({\n  zoom = 1,\n  offsetX = 0,\n  offsetY = 0,\n  gridSize = 20,\n  unit = \"px\",\n  className,\n}: InfiniteCanvasSpatialRulerProps) {\n  const [currentZoom, setCurrentZoom] = React.useState(zoom);\n  const [showGrid, setShowGrid] = React.useState(true);\n\n  const majorStep = React.useMemo(() => {\n    if (currentZoom < 0.5) return 200;\n    if (currentZoom > 2) return 50;\n    return 100;\n  }, [currentZoom]);\n\n  const tickMarks = React.useMemo(() => {\n    const marks: number[] = [];\n    for (let i = 0; i <= 600; i += 20) {\n      marks.push(i);\n    }\n    return marks;\n  }, []);\n\n  return (\n    <div className={cn(\"relative w-full h-[360px] overflow-hidden rounded-xl border border-border bg-background select-none\", className)}>\n      {/* Top Horizontal Ruler */}\n      <div className=\"absolute top-0 left-6 right-0 h-6 border-b border-border bg-card/90 backdrop-blur-xs flex items-end overflow-hidden z-20\">\n        {tickMarks.map((pos) => {\n          const isMajor = pos % majorStep === 0;\n          return (\n            <div\n              key={`h-${pos}`}\n              className=\"absolute bottom-0 flex flex-col items-center\"\n              style={{ left: `${pos}px` }}\n            >\n              {isMajor && (\n                <span className=\"text-3xs font-mono text-muted-foreground -translate-x-1/2 mb-1\">\n                  {Math.round(pos / currentZoom)}\n                </span>\n              )}\n              <div\n                className={cn(\n                  \"w-px bg-border\",\n                  isMajor ? \"h-3 bg-muted-foreground/80\" : \"h-1.5 bg-border/80\"\n                )}\n              />\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Left Vertical Ruler */}\n      <div className=\"absolute top-6 bottom-0 left-0 w-6 border-r border-border bg-card/90 backdrop-blur-xs flex justify-end overflow-hidden z-20\">\n        {tickMarks.map((pos) => {\n          const isMajor = pos % majorStep === 0;\n          return (\n            <div\n              key={`v-${pos}`}\n              className=\"absolute right-0 flex items-center justify-end\"\n              style={{ top: `${pos}px` }}\n            >\n              {isMajor && (\n                <span className=\"text-3xs font-mono text-muted-foreground -rotate-90 -translate-x-2\">\n                  {Math.round(pos / currentZoom)}\n                </span>\n              )}\n              <div\n                className={cn(\n                  \"h-px bg-border\",\n                  isMajor ? \"w-3 bg-muted-foreground/80\" : \"w-1.5 bg-border/80\"\n                )}\n              />\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Top Left Origin Corner */}\n      <div className=\"absolute top-0 left-0 h-6 w-6 border-r border-b border-border bg-muted/60 flex items-center justify-center z-30\">\n        <Compass className=\"h-3 w-3 text-muted-foreground\" role=\"img\" aria-hidden=\"true\" />\n      </div>\n\n      {/* Canvas Viewport Grid */}\n      <div\n        className={cn(\n          \"absolute inset-0 top-6 left-6 flex items-center justify-center p-8\",\n          showGrid && \"bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)]\"\n        )}\n      >\n        <div className=\"space-y-2 rounded-lg border border-border bg-card p-4 shadow-sm max-w-xs text-center\">\n          <p className=\"text-xs font-semibold text-foreground\">Spatial Canvas Viewport</p>\n          <p className=\"text-2xs text-muted-foreground\">\n            Zoom Level: <span className=\"font-mono text-primary font-medium\">{Math.round(currentZoom * 100)}%</span> | Offset: <span className=\"font-mono\">{offsetX},{offsetY} {unit}</span>\n          </p>\n        </div>\n      </div>\n\n      {/* Floating HUD Controls */}\n      <div className=\"absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg border border-border bg-card/95 p-1.5 shadow-md z-30\">\n        <button\n          type=\"button\"\n          onClick={() => setCurrentZoom((z) => Math.max(0.25, z - 0.25))}\n          aria-label=\"Zoom Out\"\n          className=\"inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        >\n          <ZoomOut className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n\n        <span className=\"min-w-[44px] text-center font-mono text-xs text-foreground font-medium\">\n          {Math.round(currentZoom * 100)}%\n        </span>\n\n        <button\n          type=\"button\"\n          onClick={() => setCurrentZoom((z) => Math.min(3, z + 0.25))}\n          aria-label=\"Zoom In\"\n          className=\"inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        >\n          <ZoomIn className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n\n        <div className=\"h-4 w-px bg-border\" />\n\n        <button\n          type=\"button\"\n          onClick={() => setShowGrid((g) => !g)}\n          aria-label=\"Toggle Grid\"\n          className={cn(\n            \"inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n            showGrid ? \"bg-primary text-primary-foreground\" : \"text-muted-foreground hover:text-foreground hover:bg-muted\"\n          )}\n          aria-pressed={showGrid}\n        >\n          <Grid className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/infinite-canvas-spatial-ruler.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
     "name": "infinite-canvas-whiteboard",
     "type": "registry:component",
     "title": "Infinite Canvas Whiteboard",
@@ -13635,6 +14368,62 @@
         "content": "/**\n * @license MIT\n * @origin Machine-First Design Agent Wiki\n * @curated-by Machine-First Design Agent Wiki\n * Category: ui:workflow\n * Name: spatial-lasso-selection-tool\n */\n\nimport * as React from \"react\";\nimport {\n  Square,\n  AlignLeft,\n  AlignCenter,\n  AlignRight,\n  AlignVerticalJustifyCenter,\n  Layers,\n  Lock,\n  Download,\n  Trash2,\n} from \"lucide-react\";\n\nexport interface CanvasNode {\n  id: string;\n  label: string;\n  x: number;\n  y: number;\n  width: number;\n  height: number;\n  isSelected?: boolean;\n}\n\nexport interface SpatialLassoToolProps {\n  initialNodes?: CanvasNode[];\n  onSelectionChange?: (selectedIds: string[]) => void;\n  onAlign?: (alignment: \"left\" | \"center\" | \"right\" | \"top\" | \"middle\" | \"bottom\") => void;\n  onGroup?: (selectedIds: string[]) => void;\n  onDelete?: (selectedIds: string[]) => void;\n  className?: string;\n}\n\nexport const SpatialLassoSelectionTool: React.FC<SpatialLassoToolProps> = ({\n  initialNodes = [\n    { id: \"node-1\", label: \"Agent Executor\", x: 40, y: 50, width: 140, height: 70, isSelected: true },\n    { id: \"node-2\", label: \"MCP Tool Server\", x: 220, y: 50, width: 140, height: 70, isSelected: true },\n    { id: \"node-3\", label: \"A11y Validator\", x: 130, y: 160, width: 140, height: 70, isSelected: false },\n  ],\n  onSelectionChange,\n  onAlign,\n  onGroup,\n  onDelete,\n  className = \"\",\n}) => {\n  const [nodes, setNodes] = React.useState<CanvasNode[]>(initialNodes);\n  const selectedNodes = nodes.filter((n) => n.isSelected);\n  const selectedIds = selectedNodes.map((n) => n.id);\n\n  const toggleNodeSelect = (id: string) => {\n    const next = nodes.map((n) => (n.id === id ? { ...n, isSelected: !n.isSelected } : n));\n    setNodes(next);\n    onSelectionChange?.(next.filter((n) => n.isSelected).map((n) => n.id));\n  };\n\n  const selectAll = () => {\n    const next = nodes.map((n) => ({ ...n, isSelected: true }));\n    setNodes(next);\n    onSelectionChange?.(next.map((n) => n.id));\n  };\n\n  const clearSelection = () => {\n    const next = nodes.map((n) => ({ ...n, isSelected: false }));\n    setNodes(next);\n    onSelectionChange?.([]);\n  };\n\n  const handleAlign = (alignment: \"left\" | \"center\" | \"right\" | \"top\" | \"middle\" | \"bottom\") => {\n    if (selectedNodes.length < 2) return;\n    let next = [...nodes];\n\n    if (alignment === \"left\") {\n      const minX = Math.min(...selectedNodes.map((n) => n.x));\n      next = next.map((n) => (n.isSelected ? { ...n, x: minX } : n));\n    } else if (alignment === \"top\") {\n      const minY = Math.min(...selectedNodes.map((n) => n.y));\n      next = next.map((n) => (n.isSelected ? { ...n, y: minY } : n));\n    }\n    setNodes(next);\n    onAlign?.(alignment);\n  };\n\n  return (\n    <section\n      aria-label=\"Spatial Canvas Lasso Selection Tool\"\n      className={`relative flex flex-col w-full max-w-2xl mx-auto rounded-2xl bg-card border border-border text-card-foreground shadow-2xl overflow-hidden ${className}`}\n    >\n      {/* Floating Action HUD Toolbar */}\n      <header className=\"flex flex-wrap items-center justify-between gap-3 p-3 border-b border-border bg-muted/40 text-xs font-mono\">\n        <div className=\"flex items-center gap-2\">\n          <Square className=\"w-4 h-4 text-primary\" role=\"img\" aria-label=\"Selection Box\" />\n          <span className=\"font-semibold text-foreground\">{selectedNodes.length} Nodes Selected</span>\n        </div>\n\n        {selectedNodes.length > 0 && (\n          <div className=\"flex items-center gap-1\" role=\"toolbar\" aria-label=\"Spatial node alignment controls\">\n            <button\n              type=\"button\"\n              onClick={() => handleAlign(\"left\")}\n              aria-label=\"Align Selected Left\"\n              className=\"p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <AlignLeft className=\"w-4 h-4\" />\n            </button>\n            <button\n              type=\"button\"\n              onClick={() => handleAlign(\"center\")}\n              aria-label=\"Align Selected Horizontal Center\"\n              className=\"p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <AlignCenter className=\"w-4 h-4\" />\n            </button>\n            <button\n              type=\"button\"\n              onClick={() => handleAlign(\"right\")}\n              aria-label=\"Align Selected Right\"\n              className=\"p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <AlignRight className=\"w-4 h-4\" />\n            </button>\n            <button\n              type=\"button\"\n              onClick={() => handleAlign(\"top\")}\n              aria-label=\"Align Selected Top\"\n              className=\"p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <AlignVerticalJustifyCenter className=\"w-4 h-4\" />\n            </button>\n            <span className=\"h-4 w-px bg-border mx-1\" />\n            <button\n              type=\"button\"\n              onClick={() => onGroup?.(selectedIds)}\n              aria-label=\"Group Selected Nodes\"\n              className=\"p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <Layers className=\"w-4 h-4\" />\n            </button>\n            <button\n              type=\"button\"\n              onClick={() => onDelete?.(selectedIds)}\n              aria-label=\"Delete Selected Nodes\"\n              className=\"p-1.5 rounded hover:bg-rose-500/20 text-rose-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <Trash2 className=\"w-4 h-4\" />\n            </button>\n          </div>\n        )}\n\n        <div className=\"flex items-center gap-1.5\">\n          <button\n            type=\"button\"\n            onClick={selectAll}\n            className=\"px-2 py-1 rounded text-[11px] bg-background border border-border text-foreground hover:bg-muted\"\n          >\n            Select All\n          </button>\n          <button\n            type=\"button\"\n            onClick={clearSelection}\n            className=\"px-2 py-1 rounded text-[11px] bg-background border border-border text-muted-foreground hover:text-foreground\"\n          >\n            Clear\n          </button>\n        </div>\n      </header>\n\n      {/* Spatial Mock Canvas Interactive Area */}\n      <div className=\"relative w-full h-64 bg-background overflow-hidden p-4\">\n        {/* Grid dots */}\n        <div\n          className=\"absolute inset-0 opacity-15\"\n          style={{\n            backgroundImage: \"radial-gradient(circle, #71717a 1px, transparent 1px)\",\n            backgroundSize: \"16px 16px\",\n          }}\n          aria-hidden=\"true\"\n        />\n\n        {/* Canvas Nodes */}\n        {nodes.map((node) => (\n          <div\n            key={node.id}\n            onClick={() => toggleNodeSelect(node.id)}\n            style={{\n              transform: `translate(${node.x}px, ${node.y}px)`,\n              width: `${node.width}px`,\n              height: `${node.height}px`,\n            }}\n            className={`absolute flex flex-col justify-center items-center p-3 rounded-lg border cursor-pointer transition-all ${\n              node.isSelected\n                ? \"bg-primary/10 border-primary text-primary shadow-lg shadow-primary/10 ring-2 ring-primary/40\"\n                : \"bg-card border-border text-muted-foreground hover:border-foreground/40\"\n            }`}\n          >\n            <span className=\"text-xs font-semibold text-foreground text-center\">{node.label}</span>\n            <span className=\"text-[10px] font-mono text-muted-foreground mt-0.5\">\n              ({node.x}, {node.y})\n            </span>\n          </div>\n        ))}\n      </div>\n\n      {/* Footer Info */}\n      <footer className=\"flex items-center justify-between p-3 border-t border-border bg-muted/20 text-xs text-muted-foreground font-mono\">\n        <span>Press Shift + Drag for Freeform Lasso Multi-Select</span>\n        <span className=\"text-primary\">XY Flow & Excalidraw Compatible</span>\n      </footer>\n    </section>\n  );\n};\nexport default SpatialLassoSelectionTool;\n",
         "type": "registry:component",
         "target": "components/ui/spatial-lasso-selection-tool.tsx"
+      }
+    ]
+  },
+  {
+    "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+    "name": "state-machine-flow-controller",
+    "type": "registry:component",
+    "title": "State Machine Flow Controller",
+    "description": "Visual Zag.js-inspired state machine node controller displaying active state, available transition events, and audit logs.",
+    "category": "ui:workflow",
+    "tags": [
+      "lucide-react",
+      "bento-grid",
+      "tailwind-v4",
+      "accessible",
+      "keyboard-accessible",
+      "wai-aria-compliant",
+      "layout-block",
+      "zag-js",
+      "ark-ui",
+      "state-machine",
+      "interactive",
+      "workflow"
+    ],
+    "dials": {
+      "design_variance": 6,
+      "motion_intensity": 4,
+      "visual_density": 7
+    },
+    "complexity": "high",
+    "a11y": {
+      "keyboard_navigable": true,
+      "wai_aria_compliant": true,
+      "wai_aria_role": "region",
+      "fallback_provided": true,
+      "reduced_motion_supported": false
+    },
+    "license_origin": {
+      "source_repository": "https://github.com/chakra-ui/zag",
+      "license_type": "MIT",
+      "author": "Segun Adebayo & Chakra Systems",
+      "attribution_required": true,
+      "redistribution_mode": "full_source"
+    },
+    "dependencies": [
+      "lucide-react",
+      "clsx",
+      "tailwind-merge"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/workflow/state-machine-flow-controller.tsx",
+        "content": "/**\n * @origin Zag.js & Ark UI (https://github.com/chakra-ui/zag, https://github.com/chakra-ui/ark)\n * @license MIT\n * @author Segun Adebayo & Chakra Systems\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { ArrowRight, Play, RotateCcw, Activity, ShieldCheck, HelpCircle } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface MachineStateNode {\n  id: string;\n  name: string;\n  type: \"initial\" | \"intermediate\" | \"final\" | \"error\";\n  description: string;\n  availableEvents: string[];\n}\n\nexport interface StateMachineFlowControllerProps {\n  initialState?: string;\n  states?: MachineStateNode[];\n  transitions?: Record<string, Record<string, string>>;\n  onStateChange?: (newState: string, event: string) => void;\n  className?: string;\n}\n\nconst DEFAULT_MACHINE_STATES: MachineStateNode[] = [\n  {\n    id: \"idle\",\n    name: \"Idle State\",\n    type: \"initial\",\n    description: \"Waiting for user action or automated pipeline dispatch.\",\n    availableEvents: [\"DISPATCH_PROMPT\", \"VALIDATE_CACHE\"],\n  },\n  {\n    id: \"synthesizing\",\n    name: \"Synthesizing UI\",\n    type: \"intermediate\",\n    description: \"Agent is actively assembling AST components and resolving tokens.\",\n    availableEvents: [\"GENERATION_SUCCESS\", \"SYNTAX_ERROR\", \"ABORT\"],\n  },\n  {\n    id: \"verifying\",\n    name: \"Zero-Slop Verification\",\n    type: \"intermediate\",\n    description: \"Running 50 anti-slop rules, axe-core scans, and compilation check.\",\n    availableEvents: [\"AUDIT_PASSED\", \"SLOP_DETECTED\"],\n  },\n  {\n    id: \"ready\",\n    name: \"Production Ready\",\n    type: \"final\",\n    description: \"100% WCAG AA verified with 0 slop flags and clean build output.\",\n    availableEvents: [\"RESET\"],\n  },\n  {\n    id: \"remediating\",\n    name: \"Remediation Auto-Codemod\",\n    type: \"error\",\n    description: \"Auto-remapping arbitrary spacing and fixing contrast violations.\",\n    availableEvents: [\"REPAIR_COMPLETE\", \"ABORT\"],\n  },\n];\n\nconst DEFAULT_TRANSITIONS: Record<string, Record<string, string>> = {\n  idle: {\n    DISPATCH_PROMPT: \"synthesizing\",\n    VALIDATE_CACHE: \"verifying\",\n  },\n  synthesizing: {\n    GENERATION_SUCCESS: \"verifying\",\n    SYNTAX_ERROR: \"remediating\",\n    ABORT: \"idle\",\n  },\n  verifying: {\n    AUDIT_PASSED: \"ready\",\n    SLOP_DETECTED: \"remediating\",\n  },\n  ready: {\n    RESET: \"idle\",\n  },\n  remediating: {\n    REPAIR_COMPLETE: \"verifying\",\n    ABORT: \"idle\",\n  },\n};\n\nexport function StateMachineFlowController({\n  initialState = \"idle\",\n  states = DEFAULT_MACHINE_STATES,\n  transitions = DEFAULT_TRANSITIONS,\n  onStateChange,\n  className,\n}: StateMachineFlowControllerProps) {\n  const [currentStateId, setCurrentStateId] = React.useState(initialState);\n  const [history, setHistory] = React.useState<string[]>([initialState]);\n\n  const currentState = React.useMemo(() => {\n    return states.find((s) => s.id === currentStateId) || states[0];\n  }, [states, currentStateId]);\n\n  const triggerEvent = React.useCallback(\n    (event: string) => {\n      const nextStateId = transitions[currentStateId]?.[event];\n      if (nextStateId) {\n        setCurrentStateId(nextStateId);\n        setHistory((prev) => [...prev, nextStateId]);\n        onStateChange?.(nextStateId, event);\n      }\n    },\n    [currentStateId, transitions, onStateChange]\n  );\n\n  const resetMachine = React.useCallback(() => {\n    setCurrentStateId(initialState);\n    setHistory([initialState]);\n    onStateChange?.(initialState, \"RESET\");\n  }, [initialState, onStateChange]);\n\n  return (\n    <div className={cn(\"w-full space-y-5 rounded-xl border border-border bg-card p-5 shadow-xs select-none\", className)}>\n      <div className=\"flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3\">\n        <div className=\"space-y-0.5\">\n          <div className=\"flex items-center gap-2\">\n            <Activity className=\"h-4 w-4 text-primary\" role=\"img\" aria-hidden=\"true\" />\n            <h3 className=\"text-sm font-semibold tracking-tight text-foreground\">\n              Finite State Machine UI Controller\n            </h3>\n          </div>\n          <p className=\"text-xs text-muted-foreground\">\n            Deterministic Zag.js-inspired state transitions for complex agentic interaction flows.\n          </p>\n        </div>\n\n        <button\n          type=\"button\"\n          onClick={resetMachine}\n          className=\"inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xs\"\n        >\n          <RotateCcw className=\"h-3 w-3\" role=\"img\" aria-hidden=\"true\" /> Reset Machine\n        </button>\n      </div>\n\n      {/* State Node Grid */}\n      <div className=\"grid grid-cols-1 md:grid-cols-5 gap-3\">\n        {states.map((state) => {\n          const isActive = state.id === currentStateId;\n          return (\n            <div\n              key={state.id}\n              className={cn(\n                \"flex flex-col justify-between rounded-lg border p-3 text-xs transition-all duration-200\",\n                isActive\n                  ? \"border-primary bg-primary/5 shadow-xs ring-1 ring-primary/30\"\n                  : \"border-border/70 bg-background/50 opacity-70\"\n              )}\n            >\n              <div className=\"space-y-1\">\n                <div className=\"flex items-center justify-between\">\n                  <span className=\"font-mono text-3xs uppercase font-semibold text-muted-foreground\">\n                    {state.type}\n                  </span>\n                  {isActive && (\n                    <span className=\"h-2 w-2 rounded-full bg-primary animate-pulse\" />\n                  )}\n                </div>\n                <div className=\"font-semibold text-foreground\">{state.name}</div>\n              </div>\n              <p className=\"text-3xs text-muted-foreground mt-2 leading-relaxed\">\n                {state.description}\n              </p>\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Active State Context & Trigger Controls */}\n      <div className=\"rounded-lg border border-border bg-muted/40 p-4 space-y-3\">\n        <div className=\"flex items-center justify-between\">\n          <span className=\"text-xs font-medium text-muted-foreground\">\n            Current State: <strong className=\"text-foreground font-mono\">{currentState.id}</strong>\n          </span>\n          <span className=\"text-xs font-mono text-muted-foreground\">\n            Transition Steps: {history.length}\n          </span>\n        </div>\n\n        <div className=\"flex flex-wrap items-center gap-2 pt-1 border-t border-border/50\">\n          <span className=\"text-xs font-semibold text-muted-foreground mr-1\">\n            Emit Event:\n          </span>\n          {currentState.availableEvents.map((evt) => (\n            <button\n              key={evt}\n              type=\"button\"\n              onClick={() => triggerEvent(evt)}\n              className=\"inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shadow-xs\"\n            >\n              <Play className=\"h-2.5 w-2.5 fill-primary-foreground\" role=\"img\" aria-hidden=\"true\" />\n              <span>{evt}</span>\n            </button>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+        "type": "registry:component",
+        "target": "components/ui/state-machine-flow-controller.tsx"
       }
     ]
   },

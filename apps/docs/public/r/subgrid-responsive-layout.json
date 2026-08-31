@@ -1,0 +1,56 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "subgrid-responsive-layout",
+  "type": "registry:block",
+  "title": "Subgrid Responsive Layout",
+  "description": "CSS Subgrid and Container Query card layout with aligned headers, feature checklists, and footer actions across columns.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "gui-challenges",
+    "subgrid",
+    "container-queries",
+    "marketing",
+    "cards"
+  ],
+  "dials": {
+    "design_variance": 5,
+    "motion_intensity": 2,
+    "visual_density": 6
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/argyleink/gui-challenges",
+    "license_type": "Apache-2.0",
+    "author": "Adam Argyle & Google Chrome Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/subgrid-responsive-layout.tsx",
+      "content": "/**\n * @origin Google GUI Challenges (https://github.com/argyleink/gui-challenges)\n * @license Apache-2.0\n * @author Adam Argyle & Google Chrome Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { ArrowRight, Check, Sparkles, Shield, Zap } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface SubgridCardItem {\n  id: string;\n  badge: string;\n  title: string;\n  description: string;\n  features: string[];\n  ctaText: string;\n  isPopular?: boolean;\n}\n\nexport interface SubgridResponsiveLayoutProps {\n  title?: string;\n  description?: string;\n  items?: SubgridCardItem[];\n  className?: string;\n}\n\nconst DEFAULT_SUBGRID_ITEMS: SubgridCardItem[] = [\n  {\n    id: \"tier-core\",\n    badge: \"Core Primitive\",\n    title: \"Deterministic UI Foundation\",\n    description: \"Pre-tested, accessible components with zero runtime CSS collisions and full token alignment.\",\n    features: [\"100% WCAG 2.1 AA Compliant\", \"React 19 & Tailwind v4 Native\", \"Zero AI Slop AST Guarantee\"],\n    ctaText: \"Install Primitives\",\n  },\n  {\n    id: \"tier-agent\",\n    badge: \"Agent Optimized\",\n    title: \"Autonomous MCP Orchestration\",\n    description: \"Cloudflare Edge Model Context Protocol endpoints engineered specifically for developer agents.\",\n    features: [\"< 15KB Compact Payload Budget\", \"Topological Dependency Resolution\", \"Zero-Draft Fidelity Benchmarking\"],\n    ctaText: \"Connect via MCP\",\n    isPopular: true,\n  },\n  {\n    id: \"tier-enterprise\",\n    badge: \"Enterprise Scale\",\n    title: \"Design System Governance\",\n    description: \"Cross-platform W3C DTCG design token synchronization and automated visual regression gates.\",\n    features: [\"Playwright & Axe-Core CI Scans\", \"Multi-Tenant Theme Matrices\", \"SPDX License Header Enforcement\"],\n    ctaText: \"Deploy Enterprise Pack\",\n  },\n];\n\nexport function SubgridResponsiveLayout({\n  title = \"Modular Architectural Systems\",\n  description = \"Engineered using CSS Subgrid & Container Queries for perfectly aligned card grids across all viewports.\",\n  items = DEFAULT_SUBGRID_ITEMS,\n  className,\n}: SubgridResponsiveLayoutProps) {\n  return (\n    <section className={cn(\"w-full space-y-8 py-8 select-none\", className)}>\n      <div className=\"text-center space-y-2 max-w-2xl mx-auto\">\n        <h2 className=\"text-2xl font-bold tracking-tight text-foreground sm:text-3xl\">\n          {title}\n        </h2>\n        <p className=\"text-sm text-muted-foreground\">\n          {description}\n        </p>\n      </div>\n\n      {/* Responsive Subgrid Card Container */}\n      <div className=\"grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[auto]\">\n        {items.map((item) => (\n          <div\n            key={item.id}\n            className={cn(\n              \"group relative flex flex-col justify-between rounded-xl border border-border bg-card p-6 shadow-xs transition-colors duration-200 hover:border-primary/50\",\n              item.isPopular && \"border-primary shadow-sm bg-card/95 ring-1 ring-primary/20\"\n            )}\n          >\n            {item.isPopular && (\n              <span className=\"absolute -top-3 left-6 inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-0.5 text-2xs font-semibold text-primary-foreground shadow-xs\">\n                <Sparkles className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> Most Popular\n              </span>\n            )}\n\n            <div className=\"space-y-4\">\n              <div className=\"space-y-1.5\">\n                <span className=\"text-2xs font-mono font-semibold uppercase tracking-wider text-muted-foreground\">\n                  {item.badge}\n                </span>\n                <h3 className=\"text-base font-semibold tracking-tight text-foreground\">\n                  {item.title}\n                </h3>\n              </div>\n\n              <p className=\"text-xs text-muted-foreground leading-relaxed\">\n                {item.description}\n              </p>\n\n              <ul className=\"space-y-2 pt-2 border-t border-border/60 text-xs text-foreground/90\">\n                {item.features.map((feat) => (\n                  <li key={feat} className=\"flex items-center gap-2\">\n                    <Check className=\"h-3.5 w-3.5 text-primary shrink-0\" role=\"img\" aria-hidden=\"true\" />\n                    <span>{feat}</span>\n                  </li>\n                ))}\n              </ul>\n            </div>\n\n            <div className=\"pt-6 mt-auto\">\n              <button\n                type=\"button\"\n                className={cn(\n                  \"w-full inline-flex items-center justify-center gap-1.5 h-9 rounded-lg text-xs font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                  item.isPopular\n                    ? \"bg-primary text-primary-foreground hover:bg-primary/90 shadow-xs\"\n                    : \"border border-border bg-background hover:bg-muted text-foreground\"\n                )}\n              >\n                <span>{item.ctaText}</span>\n                <ArrowRight className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n              </button>\n            </div>\n          </div>\n        ))}\n      </div>\n    </section>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/subgrid-responsive-layout.tsx"
+    }
+  ]
+}

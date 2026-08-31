@@ -7,9 +7,13 @@
 - Raw Markdown Docs: /raw/components/[slug]
 - MCP Server: npx @design-wiki/mcp
 
-## Available Registry Components (268 verified zero-slop items)
+## Available Registry Components (282 verified zero-slop items)
 
 ### Category: ui:ai-native
+- [ai-agent-evaluation-scoreboard](/r/ai-agent-evaluation-scoreboard.json): Multi-model benchmark leaderboard showing first-run compilation rates, slop health scores, latency, and cost per prompt. (Variance: 6, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, benchmark, evaluation, scoreboard, analytics
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/ai-agent-evaluation-scoreboard.json
 - [ai-artifact-sandbox-iframe](/r/ai-artifact-sandbox-iframe.json): Split-screen live preview canvas with responsive device switcher, code/preview toggle, and version history diff slider. (Variance: 7, Motion: 4, Density: 6)
   - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, ai-native, agent-ui, artifact-sandbox, preview, iframe, 21st-dev
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -66,6 +70,14 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, ai, loader, stepper, agent, kokonutui, aceternity, progress
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/multi-step-agent-loader.json
+- [split-pane-code-preview-comparator](/r/split-pane-code-preview-comparator.json): Side-by-side AST before/after unslop code comparator with health score deltas and instant copy action. (Variance: 6, Motion: 3, Density: 7)
+  - Tags: lucide-react, bento-grid, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, layout-block, unslop, anti-slop, code-diff, comparator, ast-refactor
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/split-pane-code-preview-comparator.json
+- [visual-diff-regression-viewer](/r/visual-diff-regression-viewer.json): Pixel-level screenshot and layout comparison gate with split slider, side-by-side, and difference blend modes. (Variance: 6, Motion: 3, Density: 7)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, visual-qa, testing, regression, diff-viewer, playwright
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/visual-diff-regression-viewer.json
 - [voice-call-session-hud](/r/voice-call-session-hud.json): Real-time AI voice agent call overlay with live audio reactive ring, turn-taking status indicators, interrupt controls, and transcript drawer. (Variance: 6, Motion: 6, Density: 6)
   - Tags: lucide-react, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, voice-agent, webrtc, audio-hud, ai-native, turn-taking, interruption
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -212,6 +224,10 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, radix-primitives, accordion, disclosure, headless, a11y
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/accordion.json
+- [adaptive-touch-slider](/r/adaptive-touch-slider.json): Accessible touch and gesture-aware dual slider primitive with discrete step snapping and WAI-ARIA values. (Variance: 3, Motion: 3, Density: 6)
+  - Tags: tailwind-v4, brutalist, keyboard-accessible, wai-aria-compliant, gui-challenges, react-spectrum, slider, touch, accessible, range
+  - Dependencies: clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/adaptive-touch-slider.json
 - [avatar](/r/avatar.json): Fallback-aware image avatar with initials display and smooth loading states. (Variance: 2, Motion: 1, Density: 6)
   - Tags: radix-primitives, headless, wai-aria-compliant, avatar, image
   - Dependencies: @radix-ui/react-avatar, clsx, tailwind-merge
@@ -292,6 +308,10 @@
   - Tags: accessible, keyboard-accessible, wai-aria-compliant, utility, react, tailwind-v4, headless, form, input
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/input.json
+- [interactive-matrix-filter-pill-group](/r/interactive-matrix-filter-pill-group.json): Keyboard-navigable faceted pill group with multi-select tag toggles, count badges, and clear-all triggers. (Variance: 3, Motion: 2, Density: 7)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, editorial, primer, heroui, filter-pills, faceted, tags
+  - Dependencies: lucide-react, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-matrix-filter-pill-group.json
 - [interactive-pagination-bar](/r/interactive-pagination-bar.json): Curated production-grade component. (Variance: 3, Motion: 2, Density: 8)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
   - Dependencies: lucide-react
@@ -300,6 +320,10 @@
   - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant
   - Dependencies: lucide-react
   - Install: npx shadcn@latest add http://localhost:3000/r/key-value-definition-list.json
+- [multi-step-wizard-flow](/r/multi-step-wizard-flow.json): Accessible multi-step form wizard with progress indicators, per-step validation states, and draft preservation. (Variance: 3, Motion: 3, Density: 6)
+  - Tags: lucide-react, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, mantine, formik, wizard, stepper, form
+  - Dependencies: lucide-react, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/multi-step-wizard-flow.json
 - [multi-tag-input](/r/multi-tag-input.json): Keyboard-navigable badge input with tag creation, backspace deletion, autocomplete suggestions, and duplicate prevention. (Variance: 3, Motion: 3, Density: 7)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, form, tags, multi-input, autocomplete, shark-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -410,6 +434,10 @@
   - Tags: lucide-react, webgl, threejs, canvas, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, workflow, whiteboard, sketch, excalidraw
   - Dependencies: lucide-react, three, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/embedded-whiteboard.json
+- [infinite-canvas-spatial-ruler](/r/infinite-canvas-spatial-ruler.json): Zoom-adaptive pixel grid ruler and spatial measurement HUD overlay for whiteboard and diagram applications. (Variance: 7, Motion: 4, Density: 5)
+  - Tags: lucide-react, webgl, threejs, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, canvas, tldraw, excalidraw, ruler, spatial, hud
+  - Dependencies: lucide-react, three, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/infinite-canvas-spatial-ruler.json
 - [spatial-canvas-hud](/r/spatial-canvas-hud.json): Floating viewport HUD overlay with zoom level slider, pan reset, snapping grid toggle, and layer management. (Variance: 7, Motion: 4, Density: 7)
   - Tags: lucide-react, webgl, threejs, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, canvas, hud, viewport, zoom, tldraw, xyflow, spatial
   - Dependencies: lucide-react, clsx, tailwind-merge, three
@@ -418,6 +446,10 @@
   - Tags: lucide-react, webgl, threejs, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, canvas, spatial, lasso, selection, workflow, excalidraw
   - Dependencies: lucide-react, three, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/spatial-lasso-selection-tool.json
+- [state-machine-flow-controller](/r/state-machine-flow-controller.json): Visual Zag.js-inspired state machine node controller displaying active state, available transition events, and audit logs. (Variance: 6, Motion: 4, Density: 7)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, zag-js, ark-ui, state-machine, interactive, workflow
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/state-machine-flow-controller.json
 - [workflow-minimap-controls](/r/workflow-minimap-controls.json): Floating viewport toolbar with zoom in/out, fit-view, and canvas reset controls. (Variance: 5, Motion: 3, Density: 7)
   - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, workflow, node-graph, minimap, zoom, canvas, xyflow
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -520,6 +552,10 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, mockup, browser, safari, window, launch-ui, magic-ui, showcase
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/safari-browser-mockup.json
+- [subgrid-responsive-layout](/r/subgrid-responsive-layout.json): CSS Subgrid and Container Query card layout with aligned headers, feature checklists, and footer actions across columns. (Variance: 5, Motion: 2, Density: 6)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, gui-challenges, subgrid, container-queries, marketing, cards
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/subgrid-responsive-layout.json
 - [testimonial-masonry-marquee](/r/testimonial-masonry-marquee.json): Masonry grid of verified user review cards with avatar verification and star ratings. (Variance: 6, Motion: 6, Density: 6)
   - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, block, testimonials, masonry, reviews, tailark
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -690,6 +726,14 @@
   - Tags: tailwind-v4, wai-aria-compliant, editorial
   - Dependencies: None
   - Install: npx shadcn@latest add http://localhost:3000/r/pyramid-hierarchy-chart.json
+- [query-builder-sql-tree](/r/query-builder-sql-tree.json): Visual, keyboard-navigable boolean query builder with nested AND/OR rule groups and instant SQL WHERE compilation. (Variance: 4, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, primereact, ant-design, query-builder, sql, enterprise
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/query-builder-sql-tree.json
+- [realtime-telemetry-gauge-cluster](/r/realtime-telemetry-gauge-cluster.json): SVG circular telemetry cluster for CPU/memory loads, edge latency percentiles, and SLA target indicators. (Variance: 4, Motion: 3, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, cloudscape, primer, telemetry, gauges, dashboard, metrics
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/realtime-telemetry-gauge-cluster.json
 - [resource-inventory-list](/r/resource-inventory-list.json): High-density e-commerce / admin resource table with bulk checkbox selection, status badges, contextual filter chips, and pagination. (Variance: 3, Motion: 2, Density: 9)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, table, inventory, ecommerce, admin, polaris, antd, b2b
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -792,6 +836,10 @@
   - Tags: webgl, threejs, canvas, tailwind-v4, glassmorphism, wai-aria-compliant, creative, shader, iridescence, react-bits
   - Dependencies: three, clsx, tailwind-merge, motion
   - Install: npx shadcn@latest add http://localhost:3000/r/iridescence-shader-plane.json
+- [kinetic-typography-marquee](/r/kinetic-typography-marquee.json): Variable font weight stream with smooth infinite CSS loop, edge masking, and prefers-reduced-motion support. (Variance: 8, Motion: 8, Density: 4)
+  - Tags: tailwind-v4, wai-aria-compliant, motion, paper-shaders, kinetic-type, marquee, typography
+  - Dependencies: clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/kinetic-typography-marquee.json
 - [laser-flow-border-card](/r/laser-flow-border-card.json): Card with continuous directional laser pulse border animation using SVG and CSS conic gradients with reduced-motion fallback. (Variance: 7, Motion: 6, Density: 5)
   - Tags: lucide-react, tailwind-v4, neon-scifi, accessible, keyboard-accessible, wai-aria-compliant, creative, laser, border, card, cult-ui, glow, conic-gradient
   - Dependencies: lucide-react, clsx, tailwind-merge, motion
@@ -866,6 +914,10 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, audio, waveform, visualizer, media, player
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/audio-visualizer.json
+- [interactive-audio-waveform-scrubber](/r/interactive-audio-waveform-scrubber.json): Frame-accurate interactive audio waveform scrubber with cue point markers, loop regions, and playback speed control. (Variance: 6, Motion: 7, Density: 6)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, webgl, threejs, canvas, layout-block, remocn, remotion, audio, waveform, timeline, scrubber
+  - Dependencies: lucide-react, three, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/interactive-audio-waveform-scrubber.json
 - [interactive-teleprompter-deck](/r/interactive-teleprompter-deck.json): Smooth speech-paced scrolling teleprompter with adjustable WPM speed slider, font scale controller, and mirror mode toggle. (Variance: 6, Motion: 6, Density: 5)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, webgl, threejs, canvas, ai-native, agent-ui, video, teleprompter, speech, media, remocn, player
   - Dependencies: lucide-react, three, clsx, tailwind-merge, motion
@@ -1082,6 +1134,10 @@
   - Tags: wai-aria-compliant, utility, loader, spinner, minimalist
   - Dependencies: clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/dot-loader.json
+- [dynamic-theme-matrix-inspector](/r/dynamic-theme-matrix-inspector.json): W3C DTCG-compliant design token inspector and contrast matrix validator with light/dark simulation. (Variance: 3, Motion: 2, Density: 8)
+  - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, tokens-studio, style-dictionary, tokens, dtcg, contrast, theme
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/dynamic-theme-matrix-inspector.json
 - [icon-morph](/r/icon-morph.json): Clean animated SVG state toggler (play/pause/check) with accessible title. (Variance: 3, Motion: 4, Density: 7)
   - Tags: wai-aria-compliant, utility, icon, svg, morph, a11y
   - Dependencies: clsx, tailwind-merge

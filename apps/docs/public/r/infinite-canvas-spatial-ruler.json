@@ -1,0 +1,62 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "infinite-canvas-spatial-ruler",
+  "type": "registry:component",
+  "title": "Infinite Canvas Spatial Ruler",
+  "description": "Zoom-adaptive pixel grid ruler and spatial measurement HUD overlay for whiteboard and diagram applications.",
+  "category": "ui:workflow",
+  "tags": [
+    "lucide-react",
+    "webgl",
+    "threejs",
+    "tailwind-v4",
+    "glassmorphism",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "canvas",
+    "tldraw",
+    "excalidraw",
+    "ruler",
+    "spatial",
+    "hud"
+  ],
+  "dials": {
+    "design_variance": 7,
+    "motion_intensity": 4,
+    "visual_density": 5
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/tldraw/tldraw",
+    "license_type": "Apache-2.0",
+    "author": "tldraw & Excalidraw Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "three",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "devDependencies": [
+    "@types/three"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/workflow/infinite-canvas-spatial-ruler.tsx",
+      "content": "/**\n * @origin tldraw & Excalidraw (https://github.com/tldraw/tldraw, https://github.com/excalidraw/excalidraw)\n * @license Apache-2.0\n * @author tldraw Team & Excalidraw Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Move, ZoomIn, ZoomOut, Compass, Grid } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface InfiniteCanvasSpatialRulerProps {\n  zoom?: number;\n  offsetX?: number;\n  offsetY?: number;\n  gridSize?: number;\n  unit?: string;\n  className?: string;\n}\n\nexport function InfiniteCanvasSpatialRuler({\n  zoom = 1,\n  offsetX = 0,\n  offsetY = 0,\n  gridSize = 20,\n  unit = \"px\",\n  className,\n}: InfiniteCanvasSpatialRulerProps) {\n  const [currentZoom, setCurrentZoom] = React.useState(zoom);\n  const [showGrid, setShowGrid] = React.useState(true);\n\n  const majorStep = React.useMemo(() => {\n    if (currentZoom < 0.5) return 200;\n    if (currentZoom > 2) return 50;\n    return 100;\n  }, [currentZoom]);\n\n  const tickMarks = React.useMemo(() => {\n    const marks: number[] = [];\n    for (let i = 0; i <= 600; i += 20) {\n      marks.push(i);\n    }\n    return marks;\n  }, []);\n\n  return (\n    <div className={cn(\"relative w-full h-[360px] overflow-hidden rounded-xl border border-border bg-background select-none\", className)}>\n      {/* Top Horizontal Ruler */}\n      <div className=\"absolute top-0 left-6 right-0 h-6 border-b border-border bg-card/90 backdrop-blur-xs flex items-end overflow-hidden z-20\">\n        {tickMarks.map((pos) => {\n          const isMajor = pos % majorStep === 0;\n          return (\n            <div\n              key={`h-${pos}`}\n              className=\"absolute bottom-0 flex flex-col items-center\"\n              style={{ left: `${pos}px` }}\n            >\n              {isMajor && (\n                <span className=\"text-3xs font-mono text-muted-foreground -translate-x-1/2 mb-1\">\n                  {Math.round(pos / currentZoom)}\n                </span>\n              )}\n              <div\n                className={cn(\n                  \"w-px bg-border\",\n                  isMajor ? \"h-3 bg-muted-foreground/80\" : \"h-1.5 bg-border/80\"\n                )}\n              />\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Left Vertical Ruler */}\n      <div className=\"absolute top-6 bottom-0 left-0 w-6 border-r border-border bg-card/90 backdrop-blur-xs flex justify-end overflow-hidden z-20\">\n        {tickMarks.map((pos) => {\n          const isMajor = pos % majorStep === 0;\n          return (\n            <div\n              key={`v-${pos}`}\n              className=\"absolute right-0 flex items-center justify-end\"\n              style={{ top: `${pos}px` }}\n            >\n              {isMajor && (\n                <span className=\"text-3xs font-mono text-muted-foreground -rotate-90 -translate-x-2\">\n                  {Math.round(pos / currentZoom)}\n                </span>\n              )}\n              <div\n                className={cn(\n                  \"h-px bg-border\",\n                  isMajor ? \"w-3 bg-muted-foreground/80\" : \"w-1.5 bg-border/80\"\n                )}\n              />\n            </div>\n          );\n        })}\n      </div>\n\n      {/* Top Left Origin Corner */}\n      <div className=\"absolute top-0 left-0 h-6 w-6 border-r border-b border-border bg-muted/60 flex items-center justify-center z-30\">\n        <Compass className=\"h-3 w-3 text-muted-foreground\" role=\"img\" aria-hidden=\"true\" />\n      </div>\n\n      {/* Canvas Viewport Grid */}\n      <div\n        className={cn(\n          \"absolute inset-0 top-6 left-6 flex items-center justify-center p-8\",\n          showGrid && \"bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)]\"\n        )}\n      >\n        <div className=\"space-y-2 rounded-lg border border-border bg-card p-4 shadow-sm max-w-xs text-center\">\n          <p className=\"text-xs font-semibold text-foreground\">Spatial Canvas Viewport</p>\n          <p className=\"text-2xs text-muted-foreground\">\n            Zoom Level: <span className=\"font-mono text-primary font-medium\">{Math.round(currentZoom * 100)}%</span> | Offset: <span className=\"font-mono\">{offsetX},{offsetY} {unit}</span>\n          </p>\n        </div>\n      </div>\n\n      {/* Floating HUD Controls */}\n      <div className=\"absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg border border-border bg-card/95 p-1.5 shadow-md z-30\">\n        <button\n          type=\"button\"\n          onClick={() => setCurrentZoom((z) => Math.max(0.25, z - 0.25))}\n          aria-label=\"Zoom Out\"\n          className=\"inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        >\n          <ZoomOut className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n\n        <span className=\"min-w-[44px] text-center font-mono text-xs text-foreground font-medium\">\n          {Math.round(currentZoom * 100)}%\n        </span>\n\n        <button\n          type=\"button\"\n          onClick={() => setCurrentZoom((z) => Math.min(3, z + 0.25))}\n          aria-label=\"Zoom In\"\n          className=\"inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n        >\n          <ZoomIn className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n\n        <div className=\"h-4 w-px bg-border\" />\n\n        <button\n          type=\"button\"\n          onClick={() => setShowGrid((g) => !g)}\n          aria-label=\"Toggle Grid\"\n          className={cn(\n            \"inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n            showGrid ? \"bg-primary text-primary-foreground\" : \"text-muted-foreground hover:text-foreground hover:bg-muted\"\n          )}\n          aria-pressed={showGrid}\n        >\n          <Grid className=\"h-3.5 w-3.5\" role=\"img\" aria-hidden=\"true\" />\n        </button>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/infinite-canvas-spatial-ruler.tsx"
+    }
+  ]
+}

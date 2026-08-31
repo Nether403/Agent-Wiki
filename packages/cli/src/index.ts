@@ -10,6 +10,8 @@ import { runDoctor } from "./commands/doctor";
 import { deconstructCommand } from "./commands/deconstruct";
 import { tokensCommand } from "./commands/tokens";
 import { evalCommand } from "./commands/eval";
+import { testA11yCommand } from "./commands/test-a11y";
+import { syncTokensCommand } from "./commands/sync-tokens";
 
 function printHelp() {
   console.log(`
@@ -27,6 +29,8 @@ Commands:
                       (e.g., npx design-wiki deconstruct ./mockup.html --install)
   eval [path]         Run autonomous evaluation sandbox & Zero-Draft Fidelity benchmark
                       (e.g., npx design-wiki eval --suite benchmark)
+  test-a11y [dir]     Run Axe-core WCAG 2.1 AA automated accessibility audit on local UI
+  sync-tokens         Compile and export W3C DTCG design tokens to Tailwind v4 @theme
   tokens export       Export W3C DTCG tokens to Tailwind v4, CSS, Swift, Compose, or Figma
   preview <slug>      Inspect local component contract and verify zero-slop syntax
   doctor              Run full system diagnosis across Tailwind v4, React 19, and agent rules
@@ -229,6 +233,23 @@ async function main() {
       }
     }
     await evalCommand(target, { cwd: cwdOverride, suite });
+    process.exit(0);
+  }
+
+  if (command === "test-a11y") {
+    const target = args[1] && !args[1].startsWith("--") ? args[1] : "components/ui";
+    await testA11yCommand(target, { cwd: cwdOverride });
+    process.exit(0);
+  }
+
+  if (command === "sync-tokens") {
+    let format: "dtcg" | "tailwind" | "css" | undefined;
+    for (let i = 1; i < args.length; i++) {
+      if (args[i] === "--format" && (args[i + 1] === "dtcg" || args[i + 1] === "tailwind" || args[i + 1] === "css")) {
+        format = args[++i] as "dtcg" | "tailwind" | "css";
+      }
+    }
+    await syncTokensCommand({ cwd: cwdOverride, format, theme: themeOverride });
     process.exit(0);
   }
 

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "kinetic-typography-marquee",
+  "type": "registry:component",
+  "title": "Kinetic Typography Marquee",
+  "description": "Variable font weight stream with smooth infinite CSS loop, edge masking, and prefers-reduced-motion support.",
+  "category": "ui:creative",
+  "tags": [
+    "tailwind-v4",
+    "wai-aria-compliant",
+    "motion",
+    "paper-shaders",
+    "kinetic-type",
+    "marquee",
+    "typography"
+  ],
+  "dials": {
+    "design_variance": 8,
+    "motion_intensity": 8,
+    "visual_density": 4
+  },
+  "complexity": "low",
+  "a11y": {
+    "keyboard_navigable": false,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": true
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/motiondivision/motion",
+    "license_type": "MIT",
+    "author": "Motion Division & Paper Design",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/creative/kinetic-typography-marquee.tsx",
+      "content": "/**\n * @origin Motion Division & Paper Shaders (https://github.com/motiondivision/motion, https://github.com/paper-design/shaders)\n * @license MIT\n * @author Motion Division & Paper Design\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface KineticTypographyMarqueeProps {\n  phrases?: string[];\n  speed?: number; // duration in seconds e.g. 20\n  direction?: \"left\" | \"right\";\n  className?: string;\n}\n\nconst DEFAULT_PHRASES = [\n  \"DETERMINISTIC UI ARCHITECTURE\",\n  \"ZERO-SLOP AGENT PROTOCOL\",\n  \"MODEL CONTEXT PROTOCOL\",\n  \"100% WCAG 2.1 AA COMPLIANT\",\n  \"TAILWIND V4 NATIVE\",\n];\n\nexport function KineticTypographyMarquee({\n  phrases = DEFAULT_PHRASES,\n  speed = 25,\n  direction = \"left\",\n  className,\n}: KineticTypographyMarqueeProps) {\n  const repeatedText = phrases.join(\"  ✦  \");\n\n  return (\n    <div\n      className={cn(\n        \"relative w-full overflow-hidden border-y border-border bg-background py-4 select-none\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Kinetic Typography Stream\"\n    >\n      <div\n        className={cn(\n          \"flex whitespace-nowrap will-change-transform\",\n          direction === \"left\" ? \"animate-marquee\" : \"animate-marquee-reverse\"\n        )}\n        style={{\n          animationDuration: `${speed}s`,\n        }}\n      >\n        <span className=\"font-mono text-xl sm:text-2xl font-black tracking-tight text-foreground/90 uppercase px-4\">\n          {repeatedText}  ✦  {repeatedText}\n        </span>\n      </div>\n\n      {/* Edge Gradient Mask */}\n      <div className=\"pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background to-transparent\" />\n      <div className=\"pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background to-transparent\" />\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/kinetic-typography-marquee.tsx"
+    }
+  ]
+}

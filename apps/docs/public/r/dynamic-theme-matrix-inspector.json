@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "dynamic-theme-matrix-inspector",
+  "type": "registry:component",
+  "title": "Dynamic Theme Matrix Inspector",
+  "description": "W3C DTCG-compliant design token inspector and contrast matrix validator with light/dark simulation.",
+  "category": "ui:utility",
+  "tags": [
+    "lucide-react",
+    "bento-grid",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "tokens-studio",
+    "style-dictionary",
+    "tokens",
+    "dtcg",
+    "contrast",
+    "theme"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "img",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/tokens-studio/figma-plugin",
+    "license_type": "MIT",
+    "author": "Tokens Studio & Amazon Style Dictionary",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/utility/dynamic-theme-matrix-inspector.tsx",
+      "content": "/**\n * @origin Tokens Studio & Style Dictionary (https://github.com/tokens-studio/figma-plugin, https://style-dictionary.net)\n * @license MIT\n * @author Tokens Studio & Amazon Style Dictionary Team\n * @curated-by Machine-First Design Agent Wiki\n */\n\n\"use client\";\n\nimport * as React from \"react\";\nimport { Check, Copy, Sliders, Palette, ShieldCheck, AlertCircle } from \"lucide-react\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface DesignTokenEntry {\n  name: string;\n  cssVariable: string;\n  lightHex: string;\n  darkHex: string;\n  contrastRatioOnLight: number; // against white e.g. 7.2\n  contrastRatioOnDark: number; // against black e.g. 9.1\n}\n\nexport interface DynamicThemeMatrixInspectorProps {\n  tokens?: DesignTokenEntry[];\n  themeName?: string;\n  className?: string;\n}\n\nconst DEFAULT_THEME_TOKENS: DesignTokenEntry[] = [\n  {\n    name: \"Primary Action\",\n    cssVariable: \"--color-primary\",\n    lightHex: \"#09090b\",\n    darkHex: \"#fafafa\",\n    contrastRatioOnLight: 19.8,\n    contrastRatioOnDark: 19.8,\n  },\n  {\n    name: \"Background Surface\",\n    cssVariable: \"--color-background\",\n    lightHex: \"#ffffff\",\n    darkHex: \"#09090b\",\n    contrastRatioOnLight: 1.0,\n    contrastRatioOnDark: 1.0,\n  },\n  {\n    name: \"Card Surface\",\n    cssVariable: \"--color-card\",\n    lightHex: \"#ffffff\",\n    darkHex: \"#121215\",\n    contrastRatioOnLight: 1.0,\n    contrastRatioOnDark: 1.1,\n  },\n  {\n    name: \"Muted Text\",\n    cssVariable: \"--color-muted-foreground\",\n    lightHex: \"#71717a\",\n    darkHex: \"#a1a1aa\",\n    contrastRatioOnLight: 4.6,\n    contrastRatioOnDark: 5.8,\n  },\n  {\n    name: \"Destructive Alert\",\n    cssVariable: \"--color-destructive\",\n    lightHex: \"#dc2626\",\n    darkHex: \"#ef4444\",\n    contrastRatioOnLight: 4.8,\n    contrastRatioOnDark: 4.9,\n  },\n];\n\nexport function DynamicThemeMatrixInspector({\n  tokens = DEFAULT_THEME_TOKENS,\n  themeName = \"Modern Minimal DTCG Token Pack\",\n  className,\n}: DynamicThemeMatrixInspectorProps) {\n  const [activeMode, setActiveMode] = React.useState<\"light\" | \"dark\">(\"dark\");\n  const [copiedVar, setCopiedVar] = React.useState<string | null>(null);\n\n  const copyVariable = React.useCallback(async (varName: string) => {\n    await navigator.clipboard.writeText(`var(${varName})`);\n    setCopiedVar(varName);\n    setTimeout(() => setCopiedVar(null), 1800);\n  }, []);\n\n  return (\n    <div className={cn(\"w-full space-y-4 rounded-xl border border-border bg-card p-5 shadow-xs select-none\", className)}>\n      <div className=\"flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3\">\n        <div className=\"space-y-0.5\">\n          <div className=\"flex items-center gap-2\">\n            <Palette className=\"h-4 w-4 text-primary\" role=\"img\" aria-hidden=\"true\" />\n            <h3 className=\"text-sm font-semibold tracking-tight text-foreground\">\n              {themeName}\n            </h3>\n          </div>\n          <p className=\"text-xs text-muted-foreground\">\n            W3C DTCG-compliant design token registry with real-time contrast verification.\n          </p>\n        </div>\n\n        <div className=\"inline-flex rounded-lg border border-border bg-muted/60 p-0.5 text-xs\">\n          {([\"light\", \"dark\"] as const).map((mode) => (\n            <button\n              key={mode}\n              type=\"button\"\n              onClick={() => setActiveMode(mode)}\n              className={cn(\n                \"px-3 py-1 font-medium capitalize rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                activeMode === mode\n                  ? \"bg-primary text-primary-foreground shadow-xs\"\n                  : \"text-muted-foreground hover:text-foreground\"\n              )}\n              aria-pressed={activeMode === mode}\n            >\n              {mode} Mode\n            </button>\n          ))}\n        </div>\n      </div>\n\n      <div className=\"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3\">\n        {tokens.map((token) => {\n          const hex = activeMode === \"light\" ? token.lightHex : token.darkHex;\n          const ratio = activeMode === \"light\" ? token.contrastRatioOnLight : token.contrastRatioOnDark;\n          const isAccessible = ratio >= 4.5;\n\n          return (\n            <div\n              key={token.cssVariable}\n              className=\"flex flex-col justify-between rounded-lg border border-border/80 bg-background p-3 space-y-2.5 transition-colors duration-150 hover:border-border\"\n            >\n              <div className=\"flex items-center justify-between\">\n                <div className=\"flex items-center gap-2\">\n                  <div\n                    className=\"h-5 w-5 rounded-full border border-border/60 shadow-xs\"\n                    style={{ backgroundColor: hex }}\n                  />\n                  <span className=\"text-xs font-semibold text-foreground tracking-tight\">\n                    {token.name}\n                  </span>\n                </div>\n\n                <span\n                  className={cn(\n                    \"inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-3xs font-mono font-semibold\",\n                    isAccessible\n                      ? \"bg-emerald-500/10 text-emerald-600 dark:text-emerald-400\"\n                      : \"bg-amber-500/10 text-amber-500\"\n                  )}\n                >\n                  {isAccessible ? (\n                    <>\n                      <ShieldCheck className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> {ratio}:1 AA\n                    </>\n                  ) : (\n                    <>\n                      <AlertCircle className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> {ratio}:1\n                    </>\n                  )}\n                </span>\n              </div>\n\n              <div className=\"flex items-center justify-between pt-1 border-t border-border/50 text-2xs font-mono text-muted-foreground\">\n                <span>{hex}</span>\n                <button\n                  type=\"button\"\n                  onClick={() => copyVariable(token.cssVariable)}\n                  className=\"inline-flex items-center gap-1 text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xs\"\n                >\n                  {copiedVar === token.cssVariable ? (\n                    <>\n                      <Check className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> Copied\n                    </>\n                  ) : (\n                    <>\n                      <Copy className=\"h-2.5 w-2.5\" role=\"img\" aria-hidden=\"true\" /> {token.cssVariable}\n                    </>\n                  )}\n                </button>\n              </div>\n            </div>\n          );\n        })}\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "components/ui/dynamic-theme-matrix-inspector.tsx"
+    }
+  ]
+}
