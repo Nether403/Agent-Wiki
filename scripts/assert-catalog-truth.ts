@@ -9,6 +9,7 @@ interface CatalogContract {
   retiredMcpTools: string[];
   forbiddenDocPhrases: string[];
   compileSeed?: string;
+  catalogCore?: string;
 }
 
 interface CatalogSeed {
@@ -25,6 +26,24 @@ interface CatalogStats {
 }
 
 const root = path.resolve(__dirname, "..");
+
+function findRegistrySource(srcRoot: string, slug: string): string | null {
+  const stack = [srcRoot];
+  while (stack.length > 0) {
+    const dir = stack.pop();
+    if (!dir || !fs.existsSync(dir)) continue;
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        if (entry.name === "node_modules" || entry.name === "lib" || entry.name === "tokens") continue;
+        stack.push(full);
+      } else if (entry.name === `${slug}.tsx` || entry.name === `${slug}.ts`) {
+        return full;
+      }
+    }
+  }
+  return null;
+}
 
 function read(rel: string): string {
   return fs.readFileSync(path.join(root, rel), "utf-8");
@@ -94,6 +113,31 @@ function main() {
     fail(`compile seed utils missing: ${seed.utils}`);
   }
 
+  const coreRel = contract.catalogCore ?? "catalog-core.json";
+  const corePath = path.join(root, coreRel);
+  if (!fs.existsSync(corePath)) {
+    fail(`${coreRel} missing.`);
+  }
+  const coreDoc = JSON.parse(fs.readFileSync(corePath, "utf-8")) as { slugs?: string[] };
+  const coreSlugs = coreDoc.slugs ?? [];
+  if (coreSlugs.length === 0) {
+    fail(`${coreRel} has no slugs.`);
+  }
+  const coreSet = new Set(coreSlugs);
+  const seedOutsideCore = seed.slugs.filter((slug) => !coreSet.has(slug));
+  if (seedOutsideCore.length) {
+    fail(`compile seed slugs must be a subset of ${coreRel}: ${seedOutsideCore.join(", ")}`);
+  }
+  const srcRoot = path.join(root, "packages/registry/src");
+  for (const slug of coreSlugs) {
+    if (!registryNames.has(slug)) {
+      fail(`catalog core slug "${slug}" is not in registry.json`);
+    }
+    if (!findRegistrySource(srcRoot, slug)) {
+      fail(`catalog core slug "${slug}" has no source file under packages/registry/src`);
+    }
+  }
+
   const docsToScan = [
     "README.md",
     "SKILL.md",
@@ -121,6 +165,7 @@ function main() {
   console.log(`  rules:      ${stats.ruleCount} (${contract.ruleSource})`);
   console.log(`  mcp tools:  ${registered.length}`);
   console.log(`  compile seed: ${seed.slugs.join(", ")}`);
+  console.log(`  catalog core: ${coreSlugs.length} slugs (${coreRel})`);
   console.log(`  categories: ${JSON.stringify(stats.categories)}`);
 }
 

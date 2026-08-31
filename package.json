@@ -22,7 +22,8 @@
     "inventory:health": "tsx scripts/inventory-health.ts",
     "test:origin": "tsx scripts/test-registry-origin.ts",
     "test:compile-seed": "tsx scripts/compile-seed.ts",
-    "test": "pnpm test:sandbox && pnpm test:a11y && pnpm test:agents && pnpm assert:catalog && pnpm test:origin && pnpm test:compile-seed",
+    "test:catalog-core": "tsx scripts/test-catalog-core.ts",
+    "test": "pnpm test:sandbox && pnpm test:a11y && pnpm test:agents && pnpm assert:catalog && pnpm test:origin && pnpm test:compile-seed && pnpm test:catalog-core",
     "sync:rules": "tsx scripts/sync-rulepacks.ts",
     "mcp": "pnpm --filter @design-wiki/mcp start",
     "clean": "turbo clean"

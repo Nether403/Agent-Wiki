@@ -39,6 +39,9 @@ jobs:
       - name: Phase 4 compile seed (tsc --noEmit)
         run: pnpm test:compile-seed
 
+      - name: Trusted catalog core
+        run: pnpm test:catalog-core
+
       - name: Anti-slop rulepack on tooling packages
         run: pnpm lint:slop packages/mcp-server/src && pnpm lint:slop packages/cli/src
 

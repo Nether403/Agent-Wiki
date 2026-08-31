@@ -12,6 +12,7 @@ Phase 1 (registry + docs + compiler) and Phase 2 (harvester + catalog growth) pr
 - CLI `--registry` / `DESIGN_WIKI_REGISTRY_URL`: explicit HTTP skips local compiled files
 - MCP build copies `registry.json` into `packages/mcp-server/catalog/` (gitignored) for stdio
 - Phase 4 compile seed: `pnpm test:compile-seed` runs `tsc --noEmit` on slugs in `catalog-seed.json`
+- Trusted core: `catalog-core.json`. Unqualified search/list returns this set. Keyword search still finds experimental inventory.
 - Cloudflare Worker and Playwright + axe are **not done**. `@design-wiki/mcp` is still private
 
 **Phase 3 remaining**
@@ -21,7 +22,7 @@ Phase 1 (registry + docs + compiler) and Phase 2 (harvester + catalog growth) pr
 **Phase 4 remaining**
 - Playwright + axe on the compile seed (not claimed by `pnpm test:a11y`)
 - Stop treating registry metadata heuristics as WCAG AA proof
-- Curate the inventory (keep / merge / drop) using `pnpm inventory:health` instead of adding more harvests
+- Promote or drop experimental slugs using `pnpm inventory:health` + dogfood. Do not harvest more to grow `catalog-core.json`
 
 The original 14-week plan below is historical. Dates and “100% complete” checkboxes in later sections are not current.
 

@@ -26,6 +26,12 @@ if (!source) {
 fs.mkdirSync(destDir, { recursive: true });
 fs.copyFileSync(source, destFile);
 
+const coreSrc = path.join(repoRoot, "catalog-core.json");
+if (fs.existsSync(coreSrc)) {
+  fs.copyFileSync(coreSrc, path.join(destDir, "catalog-core.json"));
+  console.log(`MCP catalog embed: catalog-core.json → ${path.relative(repoRoot, path.join(destDir, "catalog-core.json"))}`);
+}
+
 const bytes = fs.statSync(destFile).size;
 let count = 0;
 try {
