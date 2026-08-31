@@ -1,0 +1,55 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "combobox-grouped-async",
+  "type": "registry:ui",
+  "title": "Combobox Grouped Async",
+  "description": "Ariakit-inspired accessible multi-select combobox with categorized option groups, async search, and removable tag chips.",
+  "category": "ui:primitive",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "ariakit",
+    "combobox",
+    "multi-select",
+    "search",
+    "tags"
+  ],
+  "dials": {
+    "design_variance": 3,
+    "motion_intensity": 2,
+    "visual_density": 7
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "combobox",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://github.com/ariakit/ariakit",
+    "license_type": "MIT",
+    "author": "Ariakit Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/primitives/combobox-grouped-async.tsx",
+      "content": "/**\n * @origin Machine-First Design Agent Wiki (Ariakit Combobox Archetype)\n * @license MIT\n * @curated-by Antigravity & manus-research\n */\n\"use client\";\n\nimport React, { useState, useRef, useEffect, useId } from \"react\";\nimport { Search, X, Check, Loader2, ChevronDown } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: (string | undefined | null | false)[]) {\n  return twMerge(clsx(inputs));\n}\n\nexport interface ComboboxOption {\n  id: string;\n  label: string;\n  category: string;\n}\n\nexport interface ComboboxGroupedAsyncProps {\n  label?: string;\n  placeholder?: string;\n  initialSelected?: ComboboxOption[];\n  onSelectionChange?: (selected: ComboboxOption[]) => void;\n  className?: string;\n}\n\nconst SAMPLE_OPTIONS: ComboboxOption[] = [\n  { id: \"opt-1\", label: \"Button Primitives\", category: \"Primitives\" },\n  { id: \"opt-2\", label: \"Accessible Modal Dialog\", category: \"Primitives\" },\n  { id: \"opt-3\", label: \"Faceted Filter Bar\", category: \"Primitives\" },\n  { id: \"opt-4\", label: \"Floating Dock Magnification\", category: \"Motion\" },\n  { id: \"opt-5\", label: \"Fluid Cursor Physics\", category: \"Motion\" },\n  { id: \"opt-6\", label: \"WebGL Particle Field\", category: \"Creative\" },\n  { id: \"opt-7\", label: \"Cathryn Lavery 2x2 Matrix\", category: \"Editorial\" },\n  { id: \"opt-8\", label: \"Infinite Whiteboard Canvas\", category: \"Workflow\" },\n];\n\nexport function ComboboxGroupedAsync({\n  label = \"Select Registry Components\",\n  placeholder = \"Search components by keyword or category...\",\n  initialSelected = [SAMPLE_OPTIONS[0]],\n  onSelectionChange,\n  className,\n}: ComboboxGroupedAsyncProps) {\n  const baseId = useId();\n  const [query, setQuery] = useState(\"\");\n  const [isOpen, setIsOpen] = useState(false);\n  const [isLoading, setIsLoading] = useState(false);\n  const [selected, setSelected] = useState<ComboboxOption[]>(initialSelected);\n  const [highlightedIndex, setHighlightedIndex] = useState(0);\n\n  const containerRef = useRef<HTMLDivElement>(null);\n  const inputRef = useRef<HTMLInputElement>(null);\n\n  useEffect(() => {\n    const handleClickOutside = (event: MouseEvent) => {\n      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {\n        setIsOpen(false);\n      }\n    };\n    document.addEventListener(\"mousedown\", handleClickOutside);\n    return () => document.removeEventListener(\"mousedown\", handleClickOutside);\n  }, []);\n\n  const filteredOptions = SAMPLE_OPTIONS.filter(\n    (opt) =>\n      opt.label.toLowerCase().includes(query.toLowerCase()) ||\n      opt.category.toLowerCase().includes(query.toLowerCase())\n  );\n\n  const groupedOptions = filteredOptions.reduce<Record<string, ComboboxOption[]>>((acc, opt) => {\n    acc[opt.category] = acc[opt.category] || [];\n    acc[opt.category].push(opt);\n    return acc;\n  }, {});\n\n  const handleSelect = (option: ComboboxOption) => {\n    const exists = selected.some((s) => s.id === option.id);\n    let next: ComboboxOption[];\n    if (exists) {\n      next = selected.filter((s) => s.id !== option.id);\n    } else {\n      next = [...selected, option];\n    }\n    setSelected(next);\n    onSelectionChange?.(next);\n    setQuery(\"\");\n    inputRef.current?.focus();\n  };\n\n  const handleRemove = (optionId: string) => {\n    const next = selected.filter((s) => s.id !== optionId);\n    setSelected(next);\n    onSelectionChange?.(next);\n  };\n\n  return (\n    <div\n      ref={containerRef}\n      className={cn(\"relative w-full max-w-md text-xs\", className)}\n      role=\"group\"\n      aria-labelledby={`${baseId}-label`}\n    >\n      <label id={`${baseId}-label`} className=\"block text-xs font-semibold text-foreground mb-1.5\">\n        {label}\n      </label>\n\n      {/* Selected Tags Box + Input */}\n      <div\n        onClick={() => {\n          setIsOpen(true);\n          inputRef.current?.focus();\n        }}\n        className=\"flex min-h-10 flex-wrap items-center gap-1.5 rounded-lg border border-input bg-background p-1.5 transition-colors focus-within:ring-2 focus-within:ring-ring\"\n      >\n        {selected.map((item) => (\n          <span\n            key={item.id}\n            className=\"inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-xs font-medium text-foreground\"\n          >\n            <span>{item.label}</span>\n            <button\n              type=\"button\"\n              onClick={(e) => {\n                e.stopPropagation();\n                handleRemove(item.id);\n              }}\n              aria-label={`Remove ${item.label}`}\n              className=\"rounded p-0.5 text-muted-foreground hover:bg-destructive/10 hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\"\n            >\n              <X className=\"h-3 w-3\" aria-hidden=\"true\" />\n            </button>\n          </span>\n        ))}\n\n        <div className=\"flex flex-1 items-center min-w-[120px]\">\n          <input\n            ref={inputRef}\n            type=\"text\"\n            role=\"combobox\"\n            aria-expanded={isOpen}\n            aria-controls={`${baseId}-listbox`}\n            aria-autocomplete=\"list\"\n            value={query}\n            onChange={(e) => {\n              setQuery(e.target.value);\n              setIsOpen(true);\n            }}\n            onFocus={() => setIsOpen(true)}\n            placeholder={selected.length === 0 ? placeholder : \"\"}\n            className=\"w-full bg-transparent px-1.5 py-1 text-xs text-foreground placeholder:text-muted-foreground outline-none\"\n          />\n        </div>\n\n        <button\n          type=\"button\"\n          onClick={(e) => {\n            e.stopPropagation();\n            setIsOpen(!isOpen);\n          }}\n          aria-label=\"Toggle dropdown list\"\n          className=\"p-1 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded\"\n        >\n          <ChevronDown className=\"h-3.5 w-3.5\" aria-hidden=\"true\" />\n        </button>\n      </div>\n\n      {/* Dropdown Options */}\n      {isOpen && (\n        <div\n          id={`${baseId}-listbox`}\n          role=\"listbox\"\n          aria-label=\"Grouped component options\"\n          className=\"absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-border bg-popover p-1 text-popover-foreground shadow-md transition-colors\"\n        >\n          {Object.keys(groupedOptions).length === 0 ? (\n            <div className=\"p-3 text-center text-xs text-muted-foreground\">No matching components found.</div>\n          ) : (\n            Object.entries(groupedOptions).map(([category, items]) => (\n              <div key={category} role=\"group\" aria-label={category} className=\"py-1\">\n                <div className=\"px-2 py-1 text-[10px] font-bold tracking-wider text-muted-foreground uppercase\">\n                  {category}\n                </div>\n                {items.map((opt) => {\n                  const isSelected = selected.some((s) => s.id === opt.id);\n                  return (\n                    <div\n                      key={opt.id}\n                      role=\"option\"\n                      aria-selected={isSelected}\n                      onClick={() => handleSelect(opt)}\n                      className={cn(\n                        \"flex cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-xs transition-colors\",\n                        isSelected ? \"bg-accent text-accent-foreground font-medium\" : \"hover:bg-muted\"\n                      )}\n                    >\n                      <span>{opt.label}</span>\n                      {isSelected && <Check className=\"h-3.5 w-3.5 text-primary\" aria-hidden=\"true\" />}\n                    </div>\n                  );\n                })}\n              </div>\n            ))\n          )}\n        </div>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "components/ui/combobox-grouped-async.tsx"
+    }
+  ]
+}

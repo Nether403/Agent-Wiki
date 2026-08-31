@@ -132,3 +132,4 @@ export * from "./contrast-checker";
 export * from "./lighthouse-gate";
 export * from "./a11y-runner";
 export * from "./storybook-story-generator";
+export * from "./benchmark-runner";

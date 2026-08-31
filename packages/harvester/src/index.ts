@@ -175,4 +175,6 @@ export * from "./codemods/motion-react-transform";
 export * from "./codemods/react-19-transform";
 export * from "./codemods/magic-ui-transformer";
 export * from "./codemods/lucide-normalizer";
+export * from "./figma-transformer";
+export * from "./dom-deconstructor";
 

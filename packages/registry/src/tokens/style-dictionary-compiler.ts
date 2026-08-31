@@ -116,8 +116,6 @@ public struct DesignTokens {
     }
 }
 `;
-}
-
 /**
  * Compiles canonical tokens to Android Jetpack Compose Kotlin object
  */
@@ -144,4 +142,73 @@ object DesignTokens {
     }
 }
 `;
+}
+
+/**
+ * Compiles canonical tokens to standard CSS custom properties (:root and .dark)
+ */
+export function compileToCssVars(): string {
+  return `/* Auto-generated via Machine-First Style Dictionary v4 Exporter */
+:root {
+  --background: #ffffff;
+  --foreground: #09090b;
+  --card: #ffffff;
+  --card-foreground: #09090b;
+  --border: #e4e4e7;
+  --primary: ${CANONICAL_DESIGN_TOKENS.color.primary.default.$value};
+  --primary-foreground: #000000;
+  --ring: ${CANONICAL_DESIGN_TOKENS.color.border.focus.$value};
+}
+
+.dark {
+  --background: ${CANONICAL_DESIGN_TOKENS.color.background.default.$value};
+  --foreground: ${CANONICAL_DESIGN_TOKENS.color.foreground.default.$value};
+  --card: ${CANONICAL_DESIGN_TOKENS.color.card.default.$value};
+  --card-foreground: ${CANONICAL_DESIGN_TOKENS.color.card.foreground.$value};
+  --border: ${CANONICAL_DESIGN_TOKENS.color.border.default.$value};
+  --primary: ${CANONICAL_DESIGN_TOKENS.color.primary.default.$value};
+  --primary-foreground: ${CANONICAL_DESIGN_TOKENS.color.primary.foreground.$value};
+  --ring: ${CANONICAL_DESIGN_TOKENS.color.border.focus.$value};
+}
+`;
+}
+
+/**
+ * Compiles canonical tokens to Tokens Studio for Figma / W3C DTCG JSON format
+ */
+export function compileToFigmaTokensJson(): string {
+  return JSON.stringify(
+    {
+      version: "1.0.0",
+      description: "Machine-First Design Agent Wiki W3C DTCG Tokens for Figma",
+      tokens: CANONICAL_DESIGN_TOKENS,
+    },
+    null,
+    2
+  );
+}
+
+/**
+ * Dispatcher function for multi-platform token export
+ */
+export function exportMultiplatformTokens(targetFormat: "tailwind-v4" | "css" | "swift" | "compose" | "figma" | string): string {
+  switch (targetFormat) {
+    case "tailwind-v4":
+    case "tailwind":
+      return compileToTailwindV4Theme();
+    case "css":
+      return compileToCssVars();
+    case "swift":
+    case "ios":
+      return compileToSwiftTokens();
+    case "compose":
+    case "android":
+      return compileToComposeTokens();
+    case "figma":
+    case "dtcg":
+    case "tokens-studio":
+      return compileToFigmaTokensJson();
+    default:
+      return compileToTailwindV4Theme();
+  }
 }

@@ -1,0 +1,70 @@
+---
+title: Figma & Visual Reference Ingestion
+description: Deconstructing Figma node trees, Tokens Studio JSON, and DOM references into zero-slop components.
+---
+
+# Figma & Visual Reference Ingestion
+
+The **Machine-First Design Agent Wiki** provides automated pipelines to transform visual mockups, Figma designs, and live HTML layouts into deterministic, accessible React + Tailwind v4 components.
+
+---
+
+## 1. Deconstructing HTML / DOM References
+
+Use the CLI `deconstruct` command to analyze existing web pages and extract matching zero-slop component trees:
+
+```bash
+# Deconstruct an HTML reference file
+npx design-wiki deconstruct ./landing-mockup.html
+
+# Automatically download & install all matched registry components
+npx design-wiki deconstruct ./landing-mockup.html --install
+
+# Output synthesized layout scaffold to a specific file
+npx design-wiki deconstruct ./landing-mockup.html --output app/landing/page.tsx
+```
+
+---
+
+## 2. Figma Tokens Studio & Node Ingestion
+
+Connect your Figma token export or REST node payload directly into the Agent Wiki transformer:
+
+```typescript
+import { transformFigmaNode } from "@design-wiki/harvester";
+
+const figmaNode = {
+  id: "node-104",
+  name: "PricingTableCard",
+  type: "FRAME",
+  layoutMode: "VERTICAL",
+  itemSpacing: 16,
+  paddingTop: 24,
+  paddingBottom: 24,
+  cornerRadius: 12,
+  strokes: [{ type: "SOLID" }],
+};
+
+const result = transformFigmaNode(figmaNode);
+console.log(result.tailwindClasses);
+// ["flex", "flex-col", "gap-4", "py-6", "border", "border-border", "rounded-xl"]
+console.log(result.matchedRegistrySlugs);
+// ["pricing-table", "pricing-tier-feature-matrix"]
+```
+
+---
+
+## 3. Via Model Context Protocol (MCP)
+
+AI agents in Cursor, Claude Code, or Antigravity can invoke `deconstruct_figma_nodes`:
+
+```json
+{
+  "tool": "deconstruct_figma_nodes",
+  "arguments": {
+    "figmaNodeJson": "{\"name\": \"FacetedFilterBar\", \"layoutMode\": \"HORIZONTAL\", \"itemSpacing\": 8}"
+  }
+}
+```
+
+The tool returns the extracted Tailwind classes, semantic tokens, and an executable TSX scaffold.

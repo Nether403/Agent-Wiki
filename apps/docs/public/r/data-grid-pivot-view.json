@@ -1,0 +1,57 @@
+{
+  "$schema": "https://design-wiki.dev/schemas/registry-item.json",
+  "name": "data-grid-pivot-view",
+  "type": "registry:block",
+  "title": "Data Grid Pivot View",
+  "description": "High-density enterprise data grid with column grouping chips, dynamic summary aggregation rows, and sorting.",
+  "category": "ui:block",
+  "tags": [
+    "lucide-react",
+    "tailwind-v4",
+    "accessible",
+    "keyboard-accessible",
+    "wai-aria-compliant",
+    "layout-block",
+    "reui",
+    "ag-grid",
+    "table",
+    "data-grid",
+    "pivot",
+    "analytics"
+  ],
+  "dials": {
+    "design_variance": 4,
+    "motion_intensity": 2,
+    "visual_density": 8
+  },
+  "complexity": "high",
+  "a11y": {
+    "keyboard_navigable": true,
+    "wai_aria_compliant": true,
+    "wai_aria_role": "region",
+    "fallback_provided": true,
+    "reduced_motion_supported": false
+  },
+  "license_origin": {
+    "source_repository": "https://reui.io",
+    "license_type": "MIT",
+    "author": "ReUI Team",
+    "attribution_required": true,
+    "redistribution_mode": "full_source"
+  },
+  "dependencies": [
+    "lucide-react",
+    "clsx",
+    "tailwind-merge",
+    "motion"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/blocks/data-grid-pivot-view.tsx",
+      "content": "/**\n * @origin Machine-First Design Agent Wiki (ReUI / AG-Grid Pivot Archetype)\n * @license MIT\n * @curated-by Antigravity & manus-research\n */\n\"use client\";\n\nimport React, { useState, useMemo } from \"react\";\nimport { Table, ArrowUpDown, ChevronDown, Group, SlidersHorizontal, ArrowUp, ArrowDown } from \"lucide-react\";\nimport { clsx } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nfunction cn(...inputs: (string | undefined | null | false)[]) {\n  return twMerge(clsx(inputs));\n}\n\nexport interface GridRow {\n  id: string;\n  category: string;\n  component: string;\n  stars: number;\n  healthScore: number;\n  a11yStatus: \"PASS\" | \"WARN\";\n}\n\nconst SAMPLE_GRID_ROWS: GridRow[] = [\n  { id: \"1\", category: \"ui:primitive\", component: \"faceted-query-builder\", stars: 4200, healthScore: 100, a11yStatus: \"PASS\" },\n  { id: \"2\", category: \"ui:primitive\", component: \"combobox-grouped-async\", stars: 3800, healthScore: 100, a11yStatus: \"PASS\" },\n  { id: \"3\", category: \"ui:editorial\", component: \"diff-hunk-viewer\", stars: 5600, healthScore: 100, a11yStatus: \"PASS\" },\n  { id: \"4\", category: \"ui:block\", component: \"multi-pane-workspace\", stars: 8900, healthScore: 100, a11yStatus: \"PASS\" },\n  { id: \"5\", category: \"ui:block\", component: \"data-grid-pivot-view\", stars: 7400, healthScore: 100, a11yStatus: \"PASS\" },\n  { id: \"6\", category: \"ui:motion\", component: \"dock-magnification\", stars: 12400, healthScore: 100, a11yStatus: \"PASS\" },\n];\n\nexport function DataGridPivotView({\n  rows = SAMPLE_GRID_ROWS,\n  className,\n}: {\n  rows?: GridRow[];\n  className?: string;\n}) {\n  const [groupBy, setGroupBy] = useState<\"none\" | \"category\">(\"category\");\n  const [sortField, setSortField] = useState<keyof GridRow>(\"stars\");\n  const [sortAsc, setSortAsc] = useState(false);\n\n  const handleSort = (field: keyof GridRow) => {\n    if (sortField === field) {\n      setSortAsc(!sortAsc);\n    } else {\n      setSortField(field);\n      setSortAsc(false);\n    }\n  };\n\n  const sortedRows = useMemo(() => {\n    return [...rows].sort((a, b) => {\n      const aVal = a[sortField];\n      const bVal = b[sortField];\n      if (typeof aVal === \"number\" && typeof bVal === \"number\") {\n        return sortAsc ? aVal - bVal : bVal - aVal;\n      }\n      return sortAsc\n        ? String(aVal).localeCompare(String(bVal))\n        : String(bVal).localeCompare(String(aVal));\n    });\n  }, [rows, sortField, sortAsc]);\n\n  const groupedData = useMemo(() => {\n    if (groupBy === \"none\") return { \"All Items\": sortedRows };\n    return sortedRows.reduce<Record<string, GridRow[]>>((acc, row) => {\n      acc[row.category] = acc[row.category] || [];\n      acc[row.category].push(row);\n      return acc;\n    }, {});\n  }, [sortedRows, groupBy]);\n\n  const totalStars = useMemo(() => rows.reduce((sum, r) => sum + r.stars, 0), [rows]);\n  const avgHealth = useMemo(\n    () => (rows.length ? Math.round(rows.reduce((sum, r) => sum + r.healthScore, 0) / rows.length) : 100),\n    [rows]\n  );\n\n  return (\n    <div\n      className={cn(\n        \"overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-sm transition-colors\",\n        className\n      )}\n      role=\"region\"\n      aria-label=\"Enterprise Data Grid Pivot Table\"\n    >\n      <div className=\"flex flex-wrap items-center justify-between gap-3 border-b border-border bg-muted/30 px-4 py-3\">\n        <div className=\"flex items-center gap-2\">\n          <Table className=\"h-4 w-4 text-primary\" aria-hidden=\"true\" />\n          <h3 className=\"text-xs font-semibold tracking-tight text-foreground\">Registry Pivot Data Grid</h3>\n        </div>\n\n        <div className=\"flex items-center gap-2\">\n          <span className=\"text-xs text-muted-foreground\">Group By:</span>\n          <div className=\"flex items-center rounded-lg border border-border bg-background p-0.5\">\n            <button\n              type=\"button\"\n              onClick={() => setGroupBy(\"none\")}\n              className={cn(\n                \"rounded px-2 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                groupBy === \"none\" ? \"bg-muted text-foreground font-semibold\" : \"text-muted-foreground hover:text-foreground\"\n              )}\n            >\n              Flat\n            </button>\n            <button\n              type=\"button\"\n              onClick={() => setGroupBy(\"category\")}\n              className={cn(\n                \"inline-flex items-center gap-1 rounded px-2 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring\",\n                groupBy === \"category\" ? \"bg-muted text-foreground font-semibold\" : \"text-muted-foreground hover:text-foreground\"\n              )}\n            >\n              <Group className=\"h-3 w-3\" aria-hidden=\"true\" />\n              Category\n            </button>\n          </div>\n        </div>\n      </div>\n\n      <div className=\"overflow-x-auto\">\n        <table className=\"w-full border-collapse text-left text-xs\">\n          <thead>\n            <tr className=\"border-b border-border bg-muted/60 text-muted-foreground\">\n              <th className=\"px-4 py-2.5 font-medium\">Component Slug</th>\n              <th className=\"px-4 py-2.5 font-medium\">Category</th>\n              <th className=\"px-4 py-2.5 font-medium\">\n                <button\n                  type=\"button\"\n                  onClick={() => handleSort(\"stars\")}\n                  className=\"inline-flex items-center gap-1 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded px-1\"\n                >\n                  Adoption Stars\n                  {sortField === \"stars\" ? (\n                    sortAsc ? <ArrowUp className=\"h-3 w-3 text-primary\" /> : <ArrowDown className=\"h-3 w-3 text-primary\" />\n                  ) : (\n                    <ArrowUpDown className=\"h-3 w-3\" />\n                  )}\n                </button>\n              </th>\n              <th className=\"px-4 py-2.5 font-medium\">Anti-Slop Health</th>\n              <th className=\"px-4 py-2.5 font-medium\">WCAG AA</th>\n            </tr>\n          </thead>\n          <tbody>\n            {Object.entries(groupedData).map(([groupTitle, groupRows]) => (\n              <React.Fragment key={groupTitle}>\n                {groupBy !== \"none\" && (\n                  <tr className=\"border-b border-border bg-muted/20 font-semibold text-foreground\">\n                    <td colSpan={5} className=\"px-4 py-2\">\n                      <div className=\"flex items-center gap-2\">\n                        <span className=\"rounded bg-primary/10 px-2 py-0.5 text-[10px] text-primary\">\n                          {groupTitle}\n                        </span>\n                        <span className=\"text-[11px] text-muted-foreground\">({groupRows.length} items)</span>\n                      </div>\n                    </td>\n                  </tr>\n                )}\n\n                {groupRows.map((row) => (\n                  <tr key={row.id} className=\"border-b border-border/60 transition-colors hover:bg-muted/40\">\n                    <td className=\"px-4 py-2 font-mono font-medium text-foreground\">{row.component}</td>\n                    <td className=\"px-4 py-2 text-muted-foreground\">{row.category}</td>\n                    <td className=\"px-4 py-2 font-medium text-foreground\">{row.stars.toLocaleString()}</td>\n                    <td className=\"px-4 py-2\">\n                      <span className=\"inline-flex items-center rounded-full bg-emerald-500/10 px-2 py-0.5 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400\">\n                        {row.healthScore}/100\n                      </span>\n                    </td>\n                    <td className=\"px-4 py-2\">\n                      <span className=\"font-semibold text-emerald-600 dark:text-emerald-400\">✓ {row.a11yStatus}</span>\n                    </td>\n                  </tr>\n                ))}\n              </React.Fragment>\n            ))}\n          </tbody>\n          <tfoot>\n            <tr className=\"bg-muted/50 font-semibold text-foreground\">\n              <td className=\"px-4 py-2.5\">Aggregate Summary</td>\n              <td className=\"px-4 py-2.5 text-muted-foreground\">{rows.length} Total Components</td>\n              <td className=\"px-4 py-2.5 text-foreground\">{totalStars.toLocaleString()} Stars</td>\n              <td className=\"px-4 py-2.5 text-emerald-600 dark:text-emerald-400\">{avgHealth}/100 Average</td>\n              <td className=\"px-4 py-2.5 text-emerald-600 dark:text-emerald-400\">100% PASS</td>\n            </tr>\n          </tfoot>\n        </table>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:block",
+      "target": "components/ui/data-grid-pivot-view.tsx"
+    }
+  ]
+}

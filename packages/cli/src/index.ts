@@ -7,6 +7,9 @@ import { unslopTarget } from "./commands/unslop";
 import { composePage } from "./commands/compose";
 import { previewComponent } from "./commands/preview";
 import { runDoctor } from "./commands/doctor";
+import { deconstructCommand } from "./commands/deconstruct";
+import { tokensCommand } from "./commands/tokens";
+import { evalCommand } from "./commands/eval";
 
 function printHelp() {
   console.log(`
@@ -20,6 +23,11 @@ Commands:
                       (e.g., npx design-wiki add canvas-fluid-wave)
   compose <template>  Synthesize an entire zero-slop layout page with all dependencies
                       (e.g., npx design-wiki compose ai-chat-workspace)
+  deconstruct <input> Deconstruct an HTML/DOM reference or Figma tree into Agent Wiki components
+                      (e.g., npx design-wiki deconstruct ./mockup.html --install)
+  eval [path]         Run autonomous evaluation sandbox & Zero-Draft Fidelity benchmark
+                      (e.g., npx design-wiki eval --suite benchmark)
+  tokens export       Export W3C DTCG tokens to Tailwind v4, CSS, Swift, Compose, or Figma
   preview <slug>      Inspect local component contract and verify zero-slop syntax
   doctor              Run full system diagnosis across Tailwind v4, React 19, and agent rules
   list                List all curated zero-slop components and taste dials
@@ -157,6 +165,9 @@ async function main() {
     const skillsList = [
       { name: "frontend-design", role: "Anthropic official frontend aesthetics & deliberate layout design" },
       { name: "ui-ux-pro-max", role: "Design intelligence, UI/UX audits, and screenshot review loops" },
+      { name: "video-to-design", role: "Video interaction deconstruction & temporal frame reverse engineering" },
+      { name: "nextjs-view-transitions", role: "Next.js 15 & React 19 View Transitions API architecture" },
+      { name: "microcopy-ux-tone", role: "UX microcopy, contextual empty states & anti-cliché writing" },
       { name: "vercel-composition", role: "React composition patterns, view transitions, and clean performance" },
       { name: "visual-reference-deconstruction", role: "Reverse-engineer video mockups & frames into tokens" },
       { name: "interface-craft-micro-typography", role: "Optical kerning, tabular numerals & typographic contrast" },
@@ -176,29 +187,48 @@ async function main() {
   }
 
   if (command === "tokens") {
-    const sub = args[1];
-    if (sub === "export") {
-      const dtcg = {
-        $name: "Design Wiki DTCG Tokens",
-        $version: "1.0.0",
-        color: {
-          background: { $value: "#09090b", $type: "color" },
-          foreground: { $value: "#fafafa", $type: "color" },
-          card: { $value: "#18181b", $type: "color" },
-          primary: { $value: "#10b981", $type: "color" },
-          border: { $value: "#27272a", $type: "color" },
-        },
-        spacing: {
-          "1": { $value: "4px", $type: "dimension" },
-          "2": { $value: "8px", $type: "dimension" },
-          "4": { $value: "16px", $type: "dimension" },
-          "8": { $value: "32px", $type: "dimension" },
-        },
-      };
-      console.log(JSON.stringify(dtcg, null, 2));
-      process.exit(0);
+    let targetFormat = "tailwind-v4";
+    let outputPath: string | undefined;
+    for (let i = 1; i < args.length; i++) {
+      if (args[i] === "--format" && args[i + 1]) {
+        targetFormat = args[++i];
+      } else if (args[i] === "--output" && args[i + 1]) {
+        outputPath = args[++i];
+      }
     }
-    console.log("Usage: npx design-wiki tokens export");
+    await tokensCommand({ format: targetFormat, outputPath, cwd: cwdOverride });
+    process.exit(0);
+  }
+
+  if (command === "deconstruct") {
+    const input = args[1];
+    if (!input || input.startsWith("--")) {
+      console.error("❌ Error: Missing input file or HTML snippet to deconstruct.");
+      console.error("   Example: npx design-wiki deconstruct ./landing-mockup.html --install");
+      process.exit(1);
+    }
+    let outputPath: string | undefined;
+    let install = false;
+    for (let i = 2; i < args.length; i++) {
+      if (args[i] === "--output" && args[i + 1]) {
+        outputPath = args[++i];
+      } else if (args[i] === "--install") {
+        install = true;
+      }
+    }
+    await deconstructCommand(input, { cwd: cwdOverride, install, outputPath, registry: registryUrl });
+    process.exit(0);
+  }
+
+  if (command === "eval") {
+    const target = args[1] && !args[1].startsWith("--") ? args[1] : undefined;
+    let suite: "benchmark" | "workspace" | undefined;
+    for (let i = 1; i < args.length; i++) {
+      if (args[i] === "--suite" && (args[i + 1] === "benchmark" || args[i + 1] === "workspace")) {
+        suite = args[++i] as "benchmark" | "workspace";
+      }
+    }
+    await evalCommand(target, { cwd: cwdOverride, suite });
     process.exit(0);
   }
 

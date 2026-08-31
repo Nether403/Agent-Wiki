@@ -7,7 +7,7 @@
 - Raw Markdown Docs: /raw/components/[slug]
 - MCP Server: npx @design-wiki/mcp
 
-## Available Registry Components (263 verified zero-slop items)
+## Available Registry Components (268 verified zero-slop items)
 
 ### Category: ui:ai-native
 - [ai-artifact-sandbox-iframe](/r/ai-artifact-sandbox-iframe.json): Split-screen live preview canvas with responsive device switcher, code/preview toggle, and version history diff slider. (Variance: 7, Motion: 4, Density: 6)
@@ -244,6 +244,10 @@
   - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, primitive, color-picker, form, headless, ark-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/color-picker-primitive.json
+- [combobox-grouped-async](/r/combobox-grouped-async.json): Ariakit-inspired accessible multi-select combobox with categorized option groups, async search, and removable tag chips. (Variance: 3, Motion: 2, Density: 7)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, ariakit, combobox, multi-select, search, tags
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/combobox-grouped-async.json
 - [combobox-virtualized](/r/combobox-virtualized.json): High-performance search combobox handling 10,000+ items via virtualization, with keyboard navigation and async loading states. (Variance: 3, Motion: 2, Density: 8)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, combobox, virtualized, large-list, shark-ui
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -272,6 +276,10 @@
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, filter, facets, toolbar, chips, reui, shark-ui, cloudscape
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/faceted-filter-bar.json
+- [faceted-query-builder](/r/faceted-query-builder.json): Cloudscape-inspired nested query rule condition builder with AND/OR group toggles and typed comparison operators. (Variance: 3, Motion: 2, Density: 7)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, cloudscape, enterprise, filter, query-builder, faceted
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/faceted-query-builder.json
 - [file-upload-dropzone](/r/file-upload-dropzone.json): Drag-and-drop zone with MIME validation, file size limits, thumbnail generation, upload progress bars, and abort buttons. (Variance: 4, Motion: 3, Density: 6)
   - Tags: lucide-react, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block, form, file-upload, drag-drop, reui
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -436,6 +444,10 @@
   - Tags: lucide-react, tailwind-v4, brutalist, accessible, keyboard-accessible, wai-aria-compliant, layout-block
   - Dependencies: lucide-react
   - Install: npx shadcn@latest add http://localhost:3000/r/dark-brutalist-hero.json
+- [data-grid-pivot-view](/r/data-grid-pivot-view.json): High-density enterprise data grid with column grouping chips, dynamic summary aggregation rows, and sorting. (Variance: 4, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, reui, ag-grid, table, data-grid, pivot, analytics
+  - Dependencies: lucide-react, clsx, tailwind-merge, motion
+  - Install: npx shadcn@latest add http://localhost:3000/r/data-grid-pivot-view.json
 - [data-table-server-faceted](/r/data-table-server-faceted.json): Enterprise data table with column pinning, multi-facet filtering, and keyboard navigation. (Variance: 4, Motion: 2, Density: 9)
   - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, block, table, data-grid, faceted, primer
   - Dependencies: lucide-react, clsx, tailwind-merge, motion
@@ -484,6 +496,10 @@
   - Tags: lucide-react, glassmorphism, wai-aria-compliant, mobile, mockup, iphone, smartphone, launch-ui, showcase, viewport
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/mobile-app-frame-mockup.json
+- [multi-pane-workspace](/r/multi-pane-workspace.json): Enterprise 3-pane responsive IDE workbench layout with collapsible tree explorer, central editor, and live telemetry drawer. (Variance: 5, Motion: 3, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, cloudscape, fluent, ide, workspace, multi-pane, layout, dock
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/multi-pane-workspace.json
 - [navbar-sticky](/r/navbar-sticky.json): Sticky responsive top navigation bar with blur backdrop, link routing, and mobile drawer. (Variance: 4, Motion: 3, Density: 6)
   - Tags: lucide-react, tailwind-v4, glassmorphism, accessible, keyboard-accessible, wai-aria-compliant, layout-block, navbar, navigation, header, responsive
   - Dependencies: lucide-react, clsx, tailwind-merge
@@ -622,6 +638,10 @@
   - Tags: lucide-react, bento-grid, tailwind-v4, wai-aria-compliant, editorial, svg, zero-dependency, static, analytical, diagram
   - Dependencies: lucide-react, clsx, tailwind-merge
   - Install: npx shadcn@latest add http://localhost:3000/r/diagram-card.json
+- [diff-hunk-viewer](/r/diff-hunk-viewer.json): GitHub Primer style split and unified side-by-side git diff viewer with hunk navigation, line additions, and inline reviews. (Variance: 4, Motion: 2, Density: 8)
+  - Tags: lucide-react, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block, primer, github, diff, code-review, git, syntax
+  - Dependencies: lucide-react, clsx, tailwind-merge
+  - Install: npx shadcn@latest add http://localhost:3000/r/diff-hunk-viewer.json
 - [donut-metric-card](/r/donut-metric-card.json): Donut chart featuring centered key metric, category percentage breakdown, and hover slice detachment. (Variance: 5, Motion: 3, Density: 7)
   - Tags: tailwind-v4, wai-aria-compliant, layout-block, chart, donut-chart, metric-card, tremor-raw
   - Dependencies: clsx, tailwind-merge
