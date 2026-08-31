@@ -2,16 +2,16 @@
   "name": "@design-wiki/eval-harness",
   "version": "1.0.0",
   "private": true,
-  "description": "Headless automated evaluation harness for Design Agent Wiki validating zero-slop AST, A11y, type-safety, and context budget",
+  "description": "Headless evaluation harness: canonical slop lint plus catalog presence. Compile/axe sandboxes are Phase 4.",
   "bin": {
     "eval-harness": "dist/cli.js"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --noEmit",
     "eval": "tsx src/cli.ts",
-    "test": "tsx src/cli.ts run"
+    "test": "tsx src/cli.ts"
   },
   "dependencies": {
     "@design-wiki/audit-linter": "workspace:*",

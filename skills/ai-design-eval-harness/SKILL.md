@@ -8,7 +8,7 @@ date_added: "2026-08-31"
 
 # AI Design Evaluation Harness Skill
 
-This skill defines the evaluation methodology, benchmarking protocols, and synthetic persona reviews used to guarantee **>90% Zero-Draft Fidelity** and **100/100 Anti-Slop Health Scores** across coding models.
+This skill describes the intended Phase 4 evaluation loop. Today the harness lints with `@design-wiki/audit-linter` and leaves compile/axe scores null until a real sandbox exists.
 
 ---
 

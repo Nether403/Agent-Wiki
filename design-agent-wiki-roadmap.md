@@ -1,4 +1,30 @@
-# 🗓️ Agile Delivery Roadmap: Machine-First Design Agent Wiki
+# 🗓️ Delivery Roadmap: Machine-First Design Agent Wiki
+
+## Status (2026-08-31)
+
+Phase 1 (registry + docs + compiler) and Phase 2 (harvester + catalog growth) produced a real catalog. An underspecified agent pass then added parallel rule copies, stub MCP tools, and research dumps until the docs no longer matched the code.
+
+**What is true now**
+- Pointer: `CATALOG.md`
+- Catalog source of truth: `packages/registry/src` → `catalog-stats.json`
+- Rule source of truth: `packages/audit-linter` (`SLOP-001`–`SLOP-050`, pattern checks)
+- Phase 3 stdio MCP: 14 tools listed in `catalog-contract.json` (search, fetch, install, audit, graph, keyword search, compose, contrast)
+- Cloudflare Worker, rendered axe, and compile sandbox are **not done**
+
+**Phase 3 remaining**
+- Publish `npx @design-wiki/mcp` with the compiled catalog (or a documented local path)
+- Keep Worker experimental until it embeds the full catalog and speaks real MCP transports
+- CLI `add` against a hosted registry URL, not only `localhost:3000`
+
+**Phase 4 remaining**
+- Eval harness on real `tsc --noEmit` in a fixture app (not hardcoded compile scores)
+- Playwright + axe on a small seed of primitives
+- Stop treating registry metadata heuristics as WCAG AA proof
+- Curate the inventory (keep / merge / drop) using `pnpm inventory:health` instead of adding more harvests
+
+The original 14-week plan below is historical. Dates and “100% complete” checkboxes in later sections are not current.
+
+---
 
 This roadmap outlines the tactical, 14-week milestone-driven plan to architect, build, evaluate, and launch the **Machine-First Design Agent Wiki**. Transitioning from an undefined multi-month timeline, this plan is structured into four vertical-sliced agile phases designed to deliver an operational MVP in 3 weeks and a scalable, automated system in 14 weeks.
 

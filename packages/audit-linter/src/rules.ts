@@ -9,6 +9,11 @@ export interface SlopRule {
   check: (line: string, fileContent: string, lineIndex: number, filePath?: string) => boolean;
 }
 
+/** Tailwind/JSX class rules should not fire on Node tooling or on the rule pack itself. */
+function isUiFile(filePath?: string): boolean {
+  return !filePath || /\.(tsx|jsx)$/.test(filePath);
+}
+
 export const SLOP_RULES: SlopRule[] = [
   {
     id: "SLOP-001",
@@ -127,7 +132,8 @@ export const SLOP_RULES: SlopRule[] = [
     category: "Accessibility",
     severity: "High",
     description: "Removing focus ring (outline-none or ring-0) without providing a focus-visible ring.",
-    check: (line) =>
+    check: (line, _content, _lineIndex, filePath) =>
+      isUiFile(filePath) &&
       !line.includes("pointer-events-none") &&
       /(?:outline-none|ring-0)\b/i.test(line) &&
       !line.includes("focus-visible:") &&
@@ -150,7 +156,7 @@ export const SLOP_RULES: SlopRule[] = [
     severity: "Medium",
     description: "HTML5 Canvas loop without checking window.matchMedia('(prefers-reduced-motion)').",
     check: (line, content) =>
-      /requestAnimationFrame/i.test(line) &&
+      /\brequestAnimationFrame\s*\(/i.test(line) &&
       !content.includes("prefers-reduced-motion"),
   },
   {
@@ -210,6 +216,7 @@ export const SLOP_RULES: SlopRule[] = [
     description: "Component file missing mandatory SPDX or upstream license attribution header.",
     check: (line, content, lineIndex, filePath) =>
       lineIndex === 0 &&
+      isUiFile(filePath) &&
       Boolean(filePath && (filePath.includes("registry") || filePath.includes("components"))) &&
       !content.includes("@license") &&
       !content.includes("@origin") &&
@@ -244,7 +251,13 @@ export const SLOP_RULES: SlopRule[] = [
     category: "TypeScript Safety",
     severity: "High",
     description: "Rejects loose Record<string, any>, untyped callback parameters, and unconstrained any interfaces.",
-    check: (line) =>
+    check: (line, _content, _lineIndex, filePath) =>
+      Boolean(
+        !filePath ||
+          /\.(tsx|jsx)$/.test(filePath) ||
+          filePath.includes("registry") ||
+          filePath.includes("components")
+      ) &&
       /(?:Record<string,\s*any>|:\s*any\[\]|\((?:e|evt|event|item|data|val|props):\s*any\))/i.test(
         line
       ),
@@ -323,6 +336,7 @@ export const SLOP_RULES: SlopRule[] = [
     description: "Requires verified machine-readable @origin, @license, and @curated-by frontmatter headers on all registry components.",
     check: (line, content, lineIndex, filePath) =>
       lineIndex === 0 &&
+      isUiFile(filePath) &&
       Boolean(filePath && (filePath.includes("registry") || filePath.includes("components"))) &&
       (!content.includes("@origin") || !content.includes("@license") || !content.includes("@curated-by")),
   },
@@ -439,7 +453,8 @@ export const SLOP_RULES: SlopRule[] = [
     category: "Accessibility & WCAG",
     severity: "High",
     description: "Universal CSS or Tailwind rule stripping focus outlines without providing a visible focus indicator.",
-    check: (line) =>
+    check: (line, _content, _lineIndex, filePath) =>
+      isUiFile(filePath) &&
       /(?:outline-none|\*:\s*outline-none)\b/.test(line) &&
       !line.includes("focus-visible:") &&
       !line.includes("focus:") &&
@@ -487,8 +502,9 @@ export const SLOP_RULES: SlopRule[] = [
     category: "Accessibility & ARIA",
     severity: "High",
     description: "Streaming AI message or dynamic status update container lacking aria-live or role='status' / role='log'.",
-    check: (line, content, lineIndex) =>
+    check: (line, content, lineIndex, filePath) =>
       lineIndex === 0 &&
+      Boolean(filePath && /\.(tsx|jsx)$/.test(filePath)) &&
       (/(?:StreamingMessage|StreamingChat|TokenStream|AgentStatus)\b/.test(content)) &&
       !content.includes("aria-live") &&
       !content.includes("role=\"status\"") &&

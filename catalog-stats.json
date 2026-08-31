@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-08-31T10:03:48.017Z",
+  "source": "packages/registry/src",
+  "generatedBy": "packages/registry/compiler/build-registry.ts",
+  "componentCount": 280,
+  "categories": {
+    "ui:ai-native": 26,
+    "ui:primitive": 72,
+    "ui:workflow": 11,
+    "ui:block": 41,
+    "ui:editorial": 36,
+    "ui:creative": 34,
+    "ui:media": 10,
+    "ui:motion": 41,
+    "ui:utility": 9
+  },
+  "ruleCount": 50,
+  "ruleSource": "packages/audit-linter/src/rules.ts",
+  "mcpTools": [
+    "search_components",
+    "search_library",
+    "fetch_raw_markdown",
+    "fetch_raw_markup",
+    "get_component_markup",
+    "get_installation_commands",
+    "get_installation_schema",
+    "get_install_recipe",
+    "audit_code_slop",
+    "audit_and_fix_slop",
+    "get_dependency_graph",
+    "semantic_search_components",
+    "compose_layout_tree",
+    "verify_accessibility_contrast"
+  ],
+  "mcpToolCount": 14
+}

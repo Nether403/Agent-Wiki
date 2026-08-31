@@ -5,6 +5,7 @@ import {
   classifyComponentDials,
   TaxonomyCategory,
 } from "@design-wiki/harvester";
+import { RULE_COUNT } from "@design-wiki/audit-linter";
 
 interface RegistryDial {
   design_variance: number;
@@ -1843,7 +1844,12 @@ function sweepComponentFiles(targetDirs: string[]): Array<{ filePath: string; re
       for (const entry of entries) {
         const fullPath = path.join(currentDir, entry.name);
         if (entry.isDirectory()) {
-          if (!["node_modules", ".git", "dist", ".next", "out", "build"].includes(entry.name)) {
+          // lib/ and tokens/ hold shared token modules, not installable UI catalog items.
+          if (
+            !["node_modules", ".git", "dist", ".next", "out", "build", "lib", "tokens"].includes(
+              entry.name
+            )
+          ) {
             walk(fullPath);
           }
         } else if (
@@ -1889,6 +1895,24 @@ function safeWriteFileSync(filePath: string, data: string) {
   fs.writeFileSync(filePath, data, "utf-8");
 }
 
+function pruneStaleCompiledFiles(
+  dir: string,
+  liveSlugs: Set<string>,
+  extension: string,
+  keepNames: Set<string> = new Set()
+) {
+  if (!fs.existsSync(dir)) return;
+  for (const name of fs.readdirSync(dir)) {
+    if (keepNames.has(name)) continue;
+    if (!name.endsWith(extension)) continue;
+    const slug = name.slice(0, -extension.length);
+    if (!liveSlugs.has(slug)) {
+      fs.unlinkSync(path.join(dir, name));
+      console.log(`  ♻️  Removed stale compiled artifact: ${path.join(dir, name)}`);
+    }
+  }
+}
+
 function main() {
   console.log("🚀 Starting Design Agent Wiki Registry Compilation & Dynamic Sweeper...");
 
@@ -1900,12 +1924,8 @@ function main() {
   const docsRDir = path.resolve(docsPublicDir, "r");
   const docsRawComponentsDir = path.resolve(docsPublicDir, "raw", "components");
 
-  // Additional component candidate paths
-  const candidateDirs = [
-    srcDir,
-    path.join(monorepoRoot, "components"),
-    path.join(monorepoRoot, "apps/docs/components"),
-  ];
+  // Additional component candidate paths — catalog source of truth is packages/registry/src only.
+  const candidateDirs = [srcDir];
 
   [distRDir, docsRDir, docsPublicDir, docsRawComponentsDir].forEach((dir) => {
     fs.mkdirSync(dir, { recursive: true });
@@ -2159,12 +2179,42 @@ ${fileContent}
 
   safeWriteFileSync(path.join(docsPublicDir, "llms-full.txt"), llmsFullTxt);
 
+  const categoryCounts: Record<string, number> = {};
+  allRegistryItems.forEach((item) => {
+    categoryCounts[item.category] = (categoryCounts[item.category] || 0) + 1;
+  });
+
+  const contractPath = path.join(monorepoRoot, "catalog-contract.json");
+  const contract = fs.existsSync(contractPath)
+    ? JSON.parse(fs.readFileSync(contractPath, "utf-8"))
+    : { mcpTools: [] };
+
+  const catalogStats = {
+    generatedAt: new Date().toISOString(),
+    source: "packages/registry/src",
+    generatedBy: "packages/registry/compiler/build-registry.ts",
+    componentCount: allRegistryItems.length,
+    categories: categoryCounts,
+    ruleCount: RULE_COUNT,
+    ruleSource: "packages/audit-linter/src/rules.ts",
+    mcpTools: contract.mcpTools || [],
+    mcpToolCount: Array.isArray(contract.mcpTools) ? contract.mcpTools.length : 0,
+  };
+
+  const statsJson = JSON.stringify(catalogStats, null, 2) + "\n";
+  safeWriteFileSync(path.join(monorepoRoot, "catalog-stats.json"), statsJson);
+
+  pruneStaleCompiledFiles(docsRDir, processedSlugs, ".json", new Set(["registry.json"]));
+  pruneStaleCompiledFiles(distRDir, processedSlugs, ".json", new Set(["registry.json"]));
+  pruneStaleCompiledFiles(docsRawComponentsDir, processedSlugs, ".md");
+
   console.log(`\n🎉 Registry Build Complete! Compiled ${allRegistryItems.length} components.`);
   console.log(`📁 Artifacts generated:`);
   console.log(`   - ${distRDir}/registry.json`);
   console.log(`   - ${docsRDir}/registry.json`);
   console.log(`   - ${docsPublicDir}/llms.txt`);
   console.log(`   - ${docsPublicDir}/llms-full.txt`);
+  console.log(`   - ${path.join(monorepoRoot, "catalog-stats.json")} (${allRegistryItems.length} items, ${RULE_COUNT} rules)`);
 }
 
 main();

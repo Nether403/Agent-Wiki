@@ -1,10 +1,11 @@
 /**
  * @origin Machine-First Design Agent Wiki (Eval Harness)
  * @license MIT
- * @description Automated 10-prompt benchmark test runner calculating Zero-Draft Fidelity (0-100%)
+ * @description Benchmark runner. Slop scores use @design-wiki/audit-linter.
+ * TypeScript compile and rendered a11y are not executed here (Phase 4 remaining work).
  */
 
-import { evaluateComponentFile, ComponentEvalReport } from "./index";
+import { evaluateSource } from "@design-wiki/audit-linter";
 
 export interface BenchmarkScenario {
   id: string;
@@ -47,7 +48,7 @@ import { AiPromptBarExpanded } from "@/components/ui/ai-prompt-bar-expanded";
 
 export default function ChatView() {
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground p-4">
+    <div className="flex flex-col min-h-[100dvh] bg-background text-foreground p-4">
       <AiStreamingMessage role="assistant" content="Grounded agent session ready." />
       <AiReasoningAccordion />
       <div className="mt-auto">
@@ -113,10 +114,11 @@ export interface BenchmarkRunReport {
   category: string;
   prompt: string;
   slopHealthScore: number;
-  compilationScore: number;
-  a11yScore: number;
+  compilationScore: number | null;
+  a11yScore: number | null;
   overallFidelityScore: number;
   status: "PASS" | "FAIL";
+  notes: string;
 }
 
 export interface BenchmarkSummary {
@@ -128,31 +130,20 @@ export interface BenchmarkSummary {
 
 export function runAgentBenchmarkSuite(scenarios: BenchmarkScenario[] = BENCHMARK_SCENARIOS): BenchmarkSummary {
   const reports: BenchmarkRunReport[] = scenarios.map((scenario) => {
-    // In-memory AST/Regex slop audit
-    const hasArbitraryPixels = /(?:p|m|gap)-\[\d+px\]/.test(scenario.simulatedTsxSnippet);
-    const hasChainedCasts = /as\s+\w+\s+as\s+\w+/.test(scenario.simulatedTsxSnippet);
-    const hasUnshadedBg = /bg-white(?!\/)/.test(scenario.simulatedTsxSnippet);
-
-    let slopScore = 100;
-    if (hasArbitraryPixels) slopScore -= 20;
-    if (hasChainedCasts) slopScore -= 30;
-    if (hasUnshadedBg) slopScore -= 20;
-
-    const compilationScore = 100; // Simulated clean Next.js/TS compilation
-    const a11yScore = 100; // WCAG 2.1 AA verified primitives
-
-    const overallFidelity = Math.round((slopScore * 0.4) + (compilationScore * 0.3) + (a11yScore * 0.3));
-    const status = overallFidelity >= 85 ? "PASS" : "FAIL";
+    const slop = evaluateSource(`${scenario.id}.tsx`, scenario.simulatedTsxSnippet);
+    const overallFidelity = slop.healthScore;
+    const status = slop.metrics.highSeverityCount === 0 && slop.healthScore >= 85 ? "PASS" : "FAIL";
 
     return {
       scenarioId: scenario.id,
       category: scenario.category,
       prompt: scenario.prompt,
-      slopHealthScore: slopScore,
-      compilationScore,
-      a11yScore,
+      slopHealthScore: slop.healthScore,
+      compilationScore: null,
+      a11yScore: null,
       overallFidelityScore: overallFidelity,
       status,
+      notes: "compilationScore and a11yScore are null until Phase 4 sandbox/axe exist",
     };
   });
 

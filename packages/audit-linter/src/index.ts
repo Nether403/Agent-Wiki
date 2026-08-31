@@ -1,16 +1,9 @@
 import fs from "fs";
 import path from "path";
-import { SLOP_RULES, SlopRule, Severity } from "./rules";
+import { Severity } from "./rules";
+import { evaluateSource, ratingFromScore, SourceFinding } from "./evaluate";
 
-export interface AuditFinding {
-  ruleId: string;
-  ruleName: string;
-  category: string;
-  severity: Severity;
-  lineNum: number;
-  lineText: string;
-  filePath: string;
-}
+export type AuditFinding = SourceFinding;
 
 export interface AuditReport {
   healthScore: number;
@@ -39,6 +32,8 @@ const EXCLUDED_DIRS = new Set([
   "scripts",
   "artifacts",
   "scratch",
+  "research",
+  "graphify-out",
 ]);
 
 const VALID_EXTENSIONS = new Set([".tsx", ".ts", ".jsx", ".js"]);
@@ -70,32 +65,13 @@ export function scanFiles(dir: string, fileList: string[] = []): string[] {
 
 export function auditFile(filePath: string, rootDir: string): AuditFinding[] {
   const relativePath = path.relative(rootDir, filePath);
-  const findings: AuditFinding[] = [];
-
   try {
     const fileContent = fs.readFileSync(filePath, "utf-8");
-    const lines = fileContent.split("\n");
-
-    lines.forEach((line, index) => {
-      for (const rule of SLOP_RULES) {
-        if (rule.check(line, fileContent, index, relativePath)) {
-          findings.push({
-            ruleId: rule.id,
-            ruleName: rule.name,
-            category: rule.category,
-            severity: rule.severity,
-            lineNum: index + 1,
-            lineText: line.trim(),
-            filePath: relativePath,
-          });
-        }
-      }
-    });
+    return evaluateSource(relativePath, fileContent).findings;
   } catch (err) {
     console.error(`Error reading ${filePath}:`, err);
+    return [];
   }
-
-  return findings;
 }
 
 export function runAudit(targetDir: string): AuditReport {
@@ -103,8 +79,7 @@ export function runAudit(targetDir: string): AuditReport {
   const findings: AuditFinding[] = [];
 
   for (const file of files) {
-    const fileFindings = auditFile(file, targetDir);
-    findings.push(...fileFindings);
+    findings.push(...auditFile(file, targetDir));
   }
 
   const severityCounts: Record<Severity, number> = {
@@ -121,15 +96,9 @@ export function runAudit(targetDir: string): AuditReport {
     severityCounts.High * 15 + severityCounts.Medium * 8 + severityCounts.Low * 3;
   const healthScore = Math.max(0, 100 - deductions);
 
-  let rating = "S - Flawless Quality";
-  if (healthScore < 50) rating = "F - Serious Refactoring Required";
-  else if (healthScore < 70) rating = "C - Moderate Slop Present";
-  else if (healthScore < 85) rating = "B - Minor Tweaks Required";
-  else if (healthScore < 98) rating = "A - High Standard Integrity";
-
   return {
     healthScore,
-    rating,
+    rating: ratingFromScore(healthScore),
     totalFiles: files.length,
     severityCounts,
     findings,
@@ -151,55 +120,13 @@ export interface LinterResult {
 }
 
 export function lintComponentSource(filePath: string, content: string): LinterResult {
-  const lines = content.split("\n");
-  const findings: AuditFinding[] = [];
-
-  lines.forEach((line, index) => {
-    for (const rule of SLOP_RULES) {
-      if (rule.check(line, content, index, filePath)) {
-        findings.push({
-          ruleId: rule.id,
-          ruleName: rule.name,
-          category: rule.category,
-          severity: rule.severity,
-          lineNum: index + 1,
-          lineText: line.trim(),
-          filePath: filePath,
-        });
-      }
-    }
-  });
-
-  const highCount = findings.filter((f) => f.severity === "High").length;
-  const medCount = findings.filter((f) => f.severity === "Medium").length;
-  const lowCount = findings.filter((f) => f.severity === "Low").length;
-  const healthScore = Math.max(0, 100 - (highCount * 15 + medCount * 8 + lowCount * 3));
-
-  let grade = "S";
-  if (healthScore < 50) grade = "F";
-  else if (healthScore < 70) grade = "C";
-  else if (healthScore < 85) grade = "B";
-  else if (healthScore < 98) grade = "A";
-
-  return {
-    filePath,
-    healthScore,
-    grade,
-    findings,
-    metrics: {
-      highSeverityCount: highCount,
-      mediumSeverityCount: medCount,
-      lowSeverityCount: lowCount,
-      totalFindings: findings.length,
-    },
-  };
+  return evaluateSource(filePath, content);
 }
 
 export * from "./rules";
+export * from "./evaluate";
 export * from "./llm-review";
 export * from "./dial-classifier";
 export * from "./taste-dial-audit";
 export * from "./unslop";
 export * from "./axe-runner";
-
-

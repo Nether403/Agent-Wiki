@@ -1,7 +1,7 @@
 /**
  * @license MIT
  * @origin Machine-First Design Agent Wiki
- * Automated Axe-Core & WCAG 2.1 AA Accessibility Test Runner
+ * Source-heuristic a11y scanner (not axe-core, not a rendered WCAG suite)
  */
 
 import fs from "fs";
@@ -25,7 +25,7 @@ export interface ComponentA11yScanResult {
 }
 
 /**
- * Static Axe-core rule analysis scanner checking for missing ARIA, focus suppression, contrast, and keyboard traps.
+ * Static source heuristics for missing ARIA, focus suppression, and unlabeled icon buttons.
  */
 export function scanA11yConformance(filePath: string, content: string): ComponentA11yScanResult {
   const componentName = path.basename(filePath, path.extname(filePath));

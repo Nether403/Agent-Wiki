@@ -30,7 +30,7 @@ function main() {
   console.log(`   - Passed Integrity Gate: ${summary.passedCount}`);
   console.log(`   - Failed Gate:           ${summary.failedCount}`);
   console.log(`   - Overall Health Score:  ${summary.overallHealthScore}/100`);
-  console.log(`   - Average A11y AA Score: ${summary.averageA11yScore}/100\n`);
+  console.log(`   - A11y metadata heuristic: ${summary.averageA11yScore}/100 (not axe, not WCAG AA proof)\n`);
 
   const failing = summary.reports.filter((r) => !r.passed);
   if (failing.length > 0) {

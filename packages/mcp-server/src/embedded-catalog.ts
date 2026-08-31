@@ -1,10 +1,46 @@
 import fs from "fs";
 import path from "path";
 
-// Reads the compiled registry.json if on Node.js and caches it, or provides a static snapshot for Cloudflare Worker edge runtimes
-let cachedSnapshot: any[] | null = null;
+export interface CatalogRecord {
+  name: string;
+  title?: string;
+  type?: string;
+  description?: string;
+  category?: string;
+  tags?: string[];
+  complexity?: string;
+  dependencies?: string[];
+  devDependencies?: string[];
+  registryDependencies?: string[];
+  files?: Array<{ path?: string; content?: string; target?: string }>;
+  dials?: {
+    design_variance?: number;
+    motion_intensity?: number;
+    visual_density?: number;
+  };
+  a11y?: {
+    keyboard_navigable?: boolean;
+    wai_aria_compliant?: boolean;
+    fallback_provided?: boolean;
+    reduced_motion_supported?: boolean;
+  };
+  license_origin?: { source_repository?: string };
+}
 
-export function loadCatalogSnapshot(): any[] {
+export function isCatalogRecord(value: unknown): value is CatalogRecord {
+  if (!value || typeof value !== "object") return false;
+  return typeof (value as { name?: unknown }).name === "string";
+}
+
+function parseCatalogArray(raw: string): CatalogRecord[] {
+  const parsed: unknown = JSON.parse(raw);
+  if (!Array.isArray(parsed)) return [];
+  return parsed.filter(isCatalogRecord);
+}
+
+let cachedSnapshot: CatalogRecord[] | null = null;
+
+export function loadCatalogSnapshot(): CatalogRecord[] {
   if (cachedSnapshot) return cachedSnapshot;
 
   const possiblePaths = [
@@ -20,8 +56,8 @@ export function loadCatalogSnapshot(): any[] {
     try {
       if (typeof fs !== "undefined" && fs.existsSync && fs.existsSync(p)) {
         const raw = fs.readFileSync(p, "utf-8");
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed) && parsed.length > 0) {
+        const parsed = parseCatalogArray(raw);
+        if (parsed.length > 0) {
           cachedSnapshot = parsed;
           return cachedSnapshot;
         }
@@ -32,7 +68,7 @@ export function loadCatalogSnapshot(): any[] {
   return FALLBACK_EMBEDDED_ITEMS;
 }
 
-export const FALLBACK_EMBEDDED_ITEMS = [
+export const FALLBACK_EMBEDDED_ITEMS: CatalogRecord[] = [
   {
     name: "button",
     type: "registry:component",

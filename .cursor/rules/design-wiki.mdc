@@ -41,19 +41,16 @@ When a user asks you to build, modify, or redesign an interface, you must execut
 
 ### Phase 1: Discover
 Before writing code, query our machine-readable discovery endpoints:
-1. Query MCP `@design-wiki/mcp`:
-   - `semantic_search_components({ naturalLanguageQuery: "<intent>", targetDialProfile: { variance: 5 } })` (vector/dial-calibrated natural language search)
-   - `compose_layout_tree({ pageType: "ai-chat-workspace" })` (synthesizes structured full-page layout scaffold)
-   - `search_library({ query: "dock", category: "ui:motion" })` (or `search_components`) (< 15KB payloads)
-   - `fetch_raw_markup({ name: "floating-dock" })` (or `fetch_raw_markdown`) (fetches structured YAML frontmatter & verified TSX)
-   - `get_installation_schema({ name: "floating-dock", packageManager: "pnpm" })` (or `get_installation_commands`)
-   - `audit_code_slop({ code: "<raw-code>" })` / `audit_and_fix_slop({ code: "<raw-code>" })` (auto-remaps anti-patterns to zero-slop TSX)
-   - `get_dependency_graph({ name: "dock-magnification" })` (topological dependency sequence)
-   - `export_style_dictionary_tokens({ target: "tailwind-v4" })` (multi-platform token compilation)
-   - `generate_storybook_story({ name: "voice-call-session-hud" })` (generates isolated CSF3 Storybook story)
-   - `compare_design_tokens({ paletteA, paletteB })` (computes theme contrast and token delta)
-   - `generate_playwright_test({ routeName: "/pricing" })` (generates automated Axe + Playwright a11y test spec)
-2. Or load and parse `/public/llms.txt` and `/raw/components/<name>.md`.
+1. Query MCP `@design-wiki/mcp` (stdio: `npx @design-wiki/mcp`). Canonical tools:
+   - `search_library({ query: "dock", category: "ui:motion" })` (alias: `search_components`) — filtered catalog search, <15KB payloads
+   - `semantic_search_components({ naturalLanguageQuery: "<intent>", targetDialProfile: { variance: 5 } })` — keyword + dial scoring, not an embedding index
+   - `compose_layout_tree({ pageType: "ai-chat-workspace" })` — page archetype scaffold from registry slugs
+   - `fetch_raw_markup({ name: "floating-dock" })` (aliases: `fetch_raw_markdown`, `get_component_markup`)
+   - `get_installation_schema({ name: "floating-dock", packageManager: "pnpm" })` (aliases: `get_installation_commands`, `get_install_recipe`)
+   - `audit_code_slop({ code: "<raw-code>" })` / `audit_and_fix_slop({ code: "<raw-code>" })` — canonical `@design-wiki/audit-linter` rules
+   - `get_dependency_graph({ name: "dock-magnification" })`
+   - `verify_accessibility_contrast({ foregroundHex, backgroundHex })` — WCAG contrast math
+2. Or load and parse `/public/llms.txt` and `/raw/components/<name>.md`. Counts live in `catalog-stats.json`.
 
 ### Phase 2: Install
 If the component is registered but missing from the local workspace:

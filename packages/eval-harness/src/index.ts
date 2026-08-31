@@ -52,7 +52,7 @@ export function evaluateComponentFile(filePath: string): ComponentEvalReport {
   const astMeta = parseComponentAST(filePath, content);
   const dialResult = classifyComponentDials(astMeta, content);
 
-  // 3. A11y AA Scoring
+  // Metadata heuristic only. Not axe-core and not a WCAG AA proof (Phase 4).
   let a11yScore = 100;
   if (!astMeta.a11y.keyboard_navigable) a11yScore -= 20;
   if (!astMeta.a11y.wai_aria_compliant) a11yScore -= 20;
@@ -94,7 +94,7 @@ export function runEvalHarness(targetPaths: string[]): EvalHarnessSummary {
         for (const entry of entries) {
           const full = path.join(dir, entry.name);
           if (entry.isDirectory()) {
-            if (!["node_modules", ".git", "dist", ".next", "out"].includes(entry.name)) {
+            if (!["node_modules", ".git", "dist", ".next", "out", "lib", "tokens"].includes(entry.name)) {
               walk(full);
             }
           } else if (

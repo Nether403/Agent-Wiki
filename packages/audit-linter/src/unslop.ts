@@ -1,4 +1,5 @@
 import { scanCssAntiPatterns } from "./rules";
+import { evaluateSource } from "./evaluate";
 
 export interface UnslopOptions {
   theme?: "default" | "neo-tokyo" | "midnight" | "minimal" | string;
@@ -218,8 +219,8 @@ export function unslopCode(code: string, options: UnslopOptions = {}): UnslopRes
     changes.push("Applied 'minimal' typographic hierarchy theme styling");
   }
 
-  const scoreBefore = Math.max(30, 100 - changes.length * 12);
-  const scoreAfter = 100;
+  const scoreBefore = evaluateSource(options.componentName || "before.tsx", code).healthScore;
+  const scoreAfter = evaluateSource(options.componentName || "after.tsx", refactored).healthScore;
 
   return {
     code: refactored,

@@ -8,7 +8,7 @@ date_added: "2026-08-31"
 
 # Anti-Slop Automated Remediation Skill
 
-This skill provides step-by-step AST codemods and automated transformation recipes to eliminate AI-generated frontend slop and elevate messy code into **100/100 S-Grade TSX**.
+This skill records regex remaps used by `unslopCode` in `@design-wiki/audit-linter`. Scores are re-measured after remap; 100/100 is not assumed.
 
 ---
 
