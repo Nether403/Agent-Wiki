@@ -44,12 +44,15 @@ Options:
   --path <dir>        Custom target directory (default: components/ui or src/components/ui)
   --overwrite         Overwrite existing component files without asking
   --install-deps      Automatically execute npm/pnpm/bun add for missing peer dependencies
-  --registry <url>    Base URL of registry endpoints (default: http://localhost:3000)
+  --registry <url>    Registry origin: https://..., file://..., or a directory with /r/*.json
+                      Default: DESIGN_WIKI_REGISTRY_URL, else compiled local catalog,
+                      else http://localhost:3000
   --dry-run           Simulate file operations and dependency resolution without writing
   -h, --help          Display this help message
 
 Examples:
   npx design-wiki add floating-dock
+  npx design-wiki add button --registry https://example.com
   npx design-wiki add canvas-fluid-wave --overwrite
   npx design-wiki list
   npx design-wiki search dialog

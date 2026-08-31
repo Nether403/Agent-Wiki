@@ -4,6 +4,7 @@ import { z } from "zod";
 import fs from "fs";
 import path from "path";
 import { loadCatalogSnapshot, CatalogRecord, isCatalogRecord } from "./embedded-catalog";
+import { resolveInstallBaseUrl } from "./registry-origin";
 import { scanMaliciousPayload, detectPromptInjection } from "./security";
 import { evaluateSource, unslopCode, RULE_COUNT } from "@design-wiki/audit-linter";
 export const MCP_CORE_TOOLS = [
@@ -233,7 +234,7 @@ a11y:
 \`\`\`bash
 npx design-wiki add ${item.name}
 # or via shadcn
-npx shadcn@latest add http://localhost:3000/r/${item.name}.json
+npx shadcn@latest add ${resolveInstallBaseUrl()}/r/${item.name}.json
 \`\`\`
 
 ## Peer Dependencies
@@ -310,8 +311,8 @@ ${sourceCode}
         }),
     }, async ({ name }) => handleFetchMarkup(name));
     // Handler for installation commands (CLI and package managers)
-    const handleGetInstallationCommands = async (name, packageManager = "pnpm", baseUrl = "http://localhost:3000") => {
-        const activeBaseUrl = baseUrl || "http://localhost:3000";
+    const handleGetInstallationCommands = async (name, packageManager = "pnpm", baseUrl) => {
+        const activeBaseUrl = resolveInstallBaseUrl(baseUrl);
         const item = getComponentItem(name);
         if (!item) {
             return {
@@ -370,8 +371,8 @@ ${sourceCode}
         };
     };
     // Helper handler for installation schema retrieval (backward compatibility)
-    const handleGetInstallSchema = async (name, baseUrl = "http://localhost:3000") => {
-        const activeBaseUrl = baseUrl || "http://localhost:3000";
+    const handleGetInstallSchema = async (name, baseUrl) => {
+        const activeBaseUrl = resolveInstallBaseUrl(baseUrl);
         const item = getComponentItem(name);
         if (!item) {
             return {
@@ -423,25 +424,25 @@ ${sourceCode}
         inputSchema: z.object({
             name: z.string().describe("Component slug identifier (e.g., 'floating-dock', 'canvas-fluid-wave', 'bento-grid')"),
             packageManager: z.enum(["pnpm", "npm", "bun", "yarn"]).optional().default("pnpm").describe("Target package manager (pnpm, npm, bun, yarn)"),
-            baseUrl: z.string().optional().default("http://localhost:3000").describe("Base URL hosting the /r/ registry endpoints"),
+            baseUrl: z.string().optional().describe("Base URL hosting the /r/ registry endpoints. Defaults to DESIGN_WIKI_REGISTRY_URL or http://localhost:3000"),
         }),
-    }, async ({ name, packageManager = "pnpm", baseUrl = "http://localhost:3000" }) => handleGetInstallationCommands(name, packageManager, baseUrl));
+    }, async ({ name, packageManager = "pnpm", baseUrl }) => handleGetInstallationCommands(name, packageManager, baseUrl));
     // Tool 3 Alias: get_installation_schema (backward compatibility)
     server.registerTool("get_installation_schema", {
         description: "Get the complete shadcn v3 registry JSON installation schema (including files, dependencies, registryDependencies, and CLI install recipe) for a component.",
         inputSchema: z.object({
             name: z.string().describe("Component slug identifier (e.g., 'bento-grid', 'dialog', 'floating-dock')"),
-            baseUrl: z.string().optional().default("http://localhost:3000").describe("Base URL hosting the /r/ registry endpoints"),
+            baseUrl: z.string().optional().describe("Base URL hosting the /r/ registry endpoints. Defaults to DESIGN_WIKI_REGISTRY_URL or http://localhost:3000"),
         }),
-    }, async ({ name, baseUrl = "http://localhost:3000" }) => handleGetInstallSchema(name, baseUrl));
+    }, async ({ name, baseUrl }) => handleGetInstallSchema(name, baseUrl));
     // Tool 3 Alias: get_install_recipe (backward compatibility)
     server.registerTool("get_install_recipe", {
         description: "Get the exact CLI installation recipe, shadcn command, and required peer npm dependencies for a component (alias to get_installation_schema).",
         inputSchema: z.object({
             name: z.string().describe("Component slug identifier (e.g., 'bento-grid', 'dialog')"),
-            baseUrl: z.string().optional().default("http://localhost:3000"),
+            baseUrl: z.string().optional().describe("Base URL hosting the /r/ registry endpoints. Defaults to DESIGN_WIKI_REGISTRY_URL or http://localhost:3000"),
         }),
-    }, async ({ name, baseUrl = "http://localhost:3000" }) => handleGetInstallSchema(name, baseUrl));
+    }, async ({ name, baseUrl }) => handleGetInstallSchema(name, baseUrl));
     // Tool 4: audit_code_slop
     server.registerTool("audit_code_slop", {
         description: `Scan React/TypeScript/Tailwind code against the canonical ${RULE_COUNT} anti-slop rules in @design-wiki/audit-linter and return a remediation receipt.`,

@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsx scripts/embed-catalog.ts && tsc",
     "start": "tsx src/index.ts",
     "start:http": "tsx src/server-http.ts",
     "test": "tsx test/agent-sandbox.test.ts && tsx test/worker.test.ts",

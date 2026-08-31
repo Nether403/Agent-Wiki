@@ -65,5 +65,6 @@
     "Axe-core WCAG",
     "19 registered tools",
     "192 component catalog"
-  ]
+  ],
+  "compileSeed": "catalog-seed.json"
 }

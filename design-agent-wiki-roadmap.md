@@ -9,16 +9,17 @@ Phase 1 (registry + docs + compiler) and Phase 2 (harvester + catalog growth) pr
 - Catalog source of truth: `packages/registry/src` → `catalog-stats.json`
 - Rule source of truth: `packages/audit-linter` (`SLOP-001`–`SLOP-050`, pattern checks)
 - Phase 3 stdio MCP: 14 tools listed in `catalog-contract.json` (search, fetch, install, audit, graph, keyword search, compose, contrast)
-- Cloudflare Worker, rendered axe, and compile sandbox are **not done**
+- CLI `--registry` / `DESIGN_WIKI_REGISTRY_URL`: explicit HTTP skips local compiled files
+- MCP build copies `registry.json` into `packages/mcp-server/catalog/` (gitignored) for stdio
+- Phase 4 compile seed: `pnpm test:compile-seed` runs `tsc --noEmit` on slugs in `catalog-seed.json`
+- Cloudflare Worker and Playwright + axe are **not done**. `@design-wiki/mcp` is still private
 
 **Phase 3 remaining**
-- Publish `npx @design-wiki/mcp` with the compiled catalog (or a documented local path)
+- Publish `npx @design-wiki/mcp` (package is private; run `pnpm mcp` from this repo)
 - Keep Worker experimental until it embeds the full catalog and speaks real MCP transports
-- CLI `add` against a hosted registry URL, not only `localhost:3000`
 
 **Phase 4 remaining**
-- Eval harness on real `tsc --noEmit` in a fixture app (not hardcoded compile scores)
-- Playwright + axe on a small seed of primitives
+- Playwright + axe on the compile seed (not claimed by `pnpm test:a11y`)
 - Stop treating registry metadata heuristics as WCAG AA proof
 - Curate the inventory (keep / merge / drop) using `pnpm inventory:health` instead of adding more harvests
 

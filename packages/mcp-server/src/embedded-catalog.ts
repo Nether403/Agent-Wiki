@@ -44,10 +44,13 @@ export function loadCatalogSnapshot(): CatalogRecord[] {
   if (cachedSnapshot) return cachedSnapshot;
 
   const possiblePaths = [
+    path.resolve(__dirname, "../catalog/registry.json"),
     path.resolve(__dirname, "../../../apps/docs/public/r/registry.json"),
     path.resolve(__dirname, "../../registry/dist/r/registry.json"),
     path.resolve(__dirname, "../../apps/docs/public/r/registry.json"),
     path.resolve(__dirname, "../../../packages/registry/dist/r/registry.json"),
+    path.resolve(__dirname, "../../../../apps/docs/public/r/registry.json"),
+    path.resolve(__dirname, "../../../../packages/registry/dist/r/registry.json"),
     path.resolve(process.cwd(), "apps/docs/public/r/registry.json"),
     path.resolve(process.cwd(), "packages/registry/dist/r/registry.json"),
   ];

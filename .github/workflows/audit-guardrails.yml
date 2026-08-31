@@ -33,6 +33,12 @@ jobs:
       - name: Assert catalog counts and MCP contract
         run: pnpm assert:catalog
 
+      - name: Registry origin (HTTP wins over local files)
+        run: pnpm test:origin
+
+      - name: Phase 4 compile seed (tsc --noEmit)
+        run: pnpm test:compile-seed
+
       - name: Anti-slop rulepack on tooling packages
         run: pnpm lint:slop packages/mcp-server/src && pnpm lint:slop packages/cli/src
 

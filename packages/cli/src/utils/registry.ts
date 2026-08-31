@@ -1,5 +1,12 @@
 import fs from "fs";
 import path from "path";
+import {
+  formatRegistryOrigin,
+  registryIndexPath,
+  registryItemCandidates,
+  resolveRegistryOrigin,
+  type RegistryOrigin,
+} from "./registry-origin";
 
 export interface RegistryItem {
   $schema?: string;
@@ -36,82 +43,85 @@ export interface RegistryItem {
   }>;
 }
 
-/**
- * Fetches the master registry catalog index
- */
-export async function fetchRegistryIndex(baseUrl: string = "http://localhost:3000"): Promise<RegistryItem[]> {
-  // 1. Try local filesystem paths first (fastest, works offline in workspace)
-  const localPaths = [
-    path.resolve(__dirname, "../../../apps/docs/public/r/registry.json"),
-    path.resolve(__dirname, "../../registry/dist/r/registry.json"),
-    path.resolve(process.cwd(), "apps/docs/public/r/registry.json"),
-    path.resolve(process.cwd(), "packages/registry/dist/r/registry.json"),
-  ];
+function isRegistryItem(value: unknown): value is RegistryItem {
+  if (!value || typeof value !== "object") return false;
+  return typeof (value as { name?: unknown }).name === "string";
+}
 
-  for (const p of localPaths) {
-    if (fs.existsSync(p)) {
-      try {
-        return JSON.parse(fs.readFileSync(p, "utf-8"));
-      } catch {
-        // Fall through
-      }
-    }
-  }
-
-  // 2. Fetch over HTTP
+async function readJsonFile(filePath: string): Promise<unknown | null> {
   try {
-    const url = `${baseUrl.replace(/\/$/, "")}/r/registry.json`;
-    const res = await fetch(url);
-    if (res.ok) {
-      return (await res.json()) as RegistryItem[];
-    }
+    if (!fs.existsSync(filePath)) return null;
+    return JSON.parse(fs.readFileSync(filePath, "utf-8"));
   } catch {
-    // Fall through
+    return null;
   }
+}
 
-  return [];
+async function fetchJson(url: string): Promise<unknown | null> {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+function originFromArg(explicitOrigin?: string): RegistryOrigin {
+  return resolveRegistryOrigin(explicitOrigin);
 }
 
 /**
- * Fetches a specific component schema item from local files or remote registry
+ * Fetches the master registry catalog index.
+ * Explicit http(s) origins skip local files.
+ */
+export async function fetchRegistryIndex(explicitOrigin?: string): Promise<RegistryItem[]> {
+  const origin = originFromArg(explicitOrigin);
+
+  if (origin.kind === "http") {
+    const parsed = await fetchJson(registryIndexPath(origin));
+    return Array.isArray(parsed) ? parsed.filter(isRegistryItem) : [];
+  }
+
+  const parsed = await readJsonFile(registryIndexPath(origin));
+  if (Array.isArray(parsed)) {
+    return parsed.filter(isRegistryItem);
+  }
+
+  const looseIndex = path.join(origin.rootDir, "registry.json");
+  const fallback = await readJsonFile(looseIndex);
+  return Array.isArray(fallback) ? fallback.filter(isRegistryItem) : [];
+}
+
+/**
+ * Fetches a component schema item from the resolved origin only.
+ * Explicit http(s) does not fall back to the local monorepo catalog.
  */
 export async function fetchComponentItem(
   slug: string,
-  baseUrl: string = "http://localhost:3000"
+  explicitOrigin?: string
 ): Promise<RegistryItem | null> {
+  const origin = originFromArg(explicitOrigin);
   const normalizedSlug = slug.toLowerCase().trim();
 
-  // 1. Check local files in workspace
-  const localPaths = [
-    path.resolve(__dirname, `../../../apps/docs/public/r/${normalizedSlug}.json`),
-    path.resolve(__dirname, `../../registry/dist/r/${normalizedSlug}.json`),
-    path.resolve(process.cwd(), `apps/docs/public/r/${normalizedSlug}.json`),
-    path.resolve(process.cwd(), `packages/registry/dist/r/${normalizedSlug}.json`),
-  ];
-
-  for (const p of localPaths) {
-    if (fs.existsSync(p)) {
-      try {
-        return JSON.parse(fs.readFileSync(p, "utf-8"));
-      } catch {
-        // Fall through
-      }
+  if (origin.kind === "http") {
+    for (const url of registryItemCandidates(origin, normalizedSlug)) {
+      const parsed = await fetchJson(url);
+      if (isRegistryItem(parsed)) return parsed;
     }
+    const catalog = await fetchRegistryIndex(explicitOrigin);
+    return catalog.find((item) => item.name.toLowerCase() === normalizedSlug) ?? null;
   }
 
-  // 2. Try HTTP fetch
-  try {
-    const url = `${baseUrl.replace(/\/$/, "")}/r/${normalizedSlug}.json`;
-    const res = await fetch(url);
-    if (res.ok) {
-      return (await res.json()) as RegistryItem;
-    }
-  } catch {
-    // Fall through
+  for (const filePath of registryItemCandidates(origin, normalizedSlug)) {
+    const parsed = await readJsonFile(filePath);
+    if (isRegistryItem(parsed)) return parsed;
   }
 
-  // 3. Fallback: Search in master registry if already loaded
-  const catalog = await fetchRegistryIndex(baseUrl);
-  const match = catalog.find((i) => i.name.toLowerCase() === normalizedSlug);
-  return match || null;
+  const catalog = await fetchRegistryIndex(explicitOrigin);
+  return catalog.find((item) => item.name.toLowerCase() === normalizedSlug) ?? null;
+}
+
+export function describeResolvedRegistry(explicitOrigin?: string): string {
+  return formatRegistryOrigin(originFromArg(explicitOrigin));
 }

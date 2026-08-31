@@ -1,0 +1,13 @@
+{
+  "$comment": "Phase 4 TypeScript compile seed. Slugs must exist in the compiled registry after pnpm build:registry. This is tsc --noEmit only — not axe-core and not WCAG AA proof.",
+  "utils": "packages/registry/src/lib/utils.ts",
+  "slugs": ["button", "input", "badge", "card", "separator", "skeleton"],
+  "sources": {
+    "button": "packages/registry/src/primitives/button.tsx",
+    "input": "packages/registry/src/primitives/input.tsx",
+    "badge": "packages/registry/src/primitives/badge.tsx",
+    "card": "packages/registry/src/primitives/card.tsx",
+    "separator": "packages/registry/src/primitives/separator.tsx",
+    "skeleton": "packages/registry/src/primitives/skeleton.tsx"
+  }
+}
