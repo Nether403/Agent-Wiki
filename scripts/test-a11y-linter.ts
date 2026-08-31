@@ -20,14 +20,12 @@ interface RegistryItem {
 
 /**
  * CI Accessibility Linter:
- * Validates WCAG 2.1 AA contrast rules, keyboard navigability,
- * ARIA roles, and motion fallbacks across all registered components.
+ * Checks registry a11y metadata contracts and a few source heuristics.
+ * This is not axe-core and does not prove WCAG 2.1 AA on a rendered page.
  */
 function runA11yLinter() {
-  console.log("\n♿ =======================================================");
-  console.log("♿ DESIGN AGENT WIKI: AUTOMATED ACCESSIBILITY LINTER");
-  console.log("♿ Enforcing WCAG 2.1 AA, Keyboard & Screen-Reader Contracts");
-  console.log("♿ =======================================================\n");
+  console.log("\n♿ Registry a11y metadata + source heuristics");
+  console.log("♿ Not a rendered WCAG 2.1 AA suite (Phase 4 remaining).\n");
 
   const registryPaths = [
     path.resolve(__dirname, "../apps/docs/public/r/registry.json"),
@@ -161,10 +159,8 @@ function runA11yLinter() {
     process.exit(1);
   }
 
-  console.log(`\n🎉 All ${items.length} registry components passed WCAG 2.1 AA accessibility checks!`);
-  console.log("   ✓ Zero focus outline regressions detected");
-  console.log("   ✓ 100% interactive primitives support keyboard navigation");
-  console.log("   ✓ Motion and canvas elements provide graceful accessibility fallbacks");
+  console.log(`\nRegistry a11y metadata checks passed for ${items.length} items.`);
+  console.log("   Rendered axe/Playwright coverage is still Phase 4 work.");
 }
 
 runA11yLinter();

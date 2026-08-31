@@ -3,7 +3,7 @@
  * Serves MCP JSON-RPC protocol over HTTP and Server-Sent Events (SSE) for universal agent access.
  */
 
-import { createDesignWikiMcpServer, stripPayloadToBudget } from "./server";
+import { createDesignWikiMcpServer, stripPayloadToBudget, MCP_CORE_TOOLS } from "./server";
 
 export interface Env {
   ENVIRONMENT?: string;
@@ -44,17 +44,9 @@ export default {
             sse: "/sse",
             health: "/health",
           },
-          tools: [
-            "search_library",
-            "fetch_raw_markup",
-            "get_installation_schema",
-            "search_components",
-            "fetch_raw_markdown",
-            "get_installation_commands",
-            "audit_code_slop",
-            "audit_and_fix_slop",
-            "get_dependency_graph",
-          ],
+          maturity: "prototype",
+          note: "Stdio MCP (npx @design-wiki/mcp) is the supported Phase 3 interface. This Worker is experimental and does not embed the full catalog on the edge.",
+          tools: [...MCP_CORE_TOOLS],
         }),
         {
           headers: {

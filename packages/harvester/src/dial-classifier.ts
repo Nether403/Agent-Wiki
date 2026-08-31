@@ -1,3 +1,4 @@
+import { evaluateSource, ratingFromScore } from "@design-wiki/audit-linter";
 import { ComponentParsedMetadata, TaxonomyCategory } from "./ast-parser";
 
 export interface DialScoreResult {
@@ -40,229 +41,8 @@ export interface LLMReviewResult {
   };
 }
 
-// 20 anti-slop rules for automated ingestion gating
-const HARVESTER_SLOP_CHECKS: Array<{
-  id: string;
-  name: string;
-  severity: "High" | "Medium" | "Low";
-  regex: RegExp;
-  recommendation: string;
-}> = [
-  {
-    id: "SLOP-001",
-    name: "Hardcoded Indigo Color",
-    severity: "Medium",
-    regex: /bg-indigo-(?:500|600|700)|text-indigo-(?:500|600)|(?:#4f46e5|#6366f1)/i,
-    recommendation: "Replace hardcoded indigo with semantic Tailwind tokens (bg-primary, text-primary-foreground).",
-  },
-  {
-    id: "SLOP-002",
-    name: "Purple-to-Blue Linear Gradient",
-    severity: "Medium",
-    regex: /from-purple-500\s+to-blue-500|bg-gradient-to-[r|tr|tl|b]\s+from-fuchsia/i,
-    recommendation: "Replace generic linear gradients with subtle solid card backgrounds accented by structural borders.",
-  },
-  {
-    id: "SLOP-003",
-    name: "Blanket Glassmorphism",
-    severity: "Low",
-    regex: /bg-white\/10\s+backdrop-blur|bg-white\/5\s+backdrop-blur/i,
-    recommendation: "Use solid card surfaces with crisp border-border instead of blanket glassmorphism blur.",
-  },
-  {
-    id: "SLOP-004",
-    name: "Chained Type Assertions",
-    severity: "High",
-    regex: /as\s+\w+\s+as\s+\w+/i,
-    recommendation: "Remove chained assertions (as any as). Define explicit TypeScript interfaces and type guards.",
-  },
-  {
-    id: "SLOP-005",
-    name: "Conditional Empty Object Spreads",
-    severity: "High",
-    regex: /\.\.\.\s*\(\s*[^?]+\s*\?\s*\{[^}]*\}\s*:\s*\{\s*\}\s*\)/i,
-    recommendation: "Use explicit fallback keys instead of ad-hoc conditional empty spreads.",
-  },
-  {
-    id: "SLOP-006",
-    name: "Blanket Transition All",
-    severity: "Low",
-    regex: /transition-all\s+duration-(?:300|500)/i,
-    recommendation: "Target mutable styles explicitly (e.g. transition-colors duration-200) rather than transition-all.",
-  },
-  {
-    id: "SLOP-007",
-    name: "Non-Token Arbitrary Pixel Spacing",
-    severity: "Low",
-    regex: /(?:p|m|gap)-\[(?:\d+px|\d+rem)\]/i,
-    recommendation: "Replace arbitrary pixel units (p-[17px]) with Tailwind spacing steps (p-4).",
-  },
-  {
-    id: "SLOP-008",
-    name: "Decorative Emojis in Cards/Buttons",
-    severity: "Medium",
-    regex: /(?:<span>|<li>|<button>)\s*[\uD800-\uDBFF][\uDC00-\uDFFF]\s*(?:<\/span>|<\/li>|<\/button>)/i,
-    recommendation: "Replace decorative emojis with semantic SVG vector icons from lucide-react.",
-  },
-  {
-    id: "SLOP-009",
-    name: "Incomplete Code / Mock TODOs",
-    severity: "High",
-    regex: /\/\/\s*TODO:\s*(?:implement|add\s+logic|finish|mock)/i,
-    recommendation: "Deliver complete, functional code without truncation or placeholder comments.",
-  },
-  {
-    id: "SLOP-010",
-    name: "Missing Interactive A11y Label",
-    severity: "High",
-    regex: /<button[^>]*>\s*<[A-Z]\w+[^>]*\/>\s*<\/button>/i,
-    recommendation: "Add aria-label or accessible <span className='sr-only'> text to icon-only buttons.",
-  },
-  {
-    id: "SLOP-011",
-    name: "Inline SVG Missing Role or Title",
-    severity: "Medium",
-    regex: /<svg\b(?![^>]*(?:role=["']img["']|aria-hidden=["']true["']|aria-label))[^>]*>/i,
-    recommendation: "Add role='img' and aria-label or title to inline SVGs.",
-  },
-  {
-    id: "SLOP-012",
-    name: "Focus Ring Suppression Without Replacement",
-    severity: "High",
-    regex: /(?:outline-none|ring-0)\b/i,
-    recommendation: "Provide focus-visible rings (focus-visible:ring-2) when removing default focus outlines.",
-  },
-  {
-    id: "SLOP-013",
-    name: "Layout-Triggering Transitions",
-    severity: "Medium",
-    regex: /transition-\[(?:height|width|margin|padding)\]/i,
-    recommendation: "Animate transform or opacity instead of layout properties (height/width).",
-  },
-  {
-    id: "SLOP-014",
-    name: "Canvas Loop Missing Reduced Motion Check",
-    severity: "Medium",
-    regex: /requestAnimationFrame/i,
-    recommendation: "Check window.matchMedia('(prefers-reduced-motion: reduce)') before running canvas loops.",
-  },
-  {
-    id: "SLOP-015",
-    name: "External Image Missing Fallback Dimensions",
-    severity: "High",
-    regex: /<img[^>]+src=["']http[^"']+["'](?!.*(?:width=|height=|aspect-))/i,
-    recommendation: "Specify explicit width, height, or aspect-ratio on image elements.",
-  },
-  {
-    id: "SLOP-016",
-    name: "Missing LayoutGroup or Key During Morph",
-    severity: "Low",
-    regex: /layoutId=(?!.*key=)/i,
-    recommendation: "Ensure components with layoutId inside arrays have unique stable React keys.",
-  },
-  {
-    id: "SLOP-017",
-    name: "Implicit Any Props on Component Export",
-    severity: "Medium",
-    regex: /export\s+(?:function|const)\s+\w+\s*=\s*\([^)]*:\s*any\s*\)/i,
-    recommendation: "Define explicit TypeScript interfaces for component props instead of any.",
-  },
-  {
-    id: "SLOP-018",
-    name: "Repetitive Centered Card Layout Pattern",
-    severity: "Medium",
-    regex: /grid-cols-3.*items-center.*text-center.*rounded-xl.*p-6/i,
-    recommendation: "Introduce asymmetrical rhythm or editorial layout styling.",
-  },
-  {
-    id: "SLOP-019",
-    name: "Deep Relative Import Bypassing Aliases",
-    severity: "High",
-    regex: /import\s+.*from\s+["'](?:\.\.\/){3,}/i,
-    recommendation: "Use standard import path aliases (@/components/ui/...).",
-  },
-  {
-    id: "SLOP-020",
-    name: "Missing Mandatory License Attribution",
-    severity: "High",
-    regex: /^$/i, // Handled separately in header check
-    recommendation: "Inject upstream license attribution header before publication.",
-  },
-  {
-    id: "SLOP-021",
-    name: "Raw Unshaded Background",
-    severity: "Medium",
-    regex: /(?:bg-white|bg-black)\b|bg-\[#(?:fff|ffffff|000|000000)\]/i,
-    recommendation: "Replace raw unshaded background with semantic tokens (bg-card, bg-background, bg-muted) and dark variant.",
-  },
-  {
-    id: "SLOP-022",
-    name: "AI Writing Clichés",
-    severity: "Medium",
-    regex: /(?:in today's fast-paced|unleash the power of|it's not just .* it's|the future is here|supercharge your workflow|revolutionize the way you|dive deep into|testament to)/i,
-    recommendation: "Replace generic AI clichés with direct, high-signal, benefit-driven copy.",
-  },
-  {
-    id: "SLOP-023",
-    name: "Oxlint Contract Hygiene",
-    severity: "High",
-    regex: /(?:Record<string,\s*any>|:\s*any\[\]|\((?:e|evt|event|item|data|val|props):\s*any\))/i,
-    recommendation: "Define explicit TypeScript interfaces and avoid loose 'any' signatures.",
-  },
-  {
-    id: "SLOP-024",
-    name: "Strict WCAG 2.1 AA Contrast Ratio",
-    severity: "High",
-    regex: /(?:text-muted-foreground\/(?:10|20|30)|text-zinc-400\s+bg-zinc-300|text-gray-300\s+bg-gray-200|text-white\/20\s+bg-white)/i,
-    recommendation: "Ensure text contrast meets WCAG 2.1 AA (4.5:1 minimum for normal text).",
-  },
-  {
-    id: "SLOP-025",
-    name: "Uncancelled Timer or Listener Leaks",
-    severity: "High",
-    regex: /(?:setInterval|addEventListener)\(/i,
-    recommendation: "Return cleanup functions in useEffect for any registered timers or event listeners.",
-  },
-  {
-    id: "SLOP-026",
-    name: "Arbitrary Color Token Escapes",
-    severity: "Medium",
-    regex: /(?:bg|text|border)-\[#(?:0f172a|1e293b|334155|64748b|94a3b8|cbd5e1|e2e8f0|f1f5f9|f8fafc)\]/i,
-    recommendation: "Replace arbitrary hex colors with semantic tokens (bg-background, text-foreground, border-border).",
-  },
-  {
-    id: "SLOP-027",
-    name: "Unbounded List Rendering Without Stable Key",
-    severity: "Medium",
-    regex: /\.map\(\s*\([^)]*\)\s*=>\s*<[a-zA-Z]/i,
-    recommendation: "Provide unique, stable React keys for dynamic mapped lists.",
-  },
-  {
-    id: "SLOP-028",
-    name: "Missing Spring Fallback Damping",
-    severity: "Low",
-    regex: /stiffness:\s*(?:[5-9]\d{2}|\d{4,})/i,
-    recommendation: "Ensure high-stiffness spring configurations specify adequate damping to prevent visual stutter.",
-  },
-  {
-    id: "SLOP-029",
-    name: "Hardcoded SVG Dimensions",
-    severity: "Low",
-    regex: /<svg\b[^>]*\b(?:width|height)=["'](?:[5-9]\d{2}|\d{4,})["']/i,
-    recommendation: "Use scalable viewBox and standard Tailwind sizing classes on inline SVGs.",
-  },
-  {
-    id: "SLOP-030",
-    name: "Clean SPDX & Origin Header Verification",
-    severity: "High",
-    regex: /^$/i,
-    recommendation: "Inject machine-readable @origin, @license, and @curated-by frontmatter headers.",
-  },
-];
+// Anti-slop review is delegated to @design-wiki/audit-linter (evaluateSource).
 
-/**
- * Quantitatively scores ingested components on the 3 Taste Dials (1-10)
- */
 export function classifyComponentDials(
   meta: ComponentParsedMetadata,
   fileContent: string
@@ -376,70 +156,28 @@ export function reviewComponentSlop(
   code: string,
   meta?: ComponentParsedMetadata
 ): SlopReviewReport {
-  const lines = code.split("\n");
-  const violations: SlopViolation[] = [];
+  const result = evaluateSource(meta?.name ? `${meta.name}.tsx` : "harvested.tsx", code);
+  const violations: SlopViolation[] = result.findings.map((f) => ({
+    ruleId: f.ruleId,
+    name: f.ruleName,
+    severity: f.severity,
+    lineNum: f.lineNum,
+    lineText: f.lineText,
+    recommendation: f.recommendation,
+  }));
 
-  lines.forEach((line, index) => {
-    for (const check of HARVESTER_SLOP_CHECKS) {
-      if (check.id === "SLOP-020" || check.id === "SLOP-030") continue; // Special handling for whole-file attribution
-      if (check.id === "SLOP-012" && (line.includes("focus-visible:") || line.includes("focus:ring"))) {
-        continue; // Handled focus ring replacement
-      }
-      if (check.id === "SLOP-014" && code.includes("prefers-reduced-motion")) {
-        continue; // Has reduced motion support in file
-      }
-      if (check.id === "SLOP-021" && (line.includes("dark:bg-") || line.includes("bg-white/") || line.includes("bg-black/"))) {
-        continue; // Handled with dark mode token or backdrop opacity
-      }
-
-      if (check.regex.test(line)) {
-        violations.push({
-          ruleId: check.id,
-          name: check.name,
-          severity: check.severity,
-          lineNum: index + 1,
-          lineText: line.trim(),
-          recommendation: check.recommendation,
-        });
-      }
-    }
-  });
-
-  // Check SLOP-020: License attribution header
-  if (!code.includes("@license") && !code.includes("SPDX-License-Identifier")) {
-    violations.push({
-      ruleId: "SLOP-020",
-      name: "Missing Mandatory License Attribution",
-      severity: "High",
-      lineNum: 1,
-      lineText: lines[0] || "",
-      recommendation: "Inject upstream license attribution header before publication.",
-    });
-  }
-
-  const highCount = violations.filter((v) => v.severity === "High").length;
-  const medCount = violations.filter((v) => v.severity === "Medium").length;
-  const lowCount = violations.filter((v) => v.severity === "Low").length;
-
-  const deductions = highCount * 15 + medCount * 8 + lowCount * 3;
-  const healthScore = Math.max(0, 100 - deductions);
-
-  let rating = "S - Flawless Quality";
-  if (healthScore < 50) rating = "F - Serious Refactoring Required";
-  else if (healthScore < 70) rating = "C - Moderate Slop Present";
-  else if (healthScore < 85) rating = "B - Minor Tweaks Required";
-  else if (healthScore < 98) rating = "A - High Standard Integrity";
-
-  const blocked = highCount > 0 || healthScore < 85;
+  const highCount = result.metrics.highSeverityCount;
+  const medCount = result.metrics.mediumSeverityCount;
+  const blocked = highCount > 0 || result.healthScore < 85;
 
   return {
     pass: !blocked,
-    healthScore,
-    rating,
+    healthScore: result.healthScore,
+    rating: ratingFromScore(result.healthScore),
     violations,
     summary: blocked
       ? `BLOCKED: Found ${highCount} High-severity and ${medCount} Medium-severity slop flags.`
-      : `PASSED: Clean component craft with health score ${healthScore}/100.`,
+      : `PASSED: Clean component craft with health score ${result.healthScore}/100.`,
     blocked,
   };
 }

@@ -39,7 +39,7 @@ All design tokens are defined in JSON using the standardized `$value` and `$type
 
 ## 2. Multi-Platform Export Targets
 
-Agents should use MCP tool `export_style_dictionary_tokens` to generate platform-specific definitions:
+These platform targets are a Phase 4 playbook. There is no live MCP export tool; compile tokens with `pnpm build:tokens` (`packages/registry/tokens`).
 
 1. **Tailwind CSS v4 (`@theme`)**:
    ```css
@@ -73,4 +73,4 @@ Agents should use MCP tool `export_style_dictionary_tokens` to generate platform
 
 ## 3. Mandatory Contrast Gate
 
-Every token set must pass WCAG 2.1 AA contrast validation (minimum 4.5:1 ratio for normal text) using MCP tool `validate_theme_contrast_matrix` prior to publishing.
+Every token set must pass WCAG 2.1 AA contrast validation (minimum 4.5:1 ratio for normal text) using `verify_accessibility_contrast` on foreground/background pairs, or a dedicated matrix checker when one exists.

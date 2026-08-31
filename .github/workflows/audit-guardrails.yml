@@ -1,4 +1,4 @@
-name: 🛡️ Anti-Slop & Design Audit Gate
+name: Anti-Slop & Design Audit Gate
 
 on:
   push:
@@ -8,45 +8,46 @@ on:
 
 jobs:
   audit-guardrails:
-    name: Anti-Slop AST Linter & Taste Dials
+    name: Catalog truth, slop rules, MCP sandbox
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: ⚙️ Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: ⚙️ Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: 📦 Setup pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10
 
-      - name: 📦 Install Dependencies
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: 🏗️ Build Registry & Packages
+      - name: Build packages and registry
         run: pnpm build
 
-      - name: 🛡️ Run Anti-Slop 21-Rule AST Audit Gate
-        run: python3 verify-audit.py --strict
+      - name: Assert catalog counts and MCP contract
+        run: pnpm assert:catalog
 
-      - name: 🎛️ Run Taste-Dial Calibration & Consistency Audit
+      - name: Anti-slop rulepack on tooling packages
+        run: pnpm lint:slop packages/mcp-server/src && pnpm lint:slop packages/cli/src
+
+      - name: Taste-dial consistency
         run: pnpm review:taste
 
-      - name: 🕸️ Run Dynamic DAG Dependency Graph Verification
+      - name: Registry dependency graph
         run: pnpm harvest graph packages/registry/src
 
-      - name: ♿ Run Automated Accessibility (WCAG AA) Checks
+      - name: Registry a11y metadata heuristics
         run: pnpm test:a11y
 
-      - name: 🤖 Execute Zero-Draft Sandbox Trial
+      - name: MCP stdio sandbox
         run: pnpm test:sandbox
+
+      - name: Agent rulepack files
+        run: pnpm test:agents

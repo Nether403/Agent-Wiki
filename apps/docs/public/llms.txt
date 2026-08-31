@@ -7,7 +7,7 @@
 - Raw Markdown Docs: /raw/components/[slug]
 - MCP Server: npx @design-wiki/mcp
 
-## Available Registry Components (282 verified zero-slop items)
+## Available Registry Components (280 verified zero-slop items)
 
 ### Category: ui:ai-native
 - [ai-agent-evaluation-scoreboard](/r/ai-agent-evaluation-scoreboard.json): Multi-model benchmark leaderboard showing first-run compilation rates, slop health scores, latency, and cost per prompt. (Variance: 6, Motion: 3, Density: 8)
@@ -188,10 +188,6 @@
   - Tags: tailwind-v4, wai-aria-compliant
   - Dependencies: motion
   - Install: npx shadcn@latest add http://localhost:3000/r/tree-hierarchy-map.json
-- [tokens](/r/tokens.json): Curated production-grade component. (Variance: 3, Motion: 3, Density: 6)
-  - Tags: wai-aria-compliant, spring-physics
-  - Dependencies: motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/tokens.json
 - [karaoke-caption-stream](/r/karaoke-caption-stream.json): Curated production-grade component. (Variance: 5, Motion: 2, Density: 8)
   - Tags: tailwind-v4, brutalist, wai-aria-compliant
   - Dependencies: motion
@@ -616,10 +612,6 @@
   - Tags: lucide-react, tailwind-v4, wai-aria-compliant, layout-block
   - Dependencies: lucide-react
   - Install: npx shadcn@latest add http://localhost:3000/r/split-pane-layout.json
-- [style-dictionary-compiler](/r/style-dictionary-compiler.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 6)
-  - Tags: wai-aria-compliant, layout-block
-  - Dependencies: motion
-  - Install: npx shadcn@latest add http://localhost:3000/r/style-dictionary-compiler.json
 - [agent-dag-execution-flow](/r/agent-dag-execution-flow.json): Curated production-grade component. (Variance: 6, Motion: 3, Density: 8)
   - Tags: lucide-react, bento-grid, tailwind-v4, accessible, keyboard-accessible, wai-aria-compliant, layout-block
   - Dependencies: lucide-react, motion

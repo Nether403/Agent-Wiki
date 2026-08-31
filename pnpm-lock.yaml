@@ -101,6 +101,10 @@ importers:
         version: 5.9.3
 
   packages/cli:
+    dependencies:
+      '@design-wiki/audit-linter':
+        specifier: workspace:*
+        version: link:../audit-linter
     devDependencies:
       '@types/node':
         specifier: ^22.13.9
@@ -133,6 +137,9 @@ importers:
 
   packages/harvester:
     dependencies:
+      '@design-wiki/audit-linter':
+        specifier: workspace:*
+        version: link:../audit-linter
       typescript:
         specifier: ^5.8.2
         version: 5.9.3
@@ -146,6 +153,9 @@ importers:
 
   packages/mcp-server:
     dependencies:
+      '@design-wiki/audit-linter':
+        specifier: workspace:*
+        version: link:../audit-linter
       '@modelcontextprotocol/sdk':
         specifier: ^1.6.1
         version: 1.30.0(zod@3.25.76)
@@ -165,6 +175,9 @@ importers:
 
   packages/registry:
     dependencies:
+      '@design-wiki/audit-linter':
+        specifier: workspace:*
+        version: link:../audit-linter
       '@design-wiki/harvester':
         specifier: workspace:*
         version: link:../harvester

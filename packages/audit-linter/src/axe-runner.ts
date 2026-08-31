@@ -1,9 +1,8 @@
 /**
  * @license MIT
  * @origin Machine-First Design Agent Wiki
- * Automated Accessibility Engine (axe-runner.ts)
- * Validates WCAG 2.1 AA contrast rules, keyboard focus-visible rings,
- * ARIA roles, and motion/canvas fallbacks across compiled registry items.
+ * Source-heuristic accessibility scanner over compiled registry items.
+ * Not axe-core and not a rendered WCAG 2.1 AA suite (Phase 4 remaining).
  */
 
 import fs from "fs";

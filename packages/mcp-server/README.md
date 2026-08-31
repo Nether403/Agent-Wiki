@@ -1,19 +1,18 @@
-# 🔌 @design-wiki/mcp
+# @design-wiki/mcp
 
-The official Model Context Protocol (MCP) server for the **Machine-First Design Agent Wiki**.
+Stdio Model Context Protocol server for the Machine-First Design Agent Wiki.
 
-Allows AI developer agents (Claude Code, Cursor, Codex, Windsurf, Hermes, OpenClaw, Antigravity) to discover, inspect, install, auto-remediate, and audit zero-slop UI components through standardized tool calls over Stdio or HTTP/SSE transports.
+Canonical tool list: [`catalog-contract.json`](../../catalog-contract.json). Counts: [`catalog-stats.json`](../../catalog-stats.json). See [`CATALOG.md`](../../CATALOG.md).
 
----
+The Cloudflare Worker in `src/worker.ts` is a **prototype**. There is no public `mcp.design-wiki.dev` endpoint. Use local stdio until a hosted catalog exists.
 
-## 🚀 Connecting to Your Agent
+## Connect
 
-### Claude Code (`.claude/mcp.json`)
 ```bash
+# Claude Code
 claude mcp add design-wiki npx @design-wiki/mcp
 ```
 
-### Cursor (`.cursor/mcp.json`)
 ```json
 {
   "mcpServers": {
@@ -25,119 +24,35 @@ claude mcp add design-wiki npx @design-wiki/mcp
 }
 ```
 
-### Windsurf (`.windsurf/mcp.json`)
-```json
-{
-  "mcpServers": {
-    "design-wiki": {
-      "command": "npx",
-      "args": ["@design-wiki/mcp"]
-    }
-  }
-}
-```
+## Tools (14)
 
-### Remote Cloudflare Worker Edge MCP (Universal / Browser / v0)
-- **HTTP POST endpoint**: `https://mcp.design-wiki.dev/mcp`
-- **SSE Stream endpoint**: `https://mcp.design-wiki.dev/sse`
-- **Health Check probe**: `https://mcp.design-wiki.dev/health`
+Aliases are listed beside the primary name.
 
----
+| Tool | What it actually does |
+| :--- | :--- |
+| `search_library` / `search_components` | Filtered catalog search, 15KB payload budget |
+| `fetch_raw_markup` / `fetch_raw_markdown` / `get_component_markup` | YAML frontmatter + TSX source |
+| `get_installation_schema` / `get_installation_commands` / `get_install_recipe` | CLI recipe and peer deps |
+| `get_dependency_graph` | Registry dependency walk |
+| `audit_code_slop` | Canonical 50-rule pack in `@design-wiki/audit-linter` |
+| `audit_and_fix_slop` | Regex remapper, then **re-scored** health. Does not assume 100/100 |
+| `semantic_search_components` | Keyword + dial scoring. Not an embedding index |
+| `compose_layout_tree` | Page-archetype scaffold from registry slugs |
+| `verify_accessibility_contrast` | WCAG contrast math on two hex colors |
 
-## 🛠️ Available MCP Tools (19 Tools)
+Retired names (do not register, do not document as live) are listed in `catalog-contract.json` → `retiredMcpTools`.
 
-All tools are engineered with strict **Tripwire Security Guardrails** and deliver deterministic payloads strictly **< 15KB** (15,360 bytes) via our built-in `enforceTokenBudget` optimizer, ensuring lightning-fast responses without agent context flooding.
+## Security
 
-### 1. `search_library` / `search_components`
-Searches the 192 component catalog across all 10 taxonomy categories with multi-dimensional taste dial filtering.
-* **Parameters**:
-  - `query` (string, optional)
-  - `category` (`ui:ai-native` | `ui:workflow` | `ui:primitive` | `ui:motion` | `ui:creative` | `ui:editorial` | `ui:block` | `ui:media` | `ui:utility`, optional)
-  - `tag` (string, optional)
-  - `minMotionIntensity` (number 1–10, optional)
-  - `maxVisualDensity` (number 1–10, optional)
-  - `minDesignVariance` (number 1–10, optional)
+Incoming arguments are scanned for prompt-injection strings and a small set of dangerous code sinks. Tool payloads are trimmed to 15KB.
 
-### 2. `fetch_raw_markup` / `fetch_raw_markdown` *(Alias: `get_component_markup`)*
-Returns complete raw Markdown or structured TSX markup including:
-- Structured YAML frontmatter contract (ID, name, category, taste dials, complexity, tags)
-- Accessibility criteria (WCAG 2.1 AA, keyboard navigable)
-- CLI recipes (`npx design-wiki add <slug>`)
-- Verified, copy-pasteable TSX production source code block
-* **Parameters**:
-  - `name` (string, required): Component slug (e.g. `floating-dock`, `ai-prompt-input`, `architecture-topology-diagram`)
-
-### 3. `get_installation_schema` / `get_installation_commands` *(Alias: `get_install_recipe`)*
-Returns exact terminal commands, shadcn v3 registry schemas, peer dependency installations, import syntax, and step-by-step setup instructions.
-* **Parameters**:
-  - `name` (string, required): Component slug
-  - `packageManager` (`pnpm` | `npm` | `bun` | `yarn`, optional, default: `pnpm`)
-  - `baseUrl` (string, optional, default: `http://localhost:3000`)
-
-### 4. `get_dependency_graph`
-Returns the dynamic DAG dependency topology, topological installation sequence, and required npm peer packages for any component or the full registry.
-* **Parameters**:
-  - `name` (string, optional): Component slug (omit for full registry DAG)
-  - `includeMermaid` (boolean, optional, default: `false`)
-
-### 5. `audit_code_slop`
-Lints user or agent-generated React/Tailwind code against the 50 Anti-Slop Rules, catching arbitrary pixel offsets (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), AI writing clichés, blanket transitions, and accessibility gaps.
-* **Parameters**:
-  - `code` (string, required): TSX/JSX code to analyze
-
-### 6. `audit_and_fix_slop`
-Automatically remediates slop TSX source code into zero-slop 100/100 TSX, normalizing non-token pixels, removing chained casts, adding focus rings, injecting SPDX headers, and applying calibrated themes.
-* **Parameters**:
-  - `code` (string, required): The slop TSX code to refactor
-  - `theme` (`default` | `neo-tokyo` | `midnight` | `minimal`, optional, default: `default`)
-
-### 7. `semantic_search_components`
-Calibrated natural language vector search matching user prompt descriptions directly to verified components.
-
-### 8. `compose_layout_tree`
-Generates full-page multi-component composition layouts with topological dependency graphs.
-
-### 9. `recommend_stack`
-Synthesizes full architecture framework and library recommendations tailored to product requirements.
-
-### 10. `verify_accessibility_contrast`
-Mathematical WCAG 2.1 AA and AAA contrast ratio calculator for foreground and background color combinations.
-
-### 11. `generate_color_palette`
-Generates semantic Tailwind CSS v4 `@theme` palette blocks adhering to token contracts.
-
-### 12. `validate_theme_contrast_matrix`
-Validates an entire design token color matrix (background, foreground, card, primary, muted) against AA compliance.
-
-### 13. `recommend_responsive_blueprint`
-Emits mobile-first breakpoint classes and semantic HTML landmark structure for landing, dashboard, and analytics views.
-
-### 14. `diff_against_zero_slop`
-Compares arbitrary React code to the closest zero-slop component and emits step-by-step AST migration diffs.
-
----
-
-## 🛡️ Tripwire Security Sandbox
-
-The `@design-wiki/mcp` server includes an active security layer:
-1. **Prompt Injection Interception**: Scans incoming tool arguments and neutralizes prompt extraction and injection attacks.
-2. **Malicious AST Payload Scanning**: Blocks dangerous sinks (`eval()`, dynamic `Function()`, `child_process`, `dangerouslySetInnerHTML` with untrusted variables).
-3. **15KB Token Budget Guarantee**: Strips and compresses tool outputs to prevent agent context degradation.
-
----
-
-## 🧪 Testing & Verification
+## Tests
 
 ```bash
-# Run MCP sandbox integration test
 pnpm test:sandbox
-
-# Run Cloudflare Worker edge deployment test suite
 pnpm --filter @design-wiki/mcp test:worker
 ```
 
----
+## License
 
-## 📄 License
-
-MIT © Design Agent Wiki Contributors
+MIT

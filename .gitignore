@@ -9,3 +9,10 @@ out
 .DS_Store
 *.log
 staging/
+artifacts/
+COMPLETED-DESIGN-AUDIT.md
+components/ui/
+packages/registry/catalog-stats.json
+graphify-out/**
+!graphify-out/GRAPH_REPORT.md
+

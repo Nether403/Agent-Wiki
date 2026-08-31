@@ -2,14 +2,14 @@
 
 > **A deterministic, pre-tested, zero-slop UI component registry and Model Context Protocol (MCP) ecosystem engineered specifically for AI developer agents.**
 
-[![CI / Quality Gate](https://img.shields.io/badge/Slop%20Audit-100%2F100%20(S--Grade)-emerald?style=flat-square)](./scripts/test-a11y-linter.ts)
-[![A11y CI](https://img.shields.io/badge/A11y%20WCAG%202.1%20AA-214%2F214%20PASS-green?style=flat-square)](./scripts/test-a11y-linter.ts)
-[![Anti-Slop Rules](https://img.shields.io/badge/Anti--Slop%20Rulepack-50%2F50%20Active-blue?style=flat-square)](./packages/audit-linter)
-[![Taste Dials](https://img.shields.io/badge/Taste%20Dials-100%2F100%20Consistent-blue?style=flat-square)](./packages/audit-linter)
-[![MCP Protocol](https://img.shields.io/badge/MCP%20Server-Cloudflare%20Worker%20%2B%20Stdio-blueviolet?style=flat-square)](./packages/mcp-server)
-[![Agent Ecosystem](https://img.shields.io/badge/Agents-11%20Platforms%20Verified-indigo?style=flat-square)](./scripts/test-agent-ecosystem.ts)
+[![Anti-Slop Rules](https://img.shields.io/badge/Anti--Slop%20Rulepack-50%20canonical-blue?style=flat-square)](./packages/audit-linter)
+[![Catalog](https://img.shields.io/badge/Catalog-see%20catalog--stats.json-blue?style=flat-square)](./catalog-stats.json)
+[![MCP Protocol](https://img.shields.io/badge/MCP-stdio%20Phase%203-blueviolet?style=flat-square)](./packages/mcp-server)
+[![Agent Ecosystem](https://img.shields.io/badge/Agents-11%20rulepacks-indigo?style=flat-square)](./scripts/test-agent-ecosystem.ts)
 [![React 19 & Tailwind v4](https://img.shields.io/badge/Stack-React%2019%20%7C%20Tailwind%20v4-violet?style=flat-square)](./apps/docs)
 [![License](https://img.shields.io/badge/License-MIT-gray?style=flat-square)](./LICENSE)
+
+Counts, rules, and MCP tools have **one** source of truth: [`CATALOG.md`](./CATALOG.md). Do not copy numbers into docs by hand.
 
 ---
 
@@ -55,7 +55,7 @@ The platform runs on a **Double-Exposure Architecture**:
                 │ - Interactive Component Demos│                              │  - /raw/components/*.md      │
                 │ - Taste Dial Playground      │                              │  - /r/[name].json (shadcn v3)│
                 │ - Architecture Documentation │                              │  - /r/registry.json Master   │
-                └──────────────────────────────┘                              │  - @design-wiki/mcp (Worker) │
+                └──────────────────────────────┘                              │  - @design-wiki/mcp (stdio)  │
                                                                               │  - /SKILL.md (11 rulepacks)  │
                                                                               └──────────────────────────────┘
 ```
@@ -76,7 +76,7 @@ Agent Wiki/
 │           ├── r/                   # Compiled shadcn JSON schemas and registry.json index
 │           ├── raw/components/      # Machine-first markdown with YAML frontmatter and TSX source
 │           ├── SKILL.md             # Public endpoint for remote LLM agent skill discovery
-│           ├── llms.txt             # Flat agent discovery index (192 items)
+│           ├── llms.txt             # Flat agent discovery index (count = catalog-stats.json)
 │           └── llms-full.txt        # Full-context machine manifest with embedded source
 ├── packages/
 │   ├── harvester/                   # Ingestion engine, remote JSON fetcher, AST analyzer, DAG dependency graph
@@ -86,14 +86,14 @@ Agent Wiki/
 │   │   ├── src/codemods/            # Tailwind v4 & React 19 / motion/react transformers
 │   │   ├── src/attribution.ts       # Open-source SPDX license header injector
 │   │   └── src/cli.ts               # Standalone Harvester CLI (pnpm harvest graph / ingest)
-│   ├── registry/                    # 192 curated zero-slop components & dynamic registry compiler
+│   ├── registry/                    # Canonical TSX catalog & dynamic registry compiler
 │   │   ├── src/                     # TSX sources (ai-native, workflow, primitives, motion, creative, editorial, blocks, media, utility)
 │   │   ├── compiler/build-registry.ts # Dynamic component sweeper and /r/ JSON compiler
 │   │   └── schema.json              # Component JSON Schema extending shadcn registry-item
 │   ├── mcp-server/                  # Model Context Protocol (MCP) service for developer agents
-│   │   ├── src/server.ts            # Core MCP server, audit_and_fix_slop, 19 registered tools (<15KB budget)
+│   │   ├── src/server.ts            # Stdio MCP server (tools in catalog-contract.json, 15KB budget)
 │   │   ├── src/security.ts          # Tripwire Security Sandbox (malicious AST scanner, prompt injection defense)
-│   │   ├── src/worker.ts            # Cloudflare Worker edge deployment (JSON-RPC & SSE streaming)
+│   │   ├── src/worker.ts            # Cloudflare Worker prototype (not a public endpoint)
 │   │   ├── src/embedded-catalog.ts  # 0ms disk dependency embedded snapshot catalog
 │   │   ├── src/index.ts             # Stdio transport entrypoint
 │   │   ├── test/agent-sandbox.test.ts # Autonomous end-to-end sandbox verification test
@@ -107,15 +107,22 @@ Agent Wiki/
 │   │   └── src/index.ts             # Executable CLI router with --theme, --dry-run & --cwd support
 │   └── audit-linter/                # 50-rule AST + regex anti-slop verification & unslop refactoring engine
 │       ├── src/rules.ts             # 50 Rule definitions (SLOP-001 through SLOP-050)
-│       ├── src/unslop.ts            # Automated AST unslop & aesthetic theme engine (Neo-Tokyo, Midnight, Minimal)
+│       ├── src/evaluate.ts          # Canonical scoring used by MCP, CLI, harvester, eval
+│       ├── src/unslop.ts            # Regex remapper; re-scores before/after (no fake 100/100)
 │       ├── src/taste-dial-audit.ts  # 1-10 Dial consistency auditor (Variance, Motion, Density)
 │       ├── src/dial-classifier.ts   # Standalone dial classifier with defaultDials preset support
 │       ├── src/llm-review.ts        # Automated LLM taste audit engine
 │       └── src/cli.ts               # verify-audit & taste review CLI (pnpm review:taste)
+├── catalog-contract.json            # Human-edited MCP tool contract (live vs retired)
+├── catalog-stats.json               # Generated counts (do not hand-edit)
+├── CATALOG.md                       # Pointer to counts, rules, and Phase 3–4 track
+├── research/                        # Phase 2 harvest notes (not product, not CI)
 ├── scripts/
+│   ├── assert-catalog-truth.ts      # CI gate: counts, SLOP ids, MCP tools, stale phrases
+│   ├── inventory-health.ts          # Informational grade histogram for Phase 4 curation
 │   ├── sync-rulepacks.ts            # Multi-agent rules synchronizer across 11 ecosystem platforms
 │   ├── test-agent-ecosystem.ts      # Automated compatibility test across 11 agent targets
-│   └── test-a11y-linter.ts          # WCAG 2.1 AA CI linter: checks all 192 registry components
+│   └── test-a11y-linter.ts          # Registry a11y metadata + source heuristics (not rendered axe)
 ├── SKILL.md                         # Canonical agent execution contract, 4-phase loop, active taste dials
 ├── .cursorrules                     # Cursor IDE agent instructions (auto-synced from SKILL.md)
 ├── .cursor/rules/design-wiki.mdc    # Cursor Rules v2 format (auto-synced from SKILL.md)
@@ -134,7 +141,7 @@ Agent Wiki/
 
 ## 🏷️ Standardized Taxonomy Framework
 
-All **214 curated components** are classified across 10 canonical taxonomy domains:
+Component counts are generated at compile time into [`catalog-stats.json`](./catalog-stats.json). Do not hand-edit them. Taxonomy domains:
 
 | Category | Description | Representative Upstream Libraries |
 | :--- | :--- | :--- |
@@ -152,7 +159,7 @@ All **214 curated components** are classified across 10 canonical taxonomy domai
 
 ## 🔌 Model Context Protocol (MCP) Server
 
-AI developer agents connect to the registry via the `@design-wiki/mcp` server (deployable as a local stdio process or a globally distributed Cloudflare Worker).
+AI developer agents connect via the `@design-wiki/mcp` **stdio** server. The Cloudflare Worker is a prototype and is not a public production endpoint.
 
 ### Configuration
 
@@ -173,34 +180,24 @@ claude mcp add design-wiki npx @design-wiki/mcp
 }
 ```
 
-#### Remote Cloudflare Worker Edge MCP (Universal / Browser / v0)
-- **HTTP POST endpoint**: `https://mcp.design-wiki.dev/mcp`
-- **SSE Stream endpoint**: `https://mcp.design-wiki.dev/sse`
-- **Health Check probe**: `https://mcp.design-wiki.dev/health`
+#### Remote Cloudflare Worker (prototype, not a public production endpoint)
+The Worker in `packages/mcp-server/src/worker.ts` is experimental. Use local stdio until a deployed edge catalog exists.
 
-### Core MCP Tools (19 Registered Tools)
+### Core MCP Tools
+
+Canonical list: [`catalog-contract.json`](./catalog-contract.json) (`mcpTools`). Aliases are listed beside the primary name.
 
 | Tool Name | Parameters | Description |
 | :--- | :--- | :--- |
-| `search_library` / `search_components` | `query`, `category`, `tag`, `minMotionIntensity`, `maxVisualDensity`, `minDesignVariance` | Searches the catalog with multi-dimensional filtering across all 192 zero-slop components (< 15KB payload budget). |
-| `fetch_raw_markup` / `fetch_raw_markdown` | `name` (slug) | Returns complete raw Markdown with structured YAML frontmatter contract, taxonomy, complexity, taste dials, accessibility, and verified TSX source. *(Alias: `get_component_markup`)* |
-| `get_installation_schema` / `get_installation_commands` | `name` (slug), `packageManager` (`pnpm`, `npm`, `bun`, `yarn`), `baseUrl` | Returns exact CLI commands (`npx design-wiki add <slug>`, `npx shadcn@latest add ...`), peer npm install strings, import snippets, and instructions. *(Alias: `get_install_recipe`)* |
-| `get_dependency_graph` | `name` (slug, optional), `includeMermaid` (boolean, optional) | Returns the dynamic DAG dependency topology, topological installation sequence, and required npm peer packages for any component or the full registry. |
-| `audit_code_slop` | `code` (string) | Scans arbitrary React/Tailwind code against 50 anti-slop rules, checking arbitrary pixel escapes (`p-[17px]`), chained type assertions (`as any as`), unshaded backgrounds (`bg-white`), AI clichés, and returns a health score (0–100). |
-| `audit_and_fix_slop` | `code` (string), `theme` (`default`, `neo-tokyo`, `midnight`, `minimal`) | Automatically remediates slop TSX code into zero-slop 100/100 TSX, injecting SPDX headers, normalizing spacing, fixing contrast, and applying calibrated themes. |
-| `semantic_search_components` | `naturalLanguageQuery`, `targetDialProfile` | Vector/dial-calibrated natural language search finding exact component matches for user intent. |
-| `compose_layout_tree` | `pageType`, `targetDials` | Synthesizes a full multi-component page layout tree with verified registry dependencies. |
-| `recommend_stack` | `projectType` | Emits an opinionated architecture stack recommendation with optimal taste dial ranges. |
-| `verify_accessibility_contrast` | `foregroundHex`, `backgroundHex` | Evaluates contrast mathematically against WCAG 2.1 AA (4.5:1 / 3.0:1) and AAA standards. |
-| `generate_color_palette` | `themeName`, `baseHue` | Emits an accessible Tailwind CSS v4 `@theme` block adhering to token standards. |
-| `validate_theme_contrast_matrix` | `tokens` | Validates complete color token sets (foreground, background, card, primary, muted) against AA criteria. |
-| `recommend_responsive_blueprint` | `pageType`, `targetDials` | Generates mobile-first responsive breakpoint structures and semantic HTML landmarks. |
-| `diff_against_zero_slop` | `code`, `targetComponentSlug` | Compares arbitrary user code to the nearest registry component and outputs migration diffs. |
-| `unslop_screenshot_draft` | `rawCode` | Transforms raw vision-model or screenshot-to-code generated HTML/TSX into clean, zero-slop TSX. |
-| `audit_accessibility_tree` | `code` | Evaluates component JSX/TSX markup against WCAG 2.1 AA and WAI-ARIA standards. |
-| `deconstruct_visual_reference` | `visualDescription`, `targetArchetype` | Deconstructs visual interface descriptions into verified zero-slop layout blocks and tokens. |
-| `export_dtcg_tokens` | `themeName` | Exports design tokens in W3C Design Tokens Community Group (DTCG) standard JSON format. |
-| `benchmark_taste_profile` | `code` | Benchmarks component code against the 3 canonical Taste Dials (Variance, Motion, Density). |
+| `search_library` / `search_components` | `query`, `category`, `tag`, dial filters | Catalog search with a 15KB payload budget. |
+| `fetch_raw_markup` / `fetch_raw_markdown` / `get_component_markup` | `name` | YAML frontmatter + verified TSX source. |
+| `get_installation_schema` / `get_installation_commands` / `get_install_recipe` | `name`, `packageManager`, `baseUrl` | CLI install recipe and peer deps. |
+| `get_dependency_graph` | `name?`, `includeMermaid?` | Registry dependency walk for one slug or the full catalog. |
+| `audit_code_slop` | `code` | Canonical 50-rule pack in `@design-wiki/audit-linter`. |
+| `audit_and_fix_slop` | `code`, `theme` | Regex remapper + re-scored health. Does not assume 100/100. |
+| `semantic_search_components` | `naturalLanguageQuery`, `targetDialProfile` | Keyword + dial scoring. Not an embedding index. |
+| `compose_layout_tree` | `pageType`, `targetDials` | Page-archetype scaffold from registry slugs. |
+| `verify_accessibility_contrast` | `foregroundHex`, `backgroundHex` | WCAG contrast math (4.5:1 / 3.0:1 / 7.0:1). |
 
 ---
 
@@ -282,14 +279,14 @@ pnpm build:registry
 ```
 
 ### 3. Run Anti-Slop Audit & Taste Review
-Scans all workspace components against the 30-rule linter and executes the 1-10 Taste Dial consistency auditor:
+Scans registry sources against the canonical 50-rule pack and the 1-10 Taste Dial consistency auditor:
 ```bash
 # Full catalog taste dial calibration & consistency verification
 pnpm review:taste
 ```
 
 ### 4. Run Automated Accessibility CI Linter
-Validates WCAG 2.1 AA compliance, keyboard navigability, WAI-ARIA contracts, and motion fallbacks across all 112 registry components:
+Checks registry a11y metadata contracts and a few source heuristics (not a rendered WCAG suite):
 ```bash
 pnpm test:a11y
 ```
@@ -328,7 +325,7 @@ npx design-wiki unslop ./components/ui/hero.tsx --theme neo-tokyo
 # Preview unslop changes without writing to disk
 npx design-wiki unslop ./components/ui --theme midnight --dry-run
 
-# List all 112 verified zero-slop components with dials & tags
+# List catalog components with dials & tags
 npx design-wiki list
 
 # Search components by keyword or category
@@ -372,8 +369,8 @@ When an AI coding agent pair-programs in this repository, it follows the mandato
 * **Installed Components**: `['floating-dock', 'ai-prompt-input']`
 * **Added Dependencies**: `motion`, `lucide-react`, `clsx`, `tailwind-merge`
 * **Taste Profile**: Variance `6`, Motion `7`, Density `4`
-* **A11y Status**: WCAG 2.1 AA verified; keyboard navigation + WAI-ARIA toolbar + focus-visible confirmed
-* **Anti-Slop Audit**: 0 flags detected (Score: 100/100)
+* **A11y Status**: keyboard navigation + WAI-ARIA metadata on those slugs (rendered axe is Phase 4)
+* **Anti-Slop Audit**: canonical linter score (example: 100/100 when the installed source is clean)
 ```
 
 ---

@@ -247,7 +247,7 @@ export default function Page() {
   console.log(`🎉 - Scenario 2 (Pricing Section):       "${selectedPricingSlug}" + ['button'] installed & wired into app/page.tsx`);
   console.log(`🎉 - Token Efficiency Context:           All MCP responses < 15KB per component`);
   console.log(`🎉 - Performance SLA:                    Install times: ${buttonInstallElapsed}ms & ${pricingElapsed}ms (< 2.0s SLA)`);
-  console.log(`🎉 - Anti-Slop Health Scores:            100/100 across all installed components`);
+  console.log(`🎉 - Anti-Slop Health Scores:            ${pricingAuditData.healthScore} (${selectedPricingSlug})`);
   console.log(`🎉 - Human Interventions Required:       0 actions`);
   console.log(`🎉 =========================================================================\n`);
 }

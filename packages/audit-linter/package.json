@@ -2,7 +2,7 @@
   "name": "@design-wiki/audit-linter",
   "version": "1.0.0",
   "private": true,
-  "description": "Anti-slop 20-rule AST and pattern linter for Design Agent Wiki",
+  "description": "Canonical 50-rule anti-slop pattern linter for Design Agent Wiki (regex/line checks, not a full AST engine)",
   "bin": {
     "verify-audit": "dist/cli.js"
   },

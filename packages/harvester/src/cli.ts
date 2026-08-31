@@ -2,7 +2,6 @@
 
 import path from "path";
 import fs from "fs";
-import { execSync } from "child_process";
 import {
   KNOWN_REPOSITORIES,
   harvestDirectory,
@@ -81,17 +80,17 @@ function main() {
   }
 
   if (command === "ingest") {
-    const repoKey = target || "kokonutui";
-    console.log(`\n🌾 Running End-to-End Ingestion for ${repoKey}...`);
-    try {
-      const scriptPath = path.resolve(process.cwd(), "ast-parse-ingest.js");
-      const rootScript = fs.existsSync(scriptPath) ? scriptPath : path.resolve(__dirname, "../../../ast-parse-ingest.js");
-      execSync(`node "${rootScript}" ${repoKey}`, { stdio: "inherit" });
-      process.exit(0);
-    } catch (err: any) {
-      console.error(`❌ Ingest failed:`, err.message);
+    console.log("ℹ️ `harvest ingest` is an alias of `harvest repo` (the JS orchestrator lives under research/).");
+    if (!target) {
+      console.error("❌ Error: Missing repository identifier. Example: pnpm harvest ingest heroui");
       process.exit(1);
     }
+    const harvestResult = harvestRepository(target);
+    console.log(`\n📊 Harvest Summary for [${harvestResult.config.name}]:`);
+    console.log(`   - Total Scanned: ${harvestResult.results.length}`);
+    console.log(`   - Passed Review: ${harvestResult.passedCount}`);
+    console.log(`   - Slop Blocked:  ${harvestResult.blockedCount}`);
+    process.exit(0);
   }
 
   if (command === "dir") {

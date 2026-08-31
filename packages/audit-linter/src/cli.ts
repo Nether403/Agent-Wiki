@@ -2,7 +2,7 @@
 
 import fs from "fs";
 import path from "path";
-import { runAudit, runLlmTasteReview, auditCatalogTasteDials, auditTasteDials } from "./index";
+import { runAudit, runLlmTasteReview, auditCatalogTasteDials, SLOP_RULES } from "./index";
 
 function main() {
   const args = process.argv.slice(2);
@@ -119,7 +119,7 @@ function main() {
     ? path.resolve(baseDir, rawTarget)
     : path.resolve(process.cwd(), rawTarget);
 
-  console.log(`\n🛡️ Starting Machine-First Anti-Slop Audit (20 AST & Pattern Rules)...`);
+  console.log(`\n🛡️ Starting Machine-First Anti-Slop Audit (${SLOP_RULES.length} pattern rules from packages/audit-linter)...`);
   console.log(`📂 Scanning target: ${targetDir}`);
 
   const report = runAudit(targetDir);
@@ -168,9 +168,12 @@ function main() {
     }
   }
 
-  const outReportPath = path.join(targetDir, "COMPLETED-DESIGN-AUDIT.md");
-  fs.writeFileSync(outReportPath, markdown, "utf-8");
-  console.log(`\n📁 Report written to: ${outReportPath}`);
+  const outReportPath = path.join(baseDir, "artifacts", "COMPLETED-DESIGN-AUDIT.md");
+  if (args.includes("--write-report")) {
+    fs.mkdirSync(path.dirname(outReportPath), { recursive: true });
+    fs.writeFileSync(outReportPath, markdown, "utf-8");
+    console.log(`\n📁 Report written to: ${outReportPath}`);
+  }
 
   if (report.severityCounts.High > 0) {
     console.error(`\n❌ Failed: ${report.severityCounts.High} High-severity anti-slop violations found.`);

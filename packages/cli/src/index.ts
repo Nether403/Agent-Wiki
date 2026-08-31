@@ -29,7 +29,7 @@ Commands:
                       (e.g., npx design-wiki deconstruct ./mockup.html --install)
   eval [path]         Run autonomous evaluation sandbox & Zero-Draft Fidelity benchmark
                       (e.g., npx design-wiki eval --suite benchmark)
-  test-a11y [dir]     Run Axe-core WCAG 2.1 AA automated accessibility audit on local UI
+  test-a11y [dir]     Source-level a11y heuristics (not axe-core; Phase 4 remaining)
   sync-tokens         Compile and export W3C DTCG design tokens to Tailwind v4 @theme
   tokens export       Export W3C DTCG tokens to Tailwind v4, CSS, Swift, Compose, or Figma
   preview <slug>      Inspect local component contract and verify zero-slop syntax
