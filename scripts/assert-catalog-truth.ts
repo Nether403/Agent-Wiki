@@ -8,6 +8,13 @@ interface CatalogContract {
   mcpTools: string[];
   retiredMcpTools: string[];
   forbiddenDocPhrases: string[];
+  compileSeed?: string;
+}
+
+interface CatalogSeed {
+  slugs: string[];
+  sources: Record<string, string>;
+  utils: string;
 }
 
 interface CatalogStats {
@@ -64,6 +71,29 @@ function main() {
     fail(`Retired MCP tools are still registered: ${retiredStillLive.join(", ")}`);
   }
 
+  const seedRel = contract.compileSeed ?? "catalog-seed.json";
+  const seedPath = path.join(root, seedRel);
+  if (!fs.existsSync(seedPath)) {
+    fail(`${seedRel} missing.`);
+  }
+  const seed = JSON.parse(fs.readFileSync(seedPath, "utf-8")) as CatalogSeed;
+  if (!Array.isArray(seed.slugs) || seed.slugs.length === 0) {
+    fail(`${seedRel} has no slugs.`);
+  }
+  const registryNames = new Set(registry.map((item) => item.name));
+  for (const slug of seed.slugs) {
+    if (!registryNames.has(slug)) {
+      fail(`compile seed slug "${slug}" is not in registry.json`);
+    }
+    const sourceRel = seed.sources?.[slug];
+    if (!sourceRel || !fs.existsSync(path.join(root, sourceRel))) {
+      fail(`compile seed source missing for "${slug}": ${sourceRel ?? "(unset)"}`);
+    }
+  }
+  if (seed.utils && !fs.existsSync(path.join(root, seed.utils))) {
+    fail(`compile seed utils missing: ${seed.utils}`);
+  }
+
   const docsToScan = [
     "README.md",
     "SKILL.md",
@@ -90,6 +120,7 @@ function main() {
   console.log(`  components: ${stats.componentCount}`);
   console.log(`  rules:      ${stats.ruleCount} (${contract.ruleSource})`);
   console.log(`  mcp tools:  ${registered.length}`);
+  console.log(`  compile seed: ${seed.slugs.join(", ")}`);
   console.log(`  categories: ${JSON.stringify(stats.categories)}`);
 }
 

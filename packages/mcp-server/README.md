@@ -4,25 +4,34 @@ Stdio Model Context Protocol server for the Machine-First Design Agent Wiki.
 
 Canonical tool list: [`catalog-contract.json`](../../catalog-contract.json). Counts: [`catalog-stats.json`](../../catalog-stats.json). See [`CATALOG.md`](../../CATALOG.md).
 
-The Cloudflare Worker in `src/worker.ts` is a **prototype**. There is no public `mcp.design-wiki.dev` endpoint. Use local stdio until a hosted catalog exists.
+This package is **private** and is not published to npm yet. Do not expect `npx @design-wiki/mcp` to resolve from the registry.
 
-## Connect
+The Cloudflare Worker in `src/worker.ts` is a **prototype**. There is no public `mcp.design-wiki.dev` endpoint.
+
+## Connect (local checkout)
 
 ```bash
-# Claude Code
-claude mcp add design-wiki npx @design-wiki/mcp
+pnpm build:registry   # compiles /r and is copied into packages/mcp-server/catalog at MCP build
+pnpm mcp              # tsx packages/mcp-server/src/index.ts
 ```
 
 ```json
 {
   "mcpServers": {
     "design-wiki": {
-      "command": "npx",
-      "args": ["@design-wiki/mcp"]
+      "command": "pnpm",
+      "args": ["mcp"],
+      "env": {
+        "DESIGN_WIKI_REGISTRY_URL": "http://localhost:3000"
+      }
     }
   }
 }
 ```
+
+`DESIGN_WIKI_REGISTRY_URL` is optional. When set, install-tool shadcn URLs use that host instead of `http://localhost:3000`. Catalog search/fetch still read the build-time snapshot or workspace `/r` files.
+
+`pnpm --filter @design-wiki/mcp build` copies compiled `apps/docs/public/r/registry.json` → `packages/mcp-server/catalog/registry.json` (gitignored) so stdio does not depend on Next walking relative paths.
 
 ## Tools (14)
 

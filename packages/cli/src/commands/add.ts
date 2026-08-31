@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { execSync } from "child_process";
 import { resolveProjectPathConfig } from "../utils/paths";
-import { fetchComponentItem, RegistryItem } from "../utils/registry";
+import { describeResolvedRegistry, fetchComponentItem, RegistryItem } from "../utils/registry";
 
 export interface AddOptions {
   cwd?: string;
@@ -65,13 +65,13 @@ export async function addComponent(
   const cwd = options.cwd ? path.resolve(options.cwd) : process.cwd();
   const pathConfig = resolveProjectPathConfig(cwd);
   const targetDir = options.path ? path.resolve(cwd, options.path) : pathConfig.uiDir;
-  const baseUrl = options.registry || "http://localhost:3000";
+  const originLabel = describeResolvedRegistry(options.registry);
 
   if (installedSlugs.has(slug)) return true;
   installedSlugs.add(slug);
 
-  console.log(`\n📦 Fetching component [${slug}] from registry (${baseUrl})...`);
-  const item: RegistryItem | null = await fetchComponentItem(slug, baseUrl);
+  console.log(`\n📦 Fetching component [${slug}] from registry (${originLabel})...`);
+  const item: RegistryItem | null = await fetchComponentItem(slug, options.registry);
 
   if (!item) {
     console.error(`❌ Component "${slug}" not found in Design Agent Wiki registry.`);

@@ -1,15 +1,15 @@
-import { fetchRegistryIndex, RegistryItem } from "../utils/registry";
+import { describeResolvedRegistry, fetchRegistryIndex, RegistryItem } from "../utils/registry";
 
 export async function listComponents(options: {
   category?: string;
   query?: string;
   registry?: string;
 } = {}): Promise<void> {
-  const baseUrl = options.registry || "http://localhost:3000";
+  const originLabel = describeResolvedRegistry(options.registry);
   console.log(`\n📚 Machine-First Design Agent Wiki: Component Catalog`);
-  console.log(`🌐 Source: ${baseUrl}\n`);
+  console.log(`🌐 Source: ${originLabel}\n`);
 
-  const catalog = await fetchRegistryIndex(baseUrl);
+  const catalog = await fetchRegistryIndex(options.registry);
 
   if (catalog.length === 0) {
     console.log("⚠️ No components discovered. Ensure registry is compiled via 'pnpm build:registry' or local server is running.");

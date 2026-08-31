@@ -159,22 +159,21 @@ Component counts are generated at compile time into [`catalog-stats.json`](./cat
 
 ## 🔌 Model Context Protocol (MCP) Server
 
-AI developer agents connect via the `@design-wiki/mcp` **stdio** server. The Cloudflare Worker is a prototype and is not a public production endpoint.
+AI developer agents connect via the `@design-wiki/mcp` **stdio** server from this repo (`pnpm mcp`). The package is private and is not on npm yet. The Cloudflare Worker is a prototype and is not a public production endpoint. Registry origin: `--registry` or `DESIGN_WIKI_REGISTRY_URL` (see [`CATALOG.md`](./CATALOG.md)).
 
 ### Configuration
 
-#### Claude Code (`.claude/mcp.json`)
+#### Local checkout
 ```bash
-claude mcp add design-wiki npx @design-wiki/mcp
+pnpm mcp
 ```
 
-#### Cursor (`.cursor/mcp.json`)
 ```json
 {
   "mcpServers": {
     "design-wiki": {
-      "command": "npx",
-      "args": ["@design-wiki/mcp"]
+      "command": "pnpm",
+      "args": ["mcp"]
     }
   }
 }
