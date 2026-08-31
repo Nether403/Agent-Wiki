@@ -34,8 +34,8 @@ Commands:
   tokens export       Export W3C DTCG tokens to Tailwind v4, CSS, Swift, Compose, or Figma
   preview <slug>      Inspect local component contract and verify zero-slop syntax
   doctor              Run full system diagnosis across Tailwind v4, React 19, and agent rules
-  list                List all curated zero-slop components and taste dials
-  search <query>      Search components by name, category, or tag
+  list                List trusted-core components (pass --all for the full inventory)
+  search <query>      Search components by name, category, or tag (core first)
   audit [path]        Scan local files for AI slop anti-patterns (arbitrary tokens, etc.)
   unslop <path>       Auto-refactor messy AI code into zero-slop accessible TSX with theme tokens
 
@@ -48,6 +48,8 @@ Options:
                       Default: DESIGN_WIKI_REGISTRY_URL, else compiled local catalog,
                       else http://localhost:3000
   --dry-run           Simulate file operations and dependency resolution without writing
+  --core              Restrict list/search to catalog-core.json slugs
+  --all               List the full inventory (experimental included)
   -h, --help          Display this help message
 
 Examples:
@@ -55,6 +57,7 @@ Examples:
   npx design-wiki add button --registry https://example.com
   npx design-wiki add canvas-fluid-wave --overwrite
   npx design-wiki list
+  npx design-wiki list --all
   npx design-wiki search dialog
   npx design-wiki audit ./components
   npx design-wiki unslop ./components/ui/hero.tsx --theme neo-tokyo
@@ -79,6 +82,8 @@ async function main() {
   let overwrite = false;
   let installDeps = false;
   let dryRun = false;
+  let coreOnly = false;
+  let listAll = false;
 
   for (let i = 1; i < args.length; i++) {
     if (args[i] === "--path" && args[i + 1]) {
@@ -95,6 +100,10 @@ async function main() {
       installDeps = true;
     } else if (args[i] === "--dry-run") {
       dryRun = true;
+    } else if (args[i] === "--core") {
+      coreOnly = true;
+    } else if (args[i] === "--all") {
+      listAll = true;
     }
   }
 
@@ -152,13 +161,20 @@ async function main() {
   }
 
   if (command === "list") {
-    await listComponents({ registry: registryUrl });
+    await listComponents({
+      registry: registryUrl,
+      tier: coreOnly ? "core" : listAll ? "all" : "core",
+    });
     process.exit(0);
   }
 
   if (command === "search") {
     const query = args[1] || "";
-    await listComponents({ query, registry: registryUrl });
+    await listComponents({
+      query,
+      registry: registryUrl,
+      tier: coreOnly ? "core" : listAll ? "all" : undefined,
+    });
     process.exit(0);
   }
 

@@ -5,6 +5,13 @@ import fs from "fs";
 import path from "path";
 import { loadCatalogSnapshot, CatalogRecord, isCatalogRecord } from "./embedded-catalog";
 import { resolveInstallBaseUrl } from "./registry-origin";
+import {
+    applyCatalogTier,
+    catalogTier,
+    loadCatalogCoreSlugs,
+    resolveSearchScope,
+    SEARCH_RETURN_LIMIT,
+} from "./catalog-core";
 import { scanMaliciousPayload, detectPromptInjection } from "./security";
 import { evaluateSource, unslopCode, RULE_COUNT } from "@design-wiki/audit-linter";
 export const MCP_CORE_TOOLS = [
@@ -98,9 +105,14 @@ export function createDesignWikiMcpServer(): McpServer {
         minMotionIntensity: z.number().min(1).max(10).optional().describe("Minimum motion intensity dial (1-10)"),
         maxVisualDensity: z.number().min(1).max(10).optional().describe("Maximum visual density dial (1-10)"),
         minDesignVariance: z.number().min(1).max(10).optional().describe("Minimum design variance dial (1-10)"),
+        tier: z
+            .enum(["core", "experimental", "all"])
+            .optional()
+            .describe("Catalog tier. Unqualified search defaults to trusted core (catalog-core.json). Keyword search defaults to all, core first."),
     });
-    const handleSearchComponents = async ({ query, category, tag, minMotionIntensity, maxVisualDensity, minDesignVariance, }) => {
+    const handleSearchComponents = async ({ query, category, tag, minMotionIntensity, maxVisualDensity, minDesignVariance, tier, }) => {
         const items = getRegistryItems();
+        const core = loadCatalogCoreSlugs();
         let filtered = items;
         if (category) {
             filtered = filtered.filter((i) => i.category === category);
@@ -139,10 +151,14 @@ export function createDesignWikiMcpServer(): McpServer {
                 (i.description ?? "").toLowerCase().includes(q) ||
                 (i.tags && i.tags.some((t) => t.toLowerCase().includes(q))));
         }
-        const results = filtered.map((i) => ({
+        const scope = resolveSearchScope({ query, category, tier });
+        const ranked = applyCatalogTier(filtered, scope, core);
+        const returned = ranked.slice(0, SEARCH_RETURN_LIMIT);
+        const results = returned.map((i) => ({
             name: i.name,
             title: i.title,
             category: i.category,
+            tier: i.tier,
             tags: i.tags,
             dials: i.dials,
             a11y: i.a11y,
@@ -151,7 +167,10 @@ export function createDesignWikiMcpServer(): McpServer {
             installCommand: `npx design-wiki add ${i.name}`,
         }));
         const rawJson = JSON.stringify({
-            matchCount: results.length,
+            matchCount: ranked.length,
+            returnedCount: results.length,
+            defaultedToCore: scope === "core" && !tier,
+            catalogCoreCount: core.size,
             components: results,
         }, null, 2);
         return {
@@ -165,12 +184,12 @@ export function createDesignWikiMcpServer(): McpServer {
     };
     // Tool 1: search_components
     server.registerTool("search_components", {
-        description: "Search the Machine-First Design Agent Wiki for curated, high-performance UI components by keyword, taxonomy category, tags, or taste dials.",
+        description: "Search the Machine-First Design Agent Wiki. Unqualified browse returns catalog-core.json only. Keyword search still covers the full inventory, core first.",
         inputSchema: searchInputSchema,
     }, handleSearchComponents);
     // Tool 1 Alias: search_library (for agent workflows in Cursor, Claude Code, etc.)
     server.registerTool("search_library", {
-        description: "Search and discover UI component templates and libraries within the Machine-First Design Agent Wiki by keyword, taxonomy category, tags, or taste dials.",
+        description: "Search and discover UI components. Unqualified browse returns the trusted core (catalog-core.json). Pass tier='all' or a keyword to include experimental inventory.",
         inputSchema: searchInputSchema,
     }, handleSearchComponents);
     // Helper handler for markup retrieval
@@ -600,6 +619,7 @@ ${sourceCode}
         }),
     }, async ({ naturalLanguageQuery, targetDialProfile, topK = 5 }) => {
         const items = getRegistryItems();
+        const core = loadCatalogCoreSlugs();
         const queryTokens = naturalLanguageQuery.toLowerCase().split(/\s+/).filter(Boolean);
         const scored = items.map((item) => {
             let textScore = 0;
@@ -616,6 +636,9 @@ ${sourceCode}
                 if (corpus.includes(token))
                     textScore += 1;
             });
+            if (core.has(item.name)) {
+                textScore += 4;
+            }
             // Dial distance penalty
             let dialPenalty = 0;
             if (targetDialProfile) {
@@ -634,6 +657,7 @@ ${sourceCode}
                 slug: item.name,
                 title: item.title,
                 category: item.category,
+                tier: catalogTier(item.name, core),
                 description: item.description,
                 tags: item.tags || [],
                 dials: item.dials,
@@ -641,7 +665,13 @@ ${sourceCode}
                 installCommand: `npx design-wiki add ${item.name}`,
             };
         });
-        scored.sort((a, b) => b.similarityScore - a.similarityScore);
+        scored.sort((a, b) => {
+            if (b.similarityScore !== a.similarityScore) {
+                return b.similarityScore - a.similarityScore;
+            }
+            if (a.tier === b.tier) return 0;
+            return a.tier === "core" ? -1 : 1;
+        });
         const results = scored.slice(0, topK);
         const payload = JSON.stringify({
             query: naturalLanguageQuery,
@@ -655,7 +685,7 @@ ${sourceCode}
     });
     // Tool 7: compose_layout_tree
     server.registerTool("compose_layout_tree", {
-        description: "Synthesize a cohesive, zero-slop multi-component layout tree for a specified page type, assembling verified registry components with import paths and layout TSX scaffolding.",
+        description: "Synthesize a layout tree for a page type. The settings archetype uses catalog-core.json slugs only. Other archetypes may still recommend experimental inventory and are labeled with tier.",
         inputSchema: z.object({
             pageType: z
                 .enum(["saas-landing", "dashboard", "settings", "auth-flow", "pricing", "ai-chat-workspace"])
@@ -670,6 +700,7 @@ ${sourceCode}
                 .optional(),
         }),
     }, async ({ pageType, requiredFeatures = [], targetDials }) => {
+        const core = loadCatalogCoreSlugs();
         let layoutTree: Record<string, unknown>;
         if (pageType === "ai-chat-workspace") {
             layoutTree = {
@@ -738,6 +769,96 @@ export default function DashboardPage() {
 }`,
             };
         }
+        else if (pageType === "settings") {
+            layoutTree = {
+                archetype: "Settings / preferences (trusted core)",
+                recommendedComponents: [
+                    { position: "Frame", slug: "card", title: "Card", rationale: "Section surface with structural border" },
+                    { position: "Sections", slug: "tabs", title: "Tabs", rationale: "General vs access panes" },
+                    { position: "Fields", slug: "input", title: "Input", rationale: "Labeled text fields" },
+                    { position: "Toggles", slug: "switch", title: "Switch", rationale: "Boolean preferences" },
+                    { position: "Rules", slug: "separator", title: "Separator", rationale: "Group breaks inside a card" },
+                    { position: "Submit", slug: "button", title: "Button", rationale: "Save action with focus ring" },
+                    { position: "Confirm", slug: "dialog", title: "Dialog", rationale: "Destructive confirm" },
+                    { position: "Meta", slug: "key-value-definition-list", title: "Key Value Definition List", rationale: "Read-only account facts" },
+                ],
+                scaffoldTsx: `import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+export default function SettingsPage() {
+  return (
+    <main className="min-h-[100dvh] bg-background text-foreground">
+      <div className="mx-auto flex max-w-3xl flex-col gap-6 p-6">
+        <h1 className="text-2xl font-semibold">Workspace settings</h1>
+        <Tabs defaultValue="general">
+          <TabsList>
+            <TabsTrigger value="general">General</TabsTrigger>
+            <TabsTrigger value="access">Access</TabsTrigger>
+          </TabsList>
+          <TabsContent value="general">
+            <Card>
+              <CardHeader>
+                <CardTitle>Profile</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-4">
+                <Input aria-label="Display name" placeholder="Display name" />
+                <Separator />
+                <div className="flex items-center justify-between gap-4">
+                  <span className="text-sm text-muted-foreground">Email notifications</span>
+                  <Switch aria-label="Email notifications" />
+                </div>
+                <Button type="button">Save changes</Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </main>
+  );
+}`,
+            };
+        }
+        else if (pageType === "auth-flow") {
+            layoutTree = {
+                archetype: "Auth card (trusted core)",
+                recommendedComponents: [
+                    { position: "Surface", slug: "card", title: "Card", rationale: "Sign-in panel" },
+                    { position: "Identity", slug: "input", title: "Input", rationale: "Email / password fields" },
+                    { position: "Submit", slug: "button", title: "Button", rationale: "Primary sign-in" },
+                    { position: "Avatar", slug: "avatar", title: "Avatar", rationale: "Account glyph" },
+                    { position: "Help", slug: "tooltip", title: "Tooltip", rationale: "Field hints" },
+                    { position: "Legal", slug: "dialog", title: "Dialog", rationale: "Terms overlay" },
+                ],
+                scaffoldTsx: `import * as React from "react";
+import { Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
+export default function AuthPage() {
+  return (
+    <main className="flex min-h-[100dvh] items-center justify-center bg-background p-6 text-foreground">
+      <Card className="w-full max-w-sm">
+        <CardHeader className="flex flex-row items-center gap-3">
+          <Avatar />
+          <CardTitle>Sign in</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-3">
+          <Input type="email" aria-label="Email" placeholder="you@example.com" />
+          <Input type="password" aria-label="Password" placeholder="Password" />
+          <Button type="button">Continue</Button>
+        </CardContent>
+      </Card>
+    </main>
+  );
+}`,
+            };
+        }
         else {
             layoutTree = {
                 archetype: "SaaS Marketing Showcase",
@@ -767,6 +888,15 @@ export default function LandingPage() {
 }`,
             };
         }
+        const recommended = layoutTree.recommendedComponents;
+        if (Array.isArray(recommended)) {
+            layoutTree.recommendedComponents = recommended.map((row: { slug?: string }) => ({
+                ...row,
+                tier: catalogTier(row.slug ?? "", core),
+            }));
+        }
+        layoutTree.catalogCoreFile = "catalog-core.json";
+        layoutTree.catalogCoreCount = core.size;
         return {
             content: [{ type: "text", text: stripPayloadToBudget(JSON.stringify(layoutTree, null, 2)) }],
         };

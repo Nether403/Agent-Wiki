@@ -16,5 +16,6 @@ packages/registry/catalog-stats.json
 graphify-out/**
 !graphify-out/GRAPH_REPORT.md
 packages/mcp-server/catalog/registry.json
+packages/mcp-server/catalog/catalog-core.json
 packages/eval-harness/fixture/.generated/
 

@@ -1,0 +1,19 @@
+{
+  "$comment": "Human-edited trusted install set for agents. Compile-seed slugs must stay a subset. Everything else in packages/registry/src is experimental until it is promoted here. Core is not WCAG AA proof and not a claim that these files are harvest-free.",
+  "slugs": [
+    "accordion",
+    "avatar",
+    "badge",
+    "button",
+    "card",
+    "dialog",
+    "dropdown-menu",
+    "input",
+    "key-value-definition-list",
+    "separator",
+    "skeleton",
+    "switch",
+    "tabs",
+    "tooltip"
+  ]
+}

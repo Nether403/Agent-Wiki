@@ -188,14 +188,14 @@ Canonical list: [`catalog-contract.json`](./catalog-contract.json) (`mcpTools`).
 
 | Tool Name | Parameters | Description |
 | :--- | :--- | :--- |
-| `search_library` / `search_components` | `query`, `category`, `tag`, dial filters | Catalog search with a 15KB payload budget. |
+| `search_library` / `search_components` | `query`, `category`, `tag`, `tier`, dial filters | Unqualified browse = `catalog-core.json`. Keyword search covers the full inventory, core first. |
 | `fetch_raw_markup` / `fetch_raw_markdown` / `get_component_markup` | `name` | YAML frontmatter + verified TSX source. |
 | `get_installation_schema` / `get_installation_commands` / `get_install_recipe` | `name`, `packageManager`, `baseUrl` | CLI install recipe and peer deps. |
 | `get_dependency_graph` | `name?`, `includeMermaid?` | Registry dependency walk for one slug or the full catalog. |
 | `audit_code_slop` | `code` | Canonical 50-rule pack in `@design-wiki/audit-linter`. |
 | `audit_and_fix_slop` | `code`, `theme` | Regex remapper + re-scored health. Does not assume 100/100. |
 | `semantic_search_components` | `naturalLanguageQuery`, `targetDialProfile` | Keyword + dial scoring. Not an embedding index. |
-| `compose_layout_tree` | `pageType`, `targetDials` | Page-archetype scaffold from registry slugs. |
+| `compose_layout_tree` | `pageType`, `targetDials` | Page-archetype scaffold. `settings` / `auth-flow` use core slugs only. |
 | `verify_accessibility_contrast` | `foregroundHex`, `backgroundHex` | WCAG contrast math (4.5:1 / 3.0:1 / 7.0:1). |
 
 ---

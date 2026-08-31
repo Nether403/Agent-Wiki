@@ -39,14 +39,14 @@ Aliases are listed beside the primary name.
 
 | Tool | What it actually does |
 | :--- | :--- |
-| `search_library` / `search_components` | Filtered catalog search, 15KB payload budget |
+| `search_library` / `search_components` | Unqualified browse = `catalog-core.json`. Keyword search covers the full inventory, core first, 15KB budget |
 | `fetch_raw_markup` / `fetch_raw_markdown` / `get_component_markup` | YAML frontmatter + TSX source |
 | `get_installation_schema` / `get_installation_commands` / `get_install_recipe` | CLI recipe and peer deps |
 | `get_dependency_graph` | Registry dependency walk |
 | `audit_code_slop` | Canonical 50-rule pack in `@design-wiki/audit-linter` |
 | `audit_and_fix_slop` | Regex remapper, then **re-scored** health. Does not assume 100/100 |
-| `semantic_search_components` | Keyword + dial scoring. Not an embedding index |
-| `compose_layout_tree` | Page-archetype scaffold from registry slugs |
+| `semantic_search_components` | Keyword + dial scoring with a core boost. Not an embedding index |
+| `compose_layout_tree` | Page-archetype scaffold. `settings` / `auth-flow` use core slugs only |
 | `verify_accessibility_contrast` | WCAG contrast math on two hex colors |
 
 Retired names (do not register, do not document as live) are listed in `catalog-contract.json` → `retiredMcpTools`.

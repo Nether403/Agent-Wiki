@@ -78,6 +78,22 @@ async function runAutonomySandboxTest() {
   console.log(`   ✓ Found layout: [${pricingMatch.category}] ${pricingMatch.name} (${pricingMatch.title})`);
   console.log(`✅ Phase 1B Succeeded: Autonomous pricing layout discovery verified.`);
 
+  console.log(`\n🔍 --- PHASE 1C: TRUSTED CORE BROWSE ---`);
+  const coreBrowse: McpToolResponse = await searchTool.handler({});
+  const parsedCore = JSON.parse(coreBrowse.content[0].text);
+  const coreNames = (parsedCore.components || []).map((c: { name: string }) => c.name);
+  if (!parsedCore.defaultedToCore) {
+    throw new Error("❌ Unqualified search_library should default to catalog-core.json.");
+  }
+  if (!coreNames.includes("button") || coreNames.includes("floating-dock")) {
+    throw new Error("❌ Core browse must include button and exclude experimental floating-dock.");
+  }
+  if ((parsedCore.components || []).some((c: { tier?: string }) => c.tier !== "core")) {
+    throw new Error("❌ Core browse returned a non-core tier.");
+  }
+  console.log(`   ✓ Unqualified search returned ${parsedCore.matchCount} core slugs (button present, floating-dock absent).`);
+  console.log(`✅ Phase 1C Succeeded: Trusted core is the default browse set.`);
+
   // Phase 2: Inspect Raw Markdown (with YAML frontmatter) & Markup
   console.log(`\n🔬 --- PHASE 2: INSPECT RAW MARKDOWN (YAML FRONTMATTER) ---`);
   console.log(`Agent calls fetch_raw_markdown({ name: "floating-dock" })...`);

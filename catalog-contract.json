@@ -66,5 +66,6 @@
     "19 registered tools",
     "192 component catalog"
   ],
-  "compileSeed": "catalog-seed.json"
+  "compileSeed": "catalog-seed.json",
+  "catalogCore": "catalog-core.json"
 }

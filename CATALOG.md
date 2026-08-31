@@ -7,6 +7,7 @@ Do not invent component counts, rule counts, or MCP tool lists. Read these files
 | Component count and category histogram | [`catalog-stats.json`](./catalog-stats.json) | Registry compiler (`pnpm build:registry`) |
 | MCP tool names (live vs retired) | [`catalog-contract.json`](./catalog-contract.json) | Humans. CI fails if `packages/mcp-server` drifts |
 | Phase 4 compile-seed slugs | [`catalog-seed.json`](./catalog-seed.json) | Humans. CI runs `tsc --noEmit` on these primitives |
+| Trusted install set | [`catalog-core.json`](./catalog-core.json) | Humans. Compile seed must stay a subset. Search browse defaults here |
 | Anti-slop rules `SLOP-001`–`SLOP-050` | [`packages/audit-linter/src/rules.ts`](./packages/audit-linter/src/rules.ts) | Humans |
 | Scoring / findings | [`packages/audit-linter/src/evaluate.ts`](./packages/audit-linter/src/evaluate.ts) | Humans. MCP, CLI, harvester, and eval-harness must call this |
 | Component source | [`packages/registry/src`](./packages/registry/src) | Curated TSX only (`lib/` and `tokens/` are not catalog items) |
@@ -16,11 +17,12 @@ Do not invent component counts, rule counts, or MCP tool lists. Read these files
 
 ```bash
 pnpm build:registry      # regenerates catalog-stats.json, /r/*.json, /raw, llms.txt
-pnpm assert:catalog      # counts, SLOP ids, MCP registerTool names, seed slugs, stale doc phrases
-pnpm inventory:health    # grade histogram over packages/registry/src (does not fail CI)
+pnpm assert:catalog      # counts, SLOP ids, MCP registerTool names, seed ⊆ core, stale doc phrases
+pnpm inventory:health    # keep / review / drop / experimental table (does not fail CI)
 pnpm test:eval           # slop lint on real files; compile/axe scores are not claimed
 pnpm test:origin         # CLI --registry / DESIGN_WIKI_REGISTRY_URL skip local files when HTTP
 pnpm test:compile-seed   # real tsc --noEmit on catalog-seed.json primitives
+pnpm test:catalog-core   # core ⊆ registry, seed ⊆ core, MCP browse defaults to core
 pnpm mcp                 # stdio MCP from this repo (package is private; not on npm yet)
 ```
 
@@ -39,6 +41,8 @@ MCP install tools (`get_installation_commands`, `get_installation_schema`, `get_
 
 `pnpm --filter @design-wiki/mcp build` copies compiled `registry.json` into `packages/mcp-server/catalog/` (gitignored) so stdio can load the catalog without the Next app.
 
+Unqualified MCP `search_library` / CLI `list` return **only** `catalog-core.json`. Keyword search still covers the full inventory, ranked core-first. `npx design-wiki add` of an experimental slug warns but does not block. Promote slugs into `catalog-core.json` after dogfood; do not harvest more items to grow the core.
+
 ## What is not product
 
 - `research/` — harvest notes, zips, and the old Python 21-rule gate
@@ -52,4 +56,4 @@ MCP install tools (`get_installation_commands`, `get_installation_schema`, `get_
 Current status lives at the top of [`design-agent-wiki-roadmap.md`](./design-agent-wiki-roadmap.md).
 
 1. **Phase 3**: stdio MCP with the 14 tools in `catalog-contract.json`. Registry origin + build-time catalog snapshot are in. Remaining: publish `@design-wiki/mcp` to npm; keep Worker experimental.
-2. **Phase 4**: `pnpm test:compile-seed` is a real `tsc --noEmit` sandbox on the seed in `catalog-seed.json`. Remaining: Playwright + axe on that seed, then keep/merge/drop the inventory (`pnpm inventory:health`) instead of more harvests. Do not treat `pnpm test:a11y` as WCAG AA.
+2. **Phase 4**: `pnpm test:compile-seed` is a real `tsc --noEmit` sandbox on the seed in `catalog-seed.json`. Trusted install set is `catalog-core.json` (seed is a subset). Remaining: Playwright + axe on that seed, then keep/merge/drop the rest via `pnpm inventory:health`. Do not treat `pnpm test:a11y` as WCAG AA.

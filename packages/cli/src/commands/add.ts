@@ -3,6 +3,7 @@ import path from "path";
 import { execSync } from "child_process";
 import { resolveProjectPathConfig } from "../utils/paths";
 import { describeResolvedRegistry, fetchComponentItem, RegistryItem } from "../utils/registry";
+import { isCoreSlug } from "../utils/catalog-core";
 
 export interface AddOptions {
   cwd?: string;
@@ -80,6 +81,9 @@ export async function addComponent(
   }
 
   console.log(`  ✓ Resolved: ${item.title} (${item.category})`);
+  if (!isCoreSlug(item.name)) {
+    console.warn(`  ⚠️  "${item.name}" is experimental (not in catalog-core.json). Preferred dogfood set is the trusted core.`);
+  }
   console.log(`  ✓ Taste Dials: Variance ${item.dials.design_variance}/10 · Motion ${item.dials.motion_intensity}/10 · Density ${item.dials.visual_density}/10`);
 
   // Ensure lib/utils.ts exists
